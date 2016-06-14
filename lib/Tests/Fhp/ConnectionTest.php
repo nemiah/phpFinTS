@@ -16,12 +16,12 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->adapter = $this->getMockBuilder(Curl::class)
+        $this->adapter = $this->getMockBuilder('\Fhp\Adapter\Curl')
             ->disableOriginalConstructor()
             ->setMethods(['send'])
             ->getMock();
 
-        $this->message = $this->getMockBuilder(Message::class)
+        $this->message = $this->getMockBuilder('\Fhp\Message\Message')
             ->disableOriginalConstructor()
             ->getMock();
     }

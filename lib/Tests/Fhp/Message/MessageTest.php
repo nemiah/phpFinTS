@@ -87,7 +87,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $segments);
 
         foreach ($segments as $segment) {
-            $this->assertInstanceOf(AbstractSegment::class, $segment);
+            $this->assertInstanceOf('\Fhp\Segment\AbstractSegment', $segment);
         }
     }
 }
