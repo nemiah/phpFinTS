@@ -1,0 +1,5 @@
+.idea/
+vendor/
+develop/
+coverage/
+test.php
