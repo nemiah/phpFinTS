@@ -4,6 +4,10 @@ namespace Fhp\Parser;
 
 use Fhp\Parser\Exception\MT940Exception;
 
+/**
+ * Class MT940
+ * @package Fhp\Parser
+ */
 class MT940
 {
     const TARGET_ARRAY = 0;
@@ -11,14 +15,26 @@ class MT940
     const CD_CREDIT = 'credit';
     const CD_DEBIT = 'debit';
 
+    /** @var string */
     protected $rawData;
+    /** @var string */
     protected $soaDate;
 
+    /**
+     * MT940 constructor.
+     *
+     * @param $rawData
+     */
     public function __construct($rawData)
     {
-        $this->rawData = $rawData;
+        $this->rawData = (string) $rawData;
     }
 
+    /**
+     * @param string $target
+     * @return array
+     * @throws MT940Exception
+     */
     public function parse($target)
     {
         switch ($target) {
@@ -30,6 +46,9 @@ class MT940
         }
     }
 
+    /**
+     * @return array
+     */
     protected function parseToArray()
     {
         $result = [];
@@ -92,7 +111,7 @@ class MT940
 
                     $amount = $trxMatch[4];
                     $amount = str_replace(',', '.', $amount);
-                    $trx[count($trx) - 1]['amount'] = $amount;
+                    $trx[count($trx) - 1]['amount'] = floatval($amount);
 
                     $description = $this->parseDescription($description);
                     $trx[count($trx) - 1]['description'] = $description;
@@ -103,6 +122,10 @@ class MT940
         return $result;
     }
 
+    /**
+     * @param string $descr
+     * @return array
+     */
     protected function parseDescription($descr)
     {
         $prepared = [];
@@ -143,6 +166,10 @@ class MT940
         return $result;
     }
 
+    /**
+     * @param string $val
+     * @return string
+     */
     protected function getDate($val)
     {
         $val = '20' . $val;

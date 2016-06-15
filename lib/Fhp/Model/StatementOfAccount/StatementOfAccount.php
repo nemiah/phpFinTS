@@ -2,10 +2,14 @@
 
 namespace Fhp\Model\StatementOfAccount;
 
+/**
+ * Class StatementOfAccount
+ * @package Fhp\Model\StatementOfAccount
+ */
 class StatementOfAccount
 {
     /**
-     * @var array
+     * @var Statement[]
      */
     protected $statements = array();
 

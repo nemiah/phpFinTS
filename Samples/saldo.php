@@ -3,6 +3,7 @@
 /**
  * SAMPLE - Displays the current saldo of the first found account
  */
+
 require '../vendor/autoload.php';
 
 use Fhp\FinTs;

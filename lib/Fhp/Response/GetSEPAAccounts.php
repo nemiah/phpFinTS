@@ -4,12 +4,22 @@ namespace Fhp\Response;
 
 use Fhp\Model\SEPAAccount;
 
+/**
+ * Class GetSEPAAccounts
+ * @package Fhp\Response
+ */
 class GetSEPAAccounts extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HISPA';
 
-    protected $accounts = [];
+    /** @var array */
+    protected $accounts = array();
 
+    /**
+     * Creates SEPA Account array list with SEPAAccount models.
+     *
+     * @return SEPAAccount[]
+     */
     public function getSEPAAccounts()
     {
         $accounts = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
@@ -26,6 +36,12 @@ class GetSEPAAccounts extends Response
         return $this->accounts;
     }
 
+    /**
+     * Creates a SEPAAccount model from array.
+     *
+     * @param array $array
+     * @return SEPAAccount
+     */
     protected function createModelFromArray(array $array)
     {
         $account = new SEPAAccount();

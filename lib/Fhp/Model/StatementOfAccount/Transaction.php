@@ -2,22 +2,61 @@
 
 namespace Fhp\Model\StatementOfAccount;
 
+/**
+ * Class Transaction
+ * @package Fhp\Model\StatementOfAccount
+ */
 class Transaction
 {
+    /**
+     * @var \DateTime|null
+     */
     protected $date;
+
+    /**
+     * @var float
+     */
     protected $amount;
+
+    /**
+     * @var string
+     */
     protected $creditDebit;
+
+    /**
+     * @var string
+     */
     protected $bookingText;
+
+    /**
+     * @var string
+     */
     protected $description1;
+
+    /**
+     * @var string
+     */
     protected $description2;
+
+    /**
+     * @var string
+     */
     protected $bankCode;
+
+    /**
+     * @var string
+     */
     protected $accountNumber;
+
+    /**
+     * @var string
+     */
     protected $name;
 
     /**
      * Get date
      *
-     * @return mixed
+     * @return \DateTime|null
      */
     public function getDate()
     {
@@ -27,11 +66,11 @@ class Transaction
     /**
      * Set date
      *
-     * @param mixed $date
+     * @param \DateTime|null $date
      *
      * @return $this
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date = null)
     {
         $this->date = $date;
 
@@ -41,7 +80,7 @@ class Transaction
     /**
      * Get amount
      *
-     * @return mixed
+     * @return float
      */
     public function getAmount()
     {
@@ -51,13 +90,13 @@ class Transaction
     /**
      * Set amount
      *
-     * @param mixed $amount
+     * @param float $amount
      *
      * @return $this
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = (float) $amount;
 
         return $this;
     }
@@ -65,7 +104,7 @@ class Transaction
     /**
      * Get creditDebit
      *
-     * @return mixed
+     * @return string
      */
     public function getCreditDebit()
     {
@@ -75,7 +114,7 @@ class Transaction
     /**
      * Set creditDebit
      *
-     * @param mixed $creditDebit
+     * @param string $creditDebit
      *
      * @return $this
      */
@@ -89,7 +128,7 @@ class Transaction
     /**
      * Get bookingText
      *
-     * @return mixed
+     * @return string
      */
     public function getBookingText()
     {
@@ -99,13 +138,13 @@ class Transaction
     /**
      * Set bookingText
      *
-     * @param mixed $bookingText
+     * @param string $bookingText
      *
      * @return $this
      */
     public function setBookingText($bookingText)
     {
-        $this->bookingText = $bookingText;
+        $this->bookingText = (string) $bookingText;
 
         return $this;
     }
@@ -113,7 +152,7 @@ class Transaction
     /**
      * Get description1
      *
-     * @return mixed
+     * @return string
      */
     public function getDescription1()
     {
@@ -123,13 +162,13 @@ class Transaction
     /**
      * Set description1
      *
-     * @param mixed $description1
+     * @param string $description1
      *
      * @return $this
      */
     public function setDescription1($description1)
     {
-        $this->description1 = $description1;
+        $this->description1 = (string) $description1;
 
         return $this;
     }
@@ -137,7 +176,7 @@ class Transaction
     /**
      * Get description2
      *
-     * @return mixed
+     * @return string
      */
     public function getDescription2()
     {
@@ -147,13 +186,13 @@ class Transaction
     /**
      * Set description2
      *
-     * @param mixed $description2
+     * @param string $description2
      *
      * @return $this
      */
     public function setDescription2($description2)
     {
-        $this->description2 = $description2;
+        $this->description2 = (string) $description2;
 
         return $this;
     }
@@ -161,7 +200,7 @@ class Transaction
     /**
      * Get bankCode
      *
-     * @return mixed
+     * @return string
      */
     public function getBankCode()
     {
@@ -171,13 +210,13 @@ class Transaction
     /**
      * Set bankCode
      *
-     * @param mixed $bankCode
+     * @param string $bankCode
      *
      * @return $this
      */
     public function setBankCode($bankCode)
     {
-        $this->bankCode = $bankCode;
+        $this->bankCode = (string) $bankCode;
 
         return $this;
     }
@@ -185,7 +224,7 @@ class Transaction
     /**
      * Get accountNumber
      *
-     * @return mixed
+     * @return string
      */
     public function getAccountNumber()
     {
@@ -195,13 +234,13 @@ class Transaction
     /**
      * Set accountNumber
      *
-     * @param mixed $accountNumber
+     * @param string $accountNumber
      *
      * @return $this
      */
     public function setAccountNumber($accountNumber)
     {
-        $this->accountNumber = $accountNumber;
+        $this->accountNumber = (string) $accountNumber;
 
         return $this;
     }
@@ -209,7 +248,7 @@ class Transaction
     /**
      * Get name
      *
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -219,15 +258,14 @@ class Transaction
     /**
      * Set name
      *
-     * @param mixed $name
+     * @param string $name
      *
      * @return $this
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = (string) $name;
 
         return $this;
     }
-
 }

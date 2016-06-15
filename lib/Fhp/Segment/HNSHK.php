@@ -8,7 +8,6 @@ use Fhp\DataElementGroups\SecurityDateTime;
 use Fhp\DataElementGroups\SecurityIdentificationDetails;
 use Fhp\DataElementGroups\SecurityProfile;
 use Fhp\DataElementGroups\SignatureAlgorithm;
-use Fhp\DataTypes\Bin;
 
 /**
  * Class HNSHK (Signaturkopf)
@@ -36,6 +35,19 @@ class HNSHK extends AbstractSegment
     const SECURITY_SUPPLIER_ROLE_CON = 3; // Der Unterzeichner unterstützt den Inhalt der Nachricht, z.B. bei Zweitsignatur (CON)
     const SECURITY_SUPPLIER_ROLE_WIT = 4; // Der Unterzeichner ist Zeuge, aber für den Inhalt der Nachricht nicht verantwortlich, z.B. Übermittler, welcher nicht Erfasser ist (WIT)
 
+    /**
+     * HNSHK constructor.
+     * @param int $segmentNumber
+     * @param string $securityReference
+     * @param string $countryCode
+     * @param string $bankCode
+     * @param string $userName
+     * @param int $systemId
+     * @param int $securityFunction
+     * @param int $securityBoundary
+     * @param int $securitySupplierRole
+     * @param int $pinTanVersion
+     */
     public function __construct(
         $segmentNumber,
         $securityReference,
@@ -68,6 +80,9 @@ class HNSHK extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

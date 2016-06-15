@@ -19,6 +19,16 @@ class HKKAZ extends AbstractSegment
     const ALL_ACCOUNTS_N = 'N';
     const ALL_ACCOUNTS_Y = 'J';
 
+    /**
+     * HKKAZ constructor.
+     * @param int $version
+     * @param int $segmentNumber
+     * @param mixed $ktv
+     * @param array $allAccounts
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param string|null $touchdown
+     */
     public function __construct(
         $version,
         $segmentNumber,
@@ -43,6 +53,9 @@ class HKKAZ extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

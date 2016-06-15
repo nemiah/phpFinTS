@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
 
 use Fhp\DataTypes\Kik;
 
@@ -20,6 +18,11 @@ class HNHBS extends AbstractSegment
     const NAME = 'HNHBS';
     const VERSION = 1;
 
+    /**
+     * HNHBS constructor.
+     * @param int $segmentNumber
+     * @param int $messageNumber
+     */
     public function __construct(
         $segmentNumber,
         $messageNumber
@@ -32,6 +35,9 @@ class HNHBS extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

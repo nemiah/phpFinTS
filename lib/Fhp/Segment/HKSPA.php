@@ -18,6 +18,11 @@ class HKSPA extends AbstractSegment
     const NAME = 'HKSPA';
     const VERSION = 1;
 
+    /**
+     * HKSPA constructor.
+     * @param int $segmentNumber
+     * @param Ktv|null $ktv
+     */
     public function __construct($segmentNumber, Ktv $ktv = null)
     {
         parent::__construct(
@@ -28,6 +33,9 @@ class HKSPA extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

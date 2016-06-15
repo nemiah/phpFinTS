@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
 
 use Fhp\DataTypes\Kik;
 
@@ -21,6 +19,13 @@ class HKIDN extends AbstractSegment
     const VERSION = 2;
     const COUNTRY_CODE = 280; // Germany
 
+    /**
+     * HKIDN constructor.
+     * @param int $segmentNumber
+     * @param string $bankCode
+     * @param string $userName
+     * @param int $systemId
+     */
     public function __construct($segmentNumber, $bankCode, $userName, $systemId = 0)
     {
         parent::__construct(
@@ -36,6 +41,9 @@ class HKIDN extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

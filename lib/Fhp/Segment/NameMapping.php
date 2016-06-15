@@ -2,6 +2,10 @@
 
 namespace Fhp\Segment;
 
+/**
+ * Class NameMapping
+ * @package Fhp\Segment
+ */
 class NameMapping
 {
     protected static $mapping = [
@@ -85,17 +89,29 @@ class NameMapping
 
     ];
 
+    /**
+     * @param string $code
+     * @return string
+     */
     public static function codeToName($code)
     {
         return isset(static::$mapping[$code]) ? static::$mapping[$code] : $code;
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     public static function nameToCode($name)
     {
         $flipped = array_flip(static::$mapping);
         return isset($flipped[$name]) ? $flipped[$name] : $name;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public static function translateResponse($text)
     {
         return str_replace(array_flip(static::$mapping), static::$mapping, $text);

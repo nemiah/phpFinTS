@@ -2,15 +2,27 @@
 
 namespace Fhp\Model;
 
+/**
+ * Class Account
+ * @package Fhp\Model
+ */
 class Account
 {
+    /** @var string */
     protected $id;
+    /** @var string */
     protected $accountNumber;
+    /** @var string */
     protected $bankCode;
+    /** @var string */
     protected $iban;
+    /** @var string */
     protected $customerId;
+    /** @var string */
     protected $currency;
+    /** @var string */
     protected $accountOwnerName;
+    /** @var string */
     protected $accountDescription;
 
     /**
@@ -26,7 +38,7 @@ class Account
     /**
      * Set id
      *
-     * @param mixed $id
+     * @param string $id
      *
      * @return $this
      */
@@ -40,7 +52,7 @@ class Account
     /**
      * Get accountNumber
      *
-     * @return mixed
+     * @return string
      */
     public function getAccountNumber()
     {
@@ -50,13 +62,13 @@ class Account
     /**
      * Set accountNumber
      *
-     * @param mixed $accountNumber
+     * @param string $accountNumber
      *
      * @return $this
      */
     public function setAccountNumber($accountNumber)
     {
-        $this->accountNumber = $accountNumber;
+        $this->accountNumber = (string) $accountNumber;
 
         return $this;
     }
@@ -64,7 +76,7 @@ class Account
     /**
      * Get bankCode
      *
-     * @return mixed
+     * @return string
      */
     public function getBankCode()
     {
@@ -74,13 +86,13 @@ class Account
     /**
      * Set bankCode
      *
-     * @param mixed $bankCode
+     * @param string $bankCode
      *
      * @return $this
      */
     public function setBankCode($bankCode)
     {
-        $this->bankCode = $bankCode;
+        $this->bankCode = (string) $bankCode;
 
         return $this;
     }
@@ -88,7 +100,7 @@ class Account
     /**
      * Get iban
      *
-     * @return mixed
+     * @return string
      */
     public function getIban()
     {
@@ -98,13 +110,13 @@ class Account
     /**
      * Set iban
      *
-     * @param mixed $iban
+     * @param string $iban
      *
      * @return $this
      */
     public function setIban($iban)
     {
-        $this->iban = $iban;
+        $this->iban = (string) $iban;
 
         return $this;
     }
@@ -112,7 +124,7 @@ class Account
     /**
      * Get customerId
      *
-     * @return mixed
+     * @return string
      */
     public function getCustomerId()
     {
@@ -122,13 +134,13 @@ class Account
     /**
      * Set customerId
      *
-     * @param mixed $customerId
+     * @param string $customerId
      *
      * @return $this
      */
     public function setCustomerId($customerId)
     {
-        $this->customerId = $customerId;
+        $this->customerId = (string) $customerId;
 
         return $this;
     }
@@ -136,7 +148,7 @@ class Account
     /**
      * Get currency
      *
-     * @return mixed
+     * @return string
      */
     public function getCurrency()
     {
@@ -146,13 +158,13 @@ class Account
     /**
      * Set currency
      *
-     * @param mixed $currency
+     * @param string $currency
      *
      * @return $this
      */
     public function setCurrency($currency)
     {
-        $this->currency = $currency;
+        $this->currency = (string) $currency;
 
         return $this;
     }
@@ -160,7 +172,7 @@ class Account
     /**
      * Get accountOwnerName
      *
-     * @return mixed
+     * @return string
      */
     public function getAccountOwnerName()
     {
@@ -170,13 +182,13 @@ class Account
     /**
      * Set accountOwnerName
      *
-     * @param mixed $accountOwnerName
+     * @param string $accountOwnerName
      *
      * @return $this
      */
     public function setAccountOwnerName($accountOwnerName)
     {
-        $this->accountOwnerName = $accountOwnerName;
+        $this->accountOwnerName = (string) $accountOwnerName;
 
         return $this;
     }
@@ -184,7 +196,7 @@ class Account
     /**
      * Get accountDescription
      *
-     * @return mixed
+     * @return string
      */
     public function getAccountDescription()
     {
@@ -194,13 +206,13 @@ class Account
     /**
      * Set accountDescription
      *
-     * @param mixed $accountDescription
+     * @param string $accountDescription
      *
      * @return $this
      */
     public function setAccountDescription($accountDescription)
     {
-        $this->accountDescription = $accountDescription;
+        $this->accountDescription = (string) $accountDescription;
 
         return $this;
     }

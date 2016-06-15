@@ -11,12 +11,40 @@ namespace Fhp\DataTypes;
  */
 class Kti
 {
+    /**
+     * @var string
+     */
     protected $iban;
+
+    /**
+     * @var string
+     */
     protected $bic;
+
+    /**
+     * @var string
+     */
     protected $accountNumber;
+
+    /**
+     * @var string
+     */
     protected $subAccountFeature;
+
+    /**
+     * @var Kik
+     */
     protected $kik;
 
+    /**
+     * Kti constructor.
+     *
+     * @param string $iban
+     * @param string $bic
+     * @param string $accountNumber
+     * @param string $subAccountFeature
+     * @param Kik $kik
+     */
     public function __construct($iban, $bic, $accountNumber, $subAccountFeature, Kik $kik)
     {
         $this->iban = $iban;
@@ -26,6 +54,9 @@ class Kti
         $this->kik = $kik;
     }
 
+    /**
+     * @return string
+     */
     public function toString()
     {
         return $this->iban . ':'
@@ -35,6 +66,9 @@ class Kti
             . (string) $this->kik;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toString();

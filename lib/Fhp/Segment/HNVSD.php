@@ -2,9 +2,6 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataElementGroups\SecurityDateTime;
-use Fhp\DataElementGroups\SecurityIdentificationDetails;
-use Fhp\DataElementGroups\SecurityProfile;
 use Fhp\DataTypes\Bin;
 
 /**
@@ -21,15 +18,18 @@ class HNVSD extends AbstractSegment
     const NAME = 'HNVSD';
     const VERSION = 1;
 
+    /**
+     * HNVSD constructor.
+     * @param int $segmentNumber
+     * @param string $encodedData
+     */
     public function __construct($segmentNumber, $encodedData)
     {
         parent::__construct(
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(
-                new Bin($encodedData)
-            )
+            array(new Bin($encodedData))
         );
     }
 
@@ -43,11 +43,17 @@ class HNVSD extends AbstractSegment
         return $des[0];
     }
 
+    /**
+     * @param string $data
+     */
     public function setEncodedData($data)
     {
         $this->setDataElements([new Bin($data)]);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

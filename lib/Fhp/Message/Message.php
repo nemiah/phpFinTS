@@ -18,16 +18,54 @@ use Fhp\Segment\SegmentInterface;
  */
 class Message extends AbstractMessage
 {
+    /**
+     * @var int
+     */
     protected $encryptedSegmentsCount = 0;
+
+    /**
+     * @var int
+     */
     protected $securityReference;
+
+    /**
+     * @var string
+     */
     protected $pin;
+
+    /**
+     * @var string
+     */
     protected $bankCode;
+
+    /**
+     * @var string
+     */
     protected $username;
+
+    /**
+     * @var string
+     */
     protected $systemId;
+
+    /**
+     * @var array
+     */
     protected $options;
+
+    /**
+     * @var int
+     */
     protected $profileVersion;
+
+    /**
+     * @var string
+     */
     protected $securityFunction;
 
+    /**
+     * @var array
+     */
     private $encryptedSegments = array();
 
     /**
@@ -35,6 +73,17 @@ class Message extends AbstractMessage
      */
     protected $encryptionEnvelop;
 
+    /**
+     * Message constructor.
+     * @param string $bankCode
+     * @param string $username
+     * @param string $pin
+     * @param $systemId
+     * @param int $dialogId
+     * @param int $messageNumber
+     * @param array $encryptedSegments
+     * @param array $options
+     */
     public function __construct(
         $bankCode,
         $username,
@@ -122,6 +171,11 @@ class Message extends AbstractMessage
         );
     }
 
+    /**
+     * Adds a encrypted segment to the message.
+     *
+     * @param SegmentInterface $segment
+     */
     protected function addEncryptedSegment(SegmentInterface $segment)
     {
         $this->encryptedSegmentsCount++;

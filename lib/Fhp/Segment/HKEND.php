@@ -1,13 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
-
-use Fhp\DataTypes\Kik;
-use Fhp\DataTypes\Kti;
-use Fhp\DataTypes\Ktv;
-use Fhp\Model\Account;
 
 /**
  * Class HKEND (Dialogende)
@@ -23,6 +16,11 @@ class HKEND extends AbstractSegment
     const NAME = 'HKEND';
     const VERSION = 1;
 
+    /**
+     * HKEND constructor.
+     * @param $segmentNumber
+     * @param $dialogId
+     */
     public function __construct($segmentNumber, $dialogId)
     {
         parent::__construct(
@@ -33,6 +31,9 @@ class HKEND extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

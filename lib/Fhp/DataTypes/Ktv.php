@@ -11,10 +11,28 @@ namespace Fhp\DataTypes;
  */
 class Ktv
 {
+    /**
+     * @var string
+     */
     protected $accountNumber;
+
+    /**
+     * @var string
+     */
     protected $subAccountFeature;
+
+    /**
+     * @var Kik
+     */
     protected $kik;
 
+    /**
+     * Ktv constructor.
+     *
+     * @param string $accountNumber
+     * @param string $subAccountFeature
+     * @param Kik $kik
+     */
     public function __construct($accountNumber, $subAccountFeature, Kik $kik)
     {
         $this->accountNumber = $accountNumber;
@@ -22,11 +40,17 @@ class Ktv
         $this->kik = $kik;
     }
 
+    /**
+     * @return string
+     */
     public function toString()
     {
         return $this->accountNumber . ':' . $this->subAccountFeature . ':' . (string) $this->kik;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toString();

@@ -1,13 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
-
-use Fhp\DataTypes\Kik;
-use Fhp\DataTypes\Kti;
-use Fhp\DataTypes\Ktv;
-use Fhp\Model\Account;
 
 /**
  * Class HKSAL (Saldenabfrage)
@@ -25,6 +18,13 @@ class HKSAL extends AbstractSegment
     const ALL_ACCOUNTS_N = 'N';
     const ALL_ACCOUNTS_Y = 'J';
 
+    /**
+     * HKSAL constructor.
+     * @param int $version
+     * @param int $segmentNumber
+     * @param mixed $ktv
+     * @param array $allAccounts
+     */
     public function __construct($version, $segmentNumber, $ktv, $allAccounts)
     {
         parent::__construct(
@@ -38,6 +38,9 @@ class HKSAL extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

@@ -1,22 +1,30 @@
 <?php
 
-
 namespace Fhp\Model;
 
-
+/**
+ * Class SEPAAccount
+ * @package Fhp\Model
+ */
 class SEPAAccount
 {
+    /** @var bool */
     protected $isSepaCapable;
+    /** @var string */
     protected $iban;
+    /** @var string */
     protected $bic;
+    /** @var string */
     protected $accountNumber;
+    /** @var string */
     protected $subAccount;
+    /** @var string */
     protected $blz;
 
     /**
      * Get isSepaCapable
      *
-     * @return mixed
+     * @return bool
      */
     public function getIsSepaCapable()
     {
@@ -26,13 +34,13 @@ class SEPAAccount
     /**
      * Set isSepaCapable
      *
-     * @param mixed $isSepaCapable
+     * @param bool $isSepaCapable
      *
      * @return $this
      */
     public function setIsSepaCapable($isSepaCapable)
     {
-        $this->isSepaCapable = $isSepaCapable;
+        $this->isSepaCapable = (bool) $isSepaCapable;
 
         return $this;
     }
@@ -40,7 +48,7 @@ class SEPAAccount
     /**
      * Get iban
      *
-     * @return mixed
+     * @return string
      */
     public function getIban()
     {
@@ -50,13 +58,13 @@ class SEPAAccount
     /**
      * Set iban
      *
-     * @param mixed $iban
+     * @param string $iban
      *
      * @return $this
      */
     public function setIban($iban)
     {
-        $this->iban = $iban;
+        $this->iban = (string) $iban;
 
         return $this;
     }
@@ -64,7 +72,7 @@ class SEPAAccount
     /**
      * Get bic
      *
-     * @return mixed
+     * @return string
      */
     public function getBic()
     {
@@ -74,13 +82,13 @@ class SEPAAccount
     /**
      * Set bic
      *
-     * @param mixed $bic
+     * @param string $bic
      *
      * @return $this
      */
     public function setBic($bic)
     {
-        $this->bic = $bic;
+        $this->bic = (string) $bic;
 
         return $this;
     }
@@ -88,7 +96,7 @@ class SEPAAccount
     /**
      * Get accountNumber
      *
-     * @return mixed
+     * @return string
      */
     public function getAccountNumber()
     {
@@ -98,13 +106,13 @@ class SEPAAccount
     /**
      * Set accountNumber
      *
-     * @param mixed $accountNumber
+     * @param string $accountNumber
      *
      * @return $this
      */
     public function setAccountNumber($accountNumber)
     {
-        $this->accountNumber = $accountNumber;
+        $this->accountNumber = (string) $accountNumber;
 
         return $this;
     }
@@ -112,7 +120,7 @@ class SEPAAccount
     /**
      * Get subAccount
      *
-     * @return mixed
+     * @return string
      */
     public function getSubAccount()
     {
@@ -122,13 +130,13 @@ class SEPAAccount
     /**
      * Set subAccount
      *
-     * @param mixed $subAccount
+     * @param string $subAccount
      *
      * @return $this
      */
     public function setSubAccount($subAccount)
     {
-        $this->subAccount = $subAccount;
+        $this->subAccount = (string) $subAccount;
 
         return $this;
     }
@@ -136,7 +144,7 @@ class SEPAAccount
     /**
      * Get blz
      *
-     * @return mixed
+     * @return string
      */
     public function getBlz()
     {
@@ -146,13 +154,13 @@ class SEPAAccount
     /**
      * Set blz
      *
-     * @param mixed $blz
+     * @param string $blz
      *
      * @return $this
      */
     public function setBlz($blz)
     {
-        $this->blz = $blz;
+        $this->blz = (string) $blz;
 
         return $this;
     }

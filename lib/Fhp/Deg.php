@@ -8,8 +8,14 @@ namespace Fhp;
  */
 class Deg
 {
+    /** @var array  */
     protected $dataElements = array();
 
+    /**
+     * Adds a data element to the data element group.
+     *
+     * @param mixed $value
+     */
     public function addDataElement($value)
     {
         $this->dataElements[] = $value;
@@ -20,6 +26,9 @@ class Deg
         return (string) implode(':', $this->dataElements);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toString();

@@ -36,6 +36,17 @@ class HNVSK extends AbstractSegment
     const COMPRESSION_BZIP2 = 7;
     const COMPRESSION_NEGOTIATE = 999;
 
+    /**
+     * HNVSK constructor.
+     * @param int $segmentNumber
+     * @param string $bankCode
+     * @param string $userName
+     * @param int $systemId
+     * @param int $securitySupplierRole
+     * @param int $countryCode
+     * @param int $compression
+     * @param int $pinTanVersion
+     */
     public function __construct(
         $segmentNumber,
         $bankCode,
@@ -63,6 +74,9 @@ class HNVSK extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

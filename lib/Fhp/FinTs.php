@@ -22,23 +22,45 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class FinTs
+ * @package Fhp
+ */
 class FinTs
 {
     const DEFAULT_COUNTRY_CODE = 280;
     const LOGGER_NAME = 'Fhp';
 
+    /** @var Logger */
     protected $logger;
-
+    /** @var  string */
     protected $server;
+    /** @var int */
     protected $port;
+    /** @var string */
     protected $bankCode;
+    /** @var string */
     protected $username;
+    /** @var string */
     protected $pin;
+    /** @var  Connection */
     protected $connection;
+    /** @var  AdapterInterface */
     protected $adapter;
+    /** @var int */
     protected $systemId = 0;
+    /** @var string */
     protected $bankName;
 
+    /**
+     * FinTs constructor.
+     * @param string $server
+     * @param int $port
+     * @param string $bankCode
+     * @param string $username
+     * @param string $pin
+     * @param LoggerInterface|null $logger
+     */
     public function __construct(
         $server,
         $port,
@@ -62,12 +84,22 @@ class FinTs
         }
     }
 
+    /**
+     * Sets the adapter to use.
+     *
+     * @param AdapterInterface $adapter
+     */
     public function setAdapter(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
         $this->connection = new Connection($this->adapter);
     }
 
+    /**
+     * Gets array of all accounts.
+     *
+     * @return Model\Account[]
+     */
     public function getAccounts()
     {
         $dialog = $this->getDialog();
@@ -78,6 +110,13 @@ class FinTs
         return $accounts->getAccounts();
     }
 
+    /**
+     * Gets array of all SEPA Accounts.
+     *
+     * @return Model\SEPAAccount[]
+     * @throws Adapter\Exception\AdapterException
+     * @throws Adapter\Exception\CurlException
+     */
     public function getSEPAAccounts()
     {
         $dialog = $this->getDialog();
@@ -97,6 +136,11 @@ class FinTs
         return $sepaAccounts->getSEPAAccounts();
     }
 
+    /**
+     * Gets the bank name.
+     *
+     * @return string
+     */
     public function getBankName()
     {
         if (null == $this->bankName) {
@@ -107,6 +151,8 @@ class FinTs
     }
 
     /**
+     * Gets statement of account.
+     *
      * @param SEPAAccount $account
      * @param \DateTime $from
      * @param \DateTime $to
@@ -159,6 +205,17 @@ class FinTs
         return GetStatementOfAccount::createModelFromArray($masterArray);
     }
 
+    /**
+     * Helper method to create a "Statement of Account Message".
+     *
+     * @param Dialog $dialog
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param string|null $touchdown
+     * @return Message
+     * @throws \Exception
+     */
     protected function createStateOfAccountMessage(
         Dialog $dialog,
         SepaAccount $account,
@@ -243,14 +300,22 @@ class FinTs
                     $touchdown
                 )
             ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
-            )
+            array(AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms())
         );
 
         return $message;
     }
 
+    /**
+     * Gets the saldo of given SEPAAccount.
+     *
+     * @param SEPAAccount $account
+     * @return Model\Saldo|null
+     * @throws Adapter\Exception\AdapterException
+     * @throws Adapter\Exception\CurlException
+     * @throws Dialog\Exception\FailedRequestException
+     * @throws \Exception
+     */
     public function getSaldo(SEPAAccount $account)
     {
         $dialog = $this->getDialog();

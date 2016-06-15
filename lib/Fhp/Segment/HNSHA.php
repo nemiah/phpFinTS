@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
 
 use Fhp\DataTypes\Kik;
 
@@ -20,6 +18,12 @@ class HNSHA extends AbstractSegment
     const NAME = 'HNSHA';
     const VERSION = 2;
 
+    /**
+     * HNSHA constructor.
+     * @param int $segmentNumber
+     * @param string $securityControlReference
+     * @param string $pin
+     */
     public function __construct(
         $segmentNumber,
         $securityControlReference,
@@ -37,6 +41,9 @@ class HNSHA extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

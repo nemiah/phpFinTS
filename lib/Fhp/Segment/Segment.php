@@ -1,11 +1,17 @@
 <?php
 
-
 namespace Fhp\Segment;
 
-
+/**
+ * Class Segment
+ * @package Fhp\Segment
+ */
 class Segment extends AbstractSegment
 {
+    /**
+     * @param string $string
+     * @return Segment
+     */
     public static function createFromString($string)
     {
         $lines = explode('+', $string);
@@ -19,6 +25,9 @@ class Segment extends AbstractSegment
         return new self($name, 0, $segmentNumber, $version, $lines);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->type;

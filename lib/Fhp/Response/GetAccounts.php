@@ -4,12 +4,20 @@ namespace Fhp\Response;
 
 use Fhp\Model\Account;
 
+/**
+ * Class GetAccounts
+ * @package Fhp\Response
+ */
 class GetAccounts extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HIUPD';
 
-    protected $accounts = [];
+    /** @var array */
+    protected $accounts = array();
 
+    /**
+     * @return array
+     */
     public function getAccounts()
     {
         $accounts = $this->findSegments(static::SEG_ACCOUNT_INFORMATION);
@@ -22,6 +30,12 @@ class GetAccounts extends Response
         return $this->accounts;
     }
 
+    /**
+     * Creates a Account model from array.
+     *
+     * @param array $array
+     * @return Account
+     */
     protected function createModelFromArray(array $array)
     {
         $account = new Account();

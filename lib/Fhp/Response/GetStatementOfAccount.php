@@ -7,6 +7,10 @@ use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\Model\StatementOfAccount\Transaction;
 use Fhp\Parser\MT940;
 
+/**
+ * Class GetStatementOfAccount
+ * @package Fhp\Response
+ */
 class GetStatementOfAccount extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HIKAZ';
@@ -22,6 +26,10 @@ class GetStatementOfAccount extends Response
         );
     }
 
+    /**
+     * @return array
+     * @throws \Fhp\Parser\Exception\MT940Exception
+     */
     public function getStatementOfAccountArray()
     {
         $data = [];
@@ -37,6 +45,8 @@ class GetStatementOfAccount extends Response
     }
 
     /**
+     * Creates a StatementOfAccount model from array.
+     *
      * @param array $array
      * @return StatementOfAccount|null
      */

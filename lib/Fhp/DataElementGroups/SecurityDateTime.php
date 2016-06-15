@@ -4,6 +4,10 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
+/**
+ * Class SecurityDateTime.
+ * @package Fhp\DataElementGroups
+ */
 class SecurityDateTime extends Deg
 {
     /**
@@ -16,6 +20,12 @@ class SecurityDateTime extends Deg
      */
     const DATETIME_TYPE_CRT = 6;
 
+    /**
+     * SecurityDateTime constructor.
+     *
+     * @param int $type
+     * @param \DateTime|null $dateTime
+     */
     public function __construct($type = self::DATETIME_TYPE_STS, \DateTime $dateTime = null)
     {
         $date = null == $dateTime ? new \DateTime() : $dateTime;

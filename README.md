@@ -18,5 +18,9 @@ Install via composer:
 ## How to use it
 
 You can have a look at the "Samples" folder in this repository.
+Just fill in the required data beginning from line 13 to 17 and run the script.
+
+You can find the server information of your bank here:
+https://www.hbci-zka.de/institute/institut_auswahl.htm
 
 ### Have fun!

@@ -4,6 +4,10 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
+/**
+ * Class SignatureAlgorithm.
+ * @package Fhp\DataElementGroups
+ */
 class SignatureAlgorithm extends Deg
 {
     const SIG_ALGO_USAGE_OSG = 6; // Owner Signing (OSG)
@@ -18,6 +22,13 @@ class SignatureAlgorithm extends Deg
     const OPERATION_MODE_RSASSA_PSS = 19;
     const OPERATION_MODE_999 = 999;
 
+    /**
+     * SignatureAlgorithm constructor.
+     *
+     * @param int $sigAlgoUsage
+     * @param int $sigAlgo
+     * @param int $operationMode
+     */
     public function __construct(
         $sigAlgoUsage = self::SIG_ALGO_USAGE_OSG,
         $sigAlgo = self::SIG_ALGO_RSA,

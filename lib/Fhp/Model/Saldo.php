@@ -2,6 +2,10 @@
 
 namespace Fhp\Model;
 
+/**
+ * Class Saldo
+ * @package Fhp\Model
+ */
 class Saldo
 {
     /**
@@ -22,7 +26,7 @@ class Saldo
     /**
      * Get currency
      *
-     * @return mixed
+     * @return string
      */
     public function getCurrency()
     {
@@ -32,13 +36,13 @@ class Saldo
     /**
      * Set currency
      *
-     * @param mixed $currency
+     * @param string $currency
      *
      * @return $this
      */
     public function setCurrency($currency)
     {
-        $this->currency = $currency;
+        $this->currency = (string) $currency;
 
         return $this;
     }
@@ -46,7 +50,7 @@ class Saldo
     /**
      * Get amount
      *
-     * @return mixed
+     * @return float
      */
     public function getAmount()
     {

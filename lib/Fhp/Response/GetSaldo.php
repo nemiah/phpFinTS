@@ -4,12 +4,22 @@ namespace Fhp\Response;
 
 use Fhp\Model\Saldo;
 
+/**
+ * Class GetSaldo
+ * @package Fhp\Response
+ */
 class GetSaldo extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HISAL';
     const SALDO_DEBIT = 'D';
     const SALDO_CREDIT = 'C';
 
+    /**
+     * Creates a Saldo object from response body.
+     *
+     * @return Saldo|null
+     * @throws \Exception
+     */
     public function getSaldo()
     {
         $model = null;
@@ -24,6 +34,13 @@ class GetSaldo extends Response
         return $model;
     }
 
+    /**
+     * Creates a Saldo model from array.
+     *
+     * @param array $array
+     * @return Saldo
+     * @throws \Exception
+     */
     protected function createModelFromArray(array $array)
     {
         $model = new Saldo();

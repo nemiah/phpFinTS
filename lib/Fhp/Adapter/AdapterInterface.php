@@ -4,6 +4,10 @@ namespace Fhp\Adapter;
 
 use Fhp\Message\AbstractMessage;
 
+/**
+ * Interface AdapterInterface
+ * @package Fhp\Adapter
+ */
 interface AdapterInterface
 {
     /**

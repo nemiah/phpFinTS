@@ -4,6 +4,11 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
+/**
+ * Class EncryptionAlgorithm.
+ *
+ * @package Fhp\DataElementGroups
+ */
 class EncryptionAlgorithm extends Deg
 {
     const TYPE_OSY = 2;
@@ -23,6 +28,16 @@ class EncryptionAlgorithm extends Deg
     const ALGORITHM_KEY_TYPE_SYM_PUB = 6;
     const ALGORITHM_IV_DESCRIPTION_IVC = 1;
 
+    /**
+     * EncryptionAlgorithm constructor.
+     *
+     * @param int $type
+     * @param int $operationMode
+     * @param int $algorithm
+     * @param string $algorithmIv
+     * @param int $algorithmKeyType
+     * @param int $algorithmIvDescription
+     */
     public function __construct(
         $type = self::TYPE_OSY,
         $operationMode = self::OPERATION_MODE_CBC,

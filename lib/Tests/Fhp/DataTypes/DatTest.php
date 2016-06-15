@@ -14,10 +14,10 @@ class DatTest extends \PHPUnit_Framework_TestCase
         $dateTime2 = new \DateTime();
         $dateTime2->modify('+1 month');
 
-        $d->setData($dateTime2);
+        $d->setDate($dateTime2);
         $this->assertEquals($dateTime2->format('Ymd'), (string) $d);
         $this->assertEquals($dateTime2->format('Ymd'), $d->toString());
 
-        $this->assertEquals($dateTime2, $d->getData());
+        $this->assertEquals($dateTime2, $d->getDate());
     }
 }

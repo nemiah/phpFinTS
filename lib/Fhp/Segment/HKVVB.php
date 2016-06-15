@@ -27,6 +27,15 @@ class HKVVB extends AbstractSegment
     const DEFAULT_PRODUCT_NAME = 'fints-hbci-php';
     const DEFAULT_PRODUCT_VERSION = '1.0';
 
+    /**
+     * HKVVB constructor.
+     * @param int $segmentNumber
+     * @param int $bpdVersion
+     * @param int $updVersion
+     * @param int $dialogLanguage
+     * @param string $productName
+     * @param string $productVersion
+     */
     public function __construct(
         $segmentNumber,
         $bpdVersion = self::DEFAULT_BPD_VERSION,
@@ -49,6 +58,9 @@ class HKVVB extends AbstractSegment
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return static::NAME;

@@ -16,6 +16,10 @@ use Fhp\Segment\HKVVB;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class Dialog
+ * @package Fhp\Dialog
+ */
 class Dialog
 {
     const DEFAULT_COUNTRY_CODE = 280;
@@ -24,19 +28,72 @@ class Dialog
      * @var Connection
      */
     protected $connection;
+
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
+
+    /**
+     * @var int
+     */
     protected $messageNumber = 1;
+
+    /**
+     * @var int
+     */
     protected $dialogId = 0;
+
+    /**
+     * @var int|string
+     */
     protected $systemId = 0;
+
+    /**
+     * @var string
+     */
     protected $bankCode;
+
+    /**
+     * @var string
+     */
     protected $username;
+
+    /**
+     * @var string
+     */
     protected $pin;
+
+    /**
+     * @var string
+     */
     protected $bankName;
 
-    protected $supportedTanMechanisms = [];
+    /**
+     * @var array
+     */
+    protected $supportedTanMechanisms = array();
+
+    /**
+     * @var int
+     */
     protected $hksalVersion = 6;
+
+    /**
+     * @var int
+     */
     protected $hkkazVersion = 6;
 
+    /**
+     * Dialog constructor.
+     *
+     * @param Connection $connection
+     * @param string $bankCode
+     * @param string $username
+     * @param string $pin
+     * @param string $systemId
+     * @param LoggerInterface $logger
+     */
     public function __construct(Connection $connection, $bankCode, $username, $pin, $systemId, LoggerInterface $logger)
     {
         $this->connection = $connection;
@@ -47,6 +104,13 @@ class Dialog
         $this->logger = $logger;
     }
 
+    /**
+     * @param AbstractMessage $message
+     * @return Response
+     * @throws AdapterException
+     * @throws CurlException
+     * @throws FailedRequestException
+     */
     public function sendMessage(AbstractMessage $message)
     {
         try {
@@ -78,6 +142,9 @@ class Dialog
         }
     }
 
+    /**
+     * @param Response $response
+     */
     protected function handleResponse(Response $response)
     {
         $summary = $response->getMessageSummary();
@@ -92,6 +159,11 @@ class Dialog
         }
     }
 
+    /**
+     * @param string $type
+     * @param string $code
+     * @param $message
+     */
     protected function logMessage($type, $code, $message)
     {
         switch (substr($code, 0, 1)) {
@@ -111,41 +183,85 @@ class Dialog
         $this->logger->log($level, '[' . $type . '] ' . $message);
     }
 
+    /**
+     * Gets the dialog ID.
+     *
+     * @return int|string
+     */
     public function getDialogId()
     {
         return $this->dialogId;
     }
 
+    /**
+     * Gets the current message number.
+     *
+     * @return int
+     */
     public function getMessageNumber()
     {
         return $this->messageNumber;
     }
 
+    /**
+     * Gets the system ID.
+     *
+     * @return int|string
+     */
     public function getSystemId()
     {
         return $this->systemId;
     }
 
+    /**
+     * Gets all supported TAN mechanisms.
+     *
+     * @return array
+     */
     public function getSupportedPinTanMechanisms()
     {
         return $this->supportedTanMechanisms;
     }
 
+    /**
+     * Gets the max possible HKSAL version.
+     *
+     * @return int
+     */
     public function getHksalMaxVersion()
     {
         return $this->hksalVersion;
     }
 
+    /**
+     * Gets the max possible HKKAZ version.
+     *
+     * @return int
+     */
     public function getHkkazMaxVersion()
     {
         return $this->hkkazVersion;
     }
 
+    /**
+     * Gets the bank name.
+     *
+     * @return string
+     */
     public function getBankName()
     {
         return $this->bankName;
     }
 
+    /**
+     * Initializes a dialog.
+     *
+     * @return int|null
+     * @throws AdapterException
+     * @throws CurlException
+     * @throws FailedRequestException
+     * @throws \Exception
+     */
     public function initDialog()
     {
         $this->logger->info('Initialize Dialog');
@@ -175,6 +291,15 @@ class Dialog
         return $this->dialogId;
     }
 
+    /**
+     * Sends sync request.
+     *
+     * @return mixed
+     * @throws AdapterException
+     * @throws CurlException
+     * @throws FailedRequestException
+     * @throws \Exception
+     */
     public function syncDialog()
     {
         $this->logger->info('Initialize SYNC');
@@ -222,6 +347,14 @@ class Dialog
         return $response->rawResponse;
     }
 
+    /**
+     * Ends a previous started dialog.
+     *
+     * @return mixed
+     * @throws AdapterException
+     * @throws CurlException
+     * @throws FailedRequestException
+     */
     public function endDialog()
     {
         $this->logger->info('Initialize END dialog message');

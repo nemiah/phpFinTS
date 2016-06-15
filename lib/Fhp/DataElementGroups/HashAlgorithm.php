@@ -4,6 +4,11 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
+/**
+ * Class HashAlgorithm.
+ *
+ * @package Fhp\DataElementGroups
+ */
 class HashAlgorithm extends Deg
 {
     const HASH_ALGORITHM_USAGE_OHA = 1; // Owner Hashing (OHA)
@@ -18,6 +23,13 @@ class HashAlgorithm extends Deg
 
     const HASH_ALGORITHM_PARAM_DESCRIPTION_IVC = 1;
 
+    /**
+     * HashAlgorithm constructor.
+     *
+     * @param int $hashAlgorithmUsage
+     * @param int $hashAlgorithm
+     * @param int $hashAlgorithmParamDescription
+     */
     public function __construct(
         $hashAlgorithmUsage = self::HASH_ALGORITHM_USAGE_OHA,
         $hashAlgorithm = self::HASH_ALGORITHM_NEGOTIATE,

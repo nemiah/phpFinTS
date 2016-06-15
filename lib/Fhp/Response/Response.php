@@ -3,18 +3,31 @@
 namespace Fhp\Response;
 
 use Fhp\Message\AbstractMessage;
-use Fhp\Message\Message;
 use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
 
+/**
+ * Class Response
+ * @package Fhp\Response
+ */
 class Response
 {
+    /** @var string */
     public $rawResponse;
+    /** @var string */
     protected $response;
+    /** @var array */
     protected $segments = array();
+    /** @var string */
     protected $dialogId;
+    /** @var string */
     protected $systemId;
 
+    /**
+     * Response constructor.
+     *
+     * @param $rawResponse
+     */
     public function __construct($rawResponse)
     {
         if ($rawResponse instanceof Initialization) {
@@ -26,6 +39,12 @@ class Response
         $this->segments = explode("'", $rawResponse);
     }
 
+    /**
+     * Extracts dialog ID from response.
+     *
+     * @return string|null
+     * @throws \Exception
+     */
     public function getDialogId()
     {
         $segment = $this->findSegment('HNHBK');
@@ -37,6 +56,11 @@ class Response
         return $this->getSegmentIndex(4, $segment);
     }
 
+    /**
+     * Extracts bank name from response.
+     *
+     * @return string|null
+     */
     public function getBankName()
     {
         $bankName = null;
@@ -51,6 +75,12 @@ class Response
         return $bankName;
     }
 
+    /**
+     * Some kind of HBCI pagination.
+     *
+     * @param AbstractMessage $message
+     * @return array
+     */
     public function getTouchDowns(AbstractMessage $message)
     {
         $touchdown = array();
@@ -75,6 +105,11 @@ class Response
         return $touchdown;
     }
 
+    /**
+     * Extracts supported TAN mechanisms from response.
+     *
+     * @return array|bool
+     */
     public function getSupportedTanMechanisms()
     {
         $segments = $this->findSegments('HIRMS');
@@ -95,16 +130,27 @@ class Response
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getHksalMaxVersion()
     {
         return $this->getSegmentMaxVersion('HISALS');
     }
 
+    /**
+     * @return string
+     */
     public function getHkkazMaxVersion()
     {
         return $this->getSegmentMaxVersion('HIKAZS');
     }
 
+    /**
+     * Checks if request / response was successful.
+     *
+     * @return bool
+     */
     public function isSuccess()
     {
         $summary = $this->getMessageSummary();
@@ -118,16 +164,29 @@ class Response
         return true;
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function getMessageSummary()
     {
         return $this->getSummaryBySegment('HIRMG');
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function getSegmentSummary()
     {
         return $this->getSummaryBySegment('HIRMS');
     }
 
+    /**
+     * @param string $name
+     * @return array
+     * @throws \Exception
+     */
     protected function getSummaryBySegment($name)
     {
         if (!in_array($name, array('HIRMS', 'HIRMG'))) {
@@ -146,6 +205,10 @@ class Response
         return $result;
     }
 
+    /**
+     * @param string $segmentName
+     * @return string
+     */
     public function getSegmentMaxVersion($segmentName)
     {
         $version = "3";
@@ -162,6 +225,10 @@ class Response
         return $version;
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function getSystemId()
     {
         $segment = $this->findSegment('HISYN');
@@ -173,6 +240,10 @@ class Response
         return $matches[1];
     }
 
+    /**
+     * @param bool $translateCodes
+     * @return mixed
+     */
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
@@ -184,6 +255,11 @@ class Response
         );
     }
 
+    /**
+     * @param string $name
+     * @param AbstractSegment $reference
+     * @return string|null
+     */
     protected function findSegmentForReference($name, AbstractSegment $reference)
     {
         $result = null;
@@ -200,14 +276,18 @@ class Response
         return null;
     }
 
+    /**
+     * @param string $name
+     * @return array|null|string
+     */
     protected function findSegment($name)
     {
         return $this->findSegments($name, true);
     }
 
     /**
-     * @param $name
-     * @param bool|false $one
+     * @param string $name
+     * @param bool $one
      * @return array|null|string
      */
     protected function findSegments($name, $one = false)
@@ -228,6 +308,10 @@ class Response
         return $found;
     }
 
+    /**
+     * @param $segment
+     * @return array
+     */
     protected function splitSegment($segment)
     {
         $parts = explode('+', $segment);
@@ -235,11 +319,20 @@ class Response
         return $parts;
     }
 
+    /**
+     * @param $deg
+     * @return array
+     */
     protected function splitDeg($deg)
     {
         return explode(':', $deg);
     }
 
+    /**
+     * @param int $idx
+     * @param $segment
+     * @return string|null
+     */
     protected function getSegmentIndex($idx, $segment)
     {
         $segment = $this->splitSegment($segment);
@@ -250,6 +343,10 @@ class Response
         return null;
     }
 
+    /**
+     * @param string $response
+     * @return string
+     */
     protected function unwrapEncryptedMsg($response)
     {
         if (preg_match('/HNVSD:\d+:\d+\+@\d+@(.+)\'\'/', $response, $matches)) {
