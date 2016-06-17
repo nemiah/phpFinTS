@@ -1,6 +1,8 @@
 language: php
 before_install: composer self-update
 install: composer install
+script:
+  - ./phplint.sh ./lib/
 php:
   - '5.4'
   - '5.5'
