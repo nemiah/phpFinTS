@@ -2,6 +2,7 @@ language: php
 install: composer install
 script:
   - ./phplint.sh ./lib/
+  - phpunit
 php:
   - '5.4'
   - '5.5'
