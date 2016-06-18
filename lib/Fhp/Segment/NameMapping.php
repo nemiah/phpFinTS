@@ -8,7 +8,7 @@ namespace Fhp\Segment;
  */
 class NameMapping
 {
-    protected static $mapping = [
+    protected static $mapping = array(
         // Formals
         // http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
         // Section: H.1.3
@@ -87,7 +87,7 @@ class NameMapping
         'HIPAES' => 'PIN ändern Parameter',
         'HIPSPS' => 'PIN sperren Parameter',
 
-    ];
+    );
 
     /**
      * @param string $code
