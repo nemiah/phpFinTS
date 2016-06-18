@@ -34,7 +34,7 @@ class Statement
     /**
      * Get transactions
      *
-     * @return array
+     * @return Transaction[]
      */
     public function getTransactions()
     {

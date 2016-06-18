@@ -48,7 +48,7 @@ class HNVSD extends AbstractSegment
      */
     public function setEncodedData($data)
     {
-        $this->setDataElements([new Bin($data)]);
+        $this->setDataElements(array(new Bin($data)));
     }
 
     /**

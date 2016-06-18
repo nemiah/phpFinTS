@@ -247,8 +247,8 @@ class Response
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            ["'", '+'],
-            [PHP_EOL, PHP_EOL . "  " ],
+            array("'", '+'),
+            array(PHP_EOL, PHP_EOL . "  "),
             $translateCodes
                 ? NameMapping::translateResponse($this->rawResponse)
                 : $this->rawResponse

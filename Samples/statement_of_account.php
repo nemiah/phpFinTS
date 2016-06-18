@@ -4,11 +4,11 @@
  * SAMPLE - Displays the statement of account for a specific time range and account. 
  */
 
+
 require '../vendor/autoload.php';
 
 use Fhp\FinTs;
 use Fhp\Model\StatementOfAccount\Statement;
-use Fhp\Model\StatementOfAccount\Transaction;
 
 define('FHP_BANK_URL', '');                # HBCI / FinTS Url can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm
 define('FHP_BANK_PORT', 443);              # HBCI / FinTS Port can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm

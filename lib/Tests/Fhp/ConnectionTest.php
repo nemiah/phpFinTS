@@ -18,7 +18,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter = $this->getMockBuilder('\Fhp\Adapter\Curl')
             ->disableOriginalConstructor()
-            ->setMethods(['send'])
+            ->setMethods(array('send'))
             ->getMock();
 
         $this->message = $this->getMockBuilder('\Fhp\Message\Message')

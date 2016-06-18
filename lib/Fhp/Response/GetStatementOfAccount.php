@@ -32,7 +32,7 @@ class GetStatementOfAccount extends Response
      */
     public function getStatementOfAccountArray()
     {
-        $data = [];
+        $data = array();
         $seg = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
         if (is_string($seg)) {
             if (preg_match('/@(\d+)@(.+)/ms', $seg, $m)) {

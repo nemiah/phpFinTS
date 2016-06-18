@@ -51,7 +51,7 @@ class MT940
      */
     protected function parseToArray()
     {
-        $result = [];
+        $result = array();
         $days = explode("\r\n-", $this->rawData);
         foreach ($days as &$day) {
             $day = explode("\r\n:", $day);
@@ -128,8 +128,8 @@ class MT940
      */
     protected function parseDescription($descr)
     {
-        $prepared = [];
-        $result = [];
+        $prepared = array();
+        $result = array();
 
         // prefill with empty values
         for ($i = 0; $i <= 63; $i++) {

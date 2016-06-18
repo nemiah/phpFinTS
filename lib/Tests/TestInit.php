@@ -18,10 +18,10 @@ spl_autoload_register(function($class) {
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-$files = [
+$files = array(
     __DIR__ . '/../../vendor/autoload.php',
     __DIR__ . '/../../../../../vendor/autoload.php',
-];
+);
 
 $loader = null;
 

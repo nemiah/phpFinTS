@@ -82,8 +82,8 @@ abstract class AbstractSegment implements SegmentInterface
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            ["'", '+'],
-            [PHP_EOL, PHP_EOL . "  " ],
+            array("'", '+'),
+            array(PHP_EOL, PHP_EOL . "  "),
             $translateCodes
                 ? NameMapping::translateResponse($this->toString())
                 : $this->toString()

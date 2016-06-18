@@ -313,7 +313,6 @@ class FinTs
      * @return Model\Saldo|null
      * @throws Adapter\Exception\AdapterException
      * @throws Adapter\Exception\CurlException
-     * @throws Dialog\Exception\FailedRequestException
      * @throws \Exception
      */
     public function getSaldo(SEPAAccount $account)
