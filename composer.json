@@ -1,7 +1,7 @@
 {
   "name": "mschindler83/fints-hbci-php",
   "description": "PHP Library for the protocols fints and hbci",
-  "homepage": "https://bitbucket.org/kontosecure/fints-hbci-php",
+  "homepage": "http://fints-hbci-php.markus-schindler.de",
   "version": "1.0.0",
   "license": "MIT",
   "autoload": {
