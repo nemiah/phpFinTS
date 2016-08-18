@@ -71,9 +71,18 @@ class FinTs
     ) {
         $this->server = $server;
         $this->port = $port;
-        $this->bankCode = $bankCode;
-        $this->username = $username;
-        $this->pin = $pin;
+
+        // escaping of bank code not really needed here as it should
+        // never have special chars. But we just do it to ensure
+        // that the request will not get messed up and the user
+        // can receive a valid error response from the HBCI server.
+        $this->bankCode = $this->escapeString($bankCode);
+
+        // Here, escaping is needed for usernames or pins with
+        // HBCI special chars.
+        $this->username = $this->escapeString($username);
+        $this->pin = $this->escapeString($pin);
+
         $this->adapter = new Curl($this->server, $this->port);
         $this->connection = new Connection($this->adapter);
 
@@ -413,6 +422,22 @@ class FinTs
             $this->pin,
             $this->systemId,
             $this->logger
+        );
+    }
+
+    /**
+     * Needed for escaping userdata.
+     * HBCI escape char is "?"
+     *
+     * @param string $string
+     * @return string
+     */
+    protected function escapeString($string)
+    {
+        return str_replace(
+            array('?', '@', ':', '+', '\''),
+            array('??', '?@', '?:', '?+', '?\''),
+            $string
         );
     }
 }
