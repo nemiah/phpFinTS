@@ -143,7 +143,7 @@ This library is verified to work with following banks.
 - [ ] Groß-Gerauer Volksbank
 - [ ] H + G BANK Heidelberg
 - [ ] Hagnauer Volksbank
-- [ ] Hallertauer Volksbank
+- [x] Hallertauer Volksbank
 - [ ] Hamburger Bank v. 1861
 - [ ] Hamburger Bank von 1861 Volksbank eG
 - [ ] Hamburger Sparkasse
