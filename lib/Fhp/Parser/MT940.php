@@ -91,8 +91,6 @@ class MT940
                     $transaction = substr($day[$i], 3);
                     $description = substr($day[$i + 1], 3);
 
-                    //$transactionDate = $this->getDate(substr($transaction, 0, 6));
-
                     if (!isset($result[$this->soaDate]['transactions'])) {
                         $result[$this->soaDate]['transactions'] = array();
                     }
@@ -115,6 +113,17 @@ class MT940
 
                     $description = $this->parseDescription($description);
                     $trx[count($trx) - 1]['description'] = $description;
+
+                    // :61:1605110509D198,02NMSCNONREF
+                    // 16 = year
+                    // 0511 = valuta date
+                    // 0509 = booking date
+                    $year = substr($transaction, 0, 2);
+                    $valutaDate = $this->getDate($year . substr($transaction, 2, 6));
+                    $bookingDate = $this->getDate($year . substr($transaction, 6, 10));
+
+                    $trx[count($trx) - 1]['booking_date'] = $bookingDate;
+                    $trx[count($trx) - 1]['valuta_date'] = $valutaDate;
                 }
             }
         }
