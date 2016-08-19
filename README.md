@@ -23,4 +23,12 @@ Just fill in the required data beginning from line 13 to 17 and run the script.
 You can find the server information of your bank here:
 https://www.hbci-zka.de/institute/institut_auswahl.htm
 
+## Contribute
+
+### Bank compatibility
+
+This library can only work stable with *YOUR* help!
+As I'm very limited in testing different banks it would be good to get some feedback from you all.
+Feel free to create PR's for the [COMPATIBILITY.md](COMPATIBILITY.md) file where you can update the list of working banks.
+
 ### Have fun!

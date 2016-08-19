@@ -1,0 +1,1694 @@
+# BANK COMPATIBILITY LIST
+
+This library is verified to work with following banks.
+
+* If you can not find your bank, feel free to add it to the list.
+* If you could successfully test the library with a bank, please mark it here as verified.
+
+## Bank List
+
+- [ ] 1822direkt (PIN/TAN)
+- [ ] Aachener Bank eG
+- [ ] Abtsgmünder Bank -Raiffeisen-
+- [ ] AgrarB@nk
+- [ ] akf bank GmbH & Co KG
+- [ ] AKTIVBANK
+- [ ] Allgäuer Volksbank Kempten-Sonthofen
+- [ ] Allianz-Bank (Zndl der Oldenburgische Landesbank AG)
+- [ ] Augsburger Aktienbank AG
+- [ ] Augusta-Bank Raiffeisen-Volksbank
+- [ ] Bad Waldseer Bank
+- [ ] Baden-Württembergische Bank (BW-Bank)
+- [ ] BAG Bankaktiengesellsch. Hamm
+- [ ] Bank 1 Saar
+- [ ] Bank f Orden u Mission Zndl vr bk Untertaunus
+- [ ] Bank für Kirche und Caritas eG
+- [ ] Bank für Kirche und Diakonie eG
+- [ ] Bank im Bistum Essen eG
+- [ ] Bank Sarasin
+- [ ] Bank Schilling & Co
+- [ ] Bank11Direkt GmbH
+- [ ] Bankhaus Bauer
+- [ ] Bankhaus C. Faisst OHG
+- [ ] Bankhaus C. L. Seeliger
+- [ ] Bankhaus Carl F. Plump & Co. GmbH & Co. KG 
+- [ ] Bankhaus E. Mayer AG
+- [ ] Bankhaus Ellwanger & Geiger
+- [ ] Bankhaus Hallbaum AG
+- [ ] Bankhaus Jungholz Zndl der Raiffeisenbank Reutte
+- [ ] Bankhaus Kruber
+- [ ] Bankhaus Lampe
+- [ ] Bankhaus Löbbecke & Co.
+- [ ] Bankhaus Ludwig Sperrer KG
+- [ ] Bankhaus Max Flessa KG (Flessabank)
+- [ ] Bankhaus Neelmeyer
+- [ ] Bankhaus Rautenschlein
+- [ ] Bankverein Bebra
+- [ ] Bankverein Werther AG
+- [ ] Bayerische Landesbank Girozentrale
+- [ ] BBBank
+- [ ] Bensberger Bank eG
+- [ ] Berkheimer Bank
+- [ ] Berliner Sparkasse
+- [ ] Berliner Volksbank
+- [ ] Bernhauser Bank
+- [ ] Bezirkssparkasse Reichenau
+- [ ] Bezirkssparkasse St. Blasien
+- [ ] BHF-Bank AG
+- [ ] Birsteiner Volksbank
+- [ ] biw Bank für Investments und Wertpapiere
+- [ ] BNP Paribas S.A. Niederlassung Deutschland - Consorsbank
+- [ ] Bopfinger Bank Sechta-Ries
+- [ ] Bordesholmer Sparkasse AG
+- [ ] Borkener Volksbank eG.
+- [ ] Brandenburger Bank Volksbank-Raiffeisenbank eG
+- [ ] Bremer Landesbank
+- [ ] Bremische Volksbank eG
+- [ ] Brookmerlander Raiffeisenbank eG
+- [ ] Brühler Kreditbank eG
+- [ ] Budenheimer Volksbank
+- [ ] BVB Volksbank Ndl d Frankfurter Volksbank
+- [ ] Calenberger Kreditverein
+- [ ] Cash Express Gesellschaft f Finanz-u Reisedienstleistungen
+- [ ] comdirect bank AG
+- [ ] Commerzbank
+- [ ] Crailsheimer Volksbank -alt-
+- [ ] Credit- und Volksbank eG
+- [ ] Cronbank
+- [ ] CVW - Privatbank
+- [ ] Darmsheimer Bank
+- [ ] Degussa Bank AG
+- [ ] Dettinger Bank
+- [ ] Deutsche Apotheker- und Ärztebank eG
+- [ ] Deutsche Bank AG
+- [ ] Deutsche Bank Privat und Geschäftskunden AG
+- [ ] Deutsche Genossenschafts-Hypothekenbank AG
+- [ ] Deutsche Kreditbank Berlin (DKB) AG
+- [ ] Deutsche Skatbank Zndl VR Bank Altenburger Land
+- [ ] Die Sparkasse Bremen
+- [ ] Dithmarscher Volks- und Raiffeisenbank eG
+- [ ] DKM Darlehnskasse Münster eG
+- [ ] Donner & Reuschel Aktiengesellschaft
+- [ ] Dortmunder Volksbank eG.
+- [ ] Dresdner Volksbank Raiffeisenbank
+- [ ] Düsseldorfer Bank eG
+- [ ] Echterdinger Bank
+- [ ] Eckernförder Bank eG Volksbank-Raiffeisenbank
+- [ ] EDEKABANK AG
+- [ ] Ehinger Volksbank
+- [ ] Ehninger Bank
+- [ ] Emsländische Volksbank eG
+- [ ] Enztalbank
+- [ ] Eppelborner Volksbank -alt-
+- [ ] Erfurter Bank
+- [ ] Erligheimer Bank -alt-
+- [ ] Erzgebirgssparkasse
+- [ ] Ev. Darlehnsgenossenschaft eG
+- [ ] Evangelische Kreditgenossenschaft
+- [ ] Evenord-Bank
+- [ ] Federseebank
+- [ ] Fellbacher Bank
+- [ ] Föhr-Amrumer Bank eG
+- [ ] Förde Sparkasse
+- [ ] Frankenberger Bank Raiffeisenbank
+- [ ] Frankfurter Bankgesellschaft
+- [ ] Frankfurter Sparkasse
+- [ ] Frankfurter Volksbank
+- [ ] Freiberger Bank
+- [ ] Freisinger Bank Volksbank-Raiffeisenbank
+- [ ] Fürst Fugger Privatbank
+- [ ] Fürst Fugger Privatbankiers
+- [ ] Fürstlich Castell'sche Bank
+- [ ] Gabler-Saliter-Bank KG
+- [ ] GALLINAT-BANK
+- [ ] GENO Broker GmbH
+- [ ] Geno-Volks-Bank Essen eG.
+- [ ] GenoBank DonauWald
+- [ ] Genobank Mainz
+- [ ] Genobank Rhön-Grabfeld
+- [ ] Genobank Rhön-Grabfeld eG
+- [ ] Genossenschaftsbank Meckenbeuren
+- [ ] Genossenschaftsbank München
+- [ ] Genossenschaftsbank Unterallgäu
+- [ ] Genossenschaftsbank Weil im Schönbuch
+- [ ] Genossenschaftsbank Wolfschlugen
+- [ ] Geraer Bank
+- [ ] Giengener Volksbank -alt-
+- [ ] Gladbacher Bank AG
+- [ ] GLS Gemeinschaftsbank eG
+- [ ] Goyer & Göppel
+- [ ] Grafschafter Volksbank eG
+- [ ] GRENKE BANK
+- [ ] Gries & Heissel - Bankiers
+- [ ] Groß-Gerauer Volksbank
+- [ ] H + G BANK Heidelberg
+- [ ] Hagnauer Volksbank
+- [ ] Hallertauer Volksbank
+- [ ] Hamburger Bank v. 1861
+- [ ] Hamburger Bank von 1861 Volksbank eG
+- [ ] Hamburger Sparkasse
+- [ ] Hannoversche Volksbank eG
+- [ ] Harzsparkasse
+- [ ] Hauck & Aufhäuser Privatbankiers
+- [ ] Hausbank München
+- [ ] Hegnacher Bank -alt-
+- [ ] Heidelberger Volksbank
+- [ ] Heidenheimer Volksbank
+- [ ] Herner Sparkasse
+- [ ] Hoerner-Bank
+- [ ] HSBC Trinkaus & Burkhardt
+- [ ] HSH Nordbank AG
+- [ ] Hümmlinger Volksbank eG
+- [ ] Hüttenberger Bank
+- [ ] Ibbenbürener Volksbank eG
+- [ ] Internationales Bankhaus Bodensee
+- [ ] Kasseler Bank
+- [ ] Kasseler Sparkasse
+- [ ] KBC-Bank
+- [ ] Keine FinTS-Unterstützung
+- [ ] Kerner Volksbank
+- [ ] Kieler Volksbank eG
+- [ ] Kölner Bank eG
+- [ ] Korber Bank
+- [ ] Kreis- und Stadtsparkasse Dillingen
+- [ ] Kreis- und Stadtsparkasse Dinkelsbühl
+- [ ] Kreis- und Stadtsparkasse Kaufbeuren
+- [ ] Kreis- und Stadtsparkasse Wasserburg am Inn
+- [ ] Kreissparkasse Ahrweiler 
+- [ ] Kreissparkasse Anhalt-Bitterfeld
+- [ ] Kreissparkasse Augsburg
+- [ ] Kreissparkasse Bautzen
+- [ ] Kreissparkasse Bersenbrück
+- [ ] Kreissparkasse Biberach
+- [ ] Kreissparkasse Birkenfeld
+- [ ] Kreissparkasse Bitburg-Prüm 
+- [ ] Kreissparkasse Böblingen
+- [ ] Kreissparkasse Börde
+- [ ] Kreissparkasse Döbeln
+- [ ] Kreissparkasse Düsseldorf 
+- [ ] Kreissparkasse Eichsfeld
+- [ ] Kreissparkasse Esslingen-Nürtingen
+- [ ] Kreissparkasse Euskirchen 
+- [ ] Kreissparkasse Freudenstadt
+- [ ] Kreissparkasse Garmisch-Partenkirchen
+- [ ] Kreissparkasse Gelnhausen
+- [ ] Kreissparkasse Göppingen
+- [ ] Kreissparkasse Gotha
+- [ ] Kreissparkasse Grafschaft Bentheim zu Nordhorn
+- [ ] Kreissparkasse Grafschaft Diepholz
+- [ ] Kreissparkasse Groß-Gerau
+- [ ] Kreissparkasse Halle (Westf.)
+- [ ] Kreissparkasse Heidenheim
+- [ ] Kreissparkasse Heilbronn
+- [ ] Kreissparkasse Heinsberg 
+- [ ] Kreissparkasse Herzogtum Lauenburg
+- [ ] Kreissparkasse Hildburghausen
+- [ ] Kreissparkasse Höchstadt a. d. Aisch
+- [ ] Kreissparkasse Kaiserlautern
+- [ ] Kreissparkasse Kelheim
+- [ ] Kreissparkasse Köln 
+- [ ] Kreissparkasse Kusel
+- [ ] Kreissparkasse Limburg
+- [ ] Kreissparkasse Ludwigsburg
+- [ ] Kreissparkasse Mayen
+- [ ] Kreissparkasse Melle
+- [ ] Kreissparkasse Miesbach-Tegernsee
+- [ ] Kreissparkasse München Starnberg Ebersberg
+- [ ] Kreissparkasse Nordhausen
+- [ ] Kreissparkasse Northeim
+- [ ] Kreissparkasse Ostalb (Aalen)
+- [ ] Kreissparkasse Osterholz
+- [ ] Kreissparkasse Peine
+- [ ] Kreissparkasse Ravensburg
+- [ ] Kreissparkasse Recklinghausen
+- [ ] Kreissparkasse Reutlingen
+- [ ] Kreissparkasse Rhein-Hunsrück
+- [ ] Kreissparkasse Rottweil
+- [ ] Kreissparkasse Saale-Orla
+- [ ] Kreissparkasse Saalfeld-Rudolstadt
+- [ ] Kreissparkasse Saarlouis
+- [ ] Kreissparkasse Saarpfalz
+- [ ] Kreissparkasse Schlüchtern
+- [ ] Kreissparkasse Schongau
+- [ ] Kreissparkasse Schwäbisch Hall-Crailsheim
+- [ ] Kreissparkasse Schwalm-Eder
+- [ ] Kreissparkasse Sigmaringen
+- [ ] Kreissparkasse Soltau
+- [ ] Kreissparkasse St. Wendel
+- [ ] Kreissparkasse Stade
+- [ ] Kreissparkasse Steinfurt
+- [ ] Kreissparkasse Stendal
+- [ ] Kreissparkasse Syke
+- [ ] Kreissparkasse Traunstein-Trostberg
+- [ ] Kreissparkasse Tübingen
+- [ ] Kreissparkasse Tuttlingen
+- [ ] Kreissparkasse Verden
+- [ ] Kreissparkasse Vulkaneifel
+- [ ] Kreissparkasse Waiblingen
+- [ ] Kreissparkasse Walsrode
+- [ ] Kreissparkasse Weilburg
+- [ ] Kreissparkasse Wiedenbrück
+- [ ] Kulmbacher Bank
+- [ ] Kurhessische Landbank
+- [ ] Kyffhäusersparkasse Artern-Sondershausen
+- [ ] Landbank Horlofftal
+- [ ] Landesbank Baden-Württemberg
+- [ ] Landesbank Berlin AG
+- [ ] Landeskirchliche Kredit-Genossenschaft Sachsen
+- [ ] Landessparkasse zu Oldenburg
+- [ ] Landsberg-Ammersee Bank
+- [ ] Leutkircher Bank Raiffeisen- und Volksbank
+- [ ] LevoBank Vereinte VB Lebach Eppelborn
+- [ ] LIGA Bank
+- [ ] Löchgauer Bank
+- [ ] Lohner Bank eG
+- [ ] M.M.Warburg & CO (AG & Co.) Kommanditgesellschaft auf Aktien
+- [ ] Mainzer Volksbank
+- [ ] Marcard,Stein & Co GmbH
+- [ ] Märkische Bank
+- [ ] Merck Finck & Co.
+- [ ] Merkur Bank
+- [ ] Mittelbrandenburgische Sparkasse in Potsdam
+- [ ] MKB Mittelstandskreditbank Aktiengesellschaft
+- [ ] MLP Finanzdienstleistungen
+- [ ] MLP Finanzdienstleistungen Zw CS
+- [ ] Münchner Bank
+- [ ] Münsterländische Bank Thie & Co
+- [ ] Murgtalbank Mitteltal - Obertal -alt-
+- [ ] Müritz-Sparkasse
+- [ ] Nassauische Sparkasse 
+- [ ] National-Bank
+- [ ] net-m privatbank 1891 AG
+- [ ] netbank AG
+- [ ] NF Bank 
+- [ ] NIBC Bank Zndl Frankfurt am Main
+- [ ] NL Bank Volks- und Raiffeisenbank eG
+- [ ] Nord-Ostsee Sparkasse
+- [ ] Nord/LB Hannover
+- [ ] Norderstedter Bank eG
+- [ ] Nordthüringer Volksbank
+- [ ] norisbank GmbH
+- [ ] Nufringer Bank -Raiffeisen-
+- [ ] Oberbank AG
+- [ ] Offenbacher Volksbank -alt-
+- [ ] Onstmettinger Bank
+- [ ] Ostfriesische Volksbank eG
+- [ ] Ostsächsische Sparkasse Dresden
+- [ ] Ostseesparkasse Rostock
+- [ ] Paffrather Raiffeisenbank eG
+- [ ] Paffrather RB eG
+- [ ] Pax Bank
+- [ ] PayCenter GmbH
+- [ ] Postbank
+- [ ] Postbank (Giro)
+- [ ] PSD Bank Berlin-Brandenburg
+- [ ] PSD Bank Braunschweig
+- [ ] PSD Bank Hannover
+- [ ] PSD Bank Hessen-Thüringen
+- [ ] PSD Bank Kiel
+- [ ] PSD Bank Köln
+- [ ] PSD Bank Nord
+- [ ] PSD Bank Rhein-Ruhr
+- [ ] PSD Bank Westfalen-Lippe
+- [ ] Raiba Asbach-Neustadt eG
+- [ ] Raiba eG Unterwesterwald
+- [ ] Raiba Lutzerather Höhe eG
+- [ ] Raiba Mehring-Leiwen eG
+- [ ] Raiba Rheinbach Euskirchen eG
+- [ ] Raiffbk Neumarkt-St. Veit - Niederbergkirchen
+- [ ] Raiffeisen Spar+Kreditbank Lauf a d Pegnitz
+- [ ] Raiffeisen Volksbank
+- [ ] Raiffeisen- u Volksbank Dahn
+- [ ] Raiffeisen- und Volksbank Bad Bramstedt eG
+- [ ] Raiffeisen-Bank Bad Abbach-Saal
+- [ ] Raiffeisen-Bank Bruck
+- [ ] Raiffeisen-Bodenseebank
+- [ ] Raiffeisen-Volksbank
+- [ ] Raiffeisen-Volksbank Bad Staffelstein
+- [ ] Raiffeisen-Volksbank Delmenhorst-Schierbrok eG
+- [ ] Raiffeisen-Volksbank Dillingen
+- [ ] Raiffeisen-Volksbank Donauwörth
+- [ ] Raiffeisen-Volksbank Ebersberg
+- [ ] Raiffeisen-Volksbank Fürth
+- [ ] Raiffeisen-Volksbank Grafeld-Nortrup eG
+- [ ] Raiffeisen-Volksbank Haßberge
+- [ ] Raiffeisen-Volksbank Hermsdorfer Kreuz
+- [ ] Raiffeisen-Volksbank Isen-Sempt
+- [ ] Raiffeisen-Volksbank Jever eG
+- [ ] Raiffeisen-Volksbank Kronach-Ludwigsstadt
+- [ ] Raiffeisen-Volksbank Lichtenfels-Itzgrund
+- [ ] Raiffeisen-Volksbank Miltenberg
+- [ ] Raiffeisen-Volksbank Neuburg/Donau
+- [ ] Raiffeisen-Volksbank Neustadt eG
+- [ ] Raiffeisen-Volksbank Oder-Spree eG
+- [ ] Raiffeisen-Volksbank Quedlinburg-Aschersleben eG
+- [ ] Raiffeisen-Volksbank Ries
+- [ ] Raiffeisen-Volksbank Saale-Orla
+- [ ] Raiffeisen-Volksbank Uplengen-Remels eG
+- [ ] Raiffeisen-Volksbank Varel-Nordenham eG
+- [ ] Raiffeisen-Volksbank Wemding
+- [ ] Raiffeisenbank
+- [ ] Raiffeisenbank -alt-
+- [ ] Raiffeisenbank Adelzhausen-Sielenbach
+- [ ] Raiffeisenbank Aichhalden-Hardt-Sulgen
+- [ ] Raiffeisenbank Aiglsbach
+- [ ] Raiffeisenbank Aitrang-Ruderatshofen
+- [ ] Raiffeisenbank Alsheim-Gimbsheim
+- [ ] Raiffeisenbank Altdorf-Ergolding
+- [ ] Raiffeisenbank Altdorf-Feucht
+- [ ] Raiffeisenbank Alteglofsheim-Hagelstadt
+- [ ] Raiffeisenbank Altschweier
+- [ ] Raiffeisenbank Alxing-Bruck
+- [ ] Raiffeisenbank Alzey-Land
+- [ ] Raiffeisenbank am Dreisessel
+- [ ] Raiffeisenbank Am Goldenen Steig
+- [ ] Raiffeisenbank am Kulm
+- [ ] Raiffeisenbank am Rothsee
+- [ ] Raiffeisenbank Anklam eG
+- [ ] Raiffeisenbank Anzing-Forstern -alt-
+- [ ] Raiffeisenbank Aresing-Hörzhausen-Schiltberg
+- [ ] Raiffeisenbank Arnstorf
+- [ ] Raiffeisenbank Asbach-Sorga
+- [ ] Raiffeisenbank Aschaffenburg
+- [ ] Raiffeisenbank Aschau-Samerberg
+- [ ] Raiffeisenbank Aschberg
+- [ ] Raiffeisenbank Auerbach-Freihung
+- [ ] Raiffeisenbank Augsburger Land West
+- [ ] Raiffeisenbank Aulendorf
+- [ ] Raiffeisenbank Bachgau
+- [ ] Raiffeisenbank Bad Doberan eG
+- [ ] Raiffeisenbank Bad Gögging
+- [ ] Raiffeisenbank Bad Homburg Ndl d FrankfurterVB
+- [ ] Raiffeisenbank Bad Kötzting
+- [ ] Raiffeisenbank Bad Saulgau
+- [ ] Raiffeisenbank Bad Schussenried
+- [ ] Raiffeisenbank Bad Windsheim
+- [ ] Raiffeisenbank Baiertal
+- [ ] Raiffeisenbank Baisweil-Eggenthal-Friesenried
+- [ ] Raiffeisenbank Bargteheide eG
+- [ ] Raiffeisenbank Bauschlott
+- [ ] Raiffeisenbank Beilngries
+- [ ] Raiffeisenbank Berching-Freystadt-Mühlhausen
+- [ ] Raiffeisenbank Berg im Gau-Langenmosen -alt-
+- [ ] Raiffeisenbank Berg-Bad Steben
+- [ ] Raiffeisenbank Berne-Moorriem eG
+- [ ] Raiffeisenbank Beuerberg-Eurasburg
+- [ ] Raiffeisenbank Bibertal-Kötz
+- [ ] Raiffeisenbank Biebergrund-Petersberg
+- [ ] Raiffeisenbank Bissingen
+- [ ] Raiffeisenbank Böllingertal
+- [ ] Raiffeisenbank Borken
+- [ ] Raiffeisenbank Bretzfeld-Neuenstein
+- [ ] Raiffeisenbank Bruchköbel -alt-
+- [ ] Raiffeisenbank Buch-Eching
+- [ ] Raiffeisenbank Burghaun
+- [ ] Raiffeisenbank Butjadingen-Abbehausen eG
+- [ ] Raiffeisenbank Bütthard-Gaukönigshofen
+- [ ] Raiffeisenbank Cham-Roding-Furth im Wald
+- [ ] Raiffeisenbank Chiemgau-Nord - Obing
+- [ ] Raiffeisenbank Deggendorf-Plattling
+- [ ] Raiffeisenbank Dellmensingen
+- [ ] Raiffeisenbank Denzlingen-Sexau
+- [ ] Raiffeisenbank Dietersheim und Umgebung
+- [ ] Raiffeisenbank Donau-Heuberg
+- [ ] Raiffeisenbank Donau-Iller
+- [ ] Raiffeisenbank Donaumooser Land
+- [ ] Raiffeisenbank Donnersberg -alt-
+- [ ] Raiffeisenbank Ebrachgrund
+- [ ] Raiffeisenbank Ehekirchen-Oberhausen
+- [ ] Raiffeisenbank Ehingen-Hochsträß
+- [ ] Raiffeisenbank Eichenbühl und Umgebung
+- [ ] Raiffeisenbank Elbmarsch eG
+- [ ] Raiffeisenbank Elsavatal
+- [ ] Raiffeisenbank Elztal
+- [ ] Raiffeisenbank Emmerich eG
+- [ ] Raiffeisenbank Emsland-Mitte eG
+- [ ] Raiffeisenbank Erding
+- [ ] Raiffeisenbank Erkelenz eG
+- [ ] Raiffeisenbank Erlenmoos
+- [ ] Raiffeisenbank Ersingen
+- [ ] Raiffeisenbank Eschlkam-Lam-Lohberg-Neukirchen b Hl Blut
+- [ ] Raiffeisenbank Eschweiler eG
+- [ ] Raiffeisenbank Estenfeld-Bergtheim
+- [ ] Raiffeisenbank Falkenstein-Wörth
+- [ ] Raiffeisenbank Flachsmeer eG
+- [ ] Raiffeisenbank Frankenhardt-Stimpfach
+- [ ] Raiffeisenbank Frankenwald Ost-Oberkotzau
+- [ ] Raiffeisenbank Frankenwinheim und Umgebung
+- [ ] Raiffeisenbank Fränkisches Weinland
+- [ ] Raiffeisenbank Frechen-Hürth
+- [ ] Raiffeisenbank Freinsheim
+- [ ] Raiffeisenbank Friedelsheim-Rödersheim
+- [ ] Raiffeisenbank Fuchstal-Denklingen
+- [ ] Raiffeisenbank Füssen-Pfronten-Nesselwang
+- [ ] Raiffeisenbank Gaimersheim-Buxheim
+- [ ] Raiffeisenbank Gammesfeld
+- [ ] Raiffeisenbank Garrel eG
+- [ ] Raiffeisenbank Geiselhöring-Pfaffenberg
+- [ ] Raiffeisenbank Geisenhausen
+- [ ] Raiffeisenbank Geislingen-Rosenfeld
+- [ ] Raiffeisenbank Gerolsbach
+- [ ] Raiffeisenbank Gmund am Tegernsee
+- [ ] Raiffeisenbank Gößweinstein -alt-
+- [ ] Raiffeisenbank Gotha
+- [ ] Raiffeisenbank Grafenwöhr-Kirchenthumbach
+- [ ] Raiffeisenbank Greding - Thalmässing
+- [ ] Raiffeisenbank Grevenbroich eG
+- [ ] Raiffeisenbank Griesstätt-Halfing
+- [ ] Raiffeisenbank Grimma
+- [ ] Raiffeisenbank Groß-Rohrheim
+- [ ] Raiffeisenbank Großhabersdorf-Roßtal
+- [ ] Raiffeisenbank Gruibingen
+- [ ] Raiffeisenbank Gymnich eG
+- [ ] Raiffeisenbank Haag-Gars-Maitenbeth
+- [ ] Raiffeisenbank Hagenow eG
+- [ ] Raiffeisenbank Haibach-Obernau
+- [ ] Raiffeisenbank Haldenwang
+- [ ] Raiffeisenbank Hallbergmoos-Neufahrn
+- [ ] Raiffeisenbank Hallertau
+- [ ] Raiffeisenbank Handewitt eG
+- [ ] Raiffeisenbank Hardt-Bruhrain
+- [ ] Raiffeisenbank Hardtbg.-Alfter
+- [ ] Raiffeisenbank Härten -alt-
+- [ ] Raiffeisenbank Heide eG
+- [ ] Raiffeisenbank Heidenheimer Alb
+- [ ] Raiffeisenbank Heilsbronn-Windsbach
+- [ ] Raiffeisenbank Hemau-Kallmünz
+- [ ] Raiffeisenbank Hengersberg-Schöllnach
+- [ ] Raiffeisenbank Heroldstatt
+- [ ] Raiffeisenbank Herrnwahlthann-Teugn-Dünzling -alt-
+- [ ] Raiffeisenbank Hersbruck
+- [ ] Raiffeisenbank Hirschau
+- [ ] Raiffeisenbank Höchberg
+- [ ] Raiffeisenbank Hofkirchen-Bayerbach
+- [ ] Raiffeisenbank Höhenkirchen und Umgebung
+- [ ] Raiffeisenbank Hohenwart -alt-
+- [ ] Raiffeisenbank Hollfeld-Waischenfeld-Aufseß
+- [ ] Raiffeisenbank Holzkirchen-Otterfing
+- [ ] Raiffeisenbank Horb
+- [ ] Raiffeisenbank i Lkr Passau-Nord
+- [ ] Raiffeisenbank Iller-Roth-Günz
+- [ ] Raiffeisenbank Illertal
+- [ ] Raiffeisenbank im Allgäuer Land
+- [ ] Raiffeisenbank im Kreis Calw
+- [ ] Raiffeisenbank im Naabtal
+- [ ] Raiffeisenbank im Oberland
+- [ ] Raiffeisenbank im Stiftland
+- [ ] Raiffeisenbank im Südl Bayerischen Wald
+- [ ] Raiffeisenbank Ingersheim
+- [ ] Raiffeisenbank Irrel eG
+- [ ] Raiffeisenbank Isar-Loisachtal
+- [ ] Raiffeisenbank Jessen eG
+- [ ] Raiffeisenbank Jettingen-Scheppach
+- [ ] Raiffeisenbank Junkersdorf eG
+- [ ] Raiffeisenbank Kaarst eG
+- [ ] Raiffeisenbank Kaisersesch eG
+- [ ] Raiffeisenbank Kaiserstuhl
+- [ ] Raiffeisenbank Kalbe-Bismark eG
+- [ ] Raiffeisenbank Kallmünz -alt-
+- [ ] Raiffeisenbank Kaltenkirchen eG
+- [ ] Raiffeisenbank Karlstadt-Gemünden
+- [ ] Raiffeisenbank Kastellaun eG
+- [ ] Raiffeisenbank Kehrig eG
+- [ ] Raiffeisenbank Kemnather Land - Steinwald
+- [ ] Raiffeisenbank Kieselbronn
+- [ ] Raiffeisenbank Kirchberg v. Wald
+- [ ] Raiffeisenbank Kirchheim-Walheim
+- [ ] Raiffeisenbank Kirchweihtal
+- [ ] Raiffeisenbank Kirtorf
+- [ ] Raiffeisenbank Kissing-Mering
+- [ ] Raiffeisenbank Kitzinger Land
+- [ ] Raiffeisenbank Knoblauchsland Nürnberg-Buch
+- [ ] Raiffeisenbank Kocher-Jagst
+- [ ] Raiffeisenbank Kraichgau
+- [ ] Raiffeisenbank Kreuzwertheim-Hasloch -alt-
+- [ ] Raiffeisenbank Krumbach/Schwaben
+- [ ] Raiffeisenbank Küps-Mitwitz-Stockheim
+- [ ] Raiffeisenbank Kürten-Odenthal eG
+- [ ] Raiffeisenbank Langenschwarz
+- [ ] Raiffeisenbank Lech-Ammersee
+- [ ] Raiffeisenbank Leezen eG
+- [ ] Raiffeisenbank Lorup eG
+- [ ] Raiffeisenbank Maintal Ndl d Frankfurter VB
+- [ ] Raiffeisenbank Maitis
+- [ ] Raiffeisenbank Malchin eG
+- [ ] Raiffeisenbank Mangfalltal -alt-
+- [ ] Raiffeisenbank Maselheim-Äpfingen
+- [ ] Raiffeisenbank Maßbach
+- [ ] Raiffeisenbank Mengkofen-Loiching
+- [ ] Raiffeisenbank Mittelbiberach
+- [ ] Raiffeisenbank Mittelrhein eG
+- [ ] Raiffeisenbank Moormerland eG
+- [ ] Raiffeisenbank Moselkrampen eG
+- [ ] Raiffeisenbank Münchaurach -alt-
+- [ ] Raiffeisenbank München -alt-
+- [ ] Raiffeisenbank München-Nord
+- [ ] Raiffeisenbank München-Süd
+- [ ] Raiffeisenbank Mutlangen
+- [ ] Raiffeisenbank Nahe eG
+- [ ] Raiffeisenbank Neudenau-Stein-Herbolzheim
+- [ ] Raiffeisenbank Neumarkt
+- [ ] Raiffeisenbank Neustadt-Vohenstrauß
+- [ ] Raiffeisenbank Neustadt, Sachs
+- [ ] Raiffeisenbank Niedere Alb
+- [ ] Raiffeisenbank Nordkreis Landsberg
+- [ ] Raiffeisenbank Nördliche Bergstraße
+- [ ] Raiffeisenbank Oberallgäu-Süd
+- [ ] Raiffeisenbank Oberaudorf
+- [ ] Raiffeisenbank Oberer Wald
+- [ ] Raiffeisenbank Oberes Bühlertal
+- [ ] Raiffeisenbank Oberes Gäu Ergenzingen
+- [ ] Raiffeisenbank Oberessendorf
+- [ ] Raiffeisenbank Obereßfeld-Römhild
+- [ ] Raiffeisenbank Oberferrieden-Burgthann
+- [ ] Raiffeisenbank Obergermaringen
+- [ ] Raiffeisenbank Oberhaardt-Gäu
+- [ ] Raiffeisenbank Oberland
+- [ ] Raiffeisenbank Obermain Nord
+- [ ] Raiffeisenbank Obernburg
+- [ ] Raiffeisenbank Oberpfalz Süd
+- [ ] Raiffeisenbank Oberschleißheim
+- [ ] Raiffeisenbank Oberursel
+- [ ] Raiffeisenbank Offenbach/M.-Bieber
+- [ ] Raiffeisenbank Oldenburg eG
+- [ ] Raiffeisenbank östl. Südeifel eG
+- [ ] Raiffeisenbank Ostprignitz-Ruppin eG
+- [ ] Raiffeisenbank Ottenbach
+- [ ] Raiffeisenbank Owschlag eG
+- [ ] Raiffeisenbank Parsberg-Velburg
+- [ ] Raiffeisenbank Pfaffenhausen
+- [ ] Raiffeisenbank Pfaffenhofen a d Glonn
+- [ ] Raiffeisenbank Pfaffenwinkel
+- [ ] Raiffeisenbank Pfeffenhausen-Rottenburg
+- [ ] Raiffeisenbank Plankstetten
+- [ ] Raiffeisenbank Pretzfeld -alt-
+- [ ] Raiffeisenbank Rain am Lech
+- [ ] Raiffeisenbank Raisting
+- [ ] Raiffeisenbank Rastede eG
+- [ ] Raiffeisenbank Rattiszell-Konzell
+- [ ] Raiffeisenbank Ratzeburg eG
+- [ ] Raiffeisenbank Ravensburg
+- [ ] Raiffeisenbank Regensburg-Wenzenbach
+- [ ] Raiffeisenbank Reischach-Wurmannsquick-Zeilarn
+- [ ] Raiffeisenbank Reute-Gaisbeuren
+- [ ] Raiffeisenbank Rhein-Berg eG
+- [ ] Raiffeisenbank Ried
+- [ ] Raiffeisenbank Riedenburg-Lobsing
+- [ ] Raiffeisenbank Rißtal
+- [ ] Raiffeisenbank Ronshausen-Marksuhl
+- [ ] Raiffeisenbank Rosenstein
+- [ ] Raiffeisenbank Roth-Schwabach
+- [ ] Raiffeisenbank Rottumtal
+- [ ] Raiffeisenbank RSA
+- [ ] Raiffeisenbank Rupertiwinkel
+- [ ] Raiffeisenbank Salzweg-Thyrnau
+- [ ] Raiffeisenbank Schaafheim
+- [ ] Raiffeisenbank Scharrel eG
+- [ ] Raiffeisenbank Schefflenz-Seckach -alt-
+- [ ] Raiffeisenbank Schlat -alt-
+- [ ] Raiffeisenbank Schleusingen
+- [ ] Raiffeisenbank Schrobenhausen
+- [ ] Raiffeisenbank Schrobenhausener Land
+- [ ] Raiffeisenbank Schrozberg-Rot am See
+- [ ] Raiffeisenbank Schwandorf-Nittenau
+- [ ] Raiffeisenbank Seebachgrund
+- [ ] Raiffeisenbank Seeg -alt-
+- [ ] Raiffeisenbank Seestermühe eG
+- [ ] Raiffeisenbank Simmerath eG
+- [ ] Raiffeisenbank Singoldtal
+- [ ] Raiffeisenbank Sondelfingen
+- [ ] Raiffeisenbank Sonnenwald
+- [ ] Raiffeisenbank Sparneck-Stammbach-Zell
+- [ ] Raiffeisenbank St. Augustin eG
+- [ ] Raiffeisenbank St. Wolfgang-Schwindkirchen
+- [ ] Raiffeisenbank Stauden
+- [ ] Raiffeisenbank Stegaurach
+- [ ] Raiffeisenbank Steinheim
+- [ ] Raiffeisenbank Strücklingen-Idafehn eG
+- [ ] Raiffeisenbank Struvenhütten eG
+- [ ] Raiffeisenbank Südhardt Durmersheim
+- [ ] Raiffeisenbank Südliches Ostallgäu
+- [ ] Raiffeisenbank südöstl. Starnberger See
+- [ ] Raiffeisenbank Südstormarn eG
+- [ ] Raiffeisenbank Südtondern-Bredstedt/Land eG
+- [ ] Raiffeisenbank Sulzbach-Rosenberg
+- [ ] Raiffeisenbank Tattenh-Großkarolinenf
+- [ ] Raiffeisenbank Taufkirchen-Oberneukirchen
+- [ ] Raiffeisenbank Teck
+- [ ] Raiffeisenbank Thurnauer Land
+- [ ] Raiffeisenbank Todenbüttel eG
+- [ ] Raiffeisenbank Tölzer Land
+- [ ] Raiffeisenbank Travemünde eG
+- [ ] Raiffeisenbank Trendelburg
+- [ ] Raiffeisenbank Trostberg-Traunreut
+- [ ] Raiffeisenbank Tüngental
+- [ ] Raiffeisenbank Uehlfeld-Dachsbach
+- [ ] Raiffeisenbank Ulsenheim-Gollhofen -alt-
+- [ ] Raiffeisenbank Unteres Inntal
+- [ ] Raiffeisenbank Unteres Vilstal
+- [ ] Raiffeisenbank Unteres Zusamtal
+- [ ] Raiffeisenbank Unterschleißheim-Haimhn -alt-
+- [ ] Raiffeisenbank Urbach
+- [ ] Raiffeisenbank Ursensollen-Ammerthal-Hohenburg
+- [ ] Raiffeisenbank Vellberg-Großaltdorf
+- [ ] Raiffeisenbank Vilshofener Land
+- [ ] Raiffeisenbank Vogelsberg
+- [ ] Raiffeisenbank Volkach-Wiesentheid
+- [ ] Raiffeisenbank Volkmarsen
+- [ ] Raiffeisenbank von 1895 eG
+- [ ] Raiffeisenbank Vorallgäu
+- [ ] Raiffeisenbank Vordere Alb
+- [ ] Raiffeisenbank Vordersteinenberg
+- [ ] Raiffeisenbank Wald-Görisried
+- [ ] Raiffeisenbank Waldaschaff-Heigenbrücken
+- [ ] Raiffeisenbank Wallgau-Krün
+- [ ] Raiffeisenbank Walpertskirchen-Wörth-Hörlkofen
+- [ ] Raiffeisenbank Waren eG
+- [ ] Raiffeisenbank Weiden
+- [ ] Raiffeisenbank Weil u Umgebung
+- [ ] Raiffeisenbank Weilheim
+- [ ] Raiffeisenbank Weissach
+- [ ] Raiffeisenbank Weissacher Tal
+- [ ] Raiffeisenbank Weißenburg-Gunzenhausen
+- [ ] Raiffeisenbank Welling eG
+- [ ] Raiffeisenbank Werdau-Zwickau
+- [ ] Raiffeisenbank Werratal-Landeck Zw
+- [ ] Raiffeisenbank Westallgäu
+- [ ] Raiffeisenbank Westeifel eG
+- [ ] Raiffeisenbank Westhausen
+- [ ] Raiffeisenbank Westkreis Fürstenfeldbruck
+- [ ] Raiffeisenbank Wiehl eG
+- [ ] Raiffeisenbank Wiesede-Marcardsmoor eG
+- [ ] Raiffeisenbank Wimsheim-Mönsheim
+- [ ] Raiffeisenbank Wittislingen
+- [ ] Raiffeisenbank Wüstenselbitz
+- [ ] Raiffeisenbank Wyhl
+- [ ] Raiffeisenbank Zeitz eG
+- [ ] Raiffeisenbank Zeller Land eG
+- [ ] Raiffeisenbank Zndl VB Nordschwarzwald
+- [ ] Raiffeisenbank Zorneding
+- [ ] Raiffeisenbk Ingolstadt-Pfaffenhofen-Eichstätt
+- [ ] Raiffeisenbk. Niederwallmenach
+- [ ] Raiffeisenkasse Erbes-Büdesheim und Umgebung
+- [ ] Raiffeisenkasse Wiesbach
+- [ ] Raiffeisenlandesbank Oberösterreich
+- [ ] RaiffeisenVolksbank Gewerbebank
+- [ ] RB Bernkastel-Wittlich eG
+- [ ] RB eG Heinsberg
+- [ ] RB eG Lauenburg
+- [ ] RB eG, Heinsberg
+- [ ] RB eG, Leezen
+- [ ] RB Fischenich-Kendenich eG
+- [ ] RB Frechen-Hürth eG
+- [ ] RB Grafschaft-Wachtberg eG
+- [ ] RB Hatten-Wardenburg
+- [ ] RB Much-Ruppichteroth eG
+- [ ] Rheingauer Volksbank
+- [ ] Rhön-Rennsteig-Sparkasse
+- [ ] Ritterschaftl. Kreditinst. Stade
+- [ ] Rosbacher Raiffeisenbank eG
+- [ ] Rostocker Volks- und Raiffeisenbank eG
+- [ ] Rottaler Raiffeisenbank
+- [ ] Rottaler Volksbank-Raiffeisenbank Eggenfelden
+- [ ] RSB Retail + Service Bank
+- [ ] Rüsselsheimer Volksbank
+- [ ] RV Bank Rhein-Haardt
+- [ ] RV-Bank
+- [ ] RVB Grafeld-Nortup eG
+- [ ] Saalesparkasse
+- [ ] SaarLB
+- [ ] Salzlandsparkasse
+- [ ] Santander Bank
+- [ ] Sberbank Direct
+- [ ] Scharnhauser Bank
+- [ ] Schwäbische Bank AG
+- [ ] SDK Menden eG
+- [ ] SDK Oeventrop eG
+- [ ] SDK Schloß Holte-Stukenbrock
+- [ ] SG BANK AG
+- [ ] SKG BANK AG / SKG BANK GmbH
+- [ ] SpaDaka Aegidienberg eG
+- [ ] Spadaka Bockum-Hövel eG.
+- [ ] Spadaka Gescher eG
+- [ ] Spadaka Minden-Porta Westfalica
+- [ ] Spadaka Reken eG.
+- [ ] Spar- u Kreditbank ev-freikirchl Gemeinden
+- [ ] Spar- und Darlehnskasse Börde Lamstedt-Hechthausen
+- [ ] Spar- und Darlehnskasse Dinklage eG
+- [ ] Spar- und Darlehnskasse Friesoythe eG
+- [ ] Spar- und Darlehnskasse Holtland eG
+- [ ] Spar- und Darlehnskasse Immendorf eG
+- [ ] Spar- und Darlehnskasse Stockhausen
+- [ ] Spar- und Darlehnskasse Zell -alt-
+- [ ] Spar- und Kreditbank
+- [ ] Spar- und Kreditbank eG
+- [ ] Spar- und Kreditbank Hardt
+- [ ] Spar- und Kreditbank Witten eG
+- [ ] Spar-u. Kredit-Bank
+- [ ] Sparda-Bank Augsburg eG
+- [ ] Sparda-Bank Baden-Württemberg eG
+- [ ] Sparda-Bank Berlin eG
+- [ ] Sparda-Bank Hamburg eG
+- [ ] Sparda-Bank Hannover eG
+- [ ] Sparda-Bank Hessen eG
+- [ ] Sparda-Bank München eG
+- [ ] Sparda-Bank Münster eG
+- [ ] Sparda-Bank Nürnberg eG
+- [ ] Sparda-Bank Regensburg eG
+- [ ] Sparda-Bank Südwest eG
+- [ ] Sparda-Bank West eG
+- [ ] SparDaKa Brachelen eG
+- [ ] Spardaka Hoengen eG
+- [ ] Sparkasse Aachen 
+- [ ] Sparkasse Allgäu (Kempten)
+- [ ] Sparkasse Altenburger Land
+- [ ] Sparkasse Altmark-West
+- [ ] Sparkasse Altötting-Mühldorf a.Inn
+- [ ] Sparkasse am Niederrhein
+- [ ] Sparkasse Amberg-Sulzbach
+- [ ] Sparkasse Arnsberg
+- [ ] Sparkasse Arnstadt-Ilmenau
+- [ ] Sparkasse Aschaffenburg-Alzenau
+- [ ] Sparkasse Attendorn-Lennestadt-Kichhundern
+- [ ] Sparkasse Aurich-Norden
+- [ ] Sparkasse Bad Hersfeld-Rotenburg
+- [ ] Sparkasse Bad Kissingen
+- [ ] Sparkasse Bad Neustadt a. d. Saale
+- [ ] Sparkasse Bad Tölz-Wolfratshausen
+- [ ] Sparkasse Bamberg
+- [ ] Sparkasse Barnim
+- [ ] Sparkasse Battenberg
+- [ ] Sparkasse Bayreuth
+- [ ] Sparkasse Beckum-Wadersloh
+- [ ] Sparkasse Bensheim
+- [ ] Sparkasse Berchtesgadener Land
+- [ ] Sparkasse Bergkamen-Bönen
+- [ ] Sparkasse Bielefeld
+- [ ] Sparkasse Bochum
+- [ ] Sparkasse Bodensee
+- [ ] Sparkasse Bonndorf-Stühlingen
+- [ ] Sparkasse Bottrop
+- [ ] Sparkasse Bühl
+- [ ] Sparkasse Burbach-Neunkirchen
+- [ ] Sparkasse Burgenlandkreis
+- [ ] Sparkasse Celle
+- [ ] Sparkasse Chemnitz
+- [ ] Sparkasse Dachau
+- [ ] Sparkasse Darmstadt
+- [ ] Sparkasse Deggendorf
+- [ ] Sparkasse der Homburgischen Gemeinden
+- [ ] Sparkasse Dieburg
+- [ ] Sparkasse Dillenburg
+- [ ] Sparkasse Dinslaken-Voerde-Hünxe
+- [ ] Sparkasse Donauwörth
+- [ ] Sparkasse Donnersberg
+- [ ] Sparkasse Dortmund
+- [ ] Sparkasse Duderstadt
+- [ ] Sparkasse Duisburg
+- [ ] Sparkasse Düren 
+- [ ] Sparkasse Eichstätt
+- [ ] Sparkasse Einbeck
+- [ ] Sparkasse Elbe-Elster
+- [ ] Sparkasse Elmshorn
+- [ ] Sparkasse Emden
+- [ ] Sparkasse Emsdetten-Ochtrup
+- [ ] Sparkasse Emsland
+- [ ] Sparkasse Engen-Gottmadingen
+- [ ] Sparkasse Ennepetal-Breckerfeld
+- [ ] Sparkasse Erding - Dorfen
+- [ ] Sparkasse Erwitte-Anröchte
+- [ ] Sparkasse Essen 
+- [ ] Sparkasse Finnentrop
+- [ ] Sparkasse Forchheim
+- [ ] Sparkasse Freiburg - Nördlicher Breisgau
+- [ ] Sparkasse Freising
+- [ ] Sparkasse Freyung-Grafenau
+- [ ] Sparkasse Fröndenberg
+- [ ] Sparkasse Fulda
+- [ ] Sparkasse Fürstenfeldbruck
+- [ ] Sparkasse Fürth
+- [ ] Sparkasse Gelsenkirchen
+- [ ] Sparkasse Gengenbach
+- [ ] Sparkasse Gera-Greiz
+- [ ] Sparkasse Germersheim-Kandel 
+- [ ] Sparkasse Geseke
+- [ ] Sparkasse Giessen
+- [ ] Sparkasse Gifhorn-Wolfsburg
+- [ ] Sparkasse Goslar/Harz
+- [ ] Sparkasse Göttingen
+- [ ] Sparkasse Grünberg
+- [ ] Sparkasse Gummersbach-Bergneustadt 
+- [ ] Sparkasse Günzburg-Krumbach
+- [ ] Sparkasse Gütersloh
+- [ ] Sparkasse Hagen
+- [ ] Sparkasse Hamm
+- [ ] Sparkasse Hanau
+- [ ] Sparkasse Hanauerland
+- [ ] Sparkasse Hannover
+- [ ] Sparkasse Harburg-Buxtehude
+- [ ] Sparkasse Haslach-Zell
+- [ ] Sparkasse Hattingen
+- [ ] Sparkasse Heidelberg
+- [ ] Sparkasse Hennstedt-Wesselburen
+- [ ] Sparkasse Herford
+- [ ] Sparkasse Hilden-Ratingen-Velbert 
+- [ ] Sparkasse Hildesheim
+- [ ] Sparkasse Hochfranken
+- [ ] Sparkasse Hochrhein
+- [ ] Sparkasse Hochsauerland
+- [ ] Sparkasse Hochschwarzwald
+- [ ] Sparkasse Hohenlohekreis
+- [ ] Sparkasse Hohenwestedt
+- [ ] Sparkasse Holstein
+- [ ] Sparkasse Höxter
+- [ ] Sparkasse im Landkreis Cham
+- [ ] Sparkasse im Landkreis Neustadt-Bad Winsheim
+- [ ] Sparkasse im Landkreis Schwandorf
+- [ ] Sparkasse Ingolstadt
+- [ ] Sparkasse Iserlohn
+- [ ] Sparkasse Jena Saale-Holzland
+- [ ] Sparkasse Jerichower Land
+- [ ] Sparkasse Karlsruhe Ettlingen
+- [ ] Sparkasse Kierspe-Meinerzhagen
+- [ ] Sparkasse Kleve
+- [ ] Sparkasse Koblenz 
+- [ ] Sparkasse KölnBonn 
+- [ ] Sparkasse Kraichgau (Bruchsal-Bretten-Sinsheim)
+- [ ] Sparkasse Krefeld 
+- [ ] Sparkasse Kulmbach-Kronach
+- [ ] Sparkasse Landsberg-Dießen
+- [ ] Sparkasse Landshut
+- [ ] Sparkasse Langen-Seligenstadt
+- [ ] Sparkasse Laubach Hungen
+- [ ] Sparkasse LeerWittmund
+- [ ] Sparkasse Lemgo
+- [ ] Sparkasse Leverkusen 
+- [ ] Sparkasse Lippstadt
+- [ ] Sparkasse Lörrach-Rheinfelden
+- [ ] Sparkasse Lüdenscheid
+- [ ] Sparkasse Lüneburg
+- [ ] Sparkasse Lünen
+- [ ] Sparkasse Mainfranken-Würzburg
+- [ ] Sparkasse Mainz 
+- [ ] Sparkasse Mansfeld-Südharz
+- [ ] Sparkasse Marburg-Biedenkopf
+- [ ] Sparkasse Markgräflerland
+- [ ] Sparkasse Märkisch-Oderland
+- [ ] Sparkasse Mecklenburg-Nordwest
+- [ ] Sparkasse Mecklenburg-Schwerin
+- [ ] Sparkasse Mecklenburg-Strelitz
+- [ ] Sparkasse Meißen
+- [ ] Sparkasse Memmingen-Lindau-Mindelheim
+- [ ] Sparkasse Merzig-Wadern
+- [ ] Sparkasse Meschede
+- [ ] Sparkasse Miltenberg-Obernburg
+- [ ] Sparkasse Minden-Lübbecke
+- [ ] Sparkasse Mittelfranken-Süd
+- [ ] Sparkasse Mittelholstein AG
+- [ ] Sparkasse Mittelmosel-Eifel-Mosel-Hunsrück
+- [ ] Sparkasse Mittelsachsen
+- [ ] Sparkasse Mittelthüringen
+- [ ] Sparkasse Moosburg
+- [ ] Sparkasse Muldental
+- [ ] Sparkasse Mülheim a.d. Ruhr 
+- [ ] Sparkasse Münden
+- [ ] Sparkasse Neckartal-Odenwald
+- [ ] Sparkasse Neu-Ulm-Illertissen
+- [ ] Sparkasse Neubrandenburg-Demmin
+- [ ] Sparkasse Neuburg-Rain
+- [ ] Sparkasse Neumarkt i.d.OPf.-Parsberg
+- [ ] Sparkasse Neunkirchen
+- [ ] Sparkasse Neuss 
+- [ ] Sparkasse Neuwied 
+- [ ] Sparkasse Niederbayern Mitte
+- [ ] Sparkasse Niederlausitz
+- [ ] Sparkasse Nienburg
+- [ ] Sparkasse Nördlingen
+- [ ] Sparkasse Nürnberg
+- [ ] Sparkasse Oberhessen
+- [ ] Sparkasse Oberlausitz-Niederschlesien
+- [ ] Sparkasse Oberpfalz-Nord
+- [ ] Sparkasse Odenwaldkreis
+- [ ] Sparkasse Oder-Spree
+- [ ] Sparkasse Offenbach
+- [ ] Sparkasse Offenburg/Ortenau
+- [ ] Sparkasse Olpe-Drolshagen-Wenden
+- [ ] Sparkasse Osnabrück
+- [ ] Sparkasse Osterode am Harz
+- [ ] Sparkasse Ostprignitz-Ruppin
+- [ ] Sparkasse Ostunterfranken
+- [ ] Sparkasse Paderborn-Detmold
+- [ ] Sparkasse Parchim-Lübz
+- [ ] Sparkasse Passau
+- [ ] Sparkasse Pforzheim Calw
+- [ ] Sparkasse Pfullendorf-Meßkirch
+- [ ] Sparkasse Prignitz
+- [ ] Sparkasse Radevormwald-Hückeswagen 
+- [ ] Sparkasse Rastatt-Gernsbach
+- [ ] Sparkasse Regen-Viechtach
+- [ ] Sparkasse Regensburg
+- [ ] Sparkasse Remscheid 
+- [ ] Sparkasse Rhein-Haardt
+- [ ] Sparkasse Rhein-Nahe 
+- [ ] Sparkasse Rhein-Neckar-Nord (Mannheim/Weinheim)
+- [ ] Sparkasse Rietberg
+- [ ] Sparkasse Riezlern
+- [ ] Sparkasse Rosenheim-Bad/Aibling
+- [ ] Sparkasse Rotenburg-Bremervörde
+- [ ] Sparkasse Rottal-Inn
+- [ ] Sparkasse Saabrücken
+- [ ] Sparkasse Salem-Heiligenberg
+- [ ] Sparkasse Schaumburg
+- [ ] Sparkasse Scheeßel
+- [ ] Sparkasse Schönau-Todtnau
+- [ ] Sparkasse Schopfheim-Zell
+- [ ] Sparkasse Schwarzwald-Baar
+- [ ] Sparkasse Schweinfurt 
+- [ ] Sparkasse Siegen
+- [ ] Sparkasse Singen-Radolfzell
+- [ ] Sparkasse Soest
+- [ ] Sparkasse Sonneberg
+- [ ] Sparkasse Spree-Neiße
+- [ ] Sparkasse Stade-Altes Land
+- [ ] Sparkasse Starkenburg
+- [ ] Sparkasse Staufen-Breisach
+- [ ] Sparkasse Stockach
+- [ ] Sparkasse Straelen
+- [ ] Sparkasse Südholstein
+- [ ] Sparkasse Südliche Weinstraße  Landau
+- [ ] Sparkasse Südwestpfalz
+- [ ] Sparkasse Tauberfranken
+- [ ] Sparkasse Trier
+- [ ] Sparkasse Uckermark
+- [ ] Sparkasse Uecker-Randow
+- [ ] Sparkasse Uelzen Lüchow-Dannenberg
+- [ ] Sparkasse Ulm
+- [ ] Sparkasse UnnaKamen
+- [ ] Sparkasse Unstrut-Hainich
+- [ ] Sparkasse Vogtland
+- [ ] Sparkasse Vorpommern
+- [ ] Sparkasse Waldeck-Frankenberg
+- [ ] Sparkasse Werl
+- [ ] Sparkasse Werra-Meißner
+- [ ] Sparkasse Weserbergland
+- [ ] Sparkasse Westerwald-Sieg
+- [ ] Sparkasse Westholstein
+- [ ] Sparkasse Westmünsterland
+- [ ] Sparkasse Wetzlar
+- [ ] Sparkasse Wilhelmshaven
+- [ ] Sparkasse Wittenberg
+- [ ] Sparkasse Wittgenstein
+- [ ] Sparkasse Wolfach
+- [ ] Sparkasse Worms-Alzey-Ried
+- [ ] Sparkasse Zollernalb
+- [ ] Sparkasse zu Lübeck AG
+- [ ] Sparkasse Zwickau
+- [ ] Spreewaldbank eG Volksbank-Raiffeisenbank
+- [ ] St. Galler Kantonalbank Deutschland
+- [ ] St. Wendeler Volksbank
+- [ ] Stadt- und Kreissparkasse Erlangen
+- [ ] Stadt- und Kreissparkasse Leipzig
+- [ ] Stadt- und Kreissparkasse Rothenburg
+- [ ] Stadt-Sparkasse Düsseldorf 
+- [ ] Stadt-Sparkasse Haan (Rheinland)
+- [ ] Stadt-Sparkasse Langenfeld
+- [ ] Stadt-Sparkasse Solingen 
+- [ ] Stadtsparkasse Aichach-Schrobenhausen
+- [ ] Stadtsparkasse Augsburg
+- [ ] Stadtsparkasse Bad Honnef 
+- [ ] Stadtsparkasse Bad Oeynhausen
+- [ ] Stadtsparkasse Bad Pyrmont
+- [ ] Stadtsparkasse Bad Sachsa
+- [ ] Stadtsparkasse Baden-Baden Gaggenau
+- [ ] Stadtsparkasse Barsinghausen
+- [ ] Stadtsparkasse Blomberg/Lippe
+- [ ] Stadtsparkasse Bocholt
+- [ ] Stadtsparkasse Borken
+- [ ] Stadtsparkasse Burgdorf
+- [ ] Stadtsparkasse Cuxhaven
+- [ ] Stadtsparkasse Delbrück
+- [ ] Stadtsparkasse Dessau
+- [ ] Stadtsparkasse Emmerich-Rees 
+- [ ] Stadtsparkasse Felsberg
+- [ ] Stadtsparkasse Gevelsberg
+- [ ] Stadtsparkasse Gladbeck
+- [ ] Stadtsparkasse Grebenstein
+- [ ] Stadtsparkasse Gronau
+- [ ] Stadtsparkasse Haltern am See
+- [ ] Stadtsparkasse Hameln
+- [ ] Stadtsparkasse Herdecke
+- [ ] Stadtsparkasse Hilchenbach
+- [ ] Stadtsparkasse Kaiserslautern 
+- [ ] Stadtsparkasse Lengerich
+- [ ] Stadtsparkasse Magdeburg
+- [ ] Stadtsparkasse Märkisches Sauerland Hemer-Menden
+- [ ] Stadtsparkasse Mönchengladbach 
+- [ ] Stadtsparkasse München
+- [ ] Stadtsparkasse Münsterland Ost
+- [ ] Stadtsparkasse Porta Westfalica
+- [ ] Stadtsparkasse Rahden
+- [ ] Stadtsparkasse Rheine
+- [ ] Stadtsparkasse Schmallenberg
+- [ ] Stadtsparkasse Schwalmstadt
+- [ ] Stadtsparkasse Schwedt
+- [ ] Stadtsparkasse Schwelm
+- [ ] Stadtsparkasse Schwerte
+- [ ] Stadtsparkasse Sprockhövel
+- [ ] Stadtsparkasse Versmold
+- [ ] Stadtsparkasse Völklingen
+- [ ] Stadtsparkasse Vorderpfalz
+- [ ] Stadtsparkasse Wedel
+- [ ] Stadtsparkasse Wermelskirchen 
+- [ ] Stadtsparkasse Werne
+- [ ] Stadtsparkasse Wetter (Ruhr)
+- [ ] Stadtsparkasse Witten
+- [ ] Stadtsparkasse Wunsdorf
+- [ ] Stadtsparkasse Wuppertal 
+- [ ] Steyler Missionssparinst. GmbH
+- [ ] Stralsunder Volksbank eG
+- [ ] Stuttgarter Volksbank
+- [ ] Südwestbank
+- [ ] Sydbank A/S
+- [ ] Taunus-Sparkasse
+- [ ] Triodos Bank Deutschland
+- [ ] Uhlbacher Bank
+- [ ] UniCredit Bank - HypoVereinsbank AG
+- [ ] Untertürkheimer Volksbank
+- [ ] VakifBank International Wien Zndl Frankfurt
+- [ ] VB Arnsberg-Sundern eG.
+- [ ] VB Bad Salzuflen eG
+- [ ] VB Bielefeld eG
+- [ ] VB Bitburg eG
+- [ ] VB Clarholz-Lette-Beelen eG.
+- [ ] VB Clenze-Schnega eG
+- [ ] VB eG Bremerhaven
+- [ ] VB eG im Landkr. Cuxhav.
+- [ ] VB Eifel Mitte, Prüm
+- [ ] VB Erkelenz-Hückelhofen-Wegberg eG
+- [ ] VB Freudenberg eG
+- [ ] VB Gelsenkirchen-Buer
+- [ ] VB Grevenbrück eG
+- [ ] VB Hunsrück eG
+- [ ] VB Laer-Horstmar-Leer eG
+- [ ] VB Mönchengladbach eG
+- [ ] VB Mörfelden-Walldorf Ndl d Frankfurter VB
+- [ ] VB Nahetal eG
+- [ ] VB Nordmünsterland Mitte eG
+- [ ] VB RB eG, Neumünster
+- [ ] VB RheinAhrEifel eG.
+- [ ] VB Spelle-Freren eG
+- [ ] VB Südkirchen-Cap.-Nordkirchen
+- [ ] VB Vallendar-Niederwerth eG
+- [ ] VB Westerkappeln-Wersen eG.
+- [ ] VB Westerloh-Westerwiehe eG
+- [ ] VB Wipperfürth-Lindlar eG
+- [ ] VB Wolfsburg eG
+- [ ] VBM Volksbank Mittelrhein eG
+- [ ] VBU Volksbank im Unterland
+- [ ] Verbands-Sparkasse Wesel 
+- [ ] Verbandssparkasse Goch-Kevelaer-Weeze
+- [ ] Vereinigte Coburger Sparkassen
+- [ ] Vereinigte Raiffeisenbank Burgstädt
+- [ ] Vereinigte Raiffeisenbanken
+- [ ] Vereinigte Sparkasse d. Ldkr. Pfaffenhofen
+- [ ] Vereinigte Sparkasse Eschenbach, Neustadt, Vohenstrauß
+- [ ] Vereinigte Sparkasse Gunzenhausen
+- [ ] Vereinigte Sparkasse i. Ldkr. Weilheim
+- [ ] Vereinigte Sparkasse im Märkischen Kreis
+- [ ] Vereinigte Sparkassen Ansbach
+- [ ] Vereinigte Volksbank
+- [ ] Vereinigte Volksbank Griesheim-Weiterstadt
+- [ ] Vereinigte Volksbank im Regionalverband Saarbrücken
+- [ ] Vereinigte Volksbank Limburg
+- [ ] Vereinigte Volksbank Maingau
+- [ ] Vierländer Volksbank eG
+- [ ] Voba Dünnwald-Holweide eG
+- [ ] Volks- und Raiffeisenbank Boll -alt-
+- [ ] Volks- und Raiffeisenbank Burg eG
+- [ ] Volks- und Raiffeisenbank eG Leinebergland
+- [ ] Volks- und Raiffeisenbank eG Wismar
+- [ ] Volks- und Raiffeisenbank Eisleben eG
+- [ ] Volks- und Raiffeisenbank Forst eG
+- [ ] Volks- und Raiffeisenbank Fürstenw. Seelow Wriezen eG
+- [ ] Volks- und Raiffeisenbank Güstrow eG
+- [ ] Volks- und Raiffeisenbank Muldental
+- [ ] Volks- und Raiffeisenbank Prignitz eG
+- [ ] Volks- und Raiffeisenbank Saale-Unstrut eG
+- [ ] Volks- und Raiffeisenbank Sylt eG
+- [ ] Volks- und Raiffeisenbank Weilmünster -alt-
+- [ ] Volksbank
+- [ ] Volksbank 2000 eG.
+- [ ] Volksbank Achern
+- [ ] Volksbank Adelebsen eG
+- [ ] Volksbank Aerzen eG
+- [ ] Volksbank Ahlen Sassenberg Warendorf eG
+- [ ] Volksbank Ahlerstedt eG
+- [ ] Volksbank Allgäu-West
+- [ ] Volksbank Altshausen
+- [ ] Volksbank Alzey
+- [ ] Volksbank am Ith eG
+- [ ] Volksbank Amelsbüren eG
+- [ ] Volksbank Ammerbuch
+- [ ] Volksbank Ammerland-Süd eG
+- [ ] Volksbank an der Niers
+- [ ] Volksbank Anröchte eG
+- [ ] Volksbank Appenweier-Urloffen Appenweier -alt-
+- [ ] Volksbank Aschaffenburg
+- [ ] Volksbank Ascheberg-Herbern eG.
+- [ ] Volksbank Backnang
+- [ ] Volksbank Bad Mergentheim
+- [ ] Volksbank Bad Münder eG
+- [ ] Volksbank Bad Oeynhausen-Herford eG
+- [ ] Volksbank Bad Salzuflen eG
+- [ ] Volksbank Bad Saulgau
+- [ ] Volksbank Baden-Baden Rastatt
+- [ ] Volksbank Baiersbronn
+- [ ] Volksbank Bakum eG
+- [ ] Volksbank Balingen
+- [ ] Volksbank Baumberge eG
+- [ ] Volksbank Bautzen
+- [ ] Volksbank Bechtheim
+- [ ] Volksbank Beckum eG.
+- [ ] Volksbank Beilstein-Ilsfeld-Abstatt
+- [ ] Volksbank Benninghausen eG
+- [ ] Volksbank Bielefeld eG
+- [ ] Volksbank Bigge-Lenne eG
+- [ ] Volksbank Bitburg eG
+- [ ] Volksbank Blaubeuren
+- [ ] Volksbank Bocholt eG.
+- [ ] Volksbank Bochum Witten eG
+- [ ] Volksbank Bönen eG
+- [ ] Volksbank Bonn Rhein-Sieg eG
+- [ ] Volksbank Bookholzberg-Lemwerder eG
+- [ ] Volksbank Börde-Bernburg eG
+- [ ] Volksbank Börßum-Hornburg eG
+- [ ] Volksbank Bösel eG
+- [ ] Volksbank Brackenheim-Güglingen
+- [ ] Volksbank Bramgau eG im Osnabrücker Land
+- [ ] Volksbank Brandoberndorf
+- [ ] Volksbank Braunlage eG
+- [ ] Volksbank Breisgau Nord
+- [ ] Volksbank Breisgau-Süd
+- [ ] Volksbank Bremen-Nord eG
+- [ ] Volksbank Brenztal
+- [ ] Volksbank Brilon eG.
+- [ ] Volksbank Brilon-Thülen eG
+- [ ] Volksbank Bruchsal-Bretten
+- [ ] Volksbank Bruchsal-Bretten -alt-
+- [ ] Volksbank Brüggen-Nettetal eG
+- [ ] Volksbank Bruhrain-Kraich-Hardt
+- [ ] Volksbank Büdingen -alt-
+- [ ] Volksbank Bühl
+- [ ] Volksbank Bühl Fil Kehl
+- [ ] Volksbank Büren und Salzkotten eG
+- [ ] Volksbank Butzbach
+- [ ] Volksbank Chemnitz
+- [ ] Volksbank Clenze-Hitzacker eG
+- [ ] Volksbank Cloppenburg eG
+- [ ] Volksbank Daaden
+- [ ] Volksbank Damme-Osterfeine eG
+- [ ] Volksbank Darmstadt - Kreis Bergstraße
+- [ ] Volksbank Darup-Rorup eG
+- [ ] Volksbank Dassel eG
+- [ ] Volksbank Deißlingen
+- [ ] Volksbank Delbrück-Hövelshof eG
+- [ ] Volksbank Delitzsch
+- [ ] Volksbank Demmin eG
+- [ ] Volksbank Dessau-Anhalt eG
+- [ ] Volksbank Dettenhausen
+- [ ] Volksbank Diepholz-Barnstorf eG
+- [ ] Volksbank Dill VB und Raiffbk
+- [ ] Volksbank Dillingen
+- [ ] Volksbank Dinslaken eG
+- [ ] Volksbank Donau-Neckar
+- [ ] Volksbank Dornstetten
+- [ ] Volksbank Dorsten eG.
+- [ ] Volksbank Dortmund-Nordwest eG
+- [ ] Volksbank Dreieich
+- [ ] Volksbank Dreiländereck
+- [ ] Volksbank Driburg - Brakel - Steinheim eG
+- [ ] Volksbank Düren eG
+- [ ] Volksbank Ebingen
+- [ ] Volksbank eG
+- [ ] Volksbank eG Dransfeld Groß Schneen Hann.Mün. Staufenb.
+- [ ] Volksbank eG Gelsenkirchen-Buer
+- [ ] Volksbank eG Wolfsburg
+- [ ] Volksbank Egelsbach -alt-
+- [ ] Volksbank Eichsfeld-Northeim eG
+- [ ] Volksbank Einbeck eG
+- [ ] Volksbank Eisbergen eG
+- [ ] Volksbank Eisenberg eG        
+- [ ] Volksbank Elmshorn eG
+- [ ] Volksbank Elsen-Wewer-Borchen eG
+- [ ] Volksbank Eltville
+- [ ] Volksbank Emstal Rütenbrock-Lathen eG
+- [ ] Volksbank Emstek eG
+- [ ] Volksbank Enger-Spenge eG
+- [ ] Volksbank Enniger Ostenf. Westkirchen
+- [ ] Volksbank Erft eG
+- [ ] Volksbank Erle eG.
+- [ ] Volksbank Erzgebirge
+- [ ] Volksbank Erzgebirge -alt-
+- [ ] Volksbank Esens-Holtriem eG
+- [ ] Volksbank Essen-Cappeln eG
+- [ ] Volksbank Esslingen
+- [ ] Volksbank Ettlingen
+- [ ] Volksbank Euskirchen eG
+- [ ] Volksbank Feldatal
+- [ ] Volksbank Filder
+- [ ] Volksbank Flein-Talheim
+- [ ] Volksbank Forchheim
+- [ ] Volksbank Franken
+- [ ] Volksbank Fredenbeck eG
+- [ ] Volksbank Freiberg und Umgebung
+- [ ] Volksbank Freiburg
+- [ ] Volksbank Freudenberg eG.
+- [ ] Volksbank Friedrichshafen
+- [ ] Volksbank Ganderkesee-Hude eG
+- [ ] Volksbank Gardelegen eG
+- [ ] Volksbank Gebhardshain eG
+- [ ] Volksbank Geest eG
+- [ ] Volksbank Geeste-Nord eG
+- [ ] Volksbank Gelderland eG
+- [ ] Volksbank Gemen eG.
+- [ ] Volksbank Georgsmarienhütte-Hagen eG
+- [ ] Volksbank Gersprenztal-Otzberg
+- [ ] Volksbank Glan-Münchweiler
+- [ ] Volksbank Glatten-Wittendorf
+- [ ] Volksbank Goldner Grund
+- [ ] Volksbank Göppingen
+- [ ] Volksbank Göttingen eG
+- [ ] Volksbank Gräfenhausen -alt-
+- [ ] Volksbank Grafschaft Hoya eG
+- [ ] Volksbank Grebenhain
+- [ ] Volksbank Greifswald eG
+- [ ] Volksbank Greven eG
+- [ ] Volksbank Grevenbrück eG
+- [ ] Volksbank Griesheim
+- [ ] Volksbank Gronau-Ahaus eG
+- [ ] Volksbank Günzburg
+- [ ] Volksbank Gütersloh eG
+- [ ] Volksbank Haaren eG
+- [ ] Volksbank Halle (Saale) eG
+- [ ] Volksbank Halle/Westf. eG
+- [ ] Volksbank Haltern eG
+- [ ] Volksbank Hameln-Pyrmont eG
+- [ ] Volksbank Hamm eG.
+- [ ] Volksbank Hamm, Sieg
+- [ ] Volksbank Hankensbüttel-Wahrenholz eG
+- [ ] Volksbank Harsewinkel eG.
+- [ ] Volksbank Harzburg-Wernigerode eG
+- [ ] Volksbank Haselünne eG
+- [ ] Volksbank Hegau
+- [ ] Volksbank Heiden eG.
+- [ ] Volksbank Heilbronn
+- [ ] Volksbank Heiligenstadt
+- [ ] Volksbank Heimbach eG
+- [ ] Volksbank Heinsberg eG
+- [ ] Volksbank Heldenbergen Ndl d Frankfurter VB
+- [ ] Volksbank Hellweg eG.
+- [ ] Volksbank Helmstedt eG
+- [ ] Volksbank Herborn-Eschenburg
+- [ ] Volksbank Herrenberg-Rottenburg
+- [ ] Volksbank Heuberg
+- [ ] Volksbank Heuchelheim
+- [ ] Volksbank Hildesheim-Lehrte-Pattensen eG
+- [ ] Volksbank Hildesheimer Börde eG
+- [ ] Volksbank Hochrhein
+- [ ] Volksbank Höchst
+- [ ] Volksbank Hohenlimburg eG
+- [ ] Volksbank Hohenlohe
+- [ ] Volksbank Hohenneuffen
+- [ ] Volksbank Hohenzollern
+- [ ] Volksbank Höhr-Grenzhausen -alt-
+- [ ] Volksbank Hoogstede-Wilsum eG
+- [ ] Volksbank Horb -alt-
+- [ ] Volksbank Horb-Freudenstadt
+- [ ] Volksbank Hörste eG
+- [ ] Volksbank Hörstel eG
+- [ ] Volksbank Im Harz eG
+- [ ] Volksbank im Kleinwalsertal
+- [ ] Volksbank im Märkischen Kreis eG
+- [ ] Volksbank im Siegerland eG.
+- [ ] Volksbank Immenstadt
+- [ ] Volksbank in Schaumburg eG
+- [ ] Volksbank Itzehoe eG
+- [ ] Volksbank Jestetten
+- [ ] Volksbank Kaiserslautern-Nordwestpfalz
+- [ ] Volksbank Kamen-Werne eG
+- [ ] Volksbank Karlsruhe
+- [ ] Volksbank Kehdingen eG
+- [ ] Volksbank Kelsterbach Ndl d Frankfurter VB
+- [ ] Volksbank Kempen-Grefrath eG
+- [ ] Volksbank Kierspe eG
+- [ ] Volksbank Kinzigtal
+- [ ] Volksbank Kirchberg-Hunsrück eG
+- [ ] Volksbank Kirchheim-Nürtingen
+- [ ] Volksbank Kirchhellen eG
+- [ ] Volksbank Kirnau
+- [ ] Volksbank Klettgau-Wutöschingen
+- [ ] Volksbank Kleverland eG
+- [ ] Volksbank Konstanz
+- [ ] Volksbank Köthen eG
+- [ ] Volksbank Kraichgau
+- [ ] Volksbank Krautheim
+- [ ] Volksbank Krefeld eG
+- [ ] Volksbank Kur- und Rheinpfalz
+- [ ] Volksbank Lahr
+- [ ] Volksbank Laichingen
+- [ ] Volksbank Langen-Gersten eG
+- [ ] Volksbank Langendernbach
+- [ ] Volksbank Lastrup eG
+- [ ] Volksbank Laupheim
+- [ ] Volksbank Lauterbach-Schlitz
+- [ ] Volksbank Lauterecken
+- [ ] Volksbank Leipzig
+- [ ] Volksbank Lembeck-Rhade eG.
+- [ ] Volksbank Lengerich eG
+- [ ] Volksbank Limbach
+- [ ] Volksbank Lingen eG
+- [ ] Volksbank Lippstadt eG
+- [ ] Volksbank Löbau-Zittau
+- [ ] Volksbank Löningen eG
+- [ ] Volksbank Lübbecke eG
+- [ ] Volksbank Lübeck Landbank von 1902 eG
+- [ ] Volksbank Lüdenscheid eG
+- [ ] Volksbank Lüdinghausen-Olfen
+- [ ] Volksbank Ludwigsburg
+- [ ] Volksbank Lüneburger Heide eG
+- [ ] Volksbank Magdeburg eG
+- [ ] Volksbank Magstadt
+- [ ] Volksbank Main-Tauber
+- [ ] Volksbank Main-Taunus
+- [ ] Volksbank Mainspitze
+- [ ] Volksbank Mainz-Finthen
+- [ ] Volksbank Marl-Recklinghausen eG
+- [ ] Volksbank Marsberg eG
+- [ ] Volksbank Maulbronn-Oberderdingen -alt-
+- [ ] Volksbank Medebach eG
+- [ ] Volksbank Meerbusch eG
+- [ ] Volksbank Meinerzhagen eG
+- [ ] Volksbank Melle-Borgloh eG
+- [ ] Volksbank Merzen-Fürstenau eG
+- [ ] Volksbank Meßkirch Raiffeisenbank
+- [ ] Volksbank Metzingen-Bad Urach
+- [ ] Volksbank Minden eG
+- [ ] Volksbank Mittelhessen
+- [ ] Volksbank Mittleres Erzgebirge
+- [ ] Volksbank Möckmühl-Neuenstadt
+- [ ] Volksbank Modau
+- [ ] Volksbank Modautal Modau
+- [ ] Volksbank Mönchengladbach eG
+- [ ] Volksbank Montabaur-Höhr-Grenzhausen
+- [ ] Volksbank Mosbach
+- [ ] Volksbank Mülheim-Kärlich eG
+- [ ] Volksbank Müllheim
+- [ ] Volksbank Münsingen
+- [ ] Volksbank Münster eG
+- [ ] Volksbank Murgtal Baiersbr-Klosterreichenbach
+- [ ] Volksbank Nagoldtal
+- [ ] Volksbank Nahe-Schaumberg
+- [ ] Volksbank Neckartal
+- [ ] Volksbank Neu-Ulm
+- [ ] Volksbank Neuenkirchen-Vörden eG
+- [ ] Volksbank Neumünster eG
+- [ ] Volksbank Niederrhein eG
+- [ ] Volksbank Nienburg eG
+- [ ] Volksbank Nordharz eG
+- [ ] Volksbank Nordheide eG
+- [ ] Volksbank Nordhümmling eG
+- [ ] Volksbank Nordoberpfalz
+- [ ] Volksbank Nordschwarzwald
+- [ ] Volksbank Nottuln eG
+- [ ] Volksbank Ober-Mörlen
+- [ ] Volksbank Ochtrup eG
+- [ ] Volksbank Odenwald
+- [ ] Volksbank Offenburg
+- [ ] Volksbank Oldendorf eG
+- [ ] Volksbank Olpe eG
+- [ ] Volksbank Osnabrück eG
+- [ ] Volksbank Osterburg-Wendland eG
+- [ ] Volksbank Osterholz-Scharmbeck eG
+- [ ] Volksbank Ostholstein Nord eG
+- [ ] Volksbank Ostlippe eG.
+- [ ] Volksbank Oyten eG
+- [ ] Volksbank Paderborn eG
+- [ ] Volksbank Paderborn-Höxter eG
+- [ ] Volksbank Peine eG
+- [ ] Volksbank Pforzheim
+- [ ] Volksbank Pfullendorf
+- [ ] Volksbank Pinneberg-Uetersen eG
+- [ ] Volksbank Pirna
+- [ ] Volksbank Plochingen
+- [ ] Volksbank Quierschied -alt-
+- [ ] Volksbank Raesfeld eG.
+- [ ] Volksbank Raiffeisenbank
+- [ ] Volksbank Raiffeisenbank Dachau
+- [ ] Volksbank Raiffeisenbank Döbeln
+- [ ] Volksbank Raiffeisenbank Eichstätt
+- [ ] Volksbank Raiffeisenbank Fürstenfeldbruck
+- [ ] Volksbank Raiffeisenbank Hanau Ndl d Frankf VB
+- [ ] Volksbank Raiffeisenbank Ismaning
+- [ ] Volksbank Raiffeisenbank Mangfalltal-Rosenheim
+- [ ] Volksbank Raiffeisenbank Meißen Großenhain
+- [ ] Volksbank Raiffeisenbank Niederschlesien
+- [ ] Volksbank Raiffeisenbank Oberbayern Südost
+- [ ] Volksbank Raiffeisenbank Schlüchtern
+- [ ] Volksbank Rathenow eG
+- [ ] Volksbank Regensburg
+- [ ] Volksbank Region Leonberg
+- [ ] Volksbank Reiste-Eslohe eG
+- [ ] Volksbank Rems
+- [ ] Volksbank Remscheid-Solingen eG
+- [ ] Volksbank Remseck
+- [ ] Volksbank Reutlingen
+- [ ] Volksbank Rhede eG
+- [ ] Volksbank Rhein-Lahn
+- [ ] Volksbank Rhein-Lippe eG
+- [ ] Volksbank Rhein-Ruhr eG
+- [ ] Volksbank Rhein-Selz -alt-
+- [ ] Volksbank Rhein-Wehra
+- [ ] Volksbank Rhein-Wupper eG
+- [ ] Volksbank Rheinböllen eG
+- [ ] Volksbank Riesa
+- [ ] Volksbank Rietberg eG
+- [ ] Volksbank Rosenheim -alt-
+- [ ] Volksbank Rot
+- [ ] Volksbank Rottweil
+- [ ] Volksbank Saaletal
+- [ ] Volksbank Saar-West
+- [ ] Volksbank Saarburg eG
+- [ ] Volksbank Saarlouis
+- [ ] Volksbank Saarpfalz
+- [ ] Volksbank Saerbeck eG
+- [ ] Volksbank Sandhofen
+- [ ] Volksbank Sangerhausen eG
+- [ ] Volksbank Sauerland eG
+- [ ] Volksbank Schermbeck eG.
+- [ ] Volksbank Schlangen eG
+- [ ] Volksbank Schleswig eG
+- [ ] Volksbank Schmallenberg eG
+- [ ] Volksbank Schnathorst eG
+- [ ] Volksbank Schrobenhausen
+- [ ] Volksbank Schupbach
+- [ ] Volksbank Schwäbisch Gmünd
+- [ ] Volksbank Schwalmtal eG
+- [ ] Volksbank Schwanewede eG
+- [ ] Volksbank Schwarzwald-Neckar
+- [ ] Volksbank Seeheim-Jugenheim
+- [ ] Volksbank Seesen eG
+- [ ] Volksbank Seligenstadt
+- [ ] Volksbank Selm-Bork eG.
+- [ ] Volksbank Senden eG
+- [ ] Volksbank Seppenrade eG.
+- [ ] Volksbank Siegerland eG
+- [ ] Volksbank Siegerland eG.
+- [ ] Volksbank Solling eG
+- [ ] Volksbank Sottrum eG
+- [ ] Volksbank Spelle-Freren eG
+- [ ] Volksbank Sprakel eG.
+- [ ] Volksbank Spremberg-Bad Muskau eG
+- [ ] Volksbank Sprockhövel eG.
+- [ ] Volksbank Stade-Cuxhaven eG
+- [ ] Volksbank Staufen
+- [ ] Volksbank Stein Eisingen
+- [ ] Volksbank Stendal eG
+- [ ] Volksbank Steyerberg eG
+- [ ] Volksbank Stormarn eG
+- [ ] Volksbank Störmede eG
+- [ ] Volksbank Straubing
+- [ ] Volksbank Strohgäu
+- [ ] Volksbank Stuhr eG
+- [ ] Volksbank Stutensee Hardt
+- [ ] Volksbank Südheide
+- [ ] Volksbank Sulingen eG
+- [ ] Volksbank Sulmtal
+- [ ] Volksbank Sulzbachtal -alt-
+- [ ] Volksbank Tailfingen
+- [ ] Volksbank Tauber -alt-
+- [ ] Volksbank Teltow-Fläming eG
+- [ ] Volksbank Tettnang
+- [ ] Volksbank Triberg
+- [ ] Volksbank Trier eG
+- [ ] Volksbank Trossingen
+- [ ] Volksbank Tübingen
+- [ ] Volksbank Überherrn
+- [ ] Volksbank Überlingen
+- [ ] Volksbank Überwald-Gorxheimertal
+- [ ] Volksbank Uckermark eG
+- [ ] Volksbank Uelzen-Bevensen eG
+- [ ] Volksbank Ulm-Biberach
+- [ ] Volksbank und Raiffeisenbank
+- [ ] Volksbank Untere Saar
+- [ ] Volksbank Usinger Land Ndl d Frankfurter VB
+- [ ] Volksbank Vechelde-Wendeburg eG
+- [ ] Volksbank Vechta eG
+- [ ] Volksbank Veldhausen-Neuenhaus eG
+- [ ] Volksbank Verden eG
+- [ ] Volksbank Versmold eG.
+- [ ] Volksbank Viersen eG
+- [ ] Volksbank Vilshofen
+- [ ] Volksbank Visbek eG
+- [ ] Volksbank Vogtland
+- [ ] Volksbank Vorbach-Tauber
+- [ ] Volksbank Wachtberg eG
+- [ ] Volksbank Warburg-Scherfede eG.
+- [ ] Volksbank Weingarten
+- [ ] Volksbank Weingarten-Walzbachtal
+- [ ] Volksbank Weinheim
+- [ ] Volksbank Welzheim
+- [ ] Volksbank Wenden-Drolshagen eG
+- [ ] Volksbank Weschnitztal
+- [ ] Volksbank Weserbergland eG
+- [ ] Volksbank Westenholz eG
+- [ ] Volksbank Westerstede eG
+- [ ] Volksbank Westrhauderfehn eG
+- [ ] Volksbank Wetzlar-Weilburg
+- [ ] Volksbank Wewelsburg-Ahden eG
+- [ ] Volksbank Wickede (Ruhr) eG
+- [ ] Volksbank Wiesloch
+- [ ] Volksbank Wildeshausen eG
+- [ ] Volksbank Wilferdingen-Keltern
+- [ ] Volksbank Wilhelmshaven eG
+- [ ] Volksbank Winsener Marsch eG
+- [ ] Volksbank Wißmar
+- [ ] Volksbank Wittenberg eG
+- [ ] Volksbank Wittgenstein eG
+- [ ] Volksbank Wittingen-Klötze eG
+- [ ] Volksbank Wittlage eG
+- [ ] Volksbank Wolfenbüttel-Salzgitter eG
+- [ ] Volksbank Wolgast eG
+- [ ] Volksbank Worms-Wonnegau
+- [ ] Volksbank Worpswede eG
+- [ ] Volksbank Wulfsen eG
+- [ ] Volksbank Würselen eG
+- [ ] Volksbank Zuffenhausen m Zndl Stammheimer VB
+- [ ] Volksbank Zwickau
+- [ ] Volksbank-Raiffeisenbank Amberg
+- [ ] Volksbank-Raiffeisenbank Bayreuth
+- [ ] Volksbank-Raiffeisenbank Chiemsee -alt-
+- [ ] Volksbank-Raiffeisenbank Deggingen
+- [ ] Volksbank-Raiffeisenbank Dingolfing
+- [ ] Volksbank-Raiffeisenbank Eutin eG
+- [ ] Volksbank-Raiffeisenbank Glauchau
+- [ ] Volksbank-Raiffeisenbank Husum eG
+- [ ] Volksbank-Raiffeisenbank im Kreis Rendsburg eG
+- [ ] Volksbank-Raiffeisenbank Penzberg
+- [ ] Volksbank-Raiffeisenbank Riedlingen
+- [ ] VR Bank
+- [ ] VR Bank Bad Orb-Gelnhausen
+- [ ] VR Bank Bamberg Raiffeisen-Volksbank
+- [ ] VR Bank Biedenkopf-Gladenbach
+- [ ] VR Bank Burglengenfeld
+- [ ] VR Bank Dinkelsbühl
+- [ ] VR Bank eG
+- [ ] VR Bank Flensburg-Schleswig eG
+- [ ] VR Bank HessenLand
+- [ ] VR Bank Hof
+- [ ] VR Bank im Enzkreis
+- [ ] VR Bank Kaufbeuren-Ostallgäu
+- [ ] VR Bank Kitzingen
+- [ ] VR Bank Leipziger Land
+- [ ] VR Bank Main-Kinzig-Büdingen
+- [ ] VR Bank Mittelhaardt
+- [ ] VR Bank München Land
+- [ ] VR Bank Nordwestpfalz -alt-
+- [ ] VR Bank Pinneberg eG
+- [ ] VR Bank Rhein-Neckar
+- [ ] VR Bank Rhein-Sieg eG.
+- [ ] VR Bank Rosenheim-Chiemsee
+- [ ] VR Bank Saarpfalz
+- [ ] VR Bank Schwäbisch Hall-Crailsheim
+- [ ] VR Bank Steinlach-Wiesaz-Härten
+- [ ] VR Bank Südliche Weinstraße
+- [ ] VR Bank Südpfalz
+- [ ] VR Bank Südthüringen
+- [ ] vr bank Untertaunus
+- [ ] VR Bank Wächtersbach/Bad Soden-Salmünster -alt
+- [ ] VR Bank Weimar
+- [ ] VR Bank Westthüringen
+- [ ] VR Genossenschaftsbank Fulda
+- [ ] VR I meine Raiffeisenbank
+- [ ] VR-Bank
+- [ ] VR-Bank Aalen
+- [ ] VR-Bank Alb
+- [ ] VR-Bank Altenburger Land
+- [ ] VR-Bank Asperg-Markgröningen
+- [ ] VR-Bank Bad Hersfeld-Rotenburg
+- [ ] VR-Bank Bad Kissingen-Bad Brückenau
+- [ ] VR-Bank Bad Salzungen Schmalkalden
+- [ ] VR-Bank Burghausen-Mühldorf
+- [ ] VR-Bank Chattengau
+- [ ] VR-Bank Chiemgau-Süd -alt-
+- [ ] VR-Bank Coburg
+- [ ] VR-Bank Ellwangen
+- [ ] VR-Bank Erding
+- [ ] VR-Bank Feuchtwangen-Limes
+- [ ] VR-Bank Fichtelgebirge
+- [ ] VR-Bank Gerolzhofen
+- [ ] VR-Bank im Landkreis Garmisch-Partenkirchen
+- [ ] VR-Bank in Mittelbaden
+- [ ] VR-Bank Landau
+- [ ] VR-Bank Landshut
+- [ ] VR-Bank Langenau-Ulmer Alb
+- [ ] VR-Bank Lech-Zusam
+- [ ] VR-Bank Mainz
+- [ ] VR-Bank Memmingen
+- [ ] VR-Bank Neu-Ulm/Weißenhorn
+- [ ] VR-Bank Neuwied-Linz eG
+- [ ] VR-Bank Nordeifel eG.
+- [ ] VR-Bank Nordrhön eG
+- [ ] VR-Bank Passau
+- [ ] VR-Bank Pirmasens
+- [ ] VR-Bank Rhein-Erft eG
+- [ ] VR-Bank Rhein-Mosel
+- [ ] VR-Bank Rothenburg
+- [ ] VR-Bank Rottal-Inn
+- [ ] VR-Bank Schwalm-Eder
+- [ ] VR-Bank Schweinfurt
+- [ ] VR-Bank Schweinfurt Land -alt-
+- [ ] VR-Bank Schwerin eG
+- [ ] VR-Bank Spangenberg-Morschen
+- [ ] VR-Bank Starnberg-Herrsching-Landsberg
+- [ ] VR-Bank Stromberg-Neckar
+- [ ] VR-Bank Stuttgart
+- [ ] VR-Bank Südwestpfalz
+- [ ] VR-Bank Taufkirchen-Dorfen
+- [ ] VR-Bank Uffenheim-Neustadt
+- [ ] VR-Bank Vilsbiburg
+- [ ] VR-Bank Weinstadt
+- [ ] VR-Bank Werra-Meißner
+- [ ] VR-Bank Westmünsterland eG
+- [ ] VR-Bank Westpfalz
+- [ ] VRB eG, Wismar
+- [ ] VTB Bank AG
+- [ ] Waldecker Bank
+- [ ] Wartburg-Sparkasse
+- [ ] Weberbank
+- [ ] Weser-Elbe-Sparkasse
+- [ ] Westerwald Bank
+- [ ] Wiesbadener Volksbank
+- [ ] Winterbacher Bank
+- [ ] Winterlinger Bank
+- [ ] WL-Bank
+- [ ] Zevener Volksbank eG
