@@ -59,6 +59,17 @@ class Transaction
     protected $name;
 
     /**
+     * Get booking date.
+     *
+     * @deprecated Use getBookingDate() instead
+     * @return \DateTime|null
+     */
+    public function getDate()
+    {
+        return $this->getBookingDate();
+    }
+
+    /**
      * Get booking date
      *
      * @return \DateTime|null
