@@ -83,7 +83,7 @@ This library is verified to work with following banks.
 - [ ] Deutsche Bank AG
 - [ ] Deutsche Bank Privat und Geschäftskunden AG
 - [ ] Deutsche Genossenschafts-Hypothekenbank AG
-- [ ] Deutsche Kreditbank Berlin (DKB) AG
+- [x] Deutsche Kreditbank Berlin (DKB) AG
 - [ ] Deutsche Skatbank Zndl VR Bank Altenburger Land
 - [ ] Die Sparkasse Bremen
 - [ ] Dithmarscher Volks- und Raiffeisenbank eG
@@ -161,6 +161,7 @@ This library is verified to work with following banks.
 - [ ] Hümmlinger Volksbank eG
 - [ ] Hüttenberger Bank
 - [ ] Ibbenbürener Volksbank eG
+- [x] ING-DiBa AG
 - [ ] Internationales Bankhaus Bodensee
 - [ ] Kasseler Bank
 - [ ] Kasseler Sparkasse
