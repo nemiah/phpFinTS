@@ -36,13 +36,13 @@ This library is verified to work with following banks.
 - [ ] Bankhaus Ellwanger & Geiger
 - [ ] Bankhaus Hallbaum AG
 - [ ] Bankhaus Jungholz Zndl der Raiffeisenbank Reutte
-- [ ] Bankhaus Kruber
+- [x] Bankhaus Kruber
 - [ ] Bankhaus Lampe
 - [ ] Bankhaus Löbbecke & Co.
 - [ ] Bankhaus Ludwig Sperrer KG
 - [ ] Bankhaus Max Flessa KG (Flessabank)
 - [ ] Bankhaus Neelmeyer
-- [ ] Bankhaus Rautenschlein
+- [x] Bankhaus Rautenschlein
 - [ ] Bankverein Bebra
 - [ ] Bankverein Werther AG
 - [ ] Bayerische Landesbank Girozentrale
@@ -50,12 +50,12 @@ This library is verified to work with following banks.
 - [ ] Bensberger Bank eG
 - [ ] Berkheimer Bank
 - [ ] Berliner Sparkasse
-- [ ] Berliner Volksbank
+- [x] Berliner Volksbank
 - [ ] Bernhauser Bank
 - [ ] Bezirkssparkasse Reichenau
 - [ ] Bezirkssparkasse St. Blasien
 - [ ] BHF-Bank AG
-- [ ] Birsteiner Volksbank
+- [x] Birsteiner Volksbank
 - [ ] biw Bank für Investments und Wertpapiere
 - [ ] BNP Paribas S.A. Niederlassung Deutschland - Consorsbank
 - [ ] Bopfinger Bank Sechta-Ries
@@ -74,7 +74,7 @@ This library is verified to work with following banks.
 - [ ] Commerzbank
 - [ ] Crailsheimer Volksbank -alt-
 - [ ] Credit- und Volksbank eG
-- [ ] Cronbank
+- [x] Cronbank
 - [ ] CVW - Privatbank
 - [ ] Darmsheimer Bank
 - [ ] Degussa Bank AG
@@ -103,7 +103,7 @@ This library is verified to work with following banks.
 - [ ] Erfurter Bank
 - [ ] Erligheimer Bank -alt-
 - [ ] Erzgebirgssparkasse
-- [ ] Ev. Darlehnsgenossenschaft eG
+- [x] Ev. Darlehnsgenossenschaft eG
 - [ ] Evangelische Kreditgenossenschaft
 - [ ] Evenord-Bank
 - [ ] Federseebank
@@ -111,17 +111,17 @@ This library is verified to work with following banks.
 - [ ] Föhr-Amrumer Bank eG
 - [ ] Förde Sparkasse
 - [ ] Frankenberger Bank Raiffeisenbank
-- [ ] Frankfurter Bankgesellschaft
+- [x] Frankfurter Bankgesellschaft
 - [ ] Frankfurter Sparkasse
-- [ ] Frankfurter Volksbank
+- [x] Frankfurter Volksbank
 - [ ] Freiberger Bank
 - [ ] Freisinger Bank Volksbank-Raiffeisenbank
 - [ ] Fürst Fugger Privatbank
 - [ ] Fürst Fugger Privatbankiers
 - [ ] Fürstlich Castell'sche Bank
 - [ ] Gabler-Saliter-Bank KG
-- [ ] GALLINAT-BANK
-- [ ] GENO Broker GmbH
+- [x] GALLINAT-BANK
+- [x] GENO Broker GmbH
 - [ ] Geno-Volks-Bank Essen eG.
 - [ ] GenoBank DonauWald
 - [ ] Genobank Mainz
@@ -136,18 +136,18 @@ This library is verified to work with following banks.
 - [ ] Giengener Volksbank -alt-
 - [ ] Gladbacher Bank AG
 - [ ] GLS Gemeinschaftsbank eG
-- [ ] Goyer & Göppel
+- [x] Goyer & Göppel
 - [ ] Grafschafter Volksbank eG
-- [ ] GRENKE BANK
-- [ ] Gries & Heissel - Bankiers
-- [ ] Groß-Gerauer Volksbank
+- [x] GRENKE BANK
+- [x] Gries & Heissel - Bankiers
+- [x] Groß-Gerauer Volksbank
 - [ ] H + G BANK Heidelberg
 - [ ] Hagnauer Volksbank
 - [x] Hallertauer Volksbank
 - [ ] Hamburger Bank v. 1861
 - [ ] Hamburger Bank von 1861 Volksbank eG
 - [ ] Hamburger Sparkasse
-- [ ] Hannoversche Volksbank eG
+- [x] Hannoversche Volksbank eG
 - [ ] Harzsparkasse
 - [ ] Hauck & Aufhäuser Privatbankiers
 - [ ] Hausbank München
@@ -159,7 +159,7 @@ This library is verified to work with following banks.
 - [ ] HSBC Trinkaus & Burkhardt
 - [ ] HSH Nordbank AG
 - [ ] Hümmlinger Volksbank eG
-- [ ] Hüttenberger Bank
+- [x] Hüttenberger Bank
 - [ ] Ibbenbürener Volksbank eG
 - [ ] Internationales Bankhaus Bodensee
 - [ ] Kasseler Bank
@@ -176,7 +176,7 @@ This library is verified to work with following banks.
 - [ ] Kreis- und Stadtsparkasse Wasserburg am Inn
 - [ ] Kreissparkasse Ahrweiler 
 - [ ] Kreissparkasse Anhalt-Bitterfeld
-- [ ] Kreissparkasse Augsburg
+- [x] Kreissparkasse Augsburg
 - [ ] Kreissparkasse Bautzen
 - [ ] Kreissparkasse Bersenbrück
 - [ ] Kreissparkasse Biberach
@@ -290,7 +290,7 @@ This library is verified to work with following banks.
 - [ ] norisbank GmbH
 - [ ] Nufringer Bank -Raiffeisen-
 - [ ] Oberbank AG
-- [ ] Offenbacher Volksbank -alt-
+- [x] Offenbacher Volksbank -alt-
 - [ ] Onstmettinger Bank
 - [ ] Ostfriesische Volksbank eG
 - [ ] Ostsächsische Sparkasse Dresden
@@ -301,15 +301,15 @@ This library is verified to work with following banks.
 - [ ] PayCenter GmbH
 - [ ] Postbank
 - [ ] Postbank (Giro)
-- [ ] PSD Bank Berlin-Brandenburg
-- [ ] PSD Bank Braunschweig
-- [ ] PSD Bank Hannover
-- [ ] PSD Bank Hessen-Thüringen
-- [ ] PSD Bank Kiel
-- [ ] PSD Bank Köln
-- [ ] PSD Bank Nord
-- [ ] PSD Bank Rhein-Ruhr
-- [ ] PSD Bank Westfalen-Lippe
+- [x] PSD Bank Berlin-Brandenburg
+- [x] PSD Bank Braunschweig
+- [x] PSD Bank Hannover
+- [x] PSD Bank Hessen-Thüringen
+- [x] PSD Bank Kiel
+- [x] PSD Bank Köln
+- [x] PSD Bank Nord
+- [x] PSD Bank Rhein-Ruhr
+- [x] PSD Bank Westfalen-Lippe
 - [ ] Raiba Asbach-Neustadt eG
 - [ ] Raiba eG Unterwesterwald
 - [ ] Raiba Lutzerather Höhe eG
@@ -317,7 +317,7 @@ This library is verified to work with following banks.
 - [ ] Raiba Rheinbach Euskirchen eG
 - [ ] Raiffbk Neumarkt-St. Veit - Niederbergkirchen
 - [ ] Raiffeisen Spar+Kreditbank Lauf a d Pegnitz
-- [ ] Raiffeisen Volksbank
+- [x] Raiffeisen Volksbank
 - [ ] Raiffeisen- u Volksbank Dahn
 - [ ] Raiffeisen- und Volksbank Bad Bramstedt eG
 - [ ] Raiffeisen-Bank Bad Abbach-Saal
@@ -359,7 +359,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Alteglofsheim-Hagelstadt
 - [ ] Raiffeisenbank Altschweier
 - [ ] Raiffeisenbank Alxing-Bruck
-- [ ] Raiffeisenbank Alzey-Land
+- [x] Raiffeisenbank Alzey-Land
 - [ ] Raiffeisenbank am Dreisessel
 - [ ] Raiffeisenbank Am Goldenen Steig
 - [ ] Raiffeisenbank am Kulm
@@ -378,7 +378,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Bachgau
 - [ ] Raiffeisenbank Bad Doberan eG
 - [ ] Raiffeisenbank Bad Gögging
-- [ ] Raiffeisenbank Bad Homburg Ndl d FrankfurterVB
+- [x] Raiffeisenbank Bad Homburg Ndl d FrankfurterVB
 - [ ] Raiffeisenbank Bad Kötzting
 - [ ] Raiffeisenbank Bad Saulgau
 - [ ] Raiffeisenbank Bad Schussenried
@@ -399,7 +399,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Böllingertal
 - [ ] Raiffeisenbank Borken
 - [ ] Raiffeisenbank Bretzfeld-Neuenstein
-- [ ] Raiffeisenbank Bruchköbel -alt-
+- [x] Raiffeisenbank Bruchköbel -alt-
 - [ ] Raiffeisenbank Buch-Eching
 - [ ] Raiffeisenbank Burghaun
 - [ ] Raiffeisenbank Butjadingen-Abbehausen eG
@@ -456,7 +456,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Grevenbroich eG
 - [ ] Raiffeisenbank Griesstätt-Halfing
 - [ ] Raiffeisenbank Grimma
-- [ ] Raiffeisenbank Groß-Rohrheim
+- [x] Raiffeisenbank Groß-Rohrheim
 - [ ] Raiffeisenbank Großhabersdorf-Roßtal
 - [ ] Raiffeisenbank Gruibingen
 - [ ] Raiffeisenbank Gymnich eG
@@ -515,7 +515,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Kirchberg v. Wald
 - [ ] Raiffeisenbank Kirchheim-Walheim
 - [ ] Raiffeisenbank Kirchweihtal
-- [ ] Raiffeisenbank Kirtorf
+- [x] Raiffeisenbank Kirtorf
 - [ ] Raiffeisenbank Kissing-Mering
 - [ ] Raiffeisenbank Kitzinger Land
 - [ ] Raiffeisenbank Knoblauchsland Nürnberg-Buch
@@ -529,7 +529,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Lech-Ammersee
 - [ ] Raiffeisenbank Leezen eG
 - [ ] Raiffeisenbank Lorup eG
-- [ ] Raiffeisenbank Maintal Ndl d Frankfurter VB
+- [x] Raiffeisenbank Maintal Ndl d Frankfurter VB
 - [ ] Raiffeisenbank Maitis
 - [ ] Raiffeisenbank Malchin eG
 - [ ] Raiffeisenbank Mangfalltal -alt-
@@ -552,7 +552,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Neustadt, Sachs
 - [ ] Raiffeisenbank Niedere Alb
 - [ ] Raiffeisenbank Nordkreis Landsberg
-- [ ] Raiffeisenbank Nördliche Bergstraße
+- [x] Raiffeisenbank Nördliche Bergstraße
 - [ ] Raiffeisenbank Oberallgäu-Süd
 - [ ] Raiffeisenbank Oberaudorf
 - [ ] Raiffeisenbank Oberer Wald
@@ -568,8 +568,8 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Obernburg
 - [ ] Raiffeisenbank Oberpfalz Süd
 - [ ] Raiffeisenbank Oberschleißheim
-- [ ] Raiffeisenbank Oberursel
-- [ ] Raiffeisenbank Offenbach/M.-Bieber
+- [x] Raiffeisenbank Oberursel
+- [x] Raiffeisenbank Offenbach/M.-Bieber
 - [ ] Raiffeisenbank Oldenburg eG
 - [ ] Raiffeisenbank östl. Südeifel eG
 - [ ] Raiffeisenbank Ostprignitz-Ruppin eG
@@ -592,7 +592,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Reischach-Wurmannsquick-Zeilarn
 - [ ] Raiffeisenbank Reute-Gaisbeuren
 - [ ] Raiffeisenbank Rhein-Berg eG
-- [ ] Raiffeisenbank Ried
+- [x] Raiffeisenbank Ried
 - [ ] Raiffeisenbank Riedenburg-Lobsing
 - [ ] Raiffeisenbank Rißtal
 - [ ] Raiffeisenbank Ronshausen-Marksuhl
@@ -602,7 +602,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank RSA
 - [ ] Raiffeisenbank Rupertiwinkel
 - [ ] Raiffeisenbank Salzweg-Thyrnau
-- [ ] Raiffeisenbank Schaafheim
+- [x] Raiffeisenbank Schaafheim
 - [ ] Raiffeisenbank Scharrel eG
 - [ ] Raiffeisenbank Schefflenz-Seckach -alt-
 - [ ] Raiffeisenbank Schlat -alt-
@@ -652,7 +652,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Ursensollen-Ammerthal-Hohenburg
 - [ ] Raiffeisenbank Vellberg-Großaltdorf
 - [ ] Raiffeisenbank Vilshofener Land
-- [ ] Raiffeisenbank Vogelsberg
+- [x] Raiffeisenbank Vogelsberg
 - [ ] Raiffeisenbank Volkach-Wiesentheid
 - [ ] Raiffeisenbank Volkmarsen
 - [ ] Raiffeisenbank von 1895 eG
@@ -689,7 +689,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Zorneding
 - [ ] Raiffeisenbk Ingolstadt-Pfaffenhofen-Eichstätt
 - [ ] Raiffeisenbk. Niederwallmenach
-- [ ] Raiffeisenkasse Erbes-Büdesheim und Umgebung
+- [x] Raiffeisenkasse Erbes-Büdesheim und Umgebung
 - [ ] Raiffeisenkasse Wiesbach
 - [ ] Raiffeisenlandesbank Oberösterreich
 - [ ] RaiffeisenVolksbank Gewerbebank
@@ -703,7 +703,7 @@ This library is verified to work with following banks.
 - [ ] RB Grafschaft-Wachtberg eG
 - [ ] RB Hatten-Wardenburg
 - [ ] RB Much-Ruppichteroth eG
-- [ ] Rheingauer Volksbank
+- [x] Rheingauer Volksbank
 - [ ] Rhön-Rennsteig-Sparkasse
 - [ ] Ritterschaftl. Kreditinst. Stade
 - [ ] Rosbacher Raiffeisenbank eG
@@ -711,7 +711,7 @@ This library is verified to work with following banks.
 - [ ] Rottaler Raiffeisenbank
 - [ ] Rottaler Volksbank-Raiffeisenbank Eggenfelden
 - [ ] RSB Retail + Service Bank
-- [ ] Rüsselsheimer Volksbank
+- [x] Rüsselsheimer Volksbank
 - [ ] RV Bank Rhein-Haardt
 - [ ] RV-Bank
 - [ ] RVB Grafeld-Nortup eG
@@ -732,14 +732,14 @@ This library is verified to work with following banks.
 - [ ] Spadaka Gescher eG
 - [ ] Spadaka Minden-Porta Westfalica
 - [ ] Spadaka Reken eG.
-- [ ] Spar- u Kreditbank ev-freikirchl Gemeinden
+- [x] Spar- u Kreditbank ev-freikirchl Gemeinden
 - [ ] Spar- und Darlehnskasse Börde Lamstedt-Hechthausen
 - [ ] Spar- und Darlehnskasse Dinklage eG
 - [ ] Spar- und Darlehnskasse Friesoythe eG
 - [ ] Spar- und Darlehnskasse Holtland eG
 - [ ] Spar- und Darlehnskasse Immendorf eG
 - [ ] Spar- und Darlehnskasse Stockhausen
-- [ ] Spar- und Darlehnskasse Zell -alt-
+- [x] Spar- und Darlehnskasse Zell -alt-
 - [ ] Spar- und Kreditbank
 - [ ] Spar- und Kreditbank eG
 - [ ] Spar- und Kreditbank Hardt
@@ -1014,7 +1014,7 @@ This library is verified to work with following banks.
 - [ ] Stadt-Sparkasse Langenfeld
 - [ ] Stadt-Sparkasse Solingen 
 - [ ] Stadtsparkasse Aichach-Schrobenhausen
-- [ ] Stadtsparkasse Augsburg
+- [x] Stadtsparkasse Augsburg
 - [ ] Stadtsparkasse Bad Honnef 
 - [ ] Stadtsparkasse Bad Oeynhausen
 - [ ] Stadtsparkasse Bad Pyrmont
@@ -1070,11 +1070,11 @@ This library is verified to work with following banks.
 - [ ] Südwestbank
 - [ ] Sydbank A/S
 - [ ] Taunus-Sparkasse
-- [ ] Triodos Bank Deutschland
+- [x] Triodos Bank Deutschland
 - [ ] Uhlbacher Bank
 - [ ] UniCredit Bank - HypoVereinsbank AG
 - [ ] Untertürkheimer Volksbank
-- [ ] VakifBank International Wien Zndl Frankfurt
+- [x] VakifBank International Wien Zndl Frankfurt
 - [ ] VB Arnsberg-Sundern eG.
 - [ ] VB Bad Salzuflen eG
 - [ ] VB Bielefeld eG
@@ -1091,7 +1091,7 @@ This library is verified to work with following banks.
 - [ ] VB Hunsrück eG
 - [ ] VB Laer-Horstmar-Leer eG
 - [ ] VB Mönchengladbach eG
-- [ ] VB Mörfelden-Walldorf Ndl d Frankfurter VB
+- [x] VB Mörfelden-Walldorf Ndl d Frankfurter VB
 - [ ] VB Nahetal eG
 - [ ] VB Nordmünsterland Mitte eG
 - [ ] VB RB eG, Neumünster
@@ -1117,10 +1117,10 @@ This library is verified to work with following banks.
 - [ ] Vereinigte Sparkasse im Märkischen Kreis
 - [ ] Vereinigte Sparkassen Ansbach
 - [ ] Vereinigte Volksbank
-- [ ] Vereinigte Volksbank Griesheim-Weiterstadt
+- [x] Vereinigte Volksbank Griesheim-Weiterstadt
 - [ ] Vereinigte Volksbank im Regionalverband Saarbrücken
 - [ ] Vereinigte Volksbank Limburg
-- [ ] Vereinigte Volksbank Maingau
+- [x] Vereinigte Volksbank Maingau
 - [ ] Vierländer Volksbank eG
 - [ ] Voba Dünnwald-Holweide eG
 - [ ] Volks- und Raiffeisenbank Boll -alt-
@@ -1197,7 +1197,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Bruchsal-Bretten -alt-
 - [ ] Volksbank Brüggen-Nettetal eG
 - [ ] Volksbank Bruhrain-Kraich-Hardt
-- [ ] Volksbank Büdingen -alt-
+- [x] Volksbank Büdingen -alt-
 - [ ] Volksbank Bühl
 - [ ] Volksbank Bühl Fil Kehl
 - [ ] Volksbank Büren und Salzkotten eG
@@ -1207,7 +1207,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Cloppenburg eG
 - [ ] Volksbank Daaden
 - [ ] Volksbank Damme-Osterfeine eG
-- [ ] Volksbank Darmstadt - Kreis Bergstraße
+- [x] Volksbank Darmstadt - Kreis Bergstraße
 - [ ] Volksbank Darup-Rorup eG
 - [ ] Volksbank Dassel eG
 - [ ] Volksbank Deißlingen
@@ -1224,7 +1224,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Dornstetten
 - [ ] Volksbank Dorsten eG.
 - [ ] Volksbank Dortmund-Nordwest eG
-- [ ] Volksbank Dreieich
+- [x] Volksbank Dreieich
 - [ ] Volksbank Dreiländereck
 - [ ] Volksbank Driburg - Brakel - Steinheim eG
 - [ ] Volksbank Düren eG
@@ -1233,7 +1233,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank eG Dransfeld Groß Schneen Hann.Mün. Staufenb.
 - [ ] Volksbank eG Gelsenkirchen-Buer
 - [ ] Volksbank eG Wolfsburg
-- [ ] Volksbank Egelsbach -alt-
+- [x] Volksbank Egelsbach -alt-
 - [ ] Volksbank Eichsfeld-Northeim eG
 - [ ] Volksbank Einbeck eG
 - [ ] Volksbank Eisbergen eG
@@ -1272,19 +1272,19 @@ This library is verified to work with following banks.
 - [ ] Volksbank Gelderland eG
 - [ ] Volksbank Gemen eG.
 - [ ] Volksbank Georgsmarienhütte-Hagen eG
-- [ ] Volksbank Gersprenztal-Otzberg
+- [x] Volksbank Gersprenztal-Otzberg
 - [ ] Volksbank Glan-Münchweiler
 - [ ] Volksbank Glatten-Wittendorf
 - [ ] Volksbank Goldner Grund
 - [ ] Volksbank Göppingen
 - [ ] Volksbank Göttingen eG
-- [ ] Volksbank Gräfenhausen -alt-
+- [x] Volksbank Gräfenhausen -alt-
 - [ ] Volksbank Grafschaft Hoya eG
-- [ ] Volksbank Grebenhain
+- [x] Volksbank Grebenhain
 - [ ] Volksbank Greifswald eG
 - [ ] Volksbank Greven eG
 - [ ] Volksbank Grevenbrück eG
-- [ ] Volksbank Griesheim
+- [x] Volksbank Griesheim
 - [ ] Volksbank Gronau-Ahaus eG
 - [ ] Volksbank Günzburg
 - [ ] Volksbank Gütersloh eG
@@ -1295,7 +1295,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Hameln-Pyrmont eG
 - [ ] Volksbank Hamm eG.
 - [ ] Volksbank Hamm, Sieg
-- [ ] Volksbank Hankensbüttel-Wahrenholz eG
+- [x] Volksbank Hankensbüttel-Wahrenholz eG
 - [ ] Volksbank Harsewinkel eG.
 - [ ] Volksbank Harzburg-Wernigerode eG
 - [ ] Volksbank Haselünne eG
@@ -1305,17 +1305,17 @@ This library is verified to work with following banks.
 - [ ] Volksbank Heiligenstadt
 - [ ] Volksbank Heimbach eG
 - [ ] Volksbank Heinsberg eG
-- [ ] Volksbank Heldenbergen Ndl d Frankfurter VB
+- [x] Volksbank Heldenbergen Ndl d Frankfurter VB
 - [ ] Volksbank Hellweg eG.
 - [ ] Volksbank Helmstedt eG
 - [ ] Volksbank Herborn-Eschenburg
 - [ ] Volksbank Herrenberg-Rottenburg
 - [ ] Volksbank Heuberg
 - [ ] Volksbank Heuchelheim
-- [ ] Volksbank Hildesheim-Lehrte-Pattensen eG
+- [x] Volksbank Hildesheim-Lehrte-Pattensen eG
 - [ ] Volksbank Hildesheimer Börde eG
 - [ ] Volksbank Hochrhein
-- [ ] Volksbank Höchst
+- [x] Volksbank Höchst
 - [ ] Volksbank Hohenlimburg eG
 - [ ] Volksbank Hohenlohe
 - [ ] Volksbank Hohenneuffen
@@ -1338,7 +1338,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Kamen-Werne eG
 - [ ] Volksbank Karlsruhe
 - [ ] Volksbank Kehdingen eG
-- [ ] Volksbank Kelsterbach Ndl d Frankfurter VB
+- [x] Volksbank Kelsterbach Ndl d Frankfurter VB
 - [ ] Volksbank Kempen-Grefrath eG
 - [ ] Volksbank Kierspe eG
 - [ ] Volksbank Kinzigtal
@@ -1375,12 +1375,12 @@ This library is verified to work with following banks.
 - [ ] Volksbank Lüdenscheid eG
 - [ ] Volksbank Lüdinghausen-Olfen
 - [ ] Volksbank Ludwigsburg
-- [ ] Volksbank Lüneburger Heide eG
+- [x] Volksbank Lüneburger Heide eG
 - [ ] Volksbank Magdeburg eG
 - [ ] Volksbank Magstadt
 - [ ] Volksbank Main-Tauber
-- [ ] Volksbank Main-Taunus
-- [ ] Volksbank Mainspitze
+- [x] Volksbank Main-Taunus
+- [x] Volksbank Mainspitze
 - [ ] Volksbank Mainz-Finthen
 - [ ] Volksbank Marl-Recklinghausen eG
 - [ ] Volksbank Marsberg eG
@@ -1396,8 +1396,8 @@ This library is verified to work with following banks.
 - [ ] Volksbank Mittelhessen
 - [ ] Volksbank Mittleres Erzgebirge
 - [ ] Volksbank Möckmühl-Neuenstadt
-- [ ] Volksbank Modau
-- [ ] Volksbank Modautal Modau
+- [x] Volksbank Modau
+- [x] Volksbank Modautal Modau
 - [ ] Volksbank Mönchengladbach eG
 - [ ] Volksbank Montabaur-Höhr-Grenzhausen
 - [ ] Volksbank Mosbach
@@ -1415,14 +1415,14 @@ This library is verified to work with following banks.
 - [ ] Volksbank Niederrhein eG
 - [ ] Volksbank Nienburg eG
 - [ ] Volksbank Nordharz eG
-- [ ] Volksbank Nordheide eG
+- [x] Volksbank Nordheide eG
 - [ ] Volksbank Nordhümmling eG
 - [ ] Volksbank Nordoberpfalz
 - [ ] Volksbank Nordschwarzwald
 - [ ] Volksbank Nottuln eG
 - [ ] Volksbank Ober-Mörlen
 - [ ] Volksbank Ochtrup eG
-- [ ] Volksbank Odenwald
+- [x] Volksbank Odenwald
 - [ ] Volksbank Offenburg
 - [ ] Volksbank Oldendorf eG
 - [ ] Volksbank Olpe eG
@@ -1447,7 +1447,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Raiffeisenbank Döbeln
 - [ ] Volksbank Raiffeisenbank Eichstätt
 - [ ] Volksbank Raiffeisenbank Fürstenfeldbruck
-- [ ] Volksbank Raiffeisenbank Hanau Ndl d Frankf VB
+- [x] Volksbank Raiffeisenbank Hanau Ndl d Frankf VB
 - [ ] Volksbank Raiffeisenbank Ismaning
 - [ ] Volksbank Raiffeisenbank Mangfalltal-Rosenheim
 - [ ] Volksbank Raiffeisenbank Meißen Großenhain
@@ -1495,9 +1495,9 @@ This library is verified to work with following banks.
 - [ ] Volksbank Schwalmtal eG
 - [ ] Volksbank Schwanewede eG
 - [ ] Volksbank Schwarzwald-Neckar
-- [ ] Volksbank Seeheim-Jugenheim
+- [x] Volksbank Seeheim-Jugenheim
 - [ ] Volksbank Seesen eG
-- [ ] Volksbank Seligenstadt
+- [x] Volksbank Seligenstadt
 - [ ] Volksbank Selm-Bork eG.
 - [ ] Volksbank Senden eG
 - [ ] Volksbank Seppenrade eG.
@@ -1520,7 +1520,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Strohgäu
 - [ ] Volksbank Stuhr eG
 - [ ] Volksbank Stutensee Hardt
-- [ ] Volksbank Südheide
+- [x] Volksbank Südheide
 - [ ] Volksbank Sulingen eG
 - [ ] Volksbank Sulmtal
 - [ ] Volksbank Sulzbachtal -alt-
@@ -1534,13 +1534,13 @@ This library is verified to work with following banks.
 - [ ] Volksbank Tübingen
 - [ ] Volksbank Überherrn
 - [ ] Volksbank Überlingen
-- [ ] Volksbank Überwald-Gorxheimertal
+- [x] Volksbank Überwald-Gorxheimertal
 - [ ] Volksbank Uckermark eG
 - [ ] Volksbank Uelzen-Bevensen eG
 - [ ] Volksbank Ulm-Biberach
 - [ ] Volksbank und Raiffeisenbank
 - [ ] Volksbank Untere Saar
-- [ ] Volksbank Usinger Land Ndl d Frankfurter VB
+- [x] Volksbank Usinger Land Ndl d Frankfurter VB
 - [ ] Volksbank Vechelde-Wendeburg eG
 - [ ] Volksbank Vechta eG
 - [ ] Volksbank Veldhausen-Neuenhaus eG
@@ -1558,7 +1558,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Weinheim
 - [ ] Volksbank Welzheim
 - [ ] Volksbank Wenden-Drolshagen eG
-- [ ] Volksbank Weschnitztal
+- [x] Volksbank Weschnitztal
 - [ ] Volksbank Weserbergland eG
 - [ ] Volksbank Westenholz eG
 - [ ] Volksbank Westerstede eG
@@ -1571,7 +1571,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Wilferdingen-Keltern
 - [ ] Volksbank Wilhelmshaven eG
 - [ ] Volksbank Winsener Marsch eG
-- [ ] Volksbank Wißmar
+- [x] Volksbank Wißmar
 - [ ] Volksbank Wittenberg eG
 - [ ] Volksbank Wittgenstein eG
 - [ ] Volksbank Wittingen-Klötze eG
@@ -1596,7 +1596,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank-Raiffeisenbank Penzberg
 - [ ] Volksbank-Raiffeisenbank Riedlingen
 - [ ] VR Bank
-- [ ] VR Bank Bad Orb-Gelnhausen
+- [x] VR Bank Bad Orb-Gelnhausen
 - [ ] VR Bank Bamberg Raiffeisen-Volksbank
 - [ ] VR Bank Biedenkopf-Gladenbach
 - [ ] VR Bank Burglengenfeld
@@ -1609,7 +1609,7 @@ This library is verified to work with following banks.
 - [ ] VR Bank Kaufbeuren-Ostallgäu
 - [ ] VR Bank Kitzingen
 - [ ] VR Bank Leipziger Land
-- [ ] VR Bank Main-Kinzig-Büdingen
+- [x] VR Bank Main-Kinzig-Büdingen
 - [ ] VR Bank Mittelhaardt
 - [ ] VR Bank München Land
 - [ ] VR Bank Nordwestpfalz -alt-
@@ -1624,7 +1624,7 @@ This library is verified to work with following banks.
 - [ ] VR Bank Südpfalz
 - [ ] VR Bank Südthüringen
 - [ ] vr bank Untertaunus
-- [ ] VR Bank Wächtersbach/Bad Soden-Salmünster -alt
+- [x] VR Bank Wächtersbach/Bad Soden-Salmünster -alt
 - [ ] VR Bank Weimar
 - [ ] VR Bank Westthüringen
 - [ ] VR Genossenschaftsbank Fulda
@@ -1687,7 +1687,7 @@ This library is verified to work with following banks.
 - [ ] Weberbank
 - [ ] Weser-Elbe-Sparkasse
 - [ ] Westerwald Bank
-- [ ] Wiesbadener Volksbank
+- [x] Wiesbadener Volksbank
 - [ ] Winterbacher Bank
 - [ ] Winterlinger Bank
 - [ ] WL-Bank
