@@ -57,6 +57,7 @@ class GetStatementOfAccount extends Response
         }
 
         $soa = new StatementOfAccount();
+
         foreach ($array as $date => $statement) {
             $statementModel = new Statement();
             $statementModel->setDate(new \DateTime($date));
@@ -66,7 +67,8 @@ class GetStatementOfAccount extends Response
             if (isset($statement['transactions'])) {
                 foreach ($statement['transactions'] as $trx) {
                     $transaction = new Transaction();
-                    $transaction->setDate(new \DateTime($date));
+                    $transaction->setBookingDate(new \DateTime($trx['booking_date']));
+                    $transaction->setValutaDate(new \DateTime($trx['valuta_date']));
                     $transaction->setCreditDebit($trx['credit_debit']);
                     $transaction->setAmount($trx['amount']);
                     $transaction->setBookingText($trx['description']['booking_text']);

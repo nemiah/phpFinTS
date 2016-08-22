@@ -11,7 +11,12 @@ class Transaction
     /**
      * @var \DateTime|null
      */
-    protected $date;
+    protected $bookingDate;
+
+    /**
+     * @var \DateTime|null
+     */
+    protected $valutaDate;
 
     /**
      * @var float
@@ -54,25 +59,60 @@ class Transaction
     protected $name;
 
     /**
-     * Get date
+     * Get booking date.
      *
+     * @deprecated Use getBookingDate() instead
      * @return \DateTime|null
      */
     public function getDate()
     {
-        return $this->date;
+        return $this->getBookingDate();
     }
 
     /**
-     * Set date
+     * Get booking date
+     *
+     * @return \DateTime|null
+     */
+    public function getBookingDate()
+    {
+        return $this->bookingDate;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime|null
+     */
+    public function getValutaDate()
+    {
+        return $this->valutaDate;
+    }
+
+    /**
+     * Set booking date
      *
      * @param \DateTime|null $date
      *
      * @return $this
      */
-    public function setDate(\DateTime $date = null)
+    public function setBookingDate(\DateTime $date = null)
     {
-        $this->date = $date;
+        $this->bookingDate = $date;
+
+        return $this;
+    }
+
+    /**
+     * Set valuta date
+     *
+     * @param \DateTime|null $date
+     *
+     * @return $this
+     */
+    public function setValutaDate(\DateTime $date = null)
+    {
+        $this->valutaDate = $date;
 
         return $this;
     }
