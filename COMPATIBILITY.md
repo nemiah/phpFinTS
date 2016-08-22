@@ -941,7 +941,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Paderborn-Detmold
 - [ ] Sparkasse Parchim-Lübz
 - [ ] Sparkasse Passau
-- [ ] Sparkasse Pforzheim Calw
+- [x] Sparkasse Pforzheim Calw
 - [ ] Sparkasse Pfullendorf-Meßkirch
 - [ ] Sparkasse Prignitz
 - [ ] Sparkasse Radevormwald-Hückeswagen 
