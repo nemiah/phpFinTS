@@ -104,7 +104,7 @@ class MT940
                     } elseif ($trxMatch[2] == 'D') {
                         $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
                     } else {
-                        die('cd mark not found in: ' . $transaction);
+                        throw new MT940Exception('cd mark not found in: ' . $transaction);
                     }
 
                     $amount = $trxMatch[4];
