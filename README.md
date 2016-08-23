@@ -31,4 +31,9 @@ This library can only work stable with *YOUR* help!
 As I'm very limited in testing different banks it would be good to get some feedback from you all.
 Feel free to create PR's for the [COMPATIBILITY.md](COMPATIBILITY.md) file where you can update the list of working banks.
 
+### Code Style
+
+If you plan to contribute to this library, please ensure that you stick with the PSR coding rules as close as you can (At least PSR-0 to PSR-4).
+You can find the PHP Standard Recommendations [here](http://www.php-fig.org/psr/)
+
 ### Have fun!
