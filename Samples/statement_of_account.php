@@ -9,6 +9,7 @@ require '../vendor/autoload.php';
 
 use Fhp\FinTs;
 use Fhp\Model\StatementOfAccount\Statement;
+use Fhp\Model\StatementOfAccount\Transaction;
 
 define('FHP_BANK_URL', '');                # HBCI / FinTS Url can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm (use the PIN/TAN URL)
 define('FHP_BANK_PORT', 443);              # HBCI / FinTS Port can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm
@@ -36,7 +37,7 @@ foreach ($soa->getStatements() as $statement) {
     echo 'Transactions:' . PHP_EOL;
     echo '=======================================' . PHP_EOL;
     foreach ($statement->getTransactions() as $transaction) {
-        echo 'Amount      : ' . ($transaction->getCreditDebit() == Statement::CD_DEBIT ? '-' : '') . $transaction->getAmount() . PHP_EOL;
+        echo 'Amount      : ' . ($transaction->getCreditDebit() == Transaction::CD_DEBIT ? '-' : '') . $transaction->getAmount() . PHP_EOL;
         echo 'Booking text: ' . $transaction->getBookingText() . PHP_EOL;
         echo 'Name        : ' . $transaction->getName() . PHP_EOL;
         echo 'Description : ' . $transaction->getDescription1() . PHP_EOL;

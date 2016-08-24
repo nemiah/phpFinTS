@@ -48,6 +48,7 @@ class MT940
 
     /**
      * @return array
+     * @throws MT940Exception
      */
     protected function parseToArray()
     {

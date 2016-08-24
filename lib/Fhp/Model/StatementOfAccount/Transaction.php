@@ -8,6 +8,9 @@ namespace Fhp\Model\StatementOfAccount;
  */
 class Transaction
 {
+    const CD_CREDIT = 'credit';
+    const CD_DEBIT = 'debit';
+
     /**
      * @var \DateTime|null
      */
@@ -62,6 +65,7 @@ class Transaction
      * Get booking date.
      *
      * @deprecated Use getBookingDate() instead
+     * @codeCoverageIgnore
      * @return \DateTime|null
      */
     public function getDate()

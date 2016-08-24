@@ -30,9 +30,9 @@ class StatementOfAccount
      *
      * @return $this
      */
-    public function setStatements(array $statements)
+    public function setStatements(array $statements = null)
     {
-        $this->statements = $statements;
+        $this->statements = null == $statements ? array() : $statements;
 
         return $this;
     }

@@ -8,8 +8,6 @@ namespace Fhp\Model;
  */
 class SEPAAccount
 {
-    /** @var bool */
-    protected $isSepaCapable;
     /** @var string */
     protected $iban;
     /** @var string */
@@ -20,30 +18,6 @@ class SEPAAccount
     protected $subAccount;
     /** @var string */
     protected $blz;
-
-    /**
-     * Get isSepaCapable
-     *
-     * @return bool
-     */
-    public function getIsSepaCapable()
-    {
-        return $this->isSepaCapable;
-    }
-
-    /**
-     * Set isSepaCapable
-     *
-     * @param bool $isSepaCapable
-     *
-     * @return $this
-     */
-    public function setIsSepaCapable($isSepaCapable)
-    {
-        $this->isSepaCapable = (bool) $isSepaCapable;
-
-        return $this;
-    }
 
     /**
      * Get iban

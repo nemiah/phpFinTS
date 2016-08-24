@@ -8,42 +8,46 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 {
     public function test_getter_and_setter()
     {
-        $m = new Account();
-        $this->assertNull($m->getId());
-        $this->assertNull($m->getAccountDescription());
-        $this->assertNull($m->getAccountNumber());
-        $this->assertNull($m->getAccountOwnerName());
-        $this->assertNull($m->getBankCode());
-        $this->assertNull($m->getCurrency());
-        $this->assertNull($m->getCustomerId());
-        $this->assertNull($m->getIban());
+        $obj = new Account();
+        $this->assertNull($obj->getId());
+        $this->assertNull($obj->getAccountDescription());
+        $this->assertNull($obj->getAccountNumber());
+        $this->assertNull($obj->getAccountOwnerName());
+        $this->assertNull($obj->getBankCode());
+        $this->assertNull($obj->getCurrency());
+        $this->assertNull($obj->getCustomerId());
+        $this->assertNull($obj->getIban());
+
+        // test id
+        $obj->setId(10);
+        $this->assertSame(10, $obj->getId());
 
         // test description
-        $m->setAccountDescription('Description');
-        $this->assertSame('Description', $m->getAccountDescription());
+        $obj->setAccountDescription('Description');
+        $this->assertSame('Description', $obj->getAccountDescription());
 
         // test account number
-        $m->setAccountNumber('123123123');
-        $this->assertSame('123123123', $m->getAccountNumber());
+        $obj->setAccountNumber('123123123');
+        $this->assertSame('123123123', $obj->getAccountNumber());
 
         // test account owner name
-        $m->setAccountOwnerName('The Owner');
-        $this->assertSame('The Owner', $m->getAccountOwnerName());
+        $obj->setAccountOwnerName('The Owner');
+        $this->assertSame('The Owner', $obj->getAccountOwnerName());
 
         // test bank code
-        $m->setBankCode('123123123');
-        $this->assertSame('123123123', $m->getBankCode());
+        $obj->setBankCode('123123123');
+        $this->assertSame('123123123', $obj->getBankCode());
 
         // test currency
-        $m->setCurrency('EUR');
-        $this->assertSame('EUR', $m->getCurrency());
+        $obj->setCurrency('EUR');
+        $this->assertSame('EUR', $obj->getCurrency());
 
         // test customer ID
-        $m->setCustomerId('123123123');
-        $this->assertSame('123123123', $m->getCustomerId());
+        $obj->setCustomerId('123123123');
+        $this->assertSame('123123123', $obj->getCustomerId());
 
         // test iban
-        $m->setIban('DE123123123123');
-        $this->assertSame('DE123123123123', $m->getIban());
+        $obj->setIban('DE123123123123');
+        $this->assertSame('DE123123123123', $obj->getIban());
     }
 }

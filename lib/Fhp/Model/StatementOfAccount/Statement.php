@@ -19,7 +19,7 @@ class Statement
     /**
      * @var float
      */
-    protected $startBalance;
+    protected $startBalance = 0.0;
 
     /**
      * @var string
@@ -27,7 +27,7 @@ class Statement
     protected $creditDebit;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $date;
 
@@ -48,7 +48,7 @@ class Statement
      *
      * @return $this
      */
-    public function setTransactions(array $transactions)
+    public function setTransactions(array $transactions = null)
     {
         $this->transactions = $transactions;
 
@@ -79,7 +79,7 @@ class Statement
      */
     public function setStartBalance($startBalance)
     {
-        $this->startBalance = $startBalance;
+        $this->startBalance = (float) $startBalance;
 
         return $this;
     }
@@ -97,7 +97,7 @@ class Statement
     /**
      * Set creditDebit
      *
-     * @param mixed $creditDebit
+     * @param string|null $creditDebit
      *
      * @return $this
      */
@@ -125,7 +125,7 @@ class Statement
      *
      * @return $this
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
