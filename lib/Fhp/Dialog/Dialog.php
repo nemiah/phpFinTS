@@ -13,8 +13,8 @@ use Fhp\Segment\HKEND;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKSYN;
 use Fhp\Segment\HKVVB;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Class Dialog
@@ -168,16 +168,16 @@ class Dialog
     {
         switch (substr($code, 0, 1)) {
             case '0':
-                $level = Logger::INFO;
+                $level = LogLevel::INFO;
                 break;
             case "3":
-                $level = Logger::WARNING;
+                $level = LogLevel::WARNING;
                 break;
             case "9":
-                $level = Logger::ERROR;
+                $level = LogLevel::ERROR;
                 break;
             default:
-                $level = Logger::INFO;
+                $level = LogLevel::INFO;
         }
 
         $this->logger->log($level, '[' . $type . '] ' . $message);

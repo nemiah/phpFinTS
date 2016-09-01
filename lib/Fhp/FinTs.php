@@ -18,20 +18,19 @@ use Fhp\Response\GetStatementOfAccount;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
- * Class FinTs
+ * Class FinTs.
+ *
  * @package Fhp
  */
 class FinTs
 {
     const DEFAULT_COUNTRY_CODE = 280;
-    const LOGGER_NAME = 'Fhp';
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $logger;
     /** @var  string */
     protected $server;
@@ -71,6 +70,7 @@ class FinTs
     ) {
         $this->server = $server;
         $this->port = $port;
+        $this->logger = null == $logger ? new NullLogger() : $logger;
 
         // escaping of bank code not really needed here as it should
         // never have special chars. But we just do it to ensure
@@ -85,12 +85,6 @@ class FinTs
 
         $this->adapter = new Curl($this->server, $this->port);
         $this->connection = new Connection($this->adapter);
-
-        if (null == $logger) {
-            $this->logger = new Logger(static::LOGGER_NAME);
-            $handler = new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, Logger::INFO);
-            $this->logger->pushHandler($handler);
-        }
     }
 
     /**

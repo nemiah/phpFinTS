@@ -45,7 +45,6 @@ class GetSEPAAccounts extends Response
     protected function createModelFromArray(array $array)
     {
         $account = new SEPAAccount();
-        $account->setIsSepaCapable($array[0] == 'J' ? true : false);
         $account->setIban($array[1]);
         $account->setBic($array[2]);
         $account->setAccountNumber($array[3]);
