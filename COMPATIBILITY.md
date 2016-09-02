@@ -1679,7 +1679,7 @@ This library is verified to work with following banks.
 - [ ] VR-Bank Vilsbiburg
 - [ ] VR-Bank Weinstadt
 - [ ] VR-Bank Werra-Meißner
-- [ ] VR-Bank Westmünsterland eG
+- [x] VR-Bank Westmünsterland eG
 - [ ] VR-Bank Westpfalz
 - [ ] VRB eG, Wismar
 - [ ] VTB Bank AG
