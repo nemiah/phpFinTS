@@ -126,7 +126,8 @@ class MT940
                     if (preg_match('/^\d{4}$/', $bookingDate)) {
                         $bookingDate = $this->getDate($year . $bookingDate);
                     } else {
-                        $bookingDate = null;
+                        // if booking date not set in :61, then we have to take it from :60F
+                        $bookingDate = $this->soaDate;
                     }
 
                     $trx[count($trx) - 1]['booking_date'] = $bookingDate;
