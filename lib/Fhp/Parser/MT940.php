@@ -120,9 +120,9 @@ class MT940
                     // 0511 = valuta date
                     // 0509 = booking date
                     $year = substr($transaction, 0, 2);
-                    $valutaDate = $this->getDate($year . substr($transaction, 2, 6));
+                    $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
 
-                    $bookingDate = substr($transaction, 6, 10);
+                    $bookingDate = substr($transaction, 6, 4);
                     if (preg_match('/^\d{4}$/', $bookingDate)) {
                         $bookingDate = $this->getDate($year . $bookingDate);
                     } else {
