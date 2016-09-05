@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mschindler83/fints-hbci-php.svg?branch=master)](https://travis-ci.org/mschindler83/fints-hbci-php)
 [![Latest Stable Version](https://poser.pugx.org/mschindler83/fints-hbci-php/v/stable)](https://packagist.org/packages/mschindler83/fints-hbci-php)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mschindler83/fints-hbci-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mschindler83/fints-hbci-php/?branch=master)
 [![Monthly Downloads](https://poser.pugx.org/mschindler83/fints-hbci-php/d/monthly)](https://packagist.org/packages/mschindler83/fints-hbci-php)
 [![License](https://poser.pugx.org/mschindler83/fints-hbci-php/license)](https://packagist.org/packages/mschindler83/fints-hbci-php)
 
