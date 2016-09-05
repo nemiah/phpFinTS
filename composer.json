@@ -2,7 +2,7 @@
   "name": "mschindler83/fints-hbci-php",
   "description": "PHP Library for the protocols fints and hbci",
   "homepage": "http://fints-hbci-php.markus-schindler.de",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "autoload": {
     "psr-0": {
