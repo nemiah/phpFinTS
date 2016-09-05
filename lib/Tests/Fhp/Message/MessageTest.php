@@ -2,7 +2,6 @@
 
 namespace Fhp\Message;
 
-use Fhp\DataElementGroups\SecurityProfile;
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Ktv;
 use Fhp\Segment\AbstractSegment;
@@ -12,7 +11,6 @@ use Fhp\Segment\HNSHA;
 use Fhp\Segment\HNSHK;
 use Fhp\Segment\HNVSD;
 use Fhp\Segment\HNVSK;
-use Fhp\Segment\SegmentInterface;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {

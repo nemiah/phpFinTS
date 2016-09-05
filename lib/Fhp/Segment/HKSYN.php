@@ -18,7 +18,7 @@ class HKSYN extends AbstractSegment
 
     const SYNC_MODE_NEW_CUSTOMER_ID = 0; // Neue Kundensystem-ID zurückmelden
     const SYNC_MODE_LAST_MSG_NUMBER = 1; // Letzte verarbeitete Nachrichtennummer zurückmelden
-    const SYNC_MODE_SIGNATURE_ID = 2;    // Signatur-ID zurückmelden
+    const SYNC_MODE_SIGNATURE_ID = 2; // Signatur-ID zurückmelden
 
     /**
      * HKSYN constructor.

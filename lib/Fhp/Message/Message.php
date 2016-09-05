@@ -112,7 +112,7 @@ class Message extends AbstractMessage
             }
         }
 
-        $signatureHead  = $this->buildSignatureHead();
+        $signatureHead = $this->buildSignatureHead();
         $hnvsk = $this->buildEncryptionHead();
 
         $this->addSegment($hnvsk);
@@ -128,7 +128,7 @@ class Message extends AbstractMessage
 
         $curCount = count($encryptedSegments) + 3;
 
-        $signatureEnd   = new HNSHA($curCount, $this->securityReference, $this->pin);
+        $signatureEnd = new HNSHA($curCount, $this->securityReference, $this->pin);
         $this->addEncryptedSegment($signatureEnd);
         $this->addSegment(new HNHBS($curCount + 1, $this->messageNumber));
     }

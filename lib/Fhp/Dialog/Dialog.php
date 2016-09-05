@@ -186,7 +186,7 @@ class Dialog
     /**
      * Gets the dialog ID.
      *
-     * @return int|string
+     * @return integer
      */
     public function getDialogId()
     {
@@ -256,7 +256,7 @@ class Dialog
     /**
      * Initializes a dialog.
      *
-     * @return int|null
+     * @return string|null
      * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
@@ -294,7 +294,7 @@ class Dialog
     /**
      * Sends sync request.
      *
-     * @return mixed
+     * @return string
      * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
@@ -350,7 +350,7 @@ class Dialog
     /**
      * Ends a previous started dialog.
      *
-     * @return mixed
+     * @return string
      * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException

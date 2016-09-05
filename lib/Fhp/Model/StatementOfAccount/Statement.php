@@ -87,7 +87,7 @@ class Statement
     /**
      * Get creditDebit
      *
-     * @return mixed
+     * @return string
      */
     public function getCreditDebit()
     {

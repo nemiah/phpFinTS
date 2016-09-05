@@ -26,7 +26,7 @@ class Response
     /**
      * Response constructor.
      *
-     * @param $rawResponse
+     * @param string $rawResponse
      */
     public function __construct($rawResponse)
     {
@@ -117,7 +117,7 @@ class Response
         foreach ($segments as $segment) {
             $segment = $this->splitSegment($segment);
             array_shift($segment);
-            foreach($segment as $seg) {
+            foreach ($segment as $seg) {
                 list($id, $msg) = explode('::', $seg, 2);
                 if ("3920" == $id) {
                     if (preg_match_all('/\d{3}/', $msg, $matches)) {
@@ -242,7 +242,7 @@ class Response
 
     /**
      * @param bool $translateCodes
-     * @return mixed
+     * @return string
      */
     public function humanReadable($translateCodes = false)
     {
