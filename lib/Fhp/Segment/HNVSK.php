@@ -27,11 +27,11 @@ class HNVSK extends AbstractSegment
     const SECURITY_SUPPLIER_ROLE_WIT = 4;
 
     const COMPRESSION_NONE = 0;
-    const COMPRESSION_LZW =  1;
-    const COMPRESSION_COM =  2;
+    const COMPRESSION_LZW = 1;
+    const COMPRESSION_COM = 2;
     const COMPRESSION_LZSS = 3;
     const COMPRESSION_LZHUFF = 4;
-    const COMPRESSION_ZIP =  5;
+    const COMPRESSION_ZIP = 5;
     const COMPRESSION_GZIP = 6;
     const COMPRESSION_BZIP2 = 7;
     const COMPRESSION_NEGOTIATE = 999;

@@ -23,7 +23,7 @@ class MT940
     /**
      * MT940 constructor.
      *
-     * @param $rawData
+     * @param string $rawData
      */
     public function __construct($rawData)
     {

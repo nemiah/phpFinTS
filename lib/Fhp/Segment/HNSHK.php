@@ -65,16 +65,16 @@ class HNSHK extends AbstractSegment
             $segmentNumber,
             static::VERSION,
             array(
-                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion),      #2
-                $securityFunction,                                                                          #3
-                $securityReference,                                                                         #4
-                $securityBoundary,                                                                          #5
-                $securitySupplierRole,                                                                      #6
-                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId),      #7
-                1,                                                                                          #8
-                new SecurityDateTime(),                                                                     #9
-                new HashAlgorithm(),                                                                        #10
-                new SignatureAlgorithm(),                                                                   #11
+                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion), #2
+                $securityFunction, #3
+                $securityReference, #4
+                $securityBoundary, #5
+                $securitySupplierRole, #6
+                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId), #7
+                1, #8
+                new SecurityDateTime(), #9
+                new HashAlgorithm(), #10
+                new SignatureAlgorithm(), #11
                 new KeyName($countryCode, $bankCode, $userName, KeyName::KEY_TYPE_SIGNATURE)                #12
             )
         );
