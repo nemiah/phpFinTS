@@ -81,7 +81,7 @@ This library is verified to work with following banks.
 - [ ] Dettinger Bank
 - [ ] Deutsche Apotheker- und Ärztebank eG
 - [ ] Deutsche Bank AG
-- [ ] Deutsche Bank Privat und Geschäftskunden AG
+- [x] Deutsche Bank Privat und Geschäftskunden AG
 - [ ] Deutsche Genossenschafts-Hypothekenbank AG
 - [x] Deutsche Kreditbank Berlin (DKB) AG
 - [ ] Deutsche Skatbank Zndl VR Bank Altenburger Land
