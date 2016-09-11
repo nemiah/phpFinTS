@@ -70,7 +70,7 @@ This library is verified to work with following banks.
 - [ ] BVB Volksbank Ndl d Frankfurter Volksbank
 - [ ] Calenberger Kreditverein
 - [ ] Cash Express Gesellschaft f Finanz-u Reisedienstleistungen
-- [ ] comdirect bank AG
+- [x] comdirect bank AG
 - [ ] Commerzbank
 - [ ] Crailsheimer Volksbank -alt-
 - [ ] Credit- und Volksbank eG
@@ -214,7 +214,7 @@ This library is verified to work with following banks.
 - [ ] Kreissparkasse Mayen
 - [ ] Kreissparkasse Melle
 - [ ] Kreissparkasse Miesbach-Tegernsee
-- [ ] Kreissparkasse München Starnberg Ebersberg
+- [x] Kreissparkasse München Starnberg Ebersberg
 - [ ] Kreissparkasse Nordhausen
 - [ ] Kreissparkasse Northeim
 - [ ] Kreissparkasse Ostalb (Aalen)
