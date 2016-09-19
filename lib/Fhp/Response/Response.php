@@ -8,18 +8,24 @@ use Fhp\Segment\NameMapping;
 
 /**
  * Class Response
+ *
  * @package Fhp\Response
  */
 class Response
 {
+
     /** @var string */
     public $rawResponse;
+
     /** @var string */
     protected $response;
+
     /** @var array */
-    protected $segments = array();
+    protected $segments = [];
+
     /** @var string */
     protected $dialogId;
+
     /** @var string */
     protected $systemId;
 
@@ -35,8 +41,8 @@ class Response
         }
 
         $this->rawResponse = $rawResponse;
-        $this->response    = $this->unwrapEncryptedMsg($rawResponse);
-        $this->segments = explode("'", $rawResponse);
+        $this->response = $this->unwrapEncryptedMsg($rawResponse);
+        $this->segments = preg_split("#(')(?=[A-Z]{4,})#", $rawResponse);
     }
 
     /**
@@ -79,11 +85,12 @@ class Response
      * Some kind of HBCI pagination.
      *
      * @param AbstractMessage $message
+     *
      * @return array
      */
     public function getTouchDowns(AbstractMessage $message)
     {
-        $touchdown = array();
+        $touchdown = [];
         $messageSegments = $message->getEncryptedSegments();
         /** @var AbstractSegment $msgSeg */
         foreach ($messageSegments as $msgSeg) {
@@ -184,16 +191,17 @@ class Response
 
     /**
      * @param string $name
+     *
      * @return array
      * @throws \Exception
      */
     protected function getSummaryBySegment($name)
     {
-        if (!in_array($name, array('HIRMS', 'HIRMG'))) {
+        if (!in_array($name, ['HIRMS', 'HIRMG'])) {
             throw new \Exception('Invalid segment for message summary. Only HIRMS and HIRMG supported');
         }
 
-        $result = array();
+        $result = [];
         $segment = $this->findSegment($name);
         $segment = $this->splitSegment($segment);
         array_shift($segment);
@@ -207,6 +215,7 @@ class Response
 
     /**
      * @param string $segmentName
+     *
      * @return string
      */
     public function getSegmentMaxVersion($segmentName)
@@ -242,13 +251,14 @@ class Response
 
     /**
      * @param bool $translateCodes
+     *
      * @return string
      */
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            array("'", '+'),
-            array(PHP_EOL, PHP_EOL . "  "),
+            ["'", '+'],
+            [PHP_EOL, PHP_EOL . "  "],
             $translateCodes
                 ? NameMapping::translateResponse($this->rawResponse)
                 : $this->rawResponse
@@ -256,8 +266,9 @@ class Response
     }
 
     /**
-     * @param string $name
+     * @param string          $name
      * @param AbstractSegment $reference
+     *
      * @return string|null
      */
     protected function findSegmentForReference($name, AbstractSegment $reference)
@@ -278,6 +289,7 @@ class Response
 
     /**
      * @param string $name
+     *
      * @return array|null|string
      */
     protected function findSegment($name)
@@ -287,12 +299,13 @@ class Response
 
     /**
      * @param string $name
-     * @param bool $one
+     * @param bool   $one
+     *
      * @return array|null|string
      */
     protected function findSegments($name, $one = false)
     {
-        $found = $one ? null : array();
+        $found = $one ? null : [];
 
         foreach ($this->segments as $segment) {
             $split = explode(':', $segment, 2);
@@ -310,6 +323,7 @@ class Response
 
     /**
      * @param $segment
+     *
      * @return array
      */
     protected function splitSegment($segment)
@@ -321,6 +335,7 @@ class Response
 
     /**
      * @param $deg
+     *
      * @return array
      */
     protected function splitDeg($deg)
@@ -330,7 +345,8 @@ class Response
 
     /**
      * @param int $idx
-     * @param $segment
+     * @param     $segment
+     *
      * @return string|null
      */
     protected function getSegmentIndex($idx, $segment)
@@ -345,6 +361,7 @@ class Response
 
     /**
      * @param string $response
+     *
      * @return string
      */
     protected function unwrapEncryptedMsg($response)
