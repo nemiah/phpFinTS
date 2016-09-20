@@ -21,7 +21,7 @@ class Response
     protected $response;
 
     /** @var array */
-    protected $segments = [];
+    protected $segments = array();
 
     /** @var string */
     protected $dialogId;
@@ -42,7 +42,7 @@ class Response
 
         $this->rawResponse = $rawResponse;
         $this->response = $this->unwrapEncryptedMsg($rawResponse);
-        $this->segments = preg_split("#(')(?=[A-Z]{4,}:\d|')#", $rawResponse);
+        $this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
     }
 
     /**
@@ -90,7 +90,7 @@ class Response
      */
     public function getTouchDowns(AbstractMessage $message)
     {
-        $touchdown = [];
+        $touchdown = array();
         $messageSegments = $message->getEncryptedSegments();
         /** @var AbstractSegment $msgSeg */
         foreach ($messageSegments as $msgSeg) {
@@ -197,11 +197,11 @@ class Response
      */
     protected function getSummaryBySegment($name)
     {
-        if (!in_array($name, ['HIRMS', 'HIRMG'])) {
+        if (!in_array($name, array('HIRMS', 'HIRMG'))) {
             throw new \Exception('Invalid segment for message summary. Only HIRMS and HIRMG supported');
         }
 
-        $result = [];
+        $result = array();
         $segment = $this->findSegment($name);
         $segment = $this->splitSegment($segment);
         array_shift($segment);
@@ -257,8 +257,8 @@ class Response
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            ["'", '+'],
-            [PHP_EOL, PHP_EOL . "  "],
+            array("'", '+'),
+            array(PHP_EOL, PHP_EOL . "  "),
             $translateCodes
                 ? NameMapping::translateResponse($this->rawResponse)
                 : $this->rawResponse
@@ -305,7 +305,7 @@ class Response
      */
     protected function findSegments($name, $one = false)
     {
-        $found = $one ? null : [];
+        $found = $one ? null : array();
 
         foreach ($this->segments as $segment) {
             $split = explode(':', $segment, 2);
