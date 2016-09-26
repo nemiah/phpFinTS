@@ -112,8 +112,8 @@ This library is verified to work with following banks.
 - [ ] Förde Sparkasse
 - [ ] Frankenberger Bank Raiffeisenbank
 - [x] Frankfurter Bankgesellschaft
-- [ ] Frankfurter Sparkasse
-- [x] Frankfurter Volksbank
+- [x] Frankfurter Sparkasse
+- [x] Frankfurter Volksbank e.G.
 - [ ] Freiberger Bank
 - [ ] Freisinger Bank Volksbank-Raiffeisenbank
 - [ ] Fürst Fugger Privatbank
@@ -302,6 +302,7 @@ This library is verified to work with following banks.
 - [ ] PayCenter GmbH
 - [ ] Postbank
 - [ ] Postbank (Giro)
+- [x] Postbank Geschäftskunden
 - [x] PSD Bank Berlin-Brandenburg
 - [x] PSD Bank Braunschweig
 - [x] PSD Bank Hannover
@@ -1692,4 +1693,5 @@ This library is verified to work with following banks.
 - [ ] Winterbacher Bank
 - [ ] Winterlinger Bank
 - [ ] WL-Bank
+- [X] Wüstenrot Bank AG
 - [ ] Zevener Volksbank eG
