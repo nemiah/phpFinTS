@@ -294,7 +294,7 @@ This library is verified to work with following banks.
 - [x] Offenbacher Volksbank -alt-
 - [ ] Onstmettinger Bank
 - [ ] Ostfriesische Volksbank eG
-- [ ] Ostsächsische Sparkasse Dresden
+- [x] Ostsächsische Sparkasse Dresden
 - [ ] Ostseesparkasse Rostock
 - [ ] Paffrather Raiffeisenbank eG
 - [ ] Paffrather RB eG
