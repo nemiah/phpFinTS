@@ -328,7 +328,7 @@ class Response
      */
     protected function splitSegment($segment)
     {
-        $parts = explode('+', $segment);
+        $parts = preg_split('/\+(?<!\?\+)/', $segment);
 
         return $parts;
     }
