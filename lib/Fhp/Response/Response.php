@@ -330,6 +330,10 @@ class Response
     {
         $parts = preg_split('/\+(?<!\?\+)/', $segment);
 
+        foreach ( $parts as &$part ) {
+            $part = str_replace( '?+', '+', $part );
+        }
+
         return $parts;
     }
 
