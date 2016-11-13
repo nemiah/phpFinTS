@@ -165,9 +165,9 @@ class MT940
             $index = (int) $m[1];
             if ((20 <= $index && $index <= 29) || (60 <= $index && $index <= 63)) {
                 if (20 <= $index && $index <= 29) {
-                    $description1 .= $prepared[$i];
+                    $description1 .= $m[2];
                 } else {
-                    $description2 .= $prepared[$i];
+                    $description2 .= $m[2];
                 }
                 $m[2] = trim(str_replace("\r\n", '', $m[2]));
                 if (!empty($m[2])) {
