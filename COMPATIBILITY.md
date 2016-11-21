@@ -57,7 +57,7 @@ This library is verified to work with following banks.
 - [ ] BHF-Bank AG
 - [x] Birsteiner Volksbank
 - [ ] biw Bank für Investments und Wertpapiere
-- [ ] BNP Paribas S.A. Niederlassung Deutschland - Consorsbank
+- [x] BNP Paribas S.A. Niederlassung Deutschland - Consorsbank
 - [ ] Bopfinger Bank Sechta-Ries
 - [ ] Bordesholmer Sparkasse AG
 - [ ] Borkener Volksbank eG.
@@ -188,7 +188,7 @@ This library is verified to work with following banks.
 - [ ] Kreissparkasse Döbeln
 - [ ] Kreissparkasse Düsseldorf 
 - [ ] Kreissparkasse Eichsfeld
-- [ ] Kreissparkasse Esslingen-Nürtingen
+- [x] Kreissparkasse Esslingen-Nürtingen
 - [ ] Kreissparkasse Euskirchen 
 - [ ] Kreissparkasse Freudenstadt
 - [ ] Kreissparkasse Garmisch-Partenkirchen
