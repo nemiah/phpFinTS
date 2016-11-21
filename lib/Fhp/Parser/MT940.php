@@ -158,24 +158,56 @@ class MT940
         $descr = str_replace('? ', '?', $descr);
         preg_match_all('/\?(\d{2})([^\?]+)/', $descr, $matches, PREG_SET_ORDER);
 
+        $descriptionLines = array();
+        $description1 = ''; // Legacy, could be removed.
+        $description2 = ''; // Legacy, could be removed.
         foreach ($matches as $m) {
-            $prepared[(int) $m[1]] = $m[2];
+            $index = (int) $m[1];
+            if ((20 <= $index && $index <= 29) || (60 <= $index && $index <= 63)) {
+                if (20 <= $index && $index <= 29) {
+                    $description1 .= $m[2];
+                } else {
+                    $description2 .= $m[2];
+                }
+                $m[2] = trim(str_replace("\r\n", '', $m[2]));
+                if (!empty($m[2])) {
+                    $descriptionLines[] = $m[2];
+                }
+            } else {
+                $prepared[$index] = $m[2];
+            }
         }
 
-        // verwendungszweck
-        $description = '';
-        for ($i = 20; $i <= 29; $i++) {
-            $description .= $prepared[$i];
+        $description = array();
+        if (strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
+            $description['SVWZ'] = implode('', $descriptionLines);
+        } else {
+            $lastType = null;
+            foreach ($descriptionLines as $line) {
+                if (strlen($line) > 5 && $line[4] === '+') {
+                    if ($lastType != null) {
+                        $description[$lastType] = trim($description[$lastType]);
+                    }
+                    $lastType = substr($line, 0, 4);
+                    $description[$lastType] = substr($line, 5);
+                } else {
+                    $description[$lastType] .= $line;
+                }
+                if (strlen($line) < 27) {
+                    // Usually, lines are 27 characters long. In case characters are missing, then it's either the end
+                    // of the current type or spaces have been trimmed from the end. We want to collapse multiple spaces
+                    // into one and we don't want to leave trailing spaces behind. So add a single space here to make up
+                    // for possibly missing spaces, and if it's the end of the type, it will be trimmed off later.
+                    $description[$lastType] .= ' ';
+                }
+            }
+            $description[$lastType] = trim($description[$lastType]);
         }
 
-        $description2 = '';
-        for ($i = 60; $i <= 63; $i++) {
-            $description2 .= $prepared[$i];
-        }
-
+        $result['description']       = $description;
         $result['booking_text']      = trim(str_replace("\r\n", '', $prepared[0]));
         $result['primanoten_nr']     = trim(str_replace("\r\n", '', $prepared[10]));
-        $result['description_1']     = trim(str_replace("\r\n", '', $description));
+        $result['description_1']     = trim(str_replace("\r\n", '', $description1));
         $result['bank_code']         = trim(str_replace("\r\n", '', $prepared[30]));
         $result['account_number']    = trim(str_replace("\r\n", '', $prepared[31]));
         $result['name']              = trim(str_replace("\r\n", '', $prepared[32] . $prepared[33]));
