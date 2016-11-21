@@ -77,7 +77,12 @@ class Curl implements AdapterInterface
         $this->lastResponseInfo = curl_getinfo($this->curlHandle);
 
         if (false === $response) {
-            throw new CurlException('Failed connection to ' . $this->host, 0, null, $this->lastResponseInfo);
+            throw new CurlException(
+                'Failed connection to ' . $this->host . ': ' . curl_error($this->curlHandle),
+                curl_errno($this->curlHandle),
+                null,
+                $this->lastResponseInfo
+            );
         }
 
         $statusCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
