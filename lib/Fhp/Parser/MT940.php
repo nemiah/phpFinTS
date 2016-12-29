@@ -179,7 +179,7 @@ class MT940
         }
 
         $description = array();
-        if (strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
+        if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
             $description['SVWZ'] = implode('', $descriptionLines);
         } else {
             $lastType = null;
