@@ -17,7 +17,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function test_getter_and_setter()
     {
-        $response = self::getMethod( Response::class, 'splitSegment' );
+        $response = self::getMethod( 'Fhp\Response\Response', 'splitSegment' );
 
         $withoutEscape = new Response( '' );
         $escaped       = clone $withoutEscape;
