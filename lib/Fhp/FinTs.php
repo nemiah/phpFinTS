@@ -201,7 +201,7 @@ class FinTs
 
         /** @var GetStatementOfAccount $r */
         foreach ($responses as $r) {
-            $masterArray += $r->getStatementOfAccountArray();
+            $masterArray = array_merge($masterArray,$r->getStatementOfAccountArray());
         }
 
         $dialog->endDialog();
