@@ -64,8 +64,8 @@ class MT940
             for ($i = 0; $i < count($day); $i++) {
                 // handle start balance
                 // 60F:C160401EUR1234,56
-                if (0 === strpos($day[$i], '60F:')) {
-                    // remove 60F: for better parsing
+                if (preg_match('/^60(F|M):/', $day[$i])) {
+                    // remove 60(F|M): for better parsing
                     $day[$i] = substr($day[$i], 4);
                     $this->soaDate = $this->getDate(substr($day[$i], 1, 6));
 
