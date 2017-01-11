@@ -16,53 +16,54 @@ class GetStatementOfAccount extends Response
     const SEG_ACCOUNT_INFORMATION = 'HIKAZ';
 
     /**
-     * @return StatementOfAccount|null
-     * @throws \Fhp\Parser\Exception\MT940Exception
+     * Gets the raw MT940 string from response.
+     *
+     * @return string
      */
-    public function getStatementOfAccount()
+    public function getRawMt940()
     {
-        return static::createModelFromArray(
-            $this->getStatementOfAccountArray()
-        );
-    }
-
-    /**
-     * @return array
-     * @throws \Fhp\Parser\Exception\MT940Exception
-     */
-    public function getStatementOfAccountArray()
-    {
-        $data = array();
         $seg = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
         if (is_string($seg)) {
             if (preg_match('/@(\d+)@(.+)/ms', $seg, $m)) {
-                $parser = new MT940($m[2]);
-                $data = $parser->parse(MT940::TARGET_ARRAY);
+                return $m[2];
             }
         }
 
-        return $data;
+        return '';
     }
 
     /**
-     * Creates a StatementOfAccount model from array.
+     * Creates StatementOfAccount object from raw MT940 string.
+     *
+     * @param $rawMt940
+     * @return StatementOfAccount
+     */
+    public static function createModelFromRawMt940($rawMt940)
+    {
+        $parser = new MT940($rawMt940);
+
+        return static::createModelFromArray($parser->parse(MT940::TARGET_ARRAY));
+    }
+
+    /**
+     * Adds statements to an existing StatementOfAccount object.
      *
      * @param array $array
-     * @return StatementOfAccount|null
+     * @param StatementOfAccount $statementOfAccount
+     * @return StatementOfAccount
      */
-    public static function createModelFromArray(array $array)
+    protected static function addFromArray(array $array, StatementOfAccount $statementOfAccount)
     {
-        if (empty($array)) {
-            return null;
-        }
-
-        $soa = new StatementOfAccount();
-
         foreach ($array as $date => $statement) {
-            $statementModel = new Statement();
-            $statementModel->setDate(new \DateTime($date));
-            $statementModel->setStartBalance((float) $statement['start_balance']['amount']);
-            $statementModel->setCreditDebit($statement['start_balance']['credit_debit']);
+            if ($statementOfAccount->hasStatementForDate($date)) {
+                $statementModel = $statementOfAccount->getStatementForDate($date);
+            } else {
+                $statementModel = new Statement();
+                $statementModel->setDate(new \DateTime($date));
+                $statementModel->setStartBalance((float) $statement['start_balance']['amount']);
+                $statementModel->setCreditDebit($statement['start_balance']['credit_debit']);
+                $statementOfAccount->addStatement($statementModel);
+            }
 
             if (isset($statement['transactions'])) {
                 foreach ($statement['transactions'] as $trx) {
@@ -80,11 +81,21 @@ class GetStatementOfAccount extends Response
                     $statementModel->addTransaction($transaction);
                 }
             }
-            $soa->addStatement($statementModel);
         }
+
+        return $statementOfAccount;
+    }
+
+    /**
+     * Creates a StatementOfAccount model from array.
+     *
+     * @param array $array
+     * @return StatementOfAccount
+     */
+    protected static function createModelFromArray(array $array)
+    {
+        $soa = static::addFromArray($array, new StatementOfAccount());
 
         return $soa;
     }
-
-
 }
