@@ -52,10 +52,13 @@ class MT940
      */
     protected function parseToArray()
     {
+        // The divider can be either \r\n or @@
+        $divider = substr_count($this->rawData, "\r\n-") > substr_count($this->rawData, '@@-') ? "\r\n" : '@@';
+
         $result = array();
-        $days = explode("\r\n-", $this->rawData);
+        $days = explode($divider . '-', $this->rawData);
         foreach ($days as &$day) {
-            $day = explode("\r\n:", $day);
+            $day = explode($divider . ':', $day);
             // remove not so important data
             array_shift($day);
             array_shift($day);
