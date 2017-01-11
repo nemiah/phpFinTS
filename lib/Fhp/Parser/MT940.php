@@ -59,11 +59,6 @@ class MT940
         $days = explode($divider . '-', $this->rawData);
         foreach ($days as &$day) {
             $day = explode($divider . ':', $day);
-            // remove not so important data
-            array_shift($day);
-            array_shift($day);
-            array_shift($day);
-            array_shift($day);
             for ($i = 0; $i < count($day); $i++) {
                 // handle start balance
                 // 60F:C160401EUR1234,56

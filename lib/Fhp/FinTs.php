@@ -177,7 +177,8 @@ class FinTs
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
         $response = $dialog->sendMessage($message);
         $touchdowns = $response->getTouchdowns($message);
-        $responses[] = new GetStatementOfAccount($response->rawResponse);
+        $soaResponse = new GetStatementOfAccount($response->rawResponse);
+        $responses[] = $soaResponse->getRawMt940();
 
         $touchdownCounter = 1;
         while (isset($touchdowns[HKKAZ::NAME])) {
@@ -192,20 +193,16 @@ class FinTs
 
             $r = $dialog->sendMessage($message);
             $touchdowns = $r->getTouchDowns($message);
-            $responses[] = new GetStatementOfAccount($r->rawResponse);
+            $soaResponse = new GetStatementOfAccount($r->rawResponse);
+            $responses[] = $soaResponse->getRawMt940();
         }
 
         $this->logger->info('Fetching of ' . $touchdownCounter . ' pages done.');
         $this->logger->debug('HKKAZ response:');
-        $masterArray = array();
-
-        /** @var GetStatementOfAccount $r */
-        foreach ($responses as $r) {
-            $masterArray = array_merge($masterArray,$r->getStatementOfAccountArray());
-        }
 
         $dialog->endDialog();
-        return GetStatementOfAccount::createModelFromArray($masterArray);
+
+        return GetStatementOfAccount::createModelFromRawMt940(implode('', $responses));
     }
 
     /**
