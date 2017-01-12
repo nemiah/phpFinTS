@@ -44,4 +44,40 @@ class StatementOfAccount
     {
         $this->statements[] = $statement;
     }
+
+    /**
+     * Gets statement for given date.
+     *
+     * @param string|\DateTime $date
+     * @return Statement|null
+     */
+    public function getStatementForDate($date)
+    {
+        if (is_string($date)) {
+            $date = new \DateTime($date);
+        }
+
+        foreach ($this->statements as $stmt) {
+            if ($stmt->getDate() == $date) {
+                return $stmt;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if a statement with given date exists.
+     *
+     * @param string|\DateTime $date
+     * @return bool
+     */
+    public function hasStatementForDate($date)
+    {
+        if (is_string($date)) {
+            $date = new \DateTime($date);
+        }
+
+        return null !== $this->getStatementForDate($date);
+    }
 }
