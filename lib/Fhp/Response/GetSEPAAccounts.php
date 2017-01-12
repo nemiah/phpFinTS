@@ -20,7 +20,7 @@ class GetSEPAAccounts extends Response
      *
      * @return SEPAAccount[]
      */
-    public function getSEPAAccounts()
+    public function getSEPAAccountsArray()
     {
         $accounts = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
 

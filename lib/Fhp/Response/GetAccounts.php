@@ -18,7 +18,7 @@ class GetAccounts extends Response
     /**
      * @return array
      */
-    public function getAccounts()
+    public function getAccountsArray()
     {
         $accounts = $this->findSegments(static::SEG_ACCOUNT_INFORMATION);
 

@@ -110,7 +110,7 @@ class FinTs
         $this->bankName = $dialog->getBankName();
         $accounts = new GetAccounts($result);
 
-        return $accounts->getAccounts();
+        return $accounts->getAccountsArray();
     }
 
     /**
@@ -136,7 +136,7 @@ class FinTs
         $dialog->endDialog();
         $sepaAccounts = new  GetSEPAAccounts($result->rawResponse);
 
-        return $sepaAccounts->getSEPAAccounts();
+        return $sepaAccounts->getSEPAAccountsArray();
     }
 
     /**
@@ -372,7 +372,7 @@ class FinTs
         $response = $dialog->sendMessage($message);
         $response = new GetSaldo($response->rawResponse);
 
-        return $response->getSaldo();
+        return $response->getSaldoModel();
     }
 
     /**

@@ -20,7 +20,7 @@ class GetSaldo extends Response
      * @return Saldo|null
      * @throws \Exception
      */
-    public function getSaldo()
+    public function getSaldoModel()
     {
         $model = null;
         $saldoSec = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
