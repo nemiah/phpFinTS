@@ -22,7 +22,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $withoutEscape = new Response('');
         $escaped       = clone $withoutEscape;
 
-        $segments        = $response->invokeArgs($withoutEscape, [
+        $segments = $response->invokeArgs($withoutEscape, [
             'HISAL:5:5:3+111111111::280:111111111+GiroBest+EUR+C:9999,99:EUR:20161018+C:0,:EUR:20161018+0,:EUR+9999,99:EUR',
         ]);
 
