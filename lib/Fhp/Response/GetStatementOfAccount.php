@@ -35,7 +35,7 @@ class GetStatementOfAccount extends Response
     /**
      * Creates StatementOfAccount object from raw MT940 string.
      *
-     * @param $rawMt940
+     * @param string $rawMt940
      * @return StatementOfAccount
      */
     public static function createModelFromRawMt940($rawMt940)

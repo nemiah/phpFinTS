@@ -59,7 +59,7 @@ class MT940
         $days = explode($divider . '-', $this->rawData);
         foreach ($days as &$day) {
             $day = explode($divider . ':', $day);
-            for ($i = 0; $i < count($day); $i++) {
+            for ($i = 0, $cnt = count($day); $i < $cnt; $i++) {
                 // handle start balance
                 // 60F:C160401EUR1234,56
                 if (preg_match('/^60(F|M):/', $day[$i])) {

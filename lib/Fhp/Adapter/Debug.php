@@ -33,12 +33,12 @@ class Debug implements AdapterInterface
      */
     public function __construct($host, $port)
     {
-        if (!is_numeric($port) || (int) $port <= 0) {
+        if (!is_integer($port) || (int) $port <= 0) {
             throw new AdapterException('Invalid port number');
         }
 
-        $this->host = $host;
-        $this->port = $port;
+        $this->host = (string) $host;
+        $this->port = (int) $port;
     }
 
     /**

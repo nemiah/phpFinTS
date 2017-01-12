@@ -13,7 +13,6 @@ use Fhp\Segment\NameMapping;
  */
 class Response
 {
-
     /** @var string */
     public $rawResponse;
 
@@ -55,7 +54,7 @@ class Response
     {
         $segment = $this->findSegment('HNHBK');
 
-        if (null == $segment) {
+        if (null === $segment) {
             throw new \Exception('Could not find element HNHBK. Invalid response?');
         }
 
@@ -115,7 +114,7 @@ class Response
     /**
      * Extracts supported TAN mechanisms from response.
      *
-     * @return array|bool
+     * @return array
      */
     public function getSupportedTanMechanisms()
     {
@@ -134,11 +133,11 @@ class Response
             }
         }
 
-        return false;
+        return array();
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getHksalMaxVersion()
     {
@@ -146,7 +145,7 @@ class Response
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getHkkazMaxVersion()
     {
@@ -216,16 +215,16 @@ class Response
     /**
      * @param string $segmentName
      *
-     * @return string
+     * @return int
      */
     public function getSegmentMaxVersion($segmentName)
     {
-        $version = "3";
+        $version = 3;
         $segments = $this->findSegments($segmentName);
         foreach ($segments as $s) {
             $parts = $this->splitSegment($s);
             $segmentHeader = $this->splitDeg($parts[0]);
-            $curVersion = $segmentHeader[2];
+            $curVersion = (int) $segmentHeader[2];
             if ($curVersion > $version) {
                 $version = $curVersion;
             }
@@ -273,7 +272,6 @@ class Response
      */
     protected function findSegmentForReference($name, AbstractSegment $reference)
     {
-        $result = null;
         $segments = $this->findSegments($name);
         foreach ($segments as $seg) {
             $segSplit = $this->splitSegment($seg);
@@ -290,7 +288,7 @@ class Response
     /**
      * @param string $name
      *
-     * @return array|null|string
+     * @return string|null
      */
     protected function findSegment($name)
     {
