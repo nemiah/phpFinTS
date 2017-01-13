@@ -135,7 +135,7 @@ This library is verified to work with following banks.
 - [ ] Geraer Bank
 - [ ] Giengener Volksbank -alt-
 - [ ] Gladbacher Bank AG
-- [ ] GLS Gemeinschaftsbank eG
+- [x] GLS Gemeinschaftsbank eG
 - [x] Goyer & Göppel
 - [ ] Grafschafter Volksbank eG
 - [x] GRENKE BANK
@@ -207,7 +207,7 @@ This library is verified to work with following banks.
 - [ ] Kreissparkasse Höchstadt a. d. Aisch
 - [ ] Kreissparkasse Kaiserlautern
 - [ ] Kreissparkasse Kelheim
-- [ ] Kreissparkasse Köln 
+- [x] Kreissparkasse Köln 
 - [ ] Kreissparkasse Kusel
 - [ ] Kreissparkasse Limburg
 - [ ] Kreissparkasse Ludwigsburg
