@@ -175,7 +175,7 @@ This library is verified to work with following banks.
 - [ ] Kreis- und Stadtsparkasse Dinkelsbühl
 - [ ] Kreis- und Stadtsparkasse Kaufbeuren
 - [ ] Kreis- und Stadtsparkasse Wasserburg am Inn
-- [ ] Kreissparkasse Ahrweiler 
+- [x] Kreissparkasse Ahrweiler 
 - [ ] Kreissparkasse Anhalt-Bitterfeld
 - [x] Kreissparkasse Augsburg
 - [ ] Kreissparkasse Bautzen
