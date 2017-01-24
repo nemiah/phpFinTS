@@ -1462,7 +1462,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Reiste-Eslohe eG
 - [ ] Volksbank Rems
 - [ ] Volksbank Remscheid-Solingen eG
-- [ ] Volksbank Remseck
+- [x] Volksbank Remseck
 - [ ] Volksbank Reutlingen
 - [ ] Volksbank Rhede eG
 - [ ] Volksbank Rhein-Lahn
