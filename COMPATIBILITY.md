@@ -205,7 +205,7 @@ This library is verified to work with following banks.
 - [ ] Kreissparkasse Herzogtum Lauenburg
 - [ ] Kreissparkasse Hildburghausen
 - [ ] Kreissparkasse Höchstadt a. d. Aisch
-- [ ] Kreissparkasse Kaiserlautern
+- [x] Kreissparkasse Kaiserslautern
 - [ ] Kreissparkasse Kelheim
 - [x] Kreissparkasse Köln 
 - [ ] Kreissparkasse Kusel
@@ -757,7 +757,7 @@ This library is verified to work with following banks.
 - [ ] Sparda-Bank Münster eG
 - [ ] Sparda-Bank Nürnberg eG
 - [ ] Sparda-Bank Regensburg eG
-- [ ] Sparda-Bank Südwest eG
+- [x] Sparda-Bank Südwest eG
 - [ ] Sparda-Bank West eG
 - [ ] SparDaKa Brachelen eG
 - [ ] Spardaka Hoengen eG
