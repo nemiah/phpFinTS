@@ -1448,7 +1448,7 @@ This library is verified to work with following banks.
 - [ ] Volksbank Raiffeisenbank Dachau
 - [ ] Volksbank Raiffeisenbank Döbeln
 - [ ] Volksbank Raiffeisenbank Eichstätt
-- [ ] Volksbank Raiffeisenbank Fürstenfeldbruck
+- [x] Volksbank Raiffeisenbank Fürstenfeldbruck
 - [x] Volksbank Raiffeisenbank Hanau Ndl d Frankf VB
 - [ ] Volksbank Raiffeisenbank Ismaning
 - [ ] Volksbank Raiffeisenbank Mangfalltal-Rosenheim
