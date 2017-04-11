@@ -50,7 +50,7 @@ class Transaction
      * Array keys are identifiers like "SVWZ" for the main description.
      * @var array
      */
-    protected $description;
+    protected $structuredDescription;
 
     /**
      * @var string
@@ -248,27 +248,41 @@ class Transaction
     }
 
     /**
-     * Get description
+     * Get structuredDescription
      *
      * @return array
      */
-    public function getDescription()
+    public function getStructuredDescription()
     {
-        return $this->description;
+        return $this->structuredDescription;
     }
 
     /**
-     * Set description
+     * Set structuredDescription
      *
-     * @param array $description
+     * @param array $structuredDescription
      *
      * @return $this
      */
-    public function setDescription($description)
+    public function setStructuredDescription($structuredDescription)
     {
-        $this->description = $description;
+        $this->structuredDescription = $structuredDescription;
 
         return $this;
+    }
+
+    /**
+     * Get the main description (SVWZ)
+     *
+     * @return string
+     */
+    public function getMainDescription()
+    {
+        if (array_key_exists('SVWZ', $this->structuredDescription)) {
+            return $this->structuredDescription['SVWZ'];
+        } else {
+            return "";
+        }
     }
 
     /**
