@@ -47,6 +47,12 @@ class Transaction
     protected $description2;
 
     /**
+     * Array keys are identifiers like "SVWZ" for the main description.
+     * @var array
+     */
+    protected $description;
+
+    /**
      * @var string
      */
     protected $bankCode;
@@ -237,6 +243,30 @@ class Transaction
     public function setDescription2($description2)
     {
         $this->description2 = (string) $description2;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return array
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param array $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }

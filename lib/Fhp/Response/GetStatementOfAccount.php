@@ -75,6 +75,7 @@ class GetStatementOfAccount extends Response
                     $transaction->setBookingText($trx['description']['booking_text']);
                     $transaction->setDescription1($trx['description']['description_1']);
                     $transaction->setDescription2($trx['description']['description_2']);
+                    $transaction->setDescription($trx['description']['description']);
                     $transaction->setBankCode($trx['description']['bank_code']);
                     $transaction->setAccountNumber($trx['description']['account_number']);
                     $transaction->setName($trx['description']['name']);
