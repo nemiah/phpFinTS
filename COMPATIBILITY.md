@@ -104,7 +104,7 @@ This library is verified to work with following banks.
 - [ ] Erligheimer Bank -alt-
 - [ ] Erzgebirgssparkasse
 - [x] Ev. Darlehnsgenossenschaft eG
-- [ ] Evangelische Kreditgenossenschaft
+- [x] Evangelische Kreditgenossenschaft
 - [ ] Evenord-Bank
 - [ ] Federseebank
 - [ ] Fellbacher Bank
