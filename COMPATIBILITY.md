@@ -146,7 +146,7 @@ This library is verified to work with following banks.
 - [x] Hallertauer Volksbank
 - [ ] Hamburger Bank v. 1861
 - [ ] Hamburger Bank von 1861 Volksbank eG
-- [ ] Hamburger Sparkasse
+- [x] Hamburger Sparkasse
 - [x] Hannoversche Volksbank eG
 - [ ] Harzsparkasse
 - [ ] Hauck & Aufhäuser Privatbankiers
