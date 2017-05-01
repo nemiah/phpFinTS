@@ -802,7 +802,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Dieburg
 - [ ] Sparkasse Dillenburg
 - [ ] Sparkasse Dinslaken-Voerde-Hünxe
-- [ ] Sparkasse Donauwörth
+- [X] Sparkasse Donauwörth
 - [ ] Sparkasse Donnersberg
 - [ ] Sparkasse Dortmund
 - [ ] Sparkasse Duderstadt
