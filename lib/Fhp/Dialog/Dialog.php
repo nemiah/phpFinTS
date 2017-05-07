@@ -115,15 +115,18 @@ class Dialog
     {
         try {
             $this->logger->info('Sending Message');
+			$this->logger->info($message);
             $message->setMessageNumber($this->messageNumber);
             $message->setDialogId($this->dialogId);
 
             $result = $this->connection->send($message);
             $this->messageNumber++;
+			$this->logger->info($result);
             $response = new Response($result);
-
+			
             $this->handleResponse($response);
-
+			$this->logger->info($response->rawResponse);
+			
             if (!$response->isSuccess()) {
                 $summary = $response->getMessageSummary();
                 $ex = new FailedRequestException($summary);

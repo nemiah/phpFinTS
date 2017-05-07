@@ -11,13 +11,18 @@ use Fhp\Dialog\Dialog;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
+use Fhp\Model\SEPAStandingOrder;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
 use Fhp\Response\GetStatementOfAccount;
+use Fhp\Response\GetSEPAStandingOrders;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
+use Fhp\Segment\HKCDB;
+use Fhp\Segment\HKCDL;
+use Fhp\Segment\HKTAN;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -375,6 +380,78 @@ class FinTs
         return $response->getSaldoModel();
     }
 
+	
+	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order)
+	{
+        $dialog = $this->getDialog();
+        $dialog->syncDialog();
+        $dialog->initDialog();
+
+		$hkcdbAccount = new Kti(
+			$account->getIban(),
+			$account->getBic(),
+			$account->getAccountNumber(),
+			$account->getSubAccount(),
+			new Kik(280, $account->getBlz())
+		);
+
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+                new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03", $order),
+				new HKTAN(HKTAN::VERSION, 4)
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+            )
+        );
+		#$message->
+        var_dump($dialog->sendMessage($message));
+        #$response = new GetSEPAStandingOrders($response->rawResponse);
+		
+        #return $response->getSEPAStandingOrdersArray();
+	}
+	
+	public function getSEPAStandingOrders(SEPAAccount $account)
+    {
+        $dialog = $this->getDialog();
+        $dialog->syncDialog();
+        $dialog->initDialog();
+
+		$hkcdbAccount = new Kti(
+			$account->getIban(),
+			$account->getBic(),
+			$account->getAccountNumber(),
+			$account->getSubAccount(),
+			new Kik(280, $account->getBlz())
+		);
+
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+                new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array("pain.001.003.03"))#, "pain.008.003.02.xsd"))
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+            )
+        );
+
+        $response = $dialog->sendMessage($message);
+        $response = new GetSEPAStandingOrders($response->rawResponse);
+		
+        return $response->getSEPAStandingOrdersArray();
+	}
+	
     /**
      * Helper method to retrieve a pre configured message object.
      * Factory for poor people :)

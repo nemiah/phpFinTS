@@ -4,3 +4,10 @@ vendor/
 develop/
 coverage/
 test.php
+/nbproject/private/
+/nbproject/
+/composer.lock
+/composer.phar
+/Samples/newXMLDocument.xml
+/Samples/accounts.log
+/Samples/standingOrders.log

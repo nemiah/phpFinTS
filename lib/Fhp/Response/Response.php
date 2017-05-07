@@ -326,15 +326,20 @@ class Response
      */
     protected function splitSegment($segment)
     {
+		preg_match("@\<\?xml.+Document\>@", $segment, $matches);
+		$segment = preg_replace("@\<\?xml.+Document\>@", "EXTRACTEDXML", $segment);
+		
         $parts = preg_split('/\+(?<!\?\+)/', $segment);
 
         foreach ($parts as &$part) {
             $part = str_replace('?+', '+', $part);
+			if(trim($part) != "" AND strpos($part, "EXTRACTEDXML") > 0 AND isset($matches[0]))
+				$part = str_replace("EXTRACTEDXML", $matches[0], $part);
         }
 
         return $parts;
     }
-
+	
     /**
      * @param $deg
      *
