@@ -406,7 +406,81 @@ class FinTs
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKCCS(HKCDL::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03", $painMessage),
+                new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03", $painMessage),
+				new HKTAN(HKTAN::VERSION, 4)
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+            )
+        );
+		
+        $response = $dialog->sendMessage($message);
+        $response = new GetTANRequest($response->rawResponse);
+		print_r($response);
+		
+		#var_dump($response->get()->getProcessID());
+		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
+		for($i = 0; $i < 60; $i++){
+			sleep(1);
+			
+			$tan = file_get_contents($tanFilePath);
+			if(trim($tan) == ""){
+				echo "No TAN found, waiting ".(60 - $i)."!\n";
+				continue;
+			}
+			
+			break;
+		}
+		
+		
+		if(trim($tan) == ""){
+			echo "No TAN found, exiting!\n";
+			return;
+		}
+		
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+            ),
+			$tan
+        );
+		$dialog->sendMessage($message);
+	}
+	
+	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, $tanFilePath)
+	{
+		file_put_contents($tanFilePath, "");
+		
+        $dialog = $this->getDialog();
+        $dialog->syncDialog();
+        $dialog->initDialog();
+
+		$hkcdbAccount = new Kti(
+			$account->getIban(),
+			$account->getBic(),
+			$account->getAccountNumber(),
+			$account->getSubAccount(),
+			new Kik(280, $account->getBlz())
+		);
+
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+                new HKDSE(HKDSE::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage),
 				new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
