@@ -2,14 +2,12 @@
 
 namespace Fhp\Segment;
 
-use \Fhp\DataTypes\Bin;
-
 /**
- * Class HKCDL (SEPA-Dauerauftragsbestand löschen)
+ * Class HKTAN (Zwei-Schritt-TAN-Einreichung)
  * Segment type: Geschäftsvorfall
  *
- * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
- * Section: C.10.2.3.6
+ * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_Rel_20101027_final_version.pdf
+ * Section: B.4.5.1.1.1
  *
  * @author Nena Furtmeier <support@furtmeier.it>
  * @package Fhp\Segment
@@ -24,15 +22,26 @@ class HKTAN extends AbstractSegment
      * @param int $version
      * @param int $segmentNumber
      */
-    public function __construct($version, $segmentNumber)
+    public function __construct($version, $segmentNumber, $processID = null)
     {
+		$data = array();
+		$data[] = 4;
+		if($processID){
+			$data = array();
+			$data[] = 2;
+			$data[] = "";
+			$data[] = "";
+			$data[] = "";
+			$data[] = $processID;
+			$data[] = "";
+			$data[] = "N";
+		}
+		
         parent::__construct(
             static::NAME,
             $segmentNumber,
             $version,
-            array(
-				4
-            )
+            $data
         );
     }
 

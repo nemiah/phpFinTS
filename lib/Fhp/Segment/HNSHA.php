@@ -3,7 +3,7 @@
 namespace Fhp\Segment;
 
 use Fhp\DataTypes\Kik;
-
+use Fhp\Deg;
 /**
  * Class HNSHA (Signaturabschluss)
  * Segment type: Administration
@@ -27,8 +27,14 @@ class HNSHA extends AbstractSegment
     public function __construct(
         $segmentNumber,
         $securityControlReference,
-        $pin
+        $pin,
+		$tan = null
     ) {
+		$deg = new Deg();
+		$deg->addDataElement($pin);
+		if($tan)
+			$deg->addDataElement ($tan);
+		
         parent::__construct(
             static::NAME,
             $segmentNumber,
@@ -36,7 +42,7 @@ class HNSHA extends AbstractSegment
             array(
                 $securityControlReference,
                 '',
-                $pin
+                $deg
             )
         );
     }

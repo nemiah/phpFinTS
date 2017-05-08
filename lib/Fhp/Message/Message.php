@@ -92,7 +92,8 @@ class Message extends AbstractMessage
         $dialogId = 0,
         $messageNumber = 0,
         array $encryptedSegments = array(),
-        array $options = array()
+        array $options = array(),
+		$tan = null
     ) {
         $this->securityReference = rand(1000000, 9999999);
         $this->dialogId = $dialogId;
@@ -128,7 +129,7 @@ class Message extends AbstractMessage
 
         $curCount = count($encryptedSegments) + 3;
 
-        $signatureEnd = new HNSHA($curCount, $this->securityReference, $this->pin);
+        $signatureEnd = new HNSHA($curCount, $this->securityReference, $this->pin, $tan);
         $this->addEncryptedSegment($signatureEnd);
         $this->addSegment(new HNHBS($curCount + 1, $this->messageNumber));
     }

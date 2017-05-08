@@ -8,6 +8,7 @@ test.php
 /nbproject/
 /composer.lock
 /composer.phar
-/Samples/newXMLDocument.xml
 /Samples/accounts.log
 /Samples/standingOrders.log
+/Samples/config.php
+/Samples/tan.txt

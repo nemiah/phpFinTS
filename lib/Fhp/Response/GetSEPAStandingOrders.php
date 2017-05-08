@@ -27,7 +27,7 @@ class GetSEPAStandingOrders extends Response
         $segments = $this->findSegments(static::SEG_ACCOUNT_INFORMATION);
 		
 		foreach($segments AS $segment){
-			$details = $this->splitSegment($segment);
+			$details = $this->splitSegment($segment, false);
 			
 			$xml = preg_replace("/^@[0-9]+@/", "", $details[3]);
 			$sxml = new \SimpleXMLElement($xml);

@@ -17,6 +17,7 @@ use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
 use Fhp\Response\GetStatementOfAccount;
 use Fhp\Response\GetSEPAStandingOrders;
+use Fhp\Response\GetTANRequest;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
@@ -381,8 +382,10 @@ class FinTs
     }
 
 	
-	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order)
+	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, $tanFilePath)
 	{
+		file_put_contents($tanFilePath, "");
+		
         $dialog = $this->getDialog();
         $dialog->syncDialog();
         $dialog->initDialog();
@@ -411,8 +414,44 @@ class FinTs
             )
         );
 		#$message->
-        var_dump($dialog->sendMessage($message));
-        #$response = new GetSEPAStandingOrders($response->rawResponse);
+        $response = $dialog->sendMessage($message);
+        $response = new GetTANRequest($response->rawResponse);
+		#var_dump($response->get()->getProcessID());
+		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
+		for($i = 0; $i < 60; $i++){
+			sleep(1);
+			
+			$tan = file_get_contents($tanFilePath);
+			if(trim($tan) == ""){
+				echo "No TAN found, waiting ".(60 - $i)."!\n";
+				continue;
+			}
+			
+			break;
+		}
+		
+		
+		if(trim($tan) == ""){
+			echo "No TAN found, exiting!\n";
+			return;
+		}
+		
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+            ),
+			$tan
+        );
+		$dialog->sendMessage($message);
 		
         #return $response->getSEPAStandingOrdersArray();
 	}

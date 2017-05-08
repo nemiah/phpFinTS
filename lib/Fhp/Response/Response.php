@@ -324,7 +324,7 @@ class Response
      *
      * @return array
      */
-    protected function splitSegment($segment)
+    protected function splitSegment($segment, $fix = true)
     {
 		preg_match("@\<\?xml.+Document\>@", $segment, $matches);
 		$segment = preg_replace("@\<\?xml.+Document\>@", "EXTRACTEDXML", $segment);
@@ -332,7 +332,8 @@ class Response
         $parts = preg_split('/\+(?<!\?\+)/', $segment);
 
         foreach ($parts as &$part) {
-            $part = str_replace('?+', '+', $part);
+			if($fix)
+	            $part = str_replace('?+', '+', $part);
 			if(trim($part) != "" AND strpos($part, "EXTRACTEDXML") > 0 AND isset($matches[0]))
 				$part = str_replace("EXTRACTEDXML", $matches[0], $part);
         }
