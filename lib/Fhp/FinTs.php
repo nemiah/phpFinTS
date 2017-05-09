@@ -25,6 +25,8 @@ use Fhp\Segment\HKCDB;
 use Fhp\Segment\HKCDL;
 use Fhp\Segment\HKCCS;
 use Fhp\Segment\HKTAN;
+use Fhp\Segment\HKDSE;
+use Fhp\Segment\HKDSC;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -57,7 +59,9 @@ class FinTs
     protected $systemId = 0;
     /** @var string */
     protected $bankName;
-
+	/** @var int */
+	protected $tanMechanism;
+	
     /**
      * FinTs constructor.
      * @param string $server
@@ -94,6 +98,17 @@ class FinTs
         $this->connection = new Connection($this->adapter);
     }
 
+    /**
+     * Sets the tan mechanism to use. Uses first found tan mechanism if not set.
+     * 901: mobileTAN
+	 * 
+     * @param int $mode
+     */
+	public function setTANMechanism($mode)
+	{
+		$this->tanMechanism = $mode;
+	}
+	
     /**
      * Sets the adapter to use.
      *
@@ -384,6 +399,7 @@ class FinTs
 
 	public function executeSEPATransfer(SEPAAccount $account, $painMessage, $tanFilePath)
 	{
+		$painMessage = $this->clearXML($painMessage);
 		file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
@@ -458,6 +474,7 @@ class FinTs
 	
 	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, $tanFilePath)
 	{
+		$painMessage = $this->clearXML($painMessage);
 		file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
@@ -472,6 +489,10 @@ class FinTs
 			new Kik(280, $account->getBlz())
 		);
 
+		$hkdsx = new HKDSE(HKDSE::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage);
+		if(strpos($painMessage, "<Cd>COR1</Cd>") !== false)
+			$hkdsx = new HKDSC(HKDSC::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage);
+		
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -480,11 +501,11 @@ class FinTs
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKDSE(HKDSE::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage),
+                $hkdsx,
 				new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism()
             )
         );
 		
@@ -693,4 +714,21 @@ class FinTs
             $string
         );
     }
+	
+	protected function clearXML($xml)
+	{
+		$dom = new \DOMDocument;
+		$dom->preserveWhiteSpace = FALSE;
+		$dom->loadXML($xml);
+		$dom->formatOutput = false;
+		return $dom->saveXml();
+	}
+	
+	private function getUsedPinTanMechanism($dialog)
+	{
+		if($this->tanMechanism !== null AND in_array($this->tanMechanism, $dialog->getSupportedPinTanMechanisms()))
+			return array($this->tanMechanism);
+		
+		return $dialog->getSupportedPinTanMechanisms();
+	}
 }

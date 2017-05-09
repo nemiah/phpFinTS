@@ -8,9 +8,7 @@ test.php
 /nbproject/
 /composer.lock
 /composer.phar
-/Samples/accounts.log
-/Samples/standingOrders.log
 /Samples/config.php
 /Samples/tan.txt
 /Samples/transferTest.php
-/Samples/transfer.log
+/Samples/*.log
