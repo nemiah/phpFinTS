@@ -166,6 +166,14 @@ class Response
                 return false;
             }
         }
+		
+        $summary = $this->getSegmentSummary();
+
+        foreach ($summary as $code => $message) {
+            if ("9" == substr($code, 0, 1)) {
+                return false;
+            }
+        }
 
         return true;
     }

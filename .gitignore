@@ -10,5 +10,5 @@ test.php
 /composer.phar
 /Samples/config.php
 /Samples/tan.txt
-/Samples/transferTest.php
+/Samples/*.test.php
 /Samples/*.log

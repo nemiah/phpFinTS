@@ -128,7 +128,20 @@ class Dialog
 			$this->logger->info($response->rawResponse);
 			
             if (!$response->isSuccess()) {
-                $summary = $response->getMessageSummary();
+                $summaryS = $response->getSegmentSummary();
+                $summaryM = $response->getMessageSummary();
+				
+				$summary = array();
+				foreach($summaryS AS $k => $v)
+					$summary[$k] = $v;
+				
+				foreach($summaryM AS $k => $v){
+					if(isset($summary[$k]))
+						$summary[$k] .= "($v)";
+					else
+						$summary[$k] = $v;
+				}
+				
                 $ex = new FailedRequestException($summary);
                 $this->logger->error($ex->getMessage());
                 throw $ex;
@@ -327,6 +340,8 @@ class Dialog
         $this->logger->debug('Sending SYNC message: ' . (string) $syncMsg);
         $response = $this->sendMessage($syncMsg);
 
+		#$this->checkResponse($response);
+
         $this->logger->debug('Got SYNC response: ' . $response->rawResponse);
 
         // save BPD (Bank Parameter Daten)
@@ -350,6 +365,13 @@ class Dialog
         return $response->rawResponse;
     }
 
+	/*public function checkResponse(Response $response){
+		foreach($response->getSegmentSummary() AS $k => $v)
+			if(substr($k, 0, 1) == "9")
+				throw new \Exception($v, $k);
+		
+	}*/
+	
     /**
      * Ends a previous started dialog.
      *

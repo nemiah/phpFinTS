@@ -151,7 +151,7 @@ class FinTs
         $message = $this->getNewMessage(
             $dialog,
             array(new HKSPA(3)),
-            array(AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms())
+            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
         );
 
         $result = $dialog->sendMessage($message);
@@ -322,7 +322,7 @@ class FinTs
                     $touchdown
                 )
             ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms())
+            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
         );
 
         return $message;
@@ -387,7 +387,7 @@ class FinTs
                 new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 
@@ -422,17 +422,17 @@ class FinTs
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03", $painMessage),
+                new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03", $painMessage),
 				new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 		
         $response = $dialog->sendMessage($message);
         $response = new GetTANRequest($response->rawResponse);
-		print_r($response);
+		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
 		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
@@ -465,7 +465,7 @@ class FinTs
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             ),
 			$tan
         );
@@ -505,7 +505,7 @@ class FinTs
 				new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 		
@@ -544,7 +544,7 @@ class FinTs
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             ),
 			$tan
         );
@@ -579,7 +579,7 @@ class FinTs
 				new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 		#$message->
@@ -616,7 +616,7 @@ class FinTs
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             ),
 			$tan
         );
@@ -648,7 +648,7 @@ class FinTs
                 new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array("pain.001.003.03"))#, "pain.008.003.02.xsd"))
             ),
             array(
-                AbstractMessage::OPT_PINTAN_MECH => $dialog->getSupportedPinTanMechanisms()
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 
