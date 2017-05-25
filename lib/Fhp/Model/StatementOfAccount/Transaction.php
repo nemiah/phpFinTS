@@ -66,6 +66,11 @@ class Transaction
      * @var string
      */
     protected $name;
+	
+    /**
+     * @var boolean
+     */
+	protected $booked;
 
     /**
      * Get booking date.
@@ -137,6 +142,22 @@ class Transaction
         return $this->amount;
     }
 
+	
+	
+    /**
+     * Set booked status
+     *
+     * @param boolean $booked
+     *
+     * @return $this
+     */
+    public function setBooked($booked)
+    {
+        $this->booked = $booked;
+
+        return $this;
+    }
+	
     /**
      * Set amount
      *
@@ -343,6 +364,16 @@ class Transaction
         return $this->name;
     }
 
+    /**
+     * Get booked status
+     *
+     * @return boolean
+     */
+	public function getBooked()
+	{
+		return $this->booked;
+	}
+	
     /**
      * Set name
      *

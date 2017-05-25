@@ -54,12 +54,16 @@ class MT940
     {
         // The divider can be either \r\n or @@
         $divider = substr_count($this->rawData, "\r\n-") > substr_count($this->rawData, '@@-') ? "\r\n" : '@@';
-
+		
+		$booked = true;
         $result = array();
         $days = explode($divider . '-', $this->rawData);
         foreach ($days as &$day) {
             $day = explode($divider . ':', $day);
             for ($i = 0, $cnt = count($day); $i < $cnt; $i++) {
+				if(preg_match("/^\+\@[0-9]+\@$/", trim($day[$i])))
+					$booked = false;
+				
                 // handle start balance
                 // 60F:C160401EUR1234,56
                 if (preg_match('/^60(F|M):/', $day[$i])) {
@@ -132,10 +136,11 @@ class MT940
 
                     $trx[count($trx) - 1]['booking_date'] = $bookingDate;
                     $trx[count($trx) - 1]['valuta_date'] = $valutaDate;
+                    $trx[count($trx) - 1]['booked'] = $booked;
                 }
             }
         }
-
+		
         return $result;
     }
 
