@@ -397,10 +397,10 @@ class FinTs
         return $response->getSaldoModel();
     }
 
-	public function executeSEPATransfer(SEPAAccount $account, $painMessage, $tanFilePath)
+	public function executeSEPATransfer(SEPAAccount $account, $painMessage, Closure $tanCallback)
 	{
 		$painMessage = $this->clearXML($painMessage);
-		file_put_contents($tanFilePath, "");
+		#file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
         $dialog->syncDialog();
@@ -439,8 +439,8 @@ class FinTs
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
 			
-			$tan = file_get_contents($tanFilePath);
-			if(trim($tan) == ""){
+			$tan = trim($tanCallback());
+			if($tan == ""){
 				echo "No TAN found, waiting ".(60 - $i)."!\n";
 				continue;
 			}
@@ -449,7 +449,7 @@ class FinTs
 		}
 		
 		
-		if(trim($tan) == ""){
+		if($tan == ""){
 			echo "No TAN found, exiting!\n";
 			return;
 		}
@@ -469,13 +469,13 @@ class FinTs
             ),
 			$tan
         );
-		$dialog->sendMessage($message);
+		$result = $dialog->sendMessage($message);
 	}
 	
-	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, $tanFilePath)
+	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, Closure $tanCallback)
 	{
 		$painMessage = $this->clearXML($painMessage);
-		file_put_contents($tanFilePath, "");
+		
 		
         $dialog = $this->getDialog();
         $dialog->syncDialog();
@@ -511,15 +511,15 @@ class FinTs
 		
         $response = $dialog->sendMessage($message);
         $response = new GetTANRequest($response->rawResponse);
-		print_r($response);
+		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
+		echo "Waiting max. 60 seconds for TAN in from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
 			
-			$tan = file_get_contents($tanFilePath);
-			if(trim($tan) == ""){
+			$tan = trim($tanCallback());
+			if($tan == ""){
 				echo "No TAN found, waiting ".(60 - $i)."!\n";
 				continue;
 			}
@@ -528,7 +528,7 @@ class FinTs
 		}
 		
 		
-		if(trim($tan) == ""){
+		if($tan == ""){
 			echo "No TAN found, exiting!\n";
 			return;
 		}
@@ -548,12 +548,12 @@ class FinTs
             ),
 			$tan
         );
-		$dialog->sendMessage($message);
+		$response = $dialog->sendMessage($message);
 	}
 	
-	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, $tanFilePath)
+	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, Closure $tanCallback)
 	{
-		file_put_contents($tanFilePath, "");
+		#file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
         $dialog->syncDialog();
@@ -586,12 +586,12 @@ class FinTs
         $response = $dialog->sendMessage($message);
         $response = new GetTANRequest($response->rawResponse);
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
+		echo "Waiting max. 60 seconds for TAN from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
 			
-			$tan = file_get_contents($tanFilePath);
-			if(trim($tan) == ""){
+			$tan = trim($tanCallback());
+			if($tan == ""){
 				echo "No TAN found, waiting ".(60 - $i)."!\n";
 				continue;
 			}
@@ -600,7 +600,7 @@ class FinTs
 		}
 		
 		
-		if(trim($tan) == ""){
+		if($tan == ""){
 			echo "No TAN found, exiting!\n";
 			return;
 		}
