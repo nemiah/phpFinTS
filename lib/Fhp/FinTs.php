@@ -435,7 +435,7 @@ class FinTs
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 60 seconds for TAN in file $tanFilePath\n";
+		echo "Waiting max. 60 seconds for TAN from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
 			
@@ -514,7 +514,7 @@ class FinTs
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 60 seconds for TAN in from callback\n";
+		echo "Waiting max. 60 seconds for TAN from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
 			
