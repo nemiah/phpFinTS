@@ -114,18 +114,19 @@ class Dialog
     public function sendMessage(AbstractMessage $message)
     {
         try {
-            $this->logger->info('Sending Message');
-			$this->logger->info($message);
+			$this->logger->debug("> ".$message);
             $message->setMessageNumber($this->messageNumber);
             $message->setDialogId($this->dialogId);
 
             $result = $this->connection->send($message);
             $this->messageNumber++;
-			$this->logger->info($result);
-            $response = new Response($result);
 			
+			$this->logger->debug("< ".$result);
+			
+            $response = new Response($result);
             $this->handleResponse($response);
-			$this->logger->info($response->rawResponse);
+            #$this->logger->info('Response reads:');
+			#$this->logger->info($response->rawResponse);
 			
             if (!$response->isSuccess()) {
                 $summaryS = $response->getSegmentSummary();
@@ -173,6 +174,7 @@ class Dialog
         foreach ($segSum as $code => $message) {
             $this->logMessage('HIRMS', $code, $message);
         }
+		#$this->logger->log(LogLevel::INFO, "");
     }
 
     /**
@@ -280,7 +282,8 @@ class Dialog
      */
     public function initDialog()
     {
-        $this->logger->info('Initialize Dialog');
+        $this->logger->info('');
+        $this->logger->info('DIALOG initialize');
         $identification = new HKIDN(3, $this->bankCode, $this->username, $this->systemId);
         $prepare        = new HKVVB(4, HKVVB::DEFAULT_BPD_VERSION, HKVVB::DEFAULT_UPD_VERSION, HKVVB::LANG_DEFAULT);
 
@@ -295,15 +298,19 @@ class Dialog
             array(AbstractMessage::OPT_PINTAN_MECH => $this->supportedTanMechanisms)
         );
 
-        $this->logger->debug('Sending INIT message: ' . (string) $message);
+        #$this->logger->debug('Sending INIT message:');
+        #$this->logger->debug((string) $message);
 
         $response = $this->sendMessage($message)->rawResponse;
-        $this->logger->debug('Got INIT response: ' . $response);
+        #$this->logger->debug('Got INIT response:');
+        #$this->logger->debug($response);
 
         $result = new Initialization($response);
         $this->dialogId = $result->getDialogId();
         $this->logger->info('Received dialog ID: ' . $this->dialogId);
 
+        $this->logger->info('DIALOG end');
+		
         return $this->dialogId;
     }
 
@@ -316,9 +323,10 @@ class Dialog
      * @throws FailedRequestException
      * @throws \Exception
      */
-    public function syncDialog()
+    public function syncDialog($endDialog = true)
     {
-        $this->logger->info('Initialize SYNC');
+        $this->logger->info('');
+        $this->logger->info('SYNC initialize');
         $this->messageNumber = 1;
         $this->systemId = 0;
         $this->dialogId = 0;
@@ -337,12 +345,14 @@ class Dialog
             array($identification, $prepare, $sync)
         );
 
-        $this->logger->debug('Sending SYNC message: ' . (string) $syncMsg);
+        #$this->logger->debug('Sending SYNC message:');
+        #$this->logger->debug((string) $syncMsg);
         $response = $this->sendMessage($syncMsg);
 
 		#$this->checkResponse($response);
 
-        $this->logger->debug('Got SYNC response: ' . $response->rawResponse);
+        #$this->logger->debug('Received SYNC response:');
+        #$this->logger->debug($response->rawResponse);
 
         // save BPD (Bank Parameter Daten)
         $this->systemId = $response->getSystemId();
@@ -360,9 +370,12 @@ class Dialog
         $this->logger->info('Received dialog id: ' . $response->getDialogId());
         $this->logger->info('Supported TAN mechanisms: ' . implode(', ', $this->supportedTanMechanisms));
 
-        $this->endDialog();
+		if($endDialog)
+		    $this->endDialog();
 
-        return $response->rawResponse;
+        $this->logger->info('SYNC end');
+		
+        return $response;
     }
 
 	/*public function checkResponse(Response $response){
@@ -382,7 +395,8 @@ class Dialog
      */
     public function endDialog()
     {
-        $this->logger->info('Initialize END dialog message');
+        $this->logger->info('');
+        $this->logger->info('END initialize');
 
         $endMsg = new Message(
             $this->bankCode,
@@ -396,13 +410,15 @@ class Dialog
             )
         );
 
-        $this->logger->debug('Sending END message: ' . (string) $endMsg);
+        #$this->logger->debug("S ".(string) $endMsg);
         $response = $this->sendMessage($endMsg);
-        $this->logger->debug('Got END response: ' . $response->rawResponse);
+        #$this->logger->debug("R ".$response->rawResponse);
 
         $this->logger->info('Resetting dialog ID and message number count');
         $this->dialogId = 0;
         $this->messageNumber = 1;
+		
+        $this->logger->info('END end');
 
         return $response->rawResponse;
     }

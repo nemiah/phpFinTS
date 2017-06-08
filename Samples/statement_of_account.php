@@ -32,6 +32,8 @@ $from = new \DateTime('2016-01-01');
 $to   = new \DateTime();
 $soa = $fints->getStatementOfAccount($oneAccount, $from, $to);
 
+$fints->end();
+
 foreach ($soa->getStatements() as $statement) {
     echo $statement->getDate()->format('Y-m-d') . ': Start Saldo: ' . ($statement->getCreditDebit() == Statement::CD_DEBIT ? '-' : '') . $statement->getStartBalance() . PHP_EOL;
     echo 'Transactions:' . PHP_EOL;

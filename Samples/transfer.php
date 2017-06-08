@@ -65,6 +65,13 @@ $fints = new FinTs(
 
 $accounts = $fints->getSEPAAccounts();
 
+$fints->setTANMechanism(901); //901 for mobileTAN
+file_put_contents(__DIR__."/tan.txt", "");
+
 $oneAccount = $accounts[0];
-$transfer = $fints->executeSEPATransfer($oneAccount, $sepaDD->toXML(), __DIR__."/tan.txt");
+$transfer = $fints->executeSEPATransfer($oneAccount, $sepaDD->toXML(), function(){
+	return file_get_contents(__DIR__."/tan.txt");
+});
+
+$fints->end();
 print_r($transfer);

@@ -34,4 +34,6 @@ $fints = new FinTs(
 );
 
 $accounts = $fints->getSEPAAccounts();
+
+$fints->end();
 print_r($accounts);

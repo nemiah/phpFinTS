@@ -23,7 +23,7 @@ class GetTANRequest extends Response
     {
         $segment = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
 		$details = $this->splitSegment($segment, false);
-		print_r($details);
+		#print_r($details);
 		$request = new TANRequest();
 		$request->setProcessID($details[3]);
 		

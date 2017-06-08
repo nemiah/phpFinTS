@@ -9,7 +9,7 @@ require '../vendor/autoload.php';
 class testLogger extends Psr\Log\AbstractLogger {
 	
 	public function log($level, $message, array $context = array()): void {
-		file_put_contents(__DIR__."/standingOrders.log", file_get_contents(__DIR__."/standingOrders.log").$message."\n");
+		file_put_contents(__DIR__."/standingOrders.log", file_get_contents(__DIR__."/standingOrders.log")."[". strtoupper(substr($level, 0, 1))."] ".$message."\n");
 	}
 
 }
@@ -35,4 +35,6 @@ $fints = new FinTs(
 $accounts = $fints->getSEPAAccounts();
 
 $orders = $fints->getSEPAStandingOrders($accounts[0]);
+
+$fints->end();
 var_dump($orders);

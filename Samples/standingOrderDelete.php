@@ -33,8 +33,11 @@ $fints = new FinTs(
 );
 
 $accounts = $fints->getSEPAAccounts();
+file_put_contents(__DIR__."/tan.txt", "");
 
 $orders = $fints->getSEPAStandingOrders($accounts[0]);
 var_dump($orders);
 
-$fints->deleteSEPAStandingOrder($accounts[0], $orders[0], __DIR__."/tan.txt");
+$fints->deleteSEPAStandingOrder($accounts[0], $orders[0], function(){
+	return file_get_contents(__DIR__."/tan.txt");
+});

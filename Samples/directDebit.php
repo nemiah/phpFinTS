@@ -70,8 +70,13 @@ $fints = new FinTs(
 );
 
 $fints->setTANMechanism(901); //901 for mobileTAN
+file_put_contents(__DIR__."/tan.txt", "");
 
 $accounts = $fints->getSEPAAccounts();
 
-$transfer = $fints->executeSEPADirectDebit($accounts[0], $sepaDD->toXML(), __DIR__."/tan.txt");
+$transfer = $fints->executeSEPADirectDebit($accounts[0], $sepaDD->toXML(), function(){
+	return file_get_contents(__DIR__."/tan.txt");
+});
+
+$fints->end();
 print_r($transfer);

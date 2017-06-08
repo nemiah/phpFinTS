@@ -62,6 +62,7 @@ class FinTs
 	/** @var int */
 	protected $tanMechanism;
 	
+	protected $dialog;
     /**
      * FinTs constructor.
      * @param string $server
@@ -127,7 +128,7 @@ class FinTs
      */
     public function getAccounts()
     {
-        $dialog = $this->getDialog();
+        $dialog = $this->getDialog(false);
         $result = $dialog->syncDialog();
         $this->bankName = $dialog->getBankName();
         $accounts = new GetAccounts($result);
@@ -145,8 +146,7 @@ class FinTs
     public function getSEPAAccounts()
     {
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->initDialog();
 
         $message = $this->getNewMessage(
             $dialog,
@@ -154,13 +154,32 @@ class FinTs
             array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
         );
 
+		$this->logger->info('');
+		$this->logger->info('HKSPA (SEPA accounts) initialize');
         $result = $dialog->sendMessage($message);
-        $dialog->endDialog();
-        $sepaAccounts = new  GetSEPAAccounts($result->rawResponse);
+		$this->logger->info('HKSPA end');
+		
+        $sepaAccounts = new GetSEPAAccounts($result->rawResponse);
 
         return $sepaAccounts->getSEPAAccountsArray();
     }
 
+	public function getVariables(){
+		
+        $dialog = $this->getDialog(false);
+		$result = $dialog->syncDialog(true);
+		
+		$R = new Response\GetVariables($result->rawResponse);
+		return $R->get();
+	}
+	
+	public function end(){
+		if(!$this->dialog)
+			return;
+		
+		$this->dialog->endDialog();
+	}
+	
     /**
      * Gets the bank name.
      *
@@ -188,13 +207,14 @@ class FinTs
     {
         $responses = array();
 
-        $this->logger->info('Start fetching statement of account results');
+		$this->logger->info('');
+		$this->logger->info('HKKAZ (statement of accounts) initialize');
         $this->logger->info('Start date: ' . $from->format('Y-m-d'));
         $this->logger->info('End date  : ' . $to->format('Y-m-d'));
 
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
         $response = $dialog->sendMessage($message);
@@ -219,10 +239,9 @@ class FinTs
             $responses[] = $soaResponse->getRawMt940();
         }
 
-        $this->logger->info('Fetching of ' . $touchdownCounter . ' pages done.');
-        $this->logger->debug('HKKAZ response:');
+		$this->logger->info('HKKAZ end');
 
-        $dialog->endDialog();
+        #$dialog->endDialog();
 
         return GetStatementOfAccount::createModelFromRawMt940(implode('', $responses));
     }
@@ -340,8 +359,8 @@ class FinTs
     public function getSaldo(SEPAAccount $account)
     {
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
         switch ((int) $dialog->getHksalMaxVersion()) {
             case 4:
@@ -403,8 +422,8 @@ class FinTs
 		#file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -478,8 +497,8 @@ class FinTs
 		
 		
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -556,8 +575,8 @@ class FinTs
 		#file_put_contents($tanFilePath, "");
 		
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -626,8 +645,8 @@ class FinTs
 	public function getSEPAStandingOrders(SEPAAccount $account)
     {
         $dialog = $this->getDialog();
-        $dialog->syncDialog();
-        $dialog->initDialog();
+        #$dialog->syncDialog(false);
+		#$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -645,14 +664,20 @@ class FinTs
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array("pain.001.003.03"))#, "pain.008.003.02.xsd"))
+                new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array("urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03"))#, "pain.008.003.02.xsd"))
             ),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 
+		
+		$this->logger->info('');
+		$this->logger->info('HKCDB (SEPA standing orders) initialize');
         $response = $dialog->sendMessage($message);
+		
+		#$dialog->endDialog();
+		$this->logger->info('HKCDB end');
         $response = new GetSEPAStandingOrders($response->rawResponse);
 		
         return $response->getSEPAStandingOrdersArray();
@@ -687,9 +712,12 @@ class FinTs
      *
      * @return Dialog
      */
-    protected function getDialog()
+    protected function getDialog($sync = true)
     {
-        return new Dialog(
+		if($this->dialog)
+			return $this->dialog;
+			
+        $D = new Dialog(
             $this->connection,
             $this->bankCode,
             $this->username,
@@ -697,6 +725,13 @@ class FinTs
             $this->systemId,
             $this->logger
         );
+		
+		if($sync)
+	        $D->syncDialog(false);
+		
+		$this->dialog = $D;
+		
+		return $this->dialog;
     }
 
     /**
