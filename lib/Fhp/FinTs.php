@@ -528,7 +528,11 @@ class FinTs
             )
         );
 		
-        $response = $dialog->sendMessage($message);
+		$this->logger->info('');
+		$this->logger->info(get_class($hkdsx).' (Terminierte SEPA-Einzellastschrift einreichen) initialize');
+		$response = $dialog->sendMessage($message);
+		$this->logger->info(get_class($hkdsx).' end');
+		
         $response = new GetTANRequest($response->rawResponse);
 		#print_r($response);
 		
@@ -567,7 +571,12 @@ class FinTs
             ),
 			$tan
         );
+		
+		$this->logger->info('');
+		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
 		$response = $dialog->sendMessage($message);
+		$this->logger->info('HKTAN end');
+		
 	}
 	
 	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, Closure $tanCallback)
