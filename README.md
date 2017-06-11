@@ -1,10 +1,16 @@
 # PHP FinTS/HBCI library
 
 
-A PHP library implementing the following methods of the FinTS/HBCI protocol:
+A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
+ * Get accounts
+ * Get bank parameters
  * Get balance
  * Get transactions
+ * Get standing orders
+ * Delete standing order
+ * Execute direct debit
+ * Execute transfer
 
 ## Getting Started
 
