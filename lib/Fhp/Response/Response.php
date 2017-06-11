@@ -41,6 +41,8 @@ class Response
 
         $this->rawResponse = $rawResponse;
         $this->response = $this->unwrapEncryptedMsg($rawResponse);
+		
+		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
         $this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
     }
 
