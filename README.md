@@ -1,40 +1,43 @@
-# FinTS HBCI PHP
+# PHP FinTS/HBCI library
 
-[![Build Status](https://travis-ci.org/mschindler83/fints-hbci-php.svg?branch=master)](https://travis-ci.org/mschindler83/fints-hbci-php)
-[![Latest Stable Version](https://poser.pugx.org/mschindler83/fints-hbci-php/v/stable)](https://packagist.org/packages/mschindler83/fints-hbci-php)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mschindler83/fints-hbci-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mschindler83/fints-hbci-php/?branch=master)
-[![Monthly Downloads](https://poser.pugx.org/mschindler83/fints-hbci-php/d/monthly)](https://packagist.org/packages/mschindler83/fints-hbci-php)
-[![License](https://poser.pugx.org/mschindler83/fints-hbci-php/license)](https://packagist.org/packages/mschindler83/fints-hbci-php)
+A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
-A PHP library implementing the basics of the FinTS / HBCI protocol.
-It can be used to fetch the balance of connected bank accounts and for fetching bank statements of accounts.
+ * Get accounts
+ * Get bank parameters
+ * Get balance
+ * Get transactions
+ * Get standing orders
+ * Delete standing order
+ * Execute direct debit
+ * Execute transfer
+
+Forked from https://github.com/mschindler83/fints-hbci-php
 
 ## Getting Started
 
 Install via composer:
 
-    composer require mschindler83/fints-hbci-php
+    composer require nemiah/php-fints
 
 
-## How to use it
+## Usage
 
-You can have a look at the "Samples" folder in this repository.
-Just fill in the required data beginning from line 13 to 17 and run the script.
+See the examples in the "Samples" folder.<br>
+Fill out the required configuration and execute the file.
 
-You can find the server information of your bank here:
+Server details can be found here:
 https://www.hbci-zka.de/institute/institut_auswahl.htm
 
+## Special usage
+
+My goal for this library was to be able to execute automatic direct debits with mTAN.<br>
+You can do so too by using the [sms2url](https://play.google.com/store/apps/details?id=it.furtmeier.sms2url)
+ app I created for this purpose.
+ 
 ## Contribute
+
+Contributions are welcome!
 
 ### Bank compatibility
 
-This library can only work stable with *YOUR* help!
-As I'm very limited in testing different banks it would be good to get some feedback from you all.
-Feel free to create PR's for the [COMPATIBILITY.md](COMPATIBILITY.md) file where you can update the list of working banks.
-
-### Code Style
-
-If you plan to contribute to this library, please ensure that you stick with the PSR coding rules as close as you can (At least PSR-0 to PSR-4).
-You can find the PHP Standard Recommendations [here](http://www.php-fig.org/psr/)
-
-### Have fun!
+Please alter the COMPATIBILITY.md file and send a pull request if you successfully tested this library with your bank.
