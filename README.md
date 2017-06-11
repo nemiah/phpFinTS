@@ -1,6 +1,5 @@
 # PHP FinTS/HBCI library
 
-
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
  * Get accounts
@@ -12,6 +11,8 @@ A PHP library implementing the following functions of the FinTS/HBCI protocol:
  * Execute direct debit
  * Execute transfer
 
+Forked from https://github.com/mschindler83/fints-hbci-php
+
 ## Getting Started
 
 Install via composer:
@@ -19,25 +20,24 @@ Install via composer:
     composer require nemiah/php-fints
 
 
-## How to use it
+## Usage
 
-You can have a look at the "Samples" folder in this repository.
-Just fill in the required data beginning from line 13 to 17 and run the script.
+See the examples in the "Samples" folder.
+Fill out the required configuration and execute the file.
 
-You can find the server information of your bank here:
+Server details can be found here:
 https://www.hbci-zka.de/institute/institut_auswahl.htm
 
+## Special usage
+
+My goal for this library was to be able to execute automatic direct debits with mTAN.
+You can do so too by using the [sms2url](https://play.google.com/store/apps/details?id=it.furtmeier.sms2url)
+ app I created for this purpose.
+ 
 ## Contribute
+
+Contributions are welcome!
 
 ### Bank compatibility
 
-This library can only work stable with *YOUR* help!
-As I'm very limited in testing different banks it would be good to get some feedback from you all.
-Feel free to create PR's for the [COMPATIBILITY.md](COMPATIBILITY.md) file where you can update the list of working banks.
-
-### Code Style
-
-If you plan to contribute to this library, please ensure that you stick with the PSR coding rules as close as you can (At least PSR-0 to PSR-4).
-You can find the PHP Standard Recommendations [here](http://www.php-fig.org/psr/)
-
-### Have fun!
+Please alter the COMPATIBILITY.md file and send a pull request if you successfully tested this library with your bank.
