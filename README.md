@@ -3,6 +3,8 @@
 
 A PHP library implementing the following methods of the FinTS/HBCI protocol:
 
+ * Get balance
+ * Get transactions
 
 ## Getting Started
 
