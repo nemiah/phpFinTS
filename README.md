@@ -22,7 +22,7 @@ Install via composer:
 
 ## Usage
 
-See the examples in the "Samples" folder.
+See the examples in the "Samples" folder.<br>
 Fill out the required configuration and execute the file.
 
 Server details can be found here:
@@ -30,7 +30,7 @@ https://www.hbci-zka.de/institute/institut_auswahl.htm
 
 ## Special usage
 
-My goal for this library was to be able to execute automatic direct debits with mTAN.
+My goal for this library was to be able to execute automatic direct debits with mTAN.<br>
 You can do so too by using the [sms2url](https://play.google.com/store/apps/details?id=it.furtmeier.sms2url)
  app I created for this purpose.
  
