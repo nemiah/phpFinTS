@@ -528,10 +528,11 @@ class FinTs
             )
         );
 		
+		$class = explode("\\", get_class($hkdsx));
 		$this->logger->info('');
-		$this->logger->info(get_class($hkdsx).' (Terminierte SEPA-Einzellastschrift einreichen) initialize');
+		$this->logger->info($class[count($class) - 1].' (SEPA direct debit) initialize');
 		$response = $dialog->sendMessage($message);
-		$this->logger->info(get_class($hkdsx).' end');
+		$this->logger->info($class[count($class) - 1].' end');
 		
         $response = new GetTANRequest($response->rawResponse);
 		#print_r($response);
