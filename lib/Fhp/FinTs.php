@@ -146,7 +146,9 @@ class FinTs
     public function getSEPAAccounts()
     {
         $dialog = $this->getDialog();
-        #$dialog->initDialog();
+		$dialog->endDialog();
+		
+        $dialog->initDialog();
 
         $message = $this->getNewMessage(
             $dialog,
