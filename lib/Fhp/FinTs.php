@@ -418,7 +418,7 @@ class FinTs
         return $response->getSaldoModel();
     }
 
-	public function executeSEPATransfer(SEPAAccount $account, $painMessage, Closure $tanCallback)
+	public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback)
 	{
 		$painMessage = $this->clearXML($painMessage);
 		#file_put_contents($tanFilePath, "");
@@ -470,10 +470,10 @@ class FinTs
 		}
 		
 		
-		if($tan == ""){
-			echo "No TAN found, exiting!\n";
-			return;
-		}
+		if($tan == "")
+			throw new Exception("No TAN received!");
+			#echo "No TAN found, exiting!\n";
+			#return;
 		
         $message = new Message(
             $this->bankCode,
@@ -493,7 +493,7 @@ class FinTs
 		$result = $dialog->sendMessage($message);
 	}
 	
-	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, Closure $tanCallback)
+	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback)
 	{
 		$painMessage = $this->clearXML($painMessage);
 		
@@ -554,10 +554,11 @@ class FinTs
 		}
 		
 		
-		if($tan == ""){
-			echo "No TAN found, exiting!\n";
-			return;
-		}
+		if($tan == "")
+			throw new Exception("No TAN received!");
+			#echo "No TAN found, exiting!\n";
+			#return;
+		
 		
         $message = new Message(
             $this->bankCode,
@@ -582,7 +583,7 @@ class FinTs
 		
 	}
 	
-	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, Closure $tanCallback)
+	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, \Closure $tanCallback)
 	{
 		#file_put_contents($tanFilePath, "");
 		
@@ -631,10 +632,10 @@ class FinTs
 		}
 		
 		
-		if($tan == ""){
-			echo "No TAN found, exiting!\n";
-			return;
-		}
+		if($tan == "")
+			throw new Exception("No TAN received!");
+			#echo "No TAN found, exiting!\n";
+			#return;
 		
         $message = new Message(
             $this->bankCode,
