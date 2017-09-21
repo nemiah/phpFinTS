@@ -102,9 +102,9 @@ class MT940
                     $trx = &$result[$this->soaDate]['transactions'];
 
                     preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
-                    if ($trxMatch[2] == 'C') {
+                    if ($trxMatch[2] == 'C' OR $trxMatch[2] == 'RC') {
                         $trx[count($trx)]['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($trxMatch[2] == 'D') {
+                    } elseif ($trxMatch[2] == 'D' OR $trxMatch[2] == 'RD') {
                         $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
                     } else {
                         throw new MT940Exception('cd mark not found in: ' . $transaction);
