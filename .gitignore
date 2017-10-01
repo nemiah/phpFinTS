@@ -12,3 +12,5 @@ test.php
 /Samples/tan.txt
 /Samples/*.test.php
 /Samples/*.log
+/Samples/analyzeLogs.php
+/doc/

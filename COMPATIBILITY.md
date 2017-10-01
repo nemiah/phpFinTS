@@ -876,7 +876,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Koblenz 
 - [ ] Sparkasse KölnBonn 
 - [ ] Sparkasse Kraichgau (Bruchsal-Bretten-Sinsheim)
-- [ ] Sparkasse Krefeld 
+- [x] Sparkasse Krefeld 
 - [ ] Sparkasse Kulmbach-Kronach
 - [ ] Sparkasse Landsberg-Dießen
 - [ ] Sparkasse Landshut

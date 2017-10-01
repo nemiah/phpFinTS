@@ -40,14 +40,16 @@ class Curl implements AdapterInterface
      * @throws AdapterException
      * @throws CurlException
      */
-    public function __construct($host, $port)
-    {
-        if (!is_integer($port) || (int) $port <= 0) {
+    public function __construct($host, $port) {
+        if (!is_integer($port) || (int) $port <= 0) 
             throw new AdapterException('Invalid port number');
-        }
+        
 
         $this->host = (string) $host;
         $this->port = (int) $port;
+    }
+
+	private function connect(){
         $this->curlHandle = curl_init();
 
         curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, 1);
@@ -63,15 +65,17 @@ class Curl implements AdapterInterface
         curl_setopt($this->curlHandle, CURLOPT_MAXREDIRS, 0);
         curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, 30);
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, array("cache-control: no-cache", 'Content-Type: text/plain'));
-    }
-
+	}
+	
     /**
      * @param AbstractMessage $message
      * @return string
      * @throws CurlException
      */
-    public function send(AbstractMessage $message)
-    {
+    public function send(AbstractMessage $message) {
+		if(!$this->curlHandle)
+			$this->connect();
+		
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message->toString()));
         $response = curl_exec($this->curlHandle);
         $this->lastResponseInfo = curl_getinfo($this->curlHandle);
@@ -99,8 +103,7 @@ class Curl implements AdapterInterface
      *
      * @return mixed
      */
-    public function getLastResponseInfo()
-    {
+    public function getLastResponseInfo() {
         return $this->lastResponseInfo;
     }
 }

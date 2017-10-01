@@ -2,6 +2,7 @@
 
 namespace Fhp;
 
+use Fhp\FinTsInternal;
 use Fhp\Adapter\AdapterInterface;
 use Fhp\Adapter\Curl;
 use Fhp\DataTypes\Kik;
@@ -35,8 +36,7 @@ use Psr\Log\NullLogger;
  *
  * @package Fhp
  */
-class FinTs
-{
+class FinTs extends FinTsInternal {
     const DEFAULT_COUNTRY_CODE = 280;
 
     /** @var LoggerInterface */
@@ -105,8 +105,7 @@ class FinTs
 	 * 
      * @param int $mode
      */
-	public function setTANMechanism($mode)
-	{
+	public function setTANMechanism($mode) {
 		$this->tanMechanism = $mode;
 	}
 	
@@ -115,8 +114,7 @@ class FinTs
      *
      * @param AdapterInterface $adapter
      */
-    public function setAdapter(AdapterInterface $adapter)
-    {
+    public function setAdapter(AdapterInterface $adapter) {
         $this->adapter = $adapter;
         $this->connection = new Connection($this->adapter);
     }
@@ -126,8 +124,7 @@ class FinTs
      *
      * @return Model\Account[]
      */
-    public function getAccounts()
-    {
+    public function getAccounts() {
         $dialog = $this->getDialog(false);
         $result = $dialog->syncDialog();
         $this->bankName = $dialog->getBankName();
@@ -143,8 +140,7 @@ class FinTs
      * @throws Adapter\Exception\AdapterException
      * @throws Adapter\Exception\CurlException
      */
-    public function getSEPAAccounts()
-    {
+    public function getSEPAAccounts() {
         $dialog = $this->getDialog();
 		$dialog->endDialog();
 		
@@ -187,8 +183,7 @@ class FinTs
      *
      * @return string
      */
-    public function getBankName()
-    {
+    public function getBankName() {
         if (null == $this->bankName) {
             $this->getDialog()->syncDialog();
         }
@@ -205,8 +200,7 @@ class FinTs
      * @return Model\StatementOfAccount\StatementOfAccount|null
      * @throws \Exception
      */
-    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to)
-    {
+    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to) {
         $responses = array();
 
 		$this->logger->info('');
@@ -358,8 +352,7 @@ class FinTs
      * @throws Adapter\Exception\CurlException
      * @throws \Exception
      */
-    public function getSaldo(SEPAAccount $account)
-    {
+    public function getSaldo(SEPAAccount $account) {
         $dialog = $this->getDialog();
         #$dialog->syncDialog();
         #$dialog->initDialog();
@@ -417,24 +410,16 @@ class FinTs
 
         return $response->getSaldoModel();
     }
-
-	public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback)
-	{
-		$painMessage = $this->clearXML($painMessage);
-		#file_put_contents($tanFilePath, "");
+	
+	public function finishSEPATAN(GetTANRequest $tanRequest, $tan){
+		if($tan == "")
+			throw new \Exception("No TAN received!");
+			#echo "No TAN found, exiting!\n";
+			#return;
 		
-        $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
-
-		$hkcdbAccount = new Kti(
-			$account->getIban(),
-			$account->getBic(),
-			$account->getAccountNumber(),
-			$account->getSubAccount(),
-			new Kik(280, $account->getBlz())
-		);
-
+		$dialog = $tanRequest->getDialog();
+		$this->dialog = $dialog;
+		
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -443,19 +428,34 @@ class FinTs
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03", $painMessage),
-				new HKTAN(HKTAN::VERSION, 4)
+				new HKTAN(HKTAN::VERSION, 3, $tanRequest->get()->getProcessID())
             ),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            )
+            ),
+			$tan
         );
 		
-        $response = $dialog->sendMessage($message);
-        $response = new GetTANRequest($response->rawResponse);
-		#print_r($response);
+		$this->logger->info('');
+		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
+		$dialog->sendMessage($message);
+		$this->logger->info('HKTAN end');
+	}
+	
+	/**
+	 * Executes SEPA transfer
+	 * You have to call finishSEPATAN(), if $tanCallback is not set
+	 * 
+	 * @param SEPAAccount $account
+	 * @param string $painMessage
+	 * @param \Closure $tanCallback
+	 */
+	public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback = null) {
+		$response = $this->startSEPATransfer($account, $painMessage);
 		
-		#var_dump($response->get()->getProcessID());
+		if($tanCallback === null)
+			return $response;
+		
 		echo "Waiting max. 60 seconds for TAN from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
@@ -469,32 +469,10 @@ class FinTs
 			break;
 		}
 		
-		
-		if($tan == "")
-			throw new Exception("No TAN received!");
-			#echo "No TAN found, exiting!\n";
-			#return;
-		
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            ),
-			$tan
-        );
-		$result = $dialog->sendMessage($message);
+		$this->finishSEPATAN($response, $tan);
 	}
 	
-	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback)
-	{
+	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback) {
 		$painMessage = $this->clearXML($painMessage);
 		
 		
@@ -583,41 +561,21 @@ class FinTs
 		
 	}
 	
-	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, \Closure $tanCallback)
-	{
-		#file_put_contents($tanFilePath, "");
+	/**
+	 * Executes SEPA delete standing order
+	 * 
+	 * You have to call finishSEPATAN(), if $tanCallback is not set
+	 * 
+	 * @param SEPAAccount $account
+	 * @param SEPAStandingOrder $order
+	 * @param \Closure $tanCallback
+	 */
+	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, \Closure $tanCallback = null) {
+		$response = $this->startDeleteSEPAStandingOrder($account, $order);
+
+		if($tanCallback === null)
+			return $response;
 		
-        $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
-
-		$hkcdbAccount = new Kti(
-			$account->getIban(),
-			$account->getBic(),
-			$account->getAccountNumber(),
-			$account->getSubAccount(),
-			new Kik(280, $account->getBlz())
-		);
-
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-                new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03", $order),
-				new HKTAN(HKTAN::VERSION, 4)
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            )
-        );
-		#$message->
-        $response = $dialog->sendMessage($message);
-        $response = new GetTANRequest($response->rawResponse);
-		#var_dump($response->get()->getProcessID());
 		echo "Waiting max. 60 seconds for TAN from callback\n";
 		for($i = 0; $i < 60; $i++){
 			sleep(1);
@@ -631,32 +589,10 @@ class FinTs
 			break;
 		}
 		
-		
-		if($tan == "")
-			throw new Exception("No TAN received!");
-			#echo "No TAN found, exiting!\n";
-			#return;
-		
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            ),
-			$tan
-        );
-		$dialog->sendMessage($message);
+		$this->finishSEPATAN($tan, $response);
 	}
 	
-	public function getSEPAStandingOrders(SEPAAccount $account)
-    {
+	public function getSEPAStandingOrders(SEPAAccount $account) {
         $dialog = $this->getDialog();
         #$dialog->syncDialog(false);
 		#$dialog->initDialog();
@@ -694,89 +630,5 @@ class FinTs
         $response = new GetSEPAStandingOrders($response->rawResponse);
 		
         return $response->getSEPAStandingOrdersArray();
-	}
-	
-    /**
-     * Helper method to retrieve a pre configured message object.
-     * Factory for poor people :)
-     *
-     * @param Dialog $dialog
-     * @param array $segments
-     * @param array $options
-     * @return Message
-     */
-    protected function getNewMessage(Dialog $dialog, array $segments, array $options)
-    {
-        return new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            $segments,
-            $options
-        );
-    }
-
-    /**
-     * Helper method to retrieve a pre configured dialog object.
-     * Factory for poor people :)
-     *
-     * @return Dialog
-     */
-    protected function getDialog($sync = true)
-    {
-		if($this->dialog)
-			return $this->dialog;
-			
-        $D = new Dialog(
-            $this->connection,
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $this->systemId,
-            $this->logger
-        );
-		
-		if($sync)
-	        $D->syncDialog(false);
-		
-		$this->dialog = $D;
-		
-		return $this->dialog;
-    }
-
-    /**
-     * Needed for escaping userdata.
-     * HBCI escape char is "?"
-     *
-     * @param string $string
-     * @return string
-     */
-    protected function escapeString($string)
-    {
-        return str_replace(
-            array('?', '@', ':', '+', '\''),
-            array('??', '?@', '?:', '?+', '?\''),
-            $string
-        );
-    }
-	
-	protected function clearXML($xml)
-	{
-		$dom = new \DOMDocument;
-		$dom->preserveWhiteSpace = FALSE;
-		$dom->loadXML($xml);
-		$dom->formatOutput = false;
-		return $dom->saveXml();
-	}
-	
-	private function getUsedPinTanMechanism($dialog)
-	{
-		if($this->tanMechanism !== null AND in_array($this->tanMechanism, $dialog->getSupportedPinTanMechanisms()))
-			return array($this->tanMechanism);
-		
-		return $dialog->getSupportedPinTanMechanisms();
 	}
 }

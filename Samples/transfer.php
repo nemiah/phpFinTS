@@ -75,3 +75,50 @@ $transfer = $fints->executeSEPATransfer($oneAccount, $sepaDD->toXML(), function(
 
 $fints->end();
 print_r($transfer);
+
+//OR for web-applications without callback and interrupted connection
+/*
+
+$fints = new FinTs(
+    FHP_BANK_URL,
+    FHP_BANK_PORT,
+    FHP_BANK_CODE,
+    FHP_ONLINE_BANKING_USERNAME,
+    FHP_ONLINE_BANKING_PIN,
+	new testLogger()
+);
+
+$accounts = $fints->getSEPAAccounts();
+
+$fints->setTANMechanism(901); //901 for mobileTAN
+$response = $fints->executeSEPATransfer($accounts[0], $sepaDD->toXML());
+$serialized = serialize($response);
+
+echo "Waiting max. 60 seconds for TAN\n";
+
+for($i = 0; $i < 60; $i++){
+	sleep(1);
+
+	$tan = trim(file_get_contents(__DIR__."/tan.txt"));
+	if($tan == ""){
+		echo "No TAN found, waiting ".(60 - $i)."!\n";
+		continue;
+	}
+
+	break;
+}
+
+$userialized = unserialize($serialized);
+
+$fints = new FinTs(
+    FHP_BANK_URL,
+    FHP_BANK_PORT,
+    FHP_BANK_CODE,
+    FHP_ONLINE_BANKING_USERNAME,
+    FHP_ONLINE_BANKING_PIN,
+	new testLogger()
+);
+ * 
+$fints->finishSEPATAN($userialized, $tan);
+$fints->end();
+ */
