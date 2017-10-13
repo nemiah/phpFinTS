@@ -54,7 +54,12 @@ class FinTsInternal {
         return new GetTANRequest($response->rawResponse, $dialog);
 	}
 
-	protected function startSEPATransfer(SEPAAccount $account, $painMessage): GetTANRequest {
+	/**
+	 * @param SEPAAccount $account
+	 * @param string $painMessage
+	 * @return GetTANRequest
+	 */
+	protected function startSEPATransfer(SEPAAccount $account, $painMessage) {
 		$painMessage = $this->clearXML($painMessage);
 		
         $dialog = $this->getDialog();
