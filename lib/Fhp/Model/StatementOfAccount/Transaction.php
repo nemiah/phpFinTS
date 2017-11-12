@@ -307,6 +307,20 @@ class Transaction
     }
 
     /**
+     * Get the end to end id (EREF)
+     *
+     * @return string
+     */
+    public function getEndToEndID()
+    {
+        if (array_key_exists('EREF', $this->structuredDescription)) {
+            return $this->structuredDescription['EREF'];
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * Get bankCode
      *
      * @return string

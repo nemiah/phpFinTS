@@ -42,7 +42,8 @@ foreach ($soa->getStatements() as $statement) {
         echo 'Amount      : ' . ($transaction->getCreditDebit() == Transaction::CD_DEBIT ? '-' : '') . $transaction->getAmount() . PHP_EOL;
         echo 'Booking text: ' . $transaction->getBookingText() . PHP_EOL;
         echo 'Name        : ' . $transaction->getName() . PHP_EOL;
-        echo 'Description : ' . $transaction->getDescription1() . PHP_EOL;
+        echo 'Description : ' . $transaction->getMainDescription() . PHP_EOL;
+        echo 'EREF        : ' . $transaction->getEndToEndID() . PHP_EOL;
         echo '=======================================' . PHP_EOL . PHP_EOL;
     }
 }
