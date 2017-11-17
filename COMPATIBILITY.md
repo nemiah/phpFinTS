@@ -16,7 +16,7 @@ This library is verified to work with following banks.
 - [ ] Allgäuer Volksbank Kempten-Sonthofen
 - [ ] Allianz-Bank (Zndl der Oldenburgische Landesbank AG)
 - [ ] Augsburger Aktienbank AG
-- [ ] Augusta-Bank Raiffeisen-Volksbank
+- [x] Augusta-Bank Raiffeisen-Volksbank
 - [ ] Bad Waldseer Bank
 - [ ] Baden-Württembergische Bank (BW-Bank)
 - [ ] BAG Bankaktiengesellsch. Hamm
@@ -46,7 +46,7 @@ This library is verified to work with following banks.
 - [ ] Bankverein Bebra
 - [ ] Bankverein Werther AG
 - [ ] Bayerische Landesbank Girozentrale
-- [ ] BBBank
+- [x] BBBank
 - [ ] Bensberger Bank eG
 - [ ] Berkheimer Bank
 - [ ] Berliner Sparkasse
@@ -220,7 +220,7 @@ This library is verified to work with following banks.
 - [ ] Kreissparkasse Ostalb (Aalen)
 - [ ] Kreissparkasse Osterholz
 - [ ] Kreissparkasse Peine
-- [ ] Kreissparkasse Ravensburg
+- [x] Kreissparkasse Ravensburg
 - [ ] Kreissparkasse Recklinghausen
 - [ ] Kreissparkasse Reutlingen
 - [ ] Kreissparkasse Rhein-Hunsrück
@@ -271,7 +271,7 @@ This library is verified to work with following banks.
 - [ ] Merkur Bank
 - [ ] Mittelbrandenburgische Sparkasse in Potsdam
 - [ ] MKB Mittelstandskreditbank Aktiengesellschaft
-- [ ] MLP Finanzdienstleistungen
+- [x] MLP Finanzdienstleistungen
 - [ ] MLP Finanzdienstleistungen Zw CS
 - [ ] Münchner Bank
 - [ ] Münsterländische Bank Thie & Co
@@ -300,8 +300,8 @@ This library is verified to work with following banks.
 - [ ] Paffrather RB eG
 - [ ] Pax Bank
 - [ ] PayCenter GmbH
-- [ ] Postbank
-- [ ] Postbank (Giro)
+- [x] Postbank
+- [x] Postbank (Giro)
 - [x] Postbank Geschäftskunden
 - [x] PSD Bank Berlin-Brandenburg
 - [x] PSD Bank Braunschweig
@@ -356,7 +356,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Aiglsbach
 - [ ] Raiffeisenbank Aitrang-Ruderatshofen
 - [ ] Raiffeisenbank Alsheim-Gimbsheim
-- [ ] Raiffeisenbank Altdorf-Ergolding
+- [X] Raiffeisenbank Altdorf-Ergolding
 - [ ] Raiffeisenbank Altdorf-Feucht
 - [ ] Raiffeisenbank Alteglofsheim-Hagelstadt
 - [ ] Raiffeisenbank Altschweier
@@ -761,7 +761,7 @@ This library is verified to work with following banks.
 - [ ] Sparda-Bank West eG
 - [ ] SparDaKa Brachelen eG
 - [ ] Spardaka Hoengen eG
-- [ ] Sparkasse Aachen 
+- [x] Sparkasse Aachen 
 - [ ] Sparkasse Allgäu (Kempten)
 - [ ] Sparkasse Altenburger Land
 - [ ] Sparkasse Altmark-West
@@ -822,7 +822,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Essen 
 - [ ] Sparkasse Finnentrop
 - [ ] Sparkasse Forchheim
-- [ ] Sparkasse Freiburg - Nördlicher Breisgau
+- [X] Sparkasse Freiburg - Nördlicher Breisgau
 - [ ] Sparkasse Freising
 - [ ] Sparkasse Freyung-Grafenau
 - [ ] Sparkasse Fröndenberg
@@ -855,7 +855,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Herford
 - [ ] Sparkasse Hilden-Ratingen-Velbert 
 - [ ] Sparkasse Hildesheim
-- [ ] Sparkasse Hochfranken
+- [x] Sparkasse Hochfranken
 - [ ] Sparkasse Hochrhein
 - [ ] Sparkasse Hochsauerland
 - [ ] Sparkasse Hochschwarzwald
@@ -929,7 +929,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Nürnberg
 - [ ] Sparkasse Oberhessen
 - [ ] Sparkasse Oberlausitz-Niederschlesien
-- [ ] Sparkasse Oberpfalz-Nord
+- [x] Sparkasse Oberpfalz-Nord
 - [ ] Sparkasse Odenwaldkreis
 - [ ] Sparkasse Oder-Spree
 - [ ] Sparkasse Offenbach
