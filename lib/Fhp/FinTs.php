@@ -456,13 +456,13 @@ class FinTs extends FinTsInternal {
 		if($tanCallback === null)
 			return $response;
 		
-		echo "Waiting max. 60 seconds for TAN from callback\n";
-		for($i = 0; $i < 60; $i++){
+		echo "Waiting max. 120 seconds for TAN from callback\n";
+		for($i = 0; $i < 120; $i++){
 			sleep(1);
 			
 			$tan = trim($tanCallback());
 			if($tan == ""){
-				echo "No TAN found, waiting ".(60 - $i)."!\n";
+				echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
 			
@@ -518,13 +518,13 @@ class FinTs extends FinTsInternal {
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 60 seconds for TAN from callback\n";
-		for($i = 0; $i < 60; $i++){
+		echo "Waiting max. 120 seconds for TAN from callback\n";
+		for($i = 0; $i < 120; $i++){
 			sleep(1);
 			
 			$tan = trim($tanCallback());
 			if($tan == ""){
-				echo "No TAN found, waiting ".(60 - $i)."!\n";
+				echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
 			
@@ -576,13 +576,13 @@ class FinTs extends FinTsInternal {
 		if($tanCallback === null)
 			return $response;
 		
-		echo "Waiting max. 60 seconds for TAN from callback\n";
-		for($i = 0; $i < 60; $i++){
+		echo "Waiting max. 120 seconds for TAN from callback\n";
+		for($i = 0; $i < 120; $i++){
 			sleep(1);
 			
 			$tan = trim($tanCallback());
 			if($tan == ""){
-				echo "No TAN found, waiting ".(60 - $i)."!\n";
+				echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
 			
