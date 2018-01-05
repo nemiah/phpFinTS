@@ -128,6 +128,11 @@ class MT940
                     if (preg_match('/^\d{4}$/', $bookingDate)) {
                         // if valuta date is earlier than booking date, then it must be in the new year.
                         $year = substr($transaction, 2, 2) < substr($transaction, 6, 2) ? --$year : $year;
+                        if (substr($transaction, 2, 2) == '12' && substr($transaction, 6, 2) == '01') {
+                            $year++;
+                        } elseif (substr($transaction, 2, 2) == '01' && substr($transaction, 6, 2) == '12') {
+                            $year--;
+                        }
                         $bookingDate = $this->getDate($year . $bookingDate);
                     } else {
                         // if booking date not set in :61, then we have to take it from :60F
