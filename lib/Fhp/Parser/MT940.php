@@ -221,7 +221,7 @@ class MT940
         } else {
             $lastType = null;
             foreach ($descriptionLines as $line) {
-                if (strlen($line) > 5 && $line[4] === '+') {
+                if (strlen($line) >= 5 && $line[4] === '+') {
                     if ($lastType != null) {
                         $description[$lastType] = trim($description[$lastType]);
                     }
