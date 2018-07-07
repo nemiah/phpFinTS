@@ -23,13 +23,12 @@ use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
 use Fhp\Segment\HKCDB;
-use Fhp\Segment\HKCDL;
-use Fhp\Segment\HKCCS;
 use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Fhp\Dialog\Exception\TANException;
 
 /**
  * Class FinTs.
@@ -413,7 +412,7 @@ class FinTs extends FinTsInternal {
 	
 	public function finishSEPATAN(GetTANRequest $tanRequest, $tan){
 		if($tan == "")
-			throw new \Exception("No TAN received!");
+			throw new TANException("No TAN received!");
 			#echo "No TAN found, exiting!\n";
 			#return;
 		
@@ -533,7 +532,7 @@ class FinTs extends FinTsInternal {
 		
 		
 		if($tan == "")
-			throw new Exception("No TAN received!");
+			throw new TANException("No TAN received!");
 			#echo "No TAN found, exiting!\n";
 			#return;
 		
