@@ -471,7 +471,7 @@ class FinTs extends FinTsInternal {
 		$this->finishSEPATAN($response, $tan);
 	}
 	
-	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback) {
+	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback, $interval = 1) {
 		$painMessage = $this->clearXML($painMessage);
 		
 		
@@ -517,9 +517,9 @@ class FinTs extends FinTsInternal {
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 120 seconds for TAN from callback\n";
+		echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
 		for($i = 0; $i < 120; $i++){
-			sleep(1);
+			sleep($interval);
 			
 			$tan = trim($tanCallback());
 			if($tan == ""){
