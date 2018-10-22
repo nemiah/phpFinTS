@@ -25,8 +25,8 @@ Install via composer:
 See the examples in the "Samples" folder.<br>
 Fill out the required configuration and execute the file.
 
-Server details can be found here:
-https://www.hbci-zka.de/institute/institut_auswahl.htm
+Server details can be obtained here after registration:
+https://www.hbci-zka.de
 
 ## Special usage
 

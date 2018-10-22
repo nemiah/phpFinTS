@@ -45,6 +45,7 @@ This library is verified to work with following banks.
 - [x] Bankhaus Rautenschlein
 - [ ] Bankverein Bebra
 - [ ] Bankverein Werther AG
+- [ ] Barclays Bank PLC
 - [ ] Bayerische Landesbank Girozentrale
 - [x] BBBank
 - [ ] Bensberger Bank eG
@@ -253,10 +254,10 @@ This library is verified to work with following banks.
 - [ ] Kurhessische Landbank
 - [ ] Kyffhäusersparkasse Artern-Sondershausen
 - [ ] Landbank Horlofftal
-- [ ] Landesbank Baden-Württemberg
+- [x] Landesbank Baden-Württemberg
 - [ ] Landesbank Berlin AG
 - [ ] Landeskirchliche Kredit-Genossenschaft Sachsen
-- [ ] Landessparkasse zu Oldenburg
+- [x] Landessparkasse zu Oldenburg
 - [ ] Landsberg-Ammersee Bank
 - [ ] Leutkircher Bank Raiffeisen- und Volksbank
 - [ ] LevoBank Vereinte VB Lebach Eppelborn
@@ -277,7 +278,7 @@ This library is verified to work with following banks.
 - [ ] Münsterländische Bank Thie & Co
 - [ ] Murgtalbank Mitteltal - Obertal -alt-
 - [ ] Müritz-Sparkasse
-- [ ] Nassauische Sparkasse 
+- [X] Nassauische Sparkasse 
 - [ ] National-Bank
 - [ ] net-m privatbank 1891 AG
 - [ ] netbank AG
@@ -732,7 +733,7 @@ This library is verified to work with following banks.
 - [ ] SpaDaka Aegidienberg eG
 - [ ] Spadaka Bockum-Hövel eG.
 - [ ] Spadaka Gescher eG
-- [ ] Spadaka Minden-Porta Westfalica
+- [x] Spadaka Minden-Porta Westfalica (Volksbank Mindener Land eG)
 - [ ] Spadaka Reken eG.
 - [x] Spar- u Kreditbank ev-freikirchl Gemeinden
 - [ ] Spar- und Darlehnskasse Börde Lamstedt-Hechthausen
@@ -874,7 +875,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Kierspe-Meinerzhagen
 - [ ] Sparkasse Kleve
 - [ ] Sparkasse Koblenz 
-- [ ] Sparkasse KölnBonn 
+- [x] Sparkasse KölnBonn 
 - [ ] Sparkasse Kraichgau (Bruchsal-Bretten-Sinsheim)
 - [x] Sparkasse Krefeld 
 - [ ] Sparkasse Kulmbach-Kronach
@@ -972,7 +973,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Sonneberg
 - [ ] Sparkasse Spree-Neiße
 - [ ] Sparkasse Stade-Altes Land
-- [ ] Sparkasse Starkenburg
+- [x] Sparkasse Starkenburg
 - [ ] Sparkasse Staufen-Breisach
 - [ ] Sparkasse Stockach
 - [ ] Sparkasse Straelen
@@ -1013,7 +1014,7 @@ This library is verified to work with following banks.
 - [ ] Stadt- und Kreissparkasse Rothenburg
 - [ ] Stadt-Sparkasse Düsseldorf 
 - [ ] Stadt-Sparkasse Haan (Rheinland)
-- [ ] Stadt-Sparkasse Langenfeld
+- [x] Stadt-Sparkasse Langenfeld
 - [ ] Stadt-Sparkasse Solingen 
 - [ ] Stadtsparkasse Aichach-Schrobenhausen
 - [x] Stadtsparkasse Augsburg
@@ -1071,7 +1072,7 @@ This library is verified to work with following banks.
 - [ ] Stuttgarter Volksbank
 - [ ] Südwestbank
 - [ ] Sydbank A/S
-- [ ] Taunus-Sparkasse
+- [x] Taunus-Sparkasse
 - [x] Triodos Bank Deutschland
 - [ ] Uhlbacher Bank
 - [ ] UniCredit Bank - HypoVereinsbank AG
