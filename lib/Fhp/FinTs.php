@@ -517,13 +517,15 @@ class FinTs extends FinTsInternal {
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
-		for($i = 0; $i < 120; $i++){
+		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…");
+		#echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
+		for($i = 0; $i < 120; $i += $interval){
 			sleep($interval);
 			
 			$tan = trim($tanCallback());
 			if($tan == ""){
-				echo "No TAN found, waiting ".(120 - $i)."!\n";
+				$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
+				#echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
 			
