@@ -43,12 +43,12 @@ class FailedRequestException extends \Exception
             $this->responseCode = (int) $keys[0];
             $this->responseMessage = array_shift($summary);
         } elseif (count($summary) > 1) {
-            foreach ($summary as $scode => $smsg) {
-                if (0 === strpos($smsg, '*')) {
-                    $this->responseCode = (int) $scode;
-                    $this->responseMessage = substr($smsg, 1);
-                }
-            }
+            foreach ($summary as $scode => $smsg) 
+                $summary[$scode] = $summary[$scode]." ($scode)";
+            
+			
+			$this->responseMessage = implode("; ", $summary);
+				
         }
         
         parent::__construct('Request Failed: ' . $this->responseMessage, $this->responseCode);
