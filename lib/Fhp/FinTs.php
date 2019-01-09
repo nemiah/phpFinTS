@@ -225,7 +225,7 @@ class FinTs extends FinTsInternal {
                 $account,
                 $from,
                 $to,
-                $touchdowns[HKKAZ::NAME]
+                $this->escapeString($touchdowns[HKKAZ::NAME])
             );
 
             $r = $dialog->sendMessage($message);
