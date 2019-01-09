@@ -1,8 +1,7 @@
 <?php
 namespace Fhp\Dialog;
 
-use Fhp\Adapter\Exception\AdapterException;
-use Fhp\Adapter\Exception\CurlException;
+use Fhp\CurlException;
 use Fhp\Connection;
 use Fhp\Dialog\Exception\FailedRequestException;
 use Fhp\Message\AbstractMessage;
@@ -107,7 +106,6 @@ class Dialog
     /**
      * @param AbstractMessage $message
      * @return Response
-     * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
      */
@@ -149,7 +147,7 @@ class Dialog
             }
 
             return $response;
-        } catch (AdapterException $e) {
+        } catch (CurlException $e) {
             $this->logger->critical($e->getMessage());
             if ($e instanceof CurlException) {
                 $this->logger->debug(print_r($e->getCurlInfo(), true));
@@ -275,7 +273,6 @@ class Dialog
      * Initializes a dialog.
      *
      * @return string|null
-     * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
      * @throws \Exception
@@ -318,7 +315,6 @@ class Dialog
      * Sends sync request.
      *
      * @return string
-     * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
      * @throws \Exception
@@ -389,7 +385,6 @@ class Dialog
      * Ends a previous started dialog.
      *
      * @return string
-     * @throws AdapterException
      * @throws CurlException
      * @throws FailedRequestException
      */

@@ -20,6 +20,15 @@ use Fhp\Segment\HKTAN;
  * @package Fhp
  */
 class FinTsInternal {
+    protected $server;
+    /** @var int */
+    protected $port;
+    /** @var  Connection */
+    protected $connection;
+	/** @var int */
+	protected $timeoutConnect = 15;
+	/** @var int */
+	protected $timeoutResponse = 30;
 	
 	protected function startDeleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order){
        $dialog = $this->getDialog();
@@ -130,6 +139,9 @@ class FinTsInternal {
 		if($this->dialog)
 			return $this->dialog;
 			
+		if(!$this->connection)
+			$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+		
         $D = new Dialog(
             $this->connection,
             $this->bankCode,

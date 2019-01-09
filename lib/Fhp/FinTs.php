@@ -3,8 +3,6 @@
 namespace Fhp;
 
 use Fhp\FinTsInternal;
-use Fhp\Adapter\AdapterInterface;
-use Fhp\Adapter\Curl;
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Kti;
 use Fhp\DataTypes\Ktv;
@@ -41,19 +39,12 @@ class FinTs extends FinTsInternal {
     /** @var LoggerInterface */
     protected $logger;
     /** @var  string */
-    protected $server;
-    /** @var int */
-    protected $port;
     /** @var string */
     protected $bankCode;
     /** @var string */
     protected $username;
     /** @var string */
     protected $pin;
-    /** @var  Connection */
-    protected $connection;
-    /** @var  AdapterInterface */
-    protected $adapter;
     /** @var int */
     protected $systemId = 0;
     /** @var string */
@@ -94,8 +85,7 @@ class FinTs extends FinTsInternal {
         $this->username = $this->escapeString($username);
         $this->pin = $this->escapeString($pin);
 
-        $this->adapter = new Curl($this->server, $this->port);
-        $this->connection = new Connection($this->adapter);
+        #$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
     }
 
     /**
@@ -108,16 +98,11 @@ class FinTs extends FinTsInternal {
 		$this->tanMechanism = $mode;
 	}
 	
-    /**
-     * Sets the adapter to use.
-     *
-     * @param AdapterInterface $adapter
-     */
-    public function setAdapter(AdapterInterface $adapter) {
-        $this->adapter = $adapter;
-        $this->connection = new Connection($this->adapter);
-    }
-
+	public function setTimeouts($connect, $response){
+		$this->timeoutConnect = $connect;
+		$this->timeoutResponse = $response;
+	}
+	
     /**
      * Gets array of all accounts.
      *
@@ -136,8 +121,7 @@ class FinTs extends FinTsInternal {
      * Gets array of all SEPA Accounts.
      *
      * @return Model\SEPAAccount[]
-     * @throws Adapter\Exception\AdapterException
-     * @throws Adapter\Exception\CurlException
+     * @throws \CurlException
      */
     public function getSEPAAccounts() {
         $dialog = $this->getDialog();
@@ -347,8 +331,7 @@ class FinTs extends FinTsInternal {
      *
      * @param SEPAAccount $account
      * @return Model\Saldo|null
-     * @throws Adapter\Exception\AdapterException
-     * @throws Adapter\Exception\CurlException
+     * @throws \CurlException
      * @throws \Exception
      */
     public function getSaldo(SEPAAccount $account) {
