@@ -2,7 +2,6 @@
 
 namespace Fhp;
 
-use Fhp\FinTsInternal;
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Kti;
 use Fhp\DataTypes\Ktv;
@@ -17,6 +16,7 @@ use Fhp\Response\GetSEPAAccounts;
 use Fhp\Response\GetStatementOfAccount;
 use Fhp\Response\GetSEPAStandingOrders;
 use Fhp\Response\GetTANRequest;
+use Fhp\Response\BankToCustomerAccountReportHICAZ;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
@@ -24,6 +24,7 @@ use Fhp\Segment\HKCDB;
 use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
+use Fhp\Segment\HKCAZ;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
@@ -315,6 +316,96 @@ class FinTs extends FinTsInternal {
                     3,
                     $konto,
                     HKKAZ::ALL_ACCOUNTS_N,
+                    $from,
+                    $to,
+                    $touchdown
+                )
+            ),
+            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+        );
+
+        return $message;
+    }
+
+    /**
+     * Gets Bank To Customer Account Report as camt XML
+     *
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return string[]
+     * @throws \Exception
+     */
+    public function getBankToCustomerAccountReportAsRawXML(SEPAAccount $account, \DateTime $from, \DateTime $to)
+    {
+        $responses = [];
+
+        $this->logger->info('');
+        $this->logger->info('HKCAZ (statement of accounts) initialize');
+        $this->logger->info('Start date: ' . $from->format('Y-m-d'));
+        $this->logger->info('End date  : ' . $to->format('Y-m-d'));
+
+        $dialog = $this->getDialog();
+
+        $message = $this->createHKCAZMessage($dialog, $account, $from, $to, null);
+        $response = $dialog->sendMessage($message);
+        $touchdowns = $response->getTouchdowns($message);
+
+        $HICAZ = new BankToCustomerAccountReportHICAZ($response->rawResponse);
+        $responses[] = $HICAZ->getBookedXML();
+
+        $touchdownCounter = 1;
+        while (isset($touchdowns[HKCAZ::NAME])) {
+            $this->logger->info('Fetching more statement of account results (' . $touchdownCounter++ . ') ...');
+            $message = $this->createHKCAZMessage(
+                $dialog,
+                $account,
+                $from,
+                $to,
+                $this->escapeString($touchdowns[HKCAZ::NAME])
+            );
+
+            $response = $dialog->sendMessage($message);
+            $touchdowns = $response->getTouchDowns($message);
+            $HICAZ = new BankToCustomerAccountReportHICAZ($response->rawResponse);
+            $responses[] = $HICAZ->getBookedXML();
+        }
+
+        $this->logger->info('HKCAZ end');
+
+        return $responses;
+    }
+
+    /**
+     * Helper method to create a "Statement of Account Message".
+     *
+     * @param Dialog $dialog
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param string|null $touchdown
+     * @return Message
+     * @throws \Exception
+     */
+    protected function createHKCAZMessage(Dialog $dialog, SEPAAccount $account, \DateTime $from, \DateTime $to, $touchdown = null)
+    {
+        $kti = new Kti(
+            $account->getIban(),
+            $account->getBic(),
+            $account->getAccountNumber(),
+            $account->getSubAccount(),
+            new Kik(280, $account->getBlz())
+        );
+
+        $message = $this->getNewMessage(
+            $dialog,
+            array(
+                new HKCAZ(
+                    1,
+                    3,
+                    $kti,
+                    $this->escapeString(HKCAZ::CAMT_FORMAT_FQ),
+                    HKCAZ::ALL_ACCOUNTS_N,
                     $from,
                     $to,
                     $touchdown
