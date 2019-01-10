@@ -318,6 +318,8 @@ class Response
         foreach ($this->segments as $segment) {
             $split = explode(':', $segment, 2);
 
+            $segment = $this->conformToUtf8($segment);
+
             if ($split[0] == $name) {
                 if ($one) {
                     return $segment;
@@ -327,6 +329,11 @@ class Response
         }
 
         return $found;
+    }
+
+    protected function conformToUtf8($string)
+    {
+        return iconv('ISO-8859-1', 'UTF-8', $string);
     }
 
     /**
