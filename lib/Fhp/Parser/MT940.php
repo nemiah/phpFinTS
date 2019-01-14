@@ -54,16 +54,21 @@ class MT940
     {
         // The divider can be either \r\n or @@
         $divider = substr_count($this->rawData, "\r\n-") > substr_count($this->rawData, '@@-') ? "\r\n" : '@@';
-		
-		$booked = true;
+
+        $cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $this->rawData);
+
+        $booked = true;
         $result = array();
-        $days = explode($divider . '-', $this->rawData);
+        $days = explode($divider . '-', $cleanedRawData);
         foreach ($days as &$day) {
+
             $day = explode($divider . ':', $day);
+
             for ($i = 0, $cnt = count($day); $i < $cnt; $i++) {
-				if(preg_match("/^\+\@[0-9]+\@$/", trim($day[$i])))
-					$booked = false;
-				
+                if (preg_match("/^\+\@[0-9]+\@$/", trim($day[$i]))) {
+                    $booked = false;
+                }
+
                 // handle start balance
                 // 60F:C160401EUR1234,56
                 if (preg_match('/^60(F|M):/', $day[$i])) {
@@ -145,16 +150,15 @@ class MT940
                 }
             }
         }
-		
+
         return $result;
     }
 
-    /**
-     * @param string $descr
-     * @return array
-     */
     protected function parseDescription($descr)
     {
+        // Geschäftsvorfall-Code
+        $gvc = substr($descr, 0, 3);
+
         $prepared = array();
         $result = array();
 
@@ -164,6 +168,7 @@ class MT940
         }
 
         $descr = str_replace('? ', '?', $descr);
+
         preg_match_all('/\?(\d{2})([^\?]+)/', $descr, $matches, PREG_SET_ORDER);
 
         $descriptionLines = array();
@@ -171,21 +176,45 @@ class MT940
         $description2 = ''; // Legacy, could be removed.
         foreach ($matches as $m) {
             $index = (int) $m[1];
+
             if ((20 <= $index && $index <= 29) || (60 <= $index && $index <= 63)) {
                 if (20 <= $index && $index <= 29) {
                     $description1 .= $m[2];
                 } else {
                     $description2 .= $m[2];
                 }
-                $m[2] = trim(str_replace("\r\n", '', $m[2]));
                 if (!empty($m[2])) {
                     $descriptionLines[] = $m[2];
                 }
-            } else {
-                $prepared[$index] = $m[2];
             }
+            $prepared[$index] = $m[2];
         }
 
+        $description = $this->extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $prepared);
+
+        $result['booking_code']      = $gvc;
+        $result['booking_text']      = trim($prepared[0]);
+        $result['description']       = $description;
+        $result['primanoten_nr']     = trim($prepared[10]);
+        $result['description_1']     = trim($description1);
+        $result['bank_code']         = trim($prepared[30]);
+        $result['account_number']    = trim($prepared[31]);
+        $result['name']              = trim($prepared[32] . $prepared[33]);
+        $result['text_key_addition'] = trim($prepared[34]);
+        $result['description_2']     = $description2;
+        $result['desc_lines']        = $descriptionLines;
+
+        return $result;
+    }
+
+    /**
+     * @param string[] $lines that contain the remittance information
+     * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
+     * @param string $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
+     * @return array
+     */
+    protected function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
+    {
         $description = array();
         if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
             $description['SVWZ'] = implode('', $descriptionLines);
@@ -212,17 +241,7 @@ class MT940
             $description[$lastType] = trim($description[$lastType]);
         }
 
-        $result['description']       = $description;
-        $result['booking_text']      = trim(str_replace("\r\n", '', $prepared[0]));
-        $result['primanoten_nr']     = trim(str_replace("\r\n", '', $prepared[10]));
-        $result['description_1']     = trim(str_replace("\r\n", '', $description1));
-        $result['bank_code']         = trim(str_replace("\r\n", '', $prepared[30]));
-        $result['account_number']    = trim(str_replace("\r\n", '', $prepared[31]));
-        $result['name']              = trim(str_replace("\r\n", '', $prepared[32] . $prepared[33]));
-        $result['text_key_addition'] = trim(str_replace("\r\n", '', $prepared[34]));
-        $result['description_2']     = trim(str_replace("\r\n", '', $description2));
-
-        return $result;
+        return $description;
     }
 
     /**
