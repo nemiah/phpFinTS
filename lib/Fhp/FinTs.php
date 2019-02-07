@@ -10,6 +10,7 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
+use Fhp\Parser\MT940;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
@@ -71,8 +72,8 @@ class FinTs extends FinTsInternal {
         $pin,
         LoggerInterface $logger = null
     ) {
-        $this->server = $server;
-        $this->port = $port;
+        $this->url = trim($server);
+        $this->port = intval($port);
         $this->logger = null == $logger ? new NullLogger() : $logger;
 
         // escaping of bank code not really needed here as it should
@@ -175,20 +176,12 @@ class FinTs extends FinTsInternal {
         return $this->bankName;
     }
 
-    /**
-     * Gets statement of account.
-     *
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @return Model\StatementOfAccount\StatementOfAccount|null
-     * @throws \Exception
-     */
-    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to) {
+    public function getStatementOfAccountAsRawMT940(SEPAAccount $account, \DateTime $from, \DateTime $to)
+    {
         $responses = array();
 
-		$this->logger->info('');
-		$this->logger->info('HKKAZ (statement of accounts) initialize');
+        $this->logger->info('');
+        $this->logger->info('HKKAZ (statement of accounts) initialize');
         $this->logger->info('Start date: ' . $from->format('Y-m-d'));
         $this->logger->info('End date  : ' . $to->format('Y-m-d'));
 
@@ -219,11 +212,52 @@ class FinTs extends FinTsInternal {
             $responses[] = $soaResponse->getRawMt940();
         }
 
-		$this->logger->info('HKKAZ end');
+        $this->logger->info('HKKAZ end');
 
         #$dialog->endDialog();
 
-        return GetStatementOfAccount::createModelFromRawMt940(implode('', $responses));
+        return implode('', $responses);
+    }
+
+    /**
+     * Gets statement of account.
+     *
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return Model\StatementOfAccount\StatementOfAccount|null
+     * @throws \Exception
+     */
+    public function getStatementOfAccountAsParsedMT940(SEPAAccount $account, \DateTime $from, \DateTime $to) {
+        $rawMt940 = $this->getStatementOfAccountAsRawMT940($account, $from, $to);
+
+        $urlParts = parse_url($this->url);
+
+        // Evtl. Groß und Kleinschreibungen des Hosts normalisieren
+        $dialectId = strtr($this->url, [
+            $urlParts['scheme'] => strtolower($urlParts['scheme']),
+            $urlParts['host'] => strtolower($urlParts['host']),
+        ]);
+
+        switch ($dialectId) {
+            case Parser\Dialect\SpardaMT940::DIALECT_ID:
+                $parser = new Parser\Dialect\SpardaMT940($rawMt940);
+            break;
+            case Parser\Dialect\PostbankMT940::DIALECT_ID:
+                $parser = new Parser\Dialect\PostbankMT940($rawMt940);
+            break;
+            default:
+                $parser = new MT940($rawMt940);
+            break;
+        }
+
+        return $parser->parse(MT940::TARGET_ARRAY);
+    }
+
+    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to) {
+        $parsed = $this->getStatementOfAccountAsParsedMT940($account, $from, $to);
+
+        return GetStatementOfAccount::createModelFromArray($parsed);
     }
 
     /**

@@ -20,7 +20,7 @@ use Fhp\Segment\HKTAN;
  * @package Fhp
  */
 class FinTsInternal {
-    protected $server;
+    protected $url;
     /** @var int */
     protected $port;
     /** @var  Connection */
@@ -136,11 +136,11 @@ class FinTsInternal {
      * @return Dialog
      */
     protected function getDialog($sync = true) {
-		if($this->dialog)
+		if ($this->dialog)
 			return $this->dialog;
 			
-		if(!$this->connection)
-			$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+		if (!$this->connection)
+			$this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
 		
         $D = new Dialog(
             $this->connection,
@@ -151,7 +151,7 @@ class FinTsInternal {
             $this->logger
         );
 		
-		if($sync)
+		if ($sync)
 	        $D->syncDialog(false);
 		
 		$this->dialog = $D;
