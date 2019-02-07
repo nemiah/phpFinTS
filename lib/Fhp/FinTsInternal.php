@@ -166,7 +166,7 @@ class FinTsInternal {
      * @param string $string
      * @return string
      */
-    protected function escapeString($string) {
+    public static function escapeString($string) {
         return str_replace(
             array('?', '@', ':', '+', '\''),
             array('??', '?@', '?:', '?+', '?\''),
