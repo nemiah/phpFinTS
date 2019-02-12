@@ -2,6 +2,8 @@
 
 namespace Fhp\Segment;
 
+use Fhp\FinTsInternal;
+
 /**
  * Class HKEND (Dialogende)
  * Segment type: Administration
@@ -27,7 +29,7 @@ class HKEND extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array($dialogId)
+            array(FinTsInternal::escapeString($dialogId))
         );
     }
 

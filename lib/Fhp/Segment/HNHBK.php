@@ -2,6 +2,8 @@
 
 namespace Fhp\Segment;
 
+use Fhp\FinTsInternal;
+
 /**
  * Class HNHBK (Nachrichtenkopf)
  * Segment type: Administration
@@ -36,7 +38,7 @@ class HNHBK extends AbstractSegment
             array(
                 $messageLength,
                 300, // HBCI / FINTS version 3.0,
-                $dialogId,
+                FinTsInternal::escapeString($dialogId),
                 $messageNumber,
             )
         );

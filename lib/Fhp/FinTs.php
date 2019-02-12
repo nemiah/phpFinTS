@@ -80,12 +80,12 @@ class FinTs extends FinTsInternal {
         // never have special chars. But we just do it to ensure
         // that the request will not get messed up and the user
         // can receive a valid error response from the HBCI server.
-        $this->bankCode = $this->escapeString($bankCode);
+        $this->bankCode = self::escapeString($bankCode);
 
         // Here, escaping is needed for usernames or pins with
         // HBCI special chars.
-        $this->username = $this->escapeString($username);
-        $this->pin = $this->escapeString($pin);
+        $this->username = self::escapeString($username);
+        $this->pin = self::escapeString($pin);
 
         #$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
     }
@@ -203,7 +203,7 @@ class FinTs extends FinTsInternal {
                 $account,
                 $from,
                 $to,
-                $this->escapeString($touchdowns[HKKAZ::NAME])
+                self::escapeString($touchdowns[HKKAZ::NAME])
             );
 
             $r = $dialog->sendMessage($message);
@@ -396,7 +396,7 @@ class FinTs extends FinTsInternal {
                 $account,
                 $from,
                 $to,
-                $this->escapeString($touchdowns[HKCAZ::NAME])
+                self::escapeString($touchdowns[HKCAZ::NAME])
             );
 
             $response = $dialog->sendMessage($message);
@@ -438,7 +438,7 @@ class FinTs extends FinTsInternal {
                     1,
                     3,
                     $kti,
-                    $this->escapeString(HKCAZ::CAMT_FORMAT_FQ),
+                    self::escapeString(HKCAZ::CAMT_FORMAT_FQ),
                     HKCAZ::ALL_ACCOUNTS_N,
                     $from,
                     $to,
