@@ -105,7 +105,7 @@ class GetStatementOfAccount extends Response
      * @param array $array
      * @return StatementOfAccount
      */
-    protected static function createModelFromArray(array $array)
+    public static function createModelFromArray(array $array)
     {
         $soa = static::addFromArray($array, new StatementOfAccount());
 
