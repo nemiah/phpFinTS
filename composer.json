@@ -11,12 +11,12 @@
   },
   "require": {
     "php": ">=5.3.2",
-    "psr/log": "~1.0",
-    "nemiah/php-sepa-xml": "dev-master"
+    "psr/log": "~1.0"
   },
   "require-dev": {
   },
   "suggest": {
-    "monolog/monolog": "Allow sending log messages to a variety of different handlers"
+    "monolog/monolog": "Allow sending log messages to a variety of different handlers",
+    "nemiah/php-sepa-xml": "dev-master"
   }
 }
