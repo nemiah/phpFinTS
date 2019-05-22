@@ -34,6 +34,11 @@ class Transaction
     /**
      * @var string
      */
+    protected $bookingCode;
+
+    /**
+     * @var string
+     */
     protected $bookingText;
 
     /**
@@ -192,6 +197,30 @@ class Transaction
     public function setCreditDebit($creditDebit)
     {
         $this->creditDebit = $creditDebit;
+
+        return $this;
+    }
+
+    /**
+     * Get bookingCode
+     *
+     * @return string
+     */
+    public function getBookingCode()
+    {
+        return $this->bookingCode;
+    }
+
+    /**
+     * Set bookingCode
+     *
+     * @param string $bookingCode
+     *
+     * @return $this
+     */
+    public function setBookingCode($bookingCode)
+    {
+        $this->bookingCode = (string) $bookingCode;
 
         return $this;
     }

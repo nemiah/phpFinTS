@@ -83,6 +83,7 @@ class GetStatementOfAccount extends Response
                     $transaction->setValutaDate(new \DateTime($trx['valuta_date']));
                     $transaction->setCreditDebit($trx['credit_debit']);
                     $transaction->setAmount($trx['amount']);
+                    $transaction->setBookingCode($trx['booking_code']);
                     $transaction->setBookingText($trx['description']['booking_text']);
                     $transaction->setDescription1($trx['description']['description_1']);
                     $transaction->setDescription2($trx['description']['description_2']);
