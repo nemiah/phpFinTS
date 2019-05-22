@@ -11,28 +11,42 @@ use Fhp\FinTs;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\Transaction;
 
-define('FHP_BANK_URL', '');                # HBCI / FinTS Url can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm (use the PIN/TAN URL)
-define('FHP_BANK_PORT', 443);              # HBCI / FinTS Port can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm
+// Register your application prior to begin at https://www.hbci-zka.de/register/prod_register.htm
+
+define('FHP_BANK_URL', '');                # HBCI / FinTS Url will be provided to you after registration (use the PIN/TAN URL)
+define('FHP_BANK_PORT', 443);              # static standard TCP port for HTTPS
 define('FHP_BANK_CODE', '');               # Your bank code / Bankleitzahl
 define('FHP_ONLINE_BANKING_USERNAME', ''); # Your online banking username / alias
 define('FHP_ONLINE_BANKING_PIN', '');      # Your online banking PIN (NOT! the pin of your bank card!)
+define('FHP_REGISTRATION_NO', '');         # The number you receive after registration / FinTS-Registrierungsnummer
+define('FHP_SOFTWARE_VERSION', '1.0');     # Your own Software product version
 
 $fints = new FinTs(
     FHP_BANK_URL,
     FHP_BANK_PORT,
     FHP_BANK_CODE,
     FHP_ONLINE_BANKING_USERNAME,
-    FHP_ONLINE_BANKING_PIN
+    FHP_ONLINE_BANKING_PIN,
+    null,
+    FHP_REGISTRATION_NO,
+    FHP_SOFTWARE_VERSION
 );
 
-$accounts = $fints->getSEPAAccounts();
+try {
 
-$oneAccount = $accounts[0];
-$from = new \DateTime('2016-01-01');
-$to   = new \DateTime();
-$soa = $fints->getStatementOfAccount($oneAccount, $from, $to);
+    $accounts = $fints->getSEPAAccounts();
 
-$fints->end();
+    $oneAccount = $accounts[0];
+    $from = new \DateTime('2016-01-01');
+    $to = new \DateTime();
+    $soa = $fints->getStatementOfAccount($oneAccount, $from, $to);
+
+    $fints->end();
+
+} catch (\Exception $ex) {
+    echo 'Sth. went wrong - ' . $ex->getMessage();
+    exit;
+}
 
 foreach ($soa->getStatements() as $statement) {
     echo $statement->getDate()->format('Y-m-d') . ': Start Saldo: ' . ($statement->getCreditDebit() == Statement::CD_DEBIT ? '-' : '') . $statement->getStartBalance() . PHP_EOL;
