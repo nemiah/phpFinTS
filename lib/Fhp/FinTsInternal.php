@@ -152,7 +152,7 @@ class FinTsInternal {
             $this->systemId,
             $this->logger,
             $this->productName,
-            $this->productName
+            $this->productVersion
         );
 
 		if ($sync)
