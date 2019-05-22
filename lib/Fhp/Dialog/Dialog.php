@@ -303,7 +303,7 @@ class Dialog
     {
         $this->logger->info('');
         $this->logger->info('DIALOG initialize');
-        $this->logger->debug('Registered product:' . trim($this->productName . ' ' . $this->productVersion));
+        $this->logger->debug('Registered product: ' . trim($this->productName . ' ' . $this->productVersion));
 
         $identification = new HKIDN(3, $this->bankCode, $this->username, $this->systemId);
         $prepare        = new HKVVB(
