@@ -77,13 +77,13 @@ class GetStatementOfAccount extends Response
 					foreach($replaceIn AS $k)
 						if(isset($trx['description'][$k]))
 							$trx['description'][$k] = str_replace ("@@", "", $trx['description'][$k]);
-					
+
                     $transaction = new Transaction();
                     $transaction->setBookingDate(new \DateTime($trx['booking_date']));
                     $transaction->setValutaDate(new \DateTime($trx['valuta_date']));
                     $transaction->setCreditDebit($trx['credit_debit']);
                     $transaction->setAmount($trx['amount']);
-                    $transaction->setBookingCode($trx['booking_code']);
+                    $transaction->setBookingCode($trx['description']['booking_code']);
                     $transaction->setBookingText($trx['description']['booking_text']);
                     $transaction->setDescription1($trx['description']['description_1']);
                     $transaction->setDescription2($trx['description']['description_2']);
