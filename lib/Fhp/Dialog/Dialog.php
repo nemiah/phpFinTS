@@ -84,6 +84,16 @@ class Dialog
     protected $hkkazVersion = 6;
 
     /**
+     * @var string
+     */
+    protected $productName;
+
+    /**
+     * @var string
+     */
+    protected $productVersion;
+
+    /**
      * Dialog constructor.
      *
      * @param Connection $connection
@@ -92,15 +102,26 @@ class Dialog
      * @param string $pin
      * @param string $systemId
      * @param LoggerInterface $logger
+     * @param string $productName
+     * @param string $productVersion
      */
-    public function __construct(Connection $connection, $bankCode, $username, $pin, $systemId, LoggerInterface $logger)
-    {
+    public function __construct(
+        Connection $connection,
+        $bankCode,
+        $username,
+        $pin, $systemId,
+        LoggerInterface $logger,
+        $productName,
+        $productVersion
+    ) {
         $this->connection = $connection;
         $this->bankCode = $bankCode;
         $this->username = $username;
         $this->pin = $pin;
         $this->systemId = $systemId;
         $this->logger = $logger;
+        $this->productName = $productName;
+        $this->productVersion = $productVersion;
     }
 
     /**
@@ -147,7 +168,7 @@ class Dialog
             }
 
             return $response;
-        } catch (CurlException $e) {
+        } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
             if ($e instanceof CurlException) {
                 $this->logger->debug(print_r($e->getCurlInfo(), true));
@@ -159,6 +180,7 @@ class Dialog
 
     /**
      * @param Response $response
+     * @throws \Exception
      */
     protected function handleResponse(Response $response)
     {
@@ -282,7 +304,14 @@ class Dialog
         $this->logger->info('');
         $this->logger->info('DIALOG initialize');
         $identification = new HKIDN(3, $this->bankCode, $this->username, $this->systemId);
-        $prepare        = new HKVVB(4, HKVVB::DEFAULT_BPD_VERSION, HKVVB::DEFAULT_UPD_VERSION, HKVVB::LANG_DEFAULT);
+        $prepare        = new HKVVB(
+            4,
+            HKVVB::DEFAULT_BPD_VERSION,
+            HKVVB::DEFAULT_UPD_VERSION,
+            HKVVB::LANG_DEFAULT,
+            $this->productName,
+            $this->productVersion
+        );
 
         $message = new Message(
             $this->bankCode,
@@ -314,6 +343,7 @@ class Dialog
     /**
      * Sends sync request.
      *
+     * @param boolean
      * @return string
      * @throws CurlException
      * @throws FailedRequestException
@@ -328,7 +358,14 @@ class Dialog
         $this->dialogId = 0;
 
         $identification = new HKIDN(3, $this->bankCode, $this->username, 0);
-        $prepare        = new HKVVB(4, HKVVB::DEFAULT_BPD_VERSION, HKVVB::DEFAULT_UPD_VERSION, HKVVB::LANG_DEFAULT);
+        $prepare        = new HKVVB(
+            4,
+            HKVVB::DEFAULT_BPD_VERSION,
+            HKVVB::DEFAULT_UPD_VERSION,
+            HKVVB::LANG_DEFAULT,
+            $this->productName,
+            $this->productVersion
+        );
         $sync           = new HKSYN(5);
 
         $syncMsg = new Message(

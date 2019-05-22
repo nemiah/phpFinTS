@@ -53,8 +53,13 @@ class FinTs extends FinTsInternal {
     protected $bankName;
 	/** @var int */
 	protected $tanMechanism;
-	
+    /** @var Dialog */
 	protected $dialog;
+    /** @var string */
+    protected $productName;
+    /** @var string */
+    protected $productVersion;
+
     /**
      * FinTs constructor.
      * @param string $server
@@ -63,6 +68,8 @@ class FinTs extends FinTsInternal {
      * @param string $username
      * @param string $pin
      * @param LoggerInterface|null $logger
+     * @param string $productName
+     * @param string $productVersion
      */
     public function __construct(
         $server,
@@ -70,7 +77,9 @@ class FinTs extends FinTsInternal {
         $bankCode,
         $username,
         $pin,
-        LoggerInterface $logger = null
+        LoggerInterface $logger = null,
+        $productName = '',
+        $productVersion = ''
     ) {
         $this->url = trim($server);
         $this->port = intval($port);
@@ -86,6 +95,9 @@ class FinTs extends FinTsInternal {
         // HBCI special chars.
         $this->username = self::escapeString($username);
         $this->pin = self::escapeString($pin);
+
+        if ($productName != '') $this->productName = self::escapeString($productName);
+        if ($productVersion != '') $this->productVersion = self::escapeString($productVersion);
 
         #$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
     }
