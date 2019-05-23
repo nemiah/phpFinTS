@@ -43,6 +43,12 @@ class Connection
 	
     /**
      * Connection constructor.
+     *
+     * @param string $host
+     * @param int $port
+     * @param int $timeoutConnect
+     * @param int $timeoutResponse
+     * @throws CurlException
      */
     public function __construct($host, $port, $timeoutConnect = 15, $timeoutResponse = 30)
     {
@@ -63,6 +69,7 @@ class Connection
      *
      * @param AbstractMessage $message
      * @return string
+     * @throws CurlException
      */
     public function send(AbstractMessage $message)
     {

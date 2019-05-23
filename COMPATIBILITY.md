@@ -1098,7 +1098,7 @@ This library is verified to work with following banks.
 - [ ] VB Nahetal eG
 - [ ] VB Nordmünsterland Mitte eG
 - [ ] VB RB eG, Neumünster
-- [ ] VB RheinAhrEifel eG.
+- [x] VB RheinAhrEifel eG.
 - [ ] VB Spelle-Freren eG
 - [ ] VB Südkirchen-Cap.-Nordkirchen
 - [ ] VB Vallendar-Niederwerth eG

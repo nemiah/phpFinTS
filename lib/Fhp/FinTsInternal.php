@@ -133,7 +133,9 @@ class FinTsInternal {
      * Helper method to retrieve a pre configured dialog object.
      * Factory for poor people :)
      *
+     * @param boolean
      * @return Dialog
+     * @throws \Exception
      */
     protected function getDialog($sync = true) {
 		if ($this->dialog)
@@ -148,9 +150,11 @@ class FinTsInternal {
             $this->username,
             $this->pin,
             $this->systemId,
-            $this->logger
+            $this->logger,
+            $this->productName,
+            $this->productVersion
         );
-		
+
 		if ($sync)
 	        $D->syncDialog(false);
 		
