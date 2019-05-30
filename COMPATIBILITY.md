@@ -73,6 +73,7 @@ This library is verified to work with following banks.
 - [ ] Cash Express Gesellschaft f Finanz-u Reisedienstleistungen
 - [x] comdirect bank AG
 - [ ] Commerzbank
+- [x] Consorsbank
 - [ ] Crailsheimer Volksbank -alt-
 - [ ] Credit- und Volksbank eG
 - [x] Cronbank
@@ -80,7 +81,7 @@ This library is verified to work with following banks.
 - [ ] Darmsheimer Bank
 - [ ] Degussa Bank AG
 - [ ] Dettinger Bank
-- [ ] Deutsche Apotheker- und Ärztebank eG
+- [x] Deutsche Apotheker- und Ärztebank eG
 - [ ] Deutsche Bank AG
 - [x] Deutsche Bank Privat und Geschäftskunden AG
 - [ ] Deutsche Genossenschafts-Hypothekenbank AG
@@ -286,7 +287,7 @@ This library is verified to work with following banks.
 - [ ] NIBC Bank Zndl Frankfurt am Main
 - [ ] NL Bank Volks- und Raiffeisenbank eG
 - [ ] Nord-Ostsee Sparkasse
-- [ ] Nord/LB Hannover
+- [X] Nord/LB Hannover / Norddeutsche Landesbank Girozentrale
 - [ ] Norderstedter Bank eG
 - [ ] Nordthüringer Volksbank
 - [ ] norisbank GmbH
@@ -533,6 +534,7 @@ This library is verified to work with following banks.
 - [ ] Raiffeisenbank Leezen eG
 - [ ] Raiffeisenbank Lorup eG
 - [x] Raiffeisenbank Maintal Ndl d Frankfurter VB
+- [x] Raiffeisenbank Main-Spessart
 - [ ] Raiffeisenbank Maitis
 - [ ] Raiffeisenbank Malchin eG
 - [ ] Raiffeisenbank Mangfalltal -alt-
@@ -910,7 +912,7 @@ This library is verified to work with following banks.
 - [ ] Sparkasse Mittelholstein AG
 - [ ] Sparkasse Mittelmosel-Eifel-Mosel-Hunsrück
 - [ ] Sparkasse Mittelsachsen
-- [ ] Sparkasse Mittelthüringen
+- [x] Sparkasse Mittelthüringen
 - [ ] Sparkasse Moosburg
 - [ ] Sparkasse Muldental
 - [ ] Sparkasse Mülheim a.d. Ruhr 
