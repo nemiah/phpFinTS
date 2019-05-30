@@ -139,7 +139,7 @@ class FinTs extends FinTsInternal {
      */
     public function getSEPAAccounts() {
         $dialog = $this->getDialog();
-		$dialog->endDialog();
+		#$dialog->endDialog(); //probably not required
 		
         $dialog->initDialog();
 
