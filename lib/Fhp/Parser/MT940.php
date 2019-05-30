@@ -117,7 +117,7 @@ class MT940
 
                     $amount = $trxMatch[4];
                     $amount = str_replace(',', '.', $amount);
-                    $trx[count($trx) - 1]['amount'] = floatval($amount);
+                    $trx[count($trx) - 1]['amount'] = $amount;
 
                     $description = $this->parseDescription($description);
                     $trx[count($trx) - 1]['description'] = $description;
