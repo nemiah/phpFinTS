@@ -35,7 +35,7 @@ class Response
      */
     public function __construct($rawResponse)
     {
-        if ($rawResponse instanceof Initialization) {
+        if ($rawResponse instanceof Response) {
             $rawResponse = $rawResponse->rawResponse;
         }
 
