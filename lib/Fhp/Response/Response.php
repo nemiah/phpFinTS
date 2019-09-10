@@ -204,23 +204,24 @@ class Response
      * @return array
      * @throws \Exception
      */
-    protected function getSummaryBySegment($name)
-    {
-        if (!in_array($name, array('HIRMS', 'HIRMG'))) {
-            throw new \Exception('Invalid segment for message summary. Only HIRMS and HIRMG supported');
-        }
+	protected function getSummaryBySegment($name)
+	{
+		if (!in_array($name, array('HIRMS', 'HIRMG'))) {
+			throw new \Exception('Invalid segment for message summary. Only HIRMS and HIRMG supported');
+		}
 
-        $result = array();
-        $segment = $this->findSegment($name);
-        $segment = $this->splitSegment($segment);
-        array_shift($segment);
-        foreach ($segment as $de) {
-            $de = $this->splitDeg($de);
-            $result[$de[0]] = $de[2];
-        }
+		$result = array();
+		foreach ($this->findSegments($name) AS $segment) {
+			$segment = $this->splitSegment($segment);
+			array_shift($segment);
+			foreach ($segment as $de) {
+				$de = $this->splitDeg($de);
+				$result[$de[0]] = $de[2];
+			}
+		}
 
-        return $result;
-    }
+		return $result;
+	}
 
     /**
      * @param string $segmentName
