@@ -188,7 +188,7 @@ class FinTs extends FinTsInternal {
         return $this->bankName;
     }
 
-    public function getStatementOfAccountAsRawMT940(SEPAAccount $account, \DateTime $from, \DateTime $to)
+    public function getStatementOfAccountAsRawMT940(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1)
     {
         $responses = array();
 
@@ -203,6 +203,43 @@ class FinTs extends FinTsInternal {
 
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
         $response = $dialog->sendMessage($message);
+		
+		$response = new GetTANRequest($response->rawResponse, $dialog);
+		
+		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
+		for($i = 0; $i < 120; $i += $interval){
+			sleep($interval);
+			
+			$tan = trim($tanCallback());
+			if($tan == ""){
+				$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
+				continue;
+			}
+			
+			break;
+		}
+		
+		if($tan == "")
+			throw new TANException("No TAN received!");
+		
+		$message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $dialog->getSystemId(),
+            $dialog->getDialogId(),
+            $dialog->getMessageNumber(),
+            array(
+				new HKTAN(6, 3, $response->get()->getProcessID())
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
+            ),
+			$tan
+        );
+		
+		$response = $dialog->sendMessage($message);
+		
         $touchdowns = $response->getTouchdowns($message);
         $soaResponse = new GetStatementOfAccount($response->rawResponse);
         $responses[] = $soaResponse->getRawMt940();
@@ -226,8 +263,6 @@ class FinTs extends FinTsInternal {
 
         $this->logger->info('HKKAZ end');
 
-        #$dialog->endDialog();
-
         return implode('', $responses);
     }
 
@@ -240,8 +275,8 @@ class FinTs extends FinTsInternal {
      * @return Model\StatementOfAccount\StatementOfAccount|null
      * @throws \Exception
      */
-    public function getStatementOfAccountAsParsedMT940(SEPAAccount $account, \DateTime $from, \DateTime $to) {
-        $rawMt940 = $this->getStatementOfAccountAsRawMT940($account, $from, $to);
+    public function getStatementOfAccountAsParsedMT940(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1) {
+        $rawMt940 = $this->getStatementOfAccountAsRawMT940($account, $from, $to, $tanCallback, $interval);
 
         $urlParts = parse_url($this->url);
 
@@ -266,8 +301,8 @@ class FinTs extends FinTsInternal {
         return $parser->parse(MT940::TARGET_ARRAY);
     }
 
-    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to) {
-        $parsed = $this->getStatementOfAccountAsParsedMT940($account, $from, $to);
+    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1) {
+        $parsed = $this->getStatementOfAccountAsParsedMT940($account, $from, $to, $tanCallback, $interval);
 
         return GetStatementOfAccount::createModelFromArray($parsed);
     }
@@ -365,7 +400,8 @@ class FinTs extends FinTsInternal {
                     $from,
                     $to,
                     $touchdown
-                )
+                ),
+				new HKTAN(6, 4)
             ),
             array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
         );
@@ -637,7 +673,7 @@ class FinTs extends FinTsInternal {
 		#print_r($response);
 		
 		#var_dump($response->get()->getProcessID());
-		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…");
+		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 		#echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
 		for($i = 0; $i < 120; $i += $interval){
 			sleep($interval);

@@ -11,6 +11,7 @@ use Fhp\Response\Response;
 use Fhp\Segment\HKEND;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKSYN;
+use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKVVB;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -322,7 +323,10 @@ class Dialog
             $this->systemId,
             0,
             1,
-            array($identification, $prepare),
+            array(
+				$identification, 
+				$prepare,
+				new HKTAN(6, 5)),
             array(AbstractMessage::OPT_PINTAN_MECH => $this->supportedTanMechanisms)
         );
 
@@ -368,7 +372,6 @@ class Dialog
             $this->productName,
             $this->productVersion
         );
-        $sync           = new HKSYN(5);
 
         $syncMsg = new Message(
             $this->bankCode,
@@ -377,7 +380,11 @@ class Dialog
             $this->systemId,
             $this->dialogId,
             $this->messageNumber,
-            array($identification, $prepare, $sync)
+            array(
+				$identification,
+				$prepare, 
+				new HKTAN(6, 5), 
+				new HKSYN(6))
         );
 
         #$this->logger->debug('Sending SYNC message:');

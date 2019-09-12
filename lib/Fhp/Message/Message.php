@@ -103,8 +103,8 @@ class Message extends AbstractMessage
         $this->pin = $pin;
         $this->systemId = $systemId;
         $this->options = $options;
-        $this->profileVersion = SecurityProfile::PROFILE_VERSION_1;
-        $this->securityFunction = HNSHK::SECURITY_FUNC_999;
+        $this->profileVersion = SecurityProfile::PROFILE_VERSION_2;
+        $this->securityFunction = HNSHK::SECURITY_FUNC_900;
 
         if (isset($options[static::OPT_PINTAN_MECH])) {
             if (!in_array('999', $this->options[static::OPT_PINTAN_MECH])) {
