@@ -14,6 +14,7 @@ use Fhp\Parser\MT940;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
+use Fhp\Response\Response;
 use Fhp\Response\GetStatementOfAccount;
 use Fhp\Response\GetSEPAStandingOrders;
 use Fhp\Response\GetTANRequest;
@@ -188,10 +189,18 @@ class FinTs extends FinTsInternal {
         return $this->bankName;
     }
 
-    public function getStatementOfAccountAsRawMT940(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1)
-    {
-        $responses = array();
-
+    /**
+     * Gets statement of account.
+     *
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
+	 * @param \Closure $tanCallback
+	 * @param $interval
+     * @return Model\StatementOfAccount\StatementOfAccount|null
+     * @throws \Exception
+     */
+    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1) {
         $this->logger->info('');
         $this->logger->info('HKKAZ (statement of accounts) initialize');
         $this->logger->info('Start date: ' . $from->format('Y-m-d'));
@@ -202,45 +211,25 @@ class FinTs extends FinTsInternal {
         #$dialog->initDialog();
 
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
-        $response = $dialog->sendMessage($message);
+        $response = $dialog->sendMessage($message, $this->getUsedPinTanMechanism($dialog), $tanCallback, $interval);
+		#echo get_class($response);
+		if($response->isTANRequest())
+			return $response;
 		
-		$response = new GetTANRequest($response->rawResponse, $dialog);
+       return $this->finishStatementOfAccount($response, $account, $from, $to);
+    }
+	
+	public function finishStatementOfAccount(Response $response, SEPAAccount $account, \DateTime $from, \DateTime $to, $tan = null){
+		$dialog = $response->getDialog();
+		$this->dialog = $dialog;
 		
-		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
-		for($i = 0; $i < 120; $i += $interval){
-			sleep($interval);
-			
-			$tan = trim($tanCallback());
-			if($tan == ""){
-				$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
-				continue;
-			}
-			
-			break;
-		}
+		if($tan)
+			$response = $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
 		
-		if($tan == "")
-			throw new TANException("No TAN received!");
+		$message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
 		
-		$message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-				new HKTAN(6, 3, $response->get()->getProcessID())
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            ),
-			$tan
-        );
-		
-		$response = $dialog->sendMessage($message);
-		
-        $touchdowns = $response->getTouchdowns($message);
+		$responses = array();
+		$touchdowns = $response->getTouchdowns($message);
         $soaResponse = new GetStatementOfAccount($response->rawResponse);
         $responses[] = $soaResponse->getRawMt940();
 
@@ -263,23 +252,10 @@ class FinTs extends FinTsInternal {
 
         $this->logger->info('HKKAZ end');
 
-        return implode('', $responses);
-    }
+		$rawMt940 = implode('', $responses);
 
-    /**
-     * Gets statement of account.
-     *
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @return Model\StatementOfAccount\StatementOfAccount|null
-     * @throws \Exception
-     */
-    public function getStatementOfAccountAsParsedMT940(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1) {
-        $rawMt940 = $this->getStatementOfAccountAsRawMT940($account, $from, $to, $tanCallback, $interval);
-
+		
         $urlParts = parse_url($this->url);
-
         // Evtl. Groß und Kleinschreibungen des Hosts normalisieren
         $dialectId = strtr($this->url, [
             $urlParts['scheme'] => strtolower($urlParts['scheme']),
@@ -298,14 +274,8 @@ class FinTs extends FinTsInternal {
             break;
         }
 
-        return $parser->parse(MT940::TARGET_ARRAY);
-    }
-
-    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1) {
-        $parsed = $this->getStatementOfAccountAsParsedMT940($account, $from, $to, $tanCallback, $interval);
-
-        return GetStatementOfAccount::createModelFromArray($parsed);
-    }
+        return GetStatementOfAccount::createModelFromArray($parser->parse(MT940::TARGET_ARRAY));
+	}
 
     /**
      * Helper method to create a "Statement of Account Message".
@@ -575,7 +545,9 @@ class FinTs extends FinTsInternal {
 		$dialog = $tanRequest->getDialog();
 		$this->dialog = $dialog;
 		
-        $message = new Message(
+		$dialog->submitTAN($tanRequest, $this->getUsedPinTanMechanism($dialog), $tan);
+		
+        /*$message = new Message(
             $this->bankCode,
             $this->username,
             $this->pin,
@@ -594,7 +566,7 @@ class FinTs extends FinTsInternal {
 		$this->logger->info('');
 		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
 		$dialog->sendMessage($message);
-		$this->logger->info('HKTAN end');
+		$this->logger->info('HKTAN end');*/
 	}
 	
 	/**

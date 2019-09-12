@@ -28,12 +28,14 @@ class Response
     /** @var string */
     protected $systemId;
 
+	private $dialog;
+	
     /**
      * Response constructor.
      *
      * @param string $rawResponse
      */
-    public function __construct($rawResponse)
+    public function __construct($rawResponse, \Fhp\Dialog\Dialog $dialog = null)
     {
         if ($rawResponse instanceof Response) {
             $rawResponse = $rawResponse->rawResponse;
@@ -44,7 +46,19 @@ class Response
 		
 		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
         $this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
-    }
+
+		$this->dialog = $dialog;
+	}
+	
+	public function isTANRequest()
+	{
+		return get_class($this) == "Fhp\Response\GetTANRequest";
+	}
+	
+	function getDialog()
+	{
+		return $this->dialog;
+	}
 
     /**
      * Extracts dialog ID from response.
@@ -301,7 +315,7 @@ class Response
      *
      * @return string|null
      */
-    protected function findSegment($name)
+    public function findSegment($name)
     {
         return $this->findSegments($name, true);
     }
@@ -342,7 +356,7 @@ class Response
      *
      * @return array
      */
-    protected function splitSegment($segment, $fix = true)
+    public function splitSegment($segment, $fix = true)
     {
 		preg_match("@\<\?xml.+Document\>@", $segment, $matches);
 		$segment = preg_replace("@\<\?xml.+Document\>@", "EXTRACTEDXML", $segment);

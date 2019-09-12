@@ -13,7 +13,7 @@ use Fhp\Model\TANRequest;
 class GetTANRequest extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HITAN';
-	private $dialog;
+	
     /**
      * Returns TANRequest object with process ID
      *
@@ -29,14 +29,4 @@ class GetTANRequest extends Response
 		
 		return $request;
     }
-	
-	function __construct($rawResponse, \Fhp\Dialog\Dialog $dialog) {
-		parent::__construct($rawResponse);
-		
-		$this->dialog = $dialog;
-	}
-	
-	function getDialog(){
-		return $this->dialog;
-	}
 }

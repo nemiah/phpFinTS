@@ -15,7 +15,7 @@ namespace Fhp\Segment;
 class HKTAN extends AbstractSegment
 {
     const NAME = 'HKTAN';
-    const VERSION = 5;
+    const VERSION = 6;
 
     /**
      * HKCDL constructor.

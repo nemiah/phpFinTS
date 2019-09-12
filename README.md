@@ -30,9 +30,7 @@ https://www.hbci-zka.de
 
 ## Special usage
 
-My goal for this library was to be able to execute automatic direct debits with mTAN.<br>
-You can do so too by using the [sms2url](https://play.google.com/store/apps/details?id=it.furtmeier.sms2url)
- app I created for this purpose.
+My goal for this library was to be able to execute automatic direct debits with m(obile)TAN.
  
 ## Contribute
 
@@ -40,4 +38,4 @@ Contributions are welcome!
 
 ### Bank compatibility
 
-Please alter the COMPATIBILITY.md file and send a pull request if you successfully tested this library with your bank.
+Please update the COMPATIBILITY.md file and send a pull request if you successfully tested this library with your bank.

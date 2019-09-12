@@ -108,7 +108,7 @@ for($i = 0; $i < 60; $i++){
 	break;
 }
 
-$userialized = unserialize($serialized);
+$unserialized = unserialize($serialized);
 
 $fints = new FinTs(
     FHP_BANK_URL,
@@ -119,6 +119,6 @@ $fints = new FinTs(
 	new testLogger()
 );
  * 
-$fints->finishSEPATAN($userialized, $tan);
+$fints->finishSEPATAN($unserialized, $tan);
 $fints->end();
  */

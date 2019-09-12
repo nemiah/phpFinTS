@@ -37,6 +37,11 @@ class StatementOfAccount
         return $this;
     }
 
+	public function isTANRequest()
+	{
+		return false;
+	}
+	
     /**
      * @param Statement $statement
      */

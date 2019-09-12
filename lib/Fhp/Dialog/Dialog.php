@@ -8,6 +8,7 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Response\Initialization;
 use Fhp\Response\Response;
+use Fhp\Response\GetTANRequest;
 use Fhp\Segment\HKEND;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKSYN;
@@ -127,11 +128,13 @@ class Dialog
 
     /**
      * @param AbstractMessage $message
-     * @return Response
+	 * @param \Closure $tanCallback
+	 * @param $interval
+     * @return Response|GetTANRequest
      * @throws CurlException
      * @throws FailedRequestException
      */
-    public function sendMessage(AbstractMessage $message)
+    public function sendMessage(AbstractMessage $message, $pinTanMechanism = null, \Closure $tanCallback = null, $interval = 1)
     {
         try {
 			$this->logger->debug("> ".$message);
@@ -143,7 +146,7 @@ class Dialog
 			
 			$this->logger->debug("< ".$result);
 			
-            $response = new Response($result);
+            $response = new Response($result, $this);
             $this->handleResponse($response);
             #$this->logger->info('Response reads:');
 			#$this->logger->info($response->rawResponse);
@@ -168,6 +171,34 @@ class Dialog
                 throw $ex;
             }
 
+			$hitan = $response->splitSegment($response->findSegment("HITAN"));
+			
+			if(!isset($hitan[4]) OR $hitan[4] == "nochallenge")
+				return $response;
+			
+			$response = new GetTANRequest($response->rawResponse, $this);
+			
+			if(!$tanCallback)
+				return $response;
+			
+			$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
+			for($i = 0; $i < 120; $i += $interval){
+				sleep($interval);
+
+				$tan = trim($tanCallback());
+				if($tan == ""){
+					$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
+					continue;
+				}
+
+				break;
+			}
+
+			if($tan == "")
+				throw new TANException("No TAN received!");
+
+			$response = $this->submitTAN($response, $pinTanMechanism, $tan);
+			
             return $response;
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
@@ -179,6 +210,31 @@ class Dialog
         }
     }
 
+	public function submitTAN($response, $pinTanMechanism, $tan){
+		$message = new Message(
+			$this->bankCode,
+			$this->username,
+			$this->pin,
+			$this->getSystemId(),
+			$this->getDialogId(),
+			$this->getMessageNumber(),
+			array(
+				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
+			),
+			array(
+				AbstractMessage::OPT_PINTAN_MECH => $pinTanMechanism
+			),
+			$tan
+		);
+
+		$this->logger->info('');
+		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
+		$response = $this->sendMessage($message);
+		$this->logger->info('HKTAN end');
+		
+		return $response;
+	}
+	
     /**
      * @param Response $response
      * @throws \Exception
@@ -326,7 +382,7 @@ class Dialog
             array(
 				$identification, 
 				$prepare,
-				new HKTAN(6, 5)),
+				new HKTAN(HKTAN::VERSION, 5)),
             array(AbstractMessage::OPT_PINTAN_MECH => $this->supportedTanMechanisms)
         );
 
@@ -383,7 +439,7 @@ class Dialog
             array(
 				$identification,
 				$prepare, 
-				new HKTAN(6, 5), 
+				new HKTAN(HKTAN::VERSION, 5), 
 				new HKSYN(6))
         );
 
