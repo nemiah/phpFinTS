@@ -182,9 +182,9 @@ class FinTs extends FinTsInternal {
      * @return string
      */
     public function getBankName() {
-        if (null == $this->bankName) {
+        if (null == $this->bankName) 
             $this->getDialog()->syncDialog();
-        }
+        
 
         return $this->bankName;
     }
@@ -278,108 +278,6 @@ class FinTs extends FinTsInternal {
 	}
 
     /**
-     * Helper method to create a "Statement of Account Message".
-     *
-     * @param Dialog $dialog
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @param string|null $touchdown
-     * @return Message
-     * @throws \Exception
-     */
-    protected function createStateOfAccountMessage(
-        Dialog $dialog,
-        SepaAccount $account,
-        \DateTime $from,
-        \DateTime $to,
-        $touchdown = null
-    ) {
-        // version 4, 5, 6, 7
-
-        // version 5
-        /*
-            1 Segmentkopf                   DEG         M 1
-            2 Kontoverbindung Auftraggeber  DEG ktv #   M 1
-            3 Alle Konten                   DE  jn  #   M 1
-            4 Von Datum                     DE dat  #   K 1
-            5 Bis Datum                     DE dat  #   K 1
-            6 Maximale Anzahl Einträge      DE num ..4  K 1 >0
-            7 Aufsetzpunkt                  DE an ..35  K 1
-         */
-
-        // version 6
-        /*
-            1 Segmentkopf                   1 DEG           M 1
-            2 Kontoverbindung Auftraggeber  2 DEG ktv #     M 1
-            3 Alle Konten                   1 DE jn #       M 1
-            4 Von Datum                     1 DE dat #      O 1
-            5 Bis Datum                     1 DE dat #      O 1
-            6 Maximale Anzahl Einträge      1 DE num ..4    C 1 >0
-            7 Aufsetzpunkt                  1 DE an ..35    C 1
-         */
-
-        // version 7
-        /*
-            1 Segmentkopf                   1 DEG       M 1
-            2 Kontoverbindung international 1 DEG kti # M 1
-            3 Alle Konten                   1 DE jn #   M 1
-            4 Von Datum                     1 DE dat #  O 1
-            5 Bis Datum                     1 DE dat #  O 1
-            6 Maximale Anzahl Einträge      1 DE num ..4 C 1 >0
-            7 Aufsetzpunkt                  1 DE an ..35 C 1
-         */
-
-        switch ($dialog->getHkkazMaxVersion()) {
-            case 4:
-            case 5:
-                $konto = new Deg();
-                $konto->addDataElement($account->getAccountNumber());
-                $konto->addDataElement($account->getSubAccount());
-                $konto->addDataElement(static::DEFAULT_COUNTRY_CODE);
-                $konto->addDataElement($account->getBlz());
-                break;
-            case 6:
-                $konto = new Ktv(
-                    $account->getAccountNumber(),
-                    $account->getSubAccount(),
-                    new Kik(280, $account->getBlz())
-                );
-                break;
-            case 7:
-                $konto = new Kti(
-                    $account->getIban(),
-                    $account->getBic(),
-                    $account->getAccountNumber(),
-                    $account->getSubAccount(),
-                    new Kik(280, $account->getBlz())
-                );
-                break;
-            default:
-                throw new \Exception('Unsupported HKKAZ version: ' . $dialog->getHkkazMaxVersion());
-        }
-
-        $message = $this->getNewMessage(
-            $dialog,
-            array(
-                new HKKAZ(
-                    $dialog->getHkkazMaxVersion(),
-                    3,
-                    $konto,
-                    HKKAZ::ALL_ACCOUNTS_N,
-                    $from,
-                    $to,
-                    $touchdown
-                ),
-				new HKTAN(6, 4)
-            ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
-        );
-
-        return $message;
-    }
-
-    /**
      * Gets Bank To Customer Account Report as camt XML
      *
      * @param SEPAAccount $account
@@ -428,48 +326,7 @@ class FinTs extends FinTsInternal {
         return $responses;
     }
 
-    /**
-     * Helper method to create a "Statement of Account Message".
-     *
-     * @param Dialog $dialog
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @param string|null $touchdown
-     * @return Message
-     * @throws \Exception
-     */
-    protected function createHKCAZMessage(Dialog $dialog, SEPAAccount $account, \DateTime $from, \DateTime $to, $touchdown = null)
-    {
-        $kti = new Kti(
-            $account->getIban(),
-            $account->getBic(),
-            $account->getAccountNumber(),
-            $account->getSubAccount(),
-            new Kik(280, $account->getBlz())
-        );
-
-        $message = $this->getNewMessage(
-            $dialog,
-            array(
-                new HKCAZ(
-                    1,
-                    3,
-                    $kti,
-                    self::escapeString(HKCAZ::CAMT_FORMAT_FQ),
-                    HKCAZ::ALL_ACCOUNTS_N,
-                    $from,
-                    $to,
-                    $touchdown
-                )
-            ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
-        );
-
-        return $message;
-    }
-
-    /**
+	/**
      * Gets the saldo of given SEPAAccount.
      *
      * @param SEPAAccount $account
