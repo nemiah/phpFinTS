@@ -539,34 +539,11 @@ class FinTs extends FinTsInternal {
 	public function finishSEPATAN(GetTANRequest $tanRequest, $tan){
 		if($tan == "")
 			throw new TANException("No TAN received!");
-			#echo "No TAN found, exiting!\n";
-			#return;
 		
 		$dialog = $tanRequest->getDialog();
 		$this->dialog = $dialog;
 		
 		$dialog->submitTAN($tanRequest, $this->getUsedPinTanMechanism($dialog), $tan);
-		
-        /*$message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-				new HKTAN(HKTAN::VERSION, 3, $tanRequest->get()->getProcessID())
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            ),
-			$tan
-        );
-		
-		$this->logger->info('');
-		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
-		$dialog->sendMessage($message);
-		$this->logger->info('HKTAN end');*/
 	}
 	
 	/**
@@ -653,7 +630,6 @@ class FinTs extends FinTsInternal {
 			$tan = trim($tanCallback());
 			if($tan == ""){
 				$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
-				#echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
 			
@@ -663,31 +639,8 @@ class FinTs extends FinTsInternal {
 		
 		if($tan == "")
 			throw new TANException("No TAN received!");
-			#echo "No TAN found, exiting!\n";
-			#return;
 		
-		
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
-            array(
-				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
-            ),
-			$tan
-        );
-		
-		$this->logger->info('');
-		$this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
-		$response = $dialog->sendMessage($message);
-		$this->logger->info('HKTAN end');
-		
+		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
 	}
 	
 	/**
