@@ -27,7 +27,6 @@ class HNSHK extends AbstractSegment
     const SECURITY_FUNC_AUT = 2; // Message Origin Authentication, für RAH, RDH und DDV (AUT)
     const SECURITY_FUNC_ENC = 4; // Encryption, Verschlüsselung und evtl. Komprimierung (ENC)
     const SECURITY_FUNC_999 = 999;
-    const SECURITY_FUNC_900 = 942;
 
     const SECURITY_BOUNDARY_SHM = 1; // Signaturkopf und HBCI-Nutzdaten (SHM)
     const SECURITY_BOUNDARY_SHT = 2; // Von Signaturkopf bis Signaturabschluss (SHT)

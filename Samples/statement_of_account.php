@@ -33,7 +33,9 @@ $fints = new FinTs(
 );
 
 try {
-
+	
+	$fints->setTANMechanism(901); //request available TAN modes with $fints->getVariables();!
+	
     $accounts = $fints->getSEPAAccounts();
 
     $oneAccount = $accounts[0];

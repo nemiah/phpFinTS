@@ -134,7 +134,7 @@ class Dialog
      * @throws CurlException
      * @throws FailedRequestException
      */
-    public function sendMessage(AbstractMessage $message, $pinTanMechanism = null, \Closure $tanCallback = null, $interval = 1)
+    public function sendMessage(AbstractMessage $message, $tanMechanism = null, \Closure $tanCallback = null, $interval = 1)
     {
         try {
 			$this->logger->debug("> ".$message);
@@ -197,7 +197,7 @@ class Dialog
 			if($tan == "")
 				throw new TANException("No TAN received!");
 
-			$response = $this->submitTAN($response, $pinTanMechanism, $tan);
+			$response = $this->submitTAN($response, $tanMechanism, $tan);
 			
             return $response;
         } catch (\Exception $e) {
@@ -210,7 +210,7 @@ class Dialog
         }
     }
 
-	public function submitTAN($response, $pinTanMechanism, $tan){
+	public function submitTAN($response, $tanMechanism, $tan){
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
@@ -222,7 +222,7 @@ class Dialog
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
 			),
 			array(
-				AbstractMessage::OPT_PINTAN_MECH => $pinTanMechanism
+				AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
 			),
 			$tan
 		);
@@ -382,7 +382,8 @@ class Dialog
             array(
 				$identification, 
 				$prepare,
-				new HKTAN(HKTAN::VERSION, 5)),
+				new HKTAN(HKTAN::VERSION, 5)
+			),
             array(AbstractMessage::OPT_PINTAN_MECH => $this->supportedTanMechanisms)
         );
 
@@ -411,8 +412,9 @@ class Dialog
      * @throws FailedRequestException
      * @throws \Exception
      */
-    public function syncDialog($endDialog = true)
+    public function syncDialog($endDialog = true, $sendHKTan = true, $tanMechanism = null)
     {
+		
         $this->logger->info('');
         $this->logger->info('SYNC initialize');
         $this->messageNumber = 1;
@@ -429,19 +431,40 @@ class Dialog
             $this->productVersion
         );
 
-        $syncMsg = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $this->systemId,
-            $this->dialogId,
-            $this->messageNumber,
-            array(
-				$identification,
-				$prepare, 
-				new HKTAN(HKTAN::VERSION, 5), 
-				new HKSYN(6))
-        );
+		if($sendHKTan){
+			$options = array();
+			if($tanMechanism)
+				$options[AbstractMessage::OPT_PINTAN_MECH] = array($tanMechanism);
+			
+			$syncMsg = new Message(
+				$this->bankCode,
+				$this->username,
+				$this->pin,
+				$this->systemId,
+				$this->dialogId,
+				$this->messageNumber,
+				array(
+					$identification,
+					$prepare, 
+					new HKTAN(HKTAN::VERSION, 5),
+					new HKSYN(6)
+				),
+				$options
+			);
+		} else
+			$syncMsg = new Message(
+				$this->bankCode,
+				$this->username,
+				$this->pin,
+				$this->systemId,
+				$this->dialogId,
+				$this->messageNumber,
+				array(
+					$identification,
+					$prepare, 
+					new HKSYN(5)
+				)
+			);
 
         #$this->logger->debug('Sending SYNC message:');
         #$this->logger->debug((string) $syncMsg);

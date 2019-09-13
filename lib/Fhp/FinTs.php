@@ -18,6 +18,7 @@ use Fhp\Response\Response;
 use Fhp\Response\GetStatementOfAccount;
 use Fhp\Response\GetSEPAStandingOrders;
 use Fhp\Response\GetTANRequest;
+use Fhp\Response\GetVariables;
 use Fhp\Response\BankToCustomerAccountReportHICAZ;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
@@ -139,9 +140,9 @@ class FinTs extends FinTsInternal {
      * @throws \CurlException
      */
     public function getSEPAAccounts() {
-        $dialog = $this->getDialog();
+        $dialog = $this->getDialog(false);#, $this->tanMechanism);
 		#$dialog->endDialog(); //probably not required
-		$dialog->syncDialog(true);
+		$dialog->syncDialog(true, true, $this->tanMechanism);
         $dialog->initDialog();
 
         $message = $this->getNewMessage(
@@ -161,11 +162,10 @@ class FinTs extends FinTsInternal {
     }
 
 	public function getVariables(){
-		
         $dialog = $this->getDialog(false);
-		$result = $dialog->syncDialog(true);
+		$result = $dialog->syncDialog(true, false);
 		
-		$R = new Response\GetVariables($result->rawResponse);
+		$R = new GetVariables($result->rawResponse);
 		return $R->get();
 	}
 	
@@ -380,7 +380,8 @@ class FinTs extends FinTsInternal {
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
             array(
-                new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)
+                new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)#,
+				#new HKTAN(HKTAN::VERSION, 4)
             ),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)

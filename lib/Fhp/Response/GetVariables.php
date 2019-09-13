@@ -19,7 +19,15 @@ class GetVariables extends Response
 				if(!isset($cex[3  + $i * 22]))
 					break;
 				
-				$tanNames[$cex[3 + $i * 22]] = $cex[8 + $i * 22];
+				$name = $cex[8 + $i * 22];
+				if(strlen($name) < 3)
+					continue;
+				
+				$num = $cex[3 + $i * 22];
+				if(!is_numeric($num) OR trim($num) == "")
+					continue;
+				
+				$tanNames[$num] = $name;
 			}
 		}
 		
