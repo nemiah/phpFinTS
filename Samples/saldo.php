@@ -43,5 +43,6 @@ $accounts = $fints->getSEPAAccounts();
 
 $oneAccount = $accounts[0];
 $saldo = $fints->getSaldo($oneAccount);
-print_r($saldo);
 
+$fints->end();
+print_r($saldo);
