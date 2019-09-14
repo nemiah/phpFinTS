@@ -174,6 +174,7 @@ class FinTs extends FinTsInternal {
 			return;
 		
 		$this->dialog->endDialog();
+		$this->dialog = null;
 	}
 	
     /**
