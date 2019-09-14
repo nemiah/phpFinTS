@@ -159,7 +159,7 @@ class FinTsInternal {
         );
 
 		if ($sync)
-	        $D->syncDialog(false);
+	        $D->syncDialog();
 		
 		$this->dialog = $D;
 		
