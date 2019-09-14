@@ -412,7 +412,7 @@ class Dialog
      * @throws FailedRequestException
      * @throws \Exception
      */
-    public function syncDialog($endDialog = true, $sendHKTan = true, $tanMechanism = null)
+    public function syncDialog($sendHKTan = true, $tanMechanism = null)
     {
 		
         $this->logger->info('');
@@ -490,10 +490,6 @@ class Dialog
         $this->logger->info('Received system id: ' . $response->getSystemId());
         $this->logger->info('Received dialog id: ' . $response->getDialogId());
         $this->logger->info('Supported TAN mechanisms: ' . implode(', ', $this->supportedTanMechanisms));
-
-		if($endDialog)
-		    $this->endDialog();
-
         $this->logger->info('SYNC end');
 		
         return $response;

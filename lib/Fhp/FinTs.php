@@ -127,6 +127,7 @@ class FinTs extends FinTsInternal {
     public function getAccounts() {
         $dialog = $this->getDialog(false);
         $result = $dialog->syncDialog();
+        $this->end();
         $this->bankName = $dialog->getBankName();
         $accounts = new GetAccounts($result);
 
@@ -142,7 +143,8 @@ class FinTs extends FinTsInternal {
     public function getSEPAAccounts() {
         $dialog = $this->getDialog(false);#, $this->tanMechanism);
 		#$dialog->endDialog(); //probably not required
-		$dialog->syncDialog(true, true, $this->tanMechanism);
+		$dialog->syncDialog(true, $this->tanMechanism);
+		$dialog->endDialog();
         $dialog->initDialog();
 
         $message = $this->getNewMessage(
@@ -163,7 +165,8 @@ class FinTs extends FinTsInternal {
 
 	public function getVariables(){
         $dialog = $this->getDialog(false);
-		$result = $dialog->syncDialog(true, false);
+		$result = $dialog->syncDialog(false);
+		$this->end();
 		
 		$R = new GetVariables($result->rawResponse);
 		return $R->get();
@@ -174,6 +177,7 @@ class FinTs extends FinTsInternal {
 			return;
 		
 		$this->dialog->endDialog();
+		$this->dialog = null;
 	}
 	
     /**
@@ -182,9 +186,10 @@ class FinTs extends FinTsInternal {
      * @return string
      */
     public function getBankName() {
-        if (null == $this->bankName) 
+        if (null == $this->bankName) {
             $this->getDialog()->syncDialog();
-        
+            $this->end();
+        }
 
         return $this->bankName;
     }
