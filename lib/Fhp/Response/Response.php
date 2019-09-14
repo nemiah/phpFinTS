@@ -2,7 +2,9 @@
 
 namespace Fhp\Response;
 
+use Fhp\FinTs;
 use Fhp\Message\AbstractMessage;
+use Fhp\Parser\FinTsParser;
 use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
 
@@ -45,7 +47,7 @@ class Response
         $this->response = $this->unwrapEncryptedMsg($rawResponse);
 		
 		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
-        $this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
+        $this->segments = FinTsParser::splitEscapedString("'", $rawResponse);
 
 		$this->dialog = $dialog;
 	}
@@ -360,8 +362,7 @@ class Response
     {
 		preg_match("@\<\?xml.+Document\>@", $segment, $matches);
 		$segment = preg_replace("@\<\?xml.+Document\>@", "EXTRACTEDXML", $segment);
-		
-        $parts = preg_split('/\+(?<!\?\+)/', $segment);
+		$parts = FinTsParser::splitEscapedString('+', $segment);
 
         foreach ($parts as &$part) {
 			if($fix)
