@@ -339,6 +339,8 @@ class FinTs extends FinTsInternal {
         #$dialog->syncDialog();
         #$dialog->initDialog();
 
+		$addEncSegments = array();
+		
         switch ((int) $dialog->getHksalMaxVersion()) {
             case 4:
             case 5:
@@ -351,6 +353,9 @@ class FinTs extends FinTsInternal {
                 $hksalAccount->addDataElement($account->getSubAccount());
                 $hksalAccount->addDataElement(static::DEFAULT_COUNTRY_CODE);
                 $hksalAccount->addDataElement($account->getBlz());
+				
+				$addEncSegments[] = new HKTAN(HKTAN::VERSION, 4);
+				
                 break;
             case 6:
                 $hksalAccount = new Ktv(
@@ -371,7 +376,7 @@ class FinTs extends FinTsInternal {
             default:
                 throw new \Exception('Unsupported HKSAL version: ' . $dialog->getHksalMaxVersion());
         }
-
+		
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -379,10 +384,10 @@ class FinTs extends FinTsInternal {
             $dialog->getSystemId(),
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
-            array(
-                new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)#,
-				#new HKTAN(HKTAN::VERSION, 4)
-            ),
+			array_merge(
+				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)), 
+				$addEncSegments
+			),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
