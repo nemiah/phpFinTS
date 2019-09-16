@@ -32,7 +32,7 @@ class FinTsInternal {
 	protected $timeoutConnect = 15;
 	/** @var int */
 	protected $timeoutResponse = 30;
-	
+
 	protected function startDeleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order){
        $dialog = $this->getDialog();
         #$dialog->syncDialog();
@@ -73,7 +73,7 @@ class FinTsInternal {
 	 */
 	protected function startSEPATransfer(SEPAAccount $account, $painMessage) {
 		$painMessage = $this->clearXML($painMessage);
-		
+
         $dialog = $this->getDialog();
         #$dialog->syncDialog();
         #$dialog->initDialog();
@@ -101,15 +101,15 @@ class FinTsInternal {
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
-		
+
 		$this->logger->info('');
 		$this->logger->info('HKCCS (SEPA Einzelüberweisung) initialize');
         $response = $dialog->sendMessage($message);
 		$this->logger->info('HKCCS end');
-		
+
         return new GetTANRequest($response->rawResponse, $dialog);
 	}
-	
+
     /**
      * Helper method to retrieve a pre configured message object.
      * Factory for poor people :)
@@ -143,10 +143,10 @@ class FinTsInternal {
     protected function getDialog($sync = true) {
 		if ($this->dialog)
 			return $this->dialog;
-			
+
 		if (!$this->connection)
 			$this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
-		
+
         $D = new Dialog(
             $this->connection,
             $this->bankCode,
@@ -160,9 +160,9 @@ class FinTsInternal {
 
 		if ($sync)
 	        $D->syncDialog();
-		
+
 		$this->dialog = $D;
-		
+
 		return $this->dialog;
     }
 
@@ -180,7 +180,7 @@ class FinTsInternal {
             $string
         );
     }
-	
+
 	protected function clearXML($xml) {
 		$dom = new \DOMDocument;
 		$dom->preserveWhiteSpace = FALSE;
@@ -188,14 +188,16 @@ class FinTsInternal {
 		$dom->formatOutput = false;
 		return $dom->saveXml();
 	}
-	
+
 	protected function getUsedPinTanMechanism($dialog) {
-		if($this->tanMechanism !== null AND in_array($this->tanMechanism, $dialog->getSupportedPinTanMechanisms()))
+        $mechs = array_keys($dialog->getSupportedPinTanMechanisms());
+		if($this->tanMechanism !== null && in_array($this->tanMechanism, $mechs)) {
 			return array($this->tanMechanism);
-		
-		return $dialog->getSupportedPinTanMechanisms();
+        }
+
+		return $mechs;
 	}
-	
+
 
     /**
      * Helper method to create a "Statement of Account Message".
@@ -237,7 +239,7 @@ class FinTsInternal {
 
         return $message;
     }
-	
+
     /**
      * Helper method to create a "Statement of Account Message".
      *
