@@ -32,7 +32,6 @@ class GetVariablesTest extends \PHPUnit_Framework_TestCase
 		);
 		$gv = new GetVariables(null, null);
 		$modes = $gv->parseTanModes($segments);
-		var_dump($modes);
 		$this->assertEquals($modes[901], "mobileTAN");
 		$this->assertEquals($modes[910], "chipTAN optisch HHD1.3.2");
 		$this->assertEquals($modes[911], "chipTAN manuell HHD1.3.2");

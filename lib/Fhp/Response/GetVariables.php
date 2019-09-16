@@ -18,6 +18,10 @@ class GetVariables extends Response
 		return $variables;
 	}
 
+	public function getSupportedTanMechanisms() {
+		return $this->get()->tanModes;
+	}
+
 	public function parseTanModes($segments)
 	{
 		// extracted from https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
@@ -45,7 +49,7 @@ class GetVariables extends Response
 			$segment = $this->splitSegment($segmentRaw);
 
 			$segmentHeader = $this->splitDeg($segment[0]);
-			$version = $segmentHeader[2];  // 1.3
+			$version = (int) $segmentHeader[2];  // 1.3
 
 			$paramsIndex = count($segment) - 1;
 			$params = $this->splitDeg($segment[$paramsIndex]);
@@ -84,13 +88,13 @@ class GetVariables extends Response
 	private function getTanProcessParamsOffsetForVersion($version)
 	{
 		switch ($version) {
-			case '1':
+			case 1:
 				return 4;
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
 				return 3;
 			default:
 				throw new MT940Exception('Unknown HITANS version ' . $version);
@@ -99,17 +103,17 @@ class GetVariables extends Response
 	private function getTanProcessParamElementCountForVersion($version)
 	{
 		switch ($version) {
-			case '1':
+			case 1:
 				return 11;
 				break;
-			case '2':
+			case 2:
 				return 15;
-			case '3':
+			case 3:
 				return 18;
-			case '4':
-			case '5':
+			case 4:
+			case 5:
 				return 22;
-			case '6':
+			case 6:
 				return 21;
 			default:
 				throw new MT940Exception('Unknown HITANS version ' . $version);
@@ -118,13 +122,13 @@ class GetVariables extends Response
 	private function getTanProcessNameIndexForVersion($version)
 	{
 		switch ($version) {
-			case '1':
-			case '2':
-			case '3':
+			case 1:
+			case 2:
+			case 3:
 				return 3;
-			case '4':
-			case '5':
-			case '6':
+			case 4:
+			case 5:
+			case 6:
 				return 5;
 			default:
 				throw new MT940Exception('Unknown HITANS version ' . $version);

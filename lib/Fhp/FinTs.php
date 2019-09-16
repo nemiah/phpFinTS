@@ -107,18 +107,18 @@ class FinTs extends FinTsInternal {
     /**
      * Sets the tan mechanism to use. Uses first found tan mechanism if not set.
      * 901: mobileTAN
-	 * 
+	 *
      * @param int $mode
      */
 	public function setTANMechanism($mode) {
 		$this->tanMechanism = $mode;
 	}
-	
+
 	public function setTimeouts($connect, $response){
 		$this->timeoutConnect = $connect;
 		$this->timeoutResponse = $response;
 	}
-	
+
     /**
      * Gets array of all accounts.
      *
@@ -157,7 +157,7 @@ class FinTs extends FinTsInternal {
 		$this->logger->info('HKSPA (SEPA accounts) initialize');
         $result = $dialog->sendMessage($message);
 		$this->logger->info('HKSPA end');
-		
+
         $sepaAccounts = new GetSEPAAccounts($result->rawResponse);
 
         return $sepaAccounts->getSEPAAccountsArray();
@@ -167,19 +167,19 @@ class FinTs extends FinTsInternal {
         $dialog = $this->getDialog(false);
 		$result = $dialog->syncDialog(false);
 		$this->end();
-		
+
 		$R = new GetVariables($result->rawResponse);
 		return $R->get();
 	}
-	
+
 	public function end(){
 		if(!$this->dialog)
 			return;
-		
+
 		$this->dialog->endDialog();
 		$this->dialog = null;
 	}
-	
+
     /**
      * Gets the bank name.
      *
@@ -220,19 +220,19 @@ class FinTs extends FinTsInternal {
 		#echo get_class($response);
 		if($response->isTANRequest())
 			return $response;
-		
+
        return $this->finishStatementOfAccount($response, $account, $from, $to);
     }
-	
+
 	public function finishStatementOfAccount(Response $response, SEPAAccount $account, \DateTime $from, \DateTime $to, $tan = null){
 		$dialog = $response->getDialog();
 		$this->dialog = $dialog;
-		
+
 		if($tan)
 			$response = $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
-		
+
 		$message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
-		
+
 		$responses = array();
 		$touchdowns = $response->getTouchdowns($message);
         $soaResponse = new GetStatementOfAccount($response->rawResponse);
@@ -259,7 +259,7 @@ class FinTs extends FinTsInternal {
 
 		$rawMt940 = implode('', $responses);
 
-		
+
         $urlParts = parse_url($this->url);
         // Evtl. Groß und Kleinschreibungen des Hosts normalisieren
         $dialectId = strtr($this->url, [
@@ -345,7 +345,7 @@ class FinTs extends FinTsInternal {
         #$dialog->initDialog();
 
 		$addEncSegments = array();
-		
+
         switch ((int) $dialog->getHksalMaxVersion()) {
             case 4:
             case 5:
@@ -358,9 +358,9 @@ class FinTs extends FinTsInternal {
                 $hksalAccount->addDataElement($account->getSubAccount());
                 $hksalAccount->addDataElement(static::DEFAULT_COUNTRY_CODE);
                 $hksalAccount->addDataElement($account->getBlz());
-				
+
 				$addEncSegments[] = new HKTAN(HKTAN::VERSION, 4);
-				
+
                 break;
             case 6:
                 $hksalAccount = new Ktv(
@@ -381,7 +381,7 @@ class FinTs extends FinTsInternal {
             default:
                 throw new \Exception('Unsupported HKSAL version: ' . $dialog->getHksalMaxVersion());
         }
-		
+
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -390,7 +390,7 @@ class FinTs extends FinTsInternal {
             $dialog->getDialogId(),
             $dialog->getMessageNumber(),
 			array_merge(
-				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)), 
+				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)),
 				$addEncSegments
 			),
             array(
@@ -403,51 +403,51 @@ class FinTs extends FinTsInternal {
 
         return $response->getSaldoModel();
     }
-	
+
 	public function finishSEPATAN(GetTANRequest $tanRequest, $tan){
 		if($tan == "")
 			throw new TANException("No TAN received!");
-		
+
 		$dialog = $tanRequest->getDialog();
 		$this->dialog = $dialog;
-		
+
 		$dialog->submitTAN($tanRequest, $this->getUsedPinTanMechanism($dialog), $tan);
 	}
-	
+
 	/**
 	 * Executes SEPA transfer
 	 * You have to call finishSEPATAN(), if $tanCallback is not set
-	 * 
+	 *
 	 * @param SEPAAccount $account
 	 * @param string $painMessage
 	 * @param \Closure $tanCallback
 	 */
 	public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback = null) {
 		$response = $this->startSEPATransfer($account, $painMessage);
-		
+
 		if($tanCallback === null)
 			return $response;
-		
+
 		echo "Waiting max. 120 seconds for TAN from callback\n";
 		for($i = 0; $i < 120; $i++){
 			sleep(1);
-			
+
 			$tan = trim($tanCallback());
 			if($tan == ""){
 				echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
-			
+
 			break;
 		}
-		
+
 		$this->finishSEPATAN($response, $tan);
 	}
-	
+
 	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback, $interval = 1) {
 		$painMessage = $this->clearXML($painMessage);
-		
-		
+
+
         $dialog = $this->getDialog();
         #$dialog->syncDialog();
         #$dialog->initDialog();
@@ -463,7 +463,7 @@ class FinTs extends FinTsInternal {
 		$hkdsx = new HKDSE(HKDSE::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage);
 		if(strpos($painMessage, "<Cd>COR1</Cd>") !== false)
 			$hkdsx = new HKDSC(HKDSC::VERSION, 3, $hkcdbAccount, "urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02", $painMessage);
-		
+
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -479,43 +479,43 @@ class FinTs extends FinTsInternal {
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
-		
+
 		$class = explode("\\", get_class($hkdsx));
 		$this->logger->info('');
 		$this->logger->info($class[count($class) - 1].' (SEPA direct debit) initialize');
 		$response = $dialog->sendMessage($message);
 		$this->logger->info($class[count($class) - 1].' end');
-		
+
         $response = new GetTANRequest($response->rawResponse);
 		#print_r($response);
-		
+
 		#var_dump($response->get()->getProcessID());
 		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 		#echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
 		for($i = 0; $i < 120; $i += $interval){
 			sleep($interval);
-			
+
 			$tan = trim($tanCallback());
 			if($tan == ""){
 				$this->logger->info("No TAN found, waiting ".(120 - $i)."!");
 				continue;
 			}
-			
+
 			break;
 		}
-		
-		
+
+
 		if($tan == "")
 			throw new TANException("No TAN received!");
-		
+
 		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
 	}
-	
+
 	/**
 	 * Executes SEPA delete standing order
-	 * 
+	 *
 	 * You have to call finishSEPATAN(), if $tanCallback is not set
-	 * 
+	 *
 	 * @param SEPAAccount $account
 	 * @param SEPAStandingOrder $order
 	 * @param \Closure $tanCallback
@@ -525,23 +525,23 @@ class FinTs extends FinTsInternal {
 
 		if($tanCallback === null)
 			return $response;
-		
+
 		echo "Waiting max. 120 seconds for TAN from callback\n";
 		for($i = 0; $i < 120; $i++){
 			sleep(1);
-			
+
 			$tan = trim($tanCallback());
 			if($tan == ""){
 				echo "No TAN found, waiting ".(120 - $i)."!\n";
 				continue;
 			}
-			
+
 			break;
 		}
-		
+
 		$this->finishSEPATAN($tan, $response);
 	}
-	
+
 	public function getSEPAStandingOrders(SEPAAccount $account) {
         $dialog = $this->getDialog();
         #$dialog->syncDialog(false);
@@ -570,15 +570,15 @@ class FinTs extends FinTsInternal {
             )
         );
 
-		
+
 		$this->logger->info('');
 		$this->logger->info('HKCDB (SEPA standing orders) initialize');
         $response = $dialog->sendMessage($message);
-		
+
 		#$dialog->endDialog();
 		$this->logger->info('HKCDB end');
         $response = new GetSEPAStandingOrders($response->rawResponse);
-		
+
         return $response->getSEPAStandingOrdersArray();
 	}
 }
