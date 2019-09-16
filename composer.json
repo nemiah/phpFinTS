@@ -20,5 +20,10 @@
   "suggest": {
     "monolog/monolog": "Allow sending log messages to a variety of different handlers",
     "nemiah/php-sepa-xml": "dev-master"
+  },
+  "scripts": {
+    "test": [
+      "phpunit"
+    ]
   }
 }
