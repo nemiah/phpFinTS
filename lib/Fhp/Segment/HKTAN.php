@@ -14,64 +14,44 @@ namespace Fhp\Segment;
  */
 class HKTAN extends AbstractSegment
 {
-    const NAME = 'HKTAN';
-    const VERSION = 6;
+	const NAME = 'HKTAN';
+	const VERSION = 6;
 
-    /**
-     * HKCDL constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     */
-    public function __construct($version, $segmentNumber, $processID = null)
-    {
-		$data = array();
-		$data[] = 4;
-		if($processID){
-			$data = array();
-			if ($version == 6) {
-				$data[] = 2; 
-				$data[] = ""; 
-				$data[] = ""; 
-				$data[] = "";
-				$data[] = $processID;
-				$data[] = "N";
-			} else { 
-				$data[] = 2; 
-				$data[] = ""; 
-				$data[] = ""; 
-				$data[] = "";
-				$data[] = $processID;
-				$data[] = "";
-				$data[] = "N";
-			}
-		
-			#$data[] = 2;
-			#$data[] = "";
-			#$data[] = "";
-			#$data[] = "";
-			#$data[] = $processID;
-		} else {
-			$data[] = "HKIDN";
-			$data[] = "";
-			$data[] = "";
-			$data[] = "";
-			$data[] = "N";
-		}
-		
-		
-        parent::__construct(
-            static::NAME,
-            $segmentNumber,
-            $version,
-            $data
-        );
-    }
+	/**
+	 * HKCDL constructor.
+	 * @param int $version
+	 * @param int $segmentNumber
+	 */
+	public function __construct($version, $segmentNumber, $processID = null, $tanMediaName = '')
+	{
+		$tanProcess = null !== $processID ? 2 : 4;
+		$segmentIdent = null === $processID ? 'HKIDN' : '';
+		$data = array(
+			$tanProcess,
+			$segmentIdent,
+			'',
+			'',
+			$version == 6 ? $processID : '',
+			$version != 6 ? $processID : '',
+			'N', // 7 Weitere TAN folgt
+			'',
+			'',
+			'',
+			$tanMediaName // 12 Bezeichnung des TAN-Mediums - mandatory bei TAN-Prozess=1, 3, 4  und „Anzahl unterstützter aktiver TAN-Medien“ > 1 und „Bezeichnung des TAN-Mediums erforderlich“=2
+		);
+		parent::__construct(
+			static::NAME,
+			$segmentNumber,
+			$version,
+			$data
+		);
+	}
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return static::NAME;
-    }
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return static::NAME;
+	}
 }

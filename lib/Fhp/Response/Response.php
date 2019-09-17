@@ -13,211 +13,206 @@ use Fhp\Segment\NameMapping;
  */
 class Response
 {
-    /** @var string */
-    public $rawResponse;
 
-    /** @var string */
-    protected $response;
+	const RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED = 3076;
+	const RESPONSE_CODE_STRONG_AUTH_REQUIRED = 9076;
 
-    /** @var array */
-    protected $segments = array();
+	/** @var string */
+	public $rawResponse;
 
-    /** @var string */
-    protected $dialogId;
+	/** @var string */
+	protected $response;
 
-    /** @var string */
-    protected $systemId;
+	/** @var array */
+	protected $segments = array();
+
+	/** @var string */
+	protected $dialogId;
+
+	/** @var string */
+	protected $systemId;
 
 	private $dialog;
-	
-    /**
-     * Response constructor.
-     *
-     * @param string $rawResponse
-     */
-    public function __construct($rawResponse, \Fhp\Dialog\Dialog $dialog = null)
-    {
-        if ($rawResponse instanceof Response) {
-            $rawResponse = $rawResponse->rawResponse;
-        }
 
-        $this->rawResponse = $rawResponse;
-        $this->response = $this->unwrapEncryptedMsg($rawResponse);
-		
+	/**
+	 * Response constructor.
+	 *
+	 * @param string $rawResponse
+	 */
+	public function __construct($rawResponse, \Fhp\Dialog\Dialog $dialog = null)
+	{
+		if ($rawResponse instanceof Response) {
+			$rawResponse = $rawResponse->rawResponse;
+		}
+
+		$this->rawResponse = $rawResponse;
+		$this->response = $this->unwrapEncryptedMsg($rawResponse);
+
 		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
-        $this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
+		$this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
 
 		$this->dialog = $dialog;
 	}
-	
+
+	public function isStrongAuthRequired()
+	{
+		return !array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $this->getSegmentSummary());
+	}
+
 	public function isTANRequest()
 	{
 		return get_class($this) == "Fhp\Response\GetTANRequest";
 	}
-	
-	function getDialog()
+
+	public function getDialog()
 	{
 		return $this->dialog;
 	}
 
-    /**
-     * Extracts dialog ID from response.
-     *
-     * @return string|null
-     * @throws \Exception
-     */
-    public function getDialogId()
-    {
-        $segment = $this->findSegment('HNHBK');
+	/**
+	 * Extracts dialog ID from response.
+	 *
+	 * @return string|null
+	 * @throws \Exception
+	 */
+	public function getDialogId()
+	{
+		$segment = $this->findSegment('HNHBK');
 
-        if (null === $segment) {
-            throw new \Exception('Could not find element HNHBK. Invalid response?');
-        }
+		if (null === $segment) {
+			throw new \Exception('Could not find element HNHBK. Invalid response?');
+		}
 
-        return $this->getSegmentIndex(4, $segment);
-    }
+		return $this->getSegmentIndex(4, $segment);
+	}
 
-    /**
-     * Extracts bank name from response.
-     *
-     * @return string|null
-     */
-    public function getBankName()
-    {
-        $bankName = null;
-        $segment = $this->findSegment('HIBPA');
-        if (null != $segment) {
-            $split = $this->splitSegment($segment);
-            if (isset($split[3])) {
-                $bankName = $split[3];
-            }
-        }
+	/**
+	 * Extracts bank name from response.
+	 *
+	 * @return string|null
+	 */
+	public function getBankName()
+	{
+		$bankName = null;
+		$segment = $this->findSegment('HIBPA');
+		if (null != $segment) {
+			$split = $this->splitSegment($segment);
+			if (isset($split[3])) {
+				$bankName = $split[3];
+			}
+		}
 
-        return $bankName;
-    }
+		return $bankName;
+	}
 
-    /**
-     * Some kind of HBCI pagination.
-     *
-     * @param AbstractMessage $message
-     *
-     * @return array
-     */
-    public function getTouchDowns(AbstractMessage $message)
-    {
-        $touchdown = array();
-        $messageSegments = $message->getEncryptedSegments();
-        /** @var AbstractSegment $msgSeg */
-        foreach ($messageSegments as $msgSeg) {
-            $segment = $this->findSegmentForReference('HIRMS', $msgSeg);
-            if (null != $segment) {
-                $parts = $this->splitSegment($segment);
-                // remove header
-                array_shift($parts);
-                foreach ($parts as $p) {
-                    $pSplit = $this->splitDeg($p);
-                    if ($pSplit[0] == 3040) {
-                        $td = $pSplit[3];
-                        $touchdown[$msgSeg->getName()] = $td;
-                    }
-                }
-            }
-        }
+	/**
+	 * Some kind of HBCI pagination.
+	 *
+	 * @param AbstractMessage $message
+	 *
+	 * @return array
+	 */
+	public function getTouchDowns(AbstractMessage $message)
+	{
+		$touchdown = array();
+		$messageSegments = $message->getEncryptedSegments();
+		/** @var AbstractSegment $msgSeg */
+		foreach ($messageSegments as $msgSeg) {
+			$segment = $this->findSegmentForReference('HIRMS', $msgSeg);
+			if (null != $segment) {
+				$parts = $this->splitSegment($segment);
+				// remove header
+				array_shift($parts);
+				foreach ($parts as $p) {
+					$pSplit = $this->splitDeg($p);
+					if ($pSplit[0] == 3040) {
+						$td = $pSplit[3];
+						$touchdown[$msgSeg->getName()] = $td;
+					}
+				}
+			}
+		}
 
-        return $touchdown;
-    }
+		return $touchdown;
+	}
 
-    /**
-     * Extracts supported TAN mechanisms from response.
-     *
-     * @return array
-     */
-    public function getSupportedTanMechanisms()
-    {
-        $segments = $this->findSegments('HIRMS');
-        // @todo create method to get reference element from request
-        foreach ($segments as $segment) {
-            $segment = $this->splitSegment($segment);
-            array_shift($segment);
-            foreach ($segment as $seg) {
-                list($id, $msg) = explode('::', $seg, 2);
-                if ("3920" == $id) {
-                    if (preg_match_all('/\d{3}/', $msg, $matches)) {
-                        return $matches[0];
-                    }
-                }
-            }
-        }
+	/**
+	 * Extracts supported TAN mechanisms from response.
+	 *
+	 * @return array
+	 */
+	public function getSupportedTanMechanisms()
+	{
+		$gv = new GetVariables($this->response);
+		return $gv->getSupportedTanMechanisms();
+	}
 
-        return array();
-    }
+	/**
+	 * @return int
+	 */
+	public function getHksalMaxVersion()
+	{
+		return $this->getSegmentMaxVersion('HISALS');
+	}
 
-    /**
-     * @return int
-     */
-    public function getHksalMaxVersion()
-    {
-        return $this->getSegmentMaxVersion('HISALS');
-    }
+	/**
+	 * @return int
+	 */
+	public function getHkkazMaxVersion()
+	{
+		return $this->getSegmentMaxVersion('HIKAZS');
+	}
 
-    /**
-     * @return int
-     */
-    public function getHkkazMaxVersion()
-    {
-        return $this->getSegmentMaxVersion('HIKAZS');
-    }
+	/**
+	 * Checks if request / response was successful.
+	 *
+	 * @return bool
+	 */
+	public function isSuccess()
+	{
+		$summary = $this->getMessageSummary();
 
-    /**
-     * Checks if request / response was successful.
-     *
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        $summary = $this->getMessageSummary();
+		foreach ($summary as $code => $message) {
+			if ('9' == substr($code, 0, 1)) {
+				return false;
+			}
+		}
 
-        foreach ($summary as $code => $message) {
-            if ("9" == substr($code, 0, 1)) {
-                return false;
-            }
-        }
-		
-        $summary = $this->getSegmentSummary();
+		$summary = $this->getSegmentSummary();
 
-        foreach ($summary as $code => $message) {
-            if ("9" == substr($code, 0, 1)) {
-                return false;
-            }
-        }
+		foreach ($summary as $code => $message) {
+			if ('9' == substr($code, 0, 1)) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getMessageSummary()
-    {
-        return $this->getSummaryBySegment('HIRMG');
-    }
+	/**
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function getMessageSummary()
+	{
+		return $this->getSummaryBySegment('HIRMG');
+	}
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getSegmentSummary()
-    {
-        return $this->getSummaryBySegment('HIRMS');
-    }
+	/**
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function getSegmentSummary()
+	{
+		return $this->getSummaryBySegment('HIRMS');
+	}
 
-    /**
-     * @param string $name
-     *
-     * @return array
-     * @throws \Exception
-     */
+	/**
+	 * @param string $name
+	 *
+	 * @return array
+	 * @throws \Exception
+	 */
 	protected function getSummaryBySegment($name)
 	{
 		if (!in_array($name, array('HIRMS', 'HIRMG'))) {
@@ -225,7 +220,7 @@ class Response
 		}
 
 		$result = array();
-		foreach ($this->findSegments($name) AS $segment) {
+		foreach ($this->findSegments($name) as $segment) {
 			$segment = $this->splitSegment($segment);
 			array_shift($segment);
 			foreach ($segment as $de) {
@@ -237,179 +232,181 @@ class Response
 		return $result;
 	}
 
-    /**
-     * @param string $segmentName
-     *
-     * @return int
-     */
-    public function getSegmentMaxVersion($segmentName)
-    {
-        $version = 3;
-        $segments = $this->findSegments($segmentName);
-        foreach ($segments as $s) {
-            $parts = $this->splitSegment($s);
-            $segmentHeader = $this->splitDeg($parts[0]);
-            $curVersion = (int) $segmentHeader[2];
-            if ($curVersion > $version) {
-                $version = $curVersion;
-            }
-        }
+	/**
+	 * @param string $segmentName
+	 *
+	 * @return int
+	 */
+	public function getSegmentMaxVersion($segmentName)
+	{
+		$version = 3;
+		$segments = $this->findSegments($segmentName);
+		foreach ($segments as $s) {
+			$parts = $this->splitSegment($s);
+			$segmentHeader = $this->splitDeg($parts[0]);
+			$curVersion = (int) $segmentHeader[2];
+			if ($curVersion > $version) {
+				$version = $curVersion;
+			}
+		}
 
-        return $version;
-    }
+		return $version;
+	}
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    public function getSystemId()
-    {
-        $segment = $this->findSegment('HISYN');
+	/**
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function getSystemId()
+	{
+		$segment = $this->findSegment('HISYN');
 
-        if (!preg_match('/HISYN:\d+:\d+:\d+\+(.+)/', $segment, $matches)) {
-            throw new \Exception('Could not determine system id.');
-        }
+		if (!preg_match('/HISYN:\d+:\d+:\d+\+(.+)/', $segment, $matches)) {
+			throw new \Exception('Could not determine system id.');
+		}
 
-        return $matches[1];
-    }
+		return $matches[1];
+	}
 
-    /**
-     * @param bool $translateCodes
-     *
-     * @return string
-     */
-    public function humanReadable($translateCodes = false)
-    {
-        return str_replace(
-            array("'", '+'),
-            array(PHP_EOL, PHP_EOL . "  "),
-            $translateCodes
-                ? NameMapping::translateResponse($this->rawResponse)
-                : $this->rawResponse
-        );
-    }
+	/**
+	 * @param bool $translateCodes
+	 *
+	 * @return string
+	 */
+	public function humanReadable($translateCodes = false)
+	{
+		return str_replace(
+			array("'", '+'),
+			array(PHP_EOL, PHP_EOL . '  '),
+			$translateCodes
+				? NameMapping::translateResponse($this->rawResponse)
+				: $this->rawResponse
+		);
+	}
 
-    /**
-     * @param string          $name
-     * @param AbstractSegment $reference
-     *
-     * @return string|null
-     */
-    protected function findSegmentForReference($name, AbstractSegment $reference)
-    {
-        $segments = $this->findSegments($name);
-        foreach ($segments as $seg) {
-            $segSplit = $this->splitSegment($seg);
-            $segSplit = array_shift($segSplit);
-            $segSplit = $this->splitDeg($segSplit);
-            if ($segSplit[3] == $reference->getSegmentNumber()) {
-                return $seg;
-            }
-        }
+	/**
+	 * @param string          $name
+	 * @param AbstractSegment $reference
+	 *
+	 * @return string|null
+	 */
+	protected function findSegmentForReference($name, AbstractSegment $reference)
+	{
+		$segments = $this->findSegments($name);
+		foreach ($segments as $seg) {
+			$segSplit = $this->splitSegment($seg);
+			$segSplit = array_shift($segSplit);
+			$segSplit = $this->splitDeg($segSplit);
+			if ($segSplit[3] == $reference->getSegmentNumber()) {
+				return $seg;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * @param string $name
-     *
-     * @return string|null
-     */
-    public function findSegment($name)
-    {
-        return $this->findSegments($name, true);
-    }
+	/**
+	 * @param string $name
+	 *
+	 * @return string|null
+	 */
+	public function findSegment($name)
+	{
+		return $this->findSegments($name, true);
+	}
 
-    /**
-     * @param string $name
-     * @param bool   $one
-     *
-     * @return array|null|string
-     */
-    protected function findSegments($name, $one = false)
-    {
-        $found = $one ? null : array();
+	/**
+	 * @param string $name
+	 * @param bool   $one
+	 *
+	 * @return array|null|string
+	 */
+	protected function findSegments($name, $one = false)
+	{
+		$found = $one ? null : array();
 
-        foreach ($this->segments as $segment) {
-            $split = explode(':', $segment, 2);
+		foreach ($this->segments as $segment) {
+			$split = explode(':', $segment, 2);
 
-            $segment = $this->conformToUtf8($segment);
+			$segment = $this->conformToUtf8($segment);
 
-            if ($split[0] == $name) {
-                if ($one) {
-                    return $segment;
-                }
-                $found[] = $segment;
-            }
-        }
+			if ($split[0] == $name) {
+				if ($one) {
+					return $segment;
+				}
+				$found[] = $segment;
+			}
+		}
 
-        return $found;
-    }
+		return $found;
+	}
 
-    protected function conformToUtf8($string)
-    {
-        return iconv('ISO-8859-1', 'UTF-8', $string);
-    }
+	protected function conformToUtf8($string)
+	{
+		return iconv('ISO-8859-1', 'UTF-8', $string);
+	}
 
-    /**
-     * @param $segment
-     *
-     * @return array
-     */
-    public function splitSegment($segment, $fix = true)
-    {
+	/**
+	 * @param $segment
+	 *
+	 * @return array
+	 */
+	public function splitSegment($segment, $fix = true)
+	{
 		preg_match("@\<\?xml.+Document\>@", $segment, $matches);
-		$segment = preg_replace("@\<\?xml.+Document\>@", "EXTRACTEDXML", $segment);
-		
-        $parts = preg_split('/\+(?<!\?\+)/', $segment);
+		$segment = preg_replace("@\<\?xml.+Document\>@", 'EXTRACTEDXML', $segment);
 
-        foreach ($parts as &$part) {
-			if($fix)
-	            $part = str_replace('?+', '+', $part);
-			if(trim($part) != "" AND strpos($part, "EXTRACTEDXML") > 0 AND isset($matches[0]))
-				$part = str_replace("EXTRACTEDXML", $matches[0], $part);
-        }
+		$parts = preg_split('/\+(?<!\?\+)/', $segment);
 
-        return $parts;
-    }
-	
-    /**
-     * @param $deg
-     *
-     * @return array
-     */
-    protected function splitDeg($deg)
-    {
-        return explode(':', $deg);
-    }
+		foreach ($parts as &$part) {
+			if ($fix) {
+				$part = str_replace('?+', '+', $part);
+			}
+			if (trim($part) != '' and strpos($part, 'EXTRACTEDXML') > 0 and isset($matches[0])) {
+				$part = str_replace('EXTRACTEDXML', $matches[0], $part);
+			}
+		}
 
-    /**
-     * @param int $idx
-     * @param     $segment
-     *
-     * @return string|null
-     */
-    protected function getSegmentIndex($idx, $segment)
-    {
-        $segment = $this->splitSegment($segment);
-        if (isset($segment[$idx - 1])) {
-            return $segment[$idx - 1];
-        }
+		return $parts;
+	}
 
-        return null;
-    }
+	/**
+	 * @param $deg
+	 *
+	 * @return array
+	 */
+	protected function splitDeg($deg)
+	{
+		return explode(':', $deg);
+	}
 
-    /**
-     * @param string $response
-     *
-     * @return string
-     */
-    protected function unwrapEncryptedMsg($response)
-    {
-        if (preg_match('/HNVSD:\d+:\d+\+@\d+@(.+)\'\'/', $response, $matches)) {
-            return $matches[1];
-        }
+	/**
+	 * @param int $idx
+	 * @param     $segment
+	 *
+	 * @return string|null
+	 */
+	protected function getSegmentIndex($idx, $segment)
+	{
+		$segment = $this->splitSegment($segment);
+		if (isset($segment[$idx - 1])) {
+			return $segment[$idx - 1];
+		}
 
-        return $response;
-    }
+		return null;
+	}
+
+	/**
+	 * @param string $response
+	 *
+	 * @return string
+	 */
+	protected function unwrapEncryptedMsg($response)
+	{
+		if (preg_match('/HNVSD:\d+:\d+\+@\d+@(.+)\'\'/', $response, $matches)) {
+			return $matches[1];
+		}
+
+		return $response;
+	}
 }
