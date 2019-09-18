@@ -57,8 +57,9 @@ class Response
 
 	public function isStrongAuthRequired()
 	{
-		if(array_key_exists(self::RESPONSE_CODE_ORDER_EXECUTED, $this->getSegmentSummary()))
+		if(array_key_exists(self::RESPONSE_CODE_ORDER_EXECUTED, $this->getSegmentSummary())){
 			return false;
+		}
 		
 		return !array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $this->getSegmentSummary());
 	}
