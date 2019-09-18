@@ -71,10 +71,15 @@ class GetVariables extends Response
 			$processNameIndex = $this->getTanProcessNameIndexForVersion($version);
 			$processParamElementCount = $this->getTanProcessParamElementCountForVersion($version);
 			array_splice($params, 0, $processParamsOffset);
-			if (count($params) % $processParamElementCount !== 0) {
-				throw new MT940Exception('Invalid number of params for HITANS version ' . $version . ': ' . count($params));
+
+			$paramCount = count($params);
+			if ($paramCount % $processParamElementCount === $processParamElementCount - 1) {
+				// From version 3 on, the last parameter is optional and may be omitted in the last group of HITANS parameters
+				// see https://github.com/nemiah/phpFinTS/pull/40#issuecomment-532362814
+				$paramCount++;
 			}
-			$paramBlockIterations = count($params) / $processParamElementCount;
+
+			$paramBlockIterations = $paramCount / $processParamElementCount;
 			for ($i = 0; $i < $paramBlockIterations; $i++) {
 				$blockOffset = $i * $processParamElementCount;
 				$num = $params[$blockOffset]; // first element in block
