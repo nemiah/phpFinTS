@@ -80,10 +80,16 @@ class FinTs extends FinTsInternal
 		$bankCode,
 		$username,
 		$pin,
-		LoggerInterface $logger = null,
-		$productName = '',
-		$productVersion = ''
+		LoggerInterface $logger,
+		$productName,
+		$productVersion
 	) {
+		if(trim($productName) == '')
+			throw new Exception ("Product name required!");
+		
+		if(trim($productVersion) == '')
+			throw new Exception ("Product version required!");
+		
 		$this->url = trim($server);
 		$this->port = intval($port);
 		$this->logger = null == $logger ? new NullLogger() : $logger;
