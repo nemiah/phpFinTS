@@ -3,6 +3,7 @@
 namespace Fhp\ResponseTest;
 
 use Fhp\Response\GetVariables;
+use Tests\Fhp\Model\HITANSTest;
 
 class GetVariablesTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,12 +33,25 @@ class GetVariablesTest extends \PHPUnit_Framework_TestCase
 		);
 		$gv = new GetVariables(null, null);
 		$modes = $gv->parseTanModes($segments);
-		$this->assertEquals($modes[901], "mobileTAN");
-		$this->assertEquals($modes[910], "chipTAN optisch HHD1.3.2");
-		$this->assertEquals($modes[911], "chipTAN manuell HHD1.3.2");
-		$this->assertEquals($modes[920], "BestSign");
-		$this->assertEquals($modes[930], "mobileTAN");
-		$this->assertEquals($modes[912], "chipTAN optisch HHD1.4");
-		$this->assertEquals($modes[913], "chipTAN manuell HHD1.4");
+		$this->assertEquals($modes[901], 'mobileTAN');
+		$this->assertEquals($modes[910], 'chipTAN optisch HHD1.3.2');
+		$this->assertEquals($modes[911], 'chipTAN manuell HHD1.3.2');
+		$this->assertEquals($modes[920], 'BestSign');
+		$this->assertEquals($modes[930], 'mobileTAN');
+		$this->assertEquals($modes[912], 'chipTAN optisch HHD1.4');
+		$this->assertEquals($modes[913], 'chipTAN manuell HHD1.4');
+	}
+
+	public function testParseTanModesDKB()
+	{
+		$gv = new GetVariables(null, null);
+		$modes = $gv->parseTanModes(HITANSTest::REAL_DKB_RESPONSE);
+		$this->assertEquals($modes[920], "smsTAN");
+		$this->assertEquals($modes[900], "iTAN");
+		$this->assertEquals($modes[910], "chipTAN manuell");
+		$this->assertEquals($modes[911], "chipTAN optisch");
+		$this->assertEquals($modes[912], "chipTAN-USB");
+		$this->assertEquals($modes[913], "chipTAN-QR");
+		$this->assertEquals($modes[921], "TAN2go");
 	}
 }
