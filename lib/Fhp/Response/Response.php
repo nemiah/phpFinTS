@@ -16,7 +16,7 @@ class Response
 
 	const RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED = 3076;
 	const RESPONSE_CODE_STRONG_AUTH_REQUIRED = 9076;
-	const RESPONSE_CODE_ORDER_EXECUTED = "0020";
+	const RESPONSE_CODE_COMMAND_EXECUTED = "0020";
 
 	/** @var string */
 	public $rawResponse;
@@ -57,7 +57,7 @@ class Response
 
 	public function isStrongAuthRequired()
 	{
-		if(array_key_exists(self::RESPONSE_CODE_ORDER_EXECUTED, $this->getSegmentSummary())){
+		if(array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $this->getSegmentSummary())){
 			return false;
 		}
 		
