@@ -156,7 +156,7 @@ class FinTs extends FinTsInternal
 	 * @return Model\SEPAAccount[]
 	 * @throws \CurlException
 	 */
-	public function getSEPAAccounts()
+	public function getSEPAAccounts(\Closure $tanCallback = null)
 	{
 		$dialog = $this->getDialog(false);#, $this->tanMechanism);
 		#$dialog->endDialog(); //probably not required
@@ -172,7 +172,7 @@ class FinTs extends FinTsInternal
 
 		$this->logger->info('');
 		$this->logger->info('HKSPA (SEPA accounts) initialize');
-		$result = $dialog->sendMessage($message);
+		$result = $dialog->sendMessage($message, null, $tanCallback);
 		$this->logger->info('HKSPA end');
 
 		$sepaAccounts = new GetSEPAAccounts($result->rawResponse);
