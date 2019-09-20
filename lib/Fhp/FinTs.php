@@ -80,7 +80,7 @@ class FinTs extends FinTsInternal
 		$bankCode,
 		$username,
 		$pin,
-		?LoggerInterface $logger,
+		LoggerInterface $logger = null,
 		$productName,
 		$productVersion
 	) {
