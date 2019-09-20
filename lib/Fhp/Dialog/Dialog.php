@@ -356,12 +356,14 @@ class Dialog
 	/**
 	 * Initializes a dialog.
 	 *
-	 * @return string|null
+	 * @param int|null $tanMechanism
+	 * @param string|null $tanMediaName
+	 * @return string|null dialog id
 	 * @throws CurlException
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function initDialog($tanMediaName)
+	public function initDialog($tanMechanism = null, $tanMediaName = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('DIALOG initialize');
@@ -377,6 +379,13 @@ class Dialog
 			$this->productVersion
 		);
 
+		$options = array();
+		if (null === $tanMechanism) {
+			$options[AbstractMessage::OPT_PINTAN_MECH] = array_keys($this->supportedTanMechanisms);
+		} else {
+			$options[AbstractMessage::OPT_PINTAN_MECH] = array($tanMechanism);
+		}
+
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
@@ -389,7 +398,7 @@ class Dialog
 				$prepare,
 				new HKTAN(HKTAN::VERSION, 5, null, $tanMediaName)
 			),
-			array(AbstractMessage::OPT_PINTAN_MECH => array_keys($this->supportedTanMechanisms))
+			$options
 		);
 
 		#$this->logger->debug('Sending INIT message:');
