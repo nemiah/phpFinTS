@@ -65,7 +65,7 @@ class MT940
             $day = explode($divider . ':', $day);
 
             for ($i = 0, $cnt = count($day); $i < $cnt; $i++) {
-                if (preg_match("/^\+\@[0-9]+\@$/", trim($day[$i]))) {
+                if (preg_match("/\+\@[0-9]+\@$/", trim($day[$i]))) {
                     $booked = false;
                 }
 
