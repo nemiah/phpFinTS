@@ -4,6 +4,7 @@ namespace Tests\Fhp\Model;
 
 use Fhp\Segment\HITANS\HITANSv1;
 use Fhp\Segment\HITANS\HITANSv3;
+use Fhp\Segment\HITANS\HITANSv6;
 
 class HITANSTest extends \PHPUnit_Framework_TestCase
 {
@@ -89,5 +90,20 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
     {
         $parsed = HITANSv3::parse(static::REAL_DKB_RESPONSE[1]);
         $this->assertEquals(static::REAL_DKB_RESPONSE[1], $parsed->serialize());
+    }
+
+    public function test_parse_DKB_response_v6()
+    {
+        /** @var HITANSv6 $parsed */
+        $parsed = HITANSv6::parse(static::REAL_DKB_RESPONSE[2]);
+        $this->assertEquals(1, $parsed->maximaleAnzahlAuftraege);
+        $parsedParams = $parsed->parameterZweiSchrittTanEinreichung;
+        $this->assertEquals(true, $parsedParams->einschrittVerfahrenErlaubt);
+        $this->assertCount(7, $parsedParams->verfahrensparameterZweiSchrittVerfahren);
+        $this->assertEquals("HHD1.3.0", $parsedParams->verfahrensparameterZweiSchrittVerfahren[0]->technischeIdentifikationTanVerfahren);
+        $this->assertEquals("chipTAN manuell", $parsedParams->verfahrensparameterZweiSchrittVerfahren[0]->nameDesZweiSchrittVerfahrens);
+        $this->assertEquals("TAN2go", $parsedParams->verfahrensparameterZweiSchrittVerfahren[5]->technischeIdentifikationTanVerfahren);
+        $this->assertEquals("iTAN", $parsedParams->verfahrensparameterZweiSchrittVerfahren[6]->technischeIdentifikationTanVerfahren);
+        $this->assertEquals("00", $parsedParams->verfahrensparameterZweiSchrittVerfahren[6]->initialisierungsmodus);
     }
 }
