@@ -48,6 +48,10 @@ abstract class BaseSegment implements SegmentInterface
         return $this->segmentkopf->segmentkennung;
     }
 
+    public function getSegmentNumber()
+    {
+        $this->segmentkopf->segmentnummer;
+    }
 
     /**
      * @throws \InvalidArgumentException If any element in this segment is invalid.

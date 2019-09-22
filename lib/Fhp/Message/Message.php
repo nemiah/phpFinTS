@@ -188,7 +188,7 @@ class Message extends AbstractMessage
 
     /**
      * Only for read-only access.
-     * @return AbstractSegment[]
+     * @return SegmentInterface[]
      */
     public function getEncryptedSegments()
     {
