@@ -3,7 +3,7 @@
 namespace Fhp\ResponseTest;
 
 use Fhp\Response\GetVariables;
-use Tests\Fhp\Model\HITANSTest;
+use Tests\Fhp\Segment\HITANSTest;
 
 class GetVariablesTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Fhp\Model;
+namespace Tests\Fhp\Segment;
 
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HITANS\HITANSv1;
