@@ -430,4 +430,15 @@ class Transaction
 
         return $this;
     }
+
+    /**
+     * PN
+     */
+    public function getNr() {
+        return $this->nr;
+    }
+    public function setNr($nr) {
+        $this->nr = (int) $nr;
+        return $this;
+    }
 }
