@@ -22,7 +22,7 @@ class GetVariables extends Response
 		return $this->get()->tanModes;
 	}
 
-	public function parseTanModes($segments)
+	private function parseTanModes($segments)
 	{
 		// extracted from https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
 		// Zwei-Schritt-TAN-Einreichung, Parameter
