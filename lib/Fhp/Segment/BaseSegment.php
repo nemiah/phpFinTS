@@ -23,7 +23,7 @@ abstract class BaseSegment implements SegmentInterface
 
     /**
      * Reference to the descriptor for this type of segment.
-     * @var SegmentDescriptor
+     * @var SegmentDescriptor|null
      */
     private $descriptor;
 
@@ -32,27 +32,29 @@ abstract class BaseSegment implements SegmentInterface
      */
     public $segmentkopf;
 
-    public function __construct()
-    {
-        $this->descriptor = SegmentDescriptor::get(static::class);
-    }
-
+    /**
+     * @return SegmentDescriptor The descriptor for this segment's type.
+     */
     public function getDescriptor()
     {
+        if (!isset($this->descriptor)) {
+            $this->descriptor = SegmentDescriptor::get(static::class);
+        }
         return $this->descriptor;
     }
 
     public function getName()
     {
-        return $this->descriptor->kennung;
+        return $this->segmentkopf->segmentkennung;
     }
+
 
     /**
      * @throws \InvalidArgumentException If any element in this segment is invalid.
      */
     public function validate()
     {
-        $this->descriptor->validateObject($this);
+        $this->getDescriptor()->validateObject($this);
     }
 
     /**
