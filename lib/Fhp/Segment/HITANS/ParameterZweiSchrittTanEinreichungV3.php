@@ -4,7 +4,7 @@ namespace Fhp\Segment\HITANS;
 
 use Fhp\Segment\BaseDeg;
 
-class ParameterZweiSchrittTanEinreichungV3 extends BaseDeg
+class ParameterZweiSchrittTanEinreichungV3 extends BaseDeg implements ParameterZweiSchrittTanEinreichung
 {
     /** @var boolean */
     public $einschrittVerfahrenErlaubt;
@@ -19,4 +19,10 @@ class ParameterZweiSchrittTanEinreichungV3 extends BaseDeg
     public $auftragsHashwertverfahren;
     /** @var VerfahrensparameterZweiSchrittVerfahrenV3[] @Max(98) */
     public $verfahrensparameterZweiSchrittVerfahren;
+
+    /** @return VerfahrensparameterZweiSchrittVerfahrenV3[] */
+    public function getVerfahrensparameterZweiSchrittVerfahren()
+    {
+        return $this->verfahrensparameterZweiSchrittVerfahren;
+    }
 }

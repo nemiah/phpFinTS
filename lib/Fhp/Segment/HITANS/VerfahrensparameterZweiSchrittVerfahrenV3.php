@@ -4,7 +4,7 @@ namespace Fhp\Segment\HITANS;
 
 use Fhp\Segment\BaseDeg;
 
-class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg
+class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
 {
     /** @var integer Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
@@ -48,4 +48,14 @@ class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg
     public $bezeichnungDesTanMediumsErforderlich;
     /** @var integer|null */
     public $anzahlUnterstuetzterAktiverTanMedien;
+
+    public function getSicherheitsfunktion()
+    {
+        return $this->sicherheitsfunktion;
+    }
+
+    public function getNameDesZweiSchrittVerfahrens()
+    {
+        return $this->nameDesZweiSchrittVerfahrens;
+    }
 }
