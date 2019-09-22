@@ -361,7 +361,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function initDialog($tanMediaName)
+	public function initDialog($tanMediaName, $tanMechanism = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('DIALOG initialize');
@@ -377,6 +377,11 @@ class Dialog
 			$this->productVersion
 		);
 
+        if ($tanMechanism === null)
+            $tanMechanismArr = array_keys($this->supportedTanMechanisms);
+        else
+            $tanMechanismArr = array($tanMechanism);
+
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
@@ -389,7 +394,7 @@ class Dialog
 				$prepare,
 				new HKTAN(HKTAN::VERSION, 5, null, $tanMediaName)
 			),
-			array(AbstractMessage::OPT_PINTAN_MECH => array_keys($this->supportedTanMechanisms))
+			array(AbstractMessage::OPT_PINTAN_MECH => $tanMechanismArr)
 		);
 
 		#$this->logger->debug('Sending INIT message:');

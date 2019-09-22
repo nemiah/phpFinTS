@@ -37,6 +37,7 @@ $fints = new FinTs(
     FHP_SOFTWARE_VERSION
 );
 
+$fints->setTANMechanism(921, 'MyDevice'); //request available TAN modes with $fints->getVariables();!
 $accounts = $fints->getSEPAAccounts();
 
 $fints->end();

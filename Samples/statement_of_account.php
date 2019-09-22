@@ -10,10 +10,13 @@ require '../vendor/autoload.php';
 class testLogger extends Psr\Log\AbstractLogger {
 	
 	public function log($level, $message, array $context = array()): void {
-		file_put_contents(__DIR__."/accounts.log", file_get_contents(__DIR__."/accounts.log").$message."\n");
+		file_put_contents(__DIR__."/statement.log", file_get_contents(__DIR__."/statement.log").$message."\n");
 	}
 
 }
+
+file_put_contents(__DIR__."/statement.log", "");
+file_put_contents(__DIR__."/tan.txt", "");
 
 use Fhp\FinTs;
 use Fhp\Model\StatementOfAccount\Statement;
@@ -41,13 +44,13 @@ $fints = new FinTs(
 );
 
 try {
-	
-	$fints->setTANMechanism(901); //request available TAN modes with $fints->getVariables();!
+	$fints->setTANMechanism(921, 'MyDevice'); //request available TAN modes with $fints->getVariables();!
 	
     $accounts = $fints->getSEPAAccounts();
 
     $oneAccount = $accounts[0];
-    $from = new \DateTime('2016-01-01');
+    // $from = new \DateTime('2019-01-01');
+    $from = new \DateTime('2019-09-01');
     $to = new \DateTime();
     $soa = $fints->getStatementOfAccount($oneAccount, $from, $to);
 	
@@ -81,6 +84,7 @@ try {
 			FHP_SOFTWARE_VERSION
 		);
 
+		$fints->setTANMechanism(921, 'MyDevice'); //request available TAN modes with $fints->getVariables();!
 		$soa = $fints->finishStatementOfAccount($unserialized, $oneAccount, $from, $to, $tan);
 	}
     $fints->end();

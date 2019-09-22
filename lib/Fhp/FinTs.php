@@ -28,6 +28,9 @@ use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
+use Fhp\Segment\HKVVB;
+use Fhp\Segment\HKIDN;
+use Fhp\Model\Account;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
@@ -139,13 +142,33 @@ class FinTs extends FinTsInternal
 	 *
 	 * @return Model\Account[]
 	 */
-	public function getAccounts()
+	public function getAccounts(\Closure $tanCallback = null)
 	{
 		$dialog = $this->getDialog(false);
-		$result = $dialog->syncDialog();
-		$this->end();
-		$this->bankName = $dialog->getBankName();
+		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+		$dialog->endDialog();
+        $this->bankName = $dialog->getBankName();
+
+		$message = $this->getNewMessage(
+			$dialog,
+			array(
+                new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
+                new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
+                $this->createHKTAN(5)
+            ),
+			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+		);
+
+		$this->logger->info('');
+		$this->logger->info('HKVVB (ALL accounts) initialize');
+		
+        $result = $dialog->sendMessage($message, null, $tanCallback);
+		$this->logger->info('HKVVB end');
+
 		$accounts = new GetAccounts($result);
+
+		// $dialog->endDialog();
+        // $dialog->initDialog($this->tanMediaName, $this->tanMechanism);
 
 		return $accounts->getAccountsArray();
 	}
@@ -162,7 +185,7 @@ class FinTs extends FinTsInternal
 		#$dialog->endDialog(); //probably not required
 		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
 		$dialog->endDialog();
-		$dialog->initDialog($this->tanMediaName);
+		$dialog->initDialog($this->tanMediaName, $this->tanMechanism);
 
 		$message = $this->getNewMessage(
 			$dialog,
@@ -236,7 +259,7 @@ class FinTs extends FinTsInternal
 	 * @return Model\StatementOfAccount\StatementOfAccount|null
 	 * @throws \Exception
 	 */
-	public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1)
+    public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1)
 	{
 		$this->logger->info('');
 		$this->logger->info('HKKAZ (statement of accounts) initialize');
