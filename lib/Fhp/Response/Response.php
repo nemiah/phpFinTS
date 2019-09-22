@@ -57,11 +57,12 @@ class Response
 
 	public function isStrongAuthRequired()
 	{
-		if(array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $this->getSegmentSummary())){
+		$msgArr = $this->getSegmentSummary() + $this->getMessageSummary();
+        if(array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $msgArr)){
 			return false;
 		}
 		
-		return !array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $this->getSegmentSummary());
+		return !array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr);
 	}
 
 	public function isTANRequest()
