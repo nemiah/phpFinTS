@@ -4,11 +4,11 @@ namespace Fhp\Segment\HITANS;
 
 use Fhp\Segment\BaseDeg;
 
-class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
+class VerfahrensparameterZweiSchrittVerfahrenV2 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
 {
     /** @var integer Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var integer Allowed values: 1, 2; See specification for details */
+    /** @var integer Allowed values: 1, 2, 3, 4; See specification for details */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
@@ -42,12 +42,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements Verfa
     public $challengeKlasseErforderlich;
     /** @var boolean */
     public $challengeBetragErforderlich;
-    /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
-    public $initialisierungsmodus;
-    /** @var integer Allowed values: 0 (cannot), 2 (must) */
-    public $bezeichnungDesTanMediumsErforderlich;
-    /** @var integer|null */
-    public $anzahlUnterstuetzterAktiverTanMedien;
 
     public function getSicherheitsfunktion()
     {

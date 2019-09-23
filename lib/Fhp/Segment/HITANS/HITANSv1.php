@@ -14,7 +14,7 @@ use Fhp\Segment\BaseSegment;
  *
  * @package Fhp\Segment\HITANS
  */
-class HITANSv1 extends BaseSegment
+class HITANSv1 extends BaseSegment implements HITANS
 {
     /** @var integer */
     public $maximaleAnzahlAuftraege;
@@ -24,4 +24,10 @@ class HITANSv1 extends BaseSegment
     public $sicherheitsklasse;
     /** @var ParameterZweiSchrittTanEinreichungV1 */
     public $parameterZweiSchrittTanEinreichung;
+
+    /** @return ParameterZweiSchrittTanEinreichungV1 */
+    public function getParameterZweiSchrittTanEinreichung()
+    {
+        return $this->parameterZweiSchrittTanEinreichung;
+    }
 }

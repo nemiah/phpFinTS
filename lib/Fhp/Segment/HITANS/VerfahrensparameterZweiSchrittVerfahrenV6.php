@@ -4,7 +4,7 @@ namespace Fhp\Segment\HITANS;
 
 use Fhp\Segment\BaseDeg;
 
-class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
+class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
 {
     /** @var integer Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
@@ -12,6 +12,10 @@ class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements Verfa
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
+    /** @var string|null Max length: 32 */
+    public $zkaTanVerfahren;
+    /** @var string|null Max length: 10 */
+    public $versionZkaTanVerfahren;
     /** @var string Max length: 30 */
     public $nameDesZweiSchrittVerfahrens;
     /** @var integer */
@@ -22,8 +26,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements Verfa
     public $textZurBelegungDesRueckgabewertes;
     /** @var integer Allowed values: 1 through 256 */
     public $maximaleLaengeDesRueckgabewertes;
-    /** @var integer|null */
-    public $anzahlUnterstuetzterAktiverTanListen;
     /** @var boolean */
     public $mehrfachTanErlaubt;
     /**
@@ -34,18 +36,22 @@ class VerfahrensparameterZweiSchrittVerfahrenV3 extends BaseDeg implements Verfa
      * @var integer
      */
     public $tanZeitUndDialogbezug;
-    /** @var integer Allowed values: 0 (cannot), 2 (must) */
-    public $tanListennummerErforderlich;
     /** @var boolean */
     public $auftragsstornoErlaubt;
+    /** @var integer Allowed values: 0 (cannot), 2 (must) */
+    public $smsAbbuchungskontoErforderlich;
+    /** @var integer Allowed values: 0 (cannot), 2 (must) */
+    public $auftraggeberkontoErforderlich;
     /** @var boolean */
     public $challengeKlasseErforderlich;
     /** @var boolean */
-    public $challengeBetragErforderlich;
+    public $challengeStrukturiert;
     /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
     public $initialisierungsmodus;
     /** @var integer Allowed values: 0 (cannot), 2 (must) */
     public $bezeichnungDesTanMediumsErforderlich;
+    /** @var boolean */
+    public $antwortHhdUcErforderlich;
     /** @var integer|null */
     public $anzahlUnterstuetzterAktiverTanMedien;
 

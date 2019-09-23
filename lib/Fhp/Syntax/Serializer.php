@@ -20,6 +20,16 @@ abstract class Serializer
 {
 
     /**
+     * Escapes syntax characters (delimiters).
+     * @param string $str The unescaped string.
+     * @return string The escaped string in wire format.
+     */
+    public static function escape($str)
+    {
+        return preg_replace('/([+:\'?@])/', '?$1', $str);
+    }
+
+    /**
      * @param mixed $value A scalar (DE) value.
      * @param string $type The PHP type of this value. This should support exactly the values for which
      *     {@link ElementDescriptor#isScalarType()} returns true.
@@ -28,7 +38,7 @@ abstract class Serializer
     public static function serializeDataElement($value, $type)
     {
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
-            return strval($value);
+            return static::escape(strval($value));
         } elseif ($type === 'float') {
             // Format with fixed 2 decimal places (there has to be some limit, and the specification does not specify
             // one), then trim zeros from the end.

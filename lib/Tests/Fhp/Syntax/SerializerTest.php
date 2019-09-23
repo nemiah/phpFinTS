@@ -6,7 +6,15 @@ use Fhp\Syntax\Serializer;
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
-    public function test_serializeDataElement() 
+    public function test_escape()
+    {
+        $this->assertEquals('ABC?+DEF', Serializer::escape('ABC+DEF'));
+        $this->assertEquals('ABC???+DEF', Serializer::escape('ABC?+DEF'));
+        $this->assertEquals('ABC??DEF', Serializer::escape('ABC?DEF'));
+        $this->assertEquals('ABC?:DEF', Serializer::escape('ABC:DEF'));
+    }
+
+    public function test_serializeDataElement()
     {
         $this->assertSame('15', Serializer::serializeDataElement(15, 'int'));
         $this->assertSame('1000', Serializer::serializeDataElement(1000, 'integer'));
@@ -16,8 +24,9 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('J', Serializer::serializeDataElement(true, 'bool'));
         $this->assertSame('N', Serializer::serializeDataElement(false, 'boolean'));
         $this->assertSame('1000', Serializer::serializeDataElement("1000", 'string'));
+        $this->assertSame('5?:5', Serializer::serializeDataElement("5:5", 'string'));
     }
-    
+
     public function test_fillMissingKeys()
     {
         $arr = array(0 => 'a', 2 => 'b', 4 => 'c');
