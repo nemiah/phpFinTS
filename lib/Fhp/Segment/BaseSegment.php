@@ -2,6 +2,7 @@
 
 namespace Fhp\Segment;
 
+use Fhp\Syntax\Delimiter;
 use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
 
@@ -17,6 +18,8 @@ use Fhp\Syntax\Serializer;
  */
 abstract class BaseSegment implements SegmentInterface
 {
+    /** @var string Name of the PHP namespace under which all the segments are stored. */
+    const SEGMENT_NAMESPACE = 'Fhp\Segment';
 
     /**
      * Reference to the descriptor for this type of segment.
@@ -68,8 +71,7 @@ abstract class BaseSegment implements SegmentInterface
     }
 
     /**
-     * Convenience function for {@link Parser#parseSegment()}. This function should not be called on BaseSegment itself,
-     * but only on one of its sub-classes.
+     * Convenience function for {@link Parser#parseSegment()}.
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter may be present at
      *     the end, or not).
      * @return BaseSegment The parsed segment.
@@ -77,9 +79,23 @@ abstract class BaseSegment implements SegmentInterface
     public static function parse($rawSegment)
     {
         if (static::class === BaseSegment::class) {
-            throw new \BadFunctionCallException("Do not call BaseSegment::parse() on the super class");
+            // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
+            $firstElementDelimiter = strpos($rawSegment, Delimiter::ELEMENT);
+            if ($firstElementDelimiter === false) {
+                throw new \InvalidArgumentException("Invalid segment $rawSegment");
+            }
+            /** @var Segmentkopf $segmentkopf */
+            $segmentkopf = Segmentkopf::parse(substr($rawSegment, 0, $firstElementDelimiter));
+            $segmentType = static::SEGMENT_NAMESPACE . '\\' . $segmentkopf->segmentkennung . '\\'
+                . $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
+            if (!class_exists($segmentType)) {
+                throw new \InvalidArgumentException("Unsupported segment type/version $segmentType");
+            }
+        } else {
+            // The parse() function was called on the segment subclass itself.
+            $segmentType = static::class;
         }
-        return Parser::parseSegment($rawSegment, static::class);
+        return Parser::parseSegment($rawSegment, $segmentType);
     }
 
 }

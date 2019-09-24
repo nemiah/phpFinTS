@@ -5,8 +5,8 @@ namespace Fhp\Segment\HITANS;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HITANSv3
- * Segment: Zwei-Schritt-TAN-Einreichung, Parameter (Version 3)
+ * Class HITANSv2
+ * Segment: Zwei-Schritt-TAN-Einreichung, Parameter (Version 2)
  * Bezugssegment: HKVVB
  * Sender: Kreditinstitut
  *
@@ -14,7 +14,7 @@ use Fhp\Segment\BaseSegment;
  *
  * @package Fhp\Segment\HITANS
  */
-class HITANSv3 extends BaseSegment implements HITANS
+class HITANSv2 extends BaseSegment implements HITANS
 {
     /** @var integer */
     public $maximaleAnzahlAuftraege;
@@ -22,10 +22,10 @@ class HITANSv3 extends BaseSegment implements HITANS
     public $anzahlSignaturenMindestens;
     /** @var integer Allowed values: 0, 1, 2, 3, 4 */
     public $sicherheitsklasse;
-    /** @var ParameterZweiSchrittTanEinreichungV3 */
+    /** @var ParameterZweiSchrittTanEinreichungV2 */
     public $parameterZweiSchrittTanEinreichung;
 
-    /** @return ParameterZweiSchrittTanEinreichungV3 */
+    /** @return ParameterZweiSchrittTanEinreichungV2 */
     public function getParameterZweiSchrittTanEinreichung()
     {
         return $this->parameterZweiSchrittTanEinreichung;

@@ -26,35 +26,19 @@ class HKTAN extends AbstractSegment
 	{
 		$tanProcess = null !== $processID ? 2 : 4;
 		$segmentIdent = null === $processID ? 'HKIDN' : '';
-        $data = array();
-        switch ($tanProcess) {
-            case 2:
-                $data = array(
-                    $tanProcess,
-                    $segmentIdent,
-                    '',
-                    '',
-                    $version == 6 ? $processID : '',
-                    'N'
-                );
-                break;
-
-            default:
-                $data = array(
-                    $tanProcess,
-                    $segmentIdent,
-                    '',
-                    '',
-                    $version == 6 ? $processID : '',
-                    $version != 6 ? $processID : '',
-                    'N', // 7 Weitere TAN folgt
-                    '',
-                    '',
-                    '',
-                    $tanMediaName // 12 Bezeichnung des TAN-Mediums - mandatory bei TAN-Prozess=1, 3, 4  und „Anzahl unterstützter aktiver TAN-Medien“ > 1 und „Bezeichnung des TAN-Mediums erforderlich“=2
-                );
-        }
-
+		$data = array(
+			$tanProcess,
+			$segmentIdent,
+			'',
+			'',
+			$version == 6 ? $processID : '',
+			$version != 6 ? $processID : '',
+			'N', // 7 Weitere TAN folgt
+			'',
+			'',
+			'',
+			$tanMediaName // 12 Bezeichnung des TAN-Mediums - mandatory bei TAN-Prozess=1, 3, 4  und „Anzahl unterstützter aktiver TAN-Medien“ > 1 und „Bezeichnung des TAN-Mediums erforderlich“=2
+		);
 		parent::__construct(
 			static::NAME,
 			$segmentNumber,
