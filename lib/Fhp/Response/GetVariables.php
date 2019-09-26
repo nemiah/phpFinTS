@@ -16,22 +16,23 @@ class GetVariables extends Response
 		$variables = new \stdClass();
 		$segments = $this->findSegments('HITANS');
 		
-        $allTanModes = $this->parseTanModes($segments);
-        
-        $variables->tanModes = array();
+		$allTanModes = $this->parseTanModes($segments);
+		
+		$variables->tanModes = array();
 		foreach ($this->findSegments('HIRMS') as $segment) {
-            $segment = $this->splitSegment($segment);
-            foreach ($segment as $de)
-                if (substr($de, 0, 6) === "3920::") {
-                    $de = $this->splitDeg($de);
-                    $de = array_slice($de, 3);
+			$segment = $this->splitSegment($segment);
+			foreach ($segment as $de) {
+				if (substr($de, 0, 6) === "3920::") {
+					$de = $this->splitDeg($de);
+					$de = array_slice($de, 3);
 
-                    foreach ($de as $methodNr)
-                        if (array_key_exists($methodNr, $allTanModes))
-                            $variables->tanModes[$methodNr] = $allTanModes[$methodNr];
-                    break;
-                }
-        }
+					foreach ($de as $methodNr)
+						if (array_key_exists($methodNr, $allTanModes))
+							$variables->tanModes[$methodNr] = $allTanModes[$methodNr];
+					break;
+				}
+			}
+		}
 
 		return $variables;
 	}
