@@ -236,15 +236,15 @@ class Response
 			foreach ($segment as $de) {
 				$de = $this->splitDeg($de);
 				$result[$de[0]] = $de[2];
-                if (count($de) > 3) {
-                    $result[$de[0]] .= " (";
-                    for ($ii = 3; $ii < count($de); $ii++) {
-                        $result[$de[0]] .= $de[$ii];
-                        if ($ii !== count($de)-1)
-                            $result[$de[0]] .= ", ";
-                    }
-                    $result[$de[0]] .= ")";
-                }
+				if (count($de) > 3) {
+					$result[$de[0]] .= " (";
+					for ($ii = 3; $ii < count($de); $ii++) {
+						$result[$de[0]] .= $de[$ii];
+						if ($ii !== count($de)-1)
+							$result[$de[0]] .= ", ";
+					}
+					$result[$de[0]] .= ")";
+				}
 			}
 		}
 
