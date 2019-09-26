@@ -28,6 +28,9 @@ use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
+use Fhp\Segment\HKVVB;
+use Fhp\Segment\HKIDN;
+use Fhp\Model\Account;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
@@ -139,13 +142,59 @@ class FinTs extends FinTsInternal
 	 *
 	 * @return Model\Account[]
 	 */
-	public function getAccounts()
+	public function getAccounts(\Closure $tanCallback = null)
 	{
 		$dialog = $this->getDialog(false);
-		$result = $dialog->syncDialog();
-		$this->end();
-		$this->bankName = $dialog->getBankName();
-		$accounts = new GetAccounts($result);
+		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+		$dialog->endDialog();
+		// $dialog->initDialog($this->tanMechanism, $this->tanMediaName);
+        $this->bankName = $dialog->getBankName();
+
+		$message = $this->getNewMessage(
+			$dialog,
+			array(
+                new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
+                new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
+                $this->createHKTAN(5)
+            ),
+			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+		);
+
+		$this->logger->info('');
+		$this->logger->info('HKVVB (ALL accounts) initialize');
+		
+        $response = $dialog->sendMessage($message, null, $tanCallback);
+		if ($response->isTANRequest()) {
+			return $response;
+		}
+
+		return $this->finishAccounts($response);
+	}
+
+	public function finishAccounts(Response $response, $tan = null)
+	{
+		$dialog = $response->getDialog();
+		$this->dialog = $dialog;
+        
+        if ($tan) {
+			$response = $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
+
+            $message = $this->getNewMessage(
+                $dialog,
+                array(
+                    new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
+                    new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
+                    $this->createHKTAN(5)
+                ),
+                array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            );
+
+            $response = $dialog->sendMessage($message, null, $tanCallback);
+		}
+
+		$this->logger->info('HKVVB end');
+
+		$accounts = new GetAccounts($response);
 
 		return $accounts->getAccountsArray();
 	}
@@ -163,6 +212,7 @@ class FinTs extends FinTsInternal
 		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
 		$dialog->endDialog();
 		$dialog->initDialog($this->tanMechanism, $this->tanMediaName);
+        $this->bankName = $dialog->getBankName();
 
 		$message = $this->getNewMessage(
 			$dialog,
