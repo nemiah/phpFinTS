@@ -91,7 +91,7 @@ class GetStatementOfAccount extends Response
                     $transaction->setBankCode($trx['description']['bank_code']);
                     $transaction->setAccountNumber($trx['description']['account_number']);
                     $transaction->setName($trx['description']['name']);
-					$transaction->setBooked($trx['booked']);
+                    $transaction->setBooked($trx['booked']);
                     $transaction->setPN($trx['description']['primanoten_nr']);
                     $statementModel->addTransaction($transaction);
                 }
