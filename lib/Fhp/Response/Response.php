@@ -59,10 +59,10 @@ class Response
 	public function isStrongAuthRequired()
 	{
 		$msgArr = $this->getSegmentSummary() + $this->getMessageSummary();
-        if(array_key_exists(self::RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED, $msgArr)){
+		if(array_key_exists(self::RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED, $msgArr)){
 			return true;
 		}
-        if(array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr)){
+		if(array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr)){
 			return false;
 		}
 
