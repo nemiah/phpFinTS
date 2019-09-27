@@ -24,6 +24,8 @@ class GetAccounts extends Response
 
         foreach ($accounts as $account) {
             $accountParts = $this->splitSegment($account);
+            if (empty($accountParts[1]))
+                continue;
             $this->accounts[] = $this->createModelFromArray($accountParts);
         }
 

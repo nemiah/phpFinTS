@@ -78,6 +78,11 @@ class Transaction
 	protected $booked;
 
     /**
+     * @var int
+     */
+	protected $pn;
+
+    /**
      * Get booking date.
      *
      * @deprecated Use getBookingDate() instead
@@ -428,6 +433,27 @@ class Transaction
     {
         $this->name = (string) $name;
 
+        return $this;
+    }
+
+    /**
+     * Get primanota number
+     *
+     * @return int
+     */
+    public function getPN() {
+        return $this->pn;
+    }
+ 
+   /**
+     * Set primanota number
+     *
+     * @param int $nr
+     *
+     * @return $this
+     */
+    public function setPN($nr) {
+        $this->pn = (int) $nr;
         return $this;
     }
 }

@@ -15,7 +15,8 @@ class Response
 {
 
 	const RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED = 3076;
-	const RESPONSE_CODE_STRONG_AUTH_REQUIRED = 9076;
+	const RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED = "0030";
+	// const RESPONSE_CODE_STRONG_AUTH_REQUIRED = 9076;
 	const RESPONSE_CODE_COMMAND_EXECUTED = "0020";
 
 	/** @var string */
@@ -57,11 +58,15 @@ class Response
 
 	public function isStrongAuthRequired()
 	{
-		if(array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $this->getSegmentSummary())){
+		$msgArr = $this->getSegmentSummary() + $this->getMessageSummary();
+		if(array_key_exists(self::RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED, $msgArr)){
+			return true;
+		}
+		if(array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr)){
 			return false;
 		}
-		
-		return !array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $this->getSegmentSummary());
+
+		return !array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $msgArr);
 	}
 
 	public function isTANRequest()
@@ -231,6 +236,15 @@ class Response
 			foreach ($segment as $de) {
 				$de = $this->splitDeg($de);
 				$result[$de[0]] = $de[2];
+				if (count($de) > 3) {
+					$result[$de[0]] .= " (";
+					for ($ii = 3; $ii < count($de); $ii++) {
+						$result[$de[0]] .= $de[$ii];
+						if ($ii !== count($de)-1)
+							$result[$de[0]] .= ", ";
+					}
+					$result[$de[0]] .= ")";
+				}
 			}
 		}
 
