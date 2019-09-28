@@ -43,4 +43,11 @@ abstract class Rueckmeldungscode
         return 9000 < $code && $code < 9999;
     }
 
+    /**
+     * Zugelassene Ein- und Zwei-Schritt-Verfahren für den Benutzer (+ Rückmeldungsparameter).
+     * The parameters reference the VerfahrensparameterZweiSchrittVerfahren.sicherheitsfunktion values (900..997) from
+     * HITANS, or 999 to indicate Ein-Schritt-Verfahren.
+     */
+    const ZUGELASSENE_VERFAHREN = 3920;
+
 }

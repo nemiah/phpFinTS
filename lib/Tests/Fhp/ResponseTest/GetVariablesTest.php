@@ -71,4 +71,17 @@ class GetVariablesTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($modes[913], "chipTAN-QR");
 		$this->assertEquals($modes[921], "TAN2go");
 	}
+
+	public function testParseTanModesDKBWithRestrictions()
+    {
+        $segments = array(
+            "HIRMS:4:2:5+0020::Auftrag ausgeführt.'",
+            "HIRMS:5:2:4+3050::BPD nicht mehr aktuell, aktuelle Version enthalten.+3920::Zugelassene Zwei-Schritt-Verfahren für den Benutzer.:921+0020::Der Auftrag wurde ausgeführt.'",
+            "HITANS:167:6:4+1+1+1+J:N:0:910:2:HHD1.3.0:::chipTAN manuell:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:911:2:HHD1.3.2OPT:HHDOPT1:1.3.2:chipTAN optisch:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:912:2:HHD1.3.2USB:HHDUSB1:1.3.2:chipTAN-USB:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:913:2:Q1S:Secoder_UC:1.2.0:chipTAN-QR:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:920:2:smsTAN:::smsTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:5:921:2:TAN2go:::TAN2go:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:2:900:2:iTAN:::iTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:0'",
+        );
+        $gv = new GetVariables(implode($segments), null);
+        $modes = $gv->getSupportedTanMechanisms();
+        $this->assertEquals([921], array_keys($modes));
+        $this->assertEquals($modes[921], "TAN2go");
+    }
 }
