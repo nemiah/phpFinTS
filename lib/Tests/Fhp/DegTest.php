@@ -14,7 +14,7 @@ class DegTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $deg->toString());
 
         $deg->addDataElement('baz');
-        $this->assertEquals('foobar:baz', $deg->toString());
+        $this->assertEquals('foobdddar:baz', $deg->toString());
         $this->assertEquals('foobar:baz', (string) $deg);
     }
 }
