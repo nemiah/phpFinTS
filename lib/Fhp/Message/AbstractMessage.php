@@ -11,11 +11,6 @@ use Fhp\Segment\SegmentInterface;
  */
 class AbstractMessage
 {
-    const MSG_HEADER_SEGMENT = 'HNHBK';
-    const MSG_HEADER_VERSION = 3;
-    const MSG_HEADER_SEG_NUMBER = 1;
-    const MSG_HBCI_VERSION = '300';
-
     const OPT_PINTAN_MECH = 'pintan_mechanism';
 
     /**
