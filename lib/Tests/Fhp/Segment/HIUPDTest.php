@@ -21,7 +21,6 @@ class HIUPDTest extends \PHPUnit_Framework_TestCase
 
     public function test_parse_HBCI22_example1()
     {
-        /** @var HIUPDv4 $parsed */
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
         $this->assertSame(16, $parsed->segmentkopf->segmentnummer);
         $this->assertSame(4, $parsed->segmentkopf->segmentversion);
@@ -44,21 +43,18 @@ class HIUPDTest extends \PHPUnit_Framework_TestCase
 
     public function test_validate_HBCI22_example1()
     {
-        /** @var HIUPDv4 $parsed */
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
         $parsed->validate(); // Should not throw.
     }
 
     public function test_serialize_HBCI22_example1()
     {
-        /** @var HIUPDv4 $parsed */
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
         $this->assertEquals(static::HBCI22_EXAMPLES[0], $parsed->serialize());
     }
 
     public function test_parse_HBCI22_example2()
     {
-        /** @var HIUPDv4 $parsed */
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[1]);
         $this->assertSame('1234568', $parsed->kontoverbindung->kontonummer);
         $this->assertSame('Sparkonto 2000', $parsed->kontoproduktbezeichnung);

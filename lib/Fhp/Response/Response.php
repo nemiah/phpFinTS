@@ -5,6 +5,7 @@ namespace Fhp\Response;
 use Fhp\Message\AbstractMessage;
 use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
+use Fhp\Segment\SegmentInterface;
 
 /**
  * Class Response
@@ -126,7 +127,7 @@ class Response
 	{
 		$touchdown = array();
 		$messageSegments = $message->getEncryptedSegments();
-		/** @var AbstractSegment $msgSeg */
+		/** @var SegmentInterface $msgSeg */
 		foreach ($messageSegments as $msgSeg) {
 			$segment = $this->findSegmentForReference('HIRMS', $msgSeg);
 			if (null != $segment) {
@@ -304,12 +305,12 @@ class Response
 	}
 
 	/**
-	 * @param string          $name
-	 * @param AbstractSegment $reference
+	 * @param string           $name
+	 * @param SegmentInterface $reference
 	 *
 	 * @return string|null
 	 */
-	protected function findSegmentForReference($name, AbstractSegment $reference)
+	protected function findSegmentForReference($name, SegmentInterface $reference)
 	{
 		$segments = $this->findSegments($name);
 		foreach ($segments as $seg) {

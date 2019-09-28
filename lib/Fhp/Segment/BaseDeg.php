@@ -16,17 +16,18 @@ abstract class BaseDeg
 {
     /**
      * Reference to the descriptor for this type of segment.
-     * @var DegDescriptor
+     * @var DegDescriptor|null
      */
     private $descriptor;
 
-    public function __construct()
-    {
-        $this->descriptor = DegDescriptor::get(static::class);
-    }
-
+    /**
+     * @return DegDescriptor The descriptor for this Deg type.
+     */
     public function getDescriptor()
     {
+        if (!isset($this->descriptor)) {
+            $this->descriptor = DegDescriptor::get(static::class);
+        }
         return $this->descriptor;
     }
 
@@ -35,7 +36,7 @@ abstract class BaseDeg
      */
     public function validate()
     {
-        $this->descriptor->validateObject($this);
+        $this->getDescriptor()->validateObject($this);
     }
 
     /**
@@ -51,7 +52,7 @@ abstract class BaseDeg
      * Convenience function for {@link Parser#parseGroup()}. This function should not be called on BaseDeg itself, but
      * only on one of its sub-classes.
      * @param string $rawElements The serialized wire format for a data element group.
-     * @return BaseDeg The parsed value.
+     * @return static The parsed value.
      */
     public static function parse($rawElements)
     {

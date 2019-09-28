@@ -20,7 +20,6 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
 
     public function test_parse_DKB_response_v1()
     {
-        /** @var HITANSv1 $parsed */
         $parsed = HITANSv1::parse(static::REAL_DKB_RESPONSE[0]);
 
         $this->assertEquals(1, $parsed->maximaleAnzahlAuftraege);
@@ -55,7 +54,6 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
 
     public function test_validate_DKB_response_v1()
     {
-        /** @var HITANSv1 $parsed */
         $parsed = HITANSv1::parse(static::REAL_DKB_RESPONSE[0]);
         $parsed->validate(); // Should not throw.
     }
@@ -68,7 +66,6 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
 
     public function test_parse_DKB_response_v3()
     {
-        /** @var HITANSv3 $parsed */
         $parsed = HITANSv3::parse(static::REAL_DKB_RESPONSE[1]);
         $this->assertEquals(1, $parsed->maximaleAnzahlAuftraege);
         $parsedParams = $parsed->parameterZweiSchrittTanEinreichung;
@@ -95,7 +92,6 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
 
     public function test_parse_DKB_response_v6()
     {
-        /** @var HITANSv6 $parsed */
         $parsed = HITANSv6::parse(static::REAL_DKB_RESPONSE[2]);
         $this->assertEquals(1, $parsed->maximaleAnzahlAuftraege);
         $parsedParams = $parsed->parameterZweiSchrittTanEinreichung;

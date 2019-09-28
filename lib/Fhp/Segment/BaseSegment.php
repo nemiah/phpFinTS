@@ -23,7 +23,7 @@ abstract class BaseSegment implements SegmentInterface
 
     /**
      * Reference to the descriptor for this type of segment.
-     * @var SegmentDescriptor
+     * @var SegmentDescriptor|null
      */
     private $descriptor;
 
@@ -32,19 +32,25 @@ abstract class BaseSegment implements SegmentInterface
      */
     public $segmentkopf;
 
-    public function __construct()
-    {
-        $this->descriptor = SegmentDescriptor::get(static::class);
-    }
-
+    /**
+     * @return SegmentDescriptor The descriptor for this segment's type.
+     */
     public function getDescriptor()
     {
+        if (!isset($this->descriptor)) {
+            $this->descriptor = SegmentDescriptor::get(static::class);
+        }
         return $this->descriptor;
     }
 
     public function getName()
     {
-        return $this->descriptor->kennung;
+        return $this->segmentkopf->segmentkennung;
+    }
+
+    public function getSegmentNumber()
+    {
+        $this->segmentkopf->segmentnummer;
     }
 
     /**
@@ -52,7 +58,7 @@ abstract class BaseSegment implements SegmentInterface
      */
     public function validate()
     {
-        $this->descriptor->validateObject($this);
+        $this->getDescriptor()->validateObject($this);
     }
 
     /**
@@ -74,7 +80,7 @@ abstract class BaseSegment implements SegmentInterface
      * Convenience function for {@link Parser#parseSegment()}.
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter may be present at
      *     the end, or not).
-     * @return BaseSegment The parsed segment.
+     * @return static The parsed segment.
      */
     public static function parse($rawSegment)
     {
