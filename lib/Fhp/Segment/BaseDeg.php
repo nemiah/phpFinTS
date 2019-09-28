@@ -52,7 +52,7 @@ abstract class BaseDeg
      * Convenience function for {@link Parser#parseGroup()}. This function should not be called on BaseDeg itself, but
      * only on one of its sub-classes.
      * @param string $rawElements The serialized wire format for a data element group.
-     * @return BaseDeg The parsed value.
+     * @return static The parsed value.
      */
     public static function parse($rawElements)
     {
