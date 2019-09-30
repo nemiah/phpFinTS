@@ -64,6 +64,10 @@ abstract class AbstractSegment implements SegmentInterface
             $string .= '+' . (string) $de;
         }
 
+        if($string == '') {
+            return $string;
+        }
+
         return $string . static::SEGMENT_SEPARATOR;
     }
 
