@@ -678,4 +678,41 @@ class FinTs extends FinTsInternal
 
 		return $response->getSEPAStandingOrdersArray();
 	}
+
+    /**
+     * Retrieve a pre configured dialog object.
+     *
+     * @param boolean
+     * @return Dialog
+     * @throws \Exception
+     */
+    protected function getDialog($sync = true)
+    {
+        if ($this->dialog) {
+            return $this->dialog;
+        }
+
+        if ($this->connection === null) {
+            $this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+        }
+
+        $dialog = new Dialog(
+            $this->connection,
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $this->systemId,
+            $this->logger,
+            $this->productName,
+            $this->productVersion
+        );
+
+        if ($sync) {
+            $dialog->syncDialog();
+        }
+
+        $this->dialog = $dialog;
+
+        return $this->dialog;
+    }
 }
