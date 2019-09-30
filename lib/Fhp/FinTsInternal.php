@@ -160,7 +160,7 @@ class FinTsInternal
 			$this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
 		}
 
-		$D = new Dialog(
+		$dialog = new Dialog(
 			$this->connection,
 			$this->bankCode,
 			$this->username,
@@ -172,10 +172,10 @@ class FinTsInternal
 		);
 
 		if ($sync) {
-			$D->syncDialog();
+			$dialog->syncDialog();
 		}
 
-		$this->dialog = $D;
+		$this->dialog = $dialog;
 
 		return $this->dialog;
 	}
