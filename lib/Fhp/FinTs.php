@@ -144,6 +144,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function getAccounts(\Closure $tanCallback = null)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog(false);
 		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
 		$dialog->endDialog();
@@ -173,6 +175,8 @@ class FinTs extends FinTsInternal
 
 	public function finishAccounts(Response $response, $tan = null)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $response->getDialog();
 		$this->dialog = $dialog;
 		
@@ -207,6 +211,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function getSEPAAccounts(\Closure $tanCallback = null)
 	{
+	    $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog(false);#, $this->tanMechanism);
 		#$dialog->endDialog(); //probably not required
 		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
@@ -232,6 +238,8 @@ class FinTs extends FinTsInternal
 
 	public function getVariables()
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog(false);
 		$response = $dialog->syncDialog();
 		// $this->end();
@@ -242,6 +250,8 @@ class FinTs extends FinTsInternal
 
 	public function getTANRequest()
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog(false);
 		$response = $dialog->syncDialog();
 		if ($response->isTANRequest()) {
@@ -288,6 +298,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function getStatementOfAccount(SEPAAccount $account, \DateTime $from, \DateTime $to, \Closure $tanCallback = null, $interval = 1)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$this->logger->info('');
 		$this->logger->info('HKKAZ (statement of accounts) initialize');
 		$this->logger->info('Start date: ' . $from->format('Y-m-d'));
@@ -309,6 +321,8 @@ class FinTs extends FinTsInternal
 
 	public function finishStatementOfAccount(Response $response, SEPAAccount $account, \DateTime $from, \DateTime $to, $tan = null)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $response->getDialog();
 		$this->dialog = $dialog;
 
@@ -378,6 +392,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function getBankToCustomerAccountReportAsRawXML(SEPAAccount $account, \DateTime $from, \DateTime $to)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$responses = [];
 
 		$this->logger->info('');
@@ -426,6 +442,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function getSaldo(SEPAAccount $account)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog();
 		#$dialog->syncDialog();
 		#$dialog->initDialog();
@@ -493,6 +511,8 @@ class FinTs extends FinTsInternal
 
 	public function finishSEPATAN(GetTANRequest $tanRequest, $tan)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		if ($tan == '') {
 			throw new TANException('No TAN received!');
 		}
@@ -513,6 +533,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback = null)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$response = $this->startSEPATransfer($account, $painMessage);
 
 		if ($tanCallback === null) {
@@ -537,6 +559,8 @@ class FinTs extends FinTsInternal
 
 	public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback, $interval = 1)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$painMessage = $this->clearXML($painMessage);
 
 
@@ -616,6 +640,8 @@ class FinTs extends FinTsInternal
 	 */
 	public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, \Closure $tanCallback = null)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$response = $this->startDeleteSEPAStandingOrder($account, $order);
 
 		if ($tanCallback === null) {
@@ -640,6 +666,8 @@ class FinTs extends FinTsInternal
 
 	public function getSEPAStandingOrders(SEPAAccount $account)
 	{
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
 		$dialog = $this->getDialog();
 		#$dialog->syncDialog(false);
 		#$dialog->initDialog();
