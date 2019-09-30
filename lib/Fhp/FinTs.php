@@ -60,7 +60,7 @@ class FinTs extends FinTsInternal
 	/** @var int */
 	protected $tanMechanism;
 	/** @var Dialog */
-	protected $dialog;
+	protected $dialog = null;
 	/** @var string */
 	protected $productName;
 	/** @var string */
@@ -688,7 +688,7 @@ class FinTs extends FinTsInternal
      */
     protected function getDialog($sync = true)
     {
-        if ($this->dialog) {
+        if ($this->dialog !== null) {
             return $this->dialog;
         }
 
