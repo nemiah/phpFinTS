@@ -100,7 +100,7 @@ class Message extends AbstractMessage
         $this->securityFunction = HNSHK::SECURITY_FUNC_999;
 
         $segmentNumberOffset = 2; // HNHBK + Start from 1
-        $useEncryption = true; // TODO: Automatically disable encryption if SSL is used
+        $useEncryption = true; // Disable encryption for debugging only (no all banks will accept unencrypted data)
 
         $this->securityReference = !$useEncryption ? 1 : rand(1000000, 9999999);
 
