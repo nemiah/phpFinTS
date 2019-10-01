@@ -115,7 +115,7 @@ class Message extends AbstractMessage
 
         if($useEncryption) {
             $this->addSegment($this->buildEncryptionHead()); // HNVSK
-        $this->addSegment($this->encryptionEnvelop);
+            $this->addSegment($this->encryptionEnvelop);
             $segmentNumberOffset -= 2; // HNVSK + HNVSD have different numbers
         }
 
