@@ -21,11 +21,6 @@ class Message extends AbstractMessage
     /**
      * @var int
      */
-    protected $encryptedSegmentsCount = 0;
-
-    /**
-     * @var int
-     */
     protected $securityReference;
 
     /**
@@ -179,7 +174,6 @@ class Message extends AbstractMessage
      */
     protected function addEncryptedSegment(SegmentInterface $segment)
     {
-        $this->encryptedSegmentsCount++;
         $this->encryptedSegments[] = $segment;
         $encodedData = $this->encryptionEnvelop->getEncodedData()->getData();
         $encodedData .= (string) $segment;
