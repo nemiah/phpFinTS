@@ -3,14 +3,13 @@
 namespace Fhp;
 
 use Fhp\Message\AbstractMessage;
-use Fhp\CurlException;
+
 /**
  * Class Connection
  * @package Fhp
  */
 class Connection
 {
-
     /**
      * @var string
      */
@@ -54,12 +53,11 @@ class Connection
     {
         if (!is_integer($port) || (int) $port <= 0) 
             throw new CurlException('Invalid port number');
-        
 
         $this->host = (string) $host;
         $this->port = (int) $port;
 		$this->timeoutConnect = (int) $timeoutConnect;
-		$this->timeResponse = (int) $timeoutResponse;
+		$this->timeoutResponse = (int) $timeoutResponse;
 		
         #$this->adapter = new Curl($server, $port, $timeout);
     }
@@ -75,7 +73,6 @@ class Connection
     {
         return $this->sendCurl($message);
     }
-	
 	
 	public function getCurlHandle(){
 		return $this->curlHandle;
@@ -95,7 +92,7 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($this->curlHandle, CURLOPT_ENCODING, '');
         curl_setopt($this->curlHandle, CURLOPT_MAXREDIRS, 0);
-        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeResponse);
+        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeoutResponse);
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, array("cache-control: no-cache", 'Content-Type: text/plain'));
 	}
 	
@@ -105,6 +102,7 @@ class Connection
      * @throws CurlException
      */
     public function sendCurl(AbstractMessage $message) {
+
 		if(!$this->curlHandle)
 			$this->connect();
 		

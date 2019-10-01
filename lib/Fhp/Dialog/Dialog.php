@@ -125,6 +125,8 @@ class Dialog
 		$this->logger = $logger;
 		$this->productName = $productName;
 		$this->productVersion = $productVersion;
+
+		$this->logger->debug('New Dialog constructed');
 	}
 
 	/**
