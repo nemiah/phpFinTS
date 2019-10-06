@@ -25,8 +25,6 @@ use Fhp\Segment\HKCAZ;
 abstract class FinTsInternal
 {
     protected $url;
-    /** @var int */
-    protected $port;
     /** @var  Connection */
     protected $connection = null;
     /** @var int */
