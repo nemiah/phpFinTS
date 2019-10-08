@@ -3,6 +3,7 @@
 
 namespace Fhp\Syntax;
 
+use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\DegDescriptor;
@@ -60,7 +61,7 @@ abstract class Parser
                 if ($offset > strlen($str)) {
                     throw new \InvalidArgumentException("Input ends on unescaped escape character.");
                 }
-            } elseif ($matchedStr[0] === '@') {
+            } elseif ($matchedStr[0] === Delimiter::BINARY) {
                 // It's a block binary data, which we should skip entirely.
                 $binaryLength = $match[1][0]; // $match[1] refers to the first (and only) capture group in the regex.
                 if (!is_numeric($binaryLength)) throw new \AssertionError();
@@ -126,6 +127,29 @@ abstract class Parser
     }
 
     /**
+     * @param string $rawValue The raw value (wire format), e.g. "@4@abcd".
+     * @return Bin The parsed value.
+     */
+    public static function parseBinaryBlock($rawValue)
+    {
+        $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
+        if (empty($rawValue) || $rawValue[0] !== Delimiter::BINARY || $delimiterPos === false) {
+            throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
+        }
+        $lengthStr = substr($rawValue, 1, $delimiterPos - 1);
+        if (!is_numeric($lengthStr)) {
+            throw new \InvalidArgumentException("Invalid binary block length: $lengthStr");
+        }
+        $length = intval($lengthStr);
+        $result = new Bin(substr($rawValue, $delimiterPos + 1));
+        $actualLength = strlen($result->getData());
+        if ($actualLength !== $length) {
+            throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
+        }
+        return $result;
+    }
+
+    /**
      * @param string $rawElements The serialized wire format for a data element group.
      * @param string $type The type (PHP class name) of the Deg to be parsed.
      * @return BaseDeg The parsed value, of type
@@ -177,12 +201,17 @@ abstract class Parser
                     if ($offset >= count($rawElements)) {
                         break; // End of input reached
                     }
-                    if (is_string($elementDescriptor->type)) { // Scalar type / DE
+                    if (is_string($elementDescriptor->type) // Scalar type / DE
+                        || $elementDescriptor->type->getName() === Bin::class) {
                         if ($rawElements[$offset] === '' && $repetition >= 1) { // Skip empty repeated entries.
                             $offset++;
                             continue;
                         }
-                        $value = static::parseDataElement($rawElements[$offset], $elementDescriptor->type);
+                        if (is_string($elementDescriptor->type)) {
+                            $value = static::parseDataElement($rawElements[$offset], $elementDescriptor->type);
+                        } else {
+                            $value = static::parseBinaryBlock($rawElements[$offset]);
+                        }
                         $offset++;
                     } else { // Nested DEG, will consume a certain number of elements and adjust the $offset accordingly.
                         list($value, $offset) =
@@ -264,8 +293,12 @@ abstract class Parser
      */
     private static function parseSegmentElement($rawElement, $descriptor)
     {
-        return is_string($descriptor->type)
-            ? static::parseDataElement($rawElement, $descriptor->type)
-            : static::parseDeg($rawElement, $descriptor->type->name);
+        if (is_string($descriptor->type)) { // Scalar value / DE
+            return static::parseDataElement($rawElement, $descriptor->type);
+        } elseif ($descriptor->type->getName() === Bin::class) {
+            return static::parseBinaryBlock($rawElement);
+        } else {
+            return static::parseDeg($rawElement, $descriptor->type->name);
+        }
     }
 }
