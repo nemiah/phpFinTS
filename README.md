@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
 
-:exclamation:**Note: The current developer version contains changes to the parameters of FinTs::_construct!** :exclamation:
+:exclamation:**Note: The current developer version contains changes to the parameters of FinTs::_construct! [Release 1.6](https://github.com/nemiah/phpFinTS/tree/1.6) still uses the old format.** :exclamation:
 
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
