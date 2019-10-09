@@ -16,11 +16,6 @@ class Connection
     protected $host;
 
     /**
-     * @var int
-     */
-    protected $port;
-
-    /**
      * @var resource
      */
     protected $curlHandle;
@@ -44,22 +39,15 @@ class Connection
      * Connection constructor.
      *
      * @param string $host
-     * @param int $port
      * @param int $timeoutConnect
      * @param int $timeoutResponse
      * @throws CurlException
      */
-    public function __construct($host, $port, $timeoutConnect = 15, $timeoutResponse = 30)
+    public function __construct($host, $timeoutConnect = 15, $timeoutResponse = 30)
     {
-        if (!is_integer($port) || (int) $port <= 0) 
-            throw new CurlException('Invalid port number');
-
         $this->host = (string) $host;
-        $this->port = (int) $port;
 		$this->timeoutConnect = (int) $timeoutConnect;
 		$this->timeoutResponse = (int) $timeoutResponse;
-		
-        #$this->adapter = new Curl($server, $port, $timeout);
     }
 
     /**

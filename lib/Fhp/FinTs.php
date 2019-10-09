@@ -69,7 +69,6 @@ class FinTs extends FinTsInternal
 	/**
 	 * FinTs constructor.
 	 * @param string $server
-	 * @param int $port
 	 * @param string $bankCode
 	 * @param string $username
 	 * @param string $pin
@@ -79,7 +78,6 @@ class FinTs extends FinTsInternal
 	 */
 	public function __construct(
 		$server,
-		$port,
 		$bankCode,
 		$username,
 		$pin,
@@ -94,7 +92,6 @@ class FinTs extends FinTsInternal
 			throw new Exception ("Product version required!");
 		
 		$this->url = trim($server);
-		$this->port = intval($port);
 		$this->logger = null == $logger ? new NullLogger() : $logger;
 
 		// escaping of bank code not really needed here as it should
@@ -114,8 +111,6 @@ class FinTs extends FinTsInternal
 		if ($productVersion != '') {
 			$this->productVersion = self::escapeString($productVersion);
 		}
-
-		#$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
 	}
 
 	/**
@@ -306,8 +301,8 @@ class FinTs extends FinTsInternal
 		$this->logger->info('End date  : ' . $to->format('Y-m-d'));
 
 		$dialog = $this->getDialog();
-		#$dialog->syncDialog();
-		#$dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
 		$message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
 		$response = $dialog->sendMessage($message, $this->getUsedPinTanMechanism($dialog), $tanCallback, $interval);
@@ -721,7 +716,7 @@ class FinTs extends FinTsInternal
         }
 
         if ($this->connection === null) {
-            $this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+            $this->connection = new Connection($this->url, $this->timeoutConnect, $this->timeoutResponse);
         }
 
         $dialog = new Dialog(
