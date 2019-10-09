@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
 
+**Note: The current developer version contains changes to the parameters of FinTs::_construct!**
+
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
  * Get accounts
