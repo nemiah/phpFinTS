@@ -72,7 +72,7 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, 1);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "FHP-lib");
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "phpFinTS");
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->host);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, $this->timeoutConnect);
