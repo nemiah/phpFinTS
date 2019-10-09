@@ -72,7 +72,6 @@ class FinTs extends FinTsInternal
 	 * @param string $bankCode
 	 * @param string $username
 	 * @param string $pin
-	 * @param LoggerInterface|null $logger
 	 * @param string $productName
 	 * @param string $productVersion
 	 */
@@ -81,7 +80,6 @@ class FinTs extends FinTsInternal
 		$bankCode,
 		$username,
 		$pin,
-		LoggerInterface $logger = null,
 		$productName,
 		$productVersion
 	) {
@@ -92,7 +90,7 @@ class FinTs extends FinTsInternal
 			throw new Exception ("Product version required!");
 		
 		$this->url = trim($server);
-		$this->logger = null == $logger ? new NullLogger() : $logger;
+		$this->logger = new NullLogger();
 
 		// escaping of bank code not really needed here as it should
 		// never have special chars. But we just do it to ensure
@@ -111,6 +109,10 @@ class FinTs extends FinTsInternal
 		if ($productVersion != '') {
 			$this->productVersion = self::escapeString($productVersion);
 		}
+	}
+	
+	public function setLogger(LoggerInterface $logger){
+		$this->logger = $logger;
 	}
 
 	/**
