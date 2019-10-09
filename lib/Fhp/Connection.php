@@ -2,10 +2,11 @@
 
 namespace Fhp;
 
-use Fhp\Message\AbstractMessage;
-
 /**
  * Class Connection
+ *
+ * Thin wrapper around curl that does base64 encoding/decoding and converts errors to {@link CurlException}s.
+ *
  * @package Fhp
  */
 class Connection
@@ -44,19 +45,8 @@ class Connection
         $this->timeoutResponse = $timeoutResponse;
     }
 
-    /**
-     * Sends a message to the bank
-     *
-     * @param AbstractMessage $message
-     * @return string
-     * @throws CurlException
-     */
-    public function send(AbstractMessage $message)
+    private function connect()
     {
-        return $this->sendCurl($message);
-    }
-	
-	private function connect(){
         $this->curlHandle = curl_init();
 
         curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, 1);
@@ -75,16 +65,17 @@ class Connection
 	}
 	
     /**
-     * @param AbstractMessage $message
-     * @return string
-     * @throws CurlException
+     * @param string $message The message to be sent, in HBCI/FinTS wire format.
+     * @return string The response from the server, in HBCI/FinTS wire format.
+     * @throws CurlException When the request fails.
      */
-    public function sendCurl(AbstractMessage $message) {
+    public function send($message)
+    {
+        if (!$this->curlHandle) {
+            $this->connect();
+        }
 
-		if(!$this->curlHandle)
-			$this->connect();
-		
-        curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message->toString()));
+        curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message));
         $response = curl_exec($this->curlHandle);
 
         if (false === $response) {

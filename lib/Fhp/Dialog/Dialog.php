@@ -144,7 +144,7 @@ class Dialog
 			$message->setMessageNumber($this->messageNumber);
 			$message->setDialogId($this->dialogId);
 
-			$result = $this->connection->send($message);
+            $result = $this->connection->send($message->toString());
 			$this->messageNumber++;
 
 			$this->logger->debug('< '.$result);
