@@ -21,11 +21,6 @@ class Connection
     protected $curlHandle;
 
     /**
-     * @var mixed
-     */
-    protected $lastResponseInfo;
-	
-    /**
      * @var int
      */
 	protected $timeoutConnect = 15;
@@ -41,13 +36,12 @@ class Connection
      * @param string $host
      * @param int $timeoutConnect
      * @param int $timeoutResponse
-     * @throws CurlException
      */
     public function __construct($host, $timeoutConnect = 15, $timeoutResponse = 30)
     {
-        $this->host = (string) $host;
-		$this->timeoutConnect = (int) $timeoutConnect;
-		$this->timeoutResponse = (int) $timeoutResponse;
+        $this->host = $host;
+        $this->timeoutConnect = $timeoutConnect;
+        $this->timeoutResponse = $timeoutResponse;
     }
 
     /**
@@ -61,10 +55,6 @@ class Connection
     {
         return $this->sendCurl($message);
     }
-	
-	public function getCurlHandle(){
-		return $this->curlHandle;
-	}
 	
 	private function connect(){
         $this->curlHandle = curl_init();
@@ -96,32 +86,22 @@ class Connection
 		
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message->toString()));
         $response = curl_exec($this->curlHandle);
-        $this->lastResponseInfo = curl_getinfo($this->curlHandle);
 
         if (false === $response) {
             throw new CurlException(
                 'Failed connection to ' . $this->host . ': ' . curl_error($this->curlHandle),
                 curl_errno($this->curlHandle),
                 null,
-                $this->lastResponseInfo
+                curl_getinfo($this->curlHandle)
             );
         }
 
         $statusCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
-
         if ($statusCode < 200 || $statusCode > 299) {
-            throw new CurlException('Bad response with status code ' . $statusCode, 0, null, $this->lastResponseInfo);
+            throw new CurlException('Bad response with status code ' . $statusCode, 0, null,
+                curl_getinfo($this->curlHandle));
         }
 
         return base64_decode($response);
-    }
-
-    /**
-     * Gets curl info for last request / response.
-     *
-     * @return mixed
-     */
-    public function getLastResponseInfo() {
-        return $this->lastResponseInfo;
     }
 }
