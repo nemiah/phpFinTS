@@ -49,7 +49,6 @@ class Connection
     {
         $this->curlHandle = curl_init();
 
-        curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, 1);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "phpFinTS");
