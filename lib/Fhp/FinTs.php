@@ -234,23 +234,23 @@ class FinTs extends FinTsInternal
 		return $sepaAccounts->getSEPAAccountsArray();
 	}
 
-	public function getVariables()
-	{
+    public function getVariables()
+    {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog(false);
-		$response = $dialog->syncDialog();
-		// $this->end();
+        $dialog = $this->getDialog(false);
+        $response = $dialog->syncDialog();
+        // $this->end();
 
-		$vars = new GetVariables($response->rawResponse);
+        $vars = new GetVariables($response->rawResponse);
         $obj = $vars->get();
 
         if (!empty($obj->tanModes)) {
             $this->setTANMechanism(array_keys($obj->tanModes)[0], 'A'); // some banks need nonempty methodName
             $obj->TANMediaNames = $this->getTANDevices();
         }
-		return $obj;
-	}
+        return $obj;
+    }
     public function getTANDevices()
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
