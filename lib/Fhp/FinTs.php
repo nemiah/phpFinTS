@@ -243,9 +243,15 @@ class FinTs extends FinTsInternal
 		// $this->end();
 
 		$vars = new GetVariables($response->rawResponse);
-		return $vars->get();
+        $obj = $vars->get();
+
+        if (!empty($obj->tanModes)) {
+            $this->setTANMechanism(array_keys($obj->tanModes)[0], 'A'); // some banks need nonempty methodName
+            $obj->TANMediaNames = $this->getTANDevices();
+        }
+		return $obj;
 	}
-	public function getTANDevices()
+    public function getTANDevices()
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 

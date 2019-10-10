@@ -3,7 +3,7 @@
 namespace Fhp\Segment;
 
 /**
- * Class HKTAB (ANDevices)
+ * Class HKTAB (request devices)
  * Segment type: Geschäftsvorfall
  *
  * @package Fhp\Segment
@@ -14,13 +14,11 @@ class HKTAB extends AbstractSegment
     const VERSION = 4;
 
     /**
-     * HKCDL constructor.
-     * @param int $version
+     * HKTAB constructor.
      * @param int $segmentNumber
      */
     public function __construct($segmentNumber)
     {
-
         parent::__construct(
             static::NAME,
             $segmentNumber,
