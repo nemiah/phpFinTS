@@ -29,6 +29,25 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('', '', '?+C'), Parser::splitEscapedString('+', '++?+C'));
     }
 
+    public function test_splitEscapedString_with_binaryBlock()
+    {
+        $this->assertEquals(array('A@4@xxxxD', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxxD+EF'));
+        $this->assertEquals(array('A@4@++++D', 'EF'), Parser::splitEscapedString('+', 'A@4@++++D+EF'));
+        $this->assertEquals(array('A', '@1@x@0D', 'EF'), Parser::splitEscapedString('+', 'A+@1@x@0D+EF'));
+        $this->assertEquals(array('@4@xxxxD', 'EF'), Parser::splitEscapedString('+', '@4@xxxxD+EF'));
+        $this->assertEquals(array('A@4@xxxx', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxx+EF'));
+        $this->assertEquals(array('@4@xxxx'), Parser::splitEscapedString('+', '@4@xxxx'));
+        $this->assertEquals(array('@4@++++'), Parser::splitEscapedString('+', '@4@++++'));
+    }
+
+    public function test_splitEscapedString_with_escaping_and_binaryBlock()
+    {
+        $this->assertEquals(array('A@4@xxxxD', '?+'), Parser::splitEscapedString('+', 'A@4@xxxxD+?+'));
+        $this->assertEquals(array('A@4@xxxx?+', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxx?++EF'));
+        $this->assertEquals(array('?+@4@+xxxD', '?+'), Parser::splitEscapedString('+', '?+@4@+xxxD+?+'));
+        $this->assertEquals(array('?+@4@xxx+D', '?+'), Parser::splitEscapedString('+', '?+@4@xxx+D+?+'));
+    }
+
     public function test_unescape()
     {
         $this->assertEquals('ABC+DEF', Parser::unescape('ABC+DEF'));

@@ -2,6 +2,7 @@
 
 namespace Fhp\Syntax;
 
+use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
 
@@ -95,9 +96,21 @@ abstract class Serializer
         return $serializedElements;
     }
 
+    /**
+     * @param mixed $value The value to be serialized.
+     * @param string|\ReflectionClass $type The type of the value.
+     * @return string The serialized value.
+     */
     private static function serializeElement($value, $type)
     {
-        return is_string($type) ? static::serializeDataElement($value, $type) : static::serializeDeg($value);
+        if (is_string($type)) {
+            return static::serializeDataElement($value, $type);
+        } elseif ($type->getName() === Bin::class) {
+            /** @var Bin $value */
+            return $value->toString();
+        } else {
+            return static::serializeDeg($value);
+        }
     }
 
     /**
