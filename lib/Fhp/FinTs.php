@@ -30,6 +30,7 @@ use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
 use Fhp\Segment\HKVVB;
 use Fhp\Segment\HKIDN;
+use Fhp\Segment\HKTAB;
 use Fhp\Model\Account;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -233,17 +234,46 @@ class FinTs extends FinTsInternal
 		return $sepaAccounts->getSEPAAccountsArray();
 	}
 
-	public function getVariables()
-	{
+    public function getVariables()
+    {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog(false);
-		$response = $dialog->syncDialog();
-		// $this->end();
+        $dialog = $this->getDialog(false);
+        $response = $dialog->syncDialog();
+        // $this->end();
 
-		$vars = new GetVariables($response->rawResponse);
-		return $vars->get();
-	}
+        $vars = new GetVariables($response->rawResponse);
+        $obj = $vars->get();
+
+        if (!empty($obj->tanModes)) {
+            $this->setTANMechanism(array_keys($obj->tanModes)[0], 'A'); // some banks need nonempty methodName
+            $obj->TANMediaNames = $this->getTANDevices();
+        }
+        return $obj;
+    }
+    public function getTANDevices()
+    {
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
+        $dialog = $this->getDialog(false);
+        $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+        $dialog->endDialog();
+        $dialog->initDialog($this->tanMechanism, $this->tanMediaName);
+        $this->bankName = $dialog->getBankName();
+
+        $message = $this->getNewMessage(
+            $dialog,
+            array(
+                new HKTAB(3)
+            ),
+            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+        );
+        $response = $dialog->sendMessage($message);
+        $segment = $response->findSegment('HITAB');
+        $segment = $response->splitSegment($segment);
+        $segment = array_slice($segment, 2);
+        return $segment;
+    }
 
 	public function getTANRequest()
 	{
