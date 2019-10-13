@@ -11,7 +11,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase
     {
         $obj = new Statement();
 
-        $this->assertInternalType('array', $obj->getTransactions());
+        $this->assertIsArray($obj->getTransactions());
         $this->assertEmpty($obj->getTransactions());
         $this->assertSame(0.0, $obj->getStartBalance());
         $this->assertNull($obj->getCreditDebit());
@@ -30,16 +30,16 @@ class StatementTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($obj->getTransactions());
 
         $obj->setTransactions(array());
-        $this->assertInternalType('array', $obj->getTransactions());
+        $this->assertIsArray($obj->getTransactions());
         $this->assertCount(0, $obj->getTransactions());
 
         $trxArray = array($trx1, $trx2);
         $obj->setTransactions($trxArray);
-        $this->assertInternalType('array', $obj->getTransactions());
+        $this->assertIsArray($obj->getTransactions());
         $this->assertCount(2, $obj->getTransactions());
 
         $obj->setStartBalance(20.00);
-        $this->assertInternalType('float', $obj->getStartBalance());
+        $this->assertIsFloat($obj->getStartBalance());
         $this->assertSame(20.00, $obj->getStartBalance());
 
         $obj->setStartBalance('string');

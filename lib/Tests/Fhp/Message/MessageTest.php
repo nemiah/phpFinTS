@@ -26,7 +26,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
 
         $segments = $message->getSegments();
 
-        $this->assertInternalType('array', $segments);
+        $this->assertIsArray($segments);
         $this->assertCount(3, $segments);
     }
 
@@ -82,7 +82,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $message = new Message('12345678', 'username', '1234', '987654');
         $segments = $message->getEncryptedSegments();
 
-        $this->assertInternalType('array', $segments);
+        $this->assertIsArray($segments);
 
         foreach ($segments as $segment) {
             $this->assertInstanceOf('\Fhp\Segment\AbstractSegment', $segment);
