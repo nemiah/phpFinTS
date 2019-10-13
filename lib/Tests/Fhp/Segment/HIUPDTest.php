@@ -45,6 +45,7 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
     {
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_HBCI22_example1()
@@ -73,6 +74,7 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
     {
         $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[1]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_HBCI22_example2()

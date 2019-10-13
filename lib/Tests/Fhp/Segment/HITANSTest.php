@@ -56,6 +56,7 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
     {
         $parsed = HITANSv1::parse(static::REAL_DKB_RESPONSE[0]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_DKB_response_v1()
@@ -82,6 +83,7 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
     {
         $parsed = HITANSv3::parse(static::REAL_DKB_RESPONSE[1]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_DKB_response_v3()
