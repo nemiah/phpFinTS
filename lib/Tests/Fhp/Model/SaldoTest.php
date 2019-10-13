@@ -4,7 +4,7 @@ namespace Tests\Fhp\Model;
 
 use Fhp\Model\Saldo;
 
-class SaldoTest extends \PHPUnit_Framework_TestCase
+class SaldoTest extends \PHPUnit\Framework\TestCase
 {
     public function test_getter_and_setter()
     {

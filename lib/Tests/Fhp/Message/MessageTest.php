@@ -12,7 +12,7 @@ use Fhp\Segment\HNSHK;
 use Fhp\Segment\HNVSD;
 use Fhp\Segment\HNVSK;
 
-class MessageTest extends \PHPUnit_Framework_TestCase
+class MessageTest extends \PHPUnit\Framework\TestCase
 {
     public function test_setter_and_getter()
     {
@@ -26,7 +26,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $segments = $message->getSegments();
 
-        $this->assertInternalType('array', $segments);
+        $this->assertIsArray($segments);
         $this->assertCount(3, $segments);
     }
 
@@ -82,7 +82,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $message = new Message('12345678', 'username', '1234', '987654');
         $segments = $message->getEncryptedSegments();
 
-        $this->assertInternalType('array', $segments);
+        $this->assertIsArray($segments);
 
         foreach ($segments as $segment) {
             $this->assertInstanceOf('\Fhp\Segment\AbstractSegment', $segment);

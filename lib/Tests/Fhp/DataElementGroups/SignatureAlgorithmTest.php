@@ -2,7 +2,7 @@
 
 namespace Fhp\DataElementGroups;
 
-class SignatureAlgorithmTest extends \PHPUnit_Framework_TestCase
+class SignatureAlgorithmTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

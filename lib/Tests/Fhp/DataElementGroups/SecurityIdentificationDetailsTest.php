@@ -2,7 +2,7 @@
 
 namespace Fhp\DataElementGroups;
 
-class SecurityIdentificationDetailsTest extends \PHPUnit_Framework_TestCase
+class SecurityIdentificationDetailsTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

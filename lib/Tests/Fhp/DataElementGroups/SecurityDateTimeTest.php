@@ -2,7 +2,7 @@
 
 namespace Fhp\DataElementGroups;
 
-class SecurityDateTimeTest extends \PHPUnit_Framework_TestCase
+class SecurityDateTimeTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {
