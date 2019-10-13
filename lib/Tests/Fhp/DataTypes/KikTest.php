@@ -2,7 +2,7 @@
 
 namespace Fhp\DataTypes;
 
-class KikTest extends \PHPUnit_Framework_TestCase
+class KikTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

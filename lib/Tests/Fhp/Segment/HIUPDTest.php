@@ -4,7 +4,7 @@ namespace Tests\Fhp\Segment;
 
 use Fhp\Segment\HIUPD\HIUPDv4;
 
-class HIUPDTest extends \PHPUnit_Framework_TestCase
+class HIUPDTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip

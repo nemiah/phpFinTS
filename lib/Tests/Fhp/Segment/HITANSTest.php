@@ -7,7 +7,7 @@ use Fhp\Segment\HITANS\HITANSv1;
 use Fhp\Segment\HITANS\HITANSv3;
 use Fhp\Segment\HITANS\HITANSv6;
 
-class HITANSTest extends \PHPUnit_Framework_TestCase
+class HITANSTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Real response from DKB (Deutsche Kreditbank).

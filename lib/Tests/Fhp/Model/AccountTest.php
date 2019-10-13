@@ -4,7 +4,7 @@ namespace Tests\Fhp\Model;
 
 use Fhp\Model\Account;
 
-class AccountTest extends \PHPUnit_Framework_TestCase
+class AccountTest extends \PHPUnit\Framework\TestCase
 {
     public function test_getter_and_setter()
     {

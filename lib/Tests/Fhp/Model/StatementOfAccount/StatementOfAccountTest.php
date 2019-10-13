@@ -5,7 +5,7 @@ namespace Tests\Fhp\Model\StatementOfAccount;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 
-class StatementOfAccountTest extends \PHPUnit_Framework_TestCase
+class StatementOfAccountTest extends \PHPUnit\Framework\TestCase
 {
     public function test_getter_and_setter()
     {

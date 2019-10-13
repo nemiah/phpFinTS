@@ -4,7 +4,7 @@ namespace Tests\Fhp\Syntax;
 
 use Fhp\Syntax\Serializer;
 
-class SerializerTest extends \PHPUnit_Framework_TestCase
+class SerializerTest extends \PHPUnit\Framework\TestCase
 {
 
     public function escapeProvider()

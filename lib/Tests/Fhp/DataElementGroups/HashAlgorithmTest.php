@@ -4,7 +4,7 @@ namespace Tests\Fhp\DataElementGroups;
 
 use Fhp\DataElementGroups\HashAlgorithm;
 
-class HashAlgorithmTest extends \PHPUnit_Framework_TestCase
+class HashAlgorithmTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

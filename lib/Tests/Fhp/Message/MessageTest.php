@@ -12,7 +12,7 @@ use Fhp\Segment\HNSHK;
 use Fhp\Segment\HNVSD;
 use Fhp\Segment\HNVSK;
 
-class MessageTest extends \PHPUnit_Framework_TestCase
+class MessageTest extends \PHPUnit\Framework\TestCase
 {
     public function test_setter_and_getter()
     {
