@@ -272,7 +272,15 @@ class FinTs extends FinTsInternal
         $segment = $response->findSegment('HITAB');
         $segment = $response->splitSegment($segment);
         $segment = array_slice($segment, 2);
-        return $segment;
+        
+        $devices = array();
+        
+        foreach ($segment as $deg) {
+            $deg_cleaned = str_replace("?:", "______________", $deg);
+            $name = explode(':', $deg_cleaned)[12];
+            $devices[] = str_replace("______________", "?:", $name);
+        }
+        return $devices;
     }
 
 	public function getTANRequest()
