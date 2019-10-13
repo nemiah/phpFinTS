@@ -6,7 +6,8 @@
   "license": "MIT",
   "autoload": {
     "psr-0": {
-      "Fhp": "lib/"
+      "Fhp": "lib/",
+      "Tests\\Fhp": "lib/"
     }
   },
   "require": {
