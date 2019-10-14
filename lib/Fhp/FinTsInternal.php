@@ -165,6 +165,22 @@ abstract class FinTsInternal
         );
     }
 
+    /**
+     * unescaping userdata.
+     * HBCI escape char is "?"
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function unescapeString($string)
+    {
+        return str_replace(
+            array('??', '?@', '?:', '?+', '?\''),
+            array('?', '@', ':', '+', '\''),
+            $string
+        );
+    }
+
     protected function clearXML($xml)
     {
         $dom = new \DOMDocument;
