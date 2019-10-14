@@ -133,7 +133,8 @@ abstract class Parser
             if ($rawValue === 'N') return false;
             throw new \InvalidArgumentException("Invalid bool: $rawValue");
         } elseif ($type === 'string') {
-            return static::unescape($rawValue);
+            // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
+            return utf8_encode(static::unescape($rawValue));
         } else {
             throw new \RuntimeException("Unsupported type $type");
         }
@@ -155,7 +156,8 @@ abstract class Parser
         }
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
-        $actualLength = strlen($result->getData());
+        // Note: The length is measured in wire format encoding, i.e. ISO-8859-1, so we need to convert back here.
+        $actualLength = strlen(utf8_decode($result->getData()));
         if ($actualLength !== $length) {
             throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
         }

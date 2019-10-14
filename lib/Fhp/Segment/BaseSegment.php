@@ -63,7 +63,8 @@ abstract class BaseSegment implements SegmentInterface
 
     /**
      * Short-hand for {@link Serializer#serializeSegment()}.
-     * @return string The HBCI wire format representation of this segment, terminated by the segment delimiter.
+     * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
+     *     segment delimiter.
      */
     public function serialize()
     {

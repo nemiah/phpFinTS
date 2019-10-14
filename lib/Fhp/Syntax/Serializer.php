@@ -39,7 +39,8 @@ abstract class Serializer
     public static function serializeDataElement($value, $type)
     {
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
-            return static::escape(strval($value));
+            // Convert UTF-8 (PHP's encoding) to ISO-8859-1 (FinTS wire format encoding)
+            return static::escape(utf8_decode(strval($value)));
         } elseif ($type === 'float') {
             // Format with fixed 2 decimal places (there has to be some limit, and the specification does not specify
             // one), then trim zeros from the end.
@@ -62,7 +63,8 @@ abstract class Serializer
 
     /**
      * @param BaseSegment $segment The segment to be serialized.
-     * @return string The HBCI wire format representation of the segment, terminated by the segment delimiter.
+     * @return string The HBCI wire format representation of the segment, in ISO-8859-1 encoding, terminated by the
+     *     segment delimiter.
      */
     public static function serializeSegment($segment)
     {
