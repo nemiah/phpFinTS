@@ -3,7 +3,7 @@
 
 namespace Fhp\Syntax;
 
-use Fhp\Syntax\Delimiter;
+use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\DegDescriptor;
@@ -25,7 +25,8 @@ abstract class Parser
 {
     /**
      * The FinTs wire format specifies escaping with a question mark `?` for the syntax characters `+:'?@`. This
-     * function splits strings delimited by one of these while honoring escaping within.
+     * function splits strings delimited by one of these while honoring escaping and binary blocks marked with a
+     * `@<size>@` header within the string.
      *
      * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
      * Section H.1.3 "Entwertung"
@@ -39,10 +40,46 @@ abstract class Parser
         if (empty($str)) return array();
         // Since most of the $delimiters used in FinTs are also special characters in regexes, we need to escape.
         $delimiter = preg_quote($delimiter, '/');
-        // This regex uses a negated look-behind. Generally, the regex `(?<!foo)x` matches an `x` that is NOT preceded
-        // by `foo`. In this case, we want to match on the split $delimiter when it is not preceded by the escape
-        // character `?`, which we need to escape because it's a special character in regexes.
-        return preg_split("/(?<!\\?)$delimiter/", $str);
+        $nextBegin = 0;
+        $offset = 0;
+        $result = [];
+        while (true) {
+            // Walk to the next syntax character of interest and handle it respectively.
+            $ret = preg_match("/\\?|@([0-9]+)@|$delimiter/", $str, $match, PREG_OFFSET_CAPTURE, $offset);
+            if ($ret === false) {
+                throw new \RuntimeException("preg_match failed on $str");
+            }
+            if ($ret === 0) { // There is no more syntax character behind $offset.
+                $result[] = substr($str, $nextBegin);
+                break;
+            }
+            $matchedStr = $match[0][0]; // $match[0] refers to the entire matched string. [0] has the content
+            $matchedOffset = $match[0][1]; // and [1] has the offset within $str.
+            if ($matchedStr === '?') {
+                // It's an escape character, so we should ignore this character and the next one.
+                $offset = $matchedOffset + 2;
+                if ($offset > strlen($str)) {
+                    throw new \InvalidArgumentException("Input ends on unescaped escape character.");
+                }
+            } elseif ($matchedStr[0] === Delimiter::BINARY) {
+                // It's a block binary data, which we should skip entirely.
+                $binaryLength = $match[1][0]; // $match[1] refers to the first (and only) capture group in the regex.
+                if (!is_numeric($binaryLength)) throw new \AssertionError();
+                // Note: The FinTS specification says that the length of the binary block is given in bytes (not
+                // characters) and PHP's string functions like substr() or preg_match() also operate on byte offsets, so
+                // this is fine.
+                $offset = $matchedOffset + strlen($matchedStr) + intval($match[1][0]);
+                if ($offset > strlen($str)) {
+                    throw new \InvalidArgumentException("Incomplete binary block at offset $matchedOffset");
+                }
+            } else {
+                // The delimiter was matched, so output one splitted string and advance past the delimiter.
+                $result[] = substr($str, $nextBegin, $matchedOffset - $nextBegin);
+                $nextBegin = $matchedOffset + strlen($matchedStr);
+                $offset = $nextBegin;
+            }
+        }
+        return $result;
     }
 
     /**
@@ -87,6 +124,29 @@ abstract class Parser
         } else {
             throw new \RuntimeException("Unsupported type $type");
         }
+    }
+
+    /**
+     * @param string $rawValue The raw value (wire format), e.g. "@4@abcd".
+     * @return Bin The parsed value.
+     */
+    public static function parseBinaryBlock($rawValue)
+    {
+        $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
+        if (empty($rawValue) || $rawValue[0] !== Delimiter::BINARY || $delimiterPos === false) {
+            throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
+        }
+        $lengthStr = substr($rawValue, 1, $delimiterPos - 1);
+        if (!is_numeric($lengthStr)) {
+            throw new \InvalidArgumentException("Invalid binary block length: $lengthStr");
+        }
+        $length = intval($lengthStr);
+        $result = new Bin(substr($rawValue, $delimiterPos + 1));
+        $actualLength = strlen($result->getData());
+        if ($actualLength !== $length) {
+            throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
+        }
+        return $result;
     }
 
     /**
@@ -141,12 +201,17 @@ abstract class Parser
                     if ($offset >= count($rawElements)) {
                         break; // End of input reached
                     }
-                    if (is_string($elementDescriptor->type)) { // Scalar type / DE
+                    if (is_string($elementDescriptor->type) // Scalar type / DE
+                        || $elementDescriptor->type->getName() === Bin::class) {
                         if ($rawElements[$offset] === '' && $repetition >= 1) { // Skip empty repeated entries.
                             $offset++;
                             continue;
                         }
-                        $value = static::parseDataElement($rawElements[$offset], $elementDescriptor->type);
+                        if (is_string($elementDescriptor->type)) {
+                            $value = static::parseDataElement($rawElements[$offset], $elementDescriptor->type);
+                        } else {
+                            $value = static::parseBinaryBlock($rawElements[$offset]);
+                        }
                         $offset++;
                     } else { // Nested DEG, will consume a certain number of elements and adjust the $offset accordingly.
                         list($value, $offset) =
@@ -228,8 +293,12 @@ abstract class Parser
      */
     private static function parseSegmentElement($rawElement, $descriptor)
     {
-        return is_string($descriptor->type)
-            ? static::parseDataElement($rawElement, $descriptor->type)
-            : static::parseDeg($rawElement, $descriptor->type->name);
+        if (is_string($descriptor->type)) { // Scalar value / DE
+            return static::parseDataElement($rawElement, $descriptor->type);
+        } elseif ($descriptor->type->getName() === Bin::class) {
+            return static::parseBinaryBlock($rawElement);
+        } else {
+            return static::parseDeg($rawElement, $descriptor->type->name);
+        }
     }
 }

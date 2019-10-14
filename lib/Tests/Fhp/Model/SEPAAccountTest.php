@@ -4,7 +4,7 @@ namespace Tests\Fhp\Model;
 
 use Fhp\Model\SEPAAccount;
 
-class SEPAAccountTest extends \PHPUnit_Framework_TestCase
+class SEPAAccountTest extends \PHPUnit\Framework\TestCase
 {
     public function test_getter_and_setter()
     {

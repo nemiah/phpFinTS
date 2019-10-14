@@ -4,7 +4,7 @@ namespace Tests\Fhp\DataElementGroups;
 
 use Fhp\DataElementGroups\EncryptionAlgorithm;
 
-class EncryptionAlgorithmTest extends \PHPUnit_Framework_TestCase
+class EncryptionAlgorithmTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

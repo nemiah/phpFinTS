@@ -5,7 +5,7 @@ namespace Fhp\ResponseTest;
 use Fhp\Response\GetVariables;
 use Tests\Fhp\Segment\HITANSTest;
 
-class GetVariablesTest extends \PHPUnit_Framework_TestCase
+class GetVariablesTest extends \PHPUnit\Framework\TestCase
 {
 	public function testParseTanModesSparkasse()
 	{

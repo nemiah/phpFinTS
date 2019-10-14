@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use Fhp\Syntax\Delimiter;
+use Fhp\DataTypes\Bin;
 
 /**
  * Class BaseDescriptor
@@ -172,7 +172,9 @@ abstract class BaseDescriptor
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;
         }
-        if (strpos($typeName, '\\') === false) {
+        if ($typeName === 'Bin') {
+            $typeName = Bin::class;
+        } elseif (strpos($typeName, '\\') === false) {
             // Let's assume it's a relative type name, e.g. `X` mentioned in a file that starts with `namespace Fhp\Y`
             // would become `\Fhp\X\Y`.
             $typeName = $contextClass->getNamespaceName() . '\\' . $typeName;
@@ -180,7 +182,7 @@ abstract class BaseDescriptor
         try {
             return new \ReflectionClass($typeName);
         } catch (\ReflectionException $e) {
-            throw new \RuntimeException($e);
+            throw new \RuntimeException("$typeName not found in context of " . $contextClass->getName(), 0, $e);
         }
     }
 }

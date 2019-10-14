@@ -2,7 +2,7 @@
 
 namespace Fhp\DataElementGroups;
 
-class SecurityProfileTest extends \PHPUnit_Framework_TestCase
+class SecurityProfileTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

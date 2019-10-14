@@ -4,7 +4,7 @@ namespace Tests\Fhp\Model\StatementOfAccount;
 
 use Fhp\Model\StatementOfAccount\Transaction;
 
-class TransactionTest extends \PHPUnit_Framework_TestCase
+class TransactionTest extends \PHPUnit\Framework\TestCase
 {
     public function test_getter_and_setter()
     {

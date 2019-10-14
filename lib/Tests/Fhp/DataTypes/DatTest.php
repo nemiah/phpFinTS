@@ -2,7 +2,7 @@
 
 namespace Fhp\DataTypes;
 
-class DatTest extends \PHPUnit_Framework_TestCase
+class DatTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

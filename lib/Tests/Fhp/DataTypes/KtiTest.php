@@ -2,7 +2,7 @@
 
 namespace Fhp\DataTypes;
 
-class KtiTest extends \PHPUnit_Framework_TestCase
+class KtiTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()
     {

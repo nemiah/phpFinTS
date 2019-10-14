@@ -1,30 +1,57 @@
-<?php
+<?php /** @noinspection PhpDocSignatureInspection */
 
 namespace Tests\Fhp\Syntax;
 
 use Fhp\Syntax\Serializer;
 
-class SerializerTest extends \PHPUnit_Framework_TestCase
+class SerializerTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_escape()
+
+    public function escapeProvider()
     {
-        $this->assertEquals('ABC?+DEF', Serializer::escape('ABC+DEF'));
-        $this->assertEquals('ABC???+DEF', Serializer::escape('ABC?+DEF'));
-        $this->assertEquals('ABC??DEF', Serializer::escape('ABC?DEF'));
-        $this->assertEquals('ABC?:DEF', Serializer::escape('ABC:DEF'));
+        return [ // expected, input
+            ['ABC?+DEF', 'ABC+DEF'],
+            ['ABC???+DEF', 'ABC?+DEF'],
+            ['ABC??DEF', 'ABC?DEF'],
+            ['ABC?:DEF', 'ABC:DEF'],
+            ['foo?@bar.de', 'foo@bar.de'],
+            ['??pseudo?:pass?\'special?@', '?pseudo:pass\'special@'],
+            ['nothingtodo', 'nothingtodo'],
+            ['??', '?'],
+            ['?:', ':'],
+            ['?@', '@'],
+            ['?\'', '\''],
+            ['????', '??'],
+            ['', ''],
+            ['', null],
+        ];
     }
 
-    public function test_serializeDataElement()
+    /** @dataProvider escapeProvider */
+    public function test_escape($expected, $input)
     {
-        $this->assertSame('15', Serializer::serializeDataElement(15, 'int'));
-        $this->assertSame('1000', Serializer::serializeDataElement(1000, 'integer'));
-        $this->assertSame('15,', Serializer::serializeDataElement(15.0, 'float'));
-        $this->assertSame('15,5', Serializer::serializeDataElement(15.5, 'float'));
-        $this->assertSame('0,', Serializer::serializeDataElement(0.0, 'float'));
-        $this->assertSame('J', Serializer::serializeDataElement(true, 'bool'));
-        $this->assertSame('N', Serializer::serializeDataElement(false, 'boolean'));
-        $this->assertSame('1000', Serializer::serializeDataElement("1000", 'string'));
-        $this->assertSame('5?:5', Serializer::serializeDataElement("5:5", 'string'));
+        $this->assertEquals($expected, Serializer::escape($input));
+    }
+
+    public function provideSerializeDataElement()
+    {
+        return [ // expected, value, type
+            ['15', 15, 'int'],
+            ['1000', 1000, 'integer'],
+            ['15,', 15.0, 'float'],
+            ['15,5', 15.5, 'float'],
+            ['0,', 0.0, 'float'],
+            ['J', true, 'bool'],
+            ['N', false, 'boolean'],
+            ['1000', "1000", 'string'],
+            ['5?:5', "5:5", 'string'],
+        ];
+    }
+
+    /** @dataProvider provideSerializeDataElement */
+    public function test_serializeDataElement($expected, $value, $type)
+    {
+        $this->assertSame($expected, Serializer::serializeDataElement($value, $type));
     }
 
     public function test_fillMissingKeys()
