@@ -85,10 +85,10 @@ class FinTs extends FinTsInternal
 		$productVersion
 	) {
 		if(trim($productName) == '')
-			throw new Exception ("Product name required!");
+			throw new \Exception ("Product name required!");
 		
 		if(trim($productVersion) == '')
-			throw new Exception ("Product version required!");
+			throw new \Exception ("Product version required!");
 		
 		$this->url = trim($server);
 		$this->logger = new NullLogger();
