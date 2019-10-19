@@ -43,7 +43,8 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
             ['0,', 0.0, 'float'],
             ['J', true, 'bool'],
             ['N', false, 'boolean'],
-            ['1000', "1000", 'string'],
+            ['1000', '1000', 'string'],
+            [utf8_decode('ä'), 'ä', 'string'],
             ['5?:5', "5:5", 'string'],
         ];
     }

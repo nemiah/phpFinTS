@@ -66,7 +66,8 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0.0, Parser::parseDataElement('0,', 'float'));
         $this->assertSame(true, Parser::parseDataElement('J', 'bool'));
         $this->assertSame(false, Parser::parseDataElement('N', 'boolean'));
-        $this->assertSame("1000", Parser::parseDataElement('1000', 'string'));
+        $this->assertSame('1000', Parser::parseDataElement('1000', 'string'));
+        $this->assertSame('ä', Parser::parseDataElement(utf8_decode('ä'), 'string'));
     }
 
     public function test_parseDataElement_invalid_int()

@@ -33,9 +33,11 @@ abstract class Parser
      *
      * @param string $delimiter The delimiter around which to split.
      * @param string $str The raw string, usually a response from the server.
+     * @param bool $trailingDelimiter If this is true, the delimiter is expected at the very end, and also kept at the
+     *     end of each returned substring, i.e. it's considered part of each item instead of a delimiter between items.
      * @return string[] The splitted substrings. Note that escaped characters inside will still be escaped.
      */
-    public static function splitEscapedString($delimiter, $str)
+    public static function splitEscapedString($delimiter, $str, $trailingDelimiter = false)
     {
         if (empty($str)) return array();
         // Since most of the $delimiters used in FinTs are also special characters in regexes, we need to escape.
@@ -50,7 +52,16 @@ abstract class Parser
                 throw new \RuntimeException("preg_match failed on $str");
             }
             if ($ret === 0) { // There is no more syntax character behind $offset.
-                $result[] = substr($str, $nextBegin);
+                if ($trailingDelimiter) {
+                    // The last character should have been a delimiter, so there should be no content remaining.
+                    if ($nextBegin !== strlen($str)) {
+                        throw new \InvalidArgumentException(
+                            "Unexpected content after last delimiter: " . substr($str, $nextBegin));
+                    }
+                } else {
+                    // Anything behind the last delimiter forms the last substring.
+                    $result[] = substr($str, $nextBegin);
+                }
                 break;
             }
             $matchedStr = $match[0][0]; // $match[0] refers to the entire matched string. [0] has the content
@@ -68,13 +79,15 @@ abstract class Parser
                 // Note: The FinTS specification says that the length of the binary block is given in bytes (not
                 // characters) and PHP's string functions like substr() or preg_match() also operate on byte offsets, so
                 // this is fine.
-                $offset = $matchedOffset + strlen($matchedStr) + intval($match[1][0]);
+                $offset = $matchedOffset + strlen($matchedStr) + intval($binaryLength);
                 if ($offset > strlen($str)) {
-                    throw new \InvalidArgumentException("Incomplete binary block at offset $matchedOffset");
+                    throw new \InvalidArgumentException(
+                        "Incomplete binary block at offset $matchedOffset, declared length $binaryLength, but "
+                        . "only has " . (strlen($str) - $matchedOffset - strlen($matchedStr)) . " bytes left");
                 }
             } else {
                 // The delimiter was matched, so output one splitted string and advance past the delimiter.
-                $result[] = substr($str, $nextBegin, $matchedOffset - $nextBegin);
+                $result[] = substr($str, $nextBegin, $matchedOffset - $nextBegin + ($trailingDelimiter ? 1 : 0));
                 $nextBegin = $matchedOffset + strlen($matchedStr);
                 $offset = $nextBegin;
             }
@@ -120,7 +133,8 @@ abstract class Parser
             if ($rawValue === 'N') return false;
             throw new \InvalidArgumentException("Invalid bool: $rawValue");
         } elseif ($type === 'string') {
-            return static::unescape($rawValue);
+            // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
+            return utf8_encode(static::unescape($rawValue));
         } else {
             throw new \RuntimeException("Unsupported type $type");
         }
@@ -142,7 +156,8 @@ abstract class Parser
         }
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
-        $actualLength = strlen($result->getData());
+        // Note: The length is measured in wire format encoding, i.e. ISO-8859-1, so we need to convert back here.
+        $actualLength = strlen(utf8_decode($result->getData()));
         if ($actualLength !== $length) {
             throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
         }
@@ -231,24 +246,17 @@ abstract class Parser
     }
 
     /**
-     * @param string $rawSegment The serialized wire format for a single segment (segment delimiter may be present at
-     *     the end, or not).
+     * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
+     *     the end).
      * @param string $type The type (PHP class name) of the segment to be parsed.
      * @return BaseSegment The parsed segment of type $type.
      */
     public static function parseSegment($rawSegment, $type)
     {
-        $descriptor = SegmentDescriptor::get($type);
-        if (substr($rawSegment, -1) === Delimiter::SEGMENT) {
-            $rawSegment = substr($rawSegment, 0, -1); // Strip segment delimiter at the end, if present.
-        }
-        $rawElements = static::splitEscapedString(Delimiter::ELEMENT, $rawSegment);
-        if (empty($rawElements)) {
-            throw new \InvalidArgumentException("Invalid segment: $rawSegment");
-        }
-
+        $rawElements = static::splitIntoSegmentElements($rawSegment);
         /** @var Segmentkopf $segmentkopf */
         $segmentkopf = static::parseDeg($rawElements[0], Segmentkopf::class);
+        $descriptor = SegmentDescriptor::get($type);
         if ($segmentkopf->segmentkennung !== $descriptor->kennung) {
             throw new \InvalidArgumentException("Invalid segment type $segmentkopf->segmentkennung for $type");
         }
@@ -283,6 +291,23 @@ abstract class Parser
             }
         }
         return $result;
+    }
+
+    /**
+     * @param string $rawSegment The serialized wire format for a single segment incl delimiter at the end.
+     * @return string[] The segment splitted into raw elements.
+     */
+    private static function splitIntoSegmentElements($rawSegment)
+    {
+        if (substr($rawSegment, -1) !== Delimiter::SEGMENT) {
+            throw new \InvalidArgumentException("Raw segment does not end with delimiter: $rawSegment");
+        }
+        $rawSegment = substr($rawSegment, 0, -1); // Strip segment delimiter at the end.
+        $rawElements = static::splitEscapedString(Delimiter::ELEMENT, $rawSegment);
+        if (empty($rawElements)) {
+            throw new \InvalidArgumentException("Invalid segment: $rawSegment");
+        }
+        return $rawElements;
     }
 
     /**
