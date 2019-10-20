@@ -83,6 +83,13 @@ abstract class BaseSegment implements SegmentInterface
         return $this->serialize();
     }
 
+    public function __debugInfo()
+    {
+        $result = get_object_vars($this);
+        unset($result['descriptor']); // Don't include descriptor in debug output, to avoid clutter.
+        return $result;
+    }
+
     /**
      * Convenience function for {@link Parser#parseSegment()}.
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at

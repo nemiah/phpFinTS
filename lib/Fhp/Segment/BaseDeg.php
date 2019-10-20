@@ -31,6 +31,13 @@ abstract class BaseDeg
         return $this->descriptor;
     }
 
+    public function __debugInfo()
+    {
+        $result = get_object_vars($this);
+        unset($result['descriptor']); // Don't include descriptor in debug output, to avoid clutter.
+        return $result;
+    }
+
     /**
      * @throws \InvalidArgumentException If any element in this DEG is invalid.
      */
