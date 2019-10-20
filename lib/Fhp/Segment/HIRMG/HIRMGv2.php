@@ -3,6 +3,7 @@
 namespace Fhp\Segment\HIRMG;
 
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIRMS\RueckmeldungContainer;
 
 /**
  * Class HIRMGv2
@@ -19,6 +20,8 @@ use Fhp\Segment\BaseSegment;
  */
 class HIRMGv2 extends BaseSegment
 {
+    use RueckmeldungContainer; // For utility functions.
+
 	/** @var \Fhp\Segment\HIRMS\Rueckmeldung[] @Max(99) */
 	public $rueckmeldung;
 }
