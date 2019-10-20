@@ -254,25 +254,15 @@ abstract class Parser
     public static function parseSegment($rawSegment, $type)
     {
         $rawElements = static::splitIntoSegmentElements($rawSegment);
-        /** @var Segmentkopf $segmentkopf */
-        $segmentkopf = static::parseDeg($rawElements[0], Segmentkopf::class);
         $descriptor = SegmentDescriptor::get($type);
-        if ($segmentkopf->segmentkennung !== $descriptor->kennung) {
-            throw new \InvalidArgumentException("Invalid segment type $segmentkopf->segmentkennung for $type");
-        }
-        if ($segmentkopf->segmentversion !== $descriptor->version) {
-            throw new \InvalidArgumentException("Invalid version $segmentkopf->segmentversion for $type");
-        }
-
         $result = new $type();
-        $result->segmentkopf = $segmentkopf;
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
             if (!isset($rawElements[$index]) || $rawElements[$index] === '') {
                 if ($elementDescriptor->optional) {
                     continue;
                 }
-                throw new \InvalidArgumentException("Missing field $elementDescriptor->field");
+                throw new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
             }
 
             if ($elementDescriptor->repeated === 0) {
@@ -289,6 +279,12 @@ abstract class Parser
                     }
                 }
             }
+        }
+        if ($result->segmentkopf->segmentkennung !== $descriptor->kennung) {
+            throw new \InvalidArgumentException("Invalid segment type $result->segmentkopf->segmentkennung for $type");
+        }
+        if ($result->segmentkopf->segmentversion !== $descriptor->version) {
+            throw new \InvalidArgumentException("Invalid version $result->segmentkopf->segmentversion for $type");
         }
         return $result;
     }

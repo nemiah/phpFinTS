@@ -67,7 +67,5 @@ class SegmentDescriptor extends BaseDescriptor
         if ($obj->getName() !== $this->kennung) {
             throw new \InvalidArgumentException("Expected $this->kennung, got " . $obj->getName());
         }
-        DegDescriptor::get(Segmentkopf::class)->validateObject($obj->segmentkopf);
-
     }
 }

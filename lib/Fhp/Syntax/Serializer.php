@@ -69,8 +69,6 @@ abstract class Serializer
     public static function serializeSegment($segment)
     {
         $serializedElements = static::serializeElements($segment);
-        if (isset($serializedElements[0]) && $serializedElements[0] !== '') throw new \AssertionError();
-        $serializedElements[0] = $segment->segmentkopf->serialize();
         return implode(Delimiter::ELEMENT, $serializedElements) . Delimiter::SEGMENT;
     }
 
@@ -85,7 +83,7 @@ abstract class Serializer
         foreach ($obj->getDescriptor()->elements as $index => $elementDescriptor) {
             $value = $obj->{$elementDescriptor->field};
             if ($value === null) continue;
-            if (isset($serializedElements[$index])) throw new \AssertionError();
+            if (isset($serializedElements[$index])) throw new \AssertionError("Duplicate index $index");
             if ($elementDescriptor->repeated === 0) {
                 $serializedElements[$index] = static::serializeElement($value, $elementDescriptor->type);
             } else {

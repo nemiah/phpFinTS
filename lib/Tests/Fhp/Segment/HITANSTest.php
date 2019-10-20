@@ -115,4 +115,18 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(HITANSv6::parse(static::REAL_DKB_RESPONSE[2]),
             BaseSegment::parse(static::REAL_DKB_RESPONSE[2]));
     }
+
+    public function test_validate_invalid_segmentkopf()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches("@Invalid int: LALA@");
+        HITANSv1::parse("HITANS:LALA:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:J:J'");
+    }
+
+    public function test_validate_invalid_deg()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches("@Invalid bool: LALA@");
+        HITANSv1::parse("HITANS:165:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:LALA:J'");
+    }
 }
