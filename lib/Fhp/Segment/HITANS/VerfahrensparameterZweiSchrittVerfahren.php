@@ -11,4 +11,16 @@ interface VerfahrensparameterZweiSchrittVerfahren extends TanMode
 
     /** @return string */
     public function getName();
+
+    /** @return boolean */
+    public function getSmsAbbuchungskontoErforderlich();
+
+    /** @return boolean */
+    public function getAuftraggeberkontoErforderlich();
+
+    /** @return boolean */
+    public function getChallengeKlasseErforderlich();
+
+    /** @return boolean */
+    public function getAntwortHhdUcErforderlich();
 }

@@ -68,6 +68,30 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements Verfa
     }
 
     /** @inheritDoc */
+    public function getSmsAbbuchungskontoErforderlich()
+    {
+        return $this->smsAbbuchungskontoErforderlich === 2;
+    }
+
+    /** @inheritDoc */
+    public function getAuftraggeberkontoErforderlich()
+    {
+        return $this->auftraggeberkontoErforderlich === 2;
+    }
+
+    /** @inheritDoc */
+    public function getChallengeKlasseErforderlich()
+    {
+        return $this->challengeKlasseErforderlich;
+    }
+
+    /** @inheritDoc */
+    public function getAntwortHhdUcErforderlich()
+    {
+        return $this->antwortHhdUcErforderlich;
+    }
+
+    /** @inheritDoc */
     public function getChallengeLabel()
     {
         return $this->textZurBelegungDesRueckgabewertes;
