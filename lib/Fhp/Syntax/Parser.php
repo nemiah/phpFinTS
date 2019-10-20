@@ -79,7 +79,7 @@ abstract class Parser
             } elseif ($matchedStr[0] === Delimiter::BINARY) {
                 // It's a block binary data, which we should skip entirely.
                 $binaryLength = $match[1][0]; // $match[1] refers to the first (and only) capture group in the regex.
-                if (!is_numeric($binaryLength)) throw new \AssertionError();
+                if (!is_numeric($binaryLength)) throw new \AssertionError("Invalid binary length $binaryLength");
                 // Note: The FinTS specification says that the length of the binary block is given in bytes (not
                 // characters) and PHP's string functions like substr() or preg_match() also operate on byte offsets, so
                 // this is fine.
@@ -352,9 +352,13 @@ abstract class Parser
      */
     public static function detectAndParseSegment($rawSegment)
     {
+        if (substr($rawSegment, -1) !== Delimiter::SEGMENT) {
+            throw new \InvalidArgumentException("Raw segment does not end with delimiter: $rawSegment");
+        }
         $firstElementDelimiter = strpos($rawSegment, Delimiter::ELEMENT);
         if ($firstElementDelimiter === false) {
-            throw new \InvalidArgumentException("Invalid segment $rawSegment");
+            // Let's assume it's an empty segment, i.e. all of it is the header.
+            $firstElementDelimiter = strlen($rawSegment) - 1; // Exclude the SEGMENT delimiter at the end.
         }
         /** @var Segmentkopf $segmentkopf */
         $segmentkopf = Segmentkopf::parse(substr($rawSegment, 0, $firstElementDelimiter));
