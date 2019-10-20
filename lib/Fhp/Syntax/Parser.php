@@ -4,6 +4,7 @@
 namespace Fhp\Syntax;
 
 use Fhp\DataTypes\Bin;
+use Fhp\Segment\AnonymousSegment;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\DegDescriptor;
@@ -23,6 +24,9 @@ use Fhp\Segment\Segmentkopf;
  */
 abstract class Parser
 {
+    /** @var string Name of the PHP namespace under which all the segments are stored. */
+    const SEGMENT_NAMESPACE = 'Fhp\Segment';
+
     /**
      * The FinTs wire format specifies escaping with a question mark `?` for the syntax characters `+:'?@`. This
      * function splits strings delimited by one of these while honoring escaping and binary blocks marked with a
@@ -290,6 +294,24 @@ abstract class Parser
     }
 
     /**
+     * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
+     *     the end).
+     * @return AnonymousSegment The segment parsed as an anonymous segment.
+     */
+    public static function parseAnonymousSegment($rawSegment)
+    {
+        $rawElements = static::splitIntoSegmentElements($rawSegment);
+        return new AnonymousSegment(
+            Segmentkopf::parse(array_shift($rawElements)),
+            array_map(function ($rawElement) {
+                if (empty($rawElement)) return null;
+                $subElements = static::splitEscapedString(Delimiter::GROUP, $rawElement);
+                if (count($subElements) <= 1) return $rawElement; // Asume it's not repeated.
+                return $subElements;
+            }, $rawElements));
+    }
+
+    /**
      * @param string $rawSegment The serialized wire format for a single segment incl delimiter at the end.
      * @return string[] The segment splitted into raw elements.
      */
@@ -321,5 +343,26 @@ abstract class Parser
         } else {
             return static::parseDeg($rawElement, $descriptor->type->name);
         }
+    }
+
+    /**
+     * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
+     *     the end).
+     * @return BaseSegment The parsed segment, possibly an {@link AnonymousSegment}.
+     */
+    public static function detectAndParseSegment($rawSegment)
+    {
+        $firstElementDelimiter = strpos($rawSegment, Delimiter::ELEMENT);
+        if ($firstElementDelimiter === false) {
+            throw new \InvalidArgumentException("Invalid segment $rawSegment");
+        }
+        /** @var Segmentkopf $segmentkopf */
+        $segmentkopf = Segmentkopf::parse(substr($rawSegment, 0, $firstElementDelimiter));
+        $segmentType = static::SEGMENT_NAMESPACE . '\\' . $segmentkopf->segmentkennung . '\\'
+            . $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
+        if (class_exists($segmentType)) {
+            return static::parseSegment($rawSegment, $segmentType);
+        }
+        return static::parseAnonymousSegment($rawSegment);
     }
 }

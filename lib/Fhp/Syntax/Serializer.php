@@ -3,6 +3,7 @@
 namespace Fhp\Syntax;
 
 use Fhp\DataTypes\Bin;
+use Fhp\Segment\AnonymousSegment;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
 
@@ -68,6 +69,9 @@ abstract class Serializer
      */
     public static function serializeSegment($segment)
     {
+        if ($segment instanceof AnonymousSegment) {
+            throw new \InvalidArgumentException("Cannot serialize anonymous segments");
+        }
         $serializedElements = static::serializeElements($segment);
         return implode(Delimiter::ELEMENT, $serializedElements) . Delimiter::SEGMENT;
     }
