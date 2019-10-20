@@ -10,6 +10,8 @@ use Fhp\Segment\BaseSegment;
  * Bezugssegment: HKVVB
  * Sender: Kreditinstitut
  *
+ * Note: This is a repeated segment, there is one instance per account.
+ *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation"
@@ -18,7 +20,7 @@ use Fhp\Segment\BaseSegment;
  */
 class HIUPDv4 extends BaseSegment
 {
-    /** @var KtvV3 */
+    /** @var \Fhp\Segment\Common\KtvV3 */
     public $kontoverbindung;
     /** @var string */
     public $kundenId;

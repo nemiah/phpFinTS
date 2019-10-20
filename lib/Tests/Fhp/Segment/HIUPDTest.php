@@ -28,8 +28,8 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(4, $parsed->segmentkopf->segmentversion);
         $this->assertSame('1234567', $parsed->kontoverbindung->kontonummer);
         $this->assertNull($parsed->kontoverbindung->unterkontomerkmal);
-        $this->assertSame(280, $parsed->kontoverbindung->laenderkennzeichen);
-        $this->assertSame('10020030', $parsed->kontoverbindung->kreditinstitutionscode);
+        $this->assertSame('280', $parsed->kontoverbindung->kik->laenderkennzeichen);
+        $this->assertSame('10020030', $parsed->kontoverbindung->kik->kreditinstitutscode);
         $this->assertSame('12345', $parsed->kundenId);
         $this->assertSame('DEM', $parsed->kontowaehrung);
         $this->assertSame('Ernst Müller', $parsed->name1);
