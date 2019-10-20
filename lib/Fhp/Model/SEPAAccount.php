@@ -4,6 +4,9 @@ namespace Fhp\Model;
 
 /**
  * Class SEPAAccount
+ *
+ * Note: This account information is obtained from the HISPA response to a HKSPA request.
+ *
  * @package Fhp\Model
  */
 class SEPAAccount
