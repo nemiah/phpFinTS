@@ -24,7 +24,7 @@ abstract class BaseDescriptor
      * documentation does not specify it (anymore).
      * @var ElementDescriptor[]
      */
-    public $elements;
+    public $elements = [];
 
     /**
      * @param \ReflectionClass $clazz
@@ -33,13 +33,8 @@ abstract class BaseDescriptor
     {
         // Use reflection to map PHP class fields to elements in the segment/Deg.
         $implicitIndex = true;
-        $nextIndex = $clazz->isSubclassOf(BaseSegment::class) ? 1 : 0; // Segments have implicit Segmentkopf.
-        foreach ($clazz->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if ($property->isStatic() || $property->getDeclaringClass()->name !== $clazz->name) {
-                // Skip static and super properties.
-                continue;
-            }
-
+        $nextIndex = 0;
+        foreach (static::enumerateProperties($clazz) as $property) {
             $docComment = $property->getDocComment();
             if (!is_string($docComment)) {
                 throw new \InvalidArgumentException("Property $property must be annotated.");
@@ -82,9 +77,10 @@ abstract class BaseDescriptor
             } else {
                 $nextIndex++; // Singular field, so the index advances by 1.
             }
-            $descriptor->type = static::resolveType($type, $clazz);
+            $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
+        if (empty($this->elements)) throw new \InvalidArgumentException("No fields found in $clazz->name");
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
     }
 
@@ -99,6 +95,23 @@ abstract class BaseDescriptor
         }
         foreach ($this->elements as $elementDescriptor) {
             $elementDescriptor->validateField($obj);
+        }
+    }
+
+    /**
+     * @param \ReflectionClass $clazz The class name.
+     * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
+     *     with the parents' properties *first*.
+     */
+    private static function enumerateProperties($clazz)
+    {
+        if ($clazz->getParentClass() !== false) {
+            yield from static::enumerateProperties($clazz->getParentClass());
+        }
+        foreach ($clazz->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+            if (!$property->isStatic() && $property->getDeclaringClass()->name === $clazz->name) {
+                yield $property;
+            }
         }
     }
 
