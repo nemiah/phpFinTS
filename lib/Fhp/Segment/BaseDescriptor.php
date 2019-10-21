@@ -39,6 +39,9 @@ abstract class BaseDescriptor
             if (!is_string($docComment)) {
                 throw new \InvalidArgumentException("Property $property must be annotated.");
             }
+            if (static::getBoolAnnotation('Ignore', $docComment)) {
+                continue; // Skip @Ignore-d propeties.
+            }
 
             $index = static::getIntAnnotation('Index', $docComment);
             if ($index === null) {
@@ -156,7 +159,8 @@ abstract class BaseDescriptor
      */
     private static function getBoolAnnotation($name, $docComment)
     {
-        return strpos("@$name", $docComment) !== false;
+        return strpos("@$name ", $docComment) !== false
+            || strpos("@$name())", $docComment) !== false;
     }
 
     /**
