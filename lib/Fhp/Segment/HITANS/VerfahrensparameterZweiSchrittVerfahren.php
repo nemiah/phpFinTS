@@ -2,11 +2,25 @@
 
 namespace Fhp\Segment\HITANS;
 
-interface VerfahrensparameterZweiSchrittVerfahren
+use Fhp\Model\TanMode;
+
+interface VerfahrensparameterZweiSchrittVerfahren extends TanMode
 {
     /** @return integer */
-    public function getSicherheitsfunktion();
+    public function getId();
 
     /** @return string */
-    public function getNameDesZweiSchrittVerfahrens();
+    public function getName();
+
+    /** @return boolean */
+    public function getSmsAbbuchungskontoErforderlich();
+
+    /** @return boolean */
+    public function getAuftraggeberkontoErforderlich();
+
+    /** @return boolean */
+    public function getChallengeKlasseErforderlich();
+
+    /** @return boolean */
+    public function getAntwortHhdUcErforderlich();
 }

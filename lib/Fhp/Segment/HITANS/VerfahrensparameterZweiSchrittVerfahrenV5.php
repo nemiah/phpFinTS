@@ -57,13 +57,69 @@ class VerfahrensparameterZweiSchrittVerfahrenV5 extends BaseDeg implements Verfa
     /** @var integer|null */
     public $anzahlUnterstuetzterAktiverTanMedien;
 
-    public function getSicherheitsfunktion()
+    /** @inheritDoc */
+    public function getId()
     {
         return $this->sicherheitsfunktion;
     }
 
-    public function getNameDesZweiSchrittVerfahrens()
+    /** @inheritDoc */
+    public function getName()
     {
         return $this->nameDesZweiSchrittVerfahrens;
+    }
+
+    /** @inheritDoc */
+    public function getSmsAbbuchungskontoErforderlich()
+    {
+        return $this->smsAbbuchungskontoErforderlich === 2;
+    }
+
+    /** @inheritDoc */
+    public function getAuftraggeberkontoErforderlich()
+    {
+        return $this->auftraggeberkontoErforderlich === 2;
+    }
+
+    /** @inheritDoc */
+    public function getChallengeKlasseErforderlich()
+    {
+        return $this->challengeKlasseErforderlich;
+    }
+
+    /** @inheritDoc */
+    public function getAntwortHhdUcErforderlich()
+    {
+        return false;
+    }
+
+    /** @inheritDoc */
+    public function getChallengeLabel()
+    {
+        return $this->textZurBelegungDesRueckgabewertes;
+    }
+
+    /** @inheritDoc */
+    public function getMaxChallengeLength()
+    {
+        return $this->maximaleLaengeDesRueckgabewertes;
+    }
+
+    /** @inheritDoc */
+    public function getMaxTanLength()
+    {
+        return $this->maximaleLaengeDesTanEingabewertes;
+    }
+
+    /** @inheritDoc */
+    public function getTanFormat()
+    {
+        return $this->erlaubtesFormat;
+    }
+
+    /** @inheritDoc */
+    public function needsTanDevice()
+    {
+        return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
 }

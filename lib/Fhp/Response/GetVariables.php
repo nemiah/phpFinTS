@@ -45,8 +45,8 @@ class GetVariables extends Response
                 throw new \InvalidArgumentException("All HITANS segments must implement the HITANS interface");
             }
             foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
-                if ($allowedModes === null || in_array($verfahren->getSicherheitsfunktion(), $allowedModes)) {
-                    $result[$verfahren->getSicherheitsfunktion()] = $verfahren->getNameDesZweiSchrittVerfahrens();
+                if ($allowedModes === null || in_array($verfahren->getId(), $allowedModes)) {
+                    $result[$verfahren->getId()] = $verfahren->getName();
                 }
             }
         }
