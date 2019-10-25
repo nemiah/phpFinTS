@@ -489,8 +489,12 @@ class Dialog
 		#$this->logger->debug($response->rawResponse);
 
 		// save BPD (Bank Parameter Daten)
-		$this->systemId = $response->getSystemId();
-		$this->dialogId = $response->getDialogId();
+		if(!$this->systemId) {
+			$this->systemId = $response->getSystemId();
+		}
+		if(!$this->dialogId) {
+			$this->dialogId = $response->getDialogId();
+		}
 		$this->bankName = $response->getBankName();
 
 		// max version for segment HKSAL (Saldo abfragen)

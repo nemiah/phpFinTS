@@ -635,16 +635,16 @@ class FinTs extends FinTsInternal
 		$class = explode('\\', get_class($hkdsx));
 		$this->logger->info('');
 		$this->logger->info($class[count($class) - 1].' (SEPA direct debit) initialize');
-		$response = $dialog->sendMessage($message);
+		$response = $dialog->sendMessage($message, $this->tanMechanism, $tanCallback);
 		$this->logger->info($class[count($class) - 1].' end');
 
-		$response = new GetTANRequest($response->rawResponse);
+		#$response = new GetTANRequest($response->rawResponse);
 		#print_r($response);
 
 		#var_dump($response->get()->getProcessID());
-		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
+		#$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 		#echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
-		for ($i = 0; $i < 120; $i += $interval) {
+		/*for ($i = 0; $i < 120; $i += $interval) {
 			sleep($interval);
 
 			$tan = trim($tanCallback());
@@ -661,7 +661,7 @@ class FinTs extends FinTsInternal
 			throw new TANException('No TAN received!');
 		}
 
-		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
+		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);*/
 	}
 
 	/**
