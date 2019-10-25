@@ -179,13 +179,21 @@ class Dialog
 			if (!$response->isStrongAuthRequired()) {
 				return $response;
 			}
-
+			
 			$response = new GetTANRequest($response->rawResponse, $this);
 
 			if (!$tanCallback) {
 				return $response;
 			}
-
+			
+			if(!$this->dialogId) {
+				$this->dialogId = $response->getDialogId();
+			}
+			
+			if(!$this->systemId) {
+				$this->systemId = $response->getSystemId();
+			}
+			
 			$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 			for ($i = 0; $i < 120; $i += $interval) {
 				sleep($interval);
@@ -229,7 +237,7 @@ class Dialog
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
 			),
 			array(
-				AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
+				AbstractMessage::OPT_PINTAN_MECH => array($tanMechanism)
 			),
 			$tan
 		);
@@ -428,7 +436,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function syncDialog($tanMechanism = null, $tanMediaName = null)
+	public function syncDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('SYNC initialize');
@@ -473,7 +481,7 @@ class Dialog
 
 		#$this->logger->debug('Sending SYNC message:');
 		#$this->logger->debug((string) $syncMsg);
-		$response = $this->sendMessage($syncMsg);
+		$response = $this->sendMessage($syncMsg, $tanMechanism, $tanCallback);
 
 		#$this->checkResponse($response);
 
