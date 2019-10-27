@@ -8,6 +8,7 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
+         bootstrap="./lib/Tests/phpunit_bootstrap.php"
 >
     <testsuites>
         <testsuite name="FHP Test Suite">
