@@ -62,9 +62,9 @@ interface TanMode
     public function getTanFormat();
 
     /**
-     * @return boolean If true, there are potentially multiple TAN devices (e.g. multiple mobile phones) associated with
-     *     this TanMode (e.g. if it's the smsTAN mode), and the user needs to pick the device *in addition to* and after
-     *     picking this TanMode.
+     * @return boolean If true, there are potentially multiple {@link TanMedium} choices (e.g. multiple mobile phones)
+     *     associated with this TanMode (e.g. if it's the smsTAN mode), and the user needs to pick the medium in
+     *     addition to and after picking this TanMode.
      */
-    public function needsTanDevice();
+    public function needsTanMedium();
 }

@@ -90,7 +90,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements Verfa
     }
 
     /** @inheritDoc */
-    public function needsTanDevice()
+    public function needsTanMedium()
     {
         return false;
     }
