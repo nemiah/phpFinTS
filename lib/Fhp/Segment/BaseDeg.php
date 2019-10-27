@@ -52,7 +52,7 @@ abstract class BaseDeg
      */
     public function serialize()
     {
-        return Serializer::serializeDeg($this);
+        return Serializer::serializeDeg($this, $this->getDescriptor());
     }
 
     /**

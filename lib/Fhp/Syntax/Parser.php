@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fhp\Syntax;
 
 use Fhp\DataTypes\Bin;
@@ -11,6 +10,17 @@ use Fhp\Segment\DegDescriptor;
 use Fhp\Segment\ElementDescriptor;
 use Fhp\Segment\SegmentDescriptor;
 use Fhp\Segment\Segmentkopf;
+
+// Polyfill for PHP < 7.3
+if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_key_last')) {
+    function array_key_last($array)
+    {
+        if (!is_array($array) || empty($array)) {
+            return NULL;
+        }
+        return array_keys($array)[count($array) - 1];
+    }
+}
 
 /**
  * Class Parser
@@ -117,10 +127,11 @@ abstract class Parser
      * @param string $rawValue The raw value (wire format).
      * @param string $type The PHP type that we need. This should support exactly the values for which
      *     {@link ElementDescriptor#isScalarType()} returns true.
-     * @return mixed The parsed value of type $type.
+     * @return mixed|null The parsed value of type $type, null if the $rawValue was empty.
      */
     public static function parseDataElement($rawValue, $type)
     {
+        if ($rawValue === '') return null;
         if ($type === 'int' || $type === 'integer') {
             if (!is_numeric($rawValue)) {
                 throw new \InvalidArgumentException("Invalid int: $rawValue");
@@ -146,10 +157,11 @@ abstract class Parser
 
     /**
      * @param string $rawValue The raw value (wire format), e.g. "@4@abcd".
-     * @return Bin The parsed value.
+     * @return Bin|null The parsed value, or null if $rawValue was empty.
      */
     public static function parseBinaryBlock($rawValue)
     {
+        if ($rawValue === '') return null;
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
         if (empty($rawValue) || $rawValue[0] !== Delimiter::BINARY || $delimiterPos === false) {
             throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
@@ -171,14 +183,16 @@ abstract class Parser
     /**
      * @param string $rawElements The serialized wire format for a data element group.
      * @param string $type The type (PHP class name) of the Deg to be parsed.
-     * @return BaseDeg The parsed value, of type
+     * @param boolean $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
+     * @return BaseDeg|null The parsed value, of type $type, or null if all fields were empty and $allowEmpty is true.
      */
-    public static function parseDeg($rawElements, $type)
+    public static function parseDeg($rawElements, $type, $allowEmpty = false)
     {
         $rawElements = static::splitEscapedString(Delimiter::GROUP, $rawElements);
-        list($result, $offset) = static::parseDegElements($rawElements, $type);
+        list($result, $offset) = static::parseDegElements($rawElements, $type, $allowEmpty);
         if ($offset < count($rawElements)) {
-            throw new \InvalidArgumentException("Only read $offset elements: " . print_r($rawElements, true));
+            throw new \InvalidArgumentException(
+                "Expected only $offset elements, but got " . count($rawElements) . ": " . print_r($rawElements, true));
         }
         return $result;
     }
@@ -188,30 +202,40 @@ abstract class Parser
      *     will be modified in that the elements that were consumed are removed from the beginning.
      * @param string $type The type (PHP class name) of the Deg to be parsed, defaults to the class on which
      *     this function is called.
+     * @param boolean $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @param integer $offset The position in $rawElements to be read next.
-     * @return array (BaseDeg, integer) The parsed value, which has the given $type, and the offset at which parsing
-     *     should continue. The difference between this returned offset and the $offset was passed in is the number of
-     *     elements that this function call consumed.
+     * @return array (BaseDeg|null, integer)
+     *     1. The parsed value, which has the given $type or is null in case all the fields were empty and $allowEmpty
+     *        is true.
+     *     2. The offset at which parsing should continue. The difference between this returned offset and the $offset
+     *        that was passed in is the number of elements that this function call consumed.
      */
-    private static function parseDegElements($rawElements, $type, $offset = 0)
+    private static function parseDegElements($rawElements, $type, $allowEmpty = false, $offset = 0)
     {
         if ($type === null) $type = static::class;
         $descriptor = DegDescriptor::get($type);
         $result = new $type();
         $expectedIndex = 0;
+        $allEmpty = true;
+        $missingFieldError = null; // When $allowEmpty, we need to tolerate errors at first, but maybe throw them later.
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
             $offset += ($index - $expectedIndex); // Adjust for skipped indices.
             $numRepetitions = $elementDescriptor->repeated === 0 ? 1 : $elementDescriptor->repeated;
             $expectedIndex += $numRepetitions; // Advance to next expected elementDescriptor index.
+            $isSingleField = is_string($elementDescriptor->type) // Scalar type / DE
+                || $elementDescriptor->type->getName() === Bin::class;
 
-            // Skip optional elements that are not present.
-            if (!isset($rawElements[$offset]) || $rawElements[$offset] === '') {
+            // Skip optional single elements that are not present. Note that for elements with multiple fields we cannot
+            // just skip because here we would only detect whether the first field is empty or not.
+            if ($isSingleField && (!isset($rawElements[$offset]) || $rawElements[$offset] === '')) {
                 if ($elementDescriptor->optional) {
                     $offset++;
                     continue;
+                } elseif ($missingFieldError === null) {
+                    $missingFieldError = new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
+                    if (!$allowEmpty) throw $missingFieldError;
                 }
-                throw new \InvalidArgumentException("Missing field $elementDescriptor->field");
             }
 
             // Parse element (possibly multiple values recursively).
@@ -220,8 +244,7 @@ abstract class Parser
                     if ($offset >= count($rawElements)) {
                         break; // End of input reached
                     }
-                    if (is_string($elementDescriptor->type) // Scalar type / DE
-                        || $elementDescriptor->type->getName() === Bin::class) {
+                    if ($isSingleField) {
                         if ($rawElements[$offset] === '' && $repetition >= 1) { // Skip empty repeated entries.
                             $offset++;
                             continue;
@@ -233,12 +256,14 @@ abstract class Parser
                         }
                         $offset++;
                     } else { // Nested DEG, will consume a certain number of elements and adjust the $offset accordingly.
-                        list($value, $offset) =
-                            static::parseDegElements($rawElements, $elementDescriptor->type->name, $offset);
+                        list($value, $offset) = static::parseDegElements(
+                            $rawElements, $elementDescriptor->type->name,
+                            $allowEmpty || $elementDescriptor->optional, $offset);
                     }
+                    if ($value !== null) $allEmpty = false;
                     if ($elementDescriptor->repeated === 0) {
                         $result->{$elementDescriptor->field} = $value;
-                    } else {
+                    } elseif ($value !== null) {
                         $result->{$elementDescriptor->field}[] = $value;
                     }
                 }
@@ -246,6 +271,8 @@ abstract class Parser
                 throw new \InvalidArgumentException("Failed to parse $descriptor->class::$elementDescriptor->field: $e");
             }
         }
+        if ($allEmpty && $allowEmpty) return array(null, $offset);
+        if ($missingFieldError !== null) throw $missingFieldError;
         return array($result, $offset);
     }
 
@@ -259,6 +286,9 @@ abstract class Parser
     {
         $rawElements = static::splitIntoSegmentElements($rawSegment);
         $descriptor = SegmentDescriptor::get($type);
+        if (array_key_last($rawElements) > $descriptor->maxIndex) {
+            throw new \InvalidArgumentException("Too many elements for $type: $rawSegment");
+        }
         $result = new $type();
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
@@ -269,6 +299,7 @@ abstract class Parser
                 throw new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
             }
 
+            // Note: The handling of empty values may be incorrect here, parseSegmentElement() can return null.
             if ($elementDescriptor->repeated === 0) {
                 $result->{$elementDescriptor->field} =
                     static::parseSegmentElement($rawElements[$index], $elementDescriptor);
@@ -332,7 +363,7 @@ abstract class Parser
      * @param string $rawElement The raw content (unparsed wire format) of an element, which can either be a single
      *     Data Element (DE) or a group (DEG), as determined by the descriptor.
      * @param ElementDescriptor $descriptor The descriptor that describes the expected format of the element.
-     * @return mixed The parsed value.
+     * @return mixed|null The parsed value, or null if it was empty.
      */
     private static function parseSegmentElement($rawElement, $descriptor)
     {
@@ -341,7 +372,7 @@ abstract class Parser
         } elseif ($descriptor->type->getName() === Bin::class) {
             return static::parseBinaryBlock($rawElement);
         } else {
-            return static::parseDeg($rawElement, $descriptor->type->name);
+            return static::parseDeg($rawElement, $descriptor->type->name, $descriptor->optional);
         }
     }
 

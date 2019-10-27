@@ -27,6 +27,14 @@ abstract class BaseDescriptor
     public $elements = [];
 
     /**
+     * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
+     * segment/DEG described by this descriptor, it would get index $maxIndex+1.
+     * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
+     * @var integer
+     */
+    public $maxIndex;
+
+    /**
      * @param \ReflectionClass $clazz
      */
     protected function __construct($clazz)
@@ -85,6 +93,7 @@ abstract class BaseDescriptor
         }
         if (empty($this->elements)) throw new \InvalidArgumentException("No fields found in $clazz->name");
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
+        $this->maxIndex = $nextIndex - 1;
     }
 
     /**

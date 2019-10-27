@@ -46,6 +46,8 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
             ['1000', '1000', 'string'],
             [utf8_decode('ä'), 'ä', 'string'],
             ['5?:5', "5:5", 'string'],
+            ['', null, 'int'],
+            ['', null, 'string'],
         ];
     }
 
@@ -53,12 +55,5 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
     public function test_serializeDataElement($expected, $value, $type)
     {
         $this->assertSame($expected, Serializer::serializeDataElement($value, $type));
-    }
-
-    public function test_fillMissingKeys()
-    {
-        $arr = array(0 => 'a', 2 => 'b', 4 => 'c');
-        Serializer::fillMissingKeys($arr, 'X');
-        $this->assertEquals(array(0 => 'a', 1 => 'X', 2 => 'b', 3 => 'X', 4 => 'c'), $arr);
     }
 }
