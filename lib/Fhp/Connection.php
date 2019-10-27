@@ -10,7 +10,7 @@ class Connection
     /**
      * @var string
      */
-    protected $host;
+    protected $url;
 
     /**
      * @var resource
@@ -30,13 +30,13 @@ class Connection
     /**
      * Connection constructor.
      *
-     * @param string $host
+     * @param string $url
      * @param int $timeoutConnect
      * @param int $timeoutResponse
      */
-    public function __construct($host, $timeoutConnect = 15, $timeoutResponse = 30)
+    public function __construct($url, $timeoutConnect = 15, $timeoutResponse = 30)
     {
-        $this->host = $host;
+        $this->url = $url;
         $this->timeoutConnect = $timeoutConnect;
         $this->timeoutResponse = $timeoutResponse;
     }
@@ -49,7 +49,7 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->curlHandle, CURLOPT_USERAGENT, 'phpFinTS');
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->curlHandle, CURLOPT_URL, $this->host);
+        curl_setopt($this->curlHandle, CURLOPT_URL, $this->url);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, $this->timeoutConnect);
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($this->curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -59,9 +59,17 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, ['cache-control: no-cache', 'Content-Type: text/plain']);
     }
 
+    public function disconnect()
+    {
+        if ($this->curlHandle !== null) {
+            curl_close($this->curlHandle);
+            $this->curlHandle = null;
+        }
+    }
+
     /**
-     * @param string $message The message to be sent, in HBCI/FinTS wire format.
-     * @return string The response from the server, in HBCI/FinTS wire format.
+     * @param string $message The message to be sent, in HBCI/FinTS wire format, ISO-8859-1 encoded.
+     * @return string The response from the server, in HBCI/FinTS wire format, ISO-8859-1 encoded.
      * @throws CurlException When the request fails.
      */
     public function send($message)
@@ -75,7 +83,7 @@ class Connection
 
         if (false === $response) {
             throw new CurlException(
-                'Failed connection to ' . $this->host . ': ' . curl_error($this->curlHandle),
+                'Failed connection to ' . $this->url . ': ' . curl_error($this->curlHandle),
                 null,
                 curl_errno($this->curlHandle),
                 curl_getinfo($this->curlHandle)
