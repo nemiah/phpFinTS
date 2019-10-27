@@ -362,11 +362,23 @@ abstract class Parser
         }
         /** @var Segmentkopf $segmentkopf */
         $segmentkopf = Segmentkopf::parse(substr($rawSegment, 0, $firstElementDelimiter));
+
+        // Try the default class name Fhp\Segment\HABCD\HABCDvN.
         $segmentType = static::SEGMENT_NAMESPACE . '\\' . $segmentkopf->segmentkennung . '\\'
             . $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
         if (class_exists($segmentType)) {
             return static::parseSegment($rawSegment, $segmentType);
         }
+
+        // Alternatively, allow Geschäftsvorfall segments (HKXYZ, HIXYZ and HIXYZS) to live in an abbreviated namespace,
+        // i.e. like Fhp\Segment\XYZ\HKXYZSvN
+        $segmentType = static::SEGMENT_NAMESPACE . '\\' . substr($segmentkopf->segmentkennung, 2, 3) . '\\'
+            . $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
+        if (class_exists($segmentType)) {
+            return static::parseSegment($rawSegment, $segmentType);
+        }
+
+        // If the segment type is not implemented, fall back to an anonymous segment.
         return static::parseAnonymousSegment($rawSegment);
     }
 }
