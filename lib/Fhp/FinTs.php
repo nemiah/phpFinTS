@@ -401,19 +401,19 @@ class FinTs extends FinTsInternal
 			$urlParts['host'] => strtolower($urlParts['host']),
 		]);
 
-		switch ($dialectId) {
-			case Parser\Dialect\SpardaMT940::DIALECT_ID:
-				$parser = new Parser\Dialect\SpardaMT940($rawMt940);
-			break;
-			case Parser\Dialect\PostbankMT940::DIALECT_ID:
-				$parser = new Parser\Dialect\PostbankMT940($rawMt940);
-			break;
-			default:
-				$parser = new MT940($rawMt940);
-			break;
-		}
+        switch ($dialectId) {
+            case Parser\Dialect\SpardaMT940::DIALECT_ID:
+                $parser = new Parser\Dialect\SpardaMT940();
+                break;
+            case Parser\Dialect\PostbankMT940::DIALECT_ID:
+                $parser = new Parser\Dialect\PostbankMT940();
+                break;
+            default:
+                $parser = new MT940();
+                break;
+        }
 
-		return GetStatementOfAccount::createModelFromArray($parser->parse(MT940::TARGET_ARRAY));
+        return GetStatementOfAccount::createModelFromArray($parser->parse($rawMt940));
 	}
 
 	/**
