@@ -5,7 +5,6 @@ namespace Fhp\Response;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\Model\StatementOfAccount\Transaction;
-use Fhp\Parser\MT940;
 
 /**
  * Class GetStatementOfAccount
@@ -30,19 +29,6 @@ class GetStatementOfAccount extends Response
         }
 
         return '';
-    }
-
-    /**
-     * Creates StatementOfAccount object from raw MT940 string.
-     *
-     * @param string $rawMt940
-     * @return StatementOfAccount
-     */
-    public static function createModelFromRawMt940($rawMt940)
-    {
-        $parser = new MT940($rawMt940);
-
-        return static::createModelFromArray($parser->parse(MT940::TARGET_ARRAY));
     }
 
     /**

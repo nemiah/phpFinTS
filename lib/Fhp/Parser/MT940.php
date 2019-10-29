@@ -6,60 +6,34 @@ use Fhp\Parser\Exception\MT940Exception;
 
 /**
  * Class MT940
+ * Data format: MT 940 (Version SRG 2001)
+ *
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
+ * Section: B.8
+ *
  * @package Fhp\Parser
  */
 class MT940
 {
-    const TARGET_ARRAY = 0;
-
     const CD_CREDIT = 'credit';
     const CD_DEBIT = 'debit';
 
-    /** @var string */
-    protected $rawData;
-    /** @var string */
-    protected $soaDate;
-
     /**
-     * MT940 constructor.
-     *
      * @param string $rawData
-     */
-    public function __construct($rawData)
-    {
-        $this->rawData = (string) $rawData;
-    }
-
-    /**
-     * @param string $target
      * @return array
      * @throws MT940Exception
      */
-    public function parse($target)
-    {
-        switch ($target) {
-            case static::TARGET_ARRAY:
-                return $this->parseToArray();
-                break;
-            default:
-                throw new MT940Exception('Invalid parse type provided');
-        }
-    }
-
-    /**
-     * @return array
-     * @throws MT940Exception
-     */
-    protected function parseToArray()
+    public function parse($rawData)
     {
         // The divider can be either \r\n or @@
-        $divider = substr_count($this->rawData, "\r\n-") > substr_count($this->rawData, '@@-') ? "\r\n" : '@@';
+        $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
 
-        $cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $this->rawData);
+        $cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $rawData);
 
         $booked = true;
         $result = array();
         $days = explode($divider . '-', $cleanedRawData);
+        $soaDate = null;
         foreach ($days as &$day) {
 
             $day = explode($divider . ':', $day);
@@ -74,21 +48,21 @@ class MT940
                 if (preg_match('/^60(F|M):/', $day[$i])) {
                     // remove 60(F|M): for better parsing
                     $day[$i] = substr($day[$i], 4);
-                    $this->soaDate = $this->getDate(substr($day[$i], 1, 6));
+                    $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
-                    if (!isset($result[$this->soaDate])) {
-                        $result[$this->soaDate] = array('start_balance' => array());
+                    if (!isset($result[$soaDate])) {
+                        $result[$soaDate] = array('start_balance' => array());
                     }
 
                     $cdMark = substr($day[$i], 0, 1);
                     if ($cdMark == 'C') {
-                        $result[$this->soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
+                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
                     } elseif ($cdMark == 'D') {
-                        $result[$this->soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
+                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
                     }
 
                     $amount = str_replace(',', '.', substr($day[$i], 10));
-                    $result[$this->soaDate]['start_balance']['amount'] = $amount;
+                    $result[$soaDate]['start_balance']['amount'] = $amount;
                 } elseif (
                     // found transaction
                     // trx:61:1603310331DR637,39N033NONREF
@@ -99,12 +73,12 @@ class MT940
                     $transaction = substr($day[$i], 3);
                     $description = substr($day[$i + 1], 3);
 
-                    if (!isset($result[$this->soaDate]['transactions'])) {
-                        $result[$this->soaDate]['transactions'] = array();
+                    if (!isset($result[$soaDate]['transactions'])) {
+                        $result[$soaDate]['transactions'] = array();
                     }
 
                     // short form for better handling
-                    $trx = &$result[$this->soaDate]['transactions'];
+                    $trx = &$result[$soaDate]['transactions'];
 
                     preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
                     if ($trxMatch[2] == 'C' OR $trxMatch[2] == 'RC') {
@@ -141,7 +115,7 @@ class MT940
                         $bookingDate = $this->getDate($year . $bookingDate);
                     } else {
                         // if booking date not set in :61, then we have to take it from :60F
-                        $bookingDate = $this->soaDate;
+                        $bookingDate = $soaDate;
                     }
 
                     $trx[count($trx) - 1]['booking_date'] = $bookingDate;
