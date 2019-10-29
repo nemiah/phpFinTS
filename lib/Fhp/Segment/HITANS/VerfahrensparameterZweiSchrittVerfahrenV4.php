@@ -118,7 +118,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV4 extends BaseDeg implements Verfa
     }
 
     /** @inheritDoc */
-    public function needsTanDevice()
+    public function needsTanMedium()
     {
         return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
