@@ -6,12 +6,8 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 /**
- * Class FinTsOptions.
- *
  * Holds options for FinTS connections and operations. These options are independent of the user and depend only on the
  * bank system and the client system that uses this library.
- *
- * @package Fhp
  */
 class FinTsOptions
 {

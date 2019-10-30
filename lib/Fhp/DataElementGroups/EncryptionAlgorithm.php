@@ -4,11 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class EncryptionAlgorithm.
- *
- * @package Fhp\DataElementGroups
- */
 class EncryptionAlgorithm extends Deg
 {
     const TYPE_OSY = 2;

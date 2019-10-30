@@ -3,11 +3,7 @@
 namespace Fhp\Dialog\Exception;
 
 /**
- * Class FailedRequestException.
- *
  * Transforms HBCI error to exception.
- *
- * @package Fhp\Dialog\Exception
  */
 class FailedRequestException extends \Exception
 {

@@ -36,11 +36,6 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
 
-/**
- * Class FinTs.
- *
- * @package Fhp
- */
 class FinTs extends FinTsInternal
 {
 	const DEFAULT_COUNTRY_CODE = 280;

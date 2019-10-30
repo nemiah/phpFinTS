@@ -2,10 +2,6 @@
 
 namespace Fhp\Segment;
 
-/**
- * Interface SegmentInterface
- * @package Fhp\Segment
- */
 interface SegmentInterface
 {
     /**

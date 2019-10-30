@@ -3,11 +3,7 @@
 namespace Fhp\Segment;
 
 /**
- * Class AnonymousSegment
- *
  * A fallback for segments that were received from the server but are not implemented in this library.
- *
- * @package Fhp\Segment
  */
 final class AnonymousSegment extends BaseSegment
 {

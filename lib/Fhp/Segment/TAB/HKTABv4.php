@@ -5,13 +5,10 @@ namespace Fhp\Segment\TAB;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HKTABv4
  * Segment: TAN-Generator/Liste anzeigen Bestand (Version 4)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: C.3.1.1 a)
- *
- * @package Fhp\Segment\TAB
  */
 class HKTABv4 extends BaseSegment
 {

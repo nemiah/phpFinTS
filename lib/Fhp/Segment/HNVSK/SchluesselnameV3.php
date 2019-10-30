@@ -5,13 +5,10 @@ namespace Fhp\Segment\HNVSK;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Class SchluesselnameV3
  * Data ELement Group: Schlüsselname (Version 3)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
  * Section: D
- *
- * @package Fhp\Segment\HNVSK
  */
 class SchluesselnameV3 extends BaseDeg
 {

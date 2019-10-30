@@ -3,11 +3,7 @@
 namespace Fhp;
 
 /**
- * Class Credentials
- *
  * Login information for a user.
- *
- * @package Fhp
  */
 class Credentials
 {

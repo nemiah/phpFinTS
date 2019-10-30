@@ -3,13 +3,10 @@
 namespace Fhp\Segment\HIRMS;
 
 /**
- * Class Rueckmeldungscode
  * Enum for the response codes that the server can send.
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/FinTS_Rueckmeldungscodes_2019-07-22_final_version.pdf
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
- *
- * @package Fhp\Segment\HIRMS
  */
 abstract class Rueckmeldungscode
 {

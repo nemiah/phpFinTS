@@ -7,11 +7,6 @@ use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
 use Fhp\Segment\SegmentInterface;
 
-/**
- * Class Response
- *
- * @package Fhp\Response
- */
 class Response
 {
 

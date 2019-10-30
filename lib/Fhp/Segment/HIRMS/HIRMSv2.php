@@ -5,7 +5,6 @@ namespace Fhp\Segment\HIRMS;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HIRMSv2
  * Segment: Rückmeldungen zu Segmenten (Version 2)
  * Sender: Kreditinstitut
  *
@@ -17,8 +16,6 @@ use Fhp\Segment\BaseSegment;
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section B.7.2
- *
- * @package Fhp\Segment\HIRMG
  */
 class HIRMSv2 extends BaseSegment
 {

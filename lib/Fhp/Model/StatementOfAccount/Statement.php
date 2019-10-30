@@ -2,10 +2,6 @@
 
 namespace Fhp\Model\StatementOfAccount;
 
-/**
- * Class Statement
- * @package Fhp\Model\StatementOfAccount
- */
 class Statement
 {
     const CD_CREDIT = 'credit';

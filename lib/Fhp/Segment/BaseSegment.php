@@ -6,14 +6,10 @@ use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
 
 /**
- * Class BaseSegment
- *
  * Base class for segments. Sub-classes names need to follow the format "<Kennung>v<Version>" where <Kennung> is the
  * type of the segment (e.g. "HITANS") and <Version> is the numeric version. The *public* member fields of a sub-class
  * determine the structure of the segment. The order matters for the wire format, whereas the field names are only used
  * for documentation/readability purposes within this library. See {@link HITANSv1} for an example of a sub-class.
- *
- * @package Fhp\Segment
  */
 abstract class BaseSegment implements SegmentInterface
 {

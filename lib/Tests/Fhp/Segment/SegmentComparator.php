@@ -7,11 +7,7 @@ use Fhp\Segment\BaseSegment;
 use SebastianBergmann\Comparator\ObjectComparator;
 
 /**
- * Class SegmentComparator
- *
  * Comparator for sub-classes of {@link BaseSegment} and {@link BaseDeg} that ignores the descriptor private field.
- *
- * @package Tests\Fhp\Segment
  */
 class SegmentComparator extends ObjectComparator
 {

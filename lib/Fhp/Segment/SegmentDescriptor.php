@@ -1,16 +1,10 @@
 <?php
 
-
 namespace Fhp\Segment;
 
-
 /**
- * Class SegmentDescriptor
- *
  * Contains meta information about a segment, i.e. anything that can be statically known about a sub-class of
  * {@link BaseSegment} through reflection.
- *
- * @package Fhp\Segment
  */
 class SegmentDescriptor extends BaseDescriptor
 {

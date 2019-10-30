@@ -6,11 +6,7 @@ use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
 
 /**
- * Class BaseDeg
- *
  * Base class for Data Element Groups (Datenelement-Gruppen; DEGs).
- *
- * @package Fhp\Segment
  */
 abstract class BaseDeg
 {

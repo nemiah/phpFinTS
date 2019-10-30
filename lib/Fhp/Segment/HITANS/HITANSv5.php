@@ -5,15 +5,12 @@ namespace Fhp\Segment\HITANS;
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 
 /**
- * Class HITANSv5
  * Segment: Zwei-Schritt-TAN-Einreichung, Parameter (Version 5)
  * Parameters for: HKTANv5
  * Bezugssegment: HKVVB
  * Sender: Kreditinstitut
  *
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/FinTS_V3.0_2017-10-06-FV_RM.zip
- *
- * @package Fhp\Segment\HITANS
  */
 class HITANSv5 extends BaseGeschaeftsvorfallparameter implements HITANS
 {

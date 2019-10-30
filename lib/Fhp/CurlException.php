@@ -2,10 +2,6 @@
 
 namespace Fhp;
 
-/**
- * Class CurlException
- * @package Fhp
- */
 class CurlException extends \Exception
 {
     /**
