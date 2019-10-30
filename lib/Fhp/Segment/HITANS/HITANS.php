@@ -1,7 +1,8 @@
 <?php
 
-
 namespace Fhp\Segment\HITANS;
+
+use Fhp\Segment\SegmentInterface;
 
 /**
  * Interface HITANS
@@ -11,7 +12,7 @@ namespace Fhp\Segment\HITANS;
  *
  * @package Fhp\Segment\HITANS
  */
-interface HITANS
+interface HITANS extends SegmentInterface
 {
     /** @return ParameterZweiSchrittTanEinreichung */
     public function getParameterZweiSchrittTanEinreichung();
