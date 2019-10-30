@@ -12,6 +12,8 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  * Sender: Kreditinstitut
  *
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/FinTS_V3.0_2017-10-06-FV_RM.zip
+ * File: FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2017-10-06_final_version_rm.pdf
+ * Section: E.1.4 c)
  *
  * @package Fhp\Segment\HITANS
  */
