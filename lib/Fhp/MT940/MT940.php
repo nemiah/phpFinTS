@@ -1,8 +1,8 @@
 <?php
 
-namespace Fhp\Parser;
+namespace Fhp\MT940;
 
-use Fhp\Parser\Exception\MT940Exception;
+use Fhp\MT940\MT940Exception;
 
 /**
  * Class MT940

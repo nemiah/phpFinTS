@@ -1,8 +1,8 @@
 <?php
 
-namespace Fhp\Parser\Dialect;
+namespace Fhp\MT940\Dialect;
 
-use Fhp\Parser\MT940;
+use Fhp\MT940\MT940;
 
 /**
  * Class MT940

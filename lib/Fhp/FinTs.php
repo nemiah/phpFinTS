@@ -10,7 +10,7 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
-use Fhp\Parser\MT940;
+use Fhp\MT940\MT940;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
@@ -402,11 +402,11 @@ class FinTs extends FinTsInternal
 		]);
 
         switch ($dialectId) {
-            case Parser\Dialect\SpardaMT940::DIALECT_ID:
-                $parser = new Parser\Dialect\SpardaMT940();
+            case MT940\Dialect\SpardaMT940::DIALECT_ID:
+                $parser = new MT940\Dialect\SpardaMT940();
                 break;
-            case Parser\Dialect\PostbankMT940::DIALECT_ID:
-                $parser = new Parser\Dialect\PostbankMT940();
+            case MT940\Dialect\PostbankMT940::DIALECT_ID:
+                $parser = new MT940\Dialect\PostbankMT940();
                 break;
             default:
                 $parser = new MT940();
