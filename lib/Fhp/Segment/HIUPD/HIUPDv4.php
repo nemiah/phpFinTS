@@ -18,7 +18,7 @@ use Fhp\Segment\BaseSegment;
  *
  * @package Fhp\Segment\HIUPD
  */
-class HIUPDv4 extends BaseSegment
+class HIUPDv4 extends BaseSegment implements HIUPD
 {
     /** @var \Fhp\Segment\Common\KtvV3 */
     public $kontoverbindung;
