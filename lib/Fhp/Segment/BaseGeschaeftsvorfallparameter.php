@@ -1,6 +1,5 @@
 <?php /** @noinspection PhpUnused */
 
-
 namespace Fhp\Segment;
 
 /**
@@ -17,7 +16,7 @@ namespace Fhp\Segment;
  *
  * @package Fhp\Segment
  */
-class BaseGeschaeftsvorfallparameter extends BaseSegment
+abstract class BaseGeschaeftsvorfallparameter extends BaseSegment
 {
     /**
      * Maximum number of request segments of this kind that can be included in a single request message
