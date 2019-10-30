@@ -2,8 +2,6 @@
 
 namespace Fhp\MT940;
 
-use Fhp\MT940\MT940Exception;
-
 /**
  * Class MT940
  * Data format: MT 940 (Version SRG 2001)
