@@ -28,7 +28,7 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
         $segment = Parser::parseAnonymousSegment(static::RAW_SEGMENT);
         $this->assertEquals('HNXXX', $segment->getName());
         $this->assertEquals('HNXXXv3', $segment->type);
-        $this->assertEquals(3, $segment->segmentkopf->segmentversion);
+        $this->assertEquals(3, $segment->getVersion());
         $this->assertEquals(['A', null, ['C', 'D', 'E'], 'F', null], static::getElements($segment));
 
         $segment2 = Parser::detectAndParseSegment(static::RAW_SEGMENT);

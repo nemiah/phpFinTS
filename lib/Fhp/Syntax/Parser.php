@@ -412,4 +412,15 @@ abstract class Parser
         // If the segment type is not implemented, fall back to an anonymous segment.
         return static::parseAnonymousSegment($rawSegment);
     }
+
+    /**
+     * @param string $rawSegments Concatenated segments in wire format.
+     * @return BaseSegment[] The parsed segments.
+     */
+    public static function parseSegments($rawSegments)
+    {
+        if (empty($rawSegments)) return [];
+        $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
+        return array_map([static::class, 'detectAndParseSegment'], $rawSegments);
+    }
 }

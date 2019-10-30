@@ -11,9 +11,7 @@ use Fhp\Segment\HNVSK;
 use Fhp\Segment\SegmentInterface;
 
 /**
- * Class Message.
- *
- * @package Fhp\Message
+ * NOTE: There is also the (newer) Fhp\Protocol\Message class.
  */
 class Message extends AbstractMessage
 {

@@ -25,5 +25,10 @@ interface SegmentInterface
     /**
      * @return int
      */
+    public function getVersion();
+
+    /**
+     * @return int
+     */
     public function getSegmentNumber();
 }

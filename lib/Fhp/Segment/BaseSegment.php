@@ -44,6 +44,11 @@ abstract class BaseSegment implements SegmentInterface
         return $this->segmentkopf->segmentkennung;
     }
 
+    public function getVersion()
+    {
+        return $this->segmentkopf->segmentversion;
+    }
+
     public function getSegmentNumber()
     {
         return $this->segmentkopf->segmentnummer;
