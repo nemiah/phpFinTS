@@ -222,9 +222,10 @@ class Dialog
 
 	public function submitTAN($response, $tanMechanism, $tan)
 	{
-		if(!is_array($tanMechanism))
+		if(!is_array($tanMechanism)) {
             $tanMechanism = array($tanMechanism);
-		
+        }
+        
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
