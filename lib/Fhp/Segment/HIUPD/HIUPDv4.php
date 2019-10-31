@@ -15,7 +15,7 @@ use Fhp\Segment\BaseSegment;
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation"
  */
-class HIUPDv4 extends BaseSegment
+class HIUPDv4 extends BaseSegment implements HIUPD
 {
     /** @var \Fhp\Segment\Common\KtvV3 */
     public $kontoverbindung;
