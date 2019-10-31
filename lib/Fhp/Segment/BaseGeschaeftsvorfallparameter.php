@@ -1,6 +1,5 @@
 <?php /** @noinspection PhpUnused */
 
-
 namespace Fhp\Segment;
 
 /**
@@ -13,7 +12,7 @@ namespace Fhp\Segment;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: D.6
  */
-class BaseGeschaeftsvorfallparameter extends BaseSegment
+abstract class BaseGeschaeftsvorfallparameter extends BaseSegment
 {
     /**
      * Maximum number of request segments of this kind that can be included in a single request message

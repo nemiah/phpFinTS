@@ -11,6 +11,7 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  * Sender: Kreditinstitut
  *
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/FinTS_V3.0_2017-10-06-FV_RM.zip
+
  */
 class HITANSv1 extends BaseGeschaeftsvorfallparameter implements HITANS
 {
