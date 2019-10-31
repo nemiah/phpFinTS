@@ -5,11 +5,6 @@ namespace Fhp\Response;
 use Fhp\Model\SEPAStandingOrder;
 use Fhp\Deg;
 
-/**
- * Class GetSEPAAccounts
- * @package Fhp\Response
- * @author Nena Furtmeier <support@furtmeier.it>
- */
 class GetSEPAStandingOrders extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HICDB';

@@ -17,10 +17,6 @@ use Fhp\Segment\HKVVB;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-/**
- * Class Dialog
- * @package Fhp\Dialog
- */
 class Dialog
 {
 	const DEFAULT_COUNTRY_CODE = 280;

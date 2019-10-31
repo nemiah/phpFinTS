@@ -2,11 +2,6 @@
 
 namespace Fhp\Segment;
 
-/**
- * Abstract Class AbstractSegment.
- *
- * @package Fhp\Segment
- */
 abstract class AbstractSegment implements SegmentInterface
 {
     const SEGMENT_SEPARATOR = "'";

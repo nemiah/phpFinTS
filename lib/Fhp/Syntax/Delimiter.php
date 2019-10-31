@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fhp\Syntax;
 
 abstract class Delimiter

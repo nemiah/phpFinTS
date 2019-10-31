@@ -4,10 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class SecurityDateTime.
- * @package Fhp\DataElementGroups
- */
 class SecurityDateTime extends Deg
 {
     /**

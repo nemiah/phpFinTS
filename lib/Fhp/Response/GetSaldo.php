@@ -4,10 +4,6 @@ namespace Fhp\Response;
 
 use Fhp\Model\Saldo;
 
-/**
- * Class GetSaldo
- * @package Fhp\Response
- */
 class GetSaldo extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HISAL';

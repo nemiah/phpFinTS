@@ -4,8 +4,6 @@
 namespace Fhp\Segment;
 
 /**
- * Class BaseGeschaeftsvorfallparameter
- *
  * This is a base format for segments with various names, each of which describes a potential business transaction that
  * the bank supports. The presence of the {@link BaseGeschaeftsvorfallparameter} instance in the BPD indicates that the
  * type of transaction is supported, and depending on the particular transaction, it may contain further parameters,
@@ -14,8 +12,6 @@ namespace Fhp\Segment;
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: D.6
- *
- * @package Fhp\Segment
  */
 class BaseGeschaeftsvorfallparameter extends BaseSegment
 {

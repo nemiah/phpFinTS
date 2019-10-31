@@ -2,10 +2,6 @@
 
 namespace Fhp\DataTypes;
 
-/**
- * Class Bin
- * @package Fhp\DataTypes
- */
 class Bin
 {
     /**

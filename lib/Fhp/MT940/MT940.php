@@ -5,13 +5,10 @@ namespace Fhp\MT940;
 use Fhp\MT940\MT940Exception;
 
 /**
- * Class MT940
  * Data format: MT 940 (Version SRG 2001)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
  * Section: B.8
- *
- * @package Fhp\Parser
  */
 class MT940
 {

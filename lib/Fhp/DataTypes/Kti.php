@@ -2,13 +2,6 @@
 
 namespace Fhp\DataTypes;
 
-/**
- * Class Kti (Kontoverbindung International)
- *
- * @link http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
- * Section: B.3.2
- * @package Fhp\DataTypes
- */
 class Kti
 {
     /**

@@ -4,10 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class SecurityIdentificationDetails
- * @package Fhp\DataElementGroups
- */
 class SecurityIdentificationDetails extends Deg
 {
     const PARTY_MS = 1;   // sender
