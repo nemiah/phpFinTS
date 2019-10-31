@@ -233,7 +233,7 @@ class Dialog
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
 			),
 			array(
-				AbstractMessage::OPT_PINTAN_MECH => array($tanMechanism)
+                              AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
 			),
 			$tan
 		);
