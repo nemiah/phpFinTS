@@ -2,10 +2,6 @@
 
 namespace Fhp\Segment;
 
-/**
- * Class Segment
- * @package Fhp\Segment
- */
 class Segment extends AbstractSegment
 {
     /**

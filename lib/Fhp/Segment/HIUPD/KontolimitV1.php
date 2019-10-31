@@ -5,8 +5,6 @@ namespace Fhp\Segment\HIUPD;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Data Element Group: Kontolimit (Version 1)
- *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation" > Nr. 8

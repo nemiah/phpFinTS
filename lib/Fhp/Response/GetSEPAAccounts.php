@@ -4,10 +4,6 @@ namespace Fhp\Response;
 
 use Fhp\Model\SEPAAccount;
 
-/**
- * Class GetSEPAAccounts
- * @package Fhp\Response
- */
 class GetSEPAAccounts extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HISPA';

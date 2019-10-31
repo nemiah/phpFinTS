@@ -4,10 +4,6 @@ namespace Fhp\MT940\Dialect;
 
 use Fhp\MT940\MT940;
 
-/**
- * Class MT940
- * @package Fhp\Parser
- */
 class PostbankMT940 extends MT940
 {
     const DIALECT_ID = 'https://hbci.postbank.de/banking/hbci.do';

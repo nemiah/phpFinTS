@@ -5,7 +5,6 @@ namespace Fhp\Segment\HIUPD;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HIUPDv4
  * Segment: Kontoinformation (Version 4)
  * Bezugssegment: HKVVB
  * Sender: Kreditinstitut
@@ -15,8 +14,6 @@ use Fhp\Segment\BaseSegment;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation"
- *
- * @package Fhp\Segment\HIUPD
  */
 class HIUPDv4 extends BaseSegment implements HIUPD
 {

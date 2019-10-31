@@ -2,11 +2,6 @@
 
 namespace Fhp\Model;
 
-/**
- * Class SEPAStandingOrder
- * @package Fhp\Model
- * @author Nena Furtmeier <support@furtmeier.it>
- */
 class SEPAStandingOrder
 {
     /** @var string */

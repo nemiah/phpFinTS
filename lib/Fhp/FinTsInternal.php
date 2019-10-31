@@ -17,11 +17,6 @@ use Fhp\DataTypes\Ktv;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKCAZ;
 
-/**
- * Class FinTsInternal.
- *
- * @package Fhp
- */
 abstract class FinTsInternal
 {
     protected $url;

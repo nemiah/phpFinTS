@@ -5,13 +5,10 @@ namespace Fhp\Segment\HNHBK;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HNHBKv3
  * Segment: Nachrichtenkopf (Version 3)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: B.5.2
- *
- * @package Fhp\Segment\HNHBK
  */
 class HNHBKv3 extends BaseSegment
 {

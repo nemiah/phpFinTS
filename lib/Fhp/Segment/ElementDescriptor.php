@@ -5,13 +5,9 @@ namespace Fhp\Segment;
 use Fhp\DataTypes\Bin;
 
 /**
- * Class ElementDescriptor
- *
  * Contains information about an element (aka. field) in a segment or Deg.
  *
  * Elements implicitly have version 1.
- *
- * @package Fhp\Segment
  */
 class ElementDescriptor
 {

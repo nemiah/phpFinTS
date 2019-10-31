@@ -5,7 +5,6 @@ namespace Fhp\Segment\Common;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Class KtvV3
  * Data Element Group: Kontoverbindung (Version 3)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
@@ -15,8 +14,6 @@ use Fhp\Segment\BaseDeg;
  * File: HBCI22 Final.pdf
  * Section: II.5.3.3
  * Note that this older specification document contains no version number and has the Kik inlined, which is equivalent.
- *
- * @package Fhp\Segment\Common
  */
 class KtvV3 extends BaseDeg
 {

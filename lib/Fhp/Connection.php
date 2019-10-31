@@ -3,11 +3,7 @@
 namespace Fhp;
 
 /**
- * Class Connection
- *
  * Thin wrapper around curl that does base64 encoding/decoding and converts errors to {@link CurlException}s.
- *
- * @package Fhp
  */
 class Connection
 {

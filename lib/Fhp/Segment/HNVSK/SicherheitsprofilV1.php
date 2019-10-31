@@ -6,7 +6,6 @@ use Fhp\Model\TanMode;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Class SicherheitsprofilV1
  * Data Element Group: Sicherheitsprofil (Version 1)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
@@ -14,8 +13,6 @@ use Fhp\Segment\BaseDeg;
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: B.9.1
- *
- * @package Fhp\Segment\HNVSK
  */
 class SicherheitsprofilV1 extends BaseDeg
 {

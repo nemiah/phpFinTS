@@ -6,10 +6,6 @@ use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\Model\StatementOfAccount\Transaction;
 
-/**
- * Class GetStatementOfAccount
- * @package Fhp\Response
- */
 class GetStatementOfAccount extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HIKAZ';

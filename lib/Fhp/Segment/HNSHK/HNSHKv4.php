@@ -9,7 +9,6 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Kik;
 
 /**
- * Class HNSHKv4
  * Segment: Signaturkopf (Version 4)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
@@ -17,8 +16,6 @@ use Fhp\Segment\Common\Kik;
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section B.9.4
- *
- * @package Fhp\Segment\HNSHK
  */
 class HNSHKv4 extends BaseSegment
 {
