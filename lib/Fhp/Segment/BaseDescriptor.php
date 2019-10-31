@@ -5,11 +5,7 @@ namespace Fhp\Segment;
 use Fhp\DataTypes\Bin;
 
 /**
- * Class BaseDescriptor
- *
  * Common functionality for segment/Deg descriptors.
- *
- * @package Fhp\Segment
  */
 abstract class BaseDescriptor
 {

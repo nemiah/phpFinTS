@@ -5,13 +5,10 @@ namespace Fhp\Segment\HNVSK;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Class SicherheitsdatumUndUhrzeit
  * Data Element Group: Sicherheitsdatum und -uhrzeit (Version 2)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
  * Section: D
- *
- * @package Fhp\Segment\HNVSK
  */
 class SicherheitsdatumUndUhrzeitV2 extends BaseDeg
 {

@@ -4,10 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class SignatureAlgorithm.
- * @package Fhp\DataElementGroups
- */
 class SignatureAlgorithm extends Deg
 {
     const SIG_ALGO_USAGE_OSG = 6; // Owner Signing (OSG)

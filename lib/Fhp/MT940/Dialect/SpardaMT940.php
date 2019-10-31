@@ -4,10 +4,6 @@ namespace Fhp\MT940\Dialect;
 
 use Fhp\MT940\MT940;
 
-/**
- * Class MT940
- * @package Fhp\Parser
- */
 class SpardaMT940 extends MT940
 {
     const DIALECT_ID = 'https://fints.bankingonline.de/fints/FinTs30PinTanHttpGate';

@@ -4,10 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class SecurityProfile.
- * @package Fhp\DataElementGroups
- */
 class SecurityProfile extends Deg
 {
     const PROFILE_PIN = 'PIN';

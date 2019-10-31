@@ -4,10 +4,6 @@ namespace Fhp\Response;
 
 use Fhp\Model\Account;
 
-/**
- * Class GetAccounts
- * @package Fhp\Response
- */
 class GetAccounts extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HIUPD';

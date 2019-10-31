@@ -5,13 +5,10 @@ namespace Fhp\Segment\TAB;
 use Fhp\Segment\BaseDeg;
 
 /**
- * Class TanMediumListeV4
  * Data Element Group: TAN-Medium-Liste (Version 4)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: D (letter T)
- *
- * @package Fhp\Segment\TAB
  */
 class TanMediumListeV4 extends BaseDeg implements TanMediumListe
 {

@@ -2,10 +2,6 @@
 
 namespace Fhp;
 
-/**
- * Class Deg (Data Element Group)
- * @package Fhp
- */
 class Deg
 {
     /** @var array  */

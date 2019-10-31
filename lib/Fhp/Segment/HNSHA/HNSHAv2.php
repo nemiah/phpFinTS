@@ -5,13 +5,10 @@ namespace Fhp\Segment\HNSHA;
 use Fhp\Segment\BaseSegment;
 
 /**
- * Class HNSHAv2
  * Segment: Signaturabschluss (Version 2)
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
  * Section: B.5.2
- *
- * @package Fhp\Segment\HNSHA
  */
 class HNSHAv2 extends BaseSegment
 {

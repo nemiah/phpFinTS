@@ -3,12 +3,8 @@
 namespace Fhp\Segment;
 
 /**
- * Class SegmentDescriptor
- *
  * Contains meta information about a data elemnt group, i.e. anything that can be statically known about a sub-class of
  * {@link BaseDeg} through reflection.
- *
- * @package Fhp\Segment
  */
 class DegDescriptor extends BaseDescriptor
 {

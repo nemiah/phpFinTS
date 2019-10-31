@@ -5,11 +5,6 @@ namespace Fhp\Response;
 use Fhp\Model\SEPAStandingOrder;
 use Fhp\Model\TANRequest;
 	
-/**
- * Class GetSEPAAccounts
- * @package Fhp\Response
- * @author Nena Furtmeier <support@furtmeier.it>
- */
 class GetTANRequest extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HITAN';

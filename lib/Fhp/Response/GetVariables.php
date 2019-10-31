@@ -7,10 +7,6 @@ use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\HITANS\HITANS;
 
-/**
- * Class GetVariables
- * @package Fhp\Response
- */
 class GetVariables extends Response
 {
 	public function get()

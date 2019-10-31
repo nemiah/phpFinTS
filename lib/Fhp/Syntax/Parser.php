@@ -23,14 +23,10 @@ if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_k
 }
 
 /**
- * Class Parser
- *
  * Parses the FinTS wire format (aka. syntax) into Messages, Segments, Data Element Groups (DEG) and Data Elements (DE).
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section H.1 "Nachrichtensyntax"
- *
- * @package Fhp\Syntax
  */
 abstract class Parser
 {

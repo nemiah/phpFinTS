@@ -3,13 +3,9 @@
 namespace Fhp\Model;
 
 /**
- * Interface TanMode
- *
  * For two-step authentication, users need to enter a TAN, which can be obtained in various ways (SMS, TAN generator
  * device, and so on). Users regularly have multiple ways to obtain a TAN even for a single bank, so they will need to
  * choose how they want to receive/generate the TAN. Each {@link TanMode} describes one of these options.
- *
- * @package Fhp\Model
  */
 interface TanMode
 {

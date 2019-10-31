@@ -10,6 +10,8 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
+use Fhp\MT940\Dialect\PostbankMT940;
+use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
@@ -24,23 +26,16 @@ use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
 use Fhp\Segment\HKCDB;
-use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
 use Fhp\Segment\HKVVB;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKTAB;
-use Fhp\Model\Account;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
 
-/**
- * Class FinTs.
- *
- * @package Fhp
- */
 class FinTs extends FinTsInternal
 {
 	const DEFAULT_COUNTRY_CODE = 280;
@@ -402,11 +397,11 @@ class FinTs extends FinTsInternal
 		]);
 
         switch ($dialectId) {
-            case MT940\Dialect\SpardaMT940::DIALECT_ID:
-                $parser = new MT940\Dialect\SpardaMT940();
+            case SpardaMT940::DIALECT_ID:
+                $parser = new SpardaMT940();
                 break;
-            case MT940\Dialect\PostbankMT940::DIALECT_ID:
-                $parser = new MT940\Dialect\PostbankMT940();
+            case PostbankMT940::DIALECT_ID:
+                $parser = new PostbankMT940();
                 break;
             default:
                 $parser = new MT940();

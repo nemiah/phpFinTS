@@ -2,10 +2,6 @@
 
 namespace Fhp\Segment;
 
-/**
- * Class NameMapping
- * @package Fhp\Segment
- */
 class NameMapping
 {
     protected static $mapping = array(
