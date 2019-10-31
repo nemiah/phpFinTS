@@ -222,6 +222,9 @@ class Dialog
 
 	public function submitTAN($response, $tanMechanism, $tan)
 	{
+		if(!is_array($tanMechanism))
+            $tanMechanism = array($tanMechanism);
+		
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
@@ -233,7 +236,7 @@ class Dialog
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
 			),
 			array(
-                              AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
+                AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
 			),
 			$tan
 		);
