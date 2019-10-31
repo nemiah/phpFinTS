@@ -149,8 +149,7 @@ class FinTs extends FinTsInternal
 			$dialog,
 			array(
 				new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
-				new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-				$this->createHKTAN(5)
+				new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion)
 			),
 			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
 		);
@@ -180,8 +179,7 @@ class FinTs extends FinTsInternal
 				$dialog,
 				array(
 					new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
-					new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-					$this->createHKTAN(5)
+					new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion)
 				),
 				array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
 			);
@@ -494,8 +492,6 @@ class FinTs extends FinTsInternal
 				$hksalAccount->addDataElement(static::DEFAULT_COUNTRY_CODE);
 				$hksalAccount->addDataElement($account->getBlz());
 
-				$addEncSegments[] = $this->createHKTAN(4);
-
 				break;
 			case 6:
 				$hksalAccount = new Ktv(
@@ -517,13 +513,7 @@ class FinTs extends FinTsInternal
 				throw new \Exception('Unsupported HKSAL version: ' . $dialog->getHksalMaxVersion());
 		}
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+		$message = $this->getNewMessage($dialog,
 			array_merge(
 				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)),
 				$addEncSegments
@@ -611,16 +601,9 @@ class FinTs extends FinTsInternal
 			$hkdsx = new HKDSC(HKDSC::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02', $painMessage);
 		}
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+		$message = $this->getNewMessage($dialog,
 			array(
-				$hkdsx,
-				$this->createHKTAN(4)
+				$hkdsx
 			),
 			array(
 				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
@@ -710,13 +693,7 @@ class FinTs extends FinTsInternal
 			new Kik(280, $account->getBlz())
 		);
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+		$message = $this->getNewMessage($dialog,
 			array(
 				new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array('urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03'))#, "pain.008.003.02.xsd"))
 			),
