@@ -605,7 +605,7 @@ class FinTs extends FinTsInternal
 
         $message = $this->getNewMessage($dialog,
 			array(
-				$hkdsx
+                $hkdsx
 			),
 			array(
 				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
