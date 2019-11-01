@@ -92,8 +92,8 @@ class Dialog
 	 */
 	protected $productVersion;
 
-	/** @var BPD */
-	public $bpd;
+    /** @var BPD */
+    public $bpd;
 
 	/**
 	 * Dialog constructor.
@@ -226,7 +226,7 @@ class Dialog
 
 	public function submitTAN($response, $tanMechanism, $tan)
 	{
-		if(!is_array($tanMechanism)) {
+        if(!is_array($tanMechanism)) {
             $tanMechanism = array($tanMechanism);
         }
         
