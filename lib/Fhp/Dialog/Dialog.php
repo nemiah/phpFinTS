@@ -6,6 +6,7 @@ use Fhp\Connection;
 use Fhp\Dialog\Exception\FailedRequestException;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
+use Fhp\Protocol\BPD;
 use Fhp\Response\Initialization;
 use Fhp\Response\Response;
 use Fhp\Response\GetTANRequest;
@@ -90,6 +91,9 @@ class Dialog
 	 * @var string
 	 */
 	protected $productVersion;
+
+    /** @var BPD */
+    public $bpd;
 
 	/**
 	 * Dialog constructor.
@@ -222,7 +226,7 @@ class Dialog
 
 	public function submitTAN($response, $tanMechanism, $tan)
 	{
-		if(!is_array($tanMechanism)) {
+        if(!is_array($tanMechanism)) {
             $tanMechanism = array($tanMechanism);
         }
         
@@ -497,7 +501,9 @@ class Dialog
 		}
 		$this->bankName = $response->getBankName();
 
-		// max version for segment HKSAL (Saldo abfragen)
+        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse), ['logger' => $this->logger]);
+
+        // max version for segment HKSAL (Saldo abfragen)
 		$this->hksalVersion = $response->getHksalMaxVersion();
 		$this->supportedTanMechanisms = $response->getSupportedTanMechanisms();
 

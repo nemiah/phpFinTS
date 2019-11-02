@@ -106,7 +106,7 @@ class BPD
     public function tanRequiredForRequest($requestSegments)
     {
         foreach ($requestSegments as $segment) {
-            if ($this->tanRequired[$segment->getName()]) return true;
+            if ($this->tanRequired[$segment->getName()] ?? false) return true;
         }
         return false;
     }
