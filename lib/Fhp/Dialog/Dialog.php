@@ -7,6 +7,7 @@ use Fhp\Dialog\Exception\FailedRequestException;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Protocol\BPD;
+use Fhp\Protocol\UPD;
 use Fhp\Response\Initialization;
 use Fhp\Response\Response;
 use Fhp\Response\GetTANRequest;
@@ -94,6 +95,9 @@ class Dialog
 
     /** @var BPD */
     public $bpd;
+
+    /** @var UPD */
+    public $upd;
 
 	/**
 	 * Dialog constructor.
@@ -420,8 +424,13 @@ class Dialog
 
 		$response = $this->sendMessage($message)->rawResponse;
 
+        $parsedMessage = \Fhp\Protocol\Message::parse($response);
         // Update the BPD, as it could differ from the values received via syncDialog
-        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response), ['logger' => $this->logger]);
+        $this->bpd = BPD::extractFromResponse($parsedMessage, ['logger' => $this->logger]);
+
+        if (UPD::containedInResponse($parsedMessage)) {
+            $this->upd = UPD::extractFromResponse($parsedMessage);
+        }
 
 		#$this->logger->debug('Got INIT response:');
 		#$this->logger->debug($response);

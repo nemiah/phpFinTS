@@ -2,9 +2,11 @@
 
 namespace Fhp\Protocol;
 
+use Fhp\Model\SEPAAccount;
 use Fhp\Segment\HIUPA\HIUPAv4;
 use Fhp\Segment\HIUPD\HIUPD;
 use Fhp\Segment\HIUPD\HIUPDv4;
+use Fhp\Segment\HIUPD\HIUPDv6;
 
 /**
  * Contains the "Userparameterdaten" (UPD), i.e. configuration information that was retrieved from the bank server
@@ -44,5 +46,33 @@ class UPD
         $upd->hiupa = $response->requireSegment(HIUPAv4::class);
         $upd->hiupd = $response->findSegments(HIUPD::class);
         return $upd;
+    }
+
+    /**
+     * @param SEPAAccount $account The account to test the support for
+     * @param string $requestName The request that shall be sent to the bank.
+     * @return boolean True if the given request can be used by the current user for the given account.
+     */
+    public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
+    {
+        // Every Account the User has access to, has seperate permissions
+        foreach ($this->hiupd as $hiupd) {
+            $accountFound = false;
+            if ($hiupd instanceof HIUPDv6 && !is_null($hiupd->iban)) {
+                $accountFound = $hiupd->iban == $account->getIban();
+            } elseif (!is_null($hiupd->kontoverbindung) && !is_null($hiupd->kontoverbindung->kontonummer)) {
+                $accountFound = $hiupd->kontoverbindung->kontonummer == $account->getAccountNumber();
+            }
+            if ($accountFound) {
+                foreach ($hiupd->erlaubteGeschaeftsvorfaelle as $erlaubterGeschaeftsvorfall) {
+                    if ($erlaubterGeschaeftsvorfall->geschaeftsvorfall == $requestName) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        return false;
     }
 }
