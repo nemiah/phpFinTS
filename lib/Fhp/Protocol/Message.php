@@ -283,11 +283,13 @@ class Message
             // Signature header and footer must always be there when the "encrypted" structure was used.
             $result->signatureHeader = array_shift($result->plainSegments);
             $result->signatureFooter = array_pop($result->plainSegments);
-            if (!($result->signatureHeader instanceof HNSHKv4)) {
-                throw new \InvalidArgumentException("Expected first segment to be HNSHK: $rawMessage");
-            }
-            if (!($result->signatureFooter instanceof HNSHAv2)) {
-                throw new \InvalidArgumentException("Expected last segment to be HNSHA: $rawMessage");
+
+            $signatureHeaderAsExpected = $result->signatureHeader instanceof HNSHKv4;
+            $signatureFooterAsExpected = $result->signatureFooter instanceof HNSHAv2;
+
+            // Postbank is not following the Spec and does not send the Header and Footer
+            if ($signatureHeaderAsExpected xor $signatureFooterAsExpected) {
+                throw new \InvalidArgumentException("Expected first segment to be HNSHK and last segement to be HNSHA or both to be absent: $rawMessage");
             }
         } else {
             // Ensure that there's no encryption header anywhere, and we haven't just misunderstood the format.
