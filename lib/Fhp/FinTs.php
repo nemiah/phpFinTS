@@ -752,4 +752,14 @@ class FinTs extends FinTsInternal
 
         return $this->dialog;
     }
+
+    /**
+     * @param SEPAAccount $account The account to test the support for
+     * @param string $requestName The request that shall be sent to the bank.
+     * @return boolean True if the given request can be used by the current user for the given account.
+     */
+    public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
+    {
+        return $this->dialog->upd->isRequestSupportedForAccount($account, $requestName);
+    }
 }
