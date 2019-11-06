@@ -419,6 +419,10 @@ class Dialog
 		#$this->logger->debug((string) $message);
 
 		$response = $this->sendMessage($message)->rawResponse;
+
+        // Update the BPD, as it could differ from the values received via syncDialog
+        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response), ['logger' => $this->logger]);
+
 		#$this->logger->debug('Got INIT response:');
 		#$this->logger->debug($response);
 
