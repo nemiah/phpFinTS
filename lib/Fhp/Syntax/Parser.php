@@ -157,15 +157,23 @@ abstract class Parser
      */
     public static function parseBinaryBlock($rawValue)
     {
-        if ($rawValue === '') return null;
+        if ($rawValue === '')
+            return null;
+
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
-        if (empty($rawValue) || $rawValue[0] !== Delimiter::BINARY || $delimiterPos === false) {
+        if (
+            empty($rawValue) ||
+            substr($rawValue, 0, 1) !== Delimiter::BINARY ||
+            $delimiterPos === false
+        ) {
             throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
         }
+
         $lengthStr = substr($rawValue, 1, $delimiterPos - 1);
         if (!is_numeric($lengthStr)) {
             throw new \InvalidArgumentException("Invalid binary block length: $lengthStr");
         }
+
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
         
