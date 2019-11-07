@@ -2,10 +2,6 @@
 
 namespace Fhp\Segment;
 
-/**
- * Interface SegmentInterface
- * @package Fhp\Segment
- */
 interface SegmentInterface
 {
     /**
@@ -21,6 +17,11 @@ interface SegmentInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @return int
+     */
+    public function getVersion();
 
     /**
      * @return int

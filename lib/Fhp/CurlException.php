@@ -2,14 +2,10 @@
 
 namespace Fhp;
 
-/**
- * Class CurlException
- * @package Fhp
- */
 class CurlException extends \Exception
 {
     /**
-     * @var mixed
+     * @var array
      */
     protected $curlInfo;
 
@@ -21,17 +17,16 @@ class CurlException extends \Exception
      * @param \Exception|null $previous
      * @param mixed $curlInfo
      */
-    public function __construct($message, $code = 0, \Exception $previous = null, $curlInfo = "")
+    public function __construct($message, $code = 0, \Exception $previous = null, $curlInfo = [])
     {
         parent::__construct($message, $code, $previous);
-
         $this->curlInfo = $curlInfo;
     }
 
     /**
      * Gets the curl info from request / response.
      *
-     * @return mixed
+     * @return array
      */
     public function getCurlInfo()
     {

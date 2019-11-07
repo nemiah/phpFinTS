@@ -4,10 +4,6 @@ namespace Fhp\Response;
 
 use Fhp\Segment\HKCAZ;
 
-/**
- * Class BankToCustomerAccountReportHICAZ.php
- * @package Fhp\Response
- */
 class BankToCustomerAccountReportHICAZ extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HICAZ';

@@ -4,7 +4,7 @@ namespace Fhp\ResponseTest;
 
 use Fhp\Response\Response;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends \PHPUnit\Framework\TestCase
 {
     protected static function getMethod($class, $name)
     {

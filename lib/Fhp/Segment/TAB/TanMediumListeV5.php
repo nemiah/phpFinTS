@@ -1,0 +1,75 @@
+<?php /** @noinspection PhpUnused */
+
+namespace Fhp\Segment\TAB;
+
+use Fhp\Segment\BaseDeg;
+
+/**
+ * Data Element Group: TAN-Medium-Liste (Version 5)
+ *
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * Section: D (letter T)
+ */
+class TanMediumListeV5 extends BaseDeg implements TanMediumListe
+{
+    /**
+     * A: Alle Medien
+     * L: Liste
+     * G: TAN-Generator
+     * M: Mobiltelefon mit mobileTAN
+     * S: Secoder
+     * B: Bilateral vereinbart
+     * @var string
+     */
+    public $tanMediumKlasse;
+    /**
+     * 1: Aktiv
+     * 2: Verfügbar
+     * 3: Aktiv Folgekarte
+     * 4: Verfügbar Folgekarte
+     * @var integer
+     */
+    public $status;
+    /** @var integer|null Only for $tanMediumKlasse=='B' */
+    public $sicherheitsfunktion;
+    /** @var string|null Only for $tanMediumKlasse=='G' */
+    public $kartennummer;
+    /** @var string|null Only for $tanMediumKlasse=='G' */
+    public $kartenfolgenummer;
+    /** @var integer|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
+    public $kartenart;
+    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G'  */
+    public $kontoverbindungAuftraggeber;
+    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
+    public $gueltigAb;
+    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
+    public $gueltigBis;
+    /** @var string|null Only for $tanMediumKlasse=='L' */
+    public $tanListennumer;
+    /** @var string|null Must for $tanMediumKlasse=='M', optional otherwise */
+    public $bezeichnungDesTanMediums;
+    /** @var string|null Only and optional for $tanMediumKlasse=='M' */
+    public $mobiltelefonnummerVerschleiert;
+    /** @var string|null Only and optional for $tanMediumKlasse=='M' */
+    public $mobiltelefonnummer;
+    /** @var \Fhp\Segment\Common\Kti|null Only and optional for $tanMediumKlasse=='M' */
+    public $smsAbbuchungskonto;
+    /** @var integer|null */
+    public $anzahlFreieTans;
+    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
+    public $letzteBenutzung;
+    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
+    public $freigeschaltetAm;
+
+    /** @inheritDoc */
+    public function getName()
+    {
+        return $this->bezeichnungDesTanMediums;
+    }
+
+    /** @inheritDoc */
+    public function getPhoneNumber()
+    {
+        return $this->mobiltelefonnummer !== null ? $this->mobiltelefonnummer : $this->mobiltelefonnummerVerschleiert;
+    }
+}

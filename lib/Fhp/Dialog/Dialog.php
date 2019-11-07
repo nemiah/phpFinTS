@@ -6,6 +6,8 @@ use Fhp\Connection;
 use Fhp\Dialog\Exception\FailedRequestException;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\UPD;
 use Fhp\Response\Initialization;
 use Fhp\Response\Response;
 use Fhp\Response\GetTANRequest;
@@ -17,10 +19,6 @@ use Fhp\Segment\HKVVB;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-/**
- * Class Dialog
- * @package Fhp\Dialog
- */
 class Dialog
 {
 	const DEFAULT_COUNTRY_CODE = 280;
@@ -95,6 +93,12 @@ class Dialog
 	 */
 	protected $productVersion;
 
+    /** @var BPD */
+    public $bpd;
+
+    /** @var UPD */
+    public $upd;
+
 	/**
 	 * Dialog constructor.
 	 *
@@ -144,7 +148,7 @@ class Dialog
 			$message->setMessageNumber($this->messageNumber);
 			$message->setDialogId($this->dialogId);
 
-			$result = $this->connection->send($message);
+            $result = $this->connection->send($message->toString());
 			$this->messageNumber++;
 
 			$this->logger->debug('< '.$result);
@@ -179,13 +183,21 @@ class Dialog
 			if (!$response->isStrongAuthRequired()) {
 				return $response;
 			}
-
+			
 			$response = new GetTANRequest($response->rawResponse, $this);
 
 			if (!$tanCallback) {
 				return $response;
 			}
-
+			
+			if(!$this->dialogId) {
+				$this->dialogId = $response->getDialogId();
+			}
+			
+			if(!$this->systemId) {
+				$this->systemId = $response->getSystemId();
+			}
+			
 			$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 			for ($i = 0; $i < 120; $i += $interval) {
 				sleep($interval);
@@ -218,6 +230,10 @@ class Dialog
 
 	public function submitTAN($response, $tanMechanism, $tan)
 	{
+        if(!is_array($tanMechanism)) {
+            $tanMechanism = array($tanMechanism);
+        }
+        
 		$message = new Message(
 			$this->bankCode,
 			$this->username,
@@ -229,7 +245,7 @@ class Dialog
 				new HKTAN(HKTAN::VERSION, 3, $response->get()->getProcessID())
 			),
 			array(
-				AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
+                AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
 			),
 			$tan
 		);
@@ -407,6 +423,15 @@ class Dialog
 		#$this->logger->debug((string) $message);
 
 		$response = $this->sendMessage($message)->rawResponse;
+
+        $parsedMessage = \Fhp\Protocol\Message::parse($response);
+        // Update the BPD, as it could differ from the values received via syncDialog
+        $this->bpd = BPD::extractFromResponse($parsedMessage, ['logger' => $this->logger]);
+
+        if (UPD::containedInResponse($parsedMessage)) {
+            $this->upd = UPD::extractFromResponse($parsedMessage);
+        }
+
 		#$this->logger->debug('Got INIT response:');
 		#$this->logger->debug($response);
 
@@ -428,7 +453,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function syncDialog($tanMechanism = null, $tanMediaName = null)
+	public function syncDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('SYNC initialize');
@@ -473,7 +498,7 @@ class Dialog
 
 		#$this->logger->debug('Sending SYNC message:');
 		#$this->logger->debug((string) $syncMsg);
-		$response = $this->sendMessage($syncMsg);
+		$response = $this->sendMessage($syncMsg, $tanMechanism, $tanCallback);
 
 		#$this->checkResponse($response);
 
@@ -481,11 +506,17 @@ class Dialog
 		#$this->logger->debug($response->rawResponse);
 
 		// save BPD (Bank Parameter Daten)
-		$this->systemId = $response->getSystemId();
-		$this->dialogId = $response->getDialogId();
+		if(!$this->systemId) {
+			$this->systemId = $response->getSystemId();
+		}
+		if(!$this->dialogId) {
+			$this->dialogId = $response->getDialogId();
+		}
 		$this->bankName = $response->getBankName();
 
-		// max version for segment HKSAL (Saldo abfragen)
+        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse), ['logger' => $this->logger]);
+
+        // max version for segment HKSAL (Saldo abfragen)
 		$this->hksalVersion = $response->getHksalMaxVersion();
 		$this->supportedTanMechanisms = $response->getSupportedTanMechanisms();
 

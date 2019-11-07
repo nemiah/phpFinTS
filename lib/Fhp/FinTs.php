@@ -10,7 +10,9 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
-use Fhp\Parser\MT940;
+use Fhp\MT940\Dialect\PostbankMT940;
+use Fhp\MT940\Dialect\SpardaMT940;
+use Fhp\MT940\MT940;
 use Fhp\Response\GetAccounts;
 use Fhp\Response\GetSaldo;
 use Fhp\Response\GetSEPAAccounts;
@@ -24,22 +26,16 @@ use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
 use Fhp\Segment\HKCDB;
-use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
 use Fhp\Segment\HKVVB;
 use Fhp\Segment\HKIDN;
-use Fhp\Model\Account;
+use Fhp\Segment\HKTAB;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
 
-/**
- * Class FinTs.
- *
- * @package Fhp
- */
 class FinTs extends FinTsInternal
 {
 	const DEFAULT_COUNTRY_CODE = 280;
@@ -69,33 +65,28 @@ class FinTs extends FinTsInternal
 	/**
 	 * FinTs constructor.
 	 * @param string $server
-	 * @param int $port
 	 * @param string $bankCode
 	 * @param string $username
 	 * @param string $pin
-	 * @param LoggerInterface|null $logger
 	 * @param string $productName
 	 * @param string $productVersion
 	 */
 	public function __construct(
 		$server,
-		$port,
 		$bankCode,
 		$username,
 		$pin,
-		LoggerInterface $logger = null,
 		$productName,
 		$productVersion
 	) {
 		if(trim($productName) == '')
-			throw new Exception ("Product name required!");
+			throw new \Exception ("Product name required!");
 		
 		if(trim($productVersion) == '')
-			throw new Exception ("Product version required!");
+			throw new \Exception ("Product version required!");
 		
 		$this->url = trim($server);
-		$this->port = intval($port);
-		$this->logger = null == $logger ? new NullLogger() : $logger;
+		$this->logger = new NullLogger();
 
 		// escaping of bank code not really needed here as it should
 		// never have special chars. But we just do it to ensure
@@ -114,8 +105,10 @@ class FinTs extends FinTsInternal
 		if ($productVersion != '') {
 			$this->productVersion = self::escapeString($productVersion);
 		}
-
-		#$this->connection = new Connection($this->server, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+	}
+	
+	public function setLogger(LoggerInterface $logger){
+		$this->logger = $logger;
 	}
 
 	/**
@@ -157,7 +150,7 @@ class FinTs extends FinTsInternal
 			array(
 				new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
 				new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-				$this->createHKTAN(5)
+                $this->createHKTAN(5)
 			),
 			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
 		);
@@ -188,7 +181,7 @@ class FinTs extends FinTsInternal
 				array(
 					new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
 					new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-					$this->createHKTAN(5)
+                    $this->createHKTAN(5)
 				),
 				array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
 			);
@@ -215,7 +208,7 @@ class FinTs extends FinTsInternal
 
 		$dialog = $this->getDialog(false);#, $this->tanMechanism);
 		#$dialog->endDialog(); //probably not required
-		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName, $tanCallback);
 		$dialog->endDialog();
 		$dialog->initDialog($this->tanMechanism, $this->tanMediaName);
 		$this->bankName = $dialog->getBankName();
@@ -236,17 +229,54 @@ class FinTs extends FinTsInternal
 		return $sepaAccounts->getSEPAAccountsArray();
 	}
 
-	public function getVariables()
-	{
+    public function getVariables()
+    {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog(false);
-		$response = $dialog->syncDialog();
-		// $this->end();
+        $dialog = $this->getDialog(false);
+        $response = $dialog->syncDialog();
+        // $this->end();
 
-		$vars = new GetVariables($response->rawResponse);
-		return $vars->get();
-	}
+        $vars = new GetVariables($response->rawResponse);
+        $obj = $vars->get();
+
+        #if (!empty($obj->tanModes)) {
+        #    $this->setTANMechanism(array_keys($obj->tanModes)[0], 'A'); // some banks need nonempty methodName
+        #    $obj->TANMediaNames = $this->getTANDevices(); //does not work with every Bank. Needs to be called separately
+        #}
+        return $obj;
+    }
+    public function getTANDevices()
+    {
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
+        $dialog = $this->getDialog(false);
+        $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+        $dialog->endDialog();
+        $dialog->initDialog($this->tanMechanism, $this->tanMediaName);
+        $this->bankName = $dialog->getBankName();
+
+        $message = $this->getNewMessage(
+            $dialog,
+            array(
+                new HKTAB(3)
+            ),
+            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+        );
+        $response = $dialog->sendMessage($message);
+        $segment = $response->findSegment('HITAB');
+        $segment = $response->splitSegment($segment);
+        $segment = array_slice($segment, 2);
+        
+        $devices = array();
+        
+        foreach ($segment as $deg) {
+            $deg_cleaned = str_replace("?:", "______________", $deg);
+            $name = explode(':', $deg_cleaned)[12];
+            $devices[] = $this->unescapeString(str_replace("______________", "?:", $name));
+        }
+        return $devices;
+    }
 
 	public function getTANRequest()
 	{
@@ -306,8 +336,8 @@ class FinTs extends FinTsInternal
 		$this->logger->info('End date  : ' . $to->format('Y-m-d'));
 
 		$dialog = $this->getDialog();
-		#$dialog->syncDialog();
-		#$dialog->initDialog();
+        #$dialog->syncDialog();
+        #$dialog->initDialog();
 
 		$message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
 		$response = $dialog->sendMessage($message, $this->getUsedPinTanMechanism($dialog), $tanCallback, $interval);
@@ -366,19 +396,19 @@ class FinTs extends FinTsInternal
 			$urlParts['host'] => strtolower($urlParts['host']),
 		]);
 
-		switch ($dialectId) {
-			case Parser\Dialect\SpardaMT940::DIALECT_ID:
-				$parser = new Parser\Dialect\SpardaMT940($rawMt940);
-			break;
-			case Parser\Dialect\PostbankMT940::DIALECT_ID:
-				$parser = new Parser\Dialect\PostbankMT940($rawMt940);
-			break;
-			default:
-				$parser = new MT940($rawMt940);
-			break;
-		}
+        switch ($dialectId) {
+            case SpardaMT940::DIALECT_ID:
+                $parser = new SpardaMT940();
+                break;
+            case PostbankMT940::DIALECT_ID:
+                $parser = new PostbankMT940();
+                break;
+            default:
+                $parser = new MT940();
+                break;
+        }
 
-		return GetStatementOfAccount::createModelFromArray($parser->parse(MT940::TARGET_ARRAY));
+        return GetStatementOfAccount::createModelFromArray($parser->parse($rawMt940));
 	}
 
 	/**
@@ -464,8 +494,6 @@ class FinTs extends FinTsInternal
 				$hksalAccount->addDataElement(static::DEFAULT_COUNTRY_CODE);
 				$hksalAccount->addDataElement($account->getBlz());
 
-				$addEncSegments[] = $this->createHKTAN(4);
-
 				break;
 			case 6:
 				$hksalAccount = new Ktv(
@@ -487,13 +515,7 @@ class FinTs extends FinTsInternal
 				throw new \Exception('Unsupported HKSAL version: ' . $dialog->getHksalMaxVersion());
 		}
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+        $message = $this->getNewMessage($dialog,
 			array_merge(
 				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)),
 				$addEncSegments
@@ -581,16 +603,9 @@ class FinTs extends FinTsInternal
 			$hkdsx = new HKDSC(HKDSC::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.008.003.02', $painMessage);
 		}
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+        $message = $this->getNewMessage($dialog,
 			array(
-				$hkdsx,
-				$this->createHKTAN(4)
+                $hkdsx
 			),
 			array(
 				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
@@ -600,16 +615,16 @@ class FinTs extends FinTsInternal
 		$class = explode('\\', get_class($hkdsx));
 		$this->logger->info('');
 		$this->logger->info($class[count($class) - 1].' (SEPA direct debit) initialize');
-		$response = $dialog->sendMessage($message);
+		$response = $dialog->sendMessage($message, $this->tanMechanism, $tanCallback);
 		$this->logger->info($class[count($class) - 1].' end');
 
-		$response = new GetTANRequest($response->rawResponse);
+		#$response = new GetTANRequest($response->rawResponse);
 		#print_r($response);
 
 		#var_dump($response->get()->getProcessID());
-		$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
+		#$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 		#echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
-		for ($i = 0; $i < 120; $i += $interval) {
+		/*for ($i = 0; $i < 120; $i += $interval) {
 			sleep($interval);
 
 			$tan = trim($tanCallback());
@@ -626,7 +641,7 @@ class FinTs extends FinTsInternal
 			throw new TANException('No TAN received!');
 		}
 
-		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
+		$dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);*/
 	}
 
 	/**
@@ -680,13 +695,7 @@ class FinTs extends FinTsInternal
 			new Kik(280, $account->getBlz())
 		);
 
-		$message = new Message(
-			$this->bankCode,
-			$this->username,
-			$this->pin,
-			$dialog->getSystemId(),
-			$dialog->getDialogId(),
-			$dialog->getMessageNumber(),
+        $message = $this->getNewMessage($dialog,
 			array(
 				new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array('urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03'))#, "pain.008.003.02.xsd"))
 			),
@@ -721,7 +730,7 @@ class FinTs extends FinTsInternal
         }
 
         if ($this->connection === null) {
-            $this->connection = new Connection($this->url, $this->port, $this->timeoutConnect, $this->timeoutResponse);
+            $this->connection = new Connection($this->url, $this->timeoutConnect, $this->timeoutResponse);
         }
 
         $dialog = new Dialog(
@@ -742,5 +751,15 @@ class FinTs extends FinTsInternal
         $this->dialog = $dialog;
 
         return $this->dialog;
+    }
+
+    /**
+     * @param SEPAAccount $account The account to test the support for
+     * @param string $requestName The request that shall be sent to the bank.
+     * @return boolean True if the given request can be used by the current user for the given account.
+     */
+    public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
+    {
+        return $this->dialog->upd->isRequestSupportedForAccount($account, $requestName);
     }
 }

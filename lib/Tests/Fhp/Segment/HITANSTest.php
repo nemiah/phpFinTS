@@ -7,7 +7,7 @@ use Fhp\Segment\HITANS\HITANSv1;
 use Fhp\Segment\HITANS\HITANSv3;
 use Fhp\Segment\HITANS\HITANSv6;
 
-class HITANSTest extends \PHPUnit_Framework_TestCase
+class HITANSTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Real response from DKB (Deutsche Kreditbank).
@@ -56,6 +56,7 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
     {
         $parsed = HITANSv1::parse(static::REAL_DKB_RESPONSE[0]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_DKB_response_v1()
@@ -82,6 +83,7 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
     {
         $parsed = HITANSv3::parse(static::REAL_DKB_RESPONSE[1]);
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_DKB_response_v3()
@@ -112,5 +114,19 @@ class HITANSTest extends \PHPUnit_Framework_TestCase
             BaseSegment::parse(static::REAL_DKB_RESPONSE[1]));
         $this->assertEquals(HITANSv6::parse(static::REAL_DKB_RESPONSE[2]),
             BaseSegment::parse(static::REAL_DKB_RESPONSE[2]));
+    }
+
+    public function test_validate_invalid_segmentkopf()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches("@Invalid int: LALA@");
+        HITANSv1::parse("HITANS:LALA:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:J:J'");
+    }
+
+    public function test_validate_invalid_deg()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches("@Invalid bool: LALA@");
+        HITANSv1::parse("HITANS:165:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:LALA:J'");
     }
 }

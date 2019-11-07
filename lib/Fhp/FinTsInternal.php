@@ -17,16 +17,9 @@ use Fhp\DataTypes\Ktv;
 use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKCAZ;
 
-/**
- * Class FinTsInternal.
- *
- * @package Fhp
- */
 abstract class FinTsInternal
 {
     protected $url;
-    /** @var int */
-    protected $port;
     /** @var  Connection */
     protected $connection = null;
     /** @var int */
@@ -50,16 +43,9 @@ abstract class FinTsInternal
             new Kik(280, $account->getBlz())
         );
 
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
+        $message = $this->getNewMessage($dialog,
             array(
                 new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03', $order),
-                $this->createHKTAN(4)
             ),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
@@ -70,7 +56,8 @@ abstract class FinTsInternal
         return new GetTANRequest($response->rawResponse, $dialog);
     }
 
-    protected function createHKTAN($segmentNumber) {
+    protected function createHKTAN($segmentNumber)
+    {
         return new HKTAN(HKTAN::VERSION, $segmentNumber, null, $this->tanMediaName);
     }
 
@@ -95,16 +82,9 @@ abstract class FinTsInternal
             new Kik(280, $account->getBlz())
         );
 
-        $message = new Message(
-            $this->bankCode,
-            $this->username,
-            $this->pin,
-            $dialog->getSystemId(),
-            $dialog->getDialogId(),
-            $dialog->getMessageNumber(),
+        $message = $this->getNewMessage($dialog,
             array(
                 new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03', $painMessage),
-                $this->createHKTAN(4)
             ),
             array(
                 AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
@@ -130,6 +110,10 @@ abstract class FinTsInternal
      */
     protected function getNewMessage(Dialog $dialog, array $segments, array $options)
     {
+        // Add an HKTAN Segment if the Bank requires it
+        if ($dialog->bpd->tanRequiredForRequest($segments)) {
+            $segments[] = $this->createHKTAN(count($segments) + 4);
+        }
         return new Message(
             $this->bankCode,
             $this->username,
@@ -163,6 +147,22 @@ abstract class FinTsInternal
         return str_replace(
             array('?', '@', ':', '+', '\''),
             array('??', '?@', '?:', '?+', '?\''),
+            $string
+        );
+    }
+
+    /**
+     * unescaping userdata.
+     * HBCI escape char is "?"
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function unescapeString($string)
+    {
+        return str_replace(
+            array('??', '?@', '?:', '?+', '?\''),
+            array('?', '@', ':', '+', '\''),
             $string
         );
     }
@@ -320,8 +320,7 @@ abstract class FinTsInternal
                     $from,
                     $to,
                     $touchdown
-				),
-				$this->createHKTAN(4)
+                )
             ),
             array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
         );

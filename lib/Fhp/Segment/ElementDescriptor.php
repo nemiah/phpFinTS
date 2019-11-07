@@ -2,14 +2,12 @@
 
 namespace Fhp\Segment;
 
+use Fhp\DataTypes\Bin;
+
 /**
- * Class ElementDescriptor
- *
  * Contains information about an element (aka. field) in a segment or Deg.
  *
  * Elements implicitly have version 1.
- *
- * @package Fhp\Segment
  */
 class ElementDescriptor
 {
@@ -92,16 +90,18 @@ class ElementDescriptor
             $expectedType = static::TYPE_MAP[$this->type];
             $actualType = gettype($value);
             if ($actualType !== $expectedType) {
-                throw new \InvalidArgumentException("Expected $expectedType, got $actualType: $value");
+                throw new \InvalidArgumentException("Expected $expectedType, got $actualType: $value for $this->field");
             }
         } elseif ($this->type instanceof \ReflectionClass) {
             if (!$this->type->isInstance($value)) {
-                throw new \InvalidArgumentException("Expected {$this->type->name}, got $value");
+                throw new \InvalidArgumentException("Expected {$this->type->name}, got $value for $this->field");
             }
             if ($value instanceof BaseSegment || $value instanceof BaseDeg) {
                 $value->validate();
+            } elseif ($value instanceof Bin) {
+                // Nothing to validate on a binary value.
             } else {
-                throw new \AssertionError(); // Violates guarantees of what we put in $this->type.
+                throw new \AssertionError("Unexpected type {$this->type->name}"); // Violates guarantees of what we put in $this->type.
             }
         } else {
             throw new \InvalidArgumentException("Unsupported type: $this->type");

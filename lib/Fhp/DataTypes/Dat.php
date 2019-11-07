@@ -2,10 +2,6 @@
 
 namespace Fhp\DataTypes;
 
-/**
- * Class Dat
- * @package Fhp\DataTypes
- */
 class Dat
 {
     /**

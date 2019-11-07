@@ -2,14 +2,10 @@
 
 namespace Fhp\Segment;
 
-use Fhp\Syntax\Delimiter;
+use Fhp\DataTypes\Bin;
 
 /**
- * Class BaseDescriptor
- *
  * Common functionality for segment/Deg descriptors.
- *
- * @package Fhp\Segment
  */
 abstract class BaseDescriptor
 {
@@ -24,7 +20,15 @@ abstract class BaseDescriptor
      * documentation does not specify it (anymore).
      * @var ElementDescriptor[]
      */
-    public $elements;
+    public $elements = [];
+
+    /**
+     * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
+     * segment/DEG described by this descriptor, it would get index $maxIndex+1.
+     * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
+     * @var integer
+     */
+    public $maxIndex;
 
     /**
      * @param \ReflectionClass $clazz
@@ -33,16 +37,14 @@ abstract class BaseDescriptor
     {
         // Use reflection to map PHP class fields to elements in the segment/Deg.
         $implicitIndex = true;
-        $nextIndex = $clazz->isSubclassOf(BaseSegment::class) ? 1 : 0; // Segments have implicit Segmentkopf.
-        foreach ($clazz->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if ($property->isStatic() || $property->getDeclaringClass()->name !== $clazz->name) {
-                // Skip static and super properties.
-                continue;
-            }
-
+        $nextIndex = 0;
+        foreach (static::enumerateProperties($clazz) as $property) {
             $docComment = $property->getDocComment();
             if (!is_string($docComment)) {
                 throw new \InvalidArgumentException("Property $property must be annotated.");
+            }
+            if (static::getBoolAnnotation('Ignore', $docComment)) {
+                continue; // Skip @Ignore-d propeties.
             }
 
             $index = static::getIntAnnotation('Index', $docComment);
@@ -82,10 +84,12 @@ abstract class BaseDescriptor
             } else {
                 $nextIndex++; // Singular field, so the index advances by 1.
             }
-            $descriptor->type = static::resolveType($type, $clazz);
+            $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
+        if (empty($this->elements)) throw new \InvalidArgumentException("No fields found in $clazz->name");
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
+        $this->maxIndex = $nextIndex - 1;
     }
 
     /**
@@ -99,6 +103,23 @@ abstract class BaseDescriptor
         }
         foreach ($this->elements as $elementDescriptor) {
             $elementDescriptor->validateField($obj);
+        }
+    }
+
+    /**
+     * @param \ReflectionClass $clazz The class name.
+     * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
+     *     with the parents' properties *first*.
+     */
+    private static function enumerateProperties($clazz)
+    {
+        if ($clazz->getParentClass() !== false) {
+            yield from static::enumerateProperties($clazz->getParentClass());
+        }
+        foreach ($clazz->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+            if (!$property->isStatic() && $property->getDeclaringClass()->name === $clazz->name) {
+                yield $property;
+            }
         }
     }
 
@@ -143,7 +164,8 @@ abstract class BaseDescriptor
      */
     private static function getBoolAnnotation($name, $docComment)
     {
-        return strpos("@$name", $docComment) !== false;
+        return strpos("@$name ", $docComment) !== false
+            || strpos("@$name())", $docComment) !== false;
     }
 
     /**
@@ -172,7 +194,9 @@ abstract class BaseDescriptor
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;
         }
-        if (strpos($typeName, '\\') === false) {
+        if ($typeName === 'Bin') {
+            $typeName = Bin::class;
+        } elseif (strpos($typeName, '\\') === false) {
             // Let's assume it's a relative type name, e.g. `X` mentioned in a file that starts with `namespace Fhp\Y`
             // would become `\Fhp\X\Y`.
             $typeName = $contextClass->getNamespaceName() . '\\' . $typeName;
@@ -180,7 +204,7 @@ abstract class BaseDescriptor
         try {
             return new \ReflectionClass($typeName);
         } catch (\ReflectionException $e) {
-            throw new \RuntimeException($e);
+            throw new \RuntimeException("$typeName not found in context of " . $contextClass->getName(), 0, $e);
         }
     }
 }

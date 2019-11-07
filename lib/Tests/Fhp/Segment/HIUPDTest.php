@@ -4,30 +4,32 @@ namespace Tests\Fhp\Segment;
 
 use Fhp\Segment\HIUPD\HIUPDv4;
 
-class HIUPDTest extends \PHPUnit_Framework_TestCase
+class HIUPDTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
      * File: HBCI22 Final.pdf
      * Search for: "HIUPD:"
      */
-    const HBCI22_EXAMPLES = array(
+    const HBCI22_EXAMPLES = [
         // NOTE: These two examples are likely outdated in the document because the new $unterkontomerkmal field was
         // added. So it's `::280` and not just `:280`. The first of these two examples occurs twice in the document,
         // once in the correct format. Here both of them are "fixed" (hopefully).
+        // NOTE: These examples are UTF-8 encoded in the source code, but the real wire format is ISO-8859-1 encoded,
+        // so they need to be passed through utf8_decode() before being used.
         "HIUPD:16:4:4+1234567::280:10020030+12345+DEM+Ernst Müller++Giro Spezial+T:2000,:DEM+HKPRO:1+HKSAK:1+HKISA:1+HKSSP:1+HKUEB:1+HKLAS:1+HKKAN:1+HKKAZ:1+HKSAL:1'",
         "HIUPD:17:4:4+1234568::280:10020030+12345+DEM+Ernst Müller++Sparkonto 2000++HKPRO:1+HKSAK:0+HKISA:1+HKSSP:0+HKUEB:2:Z:1000,:DEM:7+HKKAN:1+HKKAZ:1+HKSAL:2'",
-    );
+    ];
 
     public function test_parse_HBCI22_example1()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
         $this->assertSame(16, $parsed->segmentkopf->segmentnummer);
         $this->assertSame(4, $parsed->segmentkopf->segmentversion);
         $this->assertSame('1234567', $parsed->kontoverbindung->kontonummer);
         $this->assertNull($parsed->kontoverbindung->unterkontomerkmal);
-        $this->assertSame(280, $parsed->kontoverbindung->laenderkennzeichen);
-        $this->assertSame('10020030', $parsed->kontoverbindung->kreditinstitutionscode);
+        $this->assertSame('280', $parsed->kontoverbindung->kik->laenderkennzeichen);
+        $this->assertSame('10020030', $parsed->kontoverbindung->kik->kreditinstitutscode);
         $this->assertSame('12345', $parsed->kundenId);
         $this->assertSame('DEM', $parsed->kontowaehrung);
         $this->assertSame('Ernst Müller', $parsed->name1);
@@ -43,19 +45,20 @@ class HIUPDTest extends \PHPUnit_Framework_TestCase
 
     public function test_validate_HBCI22_example1()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_HBCI22_example1()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[0]);
-        $this->assertEquals(static::HBCI22_EXAMPLES[0], $parsed->serialize());
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
+        $this->assertEquals(utf8_decode(static::HBCI22_EXAMPLES[0]), $parsed->serialize());
     }
 
     public function test_parse_HBCI22_example2()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[1]);
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
         $this->assertSame('1234568', $parsed->kontoverbindung->kontonummer);
         $this->assertSame('Sparkonto 2000', $parsed->kontoproduktbezeichnung);
         $this->assertNull($parsed->kontolimit);
@@ -71,13 +74,14 @@ class HIUPDTest extends \PHPUnit_Framework_TestCase
 
     public function test_validate_HBCI22_example2()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[1]);
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
         $parsed->validate(); // Should not throw.
+        $this->assertTrue(true);
     }
 
     public function test_serialize_HBCI22_example2()
     {
-        $parsed = HIUPDv4::parse(static::HBCI22_EXAMPLES[1]);
-        $this->assertEquals(static::HBCI22_EXAMPLES[1], $parsed->serialize());
+        $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
+        $this->assertEquals(utf8_decode(static::HBCI22_EXAMPLES[1]), $parsed->serialize());
     }
 }

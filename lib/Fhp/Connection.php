@@ -2,11 +2,8 @@
 
 namespace Fhp;
 
-use Fhp\Message\AbstractMessage;
-
 /**
- * Class Connection
- * @package Fhp
+ * Thin wrapper around curl that does base64 encoding/decoding and converts errors to {@link CurlException}s.
  */
 class Connection
 {
@@ -16,20 +13,10 @@ class Connection
     protected $host;
 
     /**
-     * @var int
-     */
-    protected $port;
-
-    /**
      * @var resource
      */
     protected $curlHandle;
 
-    /**
-     * @var mixed
-     */
-    protected $lastResponseInfo;
-	
     /**
      * @var int
      */
@@ -44,47 +31,23 @@ class Connection
      * Connection constructor.
      *
      * @param string $host
-     * @param int $port
      * @param int $timeoutConnect
      * @param int $timeoutResponse
-     * @throws CurlException
      */
-    public function __construct($host, $port, $timeoutConnect = 15, $timeoutResponse = 30)
+    public function __construct($host, $timeoutConnect = 15, $timeoutResponse = 30)
     {
-        if (!is_integer($port) || (int) $port <= 0) 
-            throw new CurlException('Invalid port number');
-
-        $this->host = (string) $host;
-        $this->port = (int) $port;
-		$this->timeoutConnect = (int) $timeoutConnect;
-		$this->timeoutResponse = (int) $timeoutResponse;
-		
-        #$this->adapter = new Curl($server, $port, $timeout);
+        $this->host = $host;
+        $this->timeoutConnect = $timeoutConnect;
+        $this->timeoutResponse = $timeoutResponse;
     }
 
-    /**
-     * Sends a message to the bank
-     *
-     * @param AbstractMessage $message
-     * @return string
-     * @throws CurlException
-     */
-    public function send(AbstractMessage $message)
+    private function connect()
     {
-        return $this->sendCurl($message);
-    }
-	
-	public function getCurlHandle(){
-		return $this->curlHandle;
-	}
-	
-	private function connect(){
         $this->curlHandle = curl_init();
 
-        curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, 1);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "FHP-lib");
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "phpFinTS");
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->host);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, $this->timeoutConnect);
@@ -97,43 +60,34 @@ class Connection
 	}
 	
     /**
-     * @param AbstractMessage $message
-     * @return string
-     * @throws CurlException
+     * @param string $message The message to be sent, in HBCI/FinTS wire format.
+     * @return string The response from the server, in HBCI/FinTS wire format.
+     * @throws CurlException When the request fails.
      */
-    public function sendCurl(AbstractMessage $message) {
+    public function send($message)
+    {
+        if (!$this->curlHandle) {
+            $this->connect();
+        }
 
-		if(!$this->curlHandle)
-			$this->connect();
-		
-        curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message->toString()));
+        curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, base64_encode($message));
         $response = curl_exec($this->curlHandle);
-        $this->lastResponseInfo = curl_getinfo($this->curlHandle);
 
         if (false === $response) {
             throw new CurlException(
                 'Failed connection to ' . $this->host . ': ' . curl_error($this->curlHandle),
                 curl_errno($this->curlHandle),
                 null,
-                $this->lastResponseInfo
+                curl_getinfo($this->curlHandle)
             );
         }
 
         $statusCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
-
         if ($statusCode < 200 || $statusCode > 299) {
-            throw new CurlException('Bad response with status code ' . $statusCode, 0, null, $this->lastResponseInfo);
+            throw new CurlException('Bad response with status code ' . $statusCode, 0, null,
+                curl_getinfo($this->curlHandle));
         }
 
         return base64_decode($response);
-    }
-
-    /**
-     * Gets curl info for last request / response.
-     *
-     * @return mixed
-     */
-    public function getLastResponseInfo() {
-        return $this->lastResponseInfo;
     }
 }

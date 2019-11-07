@@ -3,8 +3,7 @@
 namespace Fhp\Model;
 
 /**
- * Class Account
- * @package Fhp\Model
+ * Note: This account information is obtained from the HIUPD contained in the UPD data, but it lacks the BIC.
  */
 class Account
 {

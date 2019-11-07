@@ -7,10 +7,6 @@ use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\HITANS\HITANS;
 
-/**
- * Class GetVariables
- * @package Fhp\Response
- */
 class GetVariables extends Response
 {
 	public function get()
@@ -29,6 +25,7 @@ class GetVariables extends Response
         $allowedModes = null;
         // TODO This should just grab the HIRMS referencing the HKVVB segment, not any others.
         foreach ($this->findSegments('HIRMS') as $segmentRaw) {
+            if (substr($segmentRaw, -1) !== "'") $segmentRaw .= "'";
             $allowed = HIRMSv2::parse($segmentRaw)->findRueckmeldung(Rueckmeldungscode::ZUGELASSENE_VERFAHREN);
             if (isset($allowed)) {
                 $allowedModes = array_map('intval', $allowed->rueckmeldungsparameter);
@@ -38,13 +35,14 @@ class GetVariables extends Response
 
 		$result = array();
         foreach ($this->findSegments('HITANS') as $segmentRaw) {
+            if (substr($segmentRaw, -1) !== "'") $segmentRaw .= "'";
             $hitans = BaseSegment::parse($segmentRaw);
             if (!($hitans instanceof HITANS)) {
                 throw new \InvalidArgumentException("All HITANS segments must implement the HITANS interface");
             }
             foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
-                if ($allowedModes === null || in_array($verfahren->getSicherheitsfunktion(), $allowedModes)) {
-                    $result[$verfahren->getSicherheitsfunktion()] = $verfahren->getNameDesZweiSchrittVerfahrens();
+                if ($allowedModes === null || in_array($verfahren->getId(), $allowedModes)) {
+                    $result[$verfahren->getId()] = $verfahren->getName();
                 }
             }
         }

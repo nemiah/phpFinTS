@@ -6,11 +6,7 @@ use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
 
 /**
- * Class BaseDeg
- *
  * Base class for Data Element Groups (Datenelement-Gruppen; DEGs).
- *
- * @package Fhp\Segment
  */
 abstract class BaseDeg
 {
@@ -31,6 +27,13 @@ abstract class BaseDeg
         return $this->descriptor;
     }
 
+    public function __debugInfo()
+    {
+        $result = get_object_vars($this);
+        unset($result['descriptor']); // Don't include descriptor in debug output, to avoid clutter.
+        return $result;
+    }
+
     /**
      * @throws \InvalidArgumentException If any element in this DEG is invalid.
      */
@@ -45,7 +48,7 @@ abstract class BaseDeg
      */
     public function serialize()
     {
-        return Serializer::serializeDeg($this);
+        return Serializer::serializeDeg($this, $this->getDescriptor());
     }
 
     /**

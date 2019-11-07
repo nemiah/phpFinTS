@@ -2,10 +2,6 @@
 
 namespace Fhp\DataTypes;
 
-/**
- * Class Kik
- * @package Fhp\DataTypes
- */
 class Kik
 {
     /**

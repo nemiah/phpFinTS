@@ -2,10 +2,6 @@
 
 namespace Fhp\Model;
 
-/**
- * Class Saldo
- * @package Fhp\Model
- */
 class Saldo
 {
     /**

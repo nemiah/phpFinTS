@@ -5,10 +5,6 @@ namespace Fhp\DataElementGroups;
 use Fhp\DataTypes\Kik;
 use Fhp\Deg;
 
-/**
- * Class KeyName.
- * @package Fhp\DataElementGroups
- */
 class KeyName extends Deg
 {
     const KEY_TYPE_DS_KEY = 'D';

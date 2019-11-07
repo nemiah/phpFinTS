@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fhp\Segment;
-
 
 class Segmentkopf extends BaseDeg
 {

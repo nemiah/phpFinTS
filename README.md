@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
 
+:exclamation:**Note: The current developer version contains changes to the parameters of FinTs::_construct! [Release 1.6](https://github.com/nemiah/phpFinTS/tree/1.6) still uses the old format.** :exclamation:
+
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
  * Get accounts
@@ -13,22 +15,22 @@ A PHP library implementing the following functions of the FinTS/HBCI protocol:
  * Execute direct debit
  * Execute transfer
 
-Forked from https://github.com/mschindler83/fints-hbci-php
+Forked from [mschindler83/fints-hbci-php](https://github.com/mschindler83/fints-hbci-php)
 
 ## Getting Started
 
 Install via composer:
 
-    composer require nemiah/php-fints
-
+```
+composer require nemiah/php-fints
+```
 
 ## Usage
 
-See the examples in the "Samples" folder.<br>
-Fill out the required configuration and execute the file.
+Before using this library, you have to register your software with [Die Deutsche Kreditwirtschaft](https://www.hbci-zka.de/register/hersteller.htm) in order to get your registration number.
+See the examples in the "[Samples](/Samples)" folder. Fill out the required configuration and execute the file.
 
-Server details can be obtained here after registration:
-https://www.hbci-zka.de
+Server details can be obtained at [www.hbci-zka.de](https://www.hbci-zka.de) after registration.
 
 ## Special usage
 

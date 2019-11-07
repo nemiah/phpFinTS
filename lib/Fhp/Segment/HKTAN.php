@@ -24,6 +24,34 @@ class HKTAN extends AbstractSegment
 	 */
 	public function __construct($version, $segmentNumber, $processID = null, $tanMediaName = '')
 	{
+		/*
+		if($processID){
+			$data = array();
+			$data[] = 2; 
+			$data[] = ""; 
+			$data[] = ""; 
+			$data[] = "";
+			$data[] = $processID;
+				
+			if ($version == 6) {
+				$data[] = "N";
+			} else {
+				$data[] = "";
+				$data[] = "N";
+			}
+		
+		} else {
+			$data = array();
+			$data[] = 4;
+			$data[] = "HKIDN";
+			$data[] = "";
+			$data[] = "";
+			$data[] = "";
+			$data[] = "N";
+		}
+		*/
+		
+		
 		$tanProcess = null !== $processID ? 2 : 4;
 		$segmentIdent = null === $processID ? 'HKIDN' : '';
 		$data = array(
@@ -32,13 +60,23 @@ class HKTAN extends AbstractSegment
 			'',
 			'',
 			$version == 6 ? $processID : '',
-			$version != 6 ? $processID : '',
-			'N', // 7 Weitere TAN folgt
-			'',
-			'',
-			'',
-			$tanMediaName // 12 Bezeichnung des TAN-Mediums - mandatory bei TAN-Prozess=1, 3, 4  und „Anzahl unterstützter aktiver TAN-Medien“ > 1 und „Bezeichnung des TAN-Mediums erforderlich“=2
+			#$version != 6 ? $processID : '',
+			'N'#, // 7 Weitere TAN folgt
+			#'',
+			#'',
+			#'',
+			#'',
+			#$tanMediaName // 12 Bezeichnung des TAN-Mediums - mandatory bei TAN-Prozess=1, 3, 4  und „Anzahl unterstützter aktiver TAN-Medien“ > 1 und „Bezeichnung des TAN-Mediums erforderlich“=2
 		);
+		
+		if($tanMediaName){
+			$data[] = '';
+			$data[] = '';
+			$data[] = '';
+			$data[] = '';
+			$data[] = $tanMediaName;
+		}
+		
 		parent::__construct(
 			static::NAME,
 			$segmentNumber,

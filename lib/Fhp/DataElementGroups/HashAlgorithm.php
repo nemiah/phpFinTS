@@ -4,11 +4,6 @@ namespace Fhp\DataElementGroups;
 
 use Fhp\Deg;
 
-/**
- * Class HashAlgorithm.
- *
- * @package Fhp\DataElementGroups
- */
 class HashAlgorithm extends Deg
 {
     const HASH_ALGORITHM_USAGE_OHA = 1; // Owner Hashing (OHA)

@@ -1,16 +1,10 @@
 <?php
 
-
 namespace Fhp\Segment;
 
-
 /**
- * Class SegmentDescriptor
- *
  * Contains meta information about a segment, i.e. anything that can be statically known about a sub-class of
  * {@link BaseSegment} through reflection.
- *
- * @package Fhp\Segment
  */
 class SegmentDescriptor extends BaseDescriptor
 {
@@ -51,7 +45,7 @@ class SegmentDescriptor extends BaseDescriptor
             if (preg_match('/^([A-Z]+)v([0-9]+)$/', $clazz->getShortName(), $match) !== 1) {
                 throw new \InvalidArgumentException("Invalid segment class name: $class");
             }
-            $this->kennung = $match[1];
+            $this->kennung = strval($match[1]);
             $this->version = intval($match[2]);
         } catch (\ReflectionException $e) {
             throw new \RuntimeException($e);
@@ -67,7 +61,5 @@ class SegmentDescriptor extends BaseDescriptor
         if ($obj->getName() !== $this->kennung) {
             throw new \InvalidArgumentException("Expected $this->kennung, got " . $obj->getName());
         }
-        DegDescriptor::get(Segmentkopf::class)->validateObject($obj->segmentkopf);
-
     }
 }

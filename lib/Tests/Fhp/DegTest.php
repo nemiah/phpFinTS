@@ -4,7 +4,7 @@ namespace Tests\Fhp;
 
 use Fhp\Deg;
 
-class DegTest extends \PHPUnit_Framework_TestCase
+class DegTest extends \PHPUnit\Framework\TestCase
 {
     public function test_can_add_new_element()
     {
