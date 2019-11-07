@@ -168,8 +168,8 @@ abstract class Parser
         }
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
-        // Note: The length is measured in wire format encoding, i.e. ISO-8859-1, so we need to convert back here.
-        $actualLength = strlen(utf8_decode($result->getData()));
+        
+        $actualLength = strlen($result->getData());
         if ($actualLength !== $length) {
             throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
         }
