@@ -112,7 +112,11 @@ abstract class FinTsInternal
     {
         // Add an HKTAN Segment if the Bank requires it
         if ($dialog->bpd->tanRequiredForRequest($segments)) {
-            $segments[] = $this->createHKTAN(count($segments) + 4);
+            $add = 4;
+            if(get_class($segments[0]) == 'Fhp\Segment\HKCCS')
+                $add = 3;
+            
+            $segments[] = $this->createHKTAN(count($segments) + $add);
         }
         return new Message(
             $this->bankCode,
@@ -173,7 +177,7 @@ abstract class FinTsInternal
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($xml);
         $dom->formatOutput = false;
-        return $dom->saveXml();
+        return str_replace("\n", "", trim($dom->saveXml()));
     }
 
     protected function getUsedPinTanMechanism($dialog)
