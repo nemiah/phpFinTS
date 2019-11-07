@@ -113,7 +113,7 @@ abstract class FinTsInternal
         // Add an HKTAN Segment if the Bank requires it
         if ($dialog->bpd->tanRequiredForRequest($segments)) {
             $add = 4;
-            if(get_class($segments[0]) == 'Fhp\Segment\HKCCS')
+            if(get_class($segments[0]) == 'Fhp\Segment\HKCCS' OR get_class($segments[0]) == 'Fhp\Segment\HKDSC')
                 $add = 3;
             
             $segments[] = $this->createHKTAN(count($segments) + $add);
