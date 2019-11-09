@@ -25,8 +25,8 @@ class Response
 	/** @var string */
 	protected $response;
 
-	/** @var Segment\BaseSegment[]|Segment\AbstractSegment[] $segments */
-	protected $segments = array();
+    /** @var Segment\BaseSegment[]|Segment\AbstractSegment[] $segments */
+    protected $segments = array();
 
     /** @var @deprecated string[] $segments */
     protected $rawSegments = array();
@@ -52,10 +52,10 @@ class Response
 
 		$this->rawResponse = $rawResponse;
 		$this->response = $this->unwrapEncryptedResponse($rawResponse);
-		$this->segments = Parser::parseSegments($this->response);
+        $this->segments = Parser::parseSegments($this->response);
 
-		// Compatibility implementation for "findSegments"
-		$this->rawSegments = Parser::parseRawSegments($this->response);
+        // Compatibility implementation for "findSegments"
+        $this->rawSegments = Parser::parseRawSegments($this->response);
 
 		$this->dialog = $dialog;
 	}
@@ -377,21 +377,21 @@ class Response
      * @param string $name
      * @return Segment\BaseSegment|Segment\AbstractSegment|null
      */
-	protected function getSegment($name) {
+    protected function getSegment($name) {
 
-	    $segments = $this->getSegments($name);
-	    if(count($segments) > 0) {
-	        return $segments[0];
+        $segments = $this->getSegments($name);
+        if(count($segments) > 0) {
+            return $segments[0];
         }
 
-	    return null;
+        return null;
     }
 
     /**
      * @param string $name
      * @return Segment\BaseSegment[]|Segment\AbstractSegment[]
      */
-	protected function getSegments($name) {
+    protected function getSegments($name) {
 
         $result = array();
 
@@ -464,12 +464,12 @@ class Response
 		return null;
 	}
 
-	/**
+    /**
      * Replaces the segment HNVSD itself by the payload
      *
-	 * @param string $response
-	 * @return string
-	 */
+     * @param string $response
+     * @return string
+     */
     private function unwrapEncryptedResponse($response)
     {
         if (preg_match('/(HNVSD:\d+:\d+\+' . Delimiter::BINARY . '(\d+)' . Delimiter::BINARY . ')/', $response, $matches, PREG_OFFSET_CAPTURE) === 1) {
