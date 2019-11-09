@@ -44,7 +44,7 @@ class Response
 		}
 
 		$this->rawResponse = $rawResponse;
-		$this->response = $this->unwrapEncryptedMsg($rawResponse);
+		$this->response = $this->unwrapEncryptedResponse($rawResponse);
 
 		$this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
 
