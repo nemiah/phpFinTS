@@ -46,7 +46,6 @@ class Response
 		$this->rawResponse = $rawResponse;
 		$this->response = $this->unwrapEncryptedMsg($rawResponse);
 
-		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
 		$this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
 
 		$this->dialog = $dialog;
@@ -412,14 +411,28 @@ class Response
 	}
 
 	/**
-	 * @param string $response
+     * Replaces the segment HNVSD itself by the payload
 	 *
+	 * @param string $response
 	 * @return string
 	 */
-	protected function unwrapEncryptedMsg($response)
+    private function unwrapEncryptedResponse($response)
 	{
-		if (preg_match('/HNVSD:\d+:\d+\+@\d+@(.+)\'\'/', $response, $matches)) {
-			return $matches[1];
+        if (preg_match('/(HNVSD:\d+:\d+\+' . Delimiter::BINARY . '(\d+)' . Delimiter::BINARY . ')/', $response, $matches, PREG_OFFSET_CAPTURE) === 1) {
+
+            // 0 -> HNVSD begin
+            $result = substr($response, 0, $matches[1][1]);
+
+            // HNVSD Payload
+            $length = $matches[2][0];
+            $start = $matches[1][1] + strlen($matches[1][0]); //
+
+            $result .= substr($response, $start, $length);
+
+            // HNVSD End -> End
+            $result .= substr($response, $start + $length + 1); // + 1 = Message delimiter "'"
+
+            return $result;
 		}
 
 		return $response;
