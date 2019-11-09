@@ -37,7 +37,7 @@ class Response
 	/** @var string */
 	protected $systemId;
 
-	protected $dialog = null;
+    protected $dialog = null;
 
 	/**
 	 * Response constructor.
@@ -51,7 +51,7 @@ class Response
 		}
 
 		$this->rawResponse = $rawResponse;
-		$this->response = $this->unwrapEncryptedResponse($rawResponse);
+        $this->response = $this->unwrapEncryptedResponse($rawResponse);
         $this->segments = Parser::parseSegments($this->response);
 
         // Compatibility implementation for "findSegments"
@@ -94,14 +94,14 @@ class Response
 	 */
 	public function getDialogId()
 	{
-	    /** @var Segment\HNHBK\HNHBKv3 $segment */
-		$segment = $this->getSegment('HNHBK');
+        /** @var Segment\HNHBK\HNHBKv3 $segment */
+        $segment = $this->getSegment('HNHBK');
 
-		if (null === $segment) {
-			throw new \RuntimeException('Could not find element HNHBK. Invalid response?');
-		}
+        if (null === $segment) {
+            throw new \RuntimeException('Could not find element HNHBK. Invalid response?');
+        }
 
-		return $segment->dialogId;
+        return $segment->dialogId;
 	}
 
 	/**
@@ -356,7 +356,7 @@ class Response
 	{
 		$found = $one ? null : array();
 
-		foreach ($this->rawSegments as $segment) {
+        foreach ($this->rawSegments as $segment) {
 
 			$split = explode(':', $segment, 2);
 
