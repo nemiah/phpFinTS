@@ -427,4 +427,25 @@ abstract class Parser
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
         return array_map([static::class, 'detectAndParseSegment'], $rawSegments);
     }
+
+    /**
+     * @deprecated Could be removed, if Response::$rawSegments is removed.
+     * @param string $rawSegments
+     * @return string[] RawSegments
+     */
+    public static function parseRawSegments($rawSegments) {
+
+        if (empty($rawSegments)) return [];
+        $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
+
+        // End delimiter must be removed for Response::rawSegments
+        return array_map(function($rawResponse) {
+
+            if(substr($rawResponse, -1) == "'") {
+                return substr($rawResponse, 0, -1);
+            }
+            return $rawResponse;
+
+        }, $rawSegments);
+    }
 }
