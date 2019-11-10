@@ -254,7 +254,7 @@ class Message
      * (in which case this function acts as the inverse of {@link #createWrappedMessage()}), or leaves as is otherwise
      * (and acts as inverse of {@link #createPlainMessage()}).
      *
-     * @param string $rawMessage The received message in HBCI/FinTS wire format.
+     * @param string $rawMessage The received message in HBCI/FinTS wire format. This should be ISO-8859-1-encoded.
      * @return Message The parsed message.
      * @throws \InvalidArgumentException When the parsing fails.
      */

@@ -303,7 +303,7 @@ abstract class Parser
 
     /**
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
-     *     the end).
+     *     the end). This should be ISO-8859-1-encoded.
      * @param string $type The type (PHP class name) of the segment to be parsed.
      * @return BaseSegment The parsed segment of type $type.
      */
@@ -407,7 +407,7 @@ abstract class Parser
 
     /**
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
-     *     the end).
+     *     the end). This should be ISO-8859-1-encoded.
      * @return BaseSegment The parsed segment, possibly an {@link AnonymousSegment}.
      */
     public static function detectAndParseSegment($rawSegment)
