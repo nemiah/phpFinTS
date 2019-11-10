@@ -197,6 +197,22 @@ class FinTs extends FinTsInternal
 	}
 
 	/**
+	 * Test if login requires a TAN
+     * Check with isTANRequest() on return value
+	 * TAN can be sent with finishSEPATAN
+	 * 
+	 * @return GetTANRequest|Response
+	 */
+    public function login()
+    {
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+        $dialog = $this->getDialog(false);#, $this->tanMechanism);
+        $response = $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+        
+        return $response;
+    }
+    
+	/**
 	 * Gets array of all SEPA Accounts.
 	 *
 	 * @return Model\SEPAAccount[]
