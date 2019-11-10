@@ -112,7 +112,7 @@ abstract class FinTsInternal
     {
         // Add an HKTAN Segment if the Bank requires it
         if ($dialog->bpd->tanRequiredForRequest($segments)) {
-            $segments[] = $this->createHKTAN(count($segments) + 4);
+            $segments[] = $this->createHKTAN(null);
         }
         return new Message(
             $this->bankCode,

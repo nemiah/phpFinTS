@@ -3,6 +3,7 @@
 namespace Fhp\Message;
 
 use Fhp\DataElementGroups\SecurityProfile;
+use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\HNHBS;
 use Fhp\Segment\HNSHA;
 use Fhp\Segment\HNSHK;
@@ -73,7 +74,7 @@ class Message extends AbstractMessage
      * @param $systemId
      * @param int $dialogId
      * @param int $messageNumber
-     * @param array $segments
+     * @param AbstractSegment[] $segments
      * @param array $options
      */
     public function __construct(
@@ -117,6 +118,7 @@ class Message extends AbstractMessage
             $segmentNumberOffset -= 2; // HNVSK + HNVSD have different numbers
         }
 
+        /** @var AbstractSegment[] $subSegments */
         $subSegments = [];
         $subSegments[] = $this->buildSignatureHead(); // HNSHK
 
@@ -124,12 +126,12 @@ class Message extends AbstractMessage
             $subSegments[] = $segment;
         }
 
-        $subSegments[] = new HNSHA(
-            count($this->segments) + count($this->encryptedSegments) + count($subSegments) + $segmentNumberOffset,
-            $this->securityReference, $this->pin, $tan
-        );
+        $subSegments[] = new HNSHA(null, $this->securityReference, $this->pin, $tan);
 
         foreach($subSegments as $subSegment) {
+
+            $subSegment->setSegmentNumber(count($this->segments) + count($this->encryptedSegments) + $segmentNumberOffset);
+
             if($useEncryption) {
                 $this->addEncryptedSegment($subSegment);
             } else {

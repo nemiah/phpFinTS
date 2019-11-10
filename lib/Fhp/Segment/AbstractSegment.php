@@ -20,7 +20,7 @@ abstract class AbstractSegment implements SegmentInterface
      * AbstractSegment constructor.
      *
      * @param $type
-     * @param $segmentNumber
+     * @param int|null $segmentNumber
      * @param $version
      * @param array $dataElements
      */
@@ -95,6 +95,13 @@ abstract class AbstractSegment implements SegmentInterface
     public function getSegmentNumber()
     {
         return $this->segmentNumber;
+    }
+
+    /**
+     * @param int $number
+     */
+    public function setSegmentNumber($number) {
+        $this->segmentNumber = $number;
     }
 
     /**
