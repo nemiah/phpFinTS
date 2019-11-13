@@ -8,6 +8,7 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\UPD;
+use Fhp\Response\GetAccounts;
 use Fhp\Response\Initialization;
 use Fhp\Response\Response;
 use Fhp\Response\GetTANRequest;
@@ -381,7 +382,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function initDialog($tanMechanism = null, $tanMediaName = null)
+	public function initDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('DIALOG initialize');
@@ -420,7 +421,7 @@ class Dialog
 		#$this->logger->debug('Sending INIT message:');
 		#$this->logger->debug((string) $message);
 
-		$response = $this->sendMessage($message)->rawResponse;
+		$response = $this->sendMessage($message, $tanMechanism, $tanCallback)->rawResponse;
 
         $parsedMessage = \Fhp\Protocol\Message::parse($response);
         // Update the BPD, as it could differ from the values received via syncDialog
@@ -439,7 +440,7 @@ class Dialog
 
 		$this->logger->info('DIALOG end');
 
-		return $this->dialogId;
+		return $response;
 	}
 
 	/**

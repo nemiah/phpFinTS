@@ -32,8 +32,6 @@ abstract class FinTsInternal
     protected function startDeleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order)
     {
         $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
 
         $hkcdbAccount = new Kti(
             $account->getIban(),
@@ -68,8 +66,6 @@ abstract class FinTsInternal
         $painMessage = $this->clearXML($painMessage);
 
         $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
 
         $hkcdbAccount = new Kti(
             $account->getIban(),
@@ -217,8 +213,7 @@ abstract class FinTsInternal
                     $to,
                     $touchdown
                 )
-            ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            )
         );
 
         return $message;
