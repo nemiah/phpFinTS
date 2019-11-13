@@ -34,6 +34,7 @@ $fints = new FinTs(
     FHP_SOFTWARE_VERSION
 );
 $fints->setLogger(new testLogger());
+$fints->initializeDialog();
 $accounts = $fints->getSEPAAccounts();
 
 $fints->end();

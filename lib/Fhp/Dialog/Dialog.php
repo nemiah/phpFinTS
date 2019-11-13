@@ -398,11 +398,9 @@ class Dialog
 		);
 
 		$options = array();
-		if (null === $tanMechanism) {
-			$options[AbstractMessage::OPT_PINTAN_MECH] = array_keys($this->supportedTanMechanisms);
-		} else {
-			$options[AbstractMessage::OPT_PINTAN_MECH] = array($tanMechanism);
-		}
+		if (!is_null($tanMechanism)) {
+            $options[AbstractMessage::OPT_PINTAN_MECH] = $tanMechanism;
+        }
 
 		$message = new Message(
 			$this->bankCode,
@@ -453,7 +451,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function syncDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
+	public function syncDialog()
 	{
 		$this->logger->info('');
 		$this->logger->info('SYNC initialize');
@@ -477,13 +475,7 @@ class Dialog
 			$prepare
 		);
 
-		if (null !== $tanMechanism) {
-			$options[AbstractMessage::OPT_PINTAN_MECH] = array($tanMechanism);
-			$encryptedSegments[] = new HKTAN(HKTAN::VERSION, 5, null, $tanMediaName);
-			$encryptedSegments[] = new HKSYN(6);
-		} else {
-			$encryptedSegments[] = new HKSYN(5);
-		}
+        $encryptedSegments[] = new HKSYN(5);
 
 		$syncMsg = new Message(
 			$this->bankCode,
@@ -498,7 +490,7 @@ class Dialog
 
 		#$this->logger->debug('Sending SYNC message:');
 		#$this->logger->debug((string) $syncMsg);
-		$response = $this->sendMessage($syncMsg, $tanMechanism, $tanCallback);
+		$response = $this->sendMessage($syncMsg);
 
 		#$this->checkResponse($response);
 

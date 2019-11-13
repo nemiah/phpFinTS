@@ -39,10 +39,9 @@ $fints = new FinTs(
 $fints->setLogger(new testLogger());
 
 try {
-	
-	$fints->setTANMechanism(901); //request available TAN modes with $fints->getVariables();!
-	
-    $accounts = $fints->getSEPAAccounts();
+
+    $fints->initializeDialog();
+	$accounts = $fints->getSEPAAccounts();
 
     $oneAccount = $accounts[0];
     $from = new \DateTime('2016-01-01');
