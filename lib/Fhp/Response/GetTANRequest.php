@@ -19,15 +19,11 @@ class GetTANRequest extends Response
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-		$request = new Model\TANRequest(
+        $request = new Model\TANRequest(
             $segment->getAuftragsReferenz()
         );
 		
 		return $request;
-    }
-
-    public function setDialog($dialog) {
-        $this->dialog = $dialog;
     }
 
     /**
