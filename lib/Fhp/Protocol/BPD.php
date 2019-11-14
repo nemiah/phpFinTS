@@ -143,7 +143,7 @@ class BPD
         /** @var HITANS $hitans */
         $hitans = $bpd->requireLatestSupportedParameters('HITANS');
         if ($hitans->getVersion() < 6) {
-            $options->logger->warning("HITANSv" . $hitans->getSegmentNumber()
+            $options['logger']->warning("HITANSv" . $hitans->getSegmentNumber()
                 . " is deprecated. Please let the phpFinTS maintainers know that your bank still uses this.");
         }
         foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {

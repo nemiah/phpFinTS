@@ -32,8 +32,6 @@ abstract class FinTsInternal
     protected function startDeleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order)
     {
         $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
 
         $hkcdbAccount = new Kti(
             $account->getIban(),
@@ -46,9 +44,6 @@ abstract class FinTsInternal
         $message = $this->getNewMessage($dialog,
             array(
                 new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03', $order),
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 
@@ -71,8 +66,6 @@ abstract class FinTsInternal
         $painMessage = $this->clearXML($painMessage);
 
         $dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
 
         $hkcdbAccount = new Kti(
             $account->getIban(),
@@ -85,9 +78,6 @@ abstract class FinTsInternal
         $message = $this->getNewMessage($dialog,
             array(
                 new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03', $painMessage),
-            ),
-            array(
-                AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
             )
         );
 
@@ -108,11 +98,14 @@ abstract class FinTsInternal
      * @param array $options
      * @return Message
      */
-    protected function getNewMessage(Dialog $dialog, array $segments, array $options)
+    protected function getNewMessage(Dialog $dialog, array $segments, array $options = [])
     {
         // Add an HKTAN Segment if the Bank requires it
         if ($dialog->bpd->tanRequiredForRequest($segments)) {
-            $segments[] = $this->createHKTAN(count($segments) + 4);
+            $segments[] = $this->createHKTAN(count($segments) + 3);
+        }
+        if (!isset($options[AbstractMessage::OPT_PINTAN_MECH]) && $this->tanMechanism) {
+            $options[AbstractMessage::OPT_PINTAN_MECH] = $this->tanMechanism;
         }
         return new Message(
             $this->bankCode,
@@ -133,7 +126,7 @@ abstract class FinTsInternal
      * @return Dialog
      * @throws \Exception
      */
-    abstract protected function getDialog($sync = true);
+    abstract protected function getDialog();
 
     /**
      * Needed for escaping userdata.
@@ -173,7 +166,7 @@ abstract class FinTsInternal
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($xml);
         $dom->formatOutput = false;
-        return $dom->saveXml();
+        return str_replace("\n", "", trim($dom->saveXml()));
     }
 
     protected function getUsedPinTanMechanism($dialog)
@@ -220,8 +213,7 @@ abstract class FinTsInternal
                     $to,
                     $touchdown
                 )
-            ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            )
         );
 
         return $message;
@@ -321,8 +313,7 @@ abstract class FinTsInternal
                     $to,
                     $touchdown
                 )
-            ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            )
         );
 
         return $message;

@@ -70,7 +70,7 @@ $fints = new FinTs(
     FHP_SOFTWARE_VERSION
 );
 $fints->setLogger(new testLogger());
-$fints->setTANMechanism(901); //901 for mobileTAN
+$fints->initializeDialog();
 file_put_contents(__DIR__."/tan.txt", "");
 
 $accounts = $fints->getSEPAAccounts();

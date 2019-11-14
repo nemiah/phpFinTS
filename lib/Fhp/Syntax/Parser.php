@@ -157,19 +157,27 @@ abstract class Parser
      */
     public static function parseBinaryBlock($rawValue)
     {
-        if ($rawValue === '') return null;
+        if ($rawValue === '')
+            return null;
+
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
-        if (empty($rawValue) || $rawValue[0] !== Delimiter::BINARY || $delimiterPos === false) {
+        if (
+            empty($rawValue) ||
+            substr($rawValue, 0, 1) !== Delimiter::BINARY ||
+            $delimiterPos === false
+        ) {
             throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
         }
+
         $lengthStr = substr($rawValue, 1, $delimiterPos - 1);
         if (!is_numeric($lengthStr)) {
             throw new \InvalidArgumentException("Invalid binary block length: $lengthStr");
         }
+
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
-        // Note: The length is measured in wire format encoding, i.e. ISO-8859-1, so we need to convert back here.
-        $actualLength = strlen(utf8_decode($result->getData()));
+        
+        $actualLength = strlen($result->getData());
         if ($actualLength !== $length) {
             throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
         }
@@ -418,5 +426,26 @@ abstract class Parser
         if (empty($rawSegments)) return [];
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
         return array_map([static::class, 'detectAndParseSegment'], $rawSegments);
+    }
+
+    /**
+     * @deprecated Could be removed, if Response::$rawSegments is removed.
+     * @param string $rawSegments
+     * @return string[] RawSegments
+     */
+    public static function parseRawSegments($rawSegments) {
+
+        if (empty($rawSegments)) return [];
+        $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
+
+        // End delimiter must be removed for Response::rawSegments
+        return array_map(function($rawResponse) {
+
+            if(substr($rawResponse, -1) == "'") {
+                return substr($rawResponse, 0, -1);
+}
+            return $rawResponse;
+
+        }, $rawSegments);
     }
 }

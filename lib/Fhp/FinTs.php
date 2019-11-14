@@ -7,7 +7,7 @@ use Fhp\DataTypes\Kti;
 use Fhp\DataTypes\Ktv;
 use Fhp\Dialog\Dialog;
 use Fhp\Message\AbstractMessage;
-use Fhp\Message\Message;
+use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
 use Fhp\MT940\Dialect\PostbankMT940;
@@ -32,6 +32,7 @@ use Fhp\Segment\HKCAZ;
 use Fhp\Segment\HKVVB;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKTAB;
+use Fhp\Segment\HNSHK;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Fhp\Dialog\Exception\TANException;
@@ -53,6 +54,8 @@ class FinTs extends FinTsInternal
 	protected $systemId = 0;
 	/** @var string */
 	protected $bankName;
+    /** @var Account[] */
+    protected $accounts;
 	/** @var int */
 	protected $tanMechanism;
 	/** @var Dialog */
@@ -111,91 +114,39 @@ class FinTs extends FinTsInternal
 		$this->logger = $logger;
 	}
 
-	/**
-	 * Sets the tan mechanism to use. Uses first found tan mechanism if not set.
-	 * 901: mobileTAN
-	 * A tan media name has to be set in order to identify the device.
-	 *
-	 * @param int $mode
-	 */
-	public function setTANMechanism($mode, $mediaName = null)
-	{
-		$this->tanMechanism = $mode;
-		$this->tanMediaName = $this->escapeString($mediaName);
-	}
-
 	public function setTimeouts($connect, $response)
 	{
 		$this->timeoutConnect = $connect;
 		$this->timeoutResponse = $response;
 	}
 
+
 	/**
 	 * Gets array of all accounts.
 	 *
 	 * @return Model\Account[]
 	 */
-	public function getAccounts(\Closure $tanCallback = null)
-	{
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+	/**
+	 * Test if login requires a TAN
+     * Check with isTANRequest() on return value
+	 * TAN can be sent with finishSEPATAN
+	 * 
+	 * @return GetTANRequest|Response
+	 */
+    public function login()
+    {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
-
-		$dialog = $this->getDialog(false);
-		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
-		$dialog->endDialog();
-		// $dialog->initDialog($this->tanMechanism, $this->tanMediaName);
-		$this->bankName = $dialog->getBankName();
-
-		$message = $this->getNewMessage(
-			$dialog,
-			array(
-				new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
-				new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-                $this->createHKTAN(5)
-			),
-			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
-		);
-
-		$this->logger->info('');
-		$this->logger->info('HKVVB (ALL accounts) initialize');
-		
-		$response = $dialog->sendMessage($message, null, $tanCallback);
-		if ($response->isTANRequest()) {
-			return $response;
-		}
-
-		return $this->finishAccounts($response);
-	}
-
-	public function finishAccounts(Response $response, $tan = null)
-	{
-        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
-
-		$dialog = $response->getDialog();
-		$this->dialog = $dialog;
-		
-		if ($tan) {
-			$response = $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
-
-			$message = $this->getNewMessage(
-				$dialog,
-				array(
-					new HKIDN(3, $this->bankCode, $this->username, $dialog->getSystemId()),
-					new HKVVB(4, 0, 0, HKVVB::LANG_DE, $this->productName, $this->productVersion),
-                    $this->createHKTAN(5)
-				),
-				array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
-			);
-
-			$response = $dialog->sendMessage($message, null, $tanCallback);
-		}
-
-		$this->logger->info('HKVVB end');
-
-		$accounts = new GetAccounts($response);
-
-		return $accounts->getAccountsArray();
-	}
-
+        $dialog = $this->getDialog(false);#, $this->tanMechanism);
+        $response = $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
+        
+        return $response;
+    }
+    
 	/**
 	 * Gets array of all SEPA Accounts.
 	 *
@@ -206,17 +157,11 @@ class FinTs extends FinTsInternal
 	{
 	    $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog(false);#, $this->tanMechanism);
-		#$dialog->endDialog(); //probably not required
-		$dialog->syncDialog($this->tanMechanism, $this->tanMediaName, $tanCallback);
-		$dialog->endDialog();
-		$dialog->initDialog($this->tanMechanism, $this->tanMediaName);
-		$this->bankName = $dialog->getBankName();
+        $dialog = $this->getDialog();
 
 		$message = $this->getNewMessage(
 			$dialog,
-			array(new HKSPA(3)),
-			array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            array(new HKSPA(3))
 		);
 
 		$this->logger->info('');
@@ -233,9 +178,9 @@ class FinTs extends FinTsInternal
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-        $dialog = $this->getDialog(false);
+        $dialog = $this->getDialog();
         $response = $dialog->syncDialog();
-        // $this->end();
+        $this->end();
 
         $vars = new GetVariables($response->rawResponse);
         $obj = $vars->get();
@@ -246,22 +191,18 @@ class FinTs extends FinTsInternal
         #}
         return $obj;
     }
-    public function getTANDevices()
+    public function getTANDevices($tanMechanism)
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-        $dialog = $this->getDialog(false);
-        $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
-        $dialog->endDialog();
-        $dialog->initDialog($this->tanMechanism, $this->tanMediaName);
-        $this->bankName = $dialog->getBankName();
+        $dialog = $this->getDialog();
 
         $message = $this->getNewMessage(
             $dialog,
             array(
                 new HKTAB(3)
             ),
-            array(AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog))
+            array(AbstractMessage::OPT_PINTAN_MECH => $tanMechanism)
         );
         $response = $dialog->sendMessage($message);
         $segment = $response->findSegment('HITAB');
@@ -282,7 +223,7 @@ class FinTs extends FinTsInternal
 	{
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog(false);
+        $dialog = $this->getDialog();
 		$response = $dialog->syncDialog();
 		if ($response->isTANRequest()) {
 			return $response;
@@ -336,8 +277,6 @@ class FinTs extends FinTsInternal
 		$this->logger->info('End date  : ' . $to->format('Y-m-d'));
 
 		$dialog = $this->getDialog();
-        #$dialog->syncDialog();
-        #$dialog->initDialog();
 
 		$message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
 		$response = $dialog->sendMessage($message, $this->getUsedPinTanMechanism($dialog), $tanCallback, $interval);
@@ -475,8 +414,6 @@ class FinTs extends FinTsInternal
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
 		$dialog = $this->getDialog();
-		#$dialog->syncDialog();
-		#$dialog->initDialog();
 
 		$addEncSegments = array();
 
@@ -519,9 +456,6 @@ class FinTs extends FinTsInternal
 			array_merge(
 				array(new HKSAL($dialog->getHksalMaxVersion(), 3, $hksalAccount, HKSAL::ALL_ACCOUNTS_N)),
 				$addEncSegments
-			),
-			array(
-				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
 			)
 		);
 
@@ -587,8 +521,6 @@ class FinTs extends FinTsInternal
 
 
 		$dialog = $this->getDialog();
-		#$dialog->syncDialog();
-		#$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -606,9 +538,6 @@ class FinTs extends FinTsInternal
         $message = $this->getNewMessage($dialog,
 			array(
                 $hkdsx
-			),
-			array(
-				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
 			)
 		);
 
@@ -684,8 +613,6 @@ class FinTs extends FinTsInternal
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
 		$dialog = $this->getDialog();
-		#$dialog->syncDialog(false);
-		#$dialog->initDialog();
 
 		$hkcdbAccount = new Kti(
 			$account->getIban(),
@@ -698,9 +625,6 @@ class FinTs extends FinTsInternal
         $message = $this->getNewMessage($dialog,
 			array(
 				new HKCDB(HKCDB::VERSION, 3, $hkcdbAccount, array('urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03'))#, "pain.008.003.02.xsd"))
-			),
-			array(
-				AbstractMessage::OPT_PINTAN_MECH => $this->getUsedPinTanMechanism($dialog)
 			)
 		);
 
@@ -723,7 +647,7 @@ class FinTs extends FinTsInternal
      * @return Dialog
      * @throws \Exception
      */
-    protected function getDialog($sync = true)
+    protected function getDialog()
     {
         if ($this->dialog !== null) {
             return $this->dialog;
@@ -744,14 +668,68 @@ class FinTs extends FinTsInternal
             $this->productVersion
         );
 
-        if ($sync) {
-            $dialog->syncDialog();
-        }
-
         $this->dialog = $dialog;
 
         return $this->dialog;
     }
+
+    public function initializeDialog($tanMechanism = HNSHK::SECURITY_FUNC_999, $tanMediaName = null, \Closure $tanCallback = null)
+    {
+        $dialog = $this->getDialog();
+        // System-ID anfragen
+        $dialog->syncDialog();
+        // Dialog muss anschließend beendet werden
+        $dialog->endDialog();
+
+        $this->tanMechanism = $tanMechanism;
+        $this->tanMediaName = $tanMediaName;
+
+        // Es wurde keine TAN-Mechanismus angegeben
+        if ($tanMechanism == HNSHK::SECURITY_FUNC_999) {
+            $mechs = $dialog->getSupportedPinTanMechanisms();
+            if (count($mechs) == 1) {
+                $this->tanMechanism = key($mechs);
+            } else {
+                // Der Nutzer muss entscheiden welchen er will
+                $names = [];
+                foreach ($mechs as $mechanism => $name) {
+                    $names[] = $mechanism . ' (' . $name . ')';
+                }
+                throw new \Exception('Bitte einen der folgenden Sicherheitsfunktionen wählen: ' . implode(', ', $names));
+            }
+        }
+
+        // Manche Banken brauchen einen TAN-Medium-Namen
+        // https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+        // B.4.3.1.3
+
+        if (is_null($this->tanMediaName) && $dialog->bpd->allTanModes[$this->tanMechanism]->needsTanMedium()) {
+            // TODO: Beim Erstzugang mit einem neuen TAN-Verfahren liegt einem Kundenprodukt
+            //ggf. noch keine TAN-Medien-Bezeichnung für dieses Verfahren vor. In diesem
+            //Fall muss der Geschäftsvorfall Anzeige der verfügbaren TAN-Medien
+            //(HKTAB) ohne starke Kundenauthentifizierung durchführbar sein. Dies ist bei
+            //der Prüfung der Kriterien im Kreditinstitut zu berücksichtigen.
+
+            $dialog->initDialog($this->tanMechanism, '??', $tanCallback);
+
+            // TODO: Nur TAN-Medien-Namen anzeigen, die zum TAN-Mechanismus passen
+            $devices = $this->getTANDevices($tanMechanism);
+            $dialog->endDialog();
+            throw new \Exception('Bitte einen der folgenden TAN-Media-Namen angeben: ' . implode(', ', $devices));
+        }
+
+        $response = $dialog->initDialog($this->tanMechanism, $this->tanMediaName, $tanCallback);
+
+        $this->bankName = $dialog->getBankName();
+
+        $this->accounts = (new GetAccounts($response))->getAccountsArray();
+
+    }
+
+    /*public function resumeDialog($dialogId, $systemId = null)
+    {
+
+    }*/
 
     /**
      * @param SEPAAccount $account The account to test the support for
