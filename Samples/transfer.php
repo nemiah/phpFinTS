@@ -66,7 +66,7 @@ $fints = new FinTs(
 $fints->setLogger(new testLogger());
 $accounts = $fints->getSEPAAccounts();
 
-$fints->setTANMechanism(901); //901 for mobileTAN
+$fints->initializeDialog();
 file_put_contents(__DIR__."/tan.txt", "");
 
 $oneAccount = $accounts[0];
