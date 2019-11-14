@@ -51,7 +51,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $ktv = new Ktv('123123123', 'sub', $kik);
         $hksal = new HKSAL(HKSAL::VERSION, 3, $ktv, true);
         $options = array(
-            Message::OPT_PINTAN_MECH => array('998')
+            Message::OPT_PINTAN_MECH => 998
         );
 
         $message = new Message(
