@@ -6,14 +6,11 @@ class TANRequest
 {
     /** @var string */
     protected $processID;
-	
-	
-	public function setProcessID($processID)
-	{
-		$this->processID = (string) $processID;
-		
-        return $this;
-	}
+
+    public function __construct($processID) {
+
+        $this->processID = (string) $processID;
+    }
 	
 	public function getProcessID()
 	{
