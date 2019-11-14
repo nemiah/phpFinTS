@@ -6,6 +6,10 @@ use Fhp\Message\AbstractMessage;
 use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
 use Fhp\Segment\SegmentInterface;
+use Fhp\Syntax\Delimiter;
+use Fhp\Syntax\Parser;
+
+use Fhp\Segment;
 
 class Response
 {
@@ -21,8 +25,11 @@ class Response
 	/** @var string */
 	protected $response;
 
-	/** @var array */
+    /** @var Segment\BaseSegment[]|Segment\AbstractSegment[] $segments */
 	protected $segments = array();
+
+    /** @var @deprecated string[] $segments */
+    protected $rawSegments = array();
 
 	/** @var string */
 	protected $dialogId;
@@ -30,7 +37,7 @@ class Response
 	/** @var string */
 	protected $systemId;
 
-	private $dialog;
+    protected $dialog = null;
 
 	/**
 	 * Response constructor.
@@ -44,10 +51,11 @@ class Response
 		}
 
 		$this->rawResponse = $rawResponse;
-		$this->response = $this->unwrapEncryptedMsg($rawResponse);
+        $this->response = $this->unwrapEncryptedResponse($rawResponse);
+        $this->segments = Parser::parseSegments($this->response);
 
-		$rawResponse = preg_replace("/\@([0-9]*)\@HIRMG/", "@$1@'HIRMG", $rawResponse);
-		$this->segments = preg_split("#'(?=[A-Z]{4,}:\d|')#", $rawResponse);
+        // Compatibility implementation for "findSegments"
+        $this->rawSegments = Parser::parseRawSegments($this->response);
 
 		$this->dialog = $dialog;
 	}
@@ -70,6 +78,9 @@ class Response
 		return get_class($this) == "Fhp\Response\GetTANRequest";
 	}
 
+    /**
+     * @return \Fhp\Dialog\Dialog|null
+     */
 	public function getDialog()
 	{
 		return $this->dialog;
@@ -83,13 +94,14 @@ class Response
 	 */
 	public function getDialogId()
 	{
-		$segment = $this->findSegment('HNHBK');
+        /** @var Segment\HNHBK\HNHBKv3 $segment */
+        $segment = $this->getSegment('HNHBK');
 
 		if (null === $segment) {
-			throw new \Exception('Could not find element HNHBK. Invalid response?');
+            throw new \RuntimeException('Could not find element HNHBK. Invalid response?');
 		}
 
-		return $this->getSegmentIndex(4, $segment);
+        return $segment->dialogId;
 	}
 
 	/**
@@ -100,6 +112,7 @@ class Response
 	public function getBankName()
 	{
 		$bankName = null;
+
 		$segment = $this->findSegment('HIBPA');
 		if (null != $segment) {
 			$split = $this->splitSegment($segment);
@@ -321,8 +334,9 @@ class Response
 	}
 
 	/**
+     * @deprecated use getSegment
+     *
 	 * @param string $name
-	 *
 	 * @return string|null
 	 */
 	public function findSegment($name)
@@ -331,6 +345,8 @@ class Response
 	}
 
 	/**
+     * @deprecated use getSegments
+     *
 	 * @param string $name
 	 * @param bool   $one
 	 *
@@ -340,7 +356,8 @@ class Response
 	{
 		$found = $one ? null : array();
 
-		foreach ($this->segments as $segment) {
+        foreach ($this->rawSegments as $segment) {
+
 			$split = explode(':', $segment, 2);
 
 			$segment = $this->conformToUtf8($segment);
@@ -356,12 +373,45 @@ class Response
 		return $found;
 	}
 
+    /**
+     * @param string $name
+     * @return Segment\BaseSegment|Segment\AbstractSegment|null
+     */
+    protected function getSegment($name) {
+
+        $segments = $this->getSegments($name);
+        if(count($segments) > 0) {
+            return $segments[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return Segment\BaseSegment[]|Segment\AbstractSegment[]
+     */
+    protected function getSegments($name) {
+
+        $result = array();
+
+        foreach($this->segments as $segment) {
+            if($segment->getName() == $name) {
+                $result[] = $segment;
+            }
+        }
+
+        return $result;
+    }
+
 	protected function conformToUtf8($string)
 	{
 		return iconv('ISO-8859-1', 'UTF-8', $string);
 	}
 
 	/**
+     * @deprecated does not work if a segment contains binary data
+     *
 	 * @param $segment
 	 *
 	 * @return array
@@ -386,6 +436,7 @@ class Response
 	}
 
 	/**
+     *
 	 * @param $deg
 	 *
 	 * @return array
@@ -396,6 +447,8 @@ class Response
 	}
 
 	/**
+     * @deprecated does not work, if the segment contains binary data
+     *
 	 * @param int $idx
 	 * @param     $segment
 	 *
@@ -412,14 +465,28 @@ class Response
 	}
 
 	/**
+     * Replaces the segment HNVSD itself by the payload
+     *
 	 * @param string $response
-	 *
 	 * @return string
 	 */
-	protected function unwrapEncryptedMsg($response)
+    private function unwrapEncryptedResponse($response)
 	{
-		if (preg_match('/HNVSD:\d+:\d+\+@\d+@(.+)\'\'/', $response, $matches)) {
-			return $matches[1];
+        if (preg_match('/(HNVSD:\d+:\d+\+' . Delimiter::BINARY . '(\d+)' . Delimiter::BINARY . ')/', $response, $matches, PREG_OFFSET_CAPTURE) === 1) {
+
+            // 0 -> HNVSD begin
+            $result = substr($response, 0, $matches[1][1]);
+
+            // HNVSD Payload
+            $length = $matches[2][0];
+            $start = $matches[1][1] + strlen($matches[1][0]); //
+
+            $result .= substr($response, $start, $length);
+
+            // HNVSD End -> End
+            $result .= substr($response, $start + $length + 1); // + 1 = Message delimiter "'"
+
+            return $result;
 		}
 
 		return $response;
