@@ -54,8 +54,8 @@ class FinTs extends FinTsInternal
 	protected $systemId = 0;
 	/** @var string */
 	protected $bankName;
-	/** @var Account[] */
-	protected $accounts;
+    /** @var Account[] */
+    protected $accounts;
 	/** @var int */
 	protected $tanMechanism;
 	/** @var Dialog */
@@ -141,11 +141,11 @@ class FinTs extends FinTsInternal
 	{
 	    $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog();
+        $dialog = $this->getDialog();
 
 		$message = $this->getNewMessage(
 			$dialog,
-			array(new HKSPA(3))
+            array(new HKSPA(3))
 		);
 
 		$this->logger->info('');
@@ -207,7 +207,7 @@ class FinTs extends FinTsInternal
 	{
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-		$dialog = $this->getDialog();
+        $dialog = $this->getDialog();
 		$response = $dialog->syncDialog();
 		if ($response->isTANRequest()) {
 			return $response;

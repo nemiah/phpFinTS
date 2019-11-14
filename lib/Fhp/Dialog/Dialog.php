@@ -382,7 +382,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function initDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
+    public function initDialog($tanMechanism = null, $tanMediaName = null, \Closure $tanCallback = null)
 	{
 		$this->logger->info('');
 		$this->logger->info('DIALOG initialize');
@@ -399,7 +399,7 @@ class Dialog
 		);
 
 		$options = array();
-		if (!is_null($tanMechanism)) {
+        if (!is_null($tanMechanism)) {
             $options[AbstractMessage::OPT_PINTAN_MECH] = $tanMechanism;
         }
 
@@ -421,7 +421,7 @@ class Dialog
 		#$this->logger->debug('Sending INIT message:');
 		#$this->logger->debug((string) $message);
 
-		$response = $this->sendMessage($message, $tanMechanism, $tanCallback)->rawResponse;
+        $response = $this->sendMessage($message, $tanMechanism, $tanCallback)->rawResponse;
 
         $parsedMessage = \Fhp\Protocol\Message::parse($response);
         // Update the BPD, as it could differ from the values received via syncDialog
@@ -440,7 +440,7 @@ class Dialog
 
 		$this->logger->info('DIALOG end');
 
-		return $response;
+        return $response;
 	}
 
 	/**
@@ -452,7 +452,7 @@ class Dialog
 	 * @throws FailedRequestException
 	 * @throws \Exception
 	 */
-	public function syncDialog()
+    public function syncDialog()
 	{
 		$this->logger->info('');
 		$this->logger->info('SYNC initialize');
@@ -491,7 +491,7 @@ class Dialog
 
 		#$this->logger->debug('Sending SYNC message:');
 		#$this->logger->debug((string) $syncMsg);
-		$response = $this->sendMessage($syncMsg);
+        $response = $this->sendMessage($syncMsg);
 
 		#$this->checkResponse($response);
 

@@ -41,7 +41,7 @@ $fints->setLogger(new testLogger());
 try {
 
     $fints->initializeDialog();
-	$accounts = $fints->getSEPAAccounts();
+    $accounts = $fints->getSEPAAccounts();
 
     $oneAccount = $accounts[0];
     $from = new \DateTime('2016-01-01');
