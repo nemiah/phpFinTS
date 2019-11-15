@@ -435,7 +435,7 @@ class Dialog
 		#$this->logger->debug('Got INIT response:');
 		#$this->logger->debug($response);
 
-		$result = new Initialization($rawResponse);
+        $result = new Initialization($rawResponse);
 		$this->dialogId = $result->getDialogId();
 		$this->logger->info('Received dialog ID: ' . $this->dialogId);
 
