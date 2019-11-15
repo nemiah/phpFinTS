@@ -132,22 +132,6 @@ class FinTs extends FinTsInternal
     }
 
 	/**
-	 * Test if login requires a TAN
-     * Check with isTANRequest() on return value
-	 * TAN can be sent with finishSEPATAN
-	 * 
-	 * @return GetTANRequest|Response
-	 */
-    public function login()
-    {
-        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
-        $dialog = $this->getDialog(false);#, $this->tanMechanism);
-        $response = $dialog->syncDialog($this->tanMechanism, $this->tanMediaName);
-        
-        return $response;
-    }
-    
-	/**
 	 * Gets array of all SEPA Accounts.
 	 *
 	 * @return Model\SEPAAccount[]
@@ -673,10 +657,13 @@ class FinTs extends FinTsInternal
         return $this->dialog;
     }
 
-    public function initializeDialog($tanMechanism = HNSHK::SECURITY_FUNC_999, $tanMediaName = null, \Closure $tanCallback = null)
+    /**
+     * @return Response|GetTANRequest
+     */
+    public function login($tanMechanism = HNSHK::SECURITY_FUNC_999, $tanMediaName = null, \Closure $tanCallback = null)
     {
         $dialog = $this->getDialog();
-        // System-ID anfragen
+        // System-ID anfragen, Anfrage ohne TAN-Mechanismus
         $dialog->syncDialog();
         // Dialog muss anschließend beendet werden
         $dialog->endDialog();
@@ -722,8 +709,15 @@ class FinTs extends FinTsInternal
 
         $this->bankName = $dialog->getBankName();
 
+        // Sonderbehandlung bis es die TANRequiredException gibt
+        if ($response->isTANRequest()) {
+            return $response;
+        }
+
         $this->accounts = (new GetAccounts($response))->getAccountsArray();
 
+
+        return $response;
     }
 
     /*public function resumeDialog($dialogId, $systemId = null)

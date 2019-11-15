@@ -40,7 +40,7 @@ $fints->setLogger(new testLogger());
 
 try {
 
-    $fints->initializeDialog();
+    $fints->login();
     $accounts = $fints->getSEPAAccounts();
 
     $oneAccount = $accounts[0];

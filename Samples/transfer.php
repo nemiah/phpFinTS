@@ -66,7 +66,7 @@ $fints = new FinTs(
 $fints->setLogger(new testLogger());
 $accounts = $fints->getSEPAAccounts();
 
-$fints->initializeDialog();
+$fints->login();
 file_put_contents(__DIR__."/tan.txt", "");
 
 $oneAccount = $accounts[0];
