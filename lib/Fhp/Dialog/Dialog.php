@@ -377,7 +377,7 @@ class Dialog
 	 *
 	 * @param int|null $tanMechanism
 	 * @param string|null $tanMediaName
-	 * @return Response|GetTANRequest
+     * @return Response|GetTANRequest
 	 * @throws CurlException
 	 * @throws FailedRequestException
 	 * @throws \Exception
