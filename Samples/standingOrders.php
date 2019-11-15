@@ -33,7 +33,7 @@ $fints = new FinTs(
     FHP_SOFTWARE_VERSION
 );
 $fints->setLogger(new testLogger());
-$fints->initializeDialog();
+$fints->login();
 $accounts = $fints->getSEPAAccounts();
 
 $orders = $fints->getSEPAStandingOrders($accounts[0]);
