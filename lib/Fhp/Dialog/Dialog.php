@@ -186,7 +186,7 @@ class Dialog
 			}
 			
 			$response = new GetTANRequest($response->rawResponse, $this);
-
+            $response->setTanMechnism($tanMechanism);
 			if (!$tanCallback) {
 				return $response;
 			}
