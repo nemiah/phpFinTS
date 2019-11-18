@@ -457,10 +457,13 @@ class FinTs extends FinTsInternal
 			throw new TANException('No TAN received!');
 		}
 
+        $this->tanMechanism = $tanRequest->getTanMechnism();
+        #$this->tanMediaName = $tanMediaName;
+        
 		$dialog = $tanRequest->getDialog();
 		$this->dialog = $dialog;
 
-		$dialog->submitTAN($tanRequest, $this->getUsedPinTanMechanism($dialog), $tan);
+		$dialog->submitTAN($tanRequest, $this->tanMechanism, $tan);
 	}
 
 	/**
