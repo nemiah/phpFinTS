@@ -2,6 +2,7 @@
 
 namespace Fhp\Response;
 
+use Fhp\FinTsInternal;
 use Fhp\Message\AbstractMessage;
 use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\NameMapping;
@@ -18,6 +19,7 @@ class Response
 	const RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED = "0030";
 	// const RESPONSE_CODE_STRONG_AUTH_REQUIRED = 9076;
 	const RESPONSE_CODE_COMMAND_EXECUTED = "0020";
+    const RESPONSE_CODE_DIALOG_ENDED = "0100";
 
 	/** @var string */
 	public $rawResponse;
@@ -62,13 +64,17 @@ class Response
 
 	public function isStrongAuthRequired()
 	{
-		$msgArr = $this->getSegmentSummary() + $this->getMessageSummary();
-		if(array_key_exists(self::RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED, $msgArr)){
-			return true;
-		}
-		if(array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr)){
-			return false;
-		}
+        $msgArr = $this->getSegmentSummary() + $this->getMessageSummary();
+        if (array_key_exists(self::RESPONSE_CODE_SECURITY_CLEARANCE_REQUIRED, $msgArr)) {
+            return true;
+        }
+        if (array_key_exists(self::RESPONSE_CODE_STRONG_AUTH_NOT_REQUIRED, $msgArr)) {
+            return false;
+        }
+
+        if (array_key_exists(self::RESPONSE_CODE_DIALOG_ENDED, $msgArr)) {
+            return false;
+        }
 
 		return !array_key_exists(self::RESPONSE_CODE_COMMAND_EXECUTED, $msgArr);
 	}
@@ -293,7 +299,7 @@ class Response
 			throw new \Exception('Could not determine system id.');
 		}
 
-		return $matches[1];
+		return FinTsInternal::unescapeString($matches[1]);
 	}
 
 	/**

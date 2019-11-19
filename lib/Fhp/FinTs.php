@@ -6,6 +6,8 @@ use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Kti;
 use Fhp\DataTypes\Ktv;
 use Fhp\Dialog\Dialog;
+use Fhp\Dialog\Exception\TANRequiredException;
+use Fhp\Message\Message;
 use Fhp\Message\AbstractMessage;
 use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
@@ -723,10 +725,44 @@ class FinTs extends FinTsInternal
         return $response;
     }
 
-    /*public function resumeDialog($dialogId, $systemId = null)
+    public function submitTanForMechanism($tanMechanism, $tanMediaName = null, $processId, $tan, $systemId = null, $dialogId = null, $messageNumber = null)
     {
+        $dialog = $this->getDialog();
 
-    }*/
+        // Wenn kein bestehender Dialog fortgeführt werden soll, z.B. weil die Bank das nicht benötigt
+        // die Werte aus dem Dialog nehmen, der vorher mit ::login gestartet wurde
+        $systemId = $systemId ?? $dialog->getSystemId();
+        $dialogId = $dialogId ?? $dialog->getDialogId();
+        $messageNumber = $messageNumber ?? $dialog->getMessageNumber();
+
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $systemId,
+            $dialogId,
+            $messageNumber,
+            array(
+                new HKTAN(HKTAN::VERSION, 3, $processId, $tanMediaName)
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $tanMechanism
+            ),
+            $tan
+        );
+        $this->logger->info('');
+        $this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
+        $response = $dialog->sendMessage($message);
+        $this->logger->info('HKTAN end');
+        return $response;
+    }
+
+    public function submitTanForToken(string $tanToken, string $tan)
+    {
+        $values = array_combine(TANRequiredException::TAN_TOKEN_VALUE_ORDER, explode('~', $tanToken));
+
+        return $this->submitTanForMechanism($values['tanMechanism'], $values['tanMediaName'] ?? null, $values['processId'], $tan, $values['systemId'], $values['dialogId'], $values['messageNumber']);
+    }
 
     /**
      * @param SEPAAccount $account The account to test the support for
