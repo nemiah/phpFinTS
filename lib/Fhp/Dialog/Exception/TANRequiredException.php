@@ -36,7 +36,7 @@ class TANRequiredException extends \Exception
         $this->tanMechanism = $cause->getSecurityFunction();
         // TODO TanMediaName ermitteln
         //$this->tanMediaName = ;
-        // Wenn die TAN beim initDialog verlangt wird, dann ist die Dialog-ID noch nicht am Dialog gesetzt worden.
+
         $this->systemId = $dialog->getSystemId();
         $this->dialogId = $dialog->getDialogId();
         $this->messageNumber = $dialog->getMessageNumber();
