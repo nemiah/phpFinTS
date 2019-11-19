@@ -761,7 +761,7 @@ class FinTs extends FinTsInternal
     {
         $values = array_combine(TANRequiredException::TAN_TOKEN_VALUE_ORDER, explode('~', $tanToken));
 
-        return $this->submitTanForMechanism($values['tanMechanism'], $values['tanMediaName'] ?? null, $values['processId'], $tan, $values['systemId'], $values['dialogId'], $values['messageNumber']);
+        return $this->submitTanForMechanism($values['tanMechanism'], $values['tanMediaName'] ?: null, $values['processId'], $tan, $values['systemId'], $values['dialogId'], $values['messageNumber']);
     }
 
     /**
