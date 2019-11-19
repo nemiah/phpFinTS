@@ -30,8 +30,12 @@ class TANRequiredException extends \Exception
     /** @var Message */
     protected $cause;
 
+    /** @var GetTANRequest */
+    protected $response;
+
     public function __construct(GetTANRequest $response, Message $cause, Dialog $dialog)
     {
+        $this->response = $response;
         $this->cause = $cause;
         $this->tanMechanism = $cause->getSecurityFunction();
         // TODO TanMediaName ermitteln
@@ -45,6 +49,14 @@ class TANRequiredException extends \Exception
             . "\nSystem-ID:" . $this->systemId . ' Dialog-ID:' . $this->dialogId . ' Nachrichtennummer:' . $this->messageNumber . ' Auftrags-Referenz:' . $this->processId
             #. "\n" . '"' . $this->systemId . ' ' . $this->dialogId . ' ' . $this->messageNumber . ' ' . $this->processId . '"'
         );
+    }
+
+    /**
+     * @return GetTANRequest
+     */
+    public function getResponse(): GetTANRequest
+    {
+        return $this->response;
     }
 
     /**
