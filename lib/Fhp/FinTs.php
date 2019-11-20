@@ -759,7 +759,7 @@ class FinTs extends FinTsInternal
 
     public function submitTanForToken(string $tanToken, string $tan)
     {
-        $values = array_combine(TANRequiredException::TAN_TOKEN_VALUE_ORDER, explode('~', $tanToken));
+        $values = array_combine(TANRequiredException::TAN_TOKEN_VALUE_ORDER, explode('~', $tanToken, count(TANRequiredException::TAN_TOKEN_VALUE_ORDER)));
 
         return $this->submitTanForMechanism($values['tanMechanism'], $values['tanMediaName'] ?: null, $values['processId'], $tan, $values['systemId'], $values['dialogId'], $values['messageNumber']);
     }
