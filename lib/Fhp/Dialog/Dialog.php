@@ -4,6 +4,7 @@ namespace Fhp\Dialog;
 use Fhp\CurlException;
 use Fhp\Connection;
 use Fhp\Dialog\Exception\FailedRequestException;
+use Fhp\Dialog\Exception\TanRequiredException;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Protocol\BPD;
@@ -184,19 +185,19 @@ class Dialog
 			if (!$response->isStrongAuthRequired()) {
 				return $response;
 			}
+
+            if(!$this->dialogId) {
+                $this->dialogId = $response->getDialogId();
+            }
+
+            if(!$this->systemId) {
+                $this->systemId = $response->getSystemId();
+            }
 			
 			$response = new GetTANRequest($response->rawResponse, $this);
             $response->setTanMechnism($tanMechanism);
 			if (!$tanCallback) {
-				return $response;
-			}
-			
-			if(!$this->dialogId) {
-				$this->dialogId = $response->getDialogId();
-			}
-			
-			if(!$this->systemId) {
-				$this->systemId = $response->getSystemId();
+			    throw new TanRequiredException($response);
 			}
 			
 			$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
