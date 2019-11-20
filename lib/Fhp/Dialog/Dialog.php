@@ -186,7 +186,7 @@ class Dialog
 			}
 			
 			$response = new GetTANRequest($response->rawResponse, $this);
-
+            $response->setTanMechnism($tanMechanism);
 			if (!$tanCallback) {
 				return $response;
 			}
@@ -377,7 +377,7 @@ class Dialog
 	 *
 	 * @param int|null $tanMechanism
 	 * @param string|null $tanMediaName
-	 * @return string|null dialog id
+     * @return Response|GetTANRequest
 	 * @throws CurlException
 	 * @throws FailedRequestException
 	 * @throws \Exception
@@ -421,9 +421,10 @@ class Dialog
 		#$this->logger->debug('Sending INIT message:');
 		#$this->logger->debug((string) $message);
 
-        $response = $this->sendMessage($message, $tanMechanism, $tanCallback)->rawResponse;
+        $response = $this->sendMessage($message, $tanMechanism, $tanCallback);
+        $rawResponse = $response->rawResponse;
 
-        $parsedMessage = \Fhp\Protocol\Message::parse($response);
+        $parsedMessage = \Fhp\Protocol\Message::parse($rawResponse);
         // Update the BPD, as it could differ from the values received via syncDialog
         $this->bpd = BPD::extractFromResponse($parsedMessage, ['logger' => $this->logger]);
 
@@ -434,7 +435,7 @@ class Dialog
 		#$this->logger->debug('Got INIT response:');
 		#$this->logger->debug($response);
 
-		$result = new Initialization($response);
+        $result = new Initialization($rawResponse);
 		$this->dialogId = $result->getDialogId();
 		$this->logger->info('Received dialog ID: ' . $this->dialogId);
 

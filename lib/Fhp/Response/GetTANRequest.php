@@ -9,6 +9,7 @@ class GetTANRequest extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HITAN';
 	
+    private $usedTanMechanism = null;
     /**
      * Returns TANRequest object with process ID
      *
@@ -26,6 +27,15 @@ class GetTANRequest extends Response
 		return $request;
     }
 
+
+    public function setTanMechnism($tanMechanism){
+        $this->usedTanMechanism = $tanMechanism;
+    }
+    
+    public function getTanMechnism(){
+        return $this->usedTanMechanism;
+    }
+    
     /**
      * @return string
      */
