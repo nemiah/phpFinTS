@@ -7,9 +7,11 @@ use Fhp\DataTypes\Kti;
 use Fhp\DataTypes\Ktv;
 use Fhp\Dialog\Dialog;
 use Fhp\Message\AbstractMessage;
+use Fhp\Message\Message;
 use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
+use Fhp\Model\TanTokenValues;
 use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
@@ -29,6 +31,7 @@ use Fhp\Segment\HKCDB;
 use Fhp\Segment\HKDSE;
 use Fhp\Segment\HKDSC;
 use Fhp\Segment\HKCAZ;
+use Fhp\Segment\HKTAN;
 use Fhp\Segment\HKVVB;
 use Fhp\Segment\HKIDN;
 use Fhp\Segment\HKTAB;
@@ -465,6 +468,45 @@ class FinTs extends FinTsInternal
 
 		$dialog->submitTAN($tanRequest, $this->tanMechanism, $tan);
 	}
+
+	public function submitTanFromTanToken(string $tanToken, $tan) {
+
+        $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
+
+        if ($tan == '') {
+            throw new TANException('No TAN received!');
+        }
+
+        $tanTokenValues = TanTokenValues::fromString($tanToken);
+
+        $dialog = $this->getDialog();
+
+        $message = new Message(
+            $this->bankCode,
+            $this->username,
+            $this->pin,
+            $tanTokenValues->systemId,
+            $tanTokenValues->dialogId,
+            $tanTokenValues->messageNumber,
+            array(
+                new HKTAN(
+                    HKTAN::VERSION,
+                    3, $tanTokenValues->processId,
+                    $tanTokenValues->tanMediaName ?? null
+                )
+            ),
+            array(
+                AbstractMessage::OPT_PINTAN_MECH => $tanTokenValues->tanMechanism
+            ),
+            $tan
+        );
+
+        $this->logger->info('');
+        $this->logger->info('HKTAN (Zwei-Schritt-TAN-Einreichung) initialize');
+        $response = $dialog->sendMessage($message);
+        $this->logger->info('HKTAN end');
+        return $response;
+    }
 
 	/**
 	 * Executes SEPA transfer
