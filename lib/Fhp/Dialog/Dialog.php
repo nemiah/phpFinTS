@@ -148,8 +148,6 @@ class Dialog
 	{
 		try {
 			$this->logger->debug('> '.$message);
-			$message->setMessageNumber($this->messageNumber);
-			$message->setDialogId($this->dialogId);
 
             $result = $this->connection->send($message->toString());
 			$this->messageNumber++;

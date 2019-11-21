@@ -82,8 +82,8 @@ class Message extends AbstractMessage
         $username,
         $pin,
         $systemId,
-        $dialogId = 0,
-        $messageNumber = 0,
+        $dialogId,
+        $messageNumber,
         array $segments = array(),
         array $options = array(),
 		$tan = null
