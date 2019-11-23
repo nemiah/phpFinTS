@@ -20,6 +20,12 @@ class ParameterZweiSchrittTanEinreichungV3 extends BaseDeg implements ParameterZ
     /** @var VerfahrensparameterZweiSchrittVerfahrenV3[] @Max(98) */
     public $verfahrensparameterZweiSchrittVerfahren;
 
+    /** @return bool */
+    public function getEinschrittVerfahrenErlaubt()
+    {
+        return $this->einschrittVerfahrenErlaubt;
+    }
+
     /** @return VerfahrensparameterZweiSchrittVerfahrenV3[] */
     public function getVerfahrensparameterZweiSchrittVerfahren()
     {
