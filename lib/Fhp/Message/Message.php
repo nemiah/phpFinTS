@@ -3,6 +3,7 @@
 namespace Fhp\Message;
 
 use Fhp\DataElementGroups\SecurityProfile;
+use Fhp\FinTsInternal;
 use Fhp\Segment\HNHBS;
 use Fhp\Segment\HNSHA;
 use Fhp\Segment\HNSHK;
@@ -81,8 +82,8 @@ class Message extends AbstractMessage
         $username,
         $pin,
         $systemId,
-        $dialogId = 0,
-        $messageNumber = 0,
+        $dialogId,
+        $messageNumber,
         array $segments = array(),
         array $options = array(),
 		$tan = null
@@ -92,7 +93,7 @@ class Message extends AbstractMessage
         $this->bankCode = $bankCode;
         $this->username = $username;
         $this->pin = $pin;
-        $this->systemId = $systemId;
+        $this->systemId = FinTsInternal::escapeString($systemId);
         $this->options = $options;
         $this->profileVersion = SecurityProfile::PROFILE_VERSION_1;
         $this->securityFunction = HNSHK::SECURITY_FUNC_999;
@@ -139,6 +140,14 @@ class Message extends AbstractMessage
             count($this->segments) + count($this->encryptedSegments) + $segmentNumberOffset,
             $this->messageNumber
         ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecurityFunction(): string
+    {
+        return $this->securityFunction;
     }
 
     /**

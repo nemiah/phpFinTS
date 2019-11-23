@@ -4,6 +4,8 @@ namespace Fhp\Dialog;
 use Fhp\CurlException;
 use Fhp\Connection;
 use Fhp\Dialog\Exception\FailedRequestException;
+use Fhp\Dialog\Exception\TANRequiredException;
+use Fhp\FinTsInternal;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Protocol\BPD;
@@ -142,12 +144,10 @@ class Dialog
 	 * @throws CurlException
 	 * @throws FailedRequestException
 	 */
-	public function sendMessage(AbstractMessage $message, $tanMechanism = null, \Closure $tanCallback = null, $interval = 1)
+	public function sendMessage(Message $message, $tanMechanism = null, \Closure $tanCallback = null)
 	{
 		try {
 			$this->logger->debug('> '.$message);
-			$message->setMessageNumber($this->messageNumber);
-			$message->setDialogId($this->dialogId);
 
             $result = $this->connection->send($message->toString());
 			$this->messageNumber++;
@@ -181,24 +181,27 @@ class Dialog
 				throw $ex;
 			}
 
+            if(!$this->dialogId) {
+                $this->dialogId = $response->getDialogId();
+            }
+
+            if(!$this->systemId) {
+                $this->systemId = $response->getSystemId();
+            }
+
 			if (!$response->isStrongAuthRequired()) {
 				return $response;
 			}
 			
 			$response = new GetTANRequest($response->rawResponse, $this);
-            $response->setTanMechnism($tanMechanism);
-			if (!$tanCallback) {
-				return $response;
+            $response->setTanMechnism($message->getSecurityFunction());
+
+            if (!$tanCallback) {
+                throw new TANRequiredException($response, $message, $this);
+                //return $response;
 			}
 			
-			if(!$this->dialogId) {
-				$this->dialogId = $response->getDialogId();
-			}
-			
-			if(!$this->systemId) {
-				$this->systemId = $response->getSystemId();
-			}
-			
+
 			$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
 			for ($i = 0; $i < 120; $i += $interval) {
 				sleep($interval);
@@ -388,7 +391,7 @@ class Dialog
 		$this->logger->info('DIALOG initialize');
 		$this->logger->debug('Registered product: ' . trim($this->productName . ' ' . $this->productVersion));
 
-		$identification = new HKIDN(3, $this->bankCode, $this->username, $this->systemId);
+		$identification = new HKIDN(3, $this->bankCode, $this->username, FinTsInternal::escapeString($this->systemId));
 		$prepare        = new HKVVB(
 			4,
 			HKVVB::DEFAULT_BPD_VERSION,
