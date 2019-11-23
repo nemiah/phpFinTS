@@ -181,6 +181,10 @@ class Message
             $referenceNumber = $segment->segmentkopf->bezugselement;
             return $referenceNumber !== null && in_array($referenceNumber, $referenceNumbers);
         });
+        $result->header = $this->header;
+        $result->footer = $this->footer;
+        $result->signatureHeader = $this->signatureHeader;
+        $result->signatureFooter = $this->signatureFooter;
         return $result;
     }
 
@@ -204,15 +208,16 @@ class Message
      * @param string $kundensystemId See {@link #$kundensystemId}.
      * @param Credentials $credentials The credentials used to authenticate the message.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
+     * @param string|null The TAN to be sent to the server (in HNSHA). If this is present, $tanMode must be present.
      * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
      */
-    public static function createWrappedMessage($plainSegments, $options, $kundensystemId, $credentials, $tanMode)
+    public static function createWrappedMessage($plainSegments, $options, $kundensystemId, $credentials, $tanMode, $tan)
     {
         $message = new Message();
         $message->plainSegments = $plainSegments instanceof MessageBuilder ? $plainSegments->segments : $plainSegments;
 
         $randomReference = strval(rand(1000000, 9999999));
-        $signature = BenutzerdefinierteSignaturV1::create($credentials->pin, null); // TODO Provide a TAN!
+        $signature = BenutzerdefinierteSignaturV1::create($credentials->pin, $tan);
         $numPlainSegments = count($message->plainSegments); // This is N, see $encryptedSegments.
 
         $message->wrapperSegments = [ // See $encryptedSegments documentation for the structure.
