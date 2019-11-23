@@ -12,16 +12,16 @@ class GetTANRequest extends Response
     private $usedTanMechanism = null;
 
     /**
-     * Returns TANRequest object with process ID
+     * Returns TANRequestOld object with process ID
      *
-     * @return Model\TANRequest
+     * @return Model\TANRequestOld
      */
     public function get()
     {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-        $request = new Model\TANRequest(
+        $request = new Model\TANRequestOld(
             $segment->getAuftragsReferenz()
         );
 
