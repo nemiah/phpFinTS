@@ -1,5 +1,7 @@
 <?php
 
+// NOTE: In FinTsTestCase, this namespace name is hard-coded in order to be able to mock the rand() function below.
+
 namespace Fhp\Protocol;
 
 use Fhp\Credentials;
@@ -216,7 +218,7 @@ class Message
         $message = new Message();
         $message->plainSegments = $plainSegments instanceof MessageBuilder ? $plainSegments->segments : $plainSegments;
 
-        $randomReference = strval(rand(1000000, 9999999));
+        $randomReference = strval(rand(1000000, 9999999)); // Call unqualified rand() for unit test mocking to work.
         $signature = BenutzerdefinierteSignaturV1::create($credentials->pin, $tan);
         $numPlainSegments = count($message->plainSegments); // This is N, see $encryptedSegments.
 
