@@ -30,7 +30,7 @@ class HKIDNv2 extends BaseSegment
      * 0: Kundensystem-ID wird nicht benötigt (HBCI DDV-Verfahren und chipkartenbasierte Verfahren ab
      *    Sicherheitsprofil-Version 3)
      * 1: Kundensystem-ID wird benötigt (sonstige HBCI RAH-/RDH- und PIN/TAN-Verfahren)
-     * @var int
+     * @var integer
      */
     public $kundensystemStatus = 1; // This library only supports PIN/TAN, hence 1 is the right choice.
 
