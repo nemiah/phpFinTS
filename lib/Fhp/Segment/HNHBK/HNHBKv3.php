@@ -12,12 +12,14 @@ use Fhp\Segment\BaseSegment;
  */
 class HNHBKv3 extends BaseSegment
 {
+    const NACHRICHTENGROESSE_LENGTH = 12;
+
     /**
      * The length of the entire message (after encryption and compression) in bytes. While this is morally a number, the
      * specification requires padding it to 12 digits, so it is implemented as a string instead.
      * @var string
      */
-    public $nachrichtengroesse;
+    public $nachrichtengroesse = '000000000000'; // Ensure this field has always length 12.
     /**
      * Version 2.0.1 : 201 (Spezifikationsstatus: obsolet)
      * Version 2.1 : 210 (Spezifikationsstatus: obsolet)
@@ -46,6 +48,6 @@ class HNHBKv3 extends BaseSegment
      */
     public function setNachrichtengroesse($nachrichtengroesse)
     {
-        $this->nachrichtengroesse = str_pad($nachrichtengroesse, 12, '0', STR_PAD_LEFT);
+        $this->nachrichtengroesse = str_pad($nachrichtengroesse, static::NACHRICHTENGROESSE_LENGTH, '0', STR_PAD_LEFT);
     }
 }
