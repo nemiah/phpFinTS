@@ -4,11 +4,12 @@ namespace Fhp\Segment;
 
 use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
+use Fhp\UnsupportedException;
 
 /**
  * Base class for Data Element Groups (Datenelement-Gruppen; DEGs).
  */
-abstract class BaseDeg
+abstract class BaseDeg implements \Serializable
 {
     /**
      * Reference to the descriptor for this type of segment.
@@ -44,11 +45,20 @@ abstract class BaseDeg
 
     /**
      * Short-hand for {@link Serializer#serializeDeg()}.
-     * @return string The HBCI wire format representation of this DEG, terminated by the segment delimiter.
+     * @return string The HBCI wire format representation of this DEG.
      */
     public function serialize()
     {
         return Serializer::serializeDeg($this, $this->getDescriptor());
+    }
+
+    /**
+     * Parses into the current instance.
+     * @param string $serialized The HBCI wire format for a DEG of this type.
+     */
+    public function unserialize($serialized)
+    {
+        Parser::parseDeg($serialized, $this);
     }
 
     /**
@@ -59,6 +69,9 @@ abstract class BaseDeg
      */
     public static function parse($rawElements)
     {
+        if (static::class === BaseDeg::class) {
+            throw new UnsupportedException('Must not call BaseDeg::parse() on the base class');
+        }
         return Parser::parseDeg($rawElements, static::class);
     }
 }

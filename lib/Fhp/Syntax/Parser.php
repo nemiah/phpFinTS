@@ -6,9 +6,7 @@ use Fhp\DataTypes\Bin;
 use Fhp\Segment\AnonymousSegment;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\DegDescriptor;
 use Fhp\Segment\ElementDescriptor;
-use Fhp\Segment\SegmentDescriptor;
 use Fhp\Segment\Segmentkopf;
 
 // Polyfill for PHP < 7.3
@@ -197,7 +195,8 @@ abstract class Parser
 
     /**
      * @param string $rawElements The serialized wire format for a data element group.
-     * @param string $type The type (PHP class name) of the Deg to be parsed.
+     * @param string|BaseDeg $type The type (PHP class name) of the Deg to be parsed, or alternatively the instance to
+     *     write to (the same instance will be returned from this function).
      * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @return BaseDeg|null The parsed value, of type $type, or null if all fields were empty and $allowEmpty is true.
      */
@@ -215,8 +214,8 @@ abstract class Parser
     /**
      * @param string[] $rawElements The serialized wire format for a series of elements (already splitted). This array
      *     will be modified in that the elements that were consumed are removed from the beginning.
-     * @param string $type The type (PHP class name) of the Deg to be parsed, defaults to the class on which
-     *     this function is called.
+     * @param string|BaseDeg $type The type (PHP class name) of the Deg to be parsed, or alternatively the instance to
+     *     write to (the same instance will be returned from this function).
      * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @param int $offset The position in $rawElements to be read next.
      * @return array (BaseDeg|null, integer)
@@ -227,11 +226,9 @@ abstract class Parser
      */
     private static function parseDegElements($rawElements, $type, $allowEmpty = false, $offset = 0)
     {
-        if ($type === null) {
-            $type = static::class;
-        }
-        $descriptor = DegDescriptor::get($type);
-        $result = new $type();
+        /** @var BaseDeg $result */
+        $result = is_string($type) ? new $type() : $type;
+        $descriptor = $result->getDescriptor();
         $expectedIndex = 0;
         $allEmpty = true;
         $missingFieldError = null; // When $allowEmpty, we need to tolerate errors at first, but maybe throw them later.
@@ -250,7 +247,8 @@ abstract class Parser
                     ++$offset;
                     continue;
                 } elseif ($missingFieldError === null) {
-                    $missingFieldError = new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
+                    $missingFieldError = new \InvalidArgumentException(
+                        "Missing field $descriptor->class.$elementDescriptor->field");
                     if (!$allowEmpty) {
                         throw $missingFieldError;
                     }
@@ -304,24 +302,26 @@ abstract class Parser
     /**
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
      *     the end). This should be ISO-8859-1-encoded.
-     * @param string $type The type (PHP class name) of the segment to be parsed.
+     * @param string|BaseSegment $type The type (PHP class name) of the segment to be parsed, or alternatively the
+     *     instance to write to (the same instance will be returned from this function).
      * @return BaseSegment The parsed segment of type $type.
      */
     public static function parseSegment($rawSegment, $type)
     {
+        /** @var BaseSegment $result */
+        $result = is_string($type) ? new $type() : $type;
         $rawElements = static::splitIntoSegmentElements($rawSegment);
-        $descriptor = SegmentDescriptor::get($type);
+        $descriptor = $result->getDescriptor();
         if (array_key_last($rawElements) > $descriptor->maxIndex) {
-            throw new \InvalidArgumentException("Too many elements for $type: $rawSegment");
+            throw new \InvalidArgumentException("Too many elements for $descriptor->class: $rawSegment");
         }
-        $result = new $type();
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
             if (!isset($rawElements[$index]) || $rawElements[$index] === '') {
                 if ($elementDescriptor->optional) {
                     continue;
                 }
-                throw new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
+                throw new \InvalidArgumentException("Missing field $descriptor->class.$elementDescriptor->field");
             }
 
             // Note: The handling of empty values may be incorrect here, parseSegmentElement() can return null.
@@ -341,10 +341,12 @@ abstract class Parser
             }
         }
         if ($result->segmentkopf->segmentkennung !== $descriptor->kennung) {
-            throw new \InvalidArgumentException("Invalid segment type $result->segmentkopf->segmentkennung for $type");
+            throw new \InvalidArgumentException(
+                "Invalid segment type $result->segmentkopf->segmentkennung for $descriptor->class");
         }
         if ($result->segmentkopf->segmentversion !== $descriptor->version) {
-            throw new \InvalidArgumentException("Invalid version $result->segmentkopf->segmentversion for $type");
+            throw new \InvalidArgumentException(
+                "Invalid version $result->segmentkopf->segmentversion for $descriptor->class");
         }
         return $result;
     }
