@@ -2,6 +2,8 @@
 
 namespace Fhp\Segment;
 
+use Fhp\Syntax\Delimiter;
+
 /**
  * A fallback for segments that were received from the server but are not implemented in this library.
  */
@@ -45,6 +47,17 @@ final class AnonymousSegment extends BaseSegment
     public function validate()
     {
         // Do nothing, anonymous segments are always valid.
+    }
+
+    public function serialize()
+    {
+        return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
+            implode(Delimiter::ELEMENT, array_map(function ($element) {
+                if ($element === null) return '';
+                if (is_string($element)) return $element;
+                return implode(Delimiter::GROUP, $element);
+            }, $this->elements))
+            . Delimiter::SEGMENT;
     }
 
     /**
