@@ -41,6 +41,19 @@ abstract class Rueckmeldungscode
     }
 
     /**
+     * Bestätigung der Dialogbeendigung des Benutzers oder des Kreditinstituts.
+     */
+    const BEENDET = 100;
+
+
+    /**
+     * Es liegen weitere Informationen vor.
+     * Tells the client that the response is incomplete and the request needs to be re-sent with the pagination token
+     * ("Aufsetzpunkt") that is contained in the Rueckmeldung parameters.
+     */
+    const PAGINATION = 3040;
+
+    /**
      * Zugelassene Ein- und Zwei-Schritt-Verfahren für den Benutzer (+ Rückmeldungsparameter).
      * The parameters reference the VerfahrensparameterZweiSchrittVerfahren.sicherheitsfunktion values (900..997) from
      * HITANS, or 999 to indicate Ein-Schritt-Verfahren.

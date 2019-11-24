@@ -78,7 +78,6 @@ abstract class BaseSegment implements SegmentInterface
         return Serializer::serializeSegment($this);
     }
 
-    // TODO Consider removing this along with SegmentInterface in future.
     public function __toString()
     {
         return $this->serialize();
