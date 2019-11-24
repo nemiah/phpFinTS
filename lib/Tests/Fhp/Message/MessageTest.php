@@ -16,7 +16,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
 {
     public function test_setter_and_getter()
     {
-        $message = new Message('12345678', 'username', '1234', '987654');
+        $message = new Message('12345678', 'username', '1234', '987654', '', 0);
 
         $message->setDialogId(333);
         $this->assertEquals(333, $message->getDialogId());
@@ -32,7 +32,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
 
     public function test_basic_message_creation()
     {
-        $message = new Message('12345678', 'username', '1234', '987654');
+        $message = new Message('12345678', 'username', '1234', '987654', '0', 0);
         $date = new \DateTime();
         $dateString = $date->format('Ymd');
 
@@ -79,7 +79,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
 
     public function test_get_encrypted_segments()
     {
-        $message = new Message('12345678', 'username', '1234', '987654');
+        $message = new Message('12345678', 'username', '1234', '987654', '', 0);
         $segments = $message->getEncryptedSegments();
 
         $this->assertIsArray($segments);

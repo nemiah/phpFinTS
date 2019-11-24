@@ -23,7 +23,7 @@ class HKSAL extends AbstractSegment
      * @param int $version
      * @param int $segmentNumber
      * @param mixed $ktv
-     * @param array $allAccounts
+     * @param bool $allAccounts
      */
     public function __construct($version, $segmentNumber, $ktv, $allAccounts)
     {
