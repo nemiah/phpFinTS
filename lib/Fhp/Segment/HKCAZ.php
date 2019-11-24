@@ -7,12 +7,10 @@ use Fhp\DataTypes\Kti;
 
 /**
  * Class HKCAZ (Kontoumsätze/Zeitraum (camt))
- * Segment type: Geschäftsvorfall
+ * Segment type: Geschäftsvorfall.
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.2.3.1.1.1
- *
- * @package Fhp\Segment
  */
 class HKCAZ extends AbstractSegment
 {
@@ -20,17 +18,16 @@ class HKCAZ extends AbstractSegment
     const ALL_ACCOUNTS_N = 'N';
     const ALL_ACCOUNTS_Y = 'J';
     const CAMT_FORMAT = 'camt.052.001.02';
-    const CAMT_FORMAT_FQ = 'urn:iso:std:iso:20022:tech:xsd:' . self::CAMT_FORMAT;
+    const CAMT_FORMAT_FQ = 'urn:iso:std:iso:20022:tech:xsd:'.self::CAMT_FORMAT;
 
     /**
      * HKCAZ constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     * @param Kti $kti
-     * @param string $camtFormat
-     * @param array $allAccounts
-     * @param \DateTime $from
-     * @param \DateTime $to
+     *
+     * @param int         $version
+     * @param int         $segmentNumber
+     * @param Kti         $kti
+     * @param string      $camtFormat
+     * @param array       $allAccounts
      * @param string|null $touchdown
      */
     public function __construct(
@@ -47,15 +44,15 @@ class HKCAZ extends AbstractSegment
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
                 $camtFormat,
                 $allAccounts,
                 new Dat($from),
                 new Dat($to),
                 null,
-                $touchdown
-            )
+                $touchdown,
+            ]
         );
     }
 

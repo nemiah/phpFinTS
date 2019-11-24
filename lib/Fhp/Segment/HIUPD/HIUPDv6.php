@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HIUPD;
 
@@ -7,11 +9,11 @@ use Fhp\Segment\BaseSegment;
 /**
  * Segment: Kontoinformation (Version 6)
  * Bezugssegment: HKVVB
- * Sender: Kreditinstitut
+ * Sender: Kreditinstitut.
  *
  * Note: This is a repeated segment, there is one instance per account.
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: E.3 "Kontoinformation"
  */
 class HIUPDv6 extends BaseSegment implements HIUPD
@@ -32,8 +34,9 @@ class HIUPDv6 extends BaseSegment implements HIUPD
      * 60 – 69: Fonds-Depot bei einer Kapitalanlagegesellschaft
      * 70 – 79: Bausparvertrag
      * 80 – 89: Versicherungsvertrag
-     * 90 – 99: Sonstige (nicht zuordenbar)
-     * @var integer|null
+     * 90 – 99: Sonstige (nicht zuordenbar).
+     *
+     * @var int|null
      */
     public $kontoart;
     /** @var string|null */
@@ -50,8 +53,10 @@ class HIUPDv6 extends BaseSegment implements HIUPD
     public $erlaubteGeschaeftsvorfaelle;
     /**
      * JSON-encoded extra information.
-     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
+     *
+     * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
      * Section: E.3.1 "Aufbau der UPD-Erweiterung, kontobezogen"
+     *
      * @var string|null Max length: 2048
      */
     public $erweiterungKontobezogen;

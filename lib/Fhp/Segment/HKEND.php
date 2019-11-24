@@ -6,12 +6,10 @@ use Fhp\FinTsInternal;
 
 /**
  * Class HKEND (Dialogende)
- * Segment type: Administration
+ * Segment type: Administration.
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: C.4.1.2
- *
- * @package Fhp\Segment
  */
 class HKEND extends AbstractSegment
 {
@@ -20,6 +18,7 @@ class HKEND extends AbstractSegment
 
     /**
      * HKEND constructor.
+     *
      * @param $segmentNumber
      * @param $dialogId
      */
@@ -29,7 +28,7 @@ class HKEND extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(FinTsInternal::escapeString($dialogId))
+            [FinTsInternal::escapeString($dialogId)]
         );
     }
 

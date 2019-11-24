@@ -6,17 +6,13 @@ use Fhp\Dialog\Dialog;
 use Fhp\Message\Message;
 use Fhp\Response\GetTANRequest;
 
-/**
- *
- * @package Fhp\Dialog\Exception
- */
 class TANRequiredException extends \Exception
 {
     const TAN_TOKEN_VALUE_ORDER = ['processId', 'systemId', 'dialogId', 'messageNumber', 'tanMechanism', 'tanMediaName'];
 
     /** @var string */
     protected $tanMechanism;
-    /** @var null|string */
+    /** @var string|null */
     protected $tanMediaName = null;
     /** @var string */
     protected $systemId;
@@ -46,30 +42,21 @@ class TANRequiredException extends \Exception
         $this->messageNumber = $dialog->getMessageNumber();
         $this->processId = $response->get()->getProcessID();
         parent::__construct(implode('\n', $response->getSegmentSummary())
-            . "\nSystem-ID:" . $this->systemId . ' Dialog-ID:' . $this->dialogId . ' Nachrichtennummer:' . $this->messageNumber . ' Auftrags-Referenz:' . $this->processId
-            #. "\n" . '"' . $this->systemId . ' ' . $this->dialogId . ' ' . $this->messageNumber . ' ' . $this->processId . '"'
+            ."\nSystem-ID:".$this->systemId.' Dialog-ID:'.$this->dialogId.' Nachrichtennummer:'.$this->messageNumber.' Auftrags-Referenz:'.$this->processId
+            //. "\n" . '"' . $this->systemId . ' ' . $this->dialogId . ' ' . $this->messageNumber . ' ' . $this->processId . '"'
         );
     }
 
-    /**
-     * @return GetTANRequest
-     */
     public function getResponse(): GetTANRequest
     {
         return $this->response;
     }
 
-    /**
-     * @return string
-     */
     public function getTanMechanism(): string
     {
         return $this->tanMechanism;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTanMediaName(): ?string
     {
         return $this->tanMediaName;
@@ -120,6 +107,7 @@ class TANRequiredException extends \Exception
         foreach (self::TAN_TOKEN_VALUE_ORDER as $name) {
             $values[] = $this->$name;
         }
+
         return implode('~', $values);
     }
 }

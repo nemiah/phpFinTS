@@ -23,6 +23,7 @@ class Bin
      * Sets the binary data.
      *
      * @param string $data
+     *
      * @return $this
      */
     public function setData($data)
@@ -49,7 +50,7 @@ class Bin
      */
     public function toString()
     {
-        return '@' . strlen($this->string) . '@' . $this->string;
+        return '@'.strlen($this->string).'@'.$this->string;
     }
 
     /**

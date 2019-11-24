@@ -7,7 +7,7 @@ use Fhp\Segment\SegmentInterface;
 /**
  * Segment: Zwei-Schritt-TAN-Einreichung, Parameter
  * Bezugssegment: HKVVB
- * Sender: Kreditinstitut
+ * Sender: Kreditinstitut.
  */
 interface HITANS extends SegmentInterface
 {

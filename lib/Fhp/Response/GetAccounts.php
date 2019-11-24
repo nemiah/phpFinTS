@@ -9,7 +9,7 @@ class GetAccounts extends Response
     const SEG_ACCOUNT_INFORMATION = 'HIUPD';
 
     /** @var array */
-    protected $accounts = array();
+    protected $accounts = [];
 
     /**
      * @return array
@@ -20,8 +20,9 @@ class GetAccounts extends Response
 
         foreach ($accounts as $account) {
             $accountParts = $this->splitSegment($account);
-            if (empty($accountParts[1]))
+            if (empty($accountParts[1])) {
                 continue;
+            }
             $this->accounts[] = $this->createModelFromArray($accountParts);
         }
 
@@ -31,7 +32,6 @@ class GetAccounts extends Response
     /**
      * Creates a Account model from array.
      *
-     * @param array $array
      * @return Account
      */
     protected function createModelFromArray(array $array)

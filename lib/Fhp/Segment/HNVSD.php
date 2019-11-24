@@ -6,12 +6,10 @@ use Fhp\DataTypes\Bin;
 
 /**
  * Class HNVSD (Verschlüsselte Daten)
- * Segment type: Administration
+ * Segment type: Administration.
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20130718_final_version.pdf
  * Section: B.5.4
- *
- * @package Fhp\Segment
  */
 class HNVSD extends AbstractSegment
 {
@@ -20,7 +18,8 @@ class HNVSD extends AbstractSegment
 
     /**
      * HNVSD constructor.
-     * @param int $segmentNumber
+     *
+     * @param int    $segmentNumber
      * @param string $encodedData
      */
     public function __construct($segmentNumber, $encodedData)
@@ -29,7 +28,7 @@ class HNVSD extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(new Bin($encodedData))
+            [new Bin($encodedData)]
         );
     }
 
@@ -48,7 +47,7 @@ class HNVSD extends AbstractSegment
      */
     public function setEncodedData($data)
     {
-        $this->setDataElements(array(new Bin($data)));
+        $this->setDataElements([new Bin($data)]);
     }
 
     /**

@@ -11,7 +11,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
     const RESPONSE_WITH_HIRMS_NUMBERS = "HNHBK:1:3+000000000241+300+0+4+0:4'HIRMG:2:2:+9050::Nachricht teilweise fehlerhaft.'HIRMS:3:2:2+9010::Verarbeitung nicht moglich.+3076::Keine starke Authentifizierung erforderlich.'HIRMS:4:2:3+3070::Wir brauchen heute keine TAN.'HNHBS:5:1+4'";
 
     /**
-     * @throws ServerException This should not actually throw because there are only warnings in the response.
+     * @throws ServerException this should not actually throw because there are only warnings in the response
      */
     public function test_detectAndThrowErrors_onlyWarnings()
     {
@@ -22,7 +22,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @throws ServerException This should not actually throw because there are only warnings in the response.
+     * @throws ServerException this should not actually throw because there are only warnings in the response
      */
     public function test_detectAndThrowErrors_withErrors()
     {
@@ -39,6 +39,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
         try {
             ServerException::detectAndThrowErrors($response, $request);
             $this->assertTrue(false);
+
             return null;
         } catch (ServerException $exception) {
             $this->assertCount(2, $exception->getErrors()); // 9050 and 9010

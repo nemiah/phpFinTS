@@ -17,10 +17,10 @@ class CurlException extends \Exception
     /**
      * CurlException constructor.
      *
-     * @param string $message
+     * @param string      $message
      * @param string|null $response
-     * @param int $code
-     * @param mixed $curlInfo
+     * @param int         $code
+     * @param mixed       $curlInfo
      */
     public function __construct($message, $response, $code = 0, $curlInfo = [])
     {

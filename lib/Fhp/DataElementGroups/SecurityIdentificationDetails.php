@@ -13,7 +13,7 @@ class SecurityIdentificationDetails extends Deg
      * SecurityIdentificationDetails constructor.
      *
      * @param string $cid
-     * @param int $systemId
+     * @param int    $systemId
      */
     public function __construct($cid = self::CID_NONE, $systemId = 0)
     {

@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HITANS;
 
@@ -6,21 +8,21 @@ use Fhp\Model\TanMode;
 
 interface VerfahrensparameterZweiSchrittVerfahren extends TanMode
 {
-    /** @return integer */
+    /** @return int */
     public function getId();
 
     /** @return string */
     public function getName();
 
-    /** @return boolean */
+    /** @return bool */
     public function getSmsAbbuchungskontoErforderlich();
 
-    /** @return boolean */
+    /** @return bool */
     public function getAuftraggeberkontoErforderlich();
 
-    /** @return boolean */
+    /** @return bool */
     public function getChallengeKlasseErforderlich();
 
-    /** @return boolean */
+    /** @return bool */
     public function getAntwortHhdUcErforderlich();
 }

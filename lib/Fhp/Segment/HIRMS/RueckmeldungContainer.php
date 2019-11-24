@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fhp\Segment\HIRMS;
 
 /**
@@ -10,7 +9,8 @@ trait RueckmeldungContainer
 {
     /**
      * @param int $code The value of Rueckmeldung.rueckmeldungscode to search for.
-     * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
+     *
+     * @return Rueckmeldung|null the corresponding Rueckmeldung instance, or null if not found
      */
     public function findRueckmeldung($code)
     {
@@ -20,6 +20,7 @@ trait RueckmeldungContainer
         if (count($matches) > 1) {
             throw new \InvalidArgumentException("Unexpectedly multiple matches for Rueckmeldungscode $code");
         }
+
         return empty($matches) ? null : $matches[0];
     }
 }

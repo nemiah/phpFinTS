@@ -6,7 +6,7 @@ use Fhp\Segment\BaseSegment;
 
 /**
  * Segment: Rückmeldungen zu Segmenten (Version 2)
- * Sender: Kreditinstitut
+ * Sender: Kreditinstitut.
  *
  * Contains reponse code(s) pertain to an individual segment in the request message. The request segment is referenced
  * inside the Segmentkopf (see the BaseSegment super class). If the request segment consisted of multiple data elements
@@ -14,7 +14,7 @@ use Fhp\Segment\BaseSegment;
  * The HIRMS segment itself is repeated. There is one HIRMS per request segment, and one Rueckmeldung per original DE(G)
  * that needs to be referenced.
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section B.7.2
  */
 class HIRMSv2 extends BaseSegment

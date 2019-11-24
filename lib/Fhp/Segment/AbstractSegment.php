@@ -22,9 +22,8 @@ abstract class AbstractSegment implements SegmentInterface
      * @param $type
      * @param $segmentNumber
      * @param $version
-     * @param array $dataElements
      */
-    public function __construct($type, $segmentNumber, $version, array $dataElements = array())
+    public function __construct($type, $segmentNumber, $version, array $dataElements = [])
     {
         $this->type = strtoupper($type);
         $this->version = $version;
@@ -32,10 +31,7 @@ abstract class AbstractSegment implements SegmentInterface
         $this->dataElements = $dataElements;
     }
 
-    /**
-     * @param array $dataElements
-     */
-    public function setDataElements(array $dataElements = array())
+    public function setDataElements(array $dataElements = [])
     {
         $this->dataElements = $dataElements;
     }
@@ -53,17 +49,17 @@ abstract class AbstractSegment implements SegmentInterface
      */
     public function toString()
     {
-        $string = $this->type . ':' . $this->segmentNumber . ':' . $this->version;
+        $string = $this->type.':'.$this->segmentNumber.':'.$this->version;
 
         foreach ($this->dataElements as $de) {
-            $string .= '+' . (string) $de;
+            $string .= '+'.(string) $de;
         }
 
-        if($string == '') {
+        if ('' == $string) {
             return $string;
         }
 
-        return $string . static::SEGMENT_SEPARATOR;
+        return $string.static::SEGMENT_SEPARATOR;
     }
 
     /**
@@ -76,13 +72,14 @@ abstract class AbstractSegment implements SegmentInterface
 
     /**
      * @param bool $translateCodes
+     *
      * @return string
      */
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            array("'", '+'),
-            array(PHP_EOL, PHP_EOL . "  "),
+            ["'", '+'],
+            [PHP_EOL, PHP_EOL.'  '],
             $translateCodes
                 ? NameMapping::translateResponse($this->toString())
                 : $this->toString()

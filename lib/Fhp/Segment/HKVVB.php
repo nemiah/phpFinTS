@@ -4,12 +4,10 @@ namespace Fhp\Segment;
 
 /**
  * Class HKVVB (Verarbeitungsvorbereitung)
- * Segment type: Administration
+ * Segment type: Administration.
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: C.3.1.3
- *
- * @package Fhp\Segment
  */
 class HKVVB extends AbstractSegment
 {
@@ -29,10 +27,11 @@ class HKVVB extends AbstractSegment
 
     /**
      * HKVVB constructor.
-     * @param int $segmentNumber
-     * @param int $bpdVersion
-     * @param int $updVersion
-     * @param int $dialogLanguage
+     *
+     * @param int    $segmentNumber
+     * @param int    $bpdVersion
+     * @param int    $updVersion
+     * @param int    $dialogLanguage
      * @param string $productName
      * @param string $productVersion
      */
@@ -48,13 +47,13 @@ class HKVVB extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(
+            [
                 $bpdVersion,
                 $updVersion,
                 $dialogLanguage,
                 $productName,
-                $productVersion
-            )
+                $productVersion,
+            ]
         );
     }
 

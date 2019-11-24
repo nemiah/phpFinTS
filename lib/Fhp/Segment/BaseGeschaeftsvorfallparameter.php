@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment;
 
@@ -9,25 +11,28 @@ namespace Fhp\Segment;
  * which are implemented in sub-classes of {@link BaseGeschaeftsvorfallparameter}. Note that the segment version of this
  * segment matches the version of the potential request segment that we could send to the server.
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: D.6
  */
 abstract class BaseGeschaeftsvorfallparameter extends BaseSegment
 {
     /**
-     * Maximum number of request segments of this kind that can be included in a single request message
-     * @var integer
+     * Maximum number of request segments of this kind that can be included in a single request message.
+     *
+     * @var int
      */
     public $maximaleAnzahlAuftraege;
     /**
      * Minimum number of signatures required for this kind of business transaction. Note that zero signatures is
      * equivalent to an anonymous connection and one signature (the most common case) can be satisfied with PIN/TAN.
-     * @var integer
+     *
+     * @var int
      */
     public $anzahlSignaturenMindestens;
     /**
      * Minimum cryptographic security required for this transaction type, where 0 means none.
-     * @var integer
+     *
+     * @var int
      */
     public $sicherheitsklasse;
 

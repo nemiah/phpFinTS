@@ -7,7 +7,7 @@ use Fhp\Segment\HIUPD\HIUPDv4;
 class HIUPDTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
+     * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
      * File: HBCI22 Final.pdf
      * Search for: "HIUPD:"
      */

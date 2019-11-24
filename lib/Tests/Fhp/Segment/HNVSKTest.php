@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class HNVSKTest extends TestCase
 {
     /**
-     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+     * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
      * Section: F.2.2 a)
      */
     const HBCI22_EXAMPLE = "HNVSK:998:3+PIN:1+998+1+1::2+1:20020610:102044+2:2:13:@8@00000000:5:1+280:10020030:12345:V:0:0+0'";
@@ -38,8 +38,8 @@ class HNVSKTest extends TestCase
         $hnvsk->sicherheitsdatumUndUhrzeit->datum = '20020610';
         $hnvsk->sicherheitsdatumUndUhrzeit->uhrzeit = '102044';
         $this->assertEquals( // Replace binary zeros to make the diff readable in case the unit test fails.
-            str_replace("\0", "0", static::HBCI22_EXAMPLE),
-            str_replace("\0", "0", $hnvsk->serialize())
+            str_replace("\0", '0', static::HBCI22_EXAMPLE),
+            str_replace("\0", '0', $hnvsk->serialize())
         );
     }
 }

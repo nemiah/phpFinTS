@@ -12,6 +12,7 @@ final class AnonymousSegment extends BaseSegment
     /**
      * The type plus version of the segment, i.e. the class name of the class that would normally implement it.
      * This is redundant with super::$segmentkopf, but it's useful to repeat here so that it shows up in a debugger.
+     *
      * @var string
      */
     public $type;
@@ -29,19 +30,19 @@ final class AnonymousSegment extends BaseSegment
     private $elements = [];
 
     /**
-     * @param Segmentkopf $segmentkopf
+     * @param Segmentkopf         $segmentkopf
      * @param string[]|string[][] $elements
      */
     public function __construct($segmentkopf, $elements)
     {
         $this->segmentkopf = $segmentkopf;
-        $this->type = $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
+        $this->type = $segmentkopf->segmentkennung.'v'.$segmentkopf->segmentversion;
         $this->elements = $elements;
     }
 
     public function getDescriptor()
     {
-        throw new \RuntimeException("AnonymousSegments do not have a descriptor");
+        throw new \RuntimeException('AnonymousSegments do not have a descriptor');
     }
 
     public function validate()
@@ -51,13 +52,18 @@ final class AnonymousSegment extends BaseSegment
 
     public function serialize()
     {
-        return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
+        return $this->segmentkopf->serialize().Delimiter::ELEMENT.
             implode(Delimiter::ELEMENT, array_map(function ($element) {
-                if ($element === null) return '';
-                if (is_string($element)) return $element;
+                if (null === $element) {
+                    return '';
+                }
+                if (is_string($element)) {
+                    return $element;
+                }
+
                 return implode(Delimiter::GROUP, $element);
             }, $this->elements))
-            . Delimiter::SEGMENT;
+            .Delimiter::SEGMENT;
     }
 
     /**
@@ -67,6 +73,6 @@ final class AnonymousSegment extends BaseSegment
     {
         // Note: createEmpty() normally runs the constructor and then fills the Segmentkopf, but that is not possible
         // for AnonymousSegment. Callers should just call the constructor itself.
-        throw new \RuntimeException("AnonymousSegment::createEmpty() is not allowed");
+        throw new \RuntimeException('AnonymousSegment::createEmpty() is not allowed');
     }
 }

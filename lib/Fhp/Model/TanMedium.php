@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Model;
 
@@ -13,12 +15,12 @@ interface TanMedium
 {
     /**
      * @return string A user-readable name for this TAN medium, which serves as its identifier at the same time. This is
-     *     what the application needs to persist when it wants to remember the users decision for future transactions.
+     *                what the application needs to persist when it wants to remember the users decision for future transactions.
      */
     public function getName();
 
     /**
-     * @return string|null In case this is a mobileTAN/smsTAN medium, this is its (possibly obfuscated) phone number.
+     * @return string|null in case this is a mobileTAN/smsTAN medium, this is its (possibly obfuscated) phone number
      */
     public function getPhoneNumber();
 

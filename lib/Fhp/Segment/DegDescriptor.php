@@ -8,25 +8,27 @@ namespace Fhp\Segment;
  */
 class DegDescriptor extends BaseDescriptor
 {
-
     /** @var DegDescriptor[] */
     private static $descriptors;
 
     /**
-     * @param string $class The name of a sub-class of {@link BaseDeg}.
-     * @return DegDescriptor The descriptor for the class.
+     * @param string $class the name of a sub-class of {@link BaseDeg}
+     *
+     * @return DegDescriptor the descriptor for the class
      */
     public static function get($class)
     {
         if (!isset(static::$descriptors[$class])) {
             static::$descriptors[$class] = new DegDescriptor($class);
         }
+
         return static::$descriptors[$class];
     }
 
     /**
      * Please use the factory above.
-     * @param string $class The name of a sub-class of {@link BaseDeg}.
+     *
+     * @param string $class the name of a sub-class of {@link BaseDeg}
      */
     protected function __construct($class)
     {
@@ -39,7 +41,7 @@ class DegDescriptor extends BaseDescriptor
             parent::__construct($clazz);
 
             // Check if the name ends in V2 or so, implicitly assume V1.
-            if (preg_match('/^[A-Z]+[vV]([0-9]+)$/', $clazz->getShortName(), $match) === 1) {
+            if (1 === preg_match('/^[A-Z]+[vV]([0-9]+)$/', $clazz->getShortName(), $match)) {
                 $this->version = intval($match[1]);
             }
         } catch (\ReflectionException $e) {

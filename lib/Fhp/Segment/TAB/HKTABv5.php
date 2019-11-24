@@ -1,13 +1,15 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\TAB;
 
 use Fhp\Segment\BaseSegment;
 
 /**
- * Segment: TAN-Generator/Liste anzeigen Bestand (Version 5)
+ * Segment: TAN-Generator/Liste anzeigen Bestand (Version 5).
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: C.3.1.1 a)
  */
 class HKTABv5 extends BaseSegment
@@ -15,8 +17,9 @@ class HKTABv5 extends BaseSegment
     /**
      * 0: Alle
      * 1: Aktiv
-     * 2: Verfügbar
-     * @var integer
+     * 2: Verfügbar.
+     *
+     * @var int
      */
     public $tanMediumArt = 0;
     /**
@@ -25,7 +28,8 @@ class HKTABv5 extends BaseSegment
      * * G: TAN-Generator
      * M: Mobiltelefon mit mobileTAN
      * S: Secoder
-     * B: Bilateral vereinbart
+     * B: Bilateral vereinbart.
+     *
      * @var string
      */
     public $tanMediumKlasse = 'A';

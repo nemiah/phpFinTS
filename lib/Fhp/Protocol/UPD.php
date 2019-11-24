@@ -26,9 +26,10 @@ class UPD
     }
 
     /**
-     * @param Message $response A dialog initialization response from the server.
-     * @return boolean True if the UPD data is contained in the response and {@link #extractFromResponse()} would
-     *     succeed.
+     * @param Message $response a dialog initialization response from the server
+     *
+     * @return bool true if the UPD data is contained in the response and {@link #extractFromResponse()} would
+     *              succeed
      */
     public static function containedInResponse($response)
     {
@@ -36,22 +37,25 @@ class UPD
     }
 
     /**
-     * @param Message $response The dialog initialization response from the server, which should contain the UPD
-     *     data.
-     * @return UPD A new UPD instance with the extracted configuration data.
+     * @param Message $response the dialog initialization response from the server, which should contain the UPD
+     *                          data
+     *
+     * @return UPD a new UPD instance with the extracted configuration data
      */
     public static function extractFromResponse($response)
     {
         $upd = new UPD();
         $upd->hiupa = $response->requireSegment(HIUPAv4::class);
         $upd->hiupd = $response->findSegments(HIUPD::class);
+
         return $upd;
     }
 
     /**
-     * @param SEPAAccount $account The account to test the support for
-     * @param string $requestName The request that shall be sent to the bank.
-     * @return boolean True if the given request can be used by the current user for the given account.
+     * @param SEPAAccount $account     The account to test the support for
+     * @param string      $requestName the request that shall be sent to the bank
+     *
+     * @return bool true if the given request can be used by the current user for the given account
      */
     public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
     {
@@ -69,6 +73,7 @@ class UPD
                         return true;
                     }
                 }
+
                 return false;
             }
         }

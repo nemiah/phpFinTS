@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HITANS;
 
@@ -6,90 +8,90 @@ use Fhp\Segment\BaseDeg;
 
 class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
 {
-    /** @var integer Allowed values: 900 through 997 */
+    /** @var int Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var integer Allowed values: 1, 2, 3, 4; See specification for details */
+    /** @var int Allowed values: 1, 2, 3, 4; See specification for details */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
     /** @var string Max length: 30 */
     public $nameDesZweiSchrittVerfahrens;
-    /** @var integer */
+    /** @var int */
     public $maximaleLaengeDesTanEingabewertes;
-    /** @var integer Allowed values: 1 = numerisch, 2 = alfanumerisch */
+    /** @var int Allowed values: 1 = numerisch, 2 = alfanumerisch */
     public $erlaubtesFormat;
     /** @var string */
     public $textZurBelegungDesRueckgabewertes;
-    /** @var integer Allowed values: 1 through 256 */
+    /** @var int Allowed values: 1 through 256 */
     public $maximaleLaengeDesRueckgabewertes;
-    /** @var integer|null */
+    /** @var int|null */
     public $anzahlUnterstuetzterAktiverTanListen;
-    /** @var boolean */
+    /** @var bool */
     public $mehrfachTanErlaubt;
-    /** @var boolean */
+    /** @var bool */
     public $tanZeitversetztDialoguebergreifendErlaubt;
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getId()
     {
         return $this->sicherheitsfunktion;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getName()
     {
         return $this->nameDesZweiSchrittVerfahrens;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getSmsAbbuchungskontoErforderlich()
     {
         return false;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getAuftraggeberkontoErforderlich()
     {
         return false;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getChallengeKlasseErforderlich()
     {
         return false;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getAntwortHhdUcErforderlich()
     {
         return false;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getChallengeLabel()
     {
         return $this->textZurBelegungDesRueckgabewertes;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getMaxChallengeLength()
     {
         return $this->maximaleLaengeDesRueckgabewertes;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getMaxTanLength()
     {
         return $this->maximaleLaengeDesTanEingabewertes;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getTanFormat()
     {
         return $this->erlaubtesFormat;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function needsTanMedium()
     {
         return false;

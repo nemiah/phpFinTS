@@ -18,8 +18,8 @@ class HITABTest extends \PHPUnit\Framework\TestCase
         $parsed = HITABv4::parse(static::REAL_DKB_RESPONSE);
         $liste = $parsed->getTanMediumListe();
         $this->assertCount(2, $liste);
-        $this->assertEquals("pushtan", $liste[0]->getName());
-        $this->assertEquals("SomePhone1", $liste[1]->getName());
+        $this->assertEquals('pushtan', $liste[0]->getName());
+        $this->assertEquals('SomePhone1', $liste[1]->getName());
     }
 
     public function test_serialize()

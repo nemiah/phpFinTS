@@ -10,7 +10,7 @@ class Statement
     /**
      * @var array of Transaction
      */
-    protected $transactions = array();
+    protected $transactions = [];
 
     /**
      * @var float
@@ -28,7 +28,7 @@ class Statement
     protected $date;
 
     /**
-     * Get transactions
+     * Get transactions.
      *
      * @return Transaction[]
      */
@@ -38,7 +38,7 @@ class Statement
     }
 
     /**
-     * Set transactions
+     * Set transactions.
      *
      * @param array $transactions
      *
@@ -57,7 +57,7 @@ class Statement
     }
 
     /**
-     * Get startBalance
+     * Get startBalance.
      *
      * @return float
      */
@@ -67,7 +67,7 @@ class Statement
     }
 
     /**
-     * Set startBalance
+     * Set startBalance.
      *
      * @param float $startBalance
      *
@@ -81,7 +81,7 @@ class Statement
     }
 
     /**
-     * Get creditDebit
+     * Get creditDebit.
      *
      * @return string
      */
@@ -91,7 +91,7 @@ class Statement
     }
 
     /**
-     * Set creditDebit
+     * Set creditDebit.
      *
      * @param string|null $creditDebit
      *
@@ -105,7 +105,7 @@ class Statement
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -115,9 +115,7 @@ class Statement
     }
 
     /**
-     * Set date
-     *
-     * @param \DateTime $date
+     * Set date.
      *
      * @return $this
      */

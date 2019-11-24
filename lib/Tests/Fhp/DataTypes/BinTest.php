@@ -10,13 +10,13 @@ class BinTest extends \PHPUnit\Framework\TestCase
         $string2 = md5(uniqid());
 
         $d = new Bin($string);
-        $this->assertEquals('@32@' . $string, (string) $d);
-        $this->assertEquals('@32@' . $string, $d->toString());
+        $this->assertEquals('@32@'.$string, (string) $d);
+        $this->assertEquals('@32@'.$string, $d->toString());
         $this->assertEquals($string, $d->getData());
 
         $d->setData($string2);
-        $this->assertEquals('@32@' . $string2, (string) $d);
-        $this->assertEquals('@32@' . $string2, $d->toString());
+        $this->assertEquals('@32@'.$string2, (string) $d);
+        $this->assertEquals('@32@'.$string2, $d->toString());
         $this->assertEquals($string2, $d->getData());
     }
 }

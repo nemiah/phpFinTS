@@ -7,5 +7,4 @@ namespace Fhp\Dialog\Exception;
  */
 class TANException extends \Exception
 {
- 
 }

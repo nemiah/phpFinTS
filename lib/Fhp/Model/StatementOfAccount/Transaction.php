@@ -49,6 +49,7 @@ class Transaction
 
     /**
      * Array keys are identifiers like "SVWZ" for the main description.
+     *
      * @var string[]
      */
     protected $structuredDescription;
@@ -67,22 +68,23 @@ class Transaction
      * @var string
      */
     protected $name;
-	
+
     /**
-     * @var boolean
+     * @var bool
      */
-	protected $booked;
+    protected $booked;
 
     /**
      * @var int
      */
-	protected $pn;
+    protected $pn;
 
     /**
      * Get booking date.
      *
      * @deprecated Use getBookingDate() instead
      * @codeCoverageIgnore
+     *
      * @return \DateTime|null
      */
     public function getDate()
@@ -91,7 +93,7 @@ class Transaction
     }
 
     /**
-     * Get booking date
+     * Get booking date.
      *
      * @return \DateTime|null
      */
@@ -101,7 +103,7 @@ class Transaction
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime|null
      */
@@ -111,9 +113,7 @@ class Transaction
     }
 
     /**
-     * Set booking date
-     *
-     * @param \DateTime|null $date
+     * Set booking date.
      *
      * @return $this
      */
@@ -125,9 +125,7 @@ class Transaction
     }
 
     /**
-     * Set valuta date
-     *
-     * @param \DateTime|null $date
+     * Set valuta date.
      *
      * @return $this
      */
@@ -139,7 +137,7 @@ class Transaction
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
      * @return float
      */
@@ -148,12 +146,10 @@ class Transaction
         return $this->amount;
     }
 
-	
-	
     /**
-     * Set booked status
+     * Set booked status.
      *
-     * @param boolean $booked
+     * @param bool $booked
      *
      * @return $this
      */
@@ -163,9 +159,9 @@ class Transaction
 
         return $this;
     }
-	
+
     /**
-     * Set amount
+     * Set amount.
      *
      * @param float $amount
      *
@@ -179,7 +175,7 @@ class Transaction
     }
 
     /**
-     * Get creditDebit
+     * Get creditDebit.
      *
      * @return string
      */
@@ -189,7 +185,7 @@ class Transaction
     }
 
     /**
-     * Set creditDebit
+     * Set creditDebit.
      *
      * @param string $creditDebit
      *
@@ -203,7 +199,7 @@ class Transaction
     }
 
     /**
-     * Get bookingCode
+     * Get bookingCode.
      *
      * @return string
      */
@@ -213,7 +209,7 @@ class Transaction
     }
 
     /**
-     * Set bookingCode
+     * Set bookingCode.
      *
      * @param string $bookingCode
      *
@@ -227,7 +223,7 @@ class Transaction
     }
 
     /**
-     * Get bookingText
+     * Get bookingText.
      *
      * @return string
      */
@@ -237,7 +233,7 @@ class Transaction
     }
 
     /**
-     * Set bookingText
+     * Set bookingText.
      *
      * @param string $bookingText
      *
@@ -251,7 +247,7 @@ class Transaction
     }
 
     /**
-     * Get description1
+     * Get description1.
      *
      * @return string
      */
@@ -261,7 +257,7 @@ class Transaction
     }
 
     /**
-     * Set description1
+     * Set description1.
      *
      * @param string $description1
      *
@@ -275,7 +271,7 @@ class Transaction
     }
 
     /**
-     * Get description2
+     * Get description2.
      *
      * @return string
      */
@@ -285,7 +281,7 @@ class Transaction
     }
 
     /**
-     * Set description2
+     * Set description2.
      *
      * @param string $description2
      *
@@ -299,7 +295,7 @@ class Transaction
     }
 
     /**
-     * Get structuredDescription
+     * Get structuredDescription.
      *
      * @return string[]
      */
@@ -309,7 +305,7 @@ class Transaction
     }
 
     /**
-     * Set structuredDescription
+     * Set structuredDescription.
      *
      * @param string[] $structuredDescription
      *
@@ -323,7 +319,7 @@ class Transaction
     }
 
     /**
-     * Get the main description (SVWZ)
+     * Get the main description (SVWZ).
      *
      * @return string
      */
@@ -332,12 +328,12 @@ class Transaction
         if (array_key_exists('SVWZ', $this->structuredDescription)) {
             return $this->structuredDescription['SVWZ'];
         } else {
-            return "";
+            return '';
         }
     }
 
     /**
-     * Get the end to end id (EREF)
+     * Get the end to end id (EREF).
      *
      * @return string
      */
@@ -346,12 +342,12 @@ class Transaction
         if (array_key_exists('EREF', $this->structuredDescription)) {
             return $this->structuredDescription['EREF'];
         } else {
-            return "";
+            return '';
         }
     }
 
     /**
-     * Get bankCode
+     * Get bankCode.
      *
      * @return string
      */
@@ -361,7 +357,7 @@ class Transaction
     }
 
     /**
-     * Set bankCode
+     * Set bankCode.
      *
      * @param string $bankCode
      *
@@ -375,7 +371,7 @@ class Transaction
     }
 
     /**
-     * Get accountNumber
+     * Get accountNumber.
      *
      * @return string
      */
@@ -385,7 +381,7 @@ class Transaction
     }
 
     /**
-     * Set accountNumber
+     * Set accountNumber.
      *
      * @param string $accountNumber
      *
@@ -399,7 +395,7 @@ class Transaction
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -409,17 +405,17 @@ class Transaction
     }
 
     /**
-     * Get booked status
+     * Get booked status.
      *
-     * @return boolean
+     * @return bool
      */
-	public function getBooked()
-	{
-		return $this->booked;
-	}
-	
+    public function getBooked()
+    {
+        return $this->booked;
+    }
+
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -433,23 +429,26 @@ class Transaction
     }
 
     /**
-     * Get primanota number
+     * Get primanota number.
      *
      * @return int
      */
-    public function getPN() {
+    public function getPN()
+    {
         return $this->pn;
     }
- 
-   /**
-     * Set primanota number
+
+    /**
+     * Set primanota number.
      *
      * @param int $nr
      *
      * @return $this
      */
-    public function setPN($nr) {
+    public function setPN($nr)
+    {
         $this->pn = (int) $nr;
+
         return $this;
     }
 }

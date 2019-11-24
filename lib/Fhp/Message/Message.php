@@ -59,7 +59,7 @@ class Message extends AbstractMessage
     /**
      * @var array
      */
-    private $encryptedSegments = array();
+    private $encryptedSegments = [];
 
     /**
      * @var HNVSD
@@ -68,14 +68,13 @@ class Message extends AbstractMessage
 
     /**
      * Message constructor.
+     *
      * @param string $bankCode
      * @param string $username
      * @param string $pin
      * @param $systemId
      * @param int $dialogId
      * @param int $messageNumber
-     * @param array $segments
-     * @param array $options
      */
     public function __construct(
         $bankCode,
@@ -84,9 +83,9 @@ class Message extends AbstractMessage
         $systemId,
         $dialogId,
         $messageNumber,
-        array $segments = array(),
-        array $options = array(),
-		$tan = null
+        array $segments = [],
+        array $options = [],
+        $tan = null
     ) {
         $this->dialogId = $dialogId;
         $this->messageNumber = $messageNumber;
@@ -103,14 +102,14 @@ class Message extends AbstractMessage
 
         $this->securityReference = !$useEncryption ? 1 : rand(1000000, 9999999);
 
-        if (isset($options[static::OPT_PINTAN_MECH]) && $this->options[static::OPT_PINTAN_MECH] != HNSHK::SECURITY_FUNC_999) {
+        if (isset($options[static::OPT_PINTAN_MECH]) && HNSHK::SECURITY_FUNC_999 != $this->options[static::OPT_PINTAN_MECH]) {
             $this->profileVersion = SecurityProfile::PROFILE_VERSION_2;
             $this->securityFunction = $this->options[static::OPT_PINTAN_MECH];
         }
 
         $this->encryptionEnvelop = new HNVSD(999, '');
 
-        if($useEncryption) {
+        if ($useEncryption) {
             $this->addSegment($this->buildEncryptionHead()); // HNVSK
             $this->addSegment($this->encryptionEnvelop);
             $segmentNumberOffset -= 2; // HNVSK + HNVSD have different numbers
@@ -128,8 +127,8 @@ class Message extends AbstractMessage
             $this->securityReference, $this->pin, $tan
         );
 
-        foreach($subSegments as $subSegment) {
-            if($useEncryption) {
+        foreach ($subSegments as $subSegment) {
+            if ($useEncryption) {
                 $this->addEncryptedSegment($subSegment);
             } else {
                 $this->addSegment($subSegment);
@@ -190,8 +189,6 @@ class Message extends AbstractMessage
 
     /**
      * Adds a encrypted segment to the message.
-     *
-     * @param SegmentInterface $segment
      */
     protected function addEncryptedSegment(SegmentInterface $segment)
     {
@@ -203,6 +200,7 @@ class Message extends AbstractMessage
 
     /**
      * Only for read-only access.
+     *
      * @return SegmentInterface[]
      */
     public function getEncryptedSegments()
