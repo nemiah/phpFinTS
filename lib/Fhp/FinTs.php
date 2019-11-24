@@ -93,6 +93,11 @@ class FinTs extends FinTsInternal
 		$this->url = trim($server);
 		$this->logger = new NullLogger();
 
+        if($this->url == "https://hbci-01.hypovereinsbank.de/bank/hbci"){
+            $this->logger->notice("Using 70020270 instead of $bankCode for Hypovereinsbank");
+            $bankCode = "70020270";
+        }
+        
 		// escaping of bank code not really needed here as it should
 		// never have special chars. But we just do it to ensure
 		// that the request will not get messed up and the user
