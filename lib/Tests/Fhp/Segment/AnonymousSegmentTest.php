@@ -41,10 +41,9 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
         Parser::parseAnonymousSegment('');
     }
 
-    public function test_cannot_serialize()
+    public function test_serialize()
     {
         $segment = Parser::parseAnonymousSegment(static::RAW_SEGMENT);
-        $this->expectException(\InvalidArgumentException::class);
-        $segment->serialize();
+        $this->assertEquals(static::RAW_SEGMENT, $segment->serialize());
     }
 }

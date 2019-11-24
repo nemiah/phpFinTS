@@ -76,16 +76,20 @@ class Connection
         if (false === $response) {
             throw new CurlException(
                 'Failed connection to ' . $this->host . ': ' . curl_error($this->curlHandle),
-                curl_errno($this->curlHandle),
                 null,
+                curl_errno($this->curlHandle),
                 curl_getinfo($this->curlHandle)
             );
         }
 
         $statusCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
         if ($statusCode < 200 || $statusCode > 299) {
-            throw new CurlException('Bad response with status code ' . $statusCode, 0, null,
-                curl_getinfo($this->curlHandle));
+            throw new CurlException(
+                'Bad response with status code ' . $statusCode,
+                $response,
+                $statusCode,
+                curl_getinfo($this->curlHandle)
+            );
         }
 
         return base64_decode($response);
