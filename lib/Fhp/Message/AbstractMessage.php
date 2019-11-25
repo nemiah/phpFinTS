@@ -12,7 +12,7 @@ class AbstractMessage
     /**
      * @var array
      */
-    protected $segments = [];
+    protected $segments = array();
 
     /**
      * @var int
@@ -26,6 +26,8 @@ class AbstractMessage
 
     /**
      * Adds a segment to the message.
+     *
+     * @param SegmentInterface $segment
      */
     protected function addSegment(SegmentInterface $segment)
     {

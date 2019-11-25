@@ -4,7 +4,9 @@ namespace Fhp\Segment;
 
 /**
  * Class HKTAB (request devices)
- * Segment type: Geschäftsvorfall.
+ * Segment type: Geschäftsvorfall
+ *
+ * @package Fhp\Segment
  */
 class HKTAB extends AbstractSegment
 {
@@ -13,7 +15,6 @@ class HKTAB extends AbstractSegment
 
     /**
      * HKTAB constructor.
-     *
      * @param int $segmentNumber
      */
     public function __construct($segmentNumber)
@@ -22,10 +23,10 @@ class HKTAB extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            [
+            array(
                 0,
-                'A',
-            ]
+                'A'
+            )
         );
     }
 

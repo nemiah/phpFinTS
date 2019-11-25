@@ -12,6 +12,6 @@ class HIUPATest extends \PHPUnit\Framework\TestCase
     public function test_parse_broken()
     {
         $this->expectException(\InvalidArgumentException::class);
-        HIUPAv4::parse(static::TEST_HIUPA.static::PARTIAL_HIUPD);
+        HIUPAv4::parse(static::TEST_HIUPA . static::PARTIAL_HIUPD);
     }
 }

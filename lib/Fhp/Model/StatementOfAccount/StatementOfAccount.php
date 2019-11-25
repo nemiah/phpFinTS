@@ -7,10 +7,10 @@ class StatementOfAccount
     /**
      * @var Statement[]
      */
-    protected $statements = [];
+    protected $statements = array();
 
     /**
-     * Get statements.
+     * Get statements
      *
      * @return Statement[]
      */
@@ -20,7 +20,7 @@ class StatementOfAccount
     }
 
     /**
-     * Set statements.
+     * Set statements
      *
      * @param array $statements
      *
@@ -28,16 +28,19 @@ class StatementOfAccount
      */
     public function setStatements(array $statements = null)
     {
-        $this->statements = null == $statements ? [] : $statements;
+        $this->statements = null == $statements ? array() : $statements;
 
         return $this;
     }
 
-    public function isTANRequest()
-    {
-        return false;
-    }
-
+	public function isTANRequest()
+	{
+		return false;
+	}
+	
+    /**
+     * @param Statement $statement
+     */
     public function addStatement(Statement $statement)
     {
         $this->statements[] = $statement;
@@ -47,7 +50,6 @@ class StatementOfAccount
      * Gets statement for given date.
      *
      * @param string|\DateTime $date
-     *
      * @return Statement|null
      */
     public function getStatementForDate($date)
@@ -69,7 +71,6 @@ class StatementOfAccount
      * Checks if a statement with given date exists.
      *
      * @param string|\DateTime $date
-     *
      * @return bool
      */
     public function hasStatementForDate($date)

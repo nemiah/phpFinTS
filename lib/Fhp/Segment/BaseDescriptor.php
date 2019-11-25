@@ -11,14 +11,13 @@ abstract class BaseDescriptor
 {
     /** @var string Example: "Fhp\Segment\HITANSv1" (Segment) or "Fhp\Segment\Segmentkopf" (Deg) */
     public $class;
-    /** @var int Example: 1 */
+    /** @var integer Example: 1 */
     public $version = 1;
 
     /**
      * Descriptors for the elements inside the segment/Deg in the order of the wire format. The indices in this array
      * match the speficiation. In particular, the first index is 1 (not 0) and some indices may be missing if the
      * documentation does not specify it (anymore).
-     *
      * @var ElementDescriptor[]
      */
     public $elements = [];
@@ -27,8 +26,7 @@ abstract class BaseDescriptor
      * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
      * segment/DEG described by this descriptor, it would get index $maxIndex+1.
      * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
-     *
-     * @var int
+     * @var integer
      */
     public $maxIndex;
 
@@ -50,7 +48,7 @@ abstract class BaseDescriptor
             }
 
             $index = static::getIntAnnotation('Index', $docComment);
-            if (null === $index) {
+            if ($index === null) {
                 if ($implicitIndex) {
                     $index = $nextIndex;
                 } else {
@@ -68,12 +66,12 @@ abstract class BaseDescriptor
                 throw new \InvalidArgumentException("Need type on property $property");
             }
             $maxCount = static::getIntAnnotation('Max', $docComment);
-            if ('|null' === substr($type, -5)) { // Nullable field
+            if (substr($type, -5) === '|null') { // Nullable field
                 $descriptor->optional = true;
                 $type = substr($type, 0, -5);
             }
-            if ('[]' === substr($type, -2)) { // Array/repeated field
-                if (null === $maxCount) {
+            if (substr($type, -2) === '[]') { // Array/repeated field
+                if ($maxCount === null) {
                     throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
                 }
                 $descriptor->repeated = $maxCount;
@@ -81,31 +79,27 @@ abstract class BaseDescriptor
                 // If a repeated field is followed by anything at all, there will be an empty entry for each possible
                 // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
                 $nextIndex += $maxCount;
-            } elseif (null !== $maxCount) {
+            } elseif ($maxCount !== null) {
                 throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
             } else {
-                ++$nextIndex; // Singular field, so the index advances by 1.
+                $nextIndex++; // Singular field, so the index advances by 1.
             }
             $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
-        if (empty($this->elements)) {
-            throw new \InvalidArgumentException("No fields found in $clazz->name");
-        }
+        if (empty($this->elements)) throw new \InvalidArgumentException("No fields found in $clazz->name");
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
         $this->maxIndex = $nextIndex - 1;
     }
 
     /**
-     * @param object $obj the object to be validated
-     *
-     * @throws \InvalidArgumentException if any of the fields in the given object is not valid according to the schema
-     *                                   defined by this descriptor
+     * @param object $obj The object to be validated.
+     * @throws \InvalidArgumentException If any of the fields in the given object is not valid according to the schema
+     *     defined by this descriptor.
      */
-    public function validateObject($obj)
-    {
+    public function validateObject($obj) {
         if (!is_a($obj, $this->class)) {
-            throw new \InvalidArgumentException("Expected $this->class, got ".gettype($obj));
+            throw new \InvalidArgumentException("Expected $this->class, got " . gettype($obj));
         }
         foreach ($this->elements as $elementDescriptor) {
             $elementDescriptor->validateField($obj);
@@ -113,14 +107,13 @@ abstract class BaseDescriptor
     }
 
     /**
-     * @param \ReflectionClass $clazz the class name
-     *
-     * @return \Generator|\ReflectionProperty[] all non-static public properties of the given class and its parents, but
-     *                                          with the parents' properties *first*
+     * @param \ReflectionClass $clazz The class name.
+     * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
+     *     with the parents' properties *first*.
      */
     private static function enumerateProperties($clazz)
     {
-        if (false !== $clazz->getParentClass()) {
+        if ($clazz->getParentClass() !== false) {
             yield from static::enumerateProperties($clazz->getParentClass());
         }
         foreach ($clazz->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
@@ -133,97 +126,85 @@ abstract class BaseDescriptor
     /**
      * Looks for the annotation with the given name and extracts the content of the parentheses behind it. For instance,
      * when called with the name "Index" and a docComment that contains {@}Index(15), this would return "15".
-     *
-     * @param string $name       the name of the annotation
-     * @param string $docComment the documentation string of a PHP field
-     *
-     * @return string|null the content of the annotation, or null if absent
+     * @param string $name The name of the annotation.
+     * @param string $docComment The documentation string of a PHP field.
+     * @return string|null The content of the annotation, or null if absent.
      */
     private static function getAnnotation($name, $docComment)
     {
         $ret = preg_match("/@$name\\((.*?)\\)/", $docComment, $match);
-        if (false === $ret) {
+        if ($ret === false) {
             throw new \RuntimeException("preg_match failed on $name");
         }
-
-        return 1 === $ret ? $match[1] : null;
+        return $ret === 1 ? $match[1] : null;
     }
 
     /**
      * Same as above, with integer parsing.
-     *
-     * @param string $name       the name of the annotation
-     * @param string $docComment the documentation string of a PHP field
-     *
-     * @return int|null the value of the annotation as an integer, or null if absent
+     * @param string $name The name of the annotation.
+     * @param string $docComment The documentation string of a PHP field.
+     * @return int|null The value of the annotation as an integer, or null if absent.
      */
     private static function getIntAnnotation($name, $docComment)
     {
         $val = static::getAnnotation($name, $docComment);
-        if (null === $val) {
+        if ($val === null) {
             return null;
         }
         if (!is_numeric($val)) {
             throw new \InvalidArgumentException("Annotation $name has non-integer value $val");
         }
-
         return intval($val);
     }
 
     /**
-     * @param string $name       the name of the annotation
-     * @param string $docComment the documentation string of a PHP field
-     *
-     * @return bool whether the annotation with the given name is present
+     * @param string $name The name of the annotation.
+     * @param string $docComment The documentation string of a PHP field.
+     * @return boolean Whether the annotation with the given name is present.
      */
     private static function getBoolAnnotation($name, $docComment)
     {
-        return false !== strpos("@$name ", $docComment)
-            || false !== strpos("@$name())", $docComment);
+        return strpos("@$name ", $docComment) !== false
+            || strpos("@$name())", $docComment) !== false;
     }
 
     /**
      * Separate parser for the {@}var` annotation because it does not use parentheses.
-     *
-     * @param string $docComment the documentation string of a PHP field
-     *
-     * @return string|null the value of the {@}var annotation, or null if absent
+     * @param string $docComment The documentation string of a PHP field.
+     * @return string|null The value of the {@}var annotation, or null if absent.
      */
     private static function getVarAnnotation($docComment)
     {
-        $ret = preg_match('/@var ([^\\s]+)/', $docComment, $match);
-        if (false === $ret) {
-            throw new \RuntimeException('preg_match failed for @var');
+        $ret = preg_match("/@var ([^\\s]+)/", $docComment, $match);
+        if ($ret === false) {
+            throw new \RuntimeException("preg_match failed for @var");
         }
-
-        return 1 === $ret ? $match[1] : null;
+        return $ret === 1 ? $match[1] : null;
     }
 
     /**
      * NOTE: This does *not* resolve `use` statements in the source file.
-     *
-     * @param string           $typeName     a type name (PHP class name, fully qualified or not) or a scalar type name
-     * @param \ReflectionClass $contextClass the class where this type name was encountered, used for resolution of
-     *                                       classes in the same package
-     *
-     * @return string|\ReflectionClass the class that the type name refers to, or the scalar type name as a string
+     * @param string $typeName A type name (PHP class name, fully qualified or not) or a scalar type name.
+     * @param \ReflectionClass $contextClass The class where this type name was encountered, used for resolution of
+     *     classes in the same package.
+     * @return string|\ReflectionClass The class that the type name refers to, or the scalar type name as a string.
      */
     private static function resolveType($typeName, $contextClass)
     {
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;
         }
-        if ('Bin' === $typeName) {
+        if ($typeName === 'Bin') {
             $typeName = Bin::class;
-        } elseif (false === strpos($typeName, '\\')) {
+        } elseif (strpos($typeName, '\\') === false) {
             // Let's assume it's a relative type name, e.g. `X` mentioned in a file that starts with `namespace Fhp\Y`
             // would become `\Fhp\X\Y`.
-            $typeName = $contextClass->getNamespaceName().'\\'.$typeName;
+            $typeName = $contextClass->getNamespaceName() . '\\' . $typeName;
         }
         try {
             return new \ReflectionClass($typeName);
         } catch (\ReflectionException $e) {
-            throw new \RuntimeException("$typeName not found in context of ".$contextClass->getName(), 0, $e);
+            throw new \RuntimeException("$typeName not found in context of " . $contextClass->getName(), 0, $e);
         }
     }
 }

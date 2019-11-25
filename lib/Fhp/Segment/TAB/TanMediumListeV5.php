@@ -1,15 +1,13 @@
-<?php
-
-/** @noinspection PhpUnused */
+<?php /** @noinspection PhpUnused */
 
 namespace Fhp\Segment\TAB;
 
 use Fhp\Segment\BaseDeg;
 
 /**
- * Data Element Group: TAN-Medium-Liste (Version 5).
+ * Data Element Group: TAN-Medium-Liste (Version 5)
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: D (letter T)
  */
 class TanMediumListeV5 extends BaseDeg implements TanMediumListe
@@ -20,8 +18,7 @@ class TanMediumListeV5 extends BaseDeg implements TanMediumListe
      * G: TAN-Generator
      * M: Mobiltelefon mit mobileTAN
      * S: Secoder
-     * B: Bilateral vereinbart.
-     *
+     * B: Bilateral vereinbart
      * @var string
      */
     public $tanMediumKlasse;
@@ -29,20 +26,19 @@ class TanMediumListeV5 extends BaseDeg implements TanMediumListe
      * 1: Aktiv
      * 2: Verfügbar
      * 3: Aktiv Folgekarte
-     * 4: Verfügbar Folgekarte.
-     *
-     * @var int
+     * 4: Verfügbar Folgekarte
+     * @var integer
      */
     public $status;
-    /** @var int|null Only for $tanMediumKlasse=='B' */
+    /** @var integer|null Only for $tanMediumKlasse=='B' */
     public $sicherheitsfunktion;
     /** @var string|null Only for $tanMediumKlasse=='G' */
     public $kartennummer;
     /** @var string|null Only for $tanMediumKlasse=='G' */
     public $kartenfolgenummer;
-    /** @var int|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
+    /** @var integer|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
     public $kartenart;
-    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G' */
+    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G'  */
     public $kontoverbindungAuftraggeber;
     /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
     public $gueltigAb;
@@ -58,22 +54,22 @@ class TanMediumListeV5 extends BaseDeg implements TanMediumListe
     public $mobiltelefonnummer;
     /** @var \Fhp\Segment\Common\Kti|null Only and optional for $tanMediumKlasse=='M' */
     public $smsAbbuchungskonto;
-    /** @var int|null */
+    /** @var integer|null */
     public $anzahlFreieTans;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
+    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
     public $letzteBenutzung;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
+    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
     public $freigeschaltetAm;
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getName()
     {
         return $this->bezeichnungDesTanMediums;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getPhoneNumber()
     {
-        return null !== $this->mobiltelefonnummer ? $this->mobiltelefonnummer : $this->mobiltelefonnummerVerschleiert;
+        return $this->mobiltelefonnummer !== null ? $this->mobiltelefonnummer : $this->mobiltelefonnummerVerschleiert;
     }
 }

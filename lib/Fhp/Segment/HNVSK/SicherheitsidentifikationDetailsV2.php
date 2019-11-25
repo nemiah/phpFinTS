@@ -1,24 +1,21 @@
-<?php
-
-/** @noinspection PhpUnused */
+<?php /** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HNVSK;
 
 use Fhp\Segment\BaseDeg;
 
 /**
- * Data Element Group: Sicherheitsidentifikation, Details (Version 2).
+ * Data Element Group: Sicherheitsidentifikation, Details (Version 2)
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
  * Section: D
  */
 class SicherheitsidentifikationDetailsV2 extends BaseDeg
 {
     /**
      * 1: Message Sender (MS), wenn ein Kunde etwas an sein Kreditinstitut sendet.
-     * 2: Message Receiver (MR), wenn das Kreditinstitut etwas an seinen Kunden sendet.
-     *
-     * @var int
+     * 2: Message Receiver (MR), wenn das Kreditinstitut etwas an seinen Kunden sendet
+     * @var integer
      */
     public $bezeichnerFuerSicherheitspartei = 1; // Unless we receive another value that overwrites this one, we're sending.
     /** @var string|null Only allowed and mandatory for Chip-card, so this library does not support it. */
@@ -27,16 +24,14 @@ class SicherheitsidentifikationDetailsV2 extends BaseDeg
     public $identifizierungDerPartei;
 
     /**
-     * @param string $kundensystemId the Kundensystem-ID as retrieved from the bank previously, or '0' during
-     *                               synchronization
-     *
+     * @param string $kundensystemId The Kundensystem-ID as retrieved from the bank previously, or '0' during
+     *     synchronization.
      * @return SicherheitsidentifikationDetailsV2
      */
     public static function createForSender($kundensystemId)
     {
         $result = new SicherheitsidentifikationDetailsV2();
         $result->identifizierungDerPartei = $kundensystemId;
-
         return $result;
     }
 }

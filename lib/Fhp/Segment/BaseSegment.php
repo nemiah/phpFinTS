@@ -15,7 +15,6 @@ abstract class BaseSegment implements SegmentInterface
 {
     /**
      * Reference to the descriptor for this type of segment.
-     *
      * @var SegmentDescriptor|null
      */
     private $descriptor;
@@ -26,14 +25,13 @@ abstract class BaseSegment implements SegmentInterface
     public $segmentkopf;
 
     /**
-     * @return SegmentDescriptor the descriptor for this segment's type
+     * @return SegmentDescriptor The descriptor for this segment's type.
      */
     public function getDescriptor()
     {
         if (!isset($this->descriptor)) {
             $this->descriptor = SegmentDescriptor::get(static::class);
         }
-
         return $this->descriptor;
     }
 
@@ -53,19 +51,17 @@ abstract class BaseSegment implements SegmentInterface
     }
 
     /**
-     * @param int $segmentNumber the new segment number
-     *
-     * @return $this the same instance
+     * @param int $segmentNumber The new segment number.
+     * @return $this The same instance.
      */
     public function setSegmentNumber($segmentNumber)
     {
         $this->segmentkopf->segmentnummer = $segmentNumber;
-
         return $this;
     }
 
     /**
-     * @throws \InvalidArgumentException if any element in this segment is invalid
+     * @throws \InvalidArgumentException If any element in this segment is invalid.
      */
     public function validate()
     {
@@ -74,9 +70,8 @@ abstract class BaseSegment implements SegmentInterface
 
     /**
      * Short-hand for {@link Serializer#serializeSegment()}.
-     *
-     * @return string the HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
-     *                segment delimiter
+     * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
+     *     segment delimiter.
      */
     public function serialize()
     {
@@ -97,15 +92,13 @@ abstract class BaseSegment implements SegmentInterface
 
     /**
      * Convenience function for {@link Parser#parseSegment()}.
-     *
-     * @param string $rawSegment the serialized wire format for a single segment (segment delimiter must be present at
-     *                           the end)
-     *
-     * @return static the parsed segment
+     * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
+     *     the end).
+     * @return static The parsed segment.
      */
     public static function parse($rawSegment)
     {
-        if (BaseSegment::class === static::class) {
+        if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
             return Parser::detectAndParseSegment($rawSegment);
         } else {
@@ -115,19 +108,18 @@ abstract class BaseSegment implements SegmentInterface
     }
 
     /**
-     * @return static a new segment of the type on which this function was called, with the Segmentkopf initialized
+     * @return static A new segment of the type on which this function was called, with the Segmentkopf initialized.
      */
     public static function createEmpty()
     {
-        if (BaseSegment::class === static::class) {
-            throw new \InvalidArgumentException('Must not call BaseSegment::createEmpty() on the super class');
+        if (static::class === BaseSegment::class) {
+            throw new \InvalidArgumentException("Must not call BaseSegment::createEmpty() on the super class");
         }
         $result = new static();
         $descriptor = $result->getDescriptor();
         $result->segmentkopf = new Segmentkopf();
         $result->segmentkopf->segmentkennung = $descriptor->kennung;
         $result->segmentkopf->segmentversion = $descriptor->version;
-
         return $result;
     }
 }

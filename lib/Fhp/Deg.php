@@ -4,8 +4,8 @@ namespace Fhp;
 
 class Deg
 {
-    /** @var array */
-    protected $dataElements = [];
+    /** @var array  */
+    protected $dataElements = array();
 
     /**
      * Adds a data element to the data element group.

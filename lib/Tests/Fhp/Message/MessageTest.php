@@ -4,7 +4,13 @@ namespace Fhp\Message;
 
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Ktv;
+use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\HKSAL;
+use Fhp\Segment\HNHBS;
+use Fhp\Segment\HNSHA;
+use Fhp\Segment\HNSHK;
+use Fhp\Segment\HNVSD;
+use Fhp\Segment\HNVSK;
 
 class MessageTest extends \PHPUnit\Framework\TestCase
 {
@@ -31,10 +37,10 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $dateString = $date->format('Ymd');
 
         $this->assertRegExp(
-            '/HNHBK:1:3\+000000000296\+300\+0\+0\'HNVSK:998:3\+PIN:1\+998\+1\+1::987654\+1:'.$dateString
-            .':(\d+)\+2:2:13:@8@00000000:5:1\+280:12345678:username:V:0:0\+0\'HNVSD:999:1\+@130@HNSHK:2:4\+PIN:1'
-            .'\+999\+(\d+)\+1\+1\+1::987654\+1\+1:'.$dateString.':(\d+)\+1:999:1\+6:10:16\+280:12345678:'
-            .'username:S:0:0\'HNSHA:3:2\+(\d+)\+\+1234\'\'HNHBS:4:1\+0\'/',
+            '/HNHBK:1:3\+000000000296\+300\+0\+0\'HNVSK:998:3\+PIN:1\+998\+1\+1::987654\+1:' . $dateString
+            . ':(\d+)\+2:2:13:@8@00000000:5:1\+280:12345678:username:V:0:0\+0\'HNVSD:999:1\+@130@HNSHK:2:4\+PIN:1'
+            . '\+999\+(\d+)\+1\+1\+1::987654\+1\+1:' . $dateString . ':(\d+)\+1:999:1\+6:10:16\+280:12345678:'
+            . 'username:S:0:0\'HNSHA:3:2\+(\d+)\+\+1234\'\'HNHBS:4:1\+0\'/',
             (string) $message
         );
     }
@@ -44,9 +50,9 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $kik = new Kik('290', '123123');
         $ktv = new Ktv('123123123', 'sub', $kik);
         $hksal = new HKSAL(HKSAL::VERSION, 3, $ktv, true);
-        $options = [
-            Message::OPT_PINTAN_MECH => 998,
-        ];
+        $options = array(
+            Message::OPT_PINTAN_MECH => 998
+        );
 
         $message = new Message(
             '12345678',
@@ -55,7 +61,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
             '987654',
             0,
             0,
-            [$hksal],
+            array($hksal),
             $options
         );
 
@@ -63,10 +69,10 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $dateString = $date->format('Ymd');
 
         $this->assertRegExp(
-            '/HNHBK:1:3\+000000000333\+300\+0\+0\'HNVSK:998:3\+PIN:2\+998\+1\+1::987654\+1:'.$dateString
-            .':(\d+)\+2:2:13:@8@00000000:5:1\+280:12345678:username:V:0:0\+0\'HNVSD:999:1\+@167@HNSHK:2:4\+PIN:2\+'
-            .'998\+(\d+)\+1\+1\+1::987654\+1\+1:'.$dateString.':(\d+)\+1:999:1\+6:10:16\+280:12345678:username:'
-            .'S:0:0\'HKSAL:3:7\+123123123:sub:290:123123\+1\'HNSHA:4:2\+(\d+)\+\+1234\'\'HNHBS:5:1\+0\'/',
+            '/HNHBK:1:3\+000000000333\+300\+0\+0\'HNVSK:998:3\+PIN:2\+998\+1\+1::987654\+1:' . $dateString
+            . ':(\d+)\+2:2:13:@8@00000000:5:1\+280:12345678:username:V:0:0\+0\'HNVSD:999:1\+@167@HNSHK:2:4\+PIN:2\+'
+            . '998\+(\d+)\+1\+1\+1::987654\+1\+1:' . $dateString . ':(\d+)\+1:999:1\+6:10:16\+280:12345678:username:'
+            . 'S:0:0\'HKSAL:3:7\+123123123:sub:290:123123\+1\'HNSHA:4:2\+(\d+)\+\+1234\'\'HNHBS:5:1\+0\'/',
             (string) $message
         );
     }

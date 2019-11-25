@@ -1,6 +1,4 @@
-<?php
-
-/** @noinspection PhpUnused */
+<?php /** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HIUPD;
 
@@ -9,11 +7,11 @@ use Fhp\Segment\BaseSegment;
 /**
  * Segment: Kontoinformation (Version 4)
  * Bezugssegment: HKVVB
- * Sender: Kreditinstitut.
+ * Sender: Kreditinstitut
  *
  * Note: This is a repeated segment, there is one instance per account.
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation"
  */

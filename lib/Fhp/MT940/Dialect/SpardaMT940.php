@@ -8,13 +8,13 @@ class SpardaMT940 extends MT940
 {
     const DIALECT_ID = 'https://fints.bankingonline.de/fints/FinTs30PinTanHttpGate';
 
-    public function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
+    function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
     {
         $otherInfo = [];
         $structuredStartFound = false;
         $lines = [];
         foreach ($descriptionLines as $line) {
-            if ($structuredStartFound || 1 === preg_match('/^[A-Z]{4}\+ /', $line)) {
+            if ($structuredStartFound || preg_match('/^[A-Z]{4}\+ /', $line) === 1) {
                 $structuredStartFound = true;
                 $lines[] = $line;
             } else {
@@ -39,9 +39,9 @@ class SpardaMT940 extends MT940
         $combined = '';
         foreach ($lines as $line) {
             // Sonderfall, für Zeile 2 aus dem Beispiel
-            $combined .= preg_replace('/ ([A-Z]{4}\+)$/', ' $1 ', $line);
+            $combined .= preg_replace('/ ([A-Z]{4}\+)$/', " $1 ", $line);
         }
-        $combined = implode('', $lines);
+        $combined = implode("", $lines);
 
         // SEPA Bezeichner müssen in einer neuen Zeile Anfangen und kein Leerzeichen hinter dem + haben
         $fixed = preg_replace('/([A-Z]{4}\+) /', "\n$1", $combined);
@@ -71,7 +71,7 @@ class SpardaMT940 extends MT940
 
         $desc = parent::extractStructuredDataFromRemittanceLines($correctedLines, $gvc, $rawLines);
 
-        if (isset($desc['SVWZ']) && 0 === strpos($desc['SVWZ'], 'Dauerauftrag')) {
+        if (isset($desc['SVWZ']) && strpos($desc['SVWZ'], 'Dauerauftrag') === 0) {
             $gvc = '152';
             $rawLines[0] = 'Dauerauftrag-Gutschrift';
         }

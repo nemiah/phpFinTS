@@ -36,6 +36,7 @@ class Kti
      * @param string $bic
      * @param string $accountNumber
      * @param string $subAccountFeature
+     * @param Kik $kik
      */
     public function __construct($iban, $bic, $accountNumber, $subAccountFeature, Kik $kik)
     {
@@ -51,11 +52,11 @@ class Kti
      */
     public function toString()
     {
-        return $this->iban.':'
-            .$this->bic.':'
-            .$this->accountNumber.':'
-            .$this->subAccountFeature.':'
-            .(string) $this->kik;
+        return $this->iban . ':'
+            . $this->bic . ':'
+            . $this->accountNumber . ':'
+            . $this->subAccountFeature . ':'
+            . (string) $this->kik;
     }
 
     /**

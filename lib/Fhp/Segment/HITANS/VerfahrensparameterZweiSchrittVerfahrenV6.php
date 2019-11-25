@@ -1,6 +1,4 @@
-<?php
-
-/** @noinspection PhpUnused */
+<?php /** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HITANS;
 
@@ -8,9 +6,9 @@ use Fhp\Segment\BaseDeg;
 
 class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
 {
-    /** @var int Allowed values: 900 through 997 */
+    /** @var integer Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var int Allowed values: 1, 2; See specification for details */
+    /** @var integer Allowed values: 1, 2; See specification for details */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
@@ -20,107 +18,106 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements Verfa
     public $versionZkaTanVerfahren;
     /** @var string Max length: 30 */
     public $nameDesZweiSchrittVerfahrens;
-    /** @var int */
+    /** @var integer */
     public $maximaleLaengeDesTanEingabewertes;
-    /** @var int Allowed values: 1 = numerisch, 2 = alfanumerisch */
+    /** @var integer Allowed values: 1 = numerisch, 2 = alfanumerisch */
     public $erlaubtesFormat;
     /** @var string */
     public $textZurBelegungDesRueckgabewertes;
-    /** @var int Allowed values: 1 through 256 */
+    /** @var integer Allowed values: 1 through 256 */
     public $maximaleLaengeDesRueckgabewertes;
-    /** @var bool */
+    /** @var boolean */
     public $mehrfachTanErlaubt;
     /**
      * 1 TAN nicht zeitversetzt / dialogübergreifend erlaubt
      * 2 TAN zeitversetzt / dialogübergreifend erlaubt
      * 3 beide Verfahren unterstützt
-     * 4 nicht zutreffend.
-     *
-     * @var int
+     * 4 nicht zutreffend
+     * @var integer
      */
     public $tanZeitUndDialogbezug;
-    /** @var bool */
+    /** @var boolean */
     public $auftragsstornoErlaubt;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    /** @var integer Allowed values: 0 (cannot), 2 (must) */
     public $smsAbbuchungskontoErforderlich;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    /** @var integer Allowed values: 0 (cannot), 2 (must) */
     public $auftraggeberkontoErforderlich;
-    /** @var bool */
+    /** @var boolean */
     public $challengeKlasseErforderlich;
-    /** @var bool */
+    /** @var boolean */
     public $challengeStrukturiert;
     /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
     public $initialisierungsmodus;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    /** @var integer Allowed values: 0 (cannot), 2 (must) */
     public $bezeichnungDesTanMediumsErforderlich;
-    /** @var bool */
+    /** @var boolean */
     public $antwortHhdUcErforderlich;
-    /** @var int|null */
+    /** @var integer|null */
     public $anzahlUnterstuetzterAktiverTanMedien;
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getId()
     {
         return $this->sicherheitsfunktion;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getName()
     {
         return $this->nameDesZweiSchrittVerfahrens;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getSmsAbbuchungskontoErforderlich()
     {
-        return 2 === $this->smsAbbuchungskontoErforderlich;
+        return $this->smsAbbuchungskontoErforderlich === 2;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getAuftraggeberkontoErforderlich()
     {
-        return 2 === $this->auftraggeberkontoErforderlich;
+        return $this->auftraggeberkontoErforderlich === 2;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getChallengeKlasseErforderlich()
     {
         return $this->challengeKlasseErforderlich;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getAntwortHhdUcErforderlich()
     {
         return $this->antwortHhdUcErforderlich;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getChallengeLabel()
     {
         return $this->textZurBelegungDesRueckgabewertes;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getMaxChallengeLength()
     {
         return $this->maximaleLaengeDesRueckgabewertes;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getMaxTanLength()
     {
         return $this->maximaleLaengeDesTanEingabewertes;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function getTanFormat()
     {
         return $this->erlaubtesFormat;
     }
 
-    /** {@inheritdoc} */
+    /** @inheritDoc */
     public function needsTanMedium()
     {
-        return 2 === $this->bezeichnungDesTanMediumsErforderlich && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
+        return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
 }

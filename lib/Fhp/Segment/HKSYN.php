@@ -4,10 +4,12 @@ namespace Fhp\Segment;
 
 /**
  * Class HKSYN (Synchronisation)
- * Segment type: Administration.
+ * Segment type: Administration
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: C.8.1.2
+ *
+ * @package Fhp\Segment
  */
 class HKSYN extends AbstractSegment
 {
@@ -20,7 +22,6 @@ class HKSYN extends AbstractSegment
 
     /**
      * HKSYN constructor.
-     *
      * @param int $segmentNumber
      * @param int $syncMode
      */
@@ -32,7 +33,7 @@ class HKSYN extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            [$syncMode]
+            array($syncMode)
         );
     }
 

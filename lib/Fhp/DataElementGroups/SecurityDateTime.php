@@ -7,12 +7,12 @@ use Fhp\Deg;
 class SecurityDateTime extends Deg
 {
     /**
-     *  Sicherheitszeitstempel (STS).
+     *  Sicherheitszeitstempel (STS)
      */
     const DATETIME_TYPE_STS = 1;
 
     /**
-     * Certificate Revocation Time (CRT).
+     * Certificate Revocation Time (CRT)
      */
     const DATETIME_TYPE_CRT = 6;
 
@@ -20,6 +20,7 @@ class SecurityDateTime extends Deg
      * SecurityDateTime constructor.
      *
      * @param int $type
+     * @param \DateTime|null $dateTime
      */
     public function __construct($type = self::DATETIME_TYPE_STS, \DateTime $dateTime = null)
     {

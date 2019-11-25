@@ -19,7 +19,7 @@ class SEPAAccount
     protected $blz;
 
     /**
-     * Get iban.
+     * Get iban
      *
      * @return string
      */
@@ -29,7 +29,7 @@ class SEPAAccount
     }
 
     /**
-     * Set iban.
+     * Set iban
      *
      * @param string $iban
      *
@@ -43,7 +43,7 @@ class SEPAAccount
     }
 
     /**
-     * Get bic.
+     * Get bic
      *
      * @return string
      */
@@ -53,7 +53,7 @@ class SEPAAccount
     }
 
     /**
-     * Set bic.
+     * Set bic
      *
      * @param string $bic
      *
@@ -67,7 +67,7 @@ class SEPAAccount
     }
 
     /**
-     * Get accountNumber.
+     * Get accountNumber
      *
      * @return string
      */
@@ -77,7 +77,7 @@ class SEPAAccount
     }
 
     /**
-     * Set accountNumber.
+     * Set accountNumber
      *
      * @param string $accountNumber
      *
@@ -91,7 +91,7 @@ class SEPAAccount
     }
 
     /**
-     * Get subAccount.
+     * Get subAccount
      *
      * @return string
      */
@@ -101,7 +101,7 @@ class SEPAAccount
     }
 
     /**
-     * Set subAccount.
+     * Set subAccount
      *
      * @param string $subAccount
      *
@@ -115,7 +115,7 @@ class SEPAAccount
     }
 
     /**
-     * Get blz.
+     * Get blz
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class SEPAAccount
     }
 
     /**
-     * Set blz.
+     * Set blz
      *
      * @param string $blz
      *

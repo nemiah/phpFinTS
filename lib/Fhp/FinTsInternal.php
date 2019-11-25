@@ -4,23 +4,23 @@ namespace Fhp;
 
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Kti;
-use Fhp\DataTypes\Ktv;
 use Fhp\Dialog\Dialog;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
 use Fhp\Response\GetTANRequest;
-use Fhp\Segment\HKCAZ;
-use Fhp\Segment\HKCCS;
 use Fhp\Segment\HKCDL;
-use Fhp\Segment\HKKAZ;
+use Fhp\Segment\HKCCS;
 use Fhp\Segment\HKTAN;
+use Fhp\DataTypes\Ktv;
+use Fhp\Segment\HKKAZ;
+use Fhp\Segment\HKCAZ;
 
 abstract class FinTsInternal
 {
     protected $url;
-    /** @var Connection */
+    /** @var  Connection */
     protected $connection = null;
     /** @var int */
     protected $timeoutConnect = 15;
@@ -42,13 +42,12 @@ abstract class FinTsInternal
         );
 
         $message = $this->getNewMessage($dialog,
-            [
+            array(
                 new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03', $order),
-            ]
+            )
         );
 
         $response = $dialog->sendMessage($message);
-
         return new GetTANRequest($response->rawResponse, $dialog);
     }
 
@@ -58,8 +57,8 @@ abstract class FinTsInternal
     }
 
     /**
+     * @param SEPAAccount $account
      * @param string $painMessage
-     *
      * @return GetTANRequest
      */
     protected function startSEPATransfer(SEPAAccount $account, $painMessage)
@@ -77,9 +76,9 @@ abstract class FinTsInternal
         );
 
         $message = $this->getNewMessage($dialog,
-            [
+            array(
                 new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03', $painMessage),
-            ]
+            )
         );
 
         $this->logger->info('');
@@ -92,8 +91,11 @@ abstract class FinTsInternal
 
     /**
      * Helper method to retrieve a pre configured message object.
-     * Factory for poor people :).
+     * Factory for poor people :)
      *
+     * @param Dialog $dialog
+     * @param array $segments
+     * @param array $options
      * @return Message
      */
     protected function getNewMessage(Dialog $dialog, array $segments, array $options = [])
@@ -105,7 +107,6 @@ abstract class FinTsInternal
         if (!isset($options[AbstractMessage::OPT_PINTAN_MECH]) && $this->tanMechanism) {
             $options[AbstractMessage::OPT_PINTAN_MECH] = $this->tanMechanism;
         }
-
         return new Message(
             $this->bankCode,
             $this->username,
@@ -121,75 +122,72 @@ abstract class FinTsInternal
     /**
      * Retrieve a pre configured dialog object.
      *
-     * @param bool
-     *
+     * @param boolean
      * @return Dialog
-     *
      * @throws \Exception
      */
     abstract protected function getDialog();
 
     /**
      * Needed for escaping userdata.
-     * HBCI escape char is "?".
+     * HBCI escape char is "?"
      *
      * @param string $string
-     *
      * @return string
      */
     public static function escapeString($string)
     {
         return str_replace(
-            ['?', '@', ':', '+', '\''],
-            ['??', '?@', '?:', '?+', '?\''],
+            array('?', '@', ':', '+', '\''),
+            array('??', '?@', '?:', '?+', '?\''),
             $string
         );
     }
 
     /**
      * unescaping userdata.
-     * HBCI escape char is "?".
+     * HBCI escape char is "?"
      *
      * @param string $string
-     *
      * @return string
      */
     public static function unescapeString($string)
     {
         return str_replace(
-            ['??', '?@', '?:', '?+', '?\''],
-            ['?', '@', ':', '+', '\''],
+            array('??', '?@', '?:', '?+', '?\''),
+            array('?', '@', ':', '+', '\''),
             $string
         );
     }
 
     protected function clearXML($xml)
     {
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument;
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($xml);
         $dom->formatOutput = false;
-
-        return str_replace("\n", '', trim($dom->saveXml()));
+        return str_replace("\n", "", trim($dom->saveXml()));
     }
 
     protected function getUsedPinTanMechanism($dialog)
     {
         $mechs = array_keys($dialog->getSupportedPinTanMechanisms());
-        if (null !== $this->tanMechanism && in_array($this->tanMechanism, $mechs)) {
-            return [$this->tanMechanism];
+        if ($this->tanMechanism !== null && in_array($this->tanMechanism, $mechs)) {
+            return array($this->tanMechanism);
         }
-
         return $mechs;
     }
+
 
     /**
      * Helper method to create a "Statement of Account Message".
      *
+     * @param Dialog $dialog
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
      * @param string|null $touchdown
-     *
      * @return Message
-     *
      * @throws \Exception
      */
     protected function createHKCAZMessage(Dialog $dialog, SEPAAccount $account, \DateTime $from, \DateTime $to, $touchdown = null)
@@ -204,7 +202,7 @@ abstract class FinTsInternal
 
         $message = $this->getNewMessage(
             $dialog,
-            [
+            array(
                 new HKCAZ(
                     1,
                     3,
@@ -214,8 +212,8 @@ abstract class FinTsInternal
                     $from,
                     $to,
                     $touchdown
-                ),
-            ]
+                )
+            )
         );
 
         return $message;
@@ -224,10 +222,12 @@ abstract class FinTsInternal
     /**
      * Helper method to create a "Statement of Account Message".
      *
+     * @param Dialog $dialog
+     * @param SEPAAccount $account
+     * @param \DateTime $from
+     * @param \DateTime $to
      * @param string|null $touchdown
-     *
      * @return Message
-     *
      * @throws \Exception
      */
     protected function createStateOfAccountMessage(
@@ -298,12 +298,12 @@ abstract class FinTsInternal
                 );
                 break;
             default:
-                throw new \Exception('Unsupported HKKAZ version: '.$dialog->getHkkazMaxVersion());
+                throw new \Exception('Unsupported HKKAZ version: ' . $dialog->getHkkazMaxVersion());
         }
 
         $message = $this->getNewMessage(
             $dialog,
-            [
+            array(
                 new HKKAZ(
                     $dialog->getHkkazMaxVersion(),
                     3,
@@ -312,8 +312,8 @@ abstract class FinTsInternal
                     $from,
                     $to,
                     $touchdown
-                ),
-            ]
+                )
+            )
         );
 
         return $message;

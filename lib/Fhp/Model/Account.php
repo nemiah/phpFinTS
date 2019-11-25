@@ -25,7 +25,7 @@ class Account
     protected $accountDescription;
 
     /**
-     * Get id.
+     * Get id
      *
      * @return mixed
      */
@@ -35,7 +35,7 @@ class Account
     }
 
     /**
-     * Set id.
+     * Set id
      *
      * @param string $id
      *
@@ -49,7 +49,7 @@ class Account
     }
 
     /**
-     * Get accountNumber.
+     * Get accountNumber
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class Account
     }
 
     /**
-     * Set accountNumber.
+     * Set accountNumber
      *
      * @param string $accountNumber
      *
@@ -73,7 +73,7 @@ class Account
     }
 
     /**
-     * Get bankCode.
+     * Get bankCode
      *
      * @return string
      */
@@ -83,7 +83,7 @@ class Account
     }
 
     /**
-     * Set bankCode.
+     * Set bankCode
      *
      * @param string $bankCode
      *
@@ -97,7 +97,7 @@ class Account
     }
 
     /**
-     * Get iban.
+     * Get iban
      *
      * @return string
      */
@@ -107,7 +107,7 @@ class Account
     }
 
     /**
-     * Set iban.
+     * Set iban
      *
      * @param string $iban
      *
@@ -121,7 +121,7 @@ class Account
     }
 
     /**
-     * Get customerId.
+     * Get customerId
      *
      * @return string
      */
@@ -131,7 +131,7 @@ class Account
     }
 
     /**
-     * Set customerId.
+     * Set customerId
      *
      * @param string $customerId
      *
@@ -145,7 +145,7 @@ class Account
     }
 
     /**
-     * Get currency.
+     * Get currency
      *
      * @return string
      */
@@ -155,7 +155,7 @@ class Account
     }
 
     /**
-     * Set currency.
+     * Set currency
      *
      * @param string $currency
      *
@@ -169,7 +169,7 @@ class Account
     }
 
     /**
-     * Get accountOwnerName.
+     * Get accountOwnerName
      *
      * @return string
      */
@@ -179,7 +179,7 @@ class Account
     }
 
     /**
-     * Set accountOwnerName.
+     * Set accountOwnerName
      *
      * @param string $accountOwnerName
      *
@@ -193,7 +193,7 @@ class Account
     }
 
     /**
-     * Get accountDescription.
+     * Get accountDescription
      *
      * @return string
      */
@@ -203,7 +203,7 @@ class Account
     }
 
     /**
-     * Set accountDescription.
+     * Set accountDescription
      *
      * @param string $accountDescription
      *

@@ -5,7 +5,7 @@ namespace Fhp\Segment\HIUPD;
 /**
  * Segment: Kontoinformation
  * Bezugssegment: HKVVB
- * Sender: Kreditinstitut.
+ * Sender: Kreditinstitut
  */
 interface HIUPD
 {

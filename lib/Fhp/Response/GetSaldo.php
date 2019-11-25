@@ -14,7 +14,6 @@ class GetSaldo extends Response
      * Creates a Saldo object from response body.
      *
      * @return Saldo|null
-     *
      * @throws \Exception
      */
     public function getSaldoModel()
@@ -34,8 +33,8 @@ class GetSaldo extends Response
     /**
      * Creates a Saldo model from array.
      *
+     * @param array $array
      * @return Saldo
-     *
      * @throws \Exception
      */
     protected function createModelFromArray(array $array)
@@ -47,11 +46,11 @@ class GetSaldo extends Response
         $creditDebit = trim($saldoDeg[0]);
 
         if (static::SALDO_DEBIT == $creditDebit) {
-            $amount = -(float) $amount;
+            $amount = - (float) $amount;
         } elseif (static::SALDO_CREDIT == $creditDebit) {
             $amount = (float) $amount;
         } else {
-            throw new \Exception('Invalid Soll-Haben-Kennzeichen: '.$creditDebit);
+            throw new \Exception('Invalid Soll-Haben-Kennzeichen: ' . $creditDebit);
         }
 
         $model->setAmount($amount);
@@ -59,7 +58,7 @@ class GetSaldo extends Response
 
         $valutaDate = $saldoDeg[3];
         preg_match('/(\d{4})(\d{2})(\d{2})/', $valutaDate, $m);
-        $valutaDate = new \DateTime($m[1].'-'.$m[2].'-'.$m[3]);
+        $valutaDate = new \DateTime($m[1] . '-' . $m[2] . '-' . $m[3]);
         $model->setValuta($valutaDate);
 
         return $model;

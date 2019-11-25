@@ -3,9 +3,9 @@
 namespace Fhp\MT940;
 
 /**
- * Data format: MT 940 (Version SRG 2001).
+ * Data format: MT 940 (Version SRG 2001)
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
  * Section: B.8
  */
 class MT940
@@ -15,9 +15,7 @@ class MT940
 
     /**
      * @param string $rawData
-     *
      * @return array
-     *
      * @throws MT940Exception
      */
     public function parse($rawData)
@@ -25,16 +23,17 @@ class MT940
         // The divider can be either \r\n or @@
         $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
 
-        $cleanedRawData = preg_replace('#'.$divider.'([^:])#ms', '$1', $rawData);
+        $cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $rawData);
 
         $booked = true;
-        $result = [];
-        $days = explode($divider.'-', $cleanedRawData);
+        $result = array();
+        $days = explode($divider . '-', $cleanedRawData);
         $soaDate = null;
         foreach ($days as &$day) {
-            $day = explode($divider.':', $day);
 
-            for ($i = 0, $cnt = count($day); $i < $cnt; ++$i) {
+            $day = explode($divider . ':', $day);
+
+            for ($i = 0, $cnt = count($day); $i < $cnt; $i++) {
                 if (preg_match("/\+\@[0-9]+\@$/", trim($day[$i]))) {
                     $booked = false;
                 }
@@ -47,13 +46,13 @@ class MT940
                     $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
                     if (!isset($result[$soaDate])) {
-                        $result[$soaDate] = ['start_balance' => []];
+                        $result[$soaDate] = array('start_balance' => array());
                     }
 
                     $cdMark = substr($day[$i], 0, 1);
-                    if ('C' == $cdMark) {
+                    if ($cdMark == 'C') {
                         $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
-                    } elseif ('D' == $cdMark) {
+                    } elseif ($cdMark == 'D') {
                         $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
                     }
 
@@ -70,19 +69,19 @@ class MT940
                     $description = substr($day[$i + 1], 3);
 
                     if (!isset($result[$soaDate]['transactions'])) {
-                        $result[$soaDate]['transactions'] = [];
+                        $result[$soaDate]['transactions'] = array();
                     }
 
                     // short form for better handling
                     $trx = &$result[$soaDate]['transactions'];
 
                     preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
-                    if ('C' == $trxMatch[2] or 'RC' == $trxMatch[2]) {
+                    if ($trxMatch[2] == 'C' OR $trxMatch[2] == 'RC') {
                         $trx[count($trx)]['credit_debit'] = static::CD_CREDIT;
-                    } elseif ('D' == $trxMatch[2] or 'RD' == $trxMatch[2]) {
+                    } elseif ($trxMatch[2] == 'D' OR $trxMatch[2] == 'RD') {
                         $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
                     } else {
-                        throw new MT940Exception('cd mark not found in: '.$transaction);
+                        throw new MT940Exception('cd mark not found in: ' . $transaction);
                     }
 
                     $amount = $trxMatch[4];
@@ -97,18 +96,18 @@ class MT940
                     // 0511 = valuta date
                     // 0509 = booking date
                     $year = substr($transaction, 0, 2);
-                    $valutaDate = $this->getDate($year.substr($transaction, 2, 4));
+                    $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
 
                     $bookingDate = substr($transaction, 6, 4);
                     if (preg_match('/^\d{4}$/', $bookingDate)) {
                         // if valuta date is earlier than booking date, then it must be in the new year.
                         $year = substr($transaction, 2, 2) < substr($transaction, 6, 2) ? --$year : $year;
-                        if ('12' == substr($transaction, 2, 2) && '01' == substr($transaction, 6, 2)) {
-                            ++$year;
-                        } elseif ('01' == substr($transaction, 2, 2) && '12' == substr($transaction, 6, 2)) {
-                            --$year;
+                        if (substr($transaction, 2, 2) == '12' && substr($transaction, 6, 2) == '01') {
+                            $year++;
+                        } elseif (substr($transaction, 2, 2) == '01' && substr($transaction, 6, 2) == '12') {
+                            $year--;
                         }
-                        $bookingDate = $this->getDate($year.$bookingDate);
+                        $bookingDate = $this->getDate($year . $bookingDate);
                     } else {
                         // if booking date not set in :61, then we have to take it from :60F
                         $bookingDate = $soaDate;
@@ -129,11 +128,11 @@ class MT940
         // Geschäftsvorfall-Code
         $gvc = substr($descr, 0, 3);
 
-        $prepared = [];
-        $result = [];
+        $prepared = array();
+        $result = array();
 
         // prefill with empty values
-        for ($i = 0; $i <= 63; ++$i) {
+        for ($i = 0; $i <= 63; $i++) {
             $prepared[$i] = null;
         }
 
@@ -141,7 +140,7 @@ class MT940
 
         preg_match_all('/\?(\d{2})([^\?]+)/', $descr, $matches, PREG_SET_ORDER);
 
-        $descriptionLines = [];
+        $descriptionLines = array();
         $description1 = ''; // Legacy, could be removed.
         $description2 = ''; // Legacy, could be removed.
         foreach ($matches as $m) {
@@ -162,38 +161,37 @@ class MT940
 
         $description = $this->extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $prepared);
 
-        $result['booking_code'] = $gvc;
-        $result['booking_text'] = trim($prepared[0]);
-        $result['description'] = $description;
-        $result['primanoten_nr'] = trim($prepared[10]);
-        $result['description_1'] = trim($description1);
-        $result['bank_code'] = trim($prepared[30]);
-        $result['account_number'] = trim($prepared[31]);
-        $result['name'] = trim($prepared[32].$prepared[33]);
+        $result['booking_code']      = $gvc;
+        $result['booking_text']      = trim($prepared[0]);
+        $result['description']       = $description;
+        $result['primanoten_nr']     = trim($prepared[10]);
+        $result['description_1']     = trim($description1);
+        $result['bank_code']         = trim($prepared[30]);
+        $result['account_number']    = trim($prepared[31]);
+        $result['name']              = trim($prepared[32] . $prepared[33]);
         $result['text_key_addition'] = trim($prepared[34]);
-        $result['description_2'] = $description2;
-        $result['desc_lines'] = $descriptionLines;
+        $result['description_2']     = $description2;
+        $result['desc_lines']        = $descriptionLines;
 
         return $result;
     }
 
     /**
-     * @param string[] $lines    that contain the remittance information
-     * @param string   $gvc      Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
-     * @param string   $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
-     *
+     * @param string[] $lines that contain the remittance information
+     * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
+     * @param string $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
      * @return array
      */
     protected function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
     {
-        $description = [];
-        if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || '+' !== $descriptionLines[0][4]) {
+        $description = array();
+        if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
             $description['SVWZ'] = implode('', $descriptionLines);
         } else {
             $lastType = null;
             foreach ($descriptionLines as $line) {
-                if (strlen($line) >= 5 && '+' === $line[4]) {
-                    if (null != $lastType) {
+                if (strlen($line) >= 5 && $line[4] === '+') {
+                    if ($lastType != null) {
                         $description[$lastType] = trim($description[$lastType]);
                     }
                     $lastType = substr($line, 0, 4);
@@ -217,14 +215,12 @@ class MT940
 
     /**
      * @param string $val
-     *
      * @return string
      */
     protected function getDate($val)
     {
-        $val = '20'.$val;
+        $val = '20' . $val;
         preg_match('/(\d{4})(\d{2})(\d{2})/', $val, $m);
-
-        return $m[1].'-'.$m[2].'-'.$m[3];
+        return $m[1] . '-' . $m[2] . '-' . $m[3];
     }
 }

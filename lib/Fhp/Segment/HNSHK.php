@@ -11,10 +11,12 @@ use Fhp\DataElementGroups\SignatureAlgorithm;
 
 /**
  * Class HNSHK (Signaturkopf)
- * Segment type: Administration.
+ * Segment type: Administration
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20130718_final_version.pdf
  * Section: B.5.1
+ *
+ * @package Fhp\Segment
  */
 class HNSHK extends AbstractSegment
 {
@@ -35,17 +37,16 @@ class HNSHK extends AbstractSegment
 
     /**
      * HNSHK constructor.
-     *
-     * @param int    $segmentNumber
+     * @param int $segmentNumber
      * @param string $securityReference
      * @param string $countryCode
      * @param string $bankCode
      * @param string $userName
-     * @param int    $systemId
-     * @param int    $securityFunction
-     * @param int    $securityBoundary
-     * @param int    $securitySupplierRole
-     * @param int    $pinTanVersion
+     * @param int $systemId
+     * @param int $securityFunction
+     * @param int $securityBoundary
+     * @param int $securitySupplierRole
+     * @param int $pinTanVersion
      */
     public function __construct(
         $segmentNumber,
@@ -63,19 +64,19 @@ class HNSHK extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            [
-                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion), //2
-                $securityFunction, //3
-                $securityReference, //4
-                $securityBoundary, //5
-                $securitySupplierRole, //6
-                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId), //7
-                1, //8
-                new SecurityDateTime(), //9
-                new HashAlgorithm(), //10
-                new SignatureAlgorithm(), //11
-                new KeyName($countryCode, $bankCode, $userName, KeyName::KEY_TYPE_SIGNATURE),                //12
-            ]
+            array(
+                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion), #2
+                $securityFunction, #3
+                $securityReference, #4
+                $securityBoundary, #5
+                $securitySupplierRole, #6
+                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId), #7
+                1, #8
+                new SecurityDateTime(), #9
+                new HashAlgorithm(), #10
+                new SignatureAlgorithm(), #11
+                new KeyName($countryCode, $bankCode, $userName, KeyName::KEY_TYPE_SIGNATURE)                #12
+            )
         );
     }
 

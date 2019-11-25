@@ -20,21 +20,23 @@ class BankToCustomerAccountReportHICAZ extends Response
         $parts = $this->splitSegment($seg);
 
         if (count($parts) > 3) {
-            if ($parts[2] == HKCAZ::CAMT_FORMAT.'.xsd') {
+
+            if ($parts[2] == HKCAZ::CAMT_FORMAT . '.xsd') {
                 list($empty, $length, $xml) = explode('@', $parts[3], 3);
-                if ('' == $empty && intval($length) == strlen($xml)) {
+                if ($empty == '' && intval($length) == strlen($xml)) {
                     return $xml;
                 }
 
                 throw new \Exception('Fehler im XML Payload');
+
             } else {
-                throw new \Exception('Unerwartetes CAMT XML Format ('.$parts[2].')');
+                throw new \Exception('Unerwartetes CAMT XML Format (' . $parts[2] . ')');
             }
         }
 
         return '';
     }
-
+    
     protected function conformToUtf8($string)
     {
         return $string;

@@ -1,15 +1,14 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
-/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HNSHA;
 
 use Fhp\Segment\BaseDeg;
 
 /**
- * Data Element Group: Benutzerdefinierte Signatur (Version 1).
+ * Data Element Group: Benutzerdefinierte Signatur (Version 1)
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: D (letter B)
  */
 class BenutzerdefinierteSignaturV1 extends BaseDeg
@@ -20,9 +19,8 @@ class BenutzerdefinierteSignaturV1 extends BaseDeg
     public $tan;
 
     /**
-     * @param string      $pin
+     * @param string $pin
      * @param string|null $tan
-     *
      * @return BenutzerdefinierteSignaturV1
      */
     public static function create($pin, $tan)
@@ -30,7 +28,6 @@ class BenutzerdefinierteSignaturV1 extends BaseDeg
         $result = new BenutzerdefinierteSignaturV1();
         $result->pin = $pin;
         $result->tan = $tan;
-
         return $result;
     }
 }

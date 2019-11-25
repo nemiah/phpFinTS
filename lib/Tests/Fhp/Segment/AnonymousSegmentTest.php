@@ -2,6 +2,7 @@
 
 namespace Tests\Fhp\Segment;
 
+
 use Fhp\Segment\AnonymousSegment;
 use Fhp\Syntax\Parser;
 
@@ -15,12 +16,12 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
             $class = new \ReflectionClass(AnonymousSegment::class);
             $property = $class->getProperty('elements');
             $property->setAccessible(true);
-
             return $property->getValue($segment);
         } catch (\ReflectionException $e) {
             throw new \RuntimeException($e);
         }
     }
+
 
     public function test_parse()
     {

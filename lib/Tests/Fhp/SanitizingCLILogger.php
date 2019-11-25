@@ -31,8 +31,8 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
 
     /**
      * @param array $sensitiveMaterial An array of various objects typically used with the phpFinTS library that contain
-     *                                 some sensitive information. This array may also contain plain strings, which are themselves interpreted as
-     *                                 sensitive.
+     *     some sensitive information. This array may also contain plain strings, which are themselves interpreted as
+     *     sensitive.
      */
     public function __construct($sensitiveMaterial)
     {
@@ -40,7 +40,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
     }
 
     /**
-     * @param array $sensitiveMaterial see the constructor
+     * @param array $sensitiveMaterial See the constructor.
      */
     public function addSensitiveMaterial($sensitiveMaterial)
     {
@@ -48,21 +48,19 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
     }
 
     /** @noinspection PhpLanguageLevelInspection */
-
     /** @noinspection PhpUndefinedClassInspection */
-    public function log($level, $message, array $context = []): void
+    public function log($level, $message, array $context = array()): void
     {
-        $message .= empty($context) ? '' : ' '.implode(', ', $context);
+        $message .= empty($context) ? '' : ' ' . implode(', ', $context);
         $sanitizedMessage = static::sanitizeForLogging($message, $this->needles);
         echo "$level: $sanitizedMessage\n";
     }
 
     /**
      * @param array $sensitiveMaterial An array of various objects typically used with the phpFinTS library that contain
-     *                                 some sensitive information. This array may also contain plain strings, which are themselves interpreted as
-     *                                 sensitive.
-     *
-     * @return string[] an array of search-replacement "needles" that should be replaced in log messages
+     *     some sensitive information. This array may also contain plain strings, which are themselves interpreted as
+     *     sensitive.
+     * @return string[] An array of search-replacement "needles" that should be replaced in log messages.
      */
     public static function computeNeedles($sensitiveMaterial)
     {
@@ -85,35 +83,30 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
                 $needles[] = $item->getIban();
                 $needles[] = $item->getAccountNumber();
             } else {
-                throw new \InvalidArgumentException('Unsupported type of sensitive material '.gettype($item));
+                throw new \InvalidArgumentException("Unsupported type of sensitive material " . gettype($item));
             }
         }
         $needles = array_filter($needles); // Filter out empty entries.
         $escapedNeedles = array_map(function ($needle) {
             return Serializer::escape($needle);
         }, $needles);
-
         return array_merge($needles, $escapedNeedles);
     }
 
     /**
      * Removes sensitive values from the given string, while preserving its overall length, so that wrappers like FinTS
      * messages or Bin containers, which declare the length of their contents, remain parsable.
-     *
-     * @param string $str some string
-     * @param string[] the sensitive values to be replaced, usually from {@link #computeNeedles()}
-     *
-     * @return string the same string, but with sensitive values removed
+     * @param string $str Some string.
+     * @param string[] The sensitive values to be replaced, usually from {@link #computeNeedles()}.
+     * @return string The same string, but with sensitive values removed.
      */
     public static function sanitizeForLogging($str, $needles)
     {
         $replacements = array_map(function ($needle) {
             $len = strlen($needle) - 1;
             $prefix = '<PRIVATE';
-
-            return substr($prefix, 0, $len).str_repeat('_', max(0, $len - strlen($prefix))).'>';
+            return substr($prefix, 0, $len) . str_repeat('_', max(0, $len - strlen($prefix))) . '>';
         }, $needles);
-
         return str_replace($needles, $replacements, $str);
     }
 }

@@ -1,6 +1,4 @@
-<?php
-
-/** @noinspection PhpDocSignatureInspection */
+<?php /** @noinspection PhpDocSignatureInspection */
 
 namespace Tests\Fhp\Syntax;
 
@@ -8,6 +6,7 @@ use Fhp\Syntax\Serializer;
 
 class SerializerTest extends \PHPUnit\Framework\TestCase
 {
+
     public function escapeProvider()
     {
         return [ // expected, input
@@ -46,7 +45,7 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
             ['N', false, 'boolean'],
             ['1000', '1000', 'string'],
             [utf8_decode('ä'), 'ä', 'string'],
-            ['5?:5', '5:5', 'string'],
+            ['5?:5', "5:5", 'string'],
             ['', null, 'int'],
             ['', null, 'string'],
         ];

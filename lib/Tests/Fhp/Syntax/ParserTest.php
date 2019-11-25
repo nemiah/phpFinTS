@@ -8,43 +8,44 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 {
     public function test_splitEscapedString_empty()
     {
-        $this->assertEquals([], Parser::splitEscapedString('+', ''));
-        $this->assertEquals(['', ''], Parser::splitEscapedString('+', '+'));
+        $this->assertEquals(array(), Parser::splitEscapedString('+', ''));
+        $this->assertEquals(array('', ''), Parser::splitEscapedString('+', '+'));
     }
 
     public function test_splitEscapedString_without_escaping()
     {
-        $this->assertEquals(['ABC', 'DEF'], Parser::splitEscapedString('+', 'ABC+DEF'));
-        $this->assertEquals(['ABC', '', 'DEF'], Parser::splitEscapedString('+', 'ABC++DEF'));
-        $this->assertEquals(['ABC', ''], Parser::splitEscapedString('+', 'ABC+'));
-        $this->assertEquals(['', '', 'ABC'], Parser::splitEscapedString('+', '++ABC'));
+        $this->assertEquals(array('ABC', 'DEF'), Parser::splitEscapedString('+', 'ABC+DEF'));
+        $this->assertEquals(array('ABC', '', 'DEF'), Parser::splitEscapedString('+', 'ABC++DEF'));
+        $this->assertEquals(array('ABC', ''), Parser::splitEscapedString('+', 'ABC+'));
+        $this->assertEquals(array('', '', 'ABC'), Parser::splitEscapedString('+', '++ABC'));
     }
 
     public function test_splitEscapedString_with_escaping()
     {
-        $this->assertEquals(['A?+', 'DEF'], Parser::splitEscapedString('+', 'A?++DEF'));
-        $this->assertEquals(['?+C', '', 'D?+'], Parser::splitEscapedString('+', '?+C++D?+'));
-        $this->assertEquals(['ABC', '?+'], Parser::splitEscapedString('+', 'ABC+?+'));
-        $this->assertEquals(['', '', '?+C'], Parser::splitEscapedString('+', '++?+C'));
+
+        $this->assertEquals(array('A?+', 'DEF'), Parser::splitEscapedString('+', 'A?++DEF'));
+        $this->assertEquals(array('?+C', '', 'D?+'), Parser::splitEscapedString('+', '?+C++D?+'));
+        $this->assertEquals(array('ABC', '?+'), Parser::splitEscapedString('+', 'ABC+?+'));
+        $this->assertEquals(array('', '', '?+C'), Parser::splitEscapedString('+', '++?+C'));
     }
 
     public function test_splitEscapedString_with_binaryBlock()
     {
-        $this->assertEquals(['A@4@xxxxD', 'EF'], Parser::splitEscapedString('+', 'A@4@xxxxD+EF'));
-        $this->assertEquals(['A@4@++++D', 'EF'], Parser::splitEscapedString('+', 'A@4@++++D+EF'));
-        $this->assertEquals(['A', '@1@x@0D', 'EF'], Parser::splitEscapedString('+', 'A+@1@x@0D+EF'));
-        $this->assertEquals(['@4@xxxxD', 'EF'], Parser::splitEscapedString('+', '@4@xxxxD+EF'));
-        $this->assertEquals(['A@4@xxxx', 'EF'], Parser::splitEscapedString('+', 'A@4@xxxx+EF'));
-        $this->assertEquals(['@4@xxxx'], Parser::splitEscapedString('+', '@4@xxxx'));
-        $this->assertEquals(['@4@++++'], Parser::splitEscapedString('+', '@4@++++'));
+        $this->assertEquals(array('A@4@xxxxD', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxxD+EF'));
+        $this->assertEquals(array('A@4@++++D', 'EF'), Parser::splitEscapedString('+', 'A@4@++++D+EF'));
+        $this->assertEquals(array('A', '@1@x@0D', 'EF'), Parser::splitEscapedString('+', 'A+@1@x@0D+EF'));
+        $this->assertEquals(array('@4@xxxxD', 'EF'), Parser::splitEscapedString('+', '@4@xxxxD+EF'));
+        $this->assertEquals(array('A@4@xxxx', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxx+EF'));
+        $this->assertEquals(array('@4@xxxx'), Parser::splitEscapedString('+', '@4@xxxx'));
+        $this->assertEquals(array('@4@++++'), Parser::splitEscapedString('+', '@4@++++'));
     }
 
     public function test_splitEscapedString_with_escaping_and_binaryBlock()
     {
-        $this->assertEquals(['A@4@xxxxD', '?+'], Parser::splitEscapedString('+', 'A@4@xxxxD+?+'));
-        $this->assertEquals(['A@4@xxxx?+', 'EF'], Parser::splitEscapedString('+', 'A@4@xxxx?++EF'));
-        $this->assertEquals(['?+@4@+xxxD', '?+'], Parser::splitEscapedString('+', '?+@4@+xxxD+?+'));
-        $this->assertEquals(['?+@4@xxx+D', '?+'], Parser::splitEscapedString('+', '?+@4@xxx+D+?+'));
+        $this->assertEquals(array('A@4@xxxxD', '?+'), Parser::splitEscapedString('+', 'A@4@xxxxD+?+'));
+        $this->assertEquals(array('A@4@xxxx?+', 'EF'), Parser::splitEscapedString('+', 'A@4@xxxx?++EF'));
+        $this->assertEquals(array('?+@4@+xxxD', '?+'), Parser::splitEscapedString('+', '?+@4@+xxxD+?+'));
+        $this->assertEquals(array('?+@4@xxx+D', '?+'), Parser::splitEscapedString('+', '?+@4@xxx+D+?+'));
     }
 
     public function test_unescape()

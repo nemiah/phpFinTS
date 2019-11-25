@@ -20,7 +20,7 @@ class Saldo
     protected $valuta;
 
     /**
-     * Get currency.
+     * Get currency
      *
      * @return string
      */
@@ -30,7 +30,7 @@ class Saldo
     }
 
     /**
-     * Set currency.
+     * Set currency
      *
      * @param string $currency
      *
@@ -44,7 +44,7 @@ class Saldo
     }
 
     /**
-     * Get amount.
+     * Get amount
      *
      * @return float
      */
@@ -54,7 +54,7 @@ class Saldo
     }
 
     /**
-     * Set amount.
+     * Set amount
      *
      * @param float $amount
      *
@@ -68,7 +68,7 @@ class Saldo
     }
 
     /**
-     * Get valuta.
+     * Get valuta
      *
      * @return \DateTime
      */
@@ -78,7 +78,9 @@ class Saldo
     }
 
     /**
-     * Set valuta.
+     * Set valuta
+     *
+     * @param \DateTime $valuta
      *
      * @return $this
      */

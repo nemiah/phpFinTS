@@ -26,12 +26,12 @@ class EncryptionAlgorithm extends Deg
     /**
      * EncryptionAlgorithm constructor.
      *
-     * @param int    $type
-     * @param int    $operationMode
-     * @param int    $algorithm
+     * @param int $type
+     * @param int $operationMode
+     * @param int $algorithm
      * @param string $algorithmIv
-     * @param int    $algorithmKeyType
-     * @param int    $algorithmIvDescription
+     * @param int $algorithmKeyType
+     * @param int $algorithmIvDescription
      */
     public function __construct(
         $type = self::TYPE_OSY,

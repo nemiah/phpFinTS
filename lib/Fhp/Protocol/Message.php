@@ -26,11 +26,13 @@ use Fhp\Syntax\Serializer;
  * encryption on the transport level (TLS), which this library implements through Curl provided that the user connects
  * to an HTTPS address.
  *
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20181129_final_version.pdf
  * Section B.5
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ *
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section A
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
+ *
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section B.8
  */
 class Message
@@ -38,7 +40,6 @@ class Message
     /**
      * The segments in the original message structure, i.e. before wrapping/"encryption" or after
      * unwrapping/"decryption". This excludes all the headers/footers.
-     *
      * @var BaseSegment[]
      */
     public $plainSegments = [];
@@ -51,22 +52,19 @@ class Message
      *    * No. 2 HNSHK Signature head (starts at 2 because there would implicitly be a HNHBK at 1)
      *    * No. 3 through N+2: All the $plainSegments (with N := count($plainSegments))
      *    * No. N+3: HNSHA Signature footer
-     *  - No. N+4: HNHBS Message footer.
-     *
+     *  - No. N+4: HNHBS Message footer
      * @var BaseSegment[]
      */
     public $wrapperSegments = [];
 
     /**
      * The same HNHBK segment that is also stored inside $wrappedSegments above.
-     *
      * @var HNHBKv3
      */
     public $header;
 
     /**
      * The same HNHBS segment that is also stored inside $wrappedSegments above.
-     *
      * @var HNHBSv1
      */
     public $footer;
@@ -77,7 +75,7 @@ class Message
     public $signatureFooter;
 
     /**
-     * @return \Generator|BaseSegment[] all plain and wrapper segments in this message
+     * @return \Generator|BaseSegment[] All plain and wrapper segments in this message.
      */
     public function getAllSegments()
     {
@@ -86,7 +84,7 @@ class Message
     }
 
     /**
-     * @throws \InvalidArgumentException if any segment in this message is invalid
+     * @throws \InvalidArgumentException If any segment in this message is invalid.
      */
     public function validate()
     {
@@ -102,22 +100,20 @@ class Message
     // TODO Add unit test coverage for the functions below.
 
     /**
-     * @param string $segmentType the PHP type (class name or interface) of the segment(s)
-     *
-     * @return BaseSegment[] all segments of this type (possibly an empty array)
+     * @param string $segmentType The PHP type (class name or interface) of the segment(s).
+     * @return BaseSegment[] All segments of this type (possibly an empty array).
      */
     public function findSegments($segmentType)
     {
         return array_values(array_filter($this->plainSegments, function ($segment) use ($segmentType) {
-            /* @var BaseSegment $segment */
+            /** @var BaseSegment $segment */
             return $segment instanceof $segmentType;
         }));
     }
 
     /**
-     * @param string $segmentType the PHP type (class name or interface) of the segment
-     *
-     * @return BaseSegment|null the segment, or null if it was found
+     * @param string $segmentType The PHP type (class name or interface) of the segment.
+     * @return BaseSegment|null The segment, or null if it was found.
      */
     public function findSegment($segmentType)
     {
@@ -125,41 +121,35 @@ class Message
         if (count($matchedSegments) > 1) {
             throw new UnexpectedResponseException("Multiple segments matched $segmentType");
         }
-
         return empty($matchedSegments) ? null : $matchedSegments[0];
     }
 
     /**
-     * @param string $segmentType the PHP type (class name or interface) of the segment
-     *
-     * @return bool whether any such segment exists
+     * @param string $segmentType The PHP type (class name or interface) of the segment.
+     * @return boolean Whether any such segment exists.
      */
     public function hasSegment($segmentType)
     {
-        return null !== $this->findSegment($segmentType);
+        return $this->findSegment($segmentType) !== null;
     }
 
     /**
-     * @param string $segmentType the PHP type (class name or interface) of the segment
-     *
-     * @return BaseSegment the segment, never null
-     *
-     * @throws UnexpectedResponseException if the segment was not found
+     * @param string $segmentType The PHP type (class name or interface) of the segment.
+     * @return BaseSegment The segment, never null.
+     * @throws UnexpectedResponseException If the segment was not found.
      */
     public function requireSegment($segmentType)
     {
         $matchedSegment = $this->findSegment($segmentType);
-        if (null === $matchedSegment) {
+        if ($matchedSegment === null) {
             throw new UnexpectedResponseException("Segment not found: $segmentType");
         }
-
         return $matchedSegment;
     }
 
     /**
-     * @param int $segmentNumber the segment number to search for
-     *
-     * @return BaseSegment|null the segment with that number, or null if there is none
+     * @param integer $segmentNumber The segment number to search for.
+     * @return BaseSegment|null The segment with that number, or null if there is none.
      */
     public function findSegmentByNumber($segmentNumber)
     {
@@ -168,38 +158,32 @@ class Message
                 return $segment;
             }
         }
-
         return null;
     }
 
     /**
-     * @param SegmentInterface[]|int[] $referenceSegments the reference segments (or their numbers)
-     *
-     * @return Message a new message that just contains the plain segment from $this message which refer to one
-     *                 of the given $referenceSegments
+     * @param SegmentInterface[]|int[] $referenceSegments The reference segments (or their numbers).
+     * @return Message A new message that just contains the plain segment from $this message which refer to one
+     *     of the given $referenceSegments.
      */
     public function filterByReferenceSegments($referenceSegments)
     {
         $result = new Message();
-        if (empty($referenceSegments)) {
-            return $result;
-        }
+        if (empty($referenceSegments)) return $result;
         $referenceNumbers = array_map(function ($referenceSegment) {
-            /* @var SegmentInterface|int $referenceSegment */
+            /** @var SegmentInterface|int $referenceSegment */
             return is_int($referenceSegment) ? $referenceSegment : $referenceSegment->getSegmentNumber();
         }, $referenceSegments);
         $result->plainSegments = array_filter($this->plainSegments, function ($segment) use ($referenceNumbers) {
             /** @var BaseSegment $segment */
             $referenceNumber = $segment->segmentkopf->bezugselement;
-
-            return null !== $referenceNumber && in_array($referenceNumber, $referenceNumbers);
+            return $referenceNumber !== null && in_array($referenceNumber, $referenceNumbers);
         });
-
         return $result;
     }
 
     /**
-     * @return string the HBCI/FinTS wire format for this message, ISO-8859-1 encoded
+     * @return string The HBCI/FinTS wire format for this message, ISO-8859-1 encoded.
      */
     public function serialize()
     {
@@ -207,20 +191,17 @@ class Message
         foreach ($this->wrapperSegments as $segment) {
             $result .= Serializer::serializeSegment($segment);
         }
-
         return $result;
     }
 
     /**
      * Wraps the given segmetns in an "encryption" envelope (see class documentation). Inverse of {@link #parse()}.
-     *
-     * @param BaseSegment[]|MessageBuilder $plainSegments  the plain segments to be wrapped
-     * @param FinTsOptions                 $options        see {@link FinTsOptions}
-     * @param string                       $kundensystemId see {@link #$kundensystemId}
-     * @param Credentials                  $credentials    the credentials used to authenticate the message
-     * @param TanMode|null                 $tanMode        optionally specifies which two-step TAN mode to use, defaults to 999 (single step)
-     *
-     * @return Message the built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}
+     * @param BaseSegment[]|MessageBuilder $plainSegments The plain segments to be wrapped.
+     * @param FinTsOptions $options See {@link FinTsOptions}.
+     * @param string $kundensystemId See {@link #$kundensystemId}.
+     * @param Credentials $credentials The credentials used to authenticate the message.
+     * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
+     * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
      */
     public static function createWrappedMessage($plainSegments, $options, $kundensystemId, $credentials, $tanMode)
     {
@@ -240,7 +221,7 @@ class Message
                 )->setSegmentNumber(2)],
                 $message->plainSegments,
                 [$message->signatureFooter = HNSHAv2::create($randomReference, $signature)
-                    ->setSegmentNumber($numPlainSegments + 3), ]
+                    ->setSegmentNumber($numPlainSegments + 3)]
             )),
             $message->footer = HNHBSv1::createEmpty()->setSegmentNumber($numPlainSegments + 4),
         ];
@@ -251,10 +232,8 @@ class Message
     /**
      * Builds a plain message by adding header and footer to the given segments, but no "encryption" envelope.
      * Inverse of {@link #parse()}.
-     *
      * @param BaseSegment[]|MessageBuilder $segments
-     *
-     * @return Message the built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}
+     * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
      */
     public static function createPlainMessage($segments)
     {
@@ -265,7 +244,6 @@ class Message
             $message->plainSegments, // NOTE: Segment numbers are technically wrong, here we have 2..(N+2)
             [$message->footer = HNHBSv1::createEmpty()->setSegmentNumber(count($message->plainSegments) + 3)]
         );
-
         return $message;
     }
 
@@ -274,11 +252,9 @@ class Message
      * (in which case this function acts as the inverse of {@link #createWrappedMessage()}), or leaves as is otherwise
      * (and acts as inverse of {@link #createPlainMessage()}).
      *
-     * @param string $rawMessage the received message in HBCI/FinTS wire format
-     *
-     * @return Message the parsed message
-     *
-     * @throws \InvalidArgumentException when the parsing fails
+     * @param string $rawMessage The received message in HBCI/FinTS wire format.
+     * @return Message The parsed message.
+     * @throws \InvalidArgumentException When the parsing fails.
      */
     public static function parse($rawMessage)
     {
@@ -297,7 +273,7 @@ class Message
 
         // Check if there's an encryption header and "encrypted" data.
         // Section B.8 specifies that there are exactly 4 segments: HNHBK, HNVSK, HNVSD, HNHBS.
-        if (4 === count($segments) && $segments[1] instanceof HNVSKv3) {
+        if (count($segments) === 4 && $segments[1] instanceof HNVSKv3) {
             if (!($segments[2] instanceof HNVSDv1)) {
                 throw new \InvalidArgumentException("Expected third segment to be HNVSD: $rawMessage");
             }
@@ -320,16 +296,16 @@ class Message
             if ($signatureFooterAsExpected) {
                 $result->signatureFooter = array_pop($result->plainSegments);
             }
+
         } else {
             // Ensure that there's no encryption header anywhere, and we haven't just misunderstood the format.
             foreach ($segments as $segment) {
-                if ('HNVSK' === $segment->getName() || 'HNVSD' === $segment->getName()) {
+                if ($segment->getName() === 'HNVSK' || $segment->getName() === 'HNVSD') {
                     throw new \InvalidArgumentException("Unexpected encrypted format: $rawMessage");
                 }
             }
             $result->plainSegments = $segments; // The message wasn't "encrypted".
         }
-
         return $result;
     }
 }

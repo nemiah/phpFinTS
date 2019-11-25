@@ -1,6 +1,4 @@
-<?php
-
-/** @noinspection PhpUnused */
+<?php /** @noinspection PhpUnused */
 
 namespace Fhp\Segment\HITAN;
 
@@ -10,23 +8,22 @@ use Fhp\Segment\BaseSegment;
 /**
  * Segment: Zwei-Schritt-TAN-Einreichung Rückmeldung (Version 6)
  * Bezugssegment: HKTAN
- * Sender: Kreditinstitut.
+ * Sender: Kreditinstitut
  *
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Page: 48
  */
-class HITANv6 extends BaseSegment
-{
+class HITANv6 extends BaseSegment {
+
     /**
-     * 0,1,2 or 4.
-     *
+     * 0,1,2 or 4
      * @var string
      */
     public $tanProzess;
 
     /**
      * M: bei Auftrags- Hashwertverfahren<>0 und TAN-Prozess=1,
-     * N: sonst.
+     * N: sonst
      *
      * @var Bin|null
      */
@@ -34,15 +31,14 @@ class HITANv6 extends BaseSegment
 
     /**
      * M: bei TAN-Prozess=2, 3, 4
-     * O: bei TAN-Prozess=1.
-     *
+     * O: bei TAN-Prozess=1
      * @var string|null
      */
     public $auftragsReferenz;
 
     /**
      * M: bei TAN-Prozess=1, 3, 4
-     * O: bei TAN-Prozess=2.
+     * O: bei TAN-Prozess=2
      *
      * Das Kundenprodukt muss den Inhalt der empfangenen Challenge dem Kunden unverändert anzeigen.
      * Ist der BPD-Parameter „Chal- lenge strukturiert“ mit „J“ belegt, so können im DE Challenge
@@ -61,7 +57,7 @@ class HITANv6 extends BaseSegment
     public $challengeHHD_UC;
 
     /**
-     * TODO: This is a DEG.
+     * TODO: This is a DEG
      *
      * @var string|null
      */
@@ -69,33 +65,29 @@ class HITANv6 extends BaseSegment
 
     /**
      * M: bei TAN-Prozess=1, 3, 4 und „Anzahl unterstützter aktiver TAN-Medien“ nicht vorhanden
-     * O: sonst.
-     *
+     * O: sonst
      * @var string|null
      */
     public $bezeichnungDesTanMediums;
 
+
     /** @return string|null */
-    public function getAuftragsReferenz()
-    {
+    public function getAuftragsReferenz() {
         return $this->auftragsReferenz;
     }
 
     /** @return string|null */
-    public function getChallenge()
-    {
+    public function getChallenge() {
         return $this->challenge;
     }
 
     /** @return Bin|null */
-    public function getChallengeHDD_UC()
-    {
+    public function getChallengeHDD_UC() {
         return $this->challengeHHD_UC;
     }
 
     /** @return string|null */
-    public function getBezeichnungDesTanMediums()
-    {
+    public function getBezeichnungDesTanMediums() {
         return $this->bezeichnungDesTanMediums;
     }
 }

@@ -18,7 +18,6 @@ class MessageBuilder
 
     /**
      * This is where the builder collects the (unencrypted/unwrapped) segments as they are being added.
-     *
      * @var BaseSegment[]
      */
     public $segments = [];
@@ -31,9 +30,8 @@ class MessageBuilder
 
     /**
      * @param BaseSegment|BaseSegment[] $segments The segment(s) to be added. Note that the segment number will be
-     *                                            determined dynamically and written to the same segment instance that was passed in here.
-     *
-     * @return $this the same instance for chaining
+     *     determined dynamically and written to the same segment instance that was passed in here.
+     * @return $this The same instance for chaining.
      */
     public function add($segments)
     {
@@ -44,18 +42,18 @@ class MessageBuilder
         } else {
             $this->addInternal($segments);
         }
-
         return $this;
     }
 
     private function addInternal($segment)
     {
-        if (null === $segment->segmentkopf) {
-            throw new \InvalidArgumentException('Segment lacks Segmentkopf, maybe you called ctor instead of createEmpty()');
+        if ($segment->segmentkopf === null) {
+            throw new \InvalidArgumentException(
+                "Segment lacks Segmentkopf, maybe you called ctor instead of createEmpty()");
         }
         $segment->segmentkopf->segmentnummer = count($this->segments) + static::SEGMENT_NUMBER_OFFSET;
         if ($segment->segmentkopf->segmentnummer >= HNVSKv3::SEGMENT_NUMBER) {
-            throw new \InvalidArgumentException('Too many segments');
+            throw new \InvalidArgumentException("Too many segments");
         }
         $this->segments[] = $segment;
     }

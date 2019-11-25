@@ -31,7 +31,7 @@ class Kik
      */
     public function toString()
     {
-        return $this->countryCode.':'.$this->bankCode;
+        return $this->countryCode . ':' . $this->bankCode;
     }
 
     /**

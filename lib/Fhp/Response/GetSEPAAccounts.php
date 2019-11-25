@@ -9,7 +9,7 @@ class GetSEPAAccounts extends Response
     const SEG_ACCOUNT_INFORMATION = 'HISPA';
 
     /** @var array */
-    protected $accounts = [];
+    protected $accounts = array();
 
     /**
      * Creates SEPA Account array list with SEPAAccount models.
@@ -35,6 +35,7 @@ class GetSEPAAccounts extends Response
     /**
      * Creates a SEPAAccount model from array.
      *
+     * @param array $array
      * @return SEPAAccount
      */
     protected function createModelFromArray(array $array)

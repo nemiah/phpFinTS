@@ -11,12 +11,16 @@ class Dat
 
     /**
      * Dat constructor.
+     * @param \DateTime $dateTime
      */
     public function __construct(\DateTime $dateTime)
     {
         $this->value = $dateTime;
     }
 
+    /**
+     * @param \DateTime $date
+     */
     public function setDate(\DateTime $date)
     {
         $this->value = $date;
