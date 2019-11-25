@@ -37,11 +37,6 @@ class Message extends AbstractMessage
     protected $username;
 
     /**
-     * @var string
-     */
-    protected $systemId;
-
-    /**
      * @var array
      */
     protected $options;
@@ -209,4 +204,6 @@ class Message extends AbstractMessage
     {
         return $this->encryptedSegments;
     }
+
+
 }

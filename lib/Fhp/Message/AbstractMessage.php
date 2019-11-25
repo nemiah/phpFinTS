@@ -15,9 +15,14 @@ class AbstractMessage
     protected $segments = [];
 
     /**
-     * @var int
+     * @var string
      */
-    protected $dialogId = 0;
+    protected $systemId;
+
+    /**
+     * @var string
+     */
+    protected $dialogId;
 
     /**
      * @var int
@@ -42,6 +47,14 @@ class AbstractMessage
     public function getSegments()
     {
         return $this->segments;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemId(): string
+    {
+        return $this->systemId;
     }
 
     /**

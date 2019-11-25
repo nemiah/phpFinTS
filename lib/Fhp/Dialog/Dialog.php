@@ -149,6 +149,11 @@ class Dialog
         try {
             $this->logger->debug('> '.$message);
 
+            // Daten von der aktuellen Nachricht übernehmen, falls ::login ausgelassen wurde
+            $this->systemId = $message->getSystemId();
+            $this->dialogId = $message->getDialogId();
+            $this->messageNumber = $message->getMessageNumber();
+
             $result = $this->connection->send($message->toString());
             ++$this->messageNumber;
 
@@ -182,7 +187,7 @@ class Dialog
             }
 
             if (!$this->dialogId) {
-                $this->dialogId = $response->getDialogId();
+                $this->dialogId = $message->getDialogId() ?? $response->getDialogId();
             }
 
             if (!$this->systemId) {
