@@ -187,7 +187,7 @@ class Dialog
             }
 
             if (!$this->dialogId) {
-                $this->dialogId = $message->getDialogId() ?? $response->getDialogId();
+                $this->dialogId = $response->getDialogId();
             }
 
             if (!$this->systemId) {
