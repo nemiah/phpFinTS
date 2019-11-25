@@ -8,7 +8,6 @@ namespace Fhp\Segment;
  */
 class SegmentDescriptor extends BaseDescriptor
 {
-
     /** @var SegmentDescriptor[] */
     private static $descriptors;
 
@@ -56,7 +55,7 @@ class SegmentDescriptor extends BaseDescriptor
     {
         parent::validateObject($obj);
         if (!($obj instanceof BaseSegment)) {
-            throw new \InvalidArgumentException("Expected sub-class of BaseSegment, got " . gettype($obj));
+            throw new \InvalidArgumentException('Expected sub-class of BaseSegment, got ' . gettype($obj));
         }
         if ($obj->getName() !== $this->kennung) {
             throw new \InvalidArgumentException("Expected $this->kennung, got " . $obj->getName());

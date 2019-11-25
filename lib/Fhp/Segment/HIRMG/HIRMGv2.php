@@ -19,6 +19,6 @@ class HIRMGv2 extends BaseSegment
 {
     use RueckmeldungContainer; // For utility functions.
 
-	/** @var \Fhp\Segment\HIRMS\Rueckmeldung[] @Max(99) */
-	public $rueckmeldung;
+    /** @var \Fhp\Segment\HIRMS\Rueckmeldung[] @Max(99) */
+    public $rueckmeldung;
 }

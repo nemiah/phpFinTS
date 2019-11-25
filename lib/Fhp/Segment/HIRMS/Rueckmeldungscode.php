@@ -45,7 +45,6 @@ abstract class Rueckmeldungscode
      */
     const BEENDET = 100;
 
-
     /**
      * Es liegen weitere Informationen vor.
      * Tells the client that the response is incomplete and the request needs to be re-sent with the pagination token
@@ -59,5 +58,4 @@ abstract class Rueckmeldungscode
      * HITANS, or 999 to indicate Ein-Schritt-Verfahren.
      */
     const ZUGELASSENE_VERFAHREN = 3920;
-
 }

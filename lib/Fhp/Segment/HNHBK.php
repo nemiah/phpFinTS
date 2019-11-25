@@ -10,8 +10,6 @@ use Fhp\FinTsInternal;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: B.5.2
- *
- * @package Fhp\Segment
  */
 class HNHBK extends AbstractSegment
 {
@@ -35,12 +33,12 @@ class HNHBK extends AbstractSegment
             static::NAME,
             1, // always the first segment
             static::VERSION,
-            array(
+            [
                 $messageLength,
                 300, // HBCI / FINTS version 3.0,
                 FinTsInternal::escapeString($dialogId),
                 $messageNumber,
-            )
+            ]
         );
     }
 

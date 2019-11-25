@@ -12,7 +12,6 @@ use Fhp\Deg;
  * Section: C.10.2.3.4
  *
  * @author Nena Furtmeier <support@furtmeier.it>
- * @package Fhp\Segment
  */
 class HKCDB extends AbstractSegment
 {
@@ -28,18 +27,19 @@ class HKCDB extends AbstractSegment
      */
     public function __construct($version, $segmentNumber, $kti, $supportedPain)
     {
-		$deg = new Deg();
-		foreach ($supportedPain AS $pain)
-			$deg->addDataElement($pain);
-		
+        $deg = new Deg();
+        foreach ($supportedPain as $pain) {
+            $deg->addDataElement($pain);
+        }
+
         parent::__construct(
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
-                $deg
-            )
+                $deg,
+            ]
         );
     }
 

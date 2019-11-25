@@ -32,9 +32,9 @@ class SchluesselnameV3 extends BaseDeg
      * @var string (Version 2)
      */
     public $schluesselart;
-    /** @var integer */
+    /** @var int */
     public $schluesselnummer = 0; // Dummy value for PIN/TAN.
-    /** @var integer */
+    /** @var int */
     public $schluesselversion = 0; // Dummy value for PIN/TAN.
 
     /**

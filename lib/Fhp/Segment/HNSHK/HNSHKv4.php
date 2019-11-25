@@ -26,7 +26,7 @@ class HNSHKv4 extends BaseSegment
      *   - 998 for Ein-Schritt-Verfahren, or
      *   - the value in the 900--997 range as received in
      *     {@link \Fhp\Segment\HITANS\VerfahrensparameterZweiSchrittVerfahren#getId()}
-     * @var integer
+     * @var int
      */
     public $sicherheitsfunktion;
     /** @var string Max length: 14; A nonce, that matches the one in HNSHA */
@@ -34,7 +34,7 @@ class HNSHKv4 extends BaseSegment
     /**
      * 1: Signaturkopf und HBCI-Nutzdaten (SHM)
      * (not allowed: 2: Von Signaturkopf bis Signaturabschluss (SHT))
-     * @var integer (Version 2)
+     * @var int (Version 2)
      */
     public $bereichDerSicherheitsapplikation = 1; // This is the only allowed value.
     /**
@@ -42,12 +42,12 @@ class HNSHKv4 extends BaseSegment
      * 3: Der Unterzeichner unterstützt den Inhalt der Nachricht, z. B. bei Zweitsignatur (CON)
      * 4: Der Unterzeichner ist Zeuge, aber für den Inhalt der Nachricht nicht verantwortlich, z. B. Übermittler,
      *    welcher nicht Erfasser ist (WIT)
-     * @var integer
+     * @var int
      */
     public $rolleDesSicherheitslieferanten = 1;
     /** @var \Fhp\Segment\HNVSK\SicherheitsidentifikationDetailsV2 */
     public $sicherheitsidentifikationDetails;
-    /** @var integer */
+    /** @var int */
     public $sicherheitsreferenznummer = 1; // Not used / supported by this library, so just a dummy value.
     /** @var \Fhp\Segment\HNVSK\SicherheitsdatumUndUhrzeitV2 */
     public $sicherheitsdatumUndUhrzeit;

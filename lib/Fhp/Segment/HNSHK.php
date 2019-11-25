@@ -15,8 +15,6 @@ use Fhp\DataElementGroups\SignatureAlgorithm;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20130718_final_version.pdf
  * Section: B.5.1
- *
- * @package Fhp\Segment
  */
 class HNSHK extends AbstractSegment
 {
@@ -64,19 +62,19 @@ class HNSHK extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(
-                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion), #2
-                $securityFunction, #3
-                $securityReference, #4
-                $securityBoundary, #5
-                $securitySupplierRole, #6
-                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId), #7
-                1, #8
-                new SecurityDateTime(), #9
-                new HashAlgorithm(), #10
-                new SignatureAlgorithm(), #11
-                new KeyName($countryCode, $bankCode, $userName, KeyName::KEY_TYPE_SIGNATURE)                #12
-            )
+            [
+                new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion), //2
+                $securityFunction, //3
+                $securityReference, //4
+                $securityBoundary, //5
+                $securitySupplierRole, //6
+                new SecurityIdentificationDetails(SecurityIdentificationDetails::CID_NONE, $systemId), //7
+                1, //8
+                new SecurityDateTime(), //9
+                new HashAlgorithm(), //10
+                new SignatureAlgorithm(), //11
+                new KeyName($countryCode, $bankCode, $userName, KeyName::KEY_TYPE_SIGNATURE),                //12
+            ]
         );
     }
 

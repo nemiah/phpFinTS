@@ -8,8 +8,6 @@ namespace Fhp\Segment;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: C.8.1.2
- *
- * @package Fhp\Segment
  */
 class HKSYN extends AbstractSegment
 {
@@ -33,7 +31,7 @@ class HKSYN extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array($syncMode)
+            [$syncMode]
         );
     }
 

@@ -21,7 +21,7 @@ class SicherheitsprofilV1 extends BaseDeg
 
     /** @var string Allowed values: "PIN", "RAH" */
     public $sicherheitsverfahren;
-    /** @var integer Allowed values: 1, 2 (for "PIN"), 7, 9, 10 (for "RAH") */
+    /** @var int Allowed values: 1, 2 (for "PIN"), 7, 9, 10 (for "RAH") */
     public $versionDesSicherheitsverfahrens;
 
     /**

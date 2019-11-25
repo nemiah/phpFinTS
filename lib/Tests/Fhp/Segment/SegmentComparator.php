@@ -13,8 +13,12 @@ class SegmentComparator extends ObjectComparator
 {
     public function accepts($expected, $actual)
     {
-        if ($expected instanceof BaseSegment && $actual instanceof BaseSegment) return true;
-        if ($expected instanceof BaseDeg && $actual instanceof BaseDeg) return true;
+        if ($expected instanceof BaseSegment && $actual instanceof BaseSegment) {
+            return true;
+        }
+        if ($expected instanceof BaseDeg && $actual instanceof BaseDeg) {
+            return true;
+        }
         return false;
     }
 

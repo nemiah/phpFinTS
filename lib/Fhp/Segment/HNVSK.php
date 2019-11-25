@@ -14,8 +14,6 @@ use Fhp\DataElementGroups\SecurityProfile;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_HBCI_Rel_20130718_final_version.pdf
  * Section: B.5.3
- *
- * @package Fhp\Segment
  */
 class HNVSK extends AbstractSegment
 {
@@ -61,7 +59,7 @@ class HNVSK extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(
+            [
                 new SecurityProfile(SecurityProfile::PROFILE_PIN, $pinTanVersion),
                 998, // Just informational / invalid for PIN/TAN,
                 $securitySupplierRole,
@@ -70,7 +68,7 @@ class HNVSK extends AbstractSegment
                 new EncryptionAlgorithm(),
                 new KeyName($countryCode, $bankCode, $userName),
                 $compression,
-            )
+            ]
         );
     }
 

@@ -15,6 +15,6 @@ class GeschaeftsvorfallspezifischePinTanInformationen extends BaseDeg
 {
     /** @var string Max length: 6; The segment name of the potential client request. */
     public $segmentkennung;
-    /** @var boolean Whether a TAN is needed. */
+    /** @var bool Whether a TAN is needed. */
     public $tanErforderlich;
 }

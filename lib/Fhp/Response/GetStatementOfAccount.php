@@ -49,16 +49,18 @@ class GetStatementOfAccount extends Response
 
             if (isset($statement['transactions'])) {
                 foreach ($statement['transactions'] as $trx) {
-					$replaceIn = array(
-						'booking_text',
-						'description_1',
-						'description_2',
-						'description',
-						'name'
-					);
-					foreach($replaceIn AS $k)
-						if(isset($trx['description'][$k]))
-							$trx['description'][$k] = str_replace ("@@", "", $trx['description'][$k]);
+                    $replaceIn = [
+                        'booking_text',
+                        'description_1',
+                        'description_2',
+                        'description',
+                        'name',
+                    ];
+                    foreach ($replaceIn as $k) {
+                        if (isset($trx['description'][$k])) {
+                            $trx['description'][$k] = str_replace('@@', '', $trx['description'][$k]);
+                        }
+                    }
 
                     $transaction = new Transaction();
                     $transaction->setBookingDate(new \DateTime($trx['booking_date']));

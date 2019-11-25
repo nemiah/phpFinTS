@@ -2,9 +2,6 @@
 
 namespace Fhp\DataElementGroups;
 
-use Fhp\DataTypes\Kik;
-use Fhp\Deg;
-
 class KeyNameTest extends \PHPUnit\Framework\TestCase
 {
     public function test_to_string()

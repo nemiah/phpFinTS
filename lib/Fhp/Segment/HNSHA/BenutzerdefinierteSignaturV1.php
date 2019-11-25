@@ -1,6 +1,5 @@
 <?php /** @noinspection PhpUnused */
 
-
 namespace Fhp\Segment\HNSHA;
 
 use Fhp\Segment\BaseDeg;

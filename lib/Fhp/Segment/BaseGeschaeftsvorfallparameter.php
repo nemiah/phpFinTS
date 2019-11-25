@@ -16,18 +16,18 @@ abstract class BaseGeschaeftsvorfallparameter extends BaseSegment
 {
     /**
      * Maximum number of request segments of this kind that can be included in a single request message
-     * @var integer
+     * @var int
      */
     public $maximaleAnzahlAuftraege;
     /**
      * Minimum number of signatures required for this kind of business transaction. Note that zero signatures is
      * equivalent to an anonymous connection and one signature (the most common case) can be satisfied with PIN/TAN.
-     * @var integer
+     * @var int
      */
     public $anzahlSignaturenMindestens;
     /**
      * Minimum cryptographic security required for this transaction type, where 0 means none.
-     * @var integer
+     * @var int
      */
     public $sicherheitsklasse;
 

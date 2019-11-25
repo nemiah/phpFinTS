@@ -7,7 +7,7 @@ class StatementOfAccount
     /**
      * @var Statement[]
      */
-    protected $statements = array();
+    protected $statements = [];
 
     /**
      * Get statements
@@ -28,16 +28,16 @@ class StatementOfAccount
      */
     public function setStatements(array $statements = null)
     {
-        $this->statements = null == $statements ? array() : $statements;
+        $this->statements = null == $statements ? [] : $statements;
 
         return $this;
     }
 
-	public function isTANRequest()
-	{
-		return false;
-	}
-	
+    public function isTANRequest()
+    {
+        return false;
+    }
+
     /**
      * @param Statement $statement
      */

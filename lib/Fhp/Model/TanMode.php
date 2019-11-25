@@ -24,7 +24,7 @@ interface TanMode
     const FORMAT_ALPHANUMERICAL = 2;
 
     /**
-     * @return integer The ID of this TanMode. This is what the application needs to persist when it wants to remember
+     * @return int The ID of this TanMode. This is what the application needs to persist when it wants to remember
      *     the users decision for future transactions.
      */
     public function getId();
@@ -40,25 +40,25 @@ interface TanMode
     public function getChallengeLabel();
 
     /**
-     * @return integer The maximum length of the challenge. The application can use this to appropriately resize the
+     * @return int The maximum length of the challenge. The application can use this to appropriately resize the
      *     text field that displays the challenge to the user.
      */
     public function getMaxChallengeLength();
 
     /**
-     * @return integer The maximum length of TANs entered in this mode. The application can use this to restrict the TAN
+     * @return int The maximum length of TANs entered in this mode. The application can use this to restrict the TAN
      *     input field or to do client-side validation.
      */
     public function getMaxTanLength();
 
     /**
-     * @return integer The allowed TAN format. See the FORMAT_* constants above. The application can use this to
+     * @return int The allowed TAN format. See the FORMAT_* constants above. The application can use this to
      *     restrict the TAN input field or to do client-side validation.
      */
     public function getTanFormat();
 
     /**
-     * @return boolean If true, there are potentially multiple {@link TanMedium} choices (e.g. multiple mobile phones)
+     * @return bool If true, there are potentially multiple {@link TanMedium} choices (e.g. multiple mobile phones)
      *     associated with this TanMode (e.g. if it's the smsTAN mode), and the user needs to pick the medium in
      *     addition to and after picking this TanMode.
      */

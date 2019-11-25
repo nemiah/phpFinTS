@@ -16,7 +16,7 @@ class HKTABv4 extends BaseSegment
      * 0: Alle
      * 1: Aktiv
      * 2: Verfügbar
-     * @var integer
+     * @var int
      */
     public $tanMediumArt = 0;
     /**

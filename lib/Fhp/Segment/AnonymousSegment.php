@@ -41,7 +41,7 @@ final class AnonymousSegment extends BaseSegment
 
     public function getDescriptor()
     {
-        throw new \RuntimeException("AnonymousSegments do not have a descriptor");
+        throw new \RuntimeException('AnonymousSegments do not have a descriptor');
     }
 
     public function validate()
@@ -53,8 +53,12 @@ final class AnonymousSegment extends BaseSegment
     {
         return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
             implode(Delimiter::ELEMENT, array_map(function ($element) {
-                if ($element === null) return '';
-                if (is_string($element)) return $element;
+                if ($element === null) {
+                    return '';
+                }
+                if (is_string($element)) {
+                    return $element;
+                }
                 return implode(Delimiter::GROUP, $element);
             }, $this->elements))
             . Delimiter::SEGMENT;
@@ -67,6 +71,6 @@ final class AnonymousSegment extends BaseSegment
     {
         // Note: createEmpty() normally runs the constructor and then fills the Segmentkopf, but that is not possible
         // for AnonymousSegment. Callers should just call the constructor itself.
-        throw new \RuntimeException("AnonymousSegment::createEmpty() is not allowed");
+        throw new \RuntimeException('AnonymousSegment::createEmpty() is not allowed');
     }
 }

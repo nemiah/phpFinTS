@@ -15,6 +15,6 @@ class KontolimitV1 extends BaseDeg
     public $limitart;
     /** @var \Fhp\Segment\Common\Btg */
     public $limitbetrag;
-    /** @var integer|null If present, must be greater than 0 */
+    /** @var int|null If present, must be greater than 0 */
     public $limitTage;
 }

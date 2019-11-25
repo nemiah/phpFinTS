@@ -4,23 +4,23 @@ namespace Fhp;
 
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Kti;
+use Fhp\DataTypes\Ktv;
 use Fhp\Dialog\Dialog;
 use Fhp\Message\AbstractMessage;
 use Fhp\Message\Message;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
 use Fhp\Response\GetTANRequest;
-use Fhp\Segment\HKCDL;
-use Fhp\Segment\HKCCS;
-use Fhp\Segment\HKTAN;
-use Fhp\DataTypes\Ktv;
-use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKCAZ;
+use Fhp\Segment\HKCCS;
+use Fhp\Segment\HKCDL;
+use Fhp\Segment\HKKAZ;
+use Fhp\Segment\HKTAN;
 
 abstract class FinTsInternal
 {
     protected $url;
-    /** @var  Connection */
+    /** @var Connection */
     protected $connection = null;
     /** @var int */
     protected $timeoutConnect = 15;
@@ -42,9 +42,9 @@ abstract class FinTsInternal
         );
 
         $message = $this->getNewMessage($dialog,
-            array(
+            [
                 new HKCDL(HKCDL::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03', $order),
-            )
+            ]
         );
 
         $response = $dialog->sendMessage($message);
@@ -76,9 +76,9 @@ abstract class FinTsInternal
         );
 
         $message = $this->getNewMessage($dialog,
-            array(
+            [
                 new HKCCS(HKCCS::VERSION, 3, $hkcdbAccount, 'urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03', $painMessage),
-            )
+            ]
         );
 
         $this->logger->info('');
@@ -122,7 +122,7 @@ abstract class FinTsInternal
     /**
      * Retrieve a pre configured dialog object.
      *
-     * @param boolean
+     * @param bool
      * @return Dialog
      * @throws \Exception
      */
@@ -138,8 +138,8 @@ abstract class FinTsInternal
     public static function escapeString($string)
     {
         return str_replace(
-            array('?', '@', ':', '+', '\''),
-            array('??', '?@', '?:', '?+', '?\''),
+            ['?', '@', ':', '+', '\''],
+            ['??', '?@', '?:', '?+', '?\''],
             $string
         );
     }
@@ -154,30 +154,29 @@ abstract class FinTsInternal
     public static function unescapeString($string)
     {
         return str_replace(
-            array('??', '?@', '?:', '?+', '?\''),
-            array('?', '@', ':', '+', '\''),
+            ['??', '?@', '?:', '?+', '?\''],
+            ['?', '@', ':', '+', '\''],
             $string
         );
     }
 
     protected function clearXML($xml)
     {
-        $dom = new \DOMDocument;
+        $dom = new \DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($xml);
         $dom->formatOutput = false;
-        return str_replace("\n", "", trim($dom->saveXml()));
+        return str_replace("\n", '', trim($dom->saveXml()));
     }
 
     protected function getUsedPinTanMechanism($dialog)
     {
         $mechs = array_keys($dialog->getSupportedPinTanMechanisms());
         if ($this->tanMechanism !== null && in_array($this->tanMechanism, $mechs)) {
-            return array($this->tanMechanism);
+            return [$this->tanMechanism];
         }
         return $mechs;
     }
-
 
     /**
      * Helper method to create a "Statement of Account Message".
@@ -202,7 +201,7 @@ abstract class FinTsInternal
 
         $message = $this->getNewMessage(
             $dialog,
-            array(
+            [
                 new HKCAZ(
                     1,
                     3,
@@ -212,8 +211,8 @@ abstract class FinTsInternal
                     $from,
                     $to,
                     $touchdown
-                )
-            )
+                ),
+            ]
         );
 
         return $message;
@@ -303,7 +302,7 @@ abstract class FinTsInternal
 
         $message = $this->getNewMessage(
             $dialog,
-            array(
+            [
                 new HKKAZ(
                     $dialog->getHkkazMaxVersion(),
                     3,
@@ -312,8 +311,8 @@ abstract class FinTsInternal
                     $from,
                     $to,
                     $touchdown
-                )
-            )
+                ),
+            ]
         );
 
         return $message;

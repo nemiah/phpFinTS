@@ -67,16 +67,16 @@ class Transaction
      * @var string
      */
     protected $name;
-	
+
     /**
-     * @var boolean
+     * @var bool
      */
-	protected $booked;
+    protected $booked;
 
     /**
      * @var int
      */
-	protected $pn;
+    protected $pn;
 
     /**
      * Get booking date.
@@ -148,12 +148,10 @@ class Transaction
         return $this->amount;
     }
 
-	
-	
     /**
      * Set booked status
      *
-     * @param boolean $booked
+     * @param bool $booked
      *
      * @return $this
      */
@@ -163,7 +161,7 @@ class Transaction
 
         return $this;
     }
-	
+
     /**
      * Set amount
      *
@@ -332,7 +330,7 @@ class Transaction
         if (array_key_exists('SVWZ', $this->structuredDescription)) {
             return $this->structuredDescription['SVWZ'];
         } else {
-            return "";
+            return '';
         }
     }
 
@@ -346,7 +344,7 @@ class Transaction
         if (array_key_exists('EREF', $this->structuredDescription)) {
             return $this->structuredDescription['EREF'];
         } else {
-            return "";
+            return '';
         }
     }
 
@@ -411,13 +409,13 @@ class Transaction
     /**
      * Get booked status
      *
-     * @return boolean
+     * @return bool
      */
-	public function getBooked()
-	{
-		return $this->booked;
-	}
-	
+    public function getBooked()
+    {
+        return $this->booked;
+    }
+
     /**
      * Set name
      *
@@ -437,18 +435,20 @@ class Transaction
      *
      * @return int
      */
-    public function getPN() {
+    public function getPN()
+    {
         return $this->pn;
     }
- 
-   /**
+
+    /**
      * Set primanota number
      *
      * @param int $nr
      *
      * @return $this
      */
-    public function setPN($nr) {
+    public function setPN($nr)
+    {
         $this->pn = (int) $nr;
         return $this;
     }

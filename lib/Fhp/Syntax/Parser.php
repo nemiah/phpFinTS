@@ -16,7 +16,7 @@ if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_k
     function array_key_last($array)
     {
         if (!is_array($array) || empty($array)) {
-            return NULL;
+            return null;
         }
         return array_keys($array)[count($array) - 1];
     }
@@ -49,7 +49,9 @@ abstract class Parser
      */
     public static function splitEscapedString($delimiter, $str, $trailingDelimiter = false)
     {
-        if (empty($str)) return array();
+        if (empty($str)) {
+            return [];
+        }
         // Since most of the $delimiters used in FinTs are also special characters in regexes, we need to escape.
         $delimiter = preg_quote($delimiter, '/');
         $nextBegin = 0;
@@ -66,7 +68,7 @@ abstract class Parser
                     // The last character should have been a delimiter, so there should be no content remaining.
                     if ($nextBegin !== strlen($str)) {
                         throw new \InvalidArgumentException(
-                            "Unexpected content after last delimiter: " . substr($str, $nextBegin));
+                            'Unexpected content after last delimiter: ' . substr($str, $nextBegin));
                     }
                 } else {
                     // Anything behind the last delimiter forms the last substring.
@@ -80,12 +82,14 @@ abstract class Parser
                 // It's an escape character, so we should ignore this character and the next one.
                 $offset = $matchedOffset + 2;
                 if ($offset > strlen($str)) {
-                    throw new \InvalidArgumentException("Input ends on unescaped escape character.");
+                    throw new \InvalidArgumentException('Input ends on unescaped escape character.');
                 }
             } elseif ($matchedStr[0] === Delimiter::BINARY) {
                 // It's a block binary data, which we should skip entirely.
                 $binaryLength = $match[1][0]; // $match[1] refers to the first (and only) capture group in the regex.
-                if (!is_numeric($binaryLength)) throw new \AssertionError("Invalid binary length $binaryLength");
+                if (!is_numeric($binaryLength)) {
+                    throw new \AssertionError("Invalid binary length $binaryLength");
+                }
                 // Note: The FinTS specification says that the length of the binary block is given in bytes (not
                 // characters) and PHP's string functions like substr() or preg_match() also operate on byte offsets, so
                 // this is fine.
@@ -93,7 +97,7 @@ abstract class Parser
                 if ($offset > strlen($str)) {
                     throw new \InvalidArgumentException(
                         "Incomplete binary block at offset $matchedOffset, declared length $binaryLength, but "
-                        . "only has " . (strlen($str) - $matchedOffset - strlen($matchedStr)) . " bytes left");
+                        . 'only has ' . (strlen($str) - $matchedOffset - strlen($matchedStr)) . ' bytes left');
                 }
             } else {
                 // The delimiter was matched, so output one splitted string and advance past the delimiter.
@@ -127,7 +131,9 @@ abstract class Parser
      */
     public static function parseDataElement($rawValue, $type)
     {
-        if ($rawValue === '') return null;
+        if ($rawValue === '') {
+            return null;
+        }
         if ($type === 'int' || $type === 'integer') {
             if (!is_numeric($rawValue)) {
                 throw new \InvalidArgumentException("Invalid int: $rawValue");
@@ -140,8 +146,12 @@ abstract class Parser
             }
             return floatval($rawValue);
         } elseif ($type === 'bool' || $type === 'boolean') {
-            if ($rawValue === 'J') return true;
-            if ($rawValue === 'N') return false;
+            if ($rawValue === 'J') {
+                return true;
+            }
+            if ($rawValue === 'N') {
+                return false;
+            }
             throw new \InvalidArgumentException("Invalid bool: $rawValue");
         } elseif ($type === 'string') {
             // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
@@ -157,8 +167,9 @@ abstract class Parser
      */
     public static function parseBinaryBlock($rawValue)
     {
-        if ($rawValue === '')
+        if ($rawValue === '') {
             return null;
+        }
 
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
         if (
@@ -176,7 +187,7 @@ abstract class Parser
 
         $length = intval($lengthStr);
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
-        
+
         $actualLength = strlen($result->getData());
         if ($actualLength !== $length) {
             throw new \InvalidArgumentException("Expected binary block of length $length, got $actualLength");
@@ -187,7 +198,7 @@ abstract class Parser
     /**
      * @param string $rawElements The serialized wire format for a data element group.
      * @param string $type The type (PHP class name) of the Deg to be parsed.
-     * @param boolean $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
+     * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @return BaseDeg|null The parsed value, of type $type, or null if all fields were empty and $allowEmpty is true.
      */
     public static function parseDeg($rawElements, $type, $allowEmpty = false)
@@ -196,7 +207,7 @@ abstract class Parser
         list($result, $offset) = static::parseDegElements($rawElements, $type, $allowEmpty);
         if ($offset < count($rawElements)) {
             throw new \InvalidArgumentException(
-                "Expected only $offset elements, but got " . count($rawElements) . ": " . print_r($rawElements, true));
+                "Expected only $offset elements, but got " . count($rawElements) . ': ' . print_r($rawElements, true));
         }
         return $result;
     }
@@ -206,8 +217,8 @@ abstract class Parser
      *     will be modified in that the elements that were consumed are removed from the beginning.
      * @param string $type The type (PHP class name) of the Deg to be parsed, defaults to the class on which
      *     this function is called.
-     * @param boolean $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
-     * @param integer $offset The position in $rawElements to be read next.
+     * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
+     * @param int $offset The position in $rawElements to be read next.
      * @return array (BaseDeg|null, integer)
      *     1. The parsed value, which has the given $type or is null in case all the fields were empty and $allowEmpty
      *        is true.
@@ -216,7 +227,9 @@ abstract class Parser
      */
     private static function parseDegElements($rawElements, $type, $allowEmpty = false, $offset = 0)
     {
-        if ($type === null) $type = static::class;
+        if ($type === null) {
+            $type = static::class;
+        }
         $descriptor = DegDescriptor::get($type);
         $result = new $type();
         $expectedIndex = 0;
@@ -234,23 +247,25 @@ abstract class Parser
             // just skip because here we would only detect whether the first field is empty or not.
             if ($isSingleField && (!isset($rawElements[$offset]) || $rawElements[$offset] === '')) {
                 if ($elementDescriptor->optional) {
-                    $offset++;
+                    ++$offset;
                     continue;
                 } elseif ($missingFieldError === null) {
                     $missingFieldError = new \InvalidArgumentException("Missing field $type.$elementDescriptor->field");
-                    if (!$allowEmpty) throw $missingFieldError;
+                    if (!$allowEmpty) {
+                        throw $missingFieldError;
+                    }
                 }
             }
 
             // Parse element (possibly multiple values recursively).
             try {
-                for ($repetition = 0; $repetition < $numRepetitions; $repetition++) {
+                for ($repetition = 0; $repetition < $numRepetitions; ++$repetition) {
                     if ($offset >= count($rawElements)) {
                         break; // End of input reached
                     }
                     if ($isSingleField) {
                         if ($rawElements[$offset] === '' && $repetition >= 1) { // Skip empty repeated entries.
-                            $offset++;
+                            ++$offset;
                             continue;
                         }
                         if (is_string($elementDescriptor->type)) {
@@ -258,13 +273,15 @@ abstract class Parser
                         } else {
                             $value = static::parseBinaryBlock($rawElements[$offset]);
                         }
-                        $offset++;
+                        ++$offset;
                     } else { // Nested DEG, will consume a certain number of elements and adjust the $offset accordingly.
                         list($value, $offset) = static::parseDegElements(
                             $rawElements, $elementDescriptor->type->name,
                             $allowEmpty || $elementDescriptor->optional, $offset);
                     }
-                    if ($value !== null) $allEmpty = false;
+                    if ($value !== null) {
+                        $allEmpty = false;
+                    }
                     if ($elementDescriptor->repeated === 0) {
                         $result->{$elementDescriptor->field} = $value;
                     } elseif ($value !== null) {
@@ -275,9 +292,13 @@ abstract class Parser
                 throw new \InvalidArgumentException("Failed to parse $descriptor->class::$elementDescriptor->field: $e");
             }
         }
-        if ($allEmpty && $allowEmpty) return array(null, $offset);
-        if ($missingFieldError !== null) throw $missingFieldError;
-        return array($result, $offset);
+        if ($allEmpty && $allowEmpty) {
+            return [null, $offset];
+        }
+        if ($missingFieldError !== null) {
+            throw $missingFieldError;
+        }
+        return [$result, $offset];
     }
 
     /**
@@ -308,7 +329,7 @@ abstract class Parser
                 $result->{$elementDescriptor->field} =
                     static::parseSegmentElement($rawElements[$index], $elementDescriptor);
             } else {
-                for ($repetition = 0; $repetition < $elementDescriptor->repeated; $repetition++) {
+                for ($repetition = 0; $repetition < $elementDescriptor->repeated; ++$repetition) {
                     if ($index + $repetition >= count($rawElements)) {
                         break; // End of input reached.
                     }
@@ -339,9 +360,13 @@ abstract class Parser
         return new AnonymousSegment(
             Segmentkopf::parse(array_shift($rawElements)),
             array_map(function ($rawElement) {
-                if (empty($rawElement)) return null;
+                if (empty($rawElement)) {
+                    return null;
+                }
                 $subElements = static::splitEscapedString(Delimiter::GROUP, $rawElement);
-                if (count($subElements) <= 1) return $rawElement; // Asume it's not repeated.
+                if (count($subElements) <= 1) {
+                    return $rawElement;
+                } // Asume it's not repeated.
                 return $subElements;
             }, $rawElements));
     }
@@ -423,7 +448,9 @@ abstract class Parser
      */
     public static function parseSegments($rawSegments)
     {
-        if (empty($rawSegments)) return [];
+        if (empty($rawSegments)) {
+            return [];
+        }
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
         return array_map([static::class, 'detectAndParseSegment'], $rawSegments);
     }
@@ -433,19 +460,19 @@ abstract class Parser
      * @param string $rawSegments
      * @return string[] RawSegments
      */
-    public static function parseRawSegments($rawSegments) {
-
-        if (empty($rawSegments)) return [];
+    public static function parseRawSegments($rawSegments)
+    {
+        if (empty($rawSegments)) {
+            return [];
+        }
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
 
         // End delimiter must be removed for Response::rawSegments
-        return array_map(function($rawResponse) {
-
-            if(substr($rawResponse, -1) == "'") {
+        return array_map(function ($rawResponse) {
+            if (substr($rawResponse, -1) == "'") {
                 return substr($rawResponse, 0, -1);
-}
+            }
             return $rawResponse;
-
         }, $rawSegments);
     }
 }

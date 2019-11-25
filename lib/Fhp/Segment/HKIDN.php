@@ -10,8 +10,6 @@ use Fhp\DataTypes\Kik;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2011-06-14_final_version.pdf
  * Section: C.3.1.2
- *
- * @package Fhp\Segment
  */
 class HKIDN extends AbstractSegment
 {
@@ -32,12 +30,12 @@ class HKIDN extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array(
+            [
                 new Kik(static::COUNTRY_CODE, $bankCode),
                 $userName,
                 $systemId,
-                1   // Kunden-ID
-            )
+                1,   // Kunden-ID
+            ]
         );
     }
 

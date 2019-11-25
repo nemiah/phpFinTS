@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fhp\Segment\HIRMS;
 
 /**

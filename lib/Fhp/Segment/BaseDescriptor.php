@@ -11,7 +11,7 @@ abstract class BaseDescriptor
 {
     /** @var string Example: "Fhp\Segment\HITANSv1" (Segment) or "Fhp\Segment\Segmentkopf" (Deg) */
     public $class;
-    /** @var integer Example: 1 */
+    /** @var int Example: 1 */
     public $version = 1;
 
     /**
@@ -26,7 +26,7 @@ abstract class BaseDescriptor
      * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
      * segment/DEG described by this descriptor, it would get index $maxIndex+1.
      * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
-     * @var integer
+     * @var int
      */
     public $maxIndex;
 
@@ -82,12 +82,14 @@ abstract class BaseDescriptor
             } elseif ($maxCount !== null) {
                 throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
             } else {
-                $nextIndex++; // Singular field, so the index advances by 1.
+                ++$nextIndex; // Singular field, so the index advances by 1.
             }
             $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
-        if (empty($this->elements)) throw new \InvalidArgumentException("No fields found in $clazz->name");
+        if (empty($this->elements)) {
+            throw new \InvalidArgumentException("No fields found in $clazz->name");
+        }
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
         $this->maxIndex = $nextIndex - 1;
     }
@@ -97,7 +99,8 @@ abstract class BaseDescriptor
      * @throws \InvalidArgumentException If any of the fields in the given object is not valid according to the schema
      *     defined by this descriptor.
      */
-    public function validateObject($obj) {
+    public function validateObject($obj)
+    {
         if (!is_a($obj, $this->class)) {
             throw new \InvalidArgumentException("Expected $this->class, got " . gettype($obj));
         }
@@ -160,7 +163,7 @@ abstract class BaseDescriptor
     /**
      * @param string $name The name of the annotation.
      * @param string $docComment The documentation string of a PHP field.
-     * @return boolean Whether the annotation with the given name is present.
+     * @return bool Whether the annotation with the given name is present.
      */
     private static function getBoolAnnotation($name, $docComment)
     {
@@ -175,9 +178,9 @@ abstract class BaseDescriptor
      */
     private static function getVarAnnotation($docComment)
     {
-        $ret = preg_match("/@var ([^\\s]+)/", $docComment, $match);
+        $ret = preg_match('/@var ([^\\s]+)/', $docComment, $match);
         if ($ret === false) {
-            throw new \RuntimeException("preg_match failed for @var");
+            throw new \RuntimeException('preg_match failed for @var');
         }
         return $ret === 1 ? $match[1] : null;
     }

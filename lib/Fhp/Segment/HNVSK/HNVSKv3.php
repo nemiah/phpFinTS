@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\HNVSK;
 
-use Fhp\FinTsOptions;
 use Fhp\Credentials;
+use Fhp\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Kik;
@@ -32,7 +32,7 @@ class HNVSKv3 extends BaseSegment
     public $sicherheitsprofil;
     /**
      * For the PIN/TAN profile, this must be 998 (see section B.9.8).
-     * @var integer
+     * @var int
      */
     public $sicherheitsfunktion = 998;
     /**
@@ -40,7 +40,7 @@ class HNVSKv3 extends BaseSegment
      * (Not allowed: 3: Der Unterzeichner unterstützt den Inhalt der Nachricht, z. B. bei Zweitsignatur (CON))
      * 4: Der Unterzeichner ist Zeuge, aber für den Inhalt der Nachricht nicht verantwortlich, z. B. Übermittler,
      *    welcher nicht Erfasser ist (WIT)
-     * @var integer
+     * @var int
      */
     public $rolleDesSicherheitslieferanten = 1;
     /** @var SicherheitsidentifikationDetailsV2 */
@@ -61,7 +61,7 @@ class HNVSKv3 extends BaseSegment
      * 6: deflate (GZIP) (http://www.gzip.org/zlib)
      * 7: bzip2 (http://sourceware.cygnus.com/bzip2/)
      * 999: Gegenseitig vereinbart (ZZZ)
-     * @var integer
+     * @var int
      */
     public $komprimierungsfunktion = 0; // This library does not support compression.
     /** @var ZertifikatV2|null For the PIN/TAN profile, this must be empty (see section B.9.8). */

@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use \Fhp\DataTypes\Bin;
+use Fhp\DataTypes\Bin;
 
 /**
  * Class HKDSE (Terminierte SEPA-Einzellastschrift einreichen)
@@ -12,7 +12,6 @@ use \Fhp\DataTypes\Bin;
  * Section: C.10.2.5.4.1
  *
  * @author Nena Furtmeier <support@furtmeier.it>
- * @package Fhp\Segment
  */
 class HKDSE extends AbstractSegment
 {
@@ -25,7 +24,7 @@ class HKDSE extends AbstractSegment
      * @param int $segmentNumber
      * @param Kti $kti
      * @param string $SEPADescriptor
-	 * @param string $painMessage
+     * @param string $painMessage
      */
     public function __construct($version, $segmentNumber, $kti, $SEPADescriptor, $painMessage)
     {
@@ -33,11 +32,11 @@ class HKDSE extends AbstractSegment
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
                 $SEPADescriptor,
-				new Bin($painMessage)
-            )
+                new Bin($painMessage),
+            ]
         );
     }
 

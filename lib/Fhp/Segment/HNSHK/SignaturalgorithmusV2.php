@@ -14,18 +14,18 @@ class SignaturalgorithmusV2 extends BaseDeg
 {
     /**
      * 6: Owner Signing (OSG)
-     * @var integer
+     * @var int
      */
     public $verwendungDesSignaturalgorithmus = 6; // The only allowed value.
     /**
      * 1: nicht zugelassen
      * 10: RSA-Algorithmus (bei RAH)
-     * @var integer
+     * @var int
      */
     public $signaturalgorithmus = 10; // The only allowed value (not actually used, just as a dummy for PIN/TAN).
     /**
      * 19: RSASSA-PSS (bei RAH, RDH)
-     * @var integer
+     * @var int
      */
     public $operationsmodus = 19; // The only allowed value (not actually used, just as a dummy for PIN/TAN).
 }

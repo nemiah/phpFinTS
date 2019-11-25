@@ -38,8 +38,8 @@ class HNVSKTest extends TestCase
         $hnvsk->sicherheitsdatumUndUhrzeit->datum = '20020610';
         $hnvsk->sicherheitsdatumUndUhrzeit->uhrzeit = '102044';
         $this->assertEquals( // Replace binary zeros to make the diff readable in case the unit test fails.
-            str_replace("\0", "0", static::HBCI22_EXAMPLE),
-            str_replace("\0", "0", $hnvsk->serialize())
+            str_replace("\0", '0', static::HBCI22_EXAMPLE),
+            str_replace("\0", '0', $hnvsk->serialize())
         );
     }
 }

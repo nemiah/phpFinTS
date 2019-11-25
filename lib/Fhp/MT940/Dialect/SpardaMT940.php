@@ -8,7 +8,7 @@ class SpardaMT940 extends MT940
 {
     const DIALECT_ID = 'https://fints.bankingonline.de/fints/FinTs30PinTanHttpGate';
 
-    function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
+    public function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
     {
         $otherInfo = [];
         $structuredStartFound = false;
@@ -39,9 +39,9 @@ class SpardaMT940 extends MT940
         $combined = '';
         foreach ($lines as $line) {
             // Sonderfall, für Zeile 2 aus dem Beispiel
-            $combined .= preg_replace('/ ([A-Z]{4}\+)$/', " $1 ", $line);
+            $combined .= preg_replace('/ ([A-Z]{4}\+)$/', ' $1 ', $line);
         }
-        $combined = implode("", $lines);
+        $combined = implode('', $lines);
 
         // SEPA Bezeichner müssen in einer neuen Zeile Anfangen und kein Leerzeichen hinter dem + haben
         $fixed = preg_replace('/([A-Z]{4}\+) /', "\n$1", $combined);

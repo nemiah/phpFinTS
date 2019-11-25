@@ -11,8 +11,6 @@ use Fhp\DataTypes\Kti;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.2.3.1.1.1
- *
- * @package Fhp\Segment
  */
 class HKCAZ extends AbstractSegment
 {
@@ -47,15 +45,15 @@ class HKCAZ extends AbstractSegment
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
                 $camtFormat,
                 $allAccounts,
                 new Dat($from),
                 new Dat($to),
                 null,
-                $touchdown
-            )
+                $touchdown,
+            ]
         );
     }
 

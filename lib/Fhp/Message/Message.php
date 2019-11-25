@@ -59,7 +59,7 @@ class Message extends AbstractMessage
     /**
      * @var array
      */
-    private $encryptedSegments = array();
+    private $encryptedSegments = [];
 
     /**
      * @var HNVSD
@@ -84,9 +84,9 @@ class Message extends AbstractMessage
         $systemId,
         $dialogId,
         $messageNumber,
-        array $segments = array(),
-        array $options = array(),
-		$tan = null
+        array $segments = [],
+        array $options = [],
+        $tan = null
     ) {
         $this->dialogId = $dialogId;
         $this->messageNumber = $messageNumber;
@@ -110,7 +110,7 @@ class Message extends AbstractMessage
 
         $this->encryptionEnvelop = new HNVSD(999, '');
 
-        if($useEncryption) {
+        if ($useEncryption) {
             $this->addSegment($this->buildEncryptionHead()); // HNVSK
             $this->addSegment($this->encryptionEnvelop);
             $segmentNumberOffset -= 2; // HNVSK + HNVSD have different numbers
@@ -128,8 +128,8 @@ class Message extends AbstractMessage
             $this->securityReference, $this->pin, $tan
         );
 
-        foreach($subSegments as $subSegment) {
-            if($useEncryption) {
+        foreach ($subSegments as $subSegment) {
+            if ($useEncryption) {
                 $this->addEncryptedSegment($subSegment);
             } else {
                 $this->addSegment($subSegment);

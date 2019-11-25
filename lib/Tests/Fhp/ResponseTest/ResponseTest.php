@@ -8,9 +8,9 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
 {
     protected static function getMethod($class, $name)
     {
-        $class  = new \ReflectionClass($class);
+        $class = new \ReflectionClass($class);
         $method = $class->getMethod($name);
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         return $method;
     }
@@ -20,7 +20,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = self::getMethod('Fhp\Response\Response', 'splitSegment');
 
         $withoutEscape = new Response('');
-        $escaped       = clone $withoutEscape;
+        $escaped = clone $withoutEscape;
 
         $segments = $response->invokeArgs($withoutEscape, [
             'HISAL:5:5:3+111111111::280:111111111+GiroBest+EUR+C:9999,99:EUR:20161018+C:0,:EUR:20161018+0,:EUR+9999,99:EUR',

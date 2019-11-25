@@ -33,7 +33,7 @@ class HIUPDv6 extends BaseSegment implements HIUPD
      * 70 – 79: Bausparvertrag
      * 80 – 89: Versicherungsvertrag
      * 90 – 99: Sonstige (nicht zuordenbar)
-     * @var integer|null
+     * @var int|null
      */
     public $kontoart;
     /** @var string|null */

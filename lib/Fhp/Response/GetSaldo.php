@@ -46,7 +46,7 @@ class GetSaldo extends Response
         $creditDebit = trim($saldoDeg[0]);
 
         if (static::SALDO_DEBIT == $creditDebit) {
-            $amount = - (float) $amount;
+            $amount = -(float) $amount;
         } elseif (static::SALDO_CREDIT == $creditDebit) {
             $amount = (float) $amount;
         } else {

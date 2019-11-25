@@ -8,7 +8,7 @@ class PostbankMT940 extends MT940
 {
     const DIALECT_ID = 'https://hbci.postbank.de/banking/hbci.do';
 
-    function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
+    public function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
     {
         // z.B bei Zinsen o.ä. ist alles leer
         if (!isset($descriptionLines[0])) {
@@ -22,19 +22,17 @@ class PostbankMT940 extends MT940
 
         // Bie Auslandsüberweisungen (=210)
         // Der Empfänger name steht als erstes im Verwendungszweck und teile des Verwendungszwecks stehen im Namen
-        if ($gvc == '210')
-        {
+        if ($gvc == '210') {
             $name = array_shift($descriptionLines);
 
             array_unshift($descriptionLines, $rawLines[33]);
             array_unshift($descriptionLines, $rawLines[32]);
             $rawLines[32] = $name;
             $rawLines[33] = '';
-
         }
 
         return [
-            'SVWZ' => implode("\n", $descriptionLines)
+            'SVWZ' => implode("\n", $descriptionLines),
         ];
     }
 }

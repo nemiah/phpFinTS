@@ -42,7 +42,7 @@ class BPD
     public $parameters = [];
 
     /**
-     * @var boolean[] An array mapping business transaction request types ('HKxyz' strings) to a bool indicating whether
+     * @var bool[] An array mapping business transaction request types ('HKxyz' strings) to a bool indicating whether
      *     the respective business transaction needs a TAN, according to the HIPINS information.
      */
     public $tanRequired = [];
@@ -77,9 +77,13 @@ class BPD
      */
     public function getLatestSupportedParameters($type)
     {
-        if (!array_key_exists($type, $this->parameters)) return null;
+        if (!array_key_exists($type, $this->parameters)) {
+            return null;
+        }
         foreach ($this->parameters[$type] as $segment) {
-            if (!($segment instanceof AnonymousSegment)) return $segment;
+            if (!($segment instanceof AnonymousSegment)) {
+                return $segment;
+            }
         }
         return null;
     }
@@ -101,12 +105,14 @@ class BPD
 
     /**
      * @param BaseSegment[] $requestSegments The segments that shall be sent to the bank.
-     * @return boolean True if any of the given segments requires a TAN according to HIPINS.
+     * @return bool True if any of the given segments requires a TAN according to HIPINS.
      */
     public function tanRequiredForRequest($requestSegments)
     {
         foreach ($requestSegments as $segment) {
-            if ($this->tanRequired[$segment->getName()] ?? false) return true;
+            if ($this->tanRequired[$segment->getName()] ?? false) {
+                return true;
+            }
         }
         return false;
     }
@@ -143,8 +149,8 @@ class BPD
         /** @var HITANS $hitans */
         $hitans = $bpd->requireLatestSupportedParameters('HITANS');
         if ($hitans->getVersion() < 6) {
-            $options['logger']->warning("HITANSv" . $hitans->getSegmentNumber()
-                . " is deprecated. Please let the phpFinTS maintainers know that your bank still uses this.");
+            $options['logger']->warning('HITANSv' . $hitans->getSegmentNumber()
+                . ' is deprecated. Please let the phpFinTS maintainers know that your bank still uses this.');
         }
         foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
             $bpd->allTanModes[$verfahren->getId()] = $verfahren;

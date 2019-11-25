@@ -13,12 +13,12 @@ class ErlaubteGeschaeftsvorfaelleV1 extends BaseDeg
 {
     /** @var string References a segment type name (Segmentkennung) */
     public $geschaeftsvorfall;
-    /** @var integer Allowed values: 0, 1, 2, 3 */
+    /** @var int Allowed values: 0, 1, 2, 3 */
     public $anzahlBenoetigterSignaturen;
     /** @var string|null Allowed values: E, T, W, M, Z */
     public $limitart;
     /** @var \Fhp\Segment\Common\Btg|null */
     public $limitbetrag;
-    /** @var integer|null If present, must be greater than 0 */
+    /** @var int|null If present, must be greater than 0 */
     public $limitTage;
 }

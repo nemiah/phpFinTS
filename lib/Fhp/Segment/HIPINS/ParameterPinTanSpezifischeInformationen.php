@@ -12,11 +12,11 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterPinTanSpezifischeInformationen extends BaseDeg
 {
-    /** @var integer|null */
+    /** @var int|null */
     public $minimalePinLaenge;
-    /** @var integer|null */
+    /** @var int|null */
     public $maximalePinLaenge;
-    /** @var integer|null */
+    /** @var int|null */
     public $maximaleTanLaenge;
     /** @var string|null Max length: 30; Label for the username field in the UI. */
     public $textZurBelegungDerBenutzerkennung;

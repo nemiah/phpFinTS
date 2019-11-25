@@ -106,7 +106,7 @@ class Message
     public function findSegments($segmentType)
     {
         return array_values(array_filter($this->plainSegments, function ($segment) use ($segmentType) {
-            /** @var BaseSegment $segment */
+            /* @var BaseSegment $segment */
             return $segment instanceof $segmentType;
         }));
     }
@@ -126,7 +126,7 @@ class Message
 
     /**
      * @param string $segmentType The PHP type (class name or interface) of the segment.
-     * @return boolean Whether any such segment exists.
+     * @return bool Whether any such segment exists.
      */
     public function hasSegment($segmentType)
     {
@@ -148,7 +148,7 @@ class Message
     }
 
     /**
-     * @param integer $segmentNumber The segment number to search for.
+     * @param int $segmentNumber The segment number to search for.
      * @return BaseSegment|null The segment with that number, or null if there is none.
      */
     public function findSegmentByNumber($segmentNumber)
@@ -169,9 +169,11 @@ class Message
     public function filterByReferenceSegments($referenceSegments)
     {
         $result = new Message();
-        if (empty($referenceSegments)) return $result;
+        if (empty($referenceSegments)) {
+            return $result;
+        }
         $referenceNumbers = array_map(function ($referenceSegment) {
-            /** @var SegmentInterface|int $referenceSegment */
+            /* @var SegmentInterface|int $referenceSegment */
             return is_int($referenceSegment) ? $referenceSegment : $referenceSegment->getSegmentNumber();
         }, $referenceSegments);
         $result->plainSegments = array_filter($this->plainSegments, function ($segment) use ($referenceNumbers) {
@@ -221,7 +223,7 @@ class Message
                 )->setSegmentNumber(2)],
                 $message->plainSegments,
                 [$message->signatureFooter = HNSHAv2::create($randomReference, $signature)
-                    ->setSegmentNumber($numPlainSegments + 3)]
+                    ->setSegmentNumber($numPlainSegments + 3), ]
             )),
             $message->footer = HNHBSv1::createEmpty()->setSegmentNumber($numPlainSegments + 4),
         ];
@@ -296,7 +298,6 @@ class Message
             if ($signatureFooterAsExpected) {
                 $result->signatureFooter = array_pop($result->plainSegments);
             }
-
         } else {
             // Ensure that there's no encryption header anywhere, and we haven't just misunderstood the format.
             foreach ($segments as $segment) {

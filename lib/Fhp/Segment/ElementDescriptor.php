@@ -27,14 +27,14 @@ class ElementDescriptor
     /**
      * Whether the field must be present (at least once, if repeated) in every segment/Deg instance (false) or can be
      * omitted (true). This is auto-detected from the nullable suffix `|null` in the PHP type.
-     * @var boolean
+     * @var bool
      */
     public $optional = false;
 
     /**
      * Whether the field can have multiple values (if so, this field contains the maximum number of allowed values) or
      * not (if so, the value is zero). This is auto-detected from the array suffix `[]` in the PHP type.
-     * @var integer
+     * @var int
      */
     public $repeated = 0;
 
@@ -45,7 +45,9 @@ class ElementDescriptor
     public function validateField($obj)
     {
         if (!isset($obj->{$this->field})) {
-            if ($this->optional) return;
+            if ($this->optional) {
+                return;
+            }
             throw new \InvalidArgumentException("Missing field $this->field");
         }
         $value = $obj->{$this->field};
@@ -73,7 +75,7 @@ class ElementDescriptor
 
     /**
      * @param string $type A potential PHP scalar type.
-     * @return boolean True if parseDataElement() would understand it.
+     * @return bool True if parseDataElement() would understand it.
      */
     public static function isScalarType($type)
     {

@@ -15,7 +15,7 @@ class SicherheitsidentifikationDetailsV2 extends BaseDeg
     /**
      * 1: Message Sender (MS), wenn ein Kunde etwas an sein Kreditinstitut sendet.
      * 2: Message Receiver (MR), wenn das Kreditinstitut etwas an seinen Kunden sendet
-     * @var integer
+     * @var int
      */
     public $bezeichnerFuerSicherheitspartei = 1; // Unless we receive another value that overwrites this one, we're sending.
     /** @var string|null Only allowed and mandatory for Chip-card, so this library does not support it. */

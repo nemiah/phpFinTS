@@ -19,7 +19,7 @@ class HIUPAv4 extends BaseSegment
     public $benutzerkennung;
     /**
      * Note: The bank may send UPD version 0, which means these UPD are the most recent but should not be persisted.
-     * @var integer
+     * @var int
      */
     public $updVersion;
     /**
@@ -27,7 +27,7 @@ class HIUPAv4 extends BaseSegment
      *    it does not support it, so sending such a request to the bank will always lead to failure.
      * 1: Explicitly declared types are definitely supported, anything else may be reported and can be sent; the bank
      *    will check online and accept/reject accordingly.
-     * @var integer
+     * @var int
      */
     public $updVerwendung;
     /** @var string|null Max length: 35 */

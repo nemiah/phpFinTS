@@ -10,7 +10,7 @@ class Statement
     /**
      * @var array of Transaction
      */
-    protected $transactions = array();
+    protected $transactions = [];
 
     /**
      * @var float

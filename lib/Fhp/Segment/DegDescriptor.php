@@ -8,7 +8,6 @@ namespace Fhp\Segment;
  */
 class DegDescriptor extends BaseDescriptor
 {
-
     /** @var DegDescriptor[] */
     private static $descriptors;
 

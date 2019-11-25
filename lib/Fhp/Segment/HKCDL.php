@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment;
 
-use \Fhp\DataTypes\Bin;
-use \Fhp\Model\SEPAStandingOrder;
+use Fhp\DataTypes\Bin;
+use Fhp\Model\SEPAStandingOrder;
 
 /**
  * Class HKCDL (SEPA-Dauerauftragsbestand löschen)
@@ -13,7 +13,6 @@ use \Fhp\Model\SEPAStandingOrder;
  * Section: C.10.2.3.6
  *
  * @author Nena Furtmeier <support@furtmeier.it>
- * @package Fhp\Segment
  */
 class HKCDL extends AbstractSegment
 {
@@ -26,28 +25,28 @@ class HKCDL extends AbstractSegment
      * @param int $segmentNumber
      * @param Kti $kti
      * @param string $SEPADescriptor
-	 * @param SEPAStandingOrder $SEPAStandingOrder
+     * @param SEPAStandingOrder $SEPAStandingOrder
      */
     public function __construct($version, $segmentNumber, $kti, $SEPADescriptor, SEPAStandingOrder $SEPAStandingOrder)
     {
-		$deg = new \Fhp\Deg();
-		$deg->addDataElement($SEPAStandingOrder->getFirstExecution());
-		$deg->addDataElement($SEPAStandingOrder->getTimeUnit());
-		$deg->addDataElement($SEPAStandingOrder->getInterval());
-		$deg->addDataElement($SEPAStandingOrder->getExecutionDay());
-		
+        $deg = new \Fhp\Deg();
+        $deg->addDataElement($SEPAStandingOrder->getFirstExecution());
+        $deg->addDataElement($SEPAStandingOrder->getTimeUnit());
+        $deg->addDataElement($SEPAStandingOrder->getInterval());
+        $deg->addDataElement($SEPAStandingOrder->getExecutionDay());
+
         parent::__construct(
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
                 $SEPADescriptor,
-				new Bin($SEPAStandingOrder->getXML()),
-				"",
-				$SEPAStandingOrder->getId(),
-				$deg
-            )
+                new Bin($SEPAStandingOrder->getXML()),
+                '',
+                $SEPAStandingOrder->getId(),
+                $deg,
+            ]
         );
     }
 

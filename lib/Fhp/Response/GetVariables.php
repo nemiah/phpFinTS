@@ -9,23 +9,26 @@ use Fhp\Segment\HITANS\HITANS;
 
 class GetVariables extends Response
 {
-	public function get()
-	{
-		$variables = new \stdClass();
+    public function get()
+    {
+        $variables = new \stdClass();
         $variables->tanModes = $this->parseTanModes();
-		return $variables;
-	}
+        return $variables;
+    }
 
-	public function getSupportedTanMechanisms() {
-		return $this->get()->tanModes;
-	}
+    public function getSupportedTanMechanisms()
+    {
+        return $this->get()->tanModes;
+    }
 
     private function parseTanModes()
     {
         $allowedModes = null;
         // TODO This should just grab the HIRMS referencing the HKVVB segment, not any others.
         foreach ($this->findSegments('HIRMS') as $segmentRaw) {
-            if (substr($segmentRaw, -1) !== "'") $segmentRaw .= "'";
+            if (substr($segmentRaw, -1) !== "'") {
+                $segmentRaw .= "'";
+            }
             $allowed = HIRMSv2::parse($segmentRaw)->findRueckmeldung(Rueckmeldungscode::ZUGELASSENE_VERFAHREN);
             if (isset($allowed)) {
                 $allowedModes = array_map('intval', $allowed->rueckmeldungsparameter);
@@ -33,12 +36,14 @@ class GetVariables extends Response
             }
         }
 
-		$result = array();
+        $result = [];
         foreach ($this->findSegments('HITANS') as $segmentRaw) {
-            if (substr($segmentRaw, -1) !== "'") $segmentRaw .= "'";
+            if (substr($segmentRaw, -1) !== "'") {
+                $segmentRaw .= "'";
+            }
             $hitans = BaseSegment::parse($segmentRaw);
             if (!($hitans instanceof HITANS)) {
-                throw new \InvalidArgumentException("All HITANS segments must implement the HITANS interface");
+                throw new \InvalidArgumentException('All HITANS segments must implement the HITANS interface');
             }
             foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
                 if ($allowedModes === null || in_array($verfahren->getId(), $allowedModes)) {
@@ -46,6 +51,6 @@ class GetVariables extends Response
                 }
             }
         }
-		return $result;
-	}
+        return $result;
+    }
 }

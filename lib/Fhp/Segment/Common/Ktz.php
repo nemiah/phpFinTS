@@ -12,7 +12,7 @@ use Fhp\Segment\BaseDeg;
  */
 class Ktz extends BaseDeg
 {
-    /** @var boolean Whether it's a SEPA account that has IBAN/BIC, or not (e.g. a stock depot) */
+    /** @var bool Whether it's a SEPA account that has IBAN/BIC, or not (e.g. a stock depot) */
     public $kontoverwendungSepa;
     /** @var string|null Max length: 34 */
     public $iban;

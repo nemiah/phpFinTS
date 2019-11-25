@@ -49,11 +49,11 @@ class MessageBuilder
     {
         if ($segment->segmentkopf === null) {
             throw new \InvalidArgumentException(
-                "Segment lacks Segmentkopf, maybe you called ctor instead of createEmpty()");
+                'Segment lacks Segmentkopf, maybe you called ctor instead of createEmpty()');
         }
         $segment->segmentkopf->segmentnummer = count($this->segments) + static::SEGMENT_NUMBER_OFFSET;
         if ($segment->segmentkopf->segmentnummer >= HNVSKv3::SEGMENT_NUMBER) {
-            throw new \InvalidArgumentException("Too many segments");
+            throw new \InvalidArgumentException('Too many segments');
         }
         $this->segments[] = $segment;
     }

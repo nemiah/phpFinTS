@@ -14,6 +14,6 @@ class BezugsnachrichtV1 extends BaseDeg
 {
     /** @var string References a previously sent {@link HNHBKv3#dialogId} */
     public $dialogId;
-    /** @var integer References a previously sent {@link HNHBKv3#nachrichtennummer} */
+    /** @var int References a previously sent {@link HNHBKv3#nachrichtennummer} */
     public $nachrichtennummer;
 }

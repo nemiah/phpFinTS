@@ -23,18 +23,18 @@ class HNHBKv3 extends BaseSegment
      * Version 2.1 : 210 (Spezifikationsstatus: obsolet)
      * Version 2.2 : 220 (Spezifikationsstatus: obsolet)
      * Version 3.0 : 300
-     * @var integer
+     * @var int
      */
     public $hbciVersion = 300; // This library implements FinTS 3.0.
     /** @var string */
     public $dialogId;
-    /** @var integer Must be positive. */
+    /** @var int Must be positive. */
     public $nachrichtennummer;
     /** @var BezugsnachrichtV1|null Never sent to server, but always present in responses. */
     public $bezugsnachricht;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getNachrichtengroesse()
     {
@@ -42,7 +42,7 @@ class HNHBKv3 extends BaseSegment
     }
 
     /**
-     * @param integer $nachrichtengroesse Length of the entire message in bytes.
+     * @param int $nachrichtengroesse Length of the entire message in bytes.
      */
     public function setNachrichtengroesse($nachrichtengroesse)
     {

@@ -24,7 +24,7 @@ abstract class AbstractSegment implements SegmentInterface
      * @param $version
      * @param array $dataElements
      */
-    public function __construct($type, $segmentNumber, $version, array $dataElements = array())
+    public function __construct($type, $segmentNumber, $version, array $dataElements = [])
     {
         $this->type = strtoupper($type);
         $this->version = $version;
@@ -35,7 +35,7 @@ abstract class AbstractSegment implements SegmentInterface
     /**
      * @param array $dataElements
      */
-    public function setDataElements(array $dataElements = array())
+    public function setDataElements(array $dataElements = [])
     {
         $this->dataElements = $dataElements;
     }
@@ -59,7 +59,7 @@ abstract class AbstractSegment implements SegmentInterface
             $string .= '+' . (string) $de;
         }
 
-        if($string == '') {
+        if ($string == '') {
             return $string;
         }
 
@@ -81,8 +81,8 @@ abstract class AbstractSegment implements SegmentInterface
     public function humanReadable($translateCodes = false)
     {
         return str_replace(
-            array("'", '+'),
-            array(PHP_EOL, PHP_EOL . "  "),
+            ["'", '+'],
+            [PHP_EOL, PHP_EOL . '  '],
             $translateCodes
                 ? NameMapping::translateResponse($this->toString())
                 : $this->toString()

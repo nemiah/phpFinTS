@@ -8,8 +8,9 @@ use Fhp\Segment\HITAN\HITANv6;
 class GetTANRequest extends Response
 {
     const SEG_ACCOUNT_INFORMATION = 'HITAN';
-	
+
     private $usedTanMechanism = null;
+
     /**
      * Returns TANRequest object with process ID
      *
@@ -23,42 +24,43 @@ class GetTANRequest extends Response
         $request = new Model\TANRequest(
             $segment->getAuftragsReferenz()
         );
-		
-		return $request;
+
+        return $request;
     }
 
-
-    public function setTanMechnism($tanMechanism){
+    public function setTanMechnism($tanMechanism)
+    {
         $this->usedTanMechanism = $tanMechanism;
     }
-    
-    public function getTanMechnism(){
+
+    public function getTanMechnism()
+    {
         return $this->usedTanMechanism;
     }
-    
+
     /**
      * @return string
      */
-    public function getTanChallenge() {
-
+    public function getTanChallenge()
+    {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
-        if($segment->getChallenge() != "") {
+        if ($segment->getChallenge() != '') {
             return $segment->getChallenge();
         }
 
-        return "";
+        return '';
     }
 
     /**
      * @return Model\TanRequestChallengeImage|null
      */
-    public function getTanChallengeImage() {
-
+    public function getTanChallengeImage()
+    {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-        if($segment->getChallengeHDD_UC() === null) {
+        if ($segment->getChallengeHDD_UC() === null) {
             return null;
         }
 

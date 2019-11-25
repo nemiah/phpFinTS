@@ -4,13 +4,7 @@ namespace Fhp\Message;
 
 use Fhp\DataTypes\Kik;
 use Fhp\DataTypes\Ktv;
-use Fhp\Segment\AbstractSegment;
 use Fhp\Segment\HKSAL;
-use Fhp\Segment\HNHBS;
-use Fhp\Segment\HNSHA;
-use Fhp\Segment\HNSHK;
-use Fhp\Segment\HNVSD;
-use Fhp\Segment\HNVSK;
 
 class MessageTest extends \PHPUnit\Framework\TestCase
 {
@@ -50,9 +44,9 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $kik = new Kik('290', '123123');
         $ktv = new Ktv('123123123', 'sub', $kik);
         $hksal = new HKSAL(HKSAL::VERSION, 3, $ktv, true);
-        $options = array(
-            Message::OPT_PINTAN_MECH => 998
-        );
+        $options = [
+            Message::OPT_PINTAN_MECH => 998,
+        ];
 
         $message = new Message(
             '12345678',
@@ -61,7 +55,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
             '987654',
             0,
             0,
-            array($hksal),
+            [$hksal],
             $options
         );
 

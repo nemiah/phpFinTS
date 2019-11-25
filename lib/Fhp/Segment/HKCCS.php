@@ -2,8 +2,7 @@
 
 namespace Fhp\Segment;
 
-use \Fhp\DataTypes\Bin;
-use \Fhp\Model\SEPAStandingOrder;
+use Fhp\DataTypes\Bin;
 
 /**
  * Class HKCCS (SEPA Einzelüberweisung)
@@ -13,7 +12,6 @@ use \Fhp\Model\SEPAStandingOrder;
  * Section: C.10.2.1
  *
  * @author Nena Furtmeier <support@furtmeier.it>
- * @package Fhp\Segment
  */
 class HKCCS extends AbstractSegment
 {
@@ -26,7 +24,7 @@ class HKCCS extends AbstractSegment
      * @param int $segmentNumber
      * @param Kti $kti
      * @param string $SEPADescriptor
-	 * @param string $painMessage
+     * @param string $painMessage
      */
     public function __construct($version, $segmentNumber, $kti, $SEPADescriptor, $painMessage)
     {
@@ -34,11 +32,11 @@ class HKCCS extends AbstractSegment
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $kti,
                 $SEPADescriptor,
-				new Bin($painMessage)
-            )
+                new Bin($painMessage),
+            ]
         );
     }
 

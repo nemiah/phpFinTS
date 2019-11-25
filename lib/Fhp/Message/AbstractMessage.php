@@ -12,7 +12,7 @@ class AbstractMessage
     /**
      * @var array
      */
-    protected $segments = array();
+    protected $segments = [];
 
     /**
      * @var int

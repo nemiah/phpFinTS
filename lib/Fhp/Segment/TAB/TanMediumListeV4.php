@@ -26,16 +26,16 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
      * 2: Verfügbar
      * 3: Aktiv Folgekarte
      * 4: Verfügbar Folgekarte
-     * @var integer
+     * @var int
      */
     public $status;
     /** @var string|null Only for $tanMediumKlasse=='G' */
     public $kartennummer;
     /** @var string|null Only for $tanMediumKlasse=='G' */
     public $kartenfolgenummer;
-    /** @var integer|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
+    /** @var int|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
     public $kartenart;
-    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G'  */
+    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G' */
     public $kontoverbindungAuftraggeber;
     /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
     public $gueltigAb;
@@ -51,20 +51,20 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
     public $mobiltelefonnummer;
     /** @var \Fhp\Segment\Common\Kti|null Only and optional for $tanMediumKlasse=='M' */
     public $smsAbbuchungskonto;
-    /** @var integer|null */
+    /** @var int|null */
     public $anzahlFreieTans;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
+    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
     public $letzteBenutzung;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 **/
+    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
     public $freigeschaltetAm;
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getName()
     {
         return $this->bezeichnungDesTanMediums;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getPhoneNumber()
     {
         return $this->mobiltelefonnummer !== null ? $this->mobiltelefonnummer : $this->mobiltelefonnummerVerschleiert;

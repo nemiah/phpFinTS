@@ -9,6 +9,6 @@ use Fhp\Segment\BaseSegment;
  */
 class HNHBSv1 extends BaseSegment
 {
-    /** @var integer Must match the {@link HNHBKv2#nachrichtennummer} in the same message. */
+    /** @var int Must match the {@link HNHBKv2#nachrichtennummer} in the same message. */
     public $nachrichtennummer;
 }

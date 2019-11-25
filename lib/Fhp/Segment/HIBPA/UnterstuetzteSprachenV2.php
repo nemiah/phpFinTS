@@ -17,7 +17,7 @@ class UnterstuetzteSprachenV2 extends BaseDeg
      * 1: Deutsch, Code ‚de’ (German), Subset Deutsch, Codeset 1 (Latin 1)
      * 2: Englisch, Code ‚en’ (English), Subset Englisch, Codeset 1 (Latin 1)
      * 3: Französisch, Code ‚fr’ (French), Subset Französisch, Codeset 1 (Latin 1)
-     * @var integer[] @Max(9)
+     * @var int[] @Max(9)
      */
     public $unterstuetzteSprache;
 }

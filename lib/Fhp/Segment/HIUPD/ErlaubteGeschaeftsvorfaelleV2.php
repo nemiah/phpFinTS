@@ -12,12 +12,12 @@ class ErlaubteGeschaeftsvorfaelleV2 extends BaseDeg
 {
     /** @var string References a segment type name (Segmentkennung) */
     public $geschaeftsvorfall;
-    /** @var integer Allowed values: 0, 1, 2, 3 */
+    /** @var int Allowed values: 0, 1, 2, 3 */
     public $anzahlBenoetigterSignaturen;
     /** @var string|null Allowed values: E, T, W, M, Z */
     public $limitart;
     /** @var \Fhp\Segment\Common\Btg|null Not allowed for limitart==Z. */
     public $limitbetrag;
-    /** @var integer|null Only allowed for limitart==Z, must be greater than zero. */
+    /** @var int|null Only allowed for limitart==Z, must be greater than zero. */
     public $limitTage;
 }

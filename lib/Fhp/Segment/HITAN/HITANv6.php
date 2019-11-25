@@ -13,8 +13,8 @@ use Fhp\Segment\BaseSegment;
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Page: 48
  */
-class HITANv6 extends BaseSegment {
-
+class HITANv6 extends BaseSegment
+{
     /**
      * 0,1,2 or 4
      * @var string
@@ -70,24 +70,27 @@ class HITANv6 extends BaseSegment {
      */
     public $bezeichnungDesTanMediums;
 
-
     /** @return string|null */
-    public function getAuftragsReferenz() {
+    public function getAuftragsReferenz()
+    {
         return $this->auftragsReferenz;
     }
 
     /** @return string|null */
-    public function getChallenge() {
+    public function getChallenge()
+    {
         return $this->challenge;
     }
 
     /** @return Bin|null */
-    public function getChallengeHDD_UC() {
+    public function getChallengeHDD_UC()
+    {
         return $this->challengeHHD_UC;
     }
 
     /** @return string|null */
-    public function getBezeichnungDesTanMediums() {
+    public function getBezeichnungDesTanMediums()
+    {
         return $this->bezeichnungDesTanMediums;
     }
 }

@@ -22,8 +22,8 @@ class SanitizingCLILoggerTest extends \PHPUnit\Framework\TestCase
             "HKVVB:4:3+3+0+0+<PRIVATE__________>+1.0'HKTAN:5:",
             $sanitize("HKVVB:4:3+3+0+0+ABCDEFGHIJKLMNOPQRS+1.0'HKTAN:5:"));
         $this->assertEquals(
-            "Look here is the password: <PRIVA>",
-            $sanitize("Look here is the password: pw+?123"));
+            'Look here is the password: <PRIVA>',
+            $sanitize('Look here is the password: pw+?123'));
         $this->assertEquals(
             "HNSHA:4:2+9999999++<PRIVATE>'",
             $sanitize("HNSHA:4:2+9999999++pw?+??123'")); // Note: The password is escaped to wire format here.

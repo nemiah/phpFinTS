@@ -27,7 +27,7 @@ class UPD
 
     /**
      * @param Message $response A dialog initialization response from the server.
-     * @return boolean True if the UPD data is contained in the response and {@link #extractFromResponse()} would
+     * @return bool True if the UPD data is contained in the response and {@link #extractFromResponse()} would
      *     succeed.
      */
     public static function containedInResponse($response)
@@ -51,7 +51,7 @@ class UPD
     /**
      * @param SEPAAccount $account The account to test the support for
      * @param string $requestName The request that shall be sent to the bank.
-     * @return boolean True if the given request can be used by the current user for the given account.
+     * @return bool True if the given request can be used by the current user for the given account.
      */
     public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
     {

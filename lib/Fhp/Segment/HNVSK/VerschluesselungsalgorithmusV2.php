@@ -13,13 +13,13 @@ use Fhp\Segment\BaseDeg;
  */
 class VerschluesselungsalgorithmusV2 extends BaseDeg
 {
-    /** @var integer Allowed values: 2: Owner Symmetric (OSY) */
+    /** @var int Allowed values: 2: Owner Symmetric (OSY) */
     public $verwendungDesVerschluesselungsalgorithmus = 2; // The only possible value.
     /**
      * 2: Cipher Block Chaining (CBC)
      * 18: RSAES-PKCS#1 V1.5 (bei RAH, RDH)
      * 19: RSASSA-PSS (bei RAH, RDH)
-     * @var integer
+     * @var int
      */
     public $operationsmodus = 2; // CBC is what we need for PIN/TAN.
     /**
@@ -27,7 +27,7 @@ class VerschluesselungsalgorithmusV2 extends BaseDeg
      * 14: AES-256 [AES]
      * The specification claims that value 13 is not allowed, but in practice and also in all the examples in the
      * specification, that's the value that is used.
-     * @var integer
+     * @var int
      */
     public $verschluesselungsalgorithmus = 13;
     /** @var Bin Binary, max length: 512 */
@@ -35,10 +35,10 @@ class VerschluesselungsalgorithmusV2 extends BaseDeg
     /**
      * 5: Symmetrischer Schlüssel (nicht zugelassen) This is the recommended dummy value for PIN/TAN.
      * 6: Symmetrischer Schlüssel, verschlüsselt mit einem öffentlichen Schlüssel bei RAH und RDH (KYP).
-     * @var integer
+     * @var int
      */
     public $bezeichnerFuerAlgorithmusparameterSchluessel = 5; // Dummy for PIN/TAN
-    /** @var integer Allowed values: 1: Initialization value, clear text (IVC) */
+    /** @var int Allowed values: 1: Initialization value, clear text (IVC) */
     public $bezeichnerFuerAlgorithmusparameterIv = 1; // The only possible value.
     /** @var string|null Max length: 512 Not allowed for PIN/TAN */
     public $wertDesAlgorithmusparametersIv;
@@ -52,7 +52,7 @@ class VerschluesselungsalgorithmusV2 extends BaseDeg
         // Note: The correct representation of the value that the specification recommends is "\0\0\0\0\0\0\0\0". But
         // that makes unit test failures unreadable because PhpUnit then interprets the entire surrounding message as
         // binary. Since the specification does not enforce its suggestion, we just something similar instead.
-        $result->wertDesAlgorithmusparametersSchluessel = new Bin("00000000"); // Dummy for PIN/TAN
+        $result->wertDesAlgorithmusparametersSchluessel = new Bin('00000000'); // Dummy for PIN/TAN
         return $result;
     }
 }

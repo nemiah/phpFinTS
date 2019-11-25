@@ -48,8 +48,9 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
     }
 
     /** @noinspection PhpLanguageLevelInspection */
+
     /** @noinspection PhpUndefinedClassInspection */
-    public function log($level, $message, array $context = array()): void
+    public function log($level, $message, array $context = []): void
     {
         $message .= empty($context) ? '' : ' ' . implode(', ', $context);
         $sanitizedMessage = static::sanitizeForLogging($message, $this->needles);
@@ -83,7 +84,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
                 $needles[] = $item->getIban();
                 $needles[] = $item->getAccountNumber();
             } else {
-                throw new \InvalidArgumentException("Unsupported type of sensitive material " . gettype($item));
+                throw new \InvalidArgumentException('Unsupported type of sensitive material ' . gettype($item));
             }
         }
         $needles = array_filter($needles); // Filter out empty entries.

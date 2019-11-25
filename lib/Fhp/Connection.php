@@ -20,13 +20,13 @@ class Connection
     /**
      * @var int
      */
-	protected $timeoutConnect = 15;
-	
+    protected $timeoutConnect = 15;
+
     /**
      * @var int
      */
-	protected $timeoutResponse = 30;
-	
+    protected $timeoutResponse = 30;
+
     /**
      * Connection constructor.
      *
@@ -47,7 +47,7 @@ class Connection
 
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "phpFinTS");
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, 'phpFinTS');
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->host);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, $this->timeoutConnect);
@@ -56,9 +56,9 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_ENCODING, '');
         curl_setopt($this->curlHandle, CURLOPT_MAXREDIRS, 0);
         curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeoutResponse);
-        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, array("cache-control: no-cache", 'Content-Type: text/plain'));
-	}
-	
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, ['cache-control: no-cache', 'Content-Type: text/plain']);
+    }
+
     /**
      * @param string $message The message to be sent, in HBCI/FinTS wire format.
      * @return string The response from the server, in HBCI/FinTS wire format.

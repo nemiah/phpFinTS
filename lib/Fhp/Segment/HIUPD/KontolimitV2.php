@@ -16,6 +16,6 @@ class KontolimitV2 extends BaseDeg
     public $limitart;
     /** @var \Fhp\Segment\Common\Btg|null Not allowed for limitart==Z. */
     public $limitbetrag;
-    /** @var integer|null Only allowed for limitart==Z, must be greater than zero. */
+    /** @var int|null Only allowed for limitart==Z, must be greater than zero. */
     public $limitTage;
 }

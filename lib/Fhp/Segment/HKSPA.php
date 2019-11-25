@@ -10,8 +10,6 @@ use Fhp\DataTypes\Ktv;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.10.1.3
- *
- * @package Fhp\Segment
  */
 class HKSPA extends AbstractSegment
 {
@@ -29,7 +27,7 @@ class HKSPA extends AbstractSegment
             static::NAME,
             $segmentNumber,
             static::VERSION,
-            array($ktv)
+            [$ktv]
         );
     }
 

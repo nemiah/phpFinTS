@@ -6,15 +6,15 @@ use Fhp\Segment\BaseDeg;
 
 class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg implements ParameterZweiSchrittTanEinreichung
 {
-    /** @var boolean */
+    /** @var bool */
     public $einschrittVerfahrenErlaubt;
-    /** @var boolean */
+    /** @var bool */
     public $mehrAlsEinTanPflichtigerAuftragProNachrichtErlaubt;
     /**
      * 0: Auftrags-Hashwert nicht unterstützt
      * 1: RIPEMD-160
      * 2: SHA-1
-     * @var integer
+     * @var int
      */
     public $auftragsHashwertverfahren;
     /** @var VerfahrensparameterZweiSchrittVerfahrenV6[] @Max(98) */

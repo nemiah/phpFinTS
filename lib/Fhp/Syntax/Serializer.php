@@ -15,7 +15,7 @@ if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_k
     function array_key_last($array)
     {
         if (!is_array($array) || empty($array)) {
-            return NULL;
+            return null;
         }
         return array_keys($array)[count($array) - 1];
     }
@@ -23,7 +23,6 @@ if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_k
 
 abstract class Serializer
 {
-
     /**
      * Escapes syntax characters (delimiters).
      * @param string $str The unescaped string.
@@ -42,7 +41,9 @@ abstract class Serializer
      */
     public static function serializeDataElement($value, $type)
     {
-        if ($value === null) return '';
+        if ($value === null) {
+            return '';
+        }
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
             // Convert UTF-8 (PHP's encoding) to ISO-8859-1 (FinTS wire format encoding)
             return static::escape(utf8_decode(strval($value)));
@@ -76,7 +77,7 @@ abstract class Serializer
     public static function serializeSegment($segment)
     {
         if ($segment instanceof AnonymousSegment) {
-            throw new \InvalidArgumentException("Cannot serialize anonymous segments");
+            throw new \InvalidArgumentException('Cannot serialize anonymous segments');
         }
         $serializedElements = static::serializeElements($segment, $segment->getDescriptor());
         return implode(Delimiter::ELEMENT, static::flattenAndTrimEnd($serializedElements)) . Delimiter::SEGMENT;
@@ -93,16 +94,18 @@ abstract class Serializer
     private static function serializeElements($obj, $descriptor)
     {
         $isSegment = $descriptor instanceof SegmentDescriptor;
-        $serializedElements = array();
+        $serializedElements = [];
         $lastKey = array_key_last($descriptor->elements);
-        for ($index = 0; $index <= $lastKey; $index++) {
+        for ($index = 0; $index <= $lastKey; ++$index) {
             if (!array_key_exists($index, $descriptor->elements)) {
                 $serializedElements[$index] = '';
                 continue;
             }
             $elementDescriptor = $descriptor->elements[$index];
             $value = $obj === null ? null : $obj->{$elementDescriptor->field};
-            if (isset($serializedElements[$index])) throw new \AssertionError("Duplicate index $index");
+            if (isset($serializedElements[$index])) {
+                throw new \AssertionError("Duplicate index $index");
+            }
             if ($elementDescriptor->repeated === 0) {
                 $serializedElements[$index] = static::serializeElement($value, $elementDescriptor->type, $isSegment);
             } else {
@@ -110,7 +113,7 @@ abstract class Serializer
                     throw new \InvalidArgumentException(
                         "Expected array value for $descriptor->class.$elementDescriptor->field, got: $value");
                 }
-                for ($repetition = 0; $repetition < $elementDescriptor->repeated; $repetition++) {
+                for ($repetition = 0; $repetition < $elementDescriptor->repeated; ++$repetition) {
                     $serializedElements[$index + $repetition] = static::serializeElement(
                         $value === null || $repetition >= count($value) ? null : $value[$repetition],
                         $elementDescriptor->type, $isSegment);
@@ -123,7 +126,7 @@ abstract class Serializer
     /**
      * @param mixed|null $value The value to be serialized.
      * @param string|\ReflectionClass $type The type of the value.
-     * @param boolean $fullySerialize If true, the result is always a string, complex values are imploded as a DEG.
+     * @param bool $fullySerialize If true, the result is always a string, complex values are imploded as a DEG.
      * @return string|array The serialized value. In case $type is a complex type and $fullySerialize is false, this
      *     returns a (possibly nested) array of strings.
      */
@@ -132,7 +135,7 @@ abstract class Serializer
         if (is_string($type)) {
             return static::serializeDataElement($value, $type);
         } elseif ($type->getName() === Bin::class) {
-            /** @var Bin|null $value */
+            /* @var Bin|null $value */
             return $value === null ? '' : $value->toString();
         } elseif ($fullySerialize) {
             return static::serializeDeg($value, DegDescriptor::get($type->name));
@@ -152,7 +155,9 @@ abstract class Serializer
         $nonemptyLength = 0;
         foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($elements)) as $element) {
             $result[] = $element;
-            if ($element !== '') $nonemptyLength = count($result);
+            if ($element !== '') {
+                $nonemptyLength = count($result);
+            }
         }
         return array_slice($result, 0, $nonemptyLength);
     }

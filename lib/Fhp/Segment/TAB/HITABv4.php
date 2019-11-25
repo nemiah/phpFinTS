@@ -16,13 +16,13 @@ class HITABv4 extends BaseSegment implements HITAB
      * 0: Kunde kann alle „aktiven“ Medien parallel nutzen
      * 1: Kunde kann genau ein Medium (z. B. ein Mobiltelefon oder einen TAN-Generator) zu einer Zeit nutzen
      * 2: Kunde kann ein Mobiltelefon und einen TAN-Generator parallel nutzen
-     * @var integer
+     * @var int
      */
     public $tanEinsatzoption;
     /** @var TanMediumListeV4[]|null @Max(99) */
     public $tanMediumListe;
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function getTanMediumListe()
     {
         return $this->tanMediumListe;

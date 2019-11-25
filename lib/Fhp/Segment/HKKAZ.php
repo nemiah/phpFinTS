@@ -10,8 +10,6 @@ use Fhp\DataTypes\Dat;
  *
  * @link: http://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.2.1.1.1.2
- *
- * @package Fhp\Segment
  */
 class HKKAZ extends AbstractSegment
 {
@@ -42,14 +40,14 @@ class HKKAZ extends AbstractSegment
             static::NAME,
             $segmentNumber,
             $version,
-            array(
+            [
                 $ktv,
                 $allAccounts,
                 new Dat($from),
                 new Dat($to),
                 null,
-                $touchdown
-            )
+                $touchdown,
+            ]
         );
     }
 

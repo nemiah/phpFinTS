@@ -2,7 +2,6 @@
 
 namespace Tests\Fhp\Segment;
 
-
 use Fhp\Segment\AnonymousSegment;
 use Fhp\Syntax\Parser;
 
@@ -21,7 +20,6 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
             throw new \RuntimeException($e);
         }
     }
-
 
     public function test_parse()
     {

@@ -113,7 +113,7 @@ abstract class BaseSegment implements SegmentInterface
     public static function createEmpty()
     {
         if (static::class === BaseSegment::class) {
-            throw new \InvalidArgumentException("Must not call BaseSegment::createEmpty() on the super class");
+            throw new \InvalidArgumentException('Must not call BaseSegment::createEmpty() on the super class');
         }
         $result = new static();
         $descriptor = $result->getDescriptor();
