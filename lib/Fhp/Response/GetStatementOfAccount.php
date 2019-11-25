@@ -34,7 +34,7 @@ class GetStatementOfAccount extends Response
      * @param StatementOfAccount $statementOfAccount
      * @return StatementOfAccount
      */
-    protected static function addFromArray(array $array, StatementOfAccount $statementOfAccount)
+    public static function addFromArray(array $array, StatementOfAccount $statementOfAccount)
     {
         foreach ($array as $date => $statement) {
             if ($statementOfAccount->hasStatementForDate($date)) {
