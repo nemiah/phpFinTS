@@ -33,6 +33,7 @@ use Fhp\Segment\HKKAZ;
 use Fhp\Segment\HKSAL;
 use Fhp\Segment\HKSPA;
 use Fhp\Segment\HKTAB;
+use Fhp\Segment\HKTAN;
 use Fhp\Segment\HNSHK;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
