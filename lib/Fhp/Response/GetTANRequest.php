@@ -3,7 +3,7 @@
 namespace Fhp\Response;
 
 use Fhp\Model;
-use Fhp\Segment\HITAN\HITANv6;
+use Fhp\Segment\TAN\HITANv6;
 
 class GetTANRequest extends Response
 {
@@ -12,17 +12,17 @@ class GetTANRequest extends Response
     private $usedTanMechanism = null;
 
     /**
-     * Returns TANRequest object with process ID
+     * Returns TANRequestOld object with process ID
      *
-     * @return Model\TANRequest
+     * @return Model\TANRequestOld
      */
     public function get()
     {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-        $request = new Model\TANRequest(
-            $segment->getAuftragsReferenz()
+        $request = new Model\TANRequestOld(
+            $segment->auftragsreferenz
         );
 
         return $request;
@@ -45,8 +45,8 @@ class GetTANRequest extends Response
     {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
-        if ($segment->getChallenge() != '') {
-            return $segment->getChallenge();
+        if ($segment->challenge != '') {
+            return $segment->challenge;
         }
 
         return '';
@@ -60,10 +60,10 @@ class GetTANRequest extends Response
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-        if ($segment->getChallengeHDD_UC() === null) {
+        if ($segment->challengeHhdUc === null) {
             return null;
         }
 
-        return new Model\TanRequestChallengeImage($segment->getChallengeHDD_UC());
+        return new Model\TanRequestChallengeImage($segment->challengeHhdUc);
     }
 }
