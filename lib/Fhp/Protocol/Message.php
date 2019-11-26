@@ -197,8 +197,9 @@ class Message
     }
 
     /**
-     * Wraps the given segmetns in an "encryption" envelope (see class documentation). Inverse of {@link #parse()}.
-     * @param BaseSegment[]|MessageBuilder $plainSegments The plain segments to be wrapped.
+     * Wraps the given segments in an "encryption" envelope (see class documentation). Inverse of {@link #parse()}.
+     * @param BaseSegment[]|MessageBuilder $plainSegments The plain segments to be wrapped. Segment numbers do not need
+     *     to be set yet (or they will be overwritten).
      * @param FinTsOptions $options See {@link FinTsOptions}.
      * @param string $kundensystemId See {@link #$kundensystemId}.
      * @param Credentials $credentials The credentials used to authenticate the message.
@@ -221,7 +222,7 @@ class Message
                 [$message->signatureHeader = HNSHKv4::create(
                     $randomReference, $options, $credentials, $tanMode, $kundensystemId
                 )->setSegmentNumber(2)],
-                $message->plainSegments,
+                static::setSegmentNumbers($message->plainSegments, 3),
                 [$message->signatureFooter = HNSHAv2::create($randomReference, $signature)
                     ->setSegmentNumber($numPlainSegments + 3), ]
             )),
@@ -243,8 +244,8 @@ class Message
         $message->plainSegments = $segments instanceof MessageBuilder ? $segments->segments : $segments;
         $message->wrapperSegments = array_merge(
             [$message->header = HNHBKv3::createEmpty()->setSegmentNumber(1)],
-            $message->plainSegments, // NOTE: Segment numbers are technically wrong, here we have 2..(N+2)
-            [$message->footer = HNHBSv1::createEmpty()->setSegmentNumber(count($message->plainSegments) + 3)]
+            static::setSegmentNumbers($message->plainSegments, 2),
+            [$message->footer = HNHBSv1::createEmpty()->setSegmentNumber(2 + count($message->plainSegments))]
         );
         return $message;
     }
@@ -254,7 +255,7 @@ class Message
      * (in which case this function acts as the inverse of {@link #createWrappedMessage()}), or leaves as is otherwise
      * (and acts as inverse of {@link #createPlainMessage()}).
      *
-     * @param string $rawMessage The received message in HBCI/FinTS wire format.
+     * @param string $rawMessage The received message in HBCI/FinTS wire format. This should be ISO-8859-1-encoded.
      * @return Message The parsed message.
      * @throws \InvalidArgumentException When the parsing fails.
      */
@@ -308,5 +309,22 @@ class Message
             $result->plainSegments = $segments; // The message wasn't "encrypted".
         }
         return $result;
+    }
+
+    /**
+     * @param BaseSegment[] $segments The segments to be numbered. Will be modified.
+     * @param int $segmentNumber The number for the *first* segment, subsequent segment get the subsequent integers.
+     * @return BaseSegment[] The same array, for chaining.
+     */
+    private static function setSegmentNumbers($segments, $segmentNumber)
+    {
+        foreach ($segments as $segment) {
+            $segment->segmentkopf->segmentnummer = $segmentNumber;
+            if ($segment->segmentkopf->segmentnummer >= HNVSKv3::SEGMENT_NUMBER) {
+                throw new \InvalidArgumentException('Too many segments');
+            }
+            ++$segmentNumber;
+        }
+        return $segments;
     }
 }
