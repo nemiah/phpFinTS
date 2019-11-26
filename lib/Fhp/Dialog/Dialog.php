@@ -312,9 +312,9 @@ class Dialog
     /**
      * Gets the dialog ID.
      *
-     * @return int
+     * @return string
      */
-    public function getDialogId()
+    public function getDialogId(): string
     {
         return $this->dialogId;
     }
@@ -332,9 +332,9 @@ class Dialog
     /**
      * Gets the system ID.
      *
-     * @return int|string
+     * @return string
      */
-    public function getSystemId()
+    public function getSystemId(): string
     {
         return $this->systemId;
     }

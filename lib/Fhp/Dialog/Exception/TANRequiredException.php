@@ -34,17 +34,14 @@ class TANRequiredException extends \Exception
         $this->response = $response;
         $this->cause = $cause;
         $this->tanMechanism = $cause->getSecurityFunction();
-        // TODO TanMediaName ermitteln
-        //$this->tanMediaName = ;
+        $this->tanMediaName = $response->getTanMediumName();
 
         $this->systemId = $dialog->getSystemId();
         $this->dialogId = $dialog->getDialogId();
         $this->messageNumber = $dialog->getMessageNumber();
         $this->processId = $response->get()->getProcessID();
-        parent::__construct(implode('\n', $response->getSegmentSummary())
-            . "\nSystem-ID:" . $this->systemId . ' Dialog-ID:' . $this->dialogId . ' Nachrichtennummer:' . $this->messageNumber . ' Auftrags-Referenz:' . $this->processId
-            //. "\n" . '"' . $this->systemId . ' ' . $this->dialogId . ' ' . $this->messageNumber . ' ' . $this->processId . '"'
-        );
+
+        parent::__construct($response->getTanChallenge());
     }
 
     /**
@@ -74,7 +71,7 @@ class TANRequiredException extends \Exception
     /**
      * @return string
      */
-    public function getSystemId()
+    public function getSystemId(): string
     {
         return $this->systemId;
     }
@@ -82,7 +79,7 @@ class TANRequiredException extends \Exception
     /**
      * @return string
      */
-    public function getDialogId()
+    public function getDialogId(): string
     {
         return $this->dialogId;
     }
@@ -90,7 +87,7 @@ class TANRequiredException extends \Exception
     /**
      * @return int
      */
-    public function getMessageNumber()
+    public function getMessageNumber(): int
     {
         return $this->messageNumber;
     }
@@ -98,7 +95,7 @@ class TANRequiredException extends \Exception
     /**
      * @return string
      */
-    public function getProcessId()
+    public function getProcessId(): string
     {
         return $this->processId;
     }
@@ -110,7 +107,7 @@ class TANRequiredException extends \Exception
      *
      * @return string
      */
-    public function getTANToken()
+    public function getTANToken(): string
     {
         $values = [];
         foreach (self::TAN_TOKEN_VALUE_ORDER as $name) {

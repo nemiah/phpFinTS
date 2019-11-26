@@ -70,9 +70,9 @@ class AbstractMessage
     /**
      * Gets the dialog ID.
      *
-     * @return int
+     * @return string
      */
-    public function getDialogId()
+    public function getDialogId(): string
     {
         return $this->dialogId;
     }

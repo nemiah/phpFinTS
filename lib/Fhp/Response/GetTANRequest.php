@@ -66,4 +66,11 @@ class GetTANRequest extends Response
 
         return new Model\TanRequestChallengeImage($segment->getChallengeHDD_UC());
     }
+
+    public function getTanMediumName(): ?string
+    {
+        /** @var HITANv6 $segment */
+        $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
+        return $segment->getBezeichnungDesTanMediums();
+    }
 }
