@@ -2,6 +2,7 @@ language: php
 install: composer install
 script:
   - ./disallowtabs.sh
+  - ./csfixer-check.sh
   - ./phplint.sh ./lib/
   - ./vendor/bin/phpunit
 php:
