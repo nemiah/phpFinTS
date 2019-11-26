@@ -206,6 +206,8 @@ class Dialog
                 //return $response;
             }
 
+            $interval = 1;
+
             $this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
             for ($i = 0; $i < 120; $i += $interval) {
                 sleep($interval);
