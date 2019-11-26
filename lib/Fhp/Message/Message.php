@@ -37,11 +37,6 @@ class Message extends AbstractMessage
     protected $username;
 
     /**
-     * @var string
-     */
-    protected $systemId;
-
-    /**
      * @var array
      */
     protected $options;
@@ -93,7 +88,7 @@ class Message extends AbstractMessage
         $this->bankCode = $bankCode;
         $this->username = $username;
         $this->pin = $pin;
-        $this->systemId = FinTsInternal::escapeString($systemId);
+        $this->systemId = $systemId;
         $this->options = $options;
         $this->profileVersion = SecurityProfile::PROFILE_VERSION_1;
         $this->securityFunction = HNSHK::SECURITY_FUNC_999;
@@ -160,7 +155,7 @@ class Message extends AbstractMessage
             998,
             $this->bankCode,
             $this->username,
-            $this->systemId,
+            FinTsInternal::escapeString($this->systemId),
             HNVSK::SECURITY_SUPPLIER_ROLE_ISS,
             HNVSK::DEFAULT_COUNTRY_CODE,
             HNVSK::COMPRESSION_NONE,
@@ -180,7 +175,7 @@ class Message extends AbstractMessage
             280, // country code
             $this->bankCode,
             $this->username,
-            $this->systemId,
+            FinTsInternal::escapeString($this->systemId),
             $this->securityFunction,
             HNSHK::SECURITY_BOUNDARY_SHM,
             HNSHK::SECURITY_SUPPLIER_ROLE_ISS,
