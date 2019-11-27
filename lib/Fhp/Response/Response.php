@@ -407,6 +407,7 @@ class Response
         return $result;
     }
 
+    /** @deprecated only used with the deprecated Response::findSegments */
     protected function conformToUtf8($string)
     {
         return iconv('ISO-8859-1', 'UTF-8', $string);

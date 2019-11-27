@@ -2,6 +2,7 @@
 
 namespace Fhp\Response;
 
+use Fhp\Segment\HICAZ\HICAZv1;
 use Fhp\Segment\HKCAZ;
 
 class BankToCustomerAccountReportHICAZ extends Response
@@ -9,32 +10,25 @@ class BankToCustomerAccountReportHICAZ extends Response
     const SEG_ACCOUNT_INFORMATION = 'HICAZ';
 
     /**
-     * Gets the raw MT940 string from response.
+     * CAMT XML
      *
      * @return string
      */
     public function getBookedXML()
     {
-        $seg = $this->findSegment(static::SEG_ACCOUNT_INFORMATION);
+        /** @var HICAZv1 $seg */
+        $seg = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
 
-        $parts = $this->splitSegment($seg);
-
-        if (count($parts) > 3) {
-            if ($parts[2] == HKCAZ::CAMT_FORMAT . '.xsd') {
-                list($empty, $length, $xml) = explode('@', $parts[3], 3);
-                if ($empty == '' && intval($length) == strlen($xml)) {
-                    return $xml;
-                }
-
-                throw new \Exception('Fehler im XML Payload');
-            } else {
-                throw new \Exception('Unerwartetes CAMT XML Format (' . $parts[2] . ')');
-            }
+        if ($seg->getCamtDescriptor() != HKCAZ::CAMT_FORMAT_FQ) {
+            throw new \Exception('Unerwartetes CAMT XML Format ' . $seg->getCamtDescriptor() . ', erwartet war ' .  HKCAZ::CAMT_FORMAT_FQ);
         }
 
-        return '';
+        $xml = $seg->getGebuchteUmsaetze()->getData();
+
+        return $xml;
     }
 
+    /** @deprecated only used with the deprecated Response::findSegments */
     protected function conformToUtf8($string)
     {
         return $string;
