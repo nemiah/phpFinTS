@@ -2,7 +2,7 @@
 
 namespace Fhp\Model;
 
-class TANRequest
+class TANRequestOld
 {
     /** @var string */
     protected $processID;

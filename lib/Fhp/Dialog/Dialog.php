@@ -149,6 +149,11 @@ class Dialog
         try {
             $this->logger->debug('> '.$message);
 
+            // Daten von der aktuellen Nachricht übernehmen, falls ::login ausgelassen wurde
+            $this->systemId = $message->getSystemId();
+            $this->dialogId = $message->getDialogId();
+            $this->messageNumber = $message->getMessageNumber();
+
             $result = $this->connection->send($message->toString());
             ++$this->messageNumber;
 
@@ -201,6 +206,8 @@ class Dialog
                 //return $response;
             }
 
+            $interval = 1;
+
             $this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
             for ($i = 0; $i < 120; $i += $interval) {
                 sleep($interval);
@@ -231,12 +238,16 @@ class Dialog
         }
     }
 
+    /**
+     * @param Response $response
+     * @param string $tanMechanism
+     * @param string $tan
+     * @return GetTANRequest|Response
+     * @throws CurlException
+     * @throws FailedRequestException
+     */
     public function submitTAN($response, $tanMechanism, $tan)
     {
-        if (!is_array($tanMechanism)) {
-            $tanMechanism = [$tanMechanism];
-        }
-
         $message = new Message(
             $this->bankCode,
             $this->username,
@@ -307,9 +318,9 @@ class Dialog
     /**
      * Gets the dialog ID.
      *
-     * @return int
+     * @return string
      */
-    public function getDialogId()
+    public function getDialogId(): string
     {
         return $this->dialogId;
     }
@@ -327,9 +338,9 @@ class Dialog
     /**
      * Gets the system ID.
      *
-     * @return int|string
+     * @return string
      */
-    public function getSystemId()
+    public function getSystemId(): string
     {
         return $this->systemId;
     }

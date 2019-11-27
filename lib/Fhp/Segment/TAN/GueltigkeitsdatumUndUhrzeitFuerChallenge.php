@@ -1,0 +1,17 @@
+<?php /** @noinspection PhpUnused */
+
+namespace Fhp\Segment\TAN;
+
+/**
+ * Data Element Group: Gültigkeitsdatum und –uhrzeit für Challenge (Version 1)
+ *
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * Section D (letter G)
+ */
+class GueltigkeitsdatumUndUhrzeitFuerChallenge
+{
+    /** @var string JJJJMMTT gemäß ISO 8601 */
+    public $datum;
+    /** @var string hhmmss gemäß ISO 8601, local time (no time zone support). */
+    public $uhrzeit;
+}

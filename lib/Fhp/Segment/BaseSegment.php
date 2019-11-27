@@ -93,7 +93,7 @@ abstract class BaseSegment implements SegmentInterface
     /**
      * Convenience function for {@link Parser#parseSegment()}.
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
-     *     the end).
+     *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.
      */
     public static function parse($rawSegment)
