@@ -40,12 +40,12 @@ My goal for this library was to be able to execute automatic direct debits with 
 
 Contributions are welcome!
 
-We are using a slighlty modified version of the [Symfony Coding-Style](https://symfony.com/doc/current/contributing/code/standards.html). Please run 
+We are using a slightly modified version of the [Symfony Coding-Style](https://symfony.com/doc/current/contributing/code/standards.html). Please run 
 ```
 composer cs-fix
 ```
 
-before sending a PR
+before sending a PR.
 
 ### Bank compatibility
 
