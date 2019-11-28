@@ -58,4 +58,9 @@ abstract class Rueckmeldungscode
      * HITANS, or 999 to indicate Ein-Schritt-Verfahren.
      */
     const ZUGELASSENE_VERFAHREN = 3920;
+
+    /**
+     * Kreditinstitutsseitige Beendigung des Dialoges.
+     */
+    const ABGEBROCHEN = 9800;
 }
