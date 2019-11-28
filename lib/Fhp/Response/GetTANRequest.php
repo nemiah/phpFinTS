@@ -71,6 +71,6 @@ class GetTANRequest extends Response
     {
         /** @var HITANv6 $segment */
         $segment = $this->getSegment(static::SEG_ACCOUNT_INFORMATION);
-        return $segment->getBezeichnungDesTanMediums();
+        return $segment->getTanMediumName();
     }
 }
