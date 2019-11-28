@@ -2,6 +2,8 @@
 
 namespace Fhp\Segment;
 
+use Fhp\FinTsInternal;
+
 /**
  * Class HKTAN (Zwei-Schritt-TAN-Einreichung)
  * Segment type: Geschäftsvorfall
@@ -72,7 +74,7 @@ class HKTAN extends AbstractSegment
             $data[] = '';
             $data[] = '';
             $data[] = '';
-            $data[] = $tanMediaName;
+            $data[] = FinTsInternal::escapeString($tanMediaName);
         }
 
         parent::__construct(
