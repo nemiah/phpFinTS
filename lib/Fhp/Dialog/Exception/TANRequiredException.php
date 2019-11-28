@@ -41,7 +41,7 @@ class TANRequiredException extends \Exception
         $this->messageNumber = $dialog->getMessageNumber();
         $this->processId = $response->get()->getProcessID();
 
-        parent::__construct($response->getTanChallenge());
+        parent::__construct('Sicherheitsfreigabe erforderlich; Challenge: ' . $response->getTanChallenge());
     }
 
     /**
