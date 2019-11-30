@@ -46,7 +46,7 @@ class HIUPDv6 extends BaseSegment implements HIUPD
     public $kontoproduktbezeichnung;
     /** @var KontolimitV2|null */
     public $kontolimit;
-    /** @var ErlaubteGeschaeftsvorfaelleV2[] @Max(999) */
+    /** @var ErlaubteGeschaeftsvorfaelleV2[]|null @Max(999) */
     public $erlaubteGeschaeftsvorfaelle;
     /**
      * JSON-encoded extra information.

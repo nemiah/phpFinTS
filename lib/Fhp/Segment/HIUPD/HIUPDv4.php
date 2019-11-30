@@ -31,6 +31,6 @@ class HIUPDv4 extends BaseSegment implements HIUPD
     public $kontoproduktbezeichnung;
     /** @var KontolimitV1|null */
     public $kontolimit;
-    /** @var ErlaubteGeschaeftsvorfaelleV1[] @Max(98) */
+    /** @var ErlaubteGeschaeftsvorfaelleV1[]|null @Max(98) */
     public $erlaubteGeschaeftsvorfaelle;
 }
