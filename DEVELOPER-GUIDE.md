@@ -60,6 +60,75 @@ the `FinTs` class and the `Fhp\Action` namespace) to provide a simpler and more 
 NOTE: The PHP namespaces `DataElementGroups`, `Dialog` and `Response` (and their contents) are deprecated.
 
 
+## Segment/DEG schema
+
+### Segment classes
+In this library, segments are implemented in classes named like `HKTANv6` that inherit from `BaseSegment`.
+Each of these classes is mapped 1:1 from the corresponding chapter of the specification document.
+The class name consists of the segment identifier (e.g. `HKTAN`) and the version (just an integer prefixed by `v`).
+
+The segment identifier itself has two parts:
+In `HXyyy`, the `H` is constant (for "HBCI"), `yyy` is an abbreviation of the name of the respective functionality that
+the segment provides, and `X` is one of `K`, `I` or `N` depending on whether it is a request segment sent by the client
+("Kunde" = customer), a response segment sent by the server ("(Kredit-)Institut" = bank) or both ("Nachricht" = message).
+The `HIyyyS` segments suffixed by `S` contain meta information (called "parameters") that describe what constitues a
+valid `HKyyy` request.
+
+The class `HXyyyvN` that implements version `N` of a particular segment type `yyy` can either be placed in the PHP
+namespace `Fhp\Segment\HXyyy` (to group versions together, used especially when `X`=`N`) or `Fhp\Segment\yyy` (to group
+corresponding request and reponse segments together).
+
+### DEG classes
+Analogously to segments, data element groups (DEGs) are mapped to classes that inherit from `BaseDeg`.
+The class name is the title of the sub-section that specifies the DEG structure in the specification document.
+The version suffix (`VN` with capital `V`) is optional for DEGs.
+The naming does not have to be as strictly deterministic as with segments because DEGs are referenced explicitly in
+code from the respective segments that contain them.
+
+### Segment/DEG interfaces
+Especially when there are multiple supported versions of the same segment/DEG type (e.g. `HKKAZv6` and `HKKAZv7`), it
+makes sense to also have a common `interface HKKAZ` implemented by all versions that defines getters for the common
+fields, so that business logic code can access all versions transparently.
+
+### Member fields / data elements
+
+As an example, consider the `HIUPDv6` class that implements the "Kontoinformation" segment from page 88 (PDF page 96)
+from the [Formals] document.
+
+Within each segment/DEG class, the elements defined in the specification are translated one by one to class fields.
+The name of the field/element is taken directly from the specification, so it is usually in German.
+Special characters like Umlauts are replaced with their expanded versions and the whole name is transformed to camel case.
+
+The element types (specified in [Formals] section B.4) are mapped to PHP types as follows:
+- `jn` (yes/no) becomes `bool`.
+- `num` (numerical) and `dig` (single digit) become `int`.
+- `float` and `wrt` (amounts) become `float`.
+- `an` (alpha-numerical), `txt` (text), `id` (identifiers), `ctr` (country codes, despite being numerical) and `cur`
+  (currency codes) become `string` and the maximum length is documented in phpDoc.
+- `code` (enum) is resolved to the type of the underlying value type (usually `string` or `int`) and the allowed values
+  are documented in phpDoc.
+- `bin` uses the `Fhp\DataTypes\Bin` class and the maximum length is documented in phpDoc.
+- `dat` and `tim` are currently mapped to `string`, but could get their own class in `Fhp\DataTypes` in future.
+- Any data element group is implemented as a separate DEG class (see above), so that the PHP field can reference that
+  class name as its type.
+
+The "Status" of each element is mapped as follows: 
+- Mandatory fields ("M" in the specification) use the plain type as described above.
+- Optional fields ("O") append `|null`.
+- Conditional fields ("C") are resolved as much as possible given the context of the segment and this library in general
+(often only one of the conditions is always satisfied, so it is clear whether the field is mandatory, optional or
+disallowed whenever it is used in this library), and otherwise mapped to `|null` as well.
+
+The "Anzahl" (cardinality) is mapped as follows:
+- If only `1` is allowed, use the plain (possibly nullable) type as described above.
+- Otherwise append `[]` to the type and add a `@Max(N)` annotation for the maximum number. E.g. a `jn` field that can be
+  repeated at most 20 times becomes `@var int[] @Max(20)`.
+- If `0` is within the allowed range, add `|null`, e.g. `@var int[]|null @Max(20)`.
+
+Any other information that is given in the specification like maximum length, restrictions on when the field can be
+used or not, and the guidelines ("Belegungsrichtlinien"), are added to the phpDoc in English (translated) if useful.
+
+
 ## Wire format
 
 Segments are terminated (and thus also delimited) by `'`.
