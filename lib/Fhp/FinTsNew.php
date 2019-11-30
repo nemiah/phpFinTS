@@ -14,8 +14,8 @@ use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
-use Fhp\Segment\HIRMG\HIRMGv2;
 use Fhp\Segment\HIRMS\HIRMSv2;
+use Fhp\Segment\HIRMS\RueckmeldungContainer;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\HITANS\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Segment\HKEND\HKENDv1;
@@ -615,11 +615,18 @@ class FinTsNew
                 $message = MessageBuilder::create()->add(HKENDv1::create($this->dialogId));
                 $request = $isAnonymous ? Message::createPlainMessage($message) : $this->buildMessage($message);
                 $response = $this->sendMessage($request);
-                /** @var HIRMGv2 $hirmg */
-                $hirmg = $response->requireSegment(HIRMGv2::class);
-                if ($hirmg->findRueckmeldung(Rueckmeldungscode::BEENDET) === null) {
+
+                $foundConfirmation = false;
+                foreach ($response->plainSegments as $segment) {
+                    if ($segment instanceof RueckmeldungContainer &&
+                        $segment->findRueckmeldung(Rueckmeldungscode::BEENDET) !== null) {
+                        $foundConfirmation = true;
+                        break;
+                    }
+                }
+                if (!$foundConfirmation) {
                     throw new UnexpectedResponseException(
-                        'Server did not confirm dialog end, but did send error either');
+                        'Server did not confirm dialog end, but did not send error either');
                 }
             }
         } catch (CurlException $e) {
