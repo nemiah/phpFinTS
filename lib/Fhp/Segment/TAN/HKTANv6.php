@@ -119,9 +119,11 @@ class HKTANv6 extends BaseSegment
      */
     public static function createProzessvariante2Step1($tanMode = null, $tanMedium = null, $segmentkennung = 'HKIDN')
     {
-        if ($tanMode !== null && $tanMode->getAuftraggeberkontoErforderlich()) {
+        // TODO: Implement the inclusion of the account for which an action is called, in the HKTAN Segment
+        // A lot of Banks announce they need the account when in fact they work fine without it.
+        /*if ($tanMode !== null && $tanMode->getAuftraggeberkontoErforderlich()) {
             throw new \InvalidArgumentException('Auftraggeberkonto not supported');
-        }
+        }*/
         if ($tanMode !== null && $tanMode->getSmsAbbuchungskontoErforderlich()) {
             throw new \InvalidArgumentException('SMS-Abbuchungskonto not supported');
         }
