@@ -2,6 +2,7 @@
 
 namespace Fhp\Segment\HIUPD;
 
+use Fhp\Model\SEPAAccount;
 use Fhp\Segment\BaseSegment;
 
 /**
@@ -31,6 +32,19 @@ class HIUPDv4 extends BaseSegment implements HIUPD
     public $kontoproduktbezeichnung;
     /** @var KontolimitV1|null */
     public $kontolimit;
-    /** @var ErlaubteGeschaeftsvorfaelleV1[] @Max(98) */
+    /** @var ErlaubteGeschaeftsvorfaelleV1[]|null @Max(98) */
     public $erlaubteGeschaeftsvorfaelle;
+
+    /** {@inheritdoc} */
+    public function matchesAccount(SEPAAccount $account)
+    {
+        return !is_null($this->kontoverbindung) && !is_null($this->kontoverbindung->kontonummer)
+            && $this->kontoverbindung->kontonummer == $account->getAccountNumber();
+    }
+
+    /** {@inheritdoc} */
+    public function getErlaubteGeschaeftsvorfaelle()
+    {
+        return $this->erlaubteGeschaeftsvorfaelle ?? [];
+    }
 }

@@ -77,6 +77,4 @@ class HICAZv1 extends BaseSegment
     {
         return $this->nichtGebuchteUmsaetze;
     }
-
-
 }

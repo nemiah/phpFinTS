@@ -5,8 +5,6 @@ namespace Fhp\Protocol;
 use Fhp\Model\SEPAAccount;
 use Fhp\Segment\HIUPA\HIUPAv4;
 use Fhp\Segment\HIUPD\HIUPD;
-use Fhp\Segment\HIUPD\HIUPDv4;
-use Fhp\Segment\HIUPD\HIUPDv6;
 
 /**
  * Contains the "Userparameterdaten" (UPD), i.e. configuration information that was retrieved from the bank server
@@ -17,7 +15,7 @@ class UPD
 {
     /** @var HIUPAv4 The HIBPA segment received from the server, which contains most of the UPD data. */
     public $hiupa;
-    /** @var HIUPDv4[] All HIUPD segments from the server, which contain per-account information. */
+    /** @var HIUPD[] All HIUPD segments from the server, which contain *per-account* information. */
     public $hiupd;
 
     public function getVersion()
@@ -49,30 +47,34 @@ class UPD
     }
 
     /**
+     * @param SEPAAccount $account An account.
+     * @return HIUPD|null The HIUPD segment for this account, or null if none exists for this account.
+     */
+    public function findHiupd(SEPAAccount $account)
+    {
+        foreach ($this->hiupd as $hiupd) {
+            if ($hiupd->matchesAccount($account)) {
+                return $hiupd;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param SEPAAccount $account The account to test the support for
      * @param string $requestName The request that shall be sent to the bank.
      * @return bool True if the given request can be used by the current user for the given account.
      */
     public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
     {
-        // Every Account the User has access to, has seperate permissions
-        foreach ($this->hiupd as $hiupd) {
-            $accountFound = false;
-            if ($hiupd instanceof HIUPDv6 && !is_null($hiupd->iban)) {
-                $accountFound = $hiupd->iban == $account->getIban();
-            } elseif (!is_null($hiupd->kontoverbindung) && !is_null($hiupd->kontoverbindung->kontonummer)) {
-                $accountFound = $hiupd->kontoverbindung->kontonummer == $account->getAccountNumber();
-            }
-            if ($accountFound) {
-                foreach ($hiupd->erlaubteGeschaeftsvorfaelle as $erlaubterGeschaeftsvorfall) {
-                    if ($erlaubterGeschaeftsvorfall->geschaeftsvorfall == $requestName) {
-                        return true;
-                    }
+        $hiupd = $this->findHiupd($account);
+        if ($hiupd !== null) {
+            foreach ($hiupd->getErlaubteGeschaeftsvorfaelle() as $erlaubterGeschaeftsvorfall) {
+                if ($erlaubterGeschaeftsvorfall->getGeschaeftsvorfall() == $requestName) {
+                    return true;
                 }
-                return false;
             }
         }
-
         return false;
     }
 }

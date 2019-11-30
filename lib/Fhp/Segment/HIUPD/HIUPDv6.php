@@ -2,6 +2,7 @@
 
 namespace Fhp\Segment\HIUPD;
 
+use Fhp\Model\SEPAAccount;
 use Fhp\Segment\BaseSegment;
 
 /**
@@ -46,7 +47,7 @@ class HIUPDv6 extends BaseSegment implements HIUPD
     public $kontoproduktbezeichnung;
     /** @var KontolimitV2|null */
     public $kontolimit;
-    /** @var ErlaubteGeschaeftsvorfaelleV2[] @Max(999) */
+    /** @var ErlaubteGeschaeftsvorfaelleV2[]|null @Max(999) */
     public $erlaubteGeschaeftsvorfaelle;
     /**
      * JSON-encoded extra information.
@@ -55,4 +56,16 @@ class HIUPDv6 extends BaseSegment implements HIUPD
      * @var string|null Max length: 2048
      */
     public $erweiterungKontobezogen;
+
+    /** {@inheritdoc} */
+    public function matchesAccount(SEPAAccount $account)
+    {
+        return !is_null($this->iban) && $this->iban == $account->getIban();
+    }
+
+    /** {@inheritdoc} */
+    public function getErlaubteGeschaeftsvorfaelle()
+    {
+        return $this->erlaubteGeschaeftsvorfaelle ?? [];
+    }
 }

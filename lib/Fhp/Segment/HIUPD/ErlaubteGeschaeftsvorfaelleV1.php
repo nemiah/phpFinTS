@@ -9,7 +9,7 @@ use Fhp\Segment\BaseDeg;
  * File: HBCI22 Final.pdf
  * Section: V.3 "Kontoinformation" > Nr. 9
  */
-class ErlaubteGeschaeftsvorfaelleV1 extends BaseDeg
+class ErlaubteGeschaeftsvorfaelleV1 extends BaseDeg implements ErlaubteGeschaeftsvorfaelle
 {
     /** @var string References a segment type name (Segmentkennung) */
     public $geschaeftsvorfall;
@@ -21,4 +21,10 @@ class ErlaubteGeschaeftsvorfaelleV1 extends BaseDeg
     public $limitbetrag;
     /** @var int|null If present, must be greater than 0 */
     public $limitTage;
+
+    /** {@inheritdoc} */
+    public function getGeschaeftsvorfall()
+    {
+        return $this->getGeschaeftsvorfall();
+    }
 }
