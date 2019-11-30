@@ -133,13 +133,8 @@ class DialogInitialization extends BaseAction
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),
             HKVVBv3::create($this->options, $bpd, $upd),
+            HKTANv6::createProzessvariante2Step1($this->tanMode, $this->tanMedium, $this->hktanRef ?? 'HKIDN'),
         ];
-
-        if ($this->hktanRef === null) { // Weak authentication, but indicate that PSD2 is supported.
-            $request[] = HKTANv6::createProzessvariante2Step1();
-        } else { // Strong or special authentication.
-            $request[] = HKTANv6::createProzessvariante2Step1($this->tanMode, $this->tanMedium, $this->hktanRef);
-        }
 
         if ($this->kundensystemId === null) {
             // NOTE: HKSYN must be *after* HKTAN.
