@@ -17,9 +17,9 @@ use Fhp\Segment\BaseSegment;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section B.7.2
  */
-class HIRMSv2 extends BaseSegment
+class HIRMSv2 extends BaseSegment implements RueckmeldungContainer
 {
-    use RueckmeldungContainer; // For utility functions.
+    use FindRueckmeldungTrait; // For RueckmeldungContainer.
 
     /** @var Rueckmeldung[] @Max(99) */
     public $rueckmeldung;

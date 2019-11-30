@@ -9,6 +9,7 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIPINS\HIPINSv1;
 use Fhp\Segment\HITANS\HITANS;
+use Fhp\Segment\SegmentInterface;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -40,6 +41,9 @@ class BPD
      * @var BaseSegment[][]
      */
     public $parameters = [];
+
+    /** @var bool Whether the fake TAN mode 999 is allowed. */
+    public $singleStepTanModeAllowed;
 
     /**
      * @var bool[] An array mapping business transaction request types ('HKxyz' strings) to a bool indicating whether
@@ -104,7 +108,7 @@ class BPD
     }
 
     /**
-     * @param BaseSegment[] $requestSegments The segments that shall be sent to the bank.
+     * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
      * @return bool True if any of the given segments requires a TAN according to HIPINS.
      */
     public function tanRequiredForRequest($requestSegments)
@@ -152,7 +156,9 @@ class BPD
             $options['logger']->warning('HITANSv' . $hitans->getSegmentNumber()
                 . ' is deprecated. Please let the phpFinTS maintainers know that your bank still uses this.');
         }
-        foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
+        $tanParams = $hitans->getParameterZweiSchrittTanEinreichung();
+        $bpd->singleStepTanModeAllowed = $tanParams->getEinschrittVerfahrenErlaubt();
+        foreach ($tanParams->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
             $bpd->allTanModes[$verfahren->getId()] = $verfahren;
         }
         return $bpd;
