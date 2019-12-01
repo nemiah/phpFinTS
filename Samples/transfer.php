@@ -72,5 +72,5 @@ try {
     print_r($transfer);
 } catch (TANRequiredException $e) {
     echo $e->getMessage() . "\n\n";
-    echo 'Please call ./submit_tan_token ' . $e->getTANToken() . " <tan>\n";
+    echo 'Please call ./submit_tan_token "' . $e->getTANToken() . '" <tan>' . "\n";
 }
