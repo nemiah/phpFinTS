@@ -111,7 +111,7 @@ class GetStatementOfAccountXML extends BaseAction
     {
         parent::processResponse($response, $bpd, $upd);
 
-        // Banks send just 3010 and no HIKAZ in case there are no transactions.
+        // Banks send just 3010 and no HICAZ in case there are no transactions.
         $isUnavailable = false;
         $responseHirms = $response->findSegments(HIRMSv2::class);
         /** @var HIRMSv2 $hirms */
@@ -128,14 +128,13 @@ class GetStatementOfAccountXML extends BaseAction
         /** @var HICAZv1[] $responseHicaz */
         $responseHicaz = $response->findSegments(HICAZv1::class);
 
-        #dump($responseHicaz);
         $numResponseSegments = count($responseHicaz);
         if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
-            throw new UnexpectedResponseException("Only got $numResponseSegments HIKAZ response segments!");
+            throw new UnexpectedResponseException("Only got $numResponseSegments HICAZ response segments!");
         }
 
         if ($numResponseSegments > 1) {
-            throw new UnexpectedResponseException("More than 1 HIKAZ response segment is not supported!");
+            throw new UnexpectedResponseException("More than 1 HICAZ response segment is not supported at the moment!");
         }
         $this->xml = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
 
