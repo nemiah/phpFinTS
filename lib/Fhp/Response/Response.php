@@ -53,12 +53,29 @@ class Response
         $this->dialog = $dialog;
     }
 
+    /**
+     * @return bool
+     *
+     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+     * Seite: 28
+     * Da die Eingabe einer TAN erforderlich ist, erfolgt eine Zwischenspeicherung des Auftrags.
+     * Anschließend wird auf Institutsseite eine verfahrensspezifische Challenge ermittelt
+     * und dem Kundenprodukt im Segment HITAN mitgeteilt. In
+     * HITAN erfolgt die Belegung ebenfalls gemäß TANProzess=4. Durch RM-Code 0030 zusammen mit den Informationen „Auftragsreferenz“ und „Challenge“ aus HITAN
+     * erhält das Kundenprodukt in der Kreditinstitutsantwort die
+     * Information, dass der Kunde nun auf Basis der Challenge in
+     * vereinbarter Form eine TAN ermitteln muss.
+     *
+     */
     public function isStrongAuthRequired()
     {
         /** @var Segment\TAN\HITANv6 $seg */
         $seg = $this->getSegment('HITAN');
 
-        return $seg != null && $seg->getChallenge() != 'nochallenge';
+        // Wenn eine zwischengespeicherter Aufrag nach TAN-Übermittlung beantwortet wird, enthält die Antwort
+        // auch wieder das HITAN Segment mit der betreffenden Auftragsreferenz, aber ohne Challenge und mit TAN-Modus = 2
+        // Dies darf hier nicht als isStrongAuthRequired ausgelegt werden
+        return $seg != null && $seg->getTanProzess() == 4 && $seg->getChallenge() != 'nochallenge';
     }
 
     public function isTANRequest()
