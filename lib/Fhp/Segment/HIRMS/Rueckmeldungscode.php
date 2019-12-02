@@ -46,6 +46,15 @@ abstract class Rueckmeldungscode
     const BEENDET = 100;
 
     /**
+     * Nicht verfügbar.
+     * zurzeit keine Börsenkurse abrufbar
+     * Keine neuen Einträge im Statusprotokoll
+     * Information wird zur Zeit nicht angeboten
+     * Wertpapierdatei ist bereits aktuell
+     */
+    const UNAVAILABLE = 3010;
+
+    /**
      * Es liegen weitere Informationen vor.
      * Tells the client that the response is incomplete and the request needs to be re-sent with the pagination token
      * ("Aufsetzpunkt") that is contained in the Rueckmeldung parameters.

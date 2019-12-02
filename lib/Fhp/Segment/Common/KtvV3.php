@@ -2,6 +2,7 @@
 
 namespace Fhp\Segment\Common;
 
+use Fhp\Model\SEPAAccount;
 use Fhp\Segment\BaseDeg;
 
 /**
@@ -23,4 +24,28 @@ class KtvV3 extends BaseDeg
     public $unterkontomerkmal;
     /** @var Kik */
     public $kik;
+
+    /**
+     * @param string $kontonummer
+     * @param string|null $unterkontomerkmal
+     * @param Kik $kik
+     * @return KtvV3
+     */
+    public static function create($kontonummer, $unterkontomerkmal, $kik)
+    {
+        $result = new KtvV3();
+        $result->kontonummer = $kontonummer;
+        $result->unterkontomerkmal = $unterkontomerkmal;
+        $result->kik = $kik;
+        return $result;
+    }
+
+    /**
+     * @param SEPAAccount $account
+     * @return KtvV3
+     */
+    public static function fromAccount($account)
+    {
+        return static::create($account->getAccountNumber(), $account->getSubAccount(), Kik::create($account->getBlz()));
+    }
 }

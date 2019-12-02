@@ -46,6 +46,10 @@ class Kti extends BaseDeg
      */
     public static function fromAccount($account)
     {
-        return static::create($account->getIban(), $account->getBic());
+        $result = static::create($account->getIban(), $account->getBic());
+        $result->kontonummer = $account->getAccountNumber();
+        $result->unterkontomerkmal = $account->getSubAccount();
+        $result->kreditinstitutskennung = Kik::create($account->getBlz());
+        return $result;
     }
 }
