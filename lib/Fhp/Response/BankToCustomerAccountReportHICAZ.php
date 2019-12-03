@@ -2,7 +2,7 @@
 
 namespace Fhp\Response;
 
-use Fhp\Segment\HICAZ\HICAZv1;
+use Fhp\Segment\CAZ\HICAZv1;
 use Fhp\Segment\HKCAZ;
 
 class BankToCustomerAccountReportHICAZ extends Response

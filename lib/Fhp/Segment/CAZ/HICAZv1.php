@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpUnused */
 
-namespace Fhp\Segment\HICAZ;
+namespace Fhp\Segment\CAZ;
 
 use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseSegment;
