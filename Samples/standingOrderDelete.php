@@ -42,5 +42,5 @@ try
     $fints->deleteSEPAStandingOrder($accounts[0], $orders[0]);
 } catch (TANRequiredException $e) {
     echo $e->getMessage() . "\n\n";
-    echo 'Please call ./submit_tan_token "' . $e->getTANToken() . '" <tan>' . "\n";
+    echo 'Please call ./submit_tan_token.php "' . $e->getTANToken() . '" <tan>' . "\n";
 }

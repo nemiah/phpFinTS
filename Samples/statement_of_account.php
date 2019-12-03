@@ -13,7 +13,7 @@ class testLogger extends Psr\Log\AbstractLogger
 {
     public function log($level, $message, array $context = array()): void
     {
-        file_put_contents(__DIR__."/accounts.log", file_get_contents(__DIR__."/accounts.log").$message."\n");
+        file_put_contents(__DIR__."/statement_of_account.log", file_get_contents(__DIR__."/statement_of_account.log").$message."\n");
     }
 }
 
@@ -58,6 +58,6 @@ try {
 
 } catch (TANRequiredException $e) {
     echo $e->getMessage() . "\n\n";
-    echo 'Please call ./submit_tan_token "' . $e->getTANToken() . '" <tan>' . "\n";
+    echo 'Please call ./submit_tan_token.php "' . $e->getTANToken() . '" <tan>' . "\n";
 }
 
