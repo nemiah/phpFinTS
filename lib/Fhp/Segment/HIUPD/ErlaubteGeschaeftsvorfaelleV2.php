@@ -24,6 +24,6 @@ class ErlaubteGeschaeftsvorfaelleV2 extends BaseDeg implements ErlaubteGeschaeft
     /** {@inheritdoc} */
     public function getGeschaeftsvorfall()
     {
-        return $this->getGeschaeftsvorfall();
+        return $this->geschaeftsvorfall;
     }
 }
