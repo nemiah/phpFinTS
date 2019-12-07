@@ -87,8 +87,8 @@ class FinTsNew
             }
             $version = $unserialized[0];
             $data = array_slice($unserialized, 1);
-            if ($version === 1) {
-                $this->loadPersistedInstanceVersion1($data);
+            if ($version === 2) {
+                $this->loadPersistedInstanceVersion2($data);
             } else {
                 throw new \InvalidArgumentException("Unknown persistedInstace version: '{$unserialized[0]}''");
             }
@@ -106,32 +106,53 @@ class FinTsNew
     }
 
     /**
-     * @return string A serialized form of those parts of the FinTs instance that can reasonably be persisted (BPD,
-     *     Kundensystem-ID, etc.). None of that information is sensitive (e.g. there are no credentials returned). This
-     *     is intended to be stored in a database.
+     * Returns a serialized form of parts of this object. This is different from PHP's `\Serializable` in that it only
+     * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
+     * `Credentials` need to be passed to the constructor in addition to the string returned here.
+     *
+     * NOTE: Unless you're persisting this object to complete a TAN request later on, you probably want to log the user
+     * out first by calling {@link #close()}.
+     *
+     * @param bool $minimal If true, the return value only contains only those values that are necessary to complete an
+     *     outstanding TAN request, but not the relatively large BPD/UPD, which can always be retrieved again later with
+     *     a few extra requests to the server. IMPORTANT: Not all actions (`BaseAction` sub-classes) are compatible with
+     *     this.
+     * @return string A serialized form of those parts of the FinTs instance that can reasonably be persisted (BPD, UPD,
+     *     Kundensystem-ID, etc.). Note that this usually contains some user data (user's name, account names and
+     *     sometimes a dialog ID that is equivalent to session cookie), so the returned string needs to be treated
+     *     carefully (not written to log files, only to a database or other storage system that would normally be used
+     *     for user data). The returned string never contains highly sensitive information (not the user's password or
+     *     PIN), so it probably does not need to be encrypted.
      */
-    public function persist()
+    public function persist(bool $minimal = false)
     {
-        // IMPORTANT: Be sure not to include sensitive user information here.
+        // IMPORTANT: Be sure not to include highly sensitive user information here.
         return serialize([ // This should match loadPersistedInstanceVersion1().
-            1, // Version of the serialized format.
-            $this->bpd,
-            $this->allowedTanModes,
-            $this->kundensystemId,
+            2, // Version of the serialized format.
+            $minimal ? null : $this->bpd,
+            $minimal ? null : $this->allowedTanModes,
+            $minimal ? null : $this->upd,
             $this->selectedTanMode,
             $this->selectedTanMedium,
+            $this->kundensystemId,
+            $this->dialogId,
+            $this->messageNumber,
         ]);
     }
 
     /** @param array $data */
-    private function loadPersistedInstanceVersion1($data)
+    private function loadPersistedInstanceVersion2($data)
     {
         list( // This should match persist().
             $this->bpd,
             $this->allowedTanModes,
-            $this->kundensystemId,
+            $this->upd,
             $this->selectedTanMode,
-            $this->selectedTanMedium) = $data;
+            $this->selectedTanMedium,
+            $this->kundensystemId,
+            $this->dialogId,
+            $this->messageNumber
+            ) = $data;
     }
 
     /**
