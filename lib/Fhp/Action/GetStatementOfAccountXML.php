@@ -4,27 +4,14 @@ namespace Fhp\Action;
 
 use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
-use Fhp\Model\StatementOfAccount\StatementOfAccount;
-use Fhp\MT940\Dialect\PostbankMT940;
-use Fhp\MT940\Dialect\SpardaMT940;
-use Fhp\MT940\MT940;
-use Fhp\MT940\MT940Exception;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Segment\CAZ\HICAZSv1;
 use Fhp\Segment\CAZ\HICAZv1;
 use Fhp\Segment\CAZ\HKCAZv1;
 use Fhp\Segment\CAZ\UnterstuetzteCamtMessages;
 use Fhp\Segment\Common\Kti;
-use Fhp\Segment\Common\Kto;
-use Fhp\Segment\Common\KtvV3;
 use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\KAZ\HIKAZ;
-use Fhp\Segment\KAZ\HIKAZS;
-use Fhp\Segment\KAZ\HKKAZv4;
-use Fhp\Segment\KAZ\HKKAZv5;
-use Fhp\Segment\KAZ\HKKAZv6;
-use Fhp\Segment\KAZ\HKKAZv7;
 use Fhp\UnsupportedException;
 
 /**
@@ -134,7 +121,7 @@ class GetStatementOfAccountXML extends BaseAction
         }
 
         if ($numResponseSegments > 1) {
-            throw new UnexpectedResponseException("More than 1 HICAZ response segment is not supported at the moment!");
+            throw new UnexpectedResponseException('More than 1 HICAZ response segment is not supported at the moment!');
         }
         $this->xml = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
 
