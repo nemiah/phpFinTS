@@ -39,9 +39,6 @@ abstract class FinTsTestCase extends TestCase
     /** @var string[][] Series of tuples of expected request and mock response */
     protected $expectedMessages;
 
-    /** @noinspection PhpLanguageLevelInspection */
-
-    /** @noinspection PhpUndefinedClassInspection */
     protected function setUp(): void
     {
         // We mock rand() for the $randomReference generation in Fhp\Protocol\Message.
@@ -107,9 +104,6 @@ abstract class FinTsTestCase extends TestCase
         return $this->connection;
     }
 
-    /** @noinspection PhpLanguageLevelInspection */
-
-    /** @noinspection PhpUndefinedClassInspection */
     protected function tearDown(): void
     {
         $this->assertAllMessagesSeen();

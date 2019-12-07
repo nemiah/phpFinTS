@@ -45,6 +45,8 @@ abstract class BaseAction implements \Serializable
     private $error;
 
     /**
+     * NOTE: A common mistake is to call this function directly. Instead, you probably want `serialize($instance)`.
+     *
      * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
      * present yet.
      * If a sub-class overrides this, it should call the parent function and include it in its result.

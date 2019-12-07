@@ -2,6 +2,7 @@
 
 namespace Tests\Fhp\Integration\DKB;
 
+use Fhp\Model\SEPAAccount;
 use Tests\Fhp\FinTsTestCase;
 
 class DKBIntegrationTestBase extends FinTsTestCase
@@ -49,5 +50,18 @@ class DKBIntegrationTestBase extends FinTsTestCase
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();
+    }
+
+    /**
+     * @return SEPAAccount
+     */
+    protected function getTestAccount()
+    {
+        $sepaAccount = new SEPAAccount();
+        $sepaAccount->setIban('DExxABCDEFGH1234567890');
+        $sepaAccount->setBic('BYLADEM1001');
+        $sepaAccount->setAccountNumber('1234567890');
+        $sepaAccount->setBlz('12030000');
+        return $sepaAccount;
     }
 }
