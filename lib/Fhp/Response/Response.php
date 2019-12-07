@@ -65,7 +65,6 @@ class Response
      * erhält das Kundenprodukt in der Kreditinstitutsantwort die
      * Information, dass der Kunde nun auf Basis der Challenge in
      * vereinbarter Form eine TAN ermitteln muss.
-     *
      */
     public function isStrongAuthRequired()
     {

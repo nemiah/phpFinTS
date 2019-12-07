@@ -64,13 +64,13 @@ class HKTANv6 extends BaseSegment
     /**
      * M: bei TAN-Prozess=1, 2
      * N: bei TAN-Prozess=3, 4
-     * @var boolean|null
+     * @var bool|null
      */
     public $weitereTanFolgt;
     /**
      * O: bei TAN-Prozess=2 und „Auftragsstorno erlaubt“=J
      * N: sons
-     * @var boolean|null
+     * @var bool|null
      */
     public $auftragStornieren;
     /**
@@ -82,7 +82,7 @@ class HKTANv6 extends BaseSegment
     /**
      * M: bei TAN-Prozess=1 und „Challenge-Klasse erforderlich“=J
      * N: sonst
-     * @var integer|null
+     * @var int|null
      */
     public $challengeKlasse;
     /**
