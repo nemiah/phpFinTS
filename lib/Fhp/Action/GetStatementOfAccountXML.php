@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
@@ -32,7 +34,7 @@ class GetStatementOfAccountXML extends BaseAction
     private $allAccounts;
 
     // Response
-    /** @var string */
+    /** @var string|null */
     private $xml;
 
     /**
@@ -61,7 +63,7 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /**
-     * @return string
+     * @return string|null The XML received from the bank, or null if the statement is unavailable/empty.
      * @throws \Exception See {@link #ensureSuccess()}.
      */
     public function getBookedXML()
@@ -98,21 +100,18 @@ class GetStatementOfAccountXML extends BaseAction
         parent::processResponse($response, $bpd, $upd);
 
         // Banks send just 3010 and no HICAZ in case there are no transactions.
-        $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null
-        if ($isUnavailable) {
+        if ($response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null) {
             return;
         }
 
         /** @var HICAZv1[] $responseHicaz */
         $responseHicaz = $response->findSegments(HICAZv1::class);
-
         $numResponseSegments = count($responseHicaz);
-        if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
+        if ($numResponseSegments < count($this->getRequestSegmentNumbers())) {
             throw new UnexpectedResponseException("Only got $numResponseSegments HICAZ response segments!");
         }
-
         if ($numResponseSegments > 1) {
-            throw new UnexpectedResponseException('More than 1 HICAZ response segment is not supported at the moment!');
+            throw new UnsupportedException('More than 1 HICAZ response segment is not supported at the moment!');
         }
         $this->xml = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
 
