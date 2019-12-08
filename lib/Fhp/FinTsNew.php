@@ -190,6 +190,8 @@ class FinTsNew
         if ($this->dialogId === null && !($action instanceof DialogInitialization)) {
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
+
+        // Let the BaseAction implementation build its request segments.
         try {
             $requestSegments = $action->createRequest($this->bpd, $this->upd);
             $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
@@ -201,6 +203,7 @@ class FinTsNew
             return; // No request needed.
         }
 
+        // Construct the full request message.
         $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
         if ($this->bpd->tanRequiredForRequest($requestSegments)) {
             $message->add(HKTANv6::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium));
@@ -211,22 +214,13 @@ class FinTsNew
             return $segment->getSegmentNumber();
         }, $requestSegments));
 
-        try {
-            $response = $this->sendMessage($request);
-            $fakeResponseMessage = $response->filterByReferenceSegments($action->getRequestSegmentNumbers());
-        } catch (ServerException $e) {
-            $actionError = $e->extractErrorsForReference($requestSegments);
-            if ($actionError !== null) {
-                $action->processError($actionError, $this->bpd, $this->upd);
-            }
-            if (!empty($e->getErrors())) {
-                throw $e;
-            }
-            return;
+        // Execute the request.
+        $response = $this->sendRequestForAction($action, $request);
+        if ($response === null) {
+            return; // Error occurred and was written to $action.
         }
-        $this->readBPD($response);
 
-        // Detect if a TAN was requested.
+        // Detect if the bank wants a TAN.
         /** @var HITANv6 $hitan */
         $hitan = $response->findSegment(HITANv6::class);
         if ($hitan !== null && $hitan->auftragsreferenz !== HITANv6::DUMMY_REFERENCE) {
@@ -244,8 +238,34 @@ class FinTsNew
             return;
         }
 
-        // If no TAN was requested, process the response normally.
-        $this->processActionResponse($action, $fakeResponseMessage);
+        // If no TAN is needed, process the response normally.
+        $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
+    }
+
+    /**
+     * @param BaseAction $action The action being executed.
+     * @param Message $request The request that has been constructed for the action and should be sent.
+     * @return Message|null The full response from the server, or null if an action-level error occurred and the
+     *     response should not be processed further.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message.
+     */
+    private function sendRequestForAction($action, $request)
+    {
+        try {
+            $response = $this->sendMessage($request);
+        } catch (ServerException $e) {
+            $actionError = $e->extractErrorsForReference($action->getRequestSegmentNumbers());
+            if ($actionError !== null) {
+                $action->processError($actionError, $this->bpd, $this->upd);
+            }
+            if (!empty($e->getErrors())) {
+                throw $e;
+            }
+            return null;
+        }
+        $this->readBPD($response);
+        return $response;
     }
 
     /**
@@ -261,6 +281,7 @@ class FinTsNew
      */
     public function submitTan($action, $tan)
     {
+        // Check the action's state.
         $tanRequest = $action->getTanRequest();
         if ($tanRequest === null) {
             throw new \InvalidArgumentException('This action does not need a TAN');
@@ -272,22 +293,17 @@ class FinTsNew
             $this->dialogId = $action->getDialogId();
             $this->messageNumber = $action->getMessageNumber();
         }
+
+        // Construct the request.
         $message = MessageBuilder::create()
             ->add(HKTANv6::createProzessvariante2Step2($this->requireTanMode(), $tanRequest->getProcessId()));
-        try {
-            $response = $this->sendMessage($this->buildMessage($message, $tan));
-            $fakeResponseMessage = $response->filterByReferenceSegments($action->getRequestSegmentNumbers());
-        } catch (ServerException $e) {
-            $actionError = $e->extractErrorsForReference($action->getRequestSegmentNumbers());
-            if ($actionError !== null) {
-                $action->processError($actionError, $this->bpd, $this->upd);
-            }
-            if (!empty($e->getErrors())) {
-                throw $e;
-            }
-            return;
+        $request = $this->buildMessage($message, $tan);
+
+        // Execute the request.
+        $response = $this->sendRequestForAction($action, $request);
+        if ($response === null) {
+            return; // Error occurred and was written to $action.
         }
-        $this->readBPD($response);
 
         // Ensure that the TAN was accepted.
         /** @var HITANv6 $hitan */
@@ -299,7 +315,9 @@ class FinTsNew
             throw new UnexpectedResponseException("Bank has not accepted TAN: $hitan");
         }
         $action->setTanRequest(null);
-        $this->processActionResponse($action, $fakeResponseMessage);
+
+        // Process the response normally.
+        $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
     }
 
     /**
