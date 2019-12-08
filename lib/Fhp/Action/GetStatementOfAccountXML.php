@@ -88,7 +88,7 @@ class GetStatementOfAccountXML extends BaseAction
             case 1:
                 $unterstuetzteCamtMessages = new UnterstuetzteCamtMessages();
                 $unterstuetzteCamtMessages->camtDescriptor = [$this->camtURN];
-                return [HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to)];
+                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKCAZ version: ' . $hicazs->getVersion());
         }

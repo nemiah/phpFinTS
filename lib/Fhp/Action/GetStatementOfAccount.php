@@ -85,13 +85,13 @@ class GetStatementOfAccount extends BaseAction
         }
         switch ($hikazs->getVersion()) {
             case 4:
-                return [HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to)];
+                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
             case 5:
-                return [HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 6:
-                return [HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 7:
-                return [HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
         }

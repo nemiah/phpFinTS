@@ -193,6 +193,7 @@ class FinTsNew
         }
         try {
             $requestSegments = $action->createRequest($this->bpd, $this->upd);
+            $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
         } catch (\Exception $e) {
             $action->processError($e, $this->bpd, $this->upd);
             return;

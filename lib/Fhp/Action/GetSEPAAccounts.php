@@ -50,9 +50,9 @@ class GetSEPAAccounts extends BaseAction
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         switch ($hispas->getVersion()) {
             case 1:
-                return [HKSPAv1::createEmpty()];
+                return HKSPAv1::createEmpty();
             case 2:
-                return [HKSPAv2::createEmpty()];
+                return HKSPAv2::createEmpty();
             default:
                 throw new UnsupportedException('Unsupported HKSPA version: ' . $hispas->getVersion());
         }

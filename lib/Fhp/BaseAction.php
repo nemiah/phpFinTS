@@ -147,9 +147,9 @@ abstract class BaseAction implements \Serializable
      * Called when this action is about to be executed, in order to construct the request.
      * @param BPD $bpd See {@link BPD}.
      * @param UPD $upd See {@link UPD}.
-     * @return BaseSegment[] A series of segments that should be sent to the bank server. Note that an action can return
-     *     an empty array to indicate that it does not need to make a request to the server, but can instead compute the
-     *     result just from the BPD/UPD.
+     * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
+     *     Note that an action can return an empty array to indicate that it does not need to make a request to the
+     *     server, but can instead compute the result just from the BPD/UPD.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
     abstract public function createRequest($bpd, $upd);

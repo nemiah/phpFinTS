@@ -24,9 +24,9 @@ class GetTanMedia extends BaseAction
         $hitabs = $bpd->requireLatestSupportedParameters('HITABS');
         switch ($hitabs->getVersion()) {
             case 4:
-                return [HKTABv4::createEmpty()];
+                return HKTABv4::createEmpty();
             case 5:
-                return [HKTABv5::createEmpty()];
+                return HKTABv5::createEmpty();
             default:
                 throw new UnsupportedException('Unsupported HKTAB version: ' . $hitabs->getVersion());
         }
