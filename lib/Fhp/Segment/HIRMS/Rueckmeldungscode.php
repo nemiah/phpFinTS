@@ -69,6 +69,49 @@ abstract class Rueckmeldungscode
     const ZUGELASSENE_VERFAHREN = 3920;
 
     /**
+     * Ihre PIN ist gesperrt.
+     */
+    const PIN_GESPERRT = 9930;
+
+    /**
+     * Sperrung des Kontos nach %1 Fehlversuchen
+     * Teilnehmersperre durchgeführt
+     * Teilnehmersperre durchgeführt, Entsperren nur durch Kreditinstitut
+     */
+    const TEILNEHMER_GESPERRT = 9931;
+
+    /**
+     * Ihr Zugang ist gesperrt - Bitte informieren Sie Ihren Berater.
+     * @link https://wiki.windata.de/index.php?title=HBCI-Fehlermeldungen
+     */
+    const ZUGANG_GESPERRT = 9933;
+
+    /**
+     * TAN ungültig.
+     * Signatur ungültig.
+     */
+    const TAN_UNGUELTIG = 9941;
+
+    /**
+     * PIN ungültig.
+     * Neue PIN ungültig.
+     * Neue PIN zu kurz.
+     * Neue PIN zu lang.
+     */
+    const PIN_UNGUELTIG = 9942;
+
+    /**
+     *  TAN bereits verbraucht.
+     */
+    const TAN_BEREITS_VERBRAUCHT = 9943;
+
+    /**
+     * Zeitüberschreitung im Zwei-Schritt-Verfahren
+     * TAN/Signatur ungültig
+     */
+    const ZEITUEBERSCHREITUNG_IM_ZWEI_SCHRITT_VERFAHREN = 9951;
+
+    /**
      * Kreditinstitutsseitige Beendigung des Dialoges.
      */
     const ABGEBROCHEN = 9800;
