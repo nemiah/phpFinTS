@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace Fhp;
 
 use Fhp\Model\TanRequest;
@@ -162,13 +164,11 @@ abstract class BaseAction implements \Serializable
      * and call the parent/super function.
      * @param Message $response A fake message that contains the subset of segments received from the server that
      *     were in response to the request segments that were created by {@link #createRequest()}.
-     * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
      * @throws UnexpectedResponseException When the response indicates failure.
      */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        unset($response, $bpd, $upd); // These parameters are used in sub-classes.
+        unset($response); // Only used in sub-classes.
         $this->isAvailable = true;
     }
 

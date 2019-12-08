@@ -113,8 +113,7 @@ class FinTsNew
      *
      * @param bool $minimal If true, the return value only contains only those values that are necessary to complete an
      *     outstanding TAN request, but not the relatively large BPD/UPD, which can always be retrieved again later with
-     *     a few extra requests to the server. IMPORTANT: Not all actions (`BaseAction` sub-classes) are compatible with
-     *     this.
+     *     a few extra requests to the server.
      * @return string A serialized form of those parts of the FinTs instance that can reasonably be persisted (BPD, UPD,
      *     Kundensystem-ID, etc.). Note that this usually contains some user data (user's name, account names and
      *     sometimes a dialog ID that is equivalent to session cookie), so the returned string needs to be treated
@@ -549,7 +548,7 @@ class FinTsNew
     private function processActionResponse($action, $fakeResponseMessage)
     {
         try {
-            $action->processResponse($fakeResponseMessage, $this->bpd, $this->upd);
+            $action->processResponse($fakeResponseMessage);
             if ($action instanceof DialogInitialization) {
                 $this->dialogId = $action->getDialogId();
                 if ($this->kundensystemId === null && $action->getKundensystemId()) {
@@ -557,6 +556,8 @@ class FinTsNew
                 }
                 if ($action->getUpd() !== null) {
                     $this->upd = $action->getUpd();
+                } elseif ($this->upd === null && $action->isStronglyAuthenticated()) {
+                    throw new UnexpectedResponseException('No UPD received');
                 }
             }
         } catch (\Exception $e) {

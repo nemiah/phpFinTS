@@ -33,9 +33,9 @@ class GetTanMedia extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
         /** @var HITAB $hitab */
         $hitab = $response->requireSegment(HITAB::class);
         $this->tanMedia = $hitab->getTanMediumListe() === null ? [] : $hitab->getTanMediumListe();

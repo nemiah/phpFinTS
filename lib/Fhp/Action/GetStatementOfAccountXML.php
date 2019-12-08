@@ -95,9 +95,9 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
 
         // Banks send just 3010 and no HICAZ in case there are no transactions.
         if ($response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null) {

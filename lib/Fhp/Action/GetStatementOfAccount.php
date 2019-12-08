@@ -38,6 +38,10 @@ class GetStatementOfAccount extends BaseAction
     /** @var bool */
     private $allAccounts;
 
+    // Information from the BPD needed to interpret the response.
+    /** @var string */
+    private $bankName;
+
     // Response
     /** @var StatementOfAccount */
     private $statement;
@@ -65,6 +69,17 @@ class GetStatementOfAccount extends BaseAction
         return $result;
     }
 
+    public function serialize()
+    {
+        return serialize([parent::serialize(), $this->bankName]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list($parentSerialized, $this->bankName) = unserialize($serialized);
+        parent::unserialize($parentSerialized);
+    }
+
     /**
      * @return StatementOfAccount
      * @throws \Exception See {@link #ensureSuccess()}.
@@ -78,6 +93,8 @@ class GetStatementOfAccount extends BaseAction
     /** {@inheritdoc} */
     public function createRequest($bpd, $upd)
     {
+        $this->bankName = $bpd->getBankName();
+
         /** @var HIKAZS $hikazs */
         $hikazs = $bpd->requireLatestSupportedParameters('HIKAZS');
         if ($this->allAccounts && !$hikazs->getParameter()->getAlleKontenErlaubt()) {
@@ -98,9 +115,9 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
 
         // Banks send just 3010 and no HIKAZ in case there are no transactions.
         $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
@@ -110,9 +127,9 @@ class GetStatementOfAccount extends BaseAction
             throw new UnexpectedResponseException("Only got $numResponseSegments HIKAZ response segments!");
         }
 
-        if (strpos(strtolower($bpd->getBankName()), 'sparda') !== false) {
+        if (strpos(strtolower($this->bankName), 'sparda') !== false) {
             $parser = new SpardaMT940();
-        } elseif (strpos(strtolower($bpd->getBankName()), 'postbank') !== false) {
+        } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
             $parser = new PostbankMT940();
         } else {
             $parser = new MT940();

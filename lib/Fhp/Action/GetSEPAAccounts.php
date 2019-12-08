@@ -59,9 +59,9 @@ class GetSEPAAccounts extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
         /** @var HISPA $hispa */
         $hispa = $response->requireSegment(HISPA::class);
         $this->accounts = array_map(function ($ktz) {
