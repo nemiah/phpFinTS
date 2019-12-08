@@ -6,7 +6,6 @@ use Fhp\Segment\HIRMG\HIRMGv2;
 use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\SegmentInterface;
 use Fhp\UnsupportedException;
 
 /**
@@ -52,19 +51,15 @@ class ServerException extends \Exception
     /**
      * Takes all errors and warnings that pertain to any of the given $referenceSegments, puts them in a new
      * ServerException instance (if any) and removes them from this instance.
-     * @param SegmentInterface[]|int[] $referenceSegments The reference segments (or their numbers).
+     * @param int[] $referenceNumbers The numbers of thte reference segments.
      * @return ServerException|null The part of the exception that pertains to the given reference segments, or null if
      *     none of the errors refer to them.
      */
-    public function extractErrorsForReference($referenceSegments)
+    public function extractErrorsForReference($referenceNumbers)
     {
-        if (empty($referenceSegments)) {
+        if (empty($referenceNumbers)) {
             return null;
         }
-        $referenceNumbers = array_map(function ($referenceSegment) {
-            /* @var SegmentInterface|int $referenceSegment */
-            return is_int($referenceSegment) ? $referenceSegment : $referenceSegment->getSegmentNumber();
-        }, $referenceSegments);
         $errors = array_filter($this->errors, function ($error) use ($referenceNumbers) {
             /* @var Rueckmeldung $error */
             return in_array($error->referenceSegment, $referenceNumbers);
