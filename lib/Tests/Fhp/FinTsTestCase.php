@@ -78,7 +78,7 @@ abstract class FinTsTestCase extends TestCase
                 // The expected request is just the inner part, so we need to unwrap the actual request. This is done in
                 // in a quick and hacky way, which slices everything from HNSHK's terminating delimiter to the start of
                 // HNSHA.
-                $this->assertEquals(1, preg_match("/HNSHK.*?'(.*?')HNSHA:/", $request, $match), "For request: $request");
+                $this->assertEquals(1, preg_match("/HNSHK.*?'(.*?')HNSHA:/s", $request, $match), "For request: $request");
                 $request = $match[1];
             }
             $this->assertEquals($expectedRequest, $request);
