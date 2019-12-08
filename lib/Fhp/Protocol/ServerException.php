@@ -120,6 +120,39 @@ class ServerException extends \Exception
     }
 
     /**
+     * @return bool True if the {@link Credentials} used to make this request are wrong. If this returns true, the
+     *     application should ask the user to re-enter the credentials before making any further requests to the bank.
+     */
+    public function indicatesBadLoginData()
+    {
+        return $this->hasError(Rueckmeldungscode::PIN_UNGUELTIG);
+    }
+
+    /**
+     * @return bool If the error indicates that the account (bank account and/or online banking access) has been locked,
+     *     usually due to suspicious activity or failed login attempts. If this returns true, the application should
+     *     refrain from logging in / using that account in any automated way before getting confirmation from the user
+     *     that it has been unlocked.
+     */
+    public function indicatesLocked()
+    {
+        return $this->hasError(Rueckmeldungscode::PIN_GESPERRT)
+            || $this->hasError(Rueckmeldungscode::TEILNEHMER_GESPERRT)
+            || $this->hasError(Rueckmeldungscode::ZUGANG_GESPERRT);
+    }
+
+    /**
+     * @return bool True if the provided TAN is invalid (including entirely wrong, used for another transaction already,
+     *     or exceeded its expiration time).
+     */
+    public function indicatesBadTan()
+    {
+        return $this->hasError(Rueckmeldungscode::TAN_UNGUELTIG)
+            || $this->hasError(Rueckmeldungscode::TAN_BEREITS_VERBRAUCHT)
+            || $this->hasError(Rueckmeldungscode::ZEITUEBERSCHREITUNG_IM_ZWEI_SCHRITT_VERFAHREN);
+    }
+
+    /**
      * @param Message $response A response received from the server.
      * @param Message $request The original requests, from which this function pulls the segments that errors
      *     refer to, for ease of debugging.

@@ -43,7 +43,7 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
     public $gueltigBis;
     /** @var string|null Only for $tanMediumKlasse=='L' */
     public $tanListennumer;
-    /** @var string|null Must for $tanMediumKlasse=='M', optional otherwise */
+    /** @var string|null Must for $tanMediumKlasse=='M', optional otherwise. Max length: 32 */
     public $bezeichnungDesTanMediums;
     /** @var string|null Only and optional for $tanMediumKlasse=='M' */
     public $mobiltelefonnummerVerschleiert;
