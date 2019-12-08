@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace Fhp;
 
 use Fhp\Model\TanRequest;
@@ -147,9 +149,11 @@ abstract class BaseAction implements \Serializable
      * Called when this action is about to be executed, in order to construct the request.
      * @param BPD $bpd See {@link BPD}.
      * @param UPD $upd See {@link UPD}.
-     * @return BaseSegment[] A series of segments that should be sent to the bank server. Note that an action can return
-     *     an empty array to indicate that it does not need to make a request to the server, but can instead compute the
-     *     result just from the BPD/UPD.
+     * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
+     *     Note that an action can return an empty array to indicate that it does not need to make a request to the
+     *     server, but can instead compute the result just from the BPD/UPD, in which case it should set
+     *     `$this->isAvailable = true;` already in {@link #createRequest()} and {@link #processResponse()} will never
+     *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
     abstract public function createRequest($bpd, $upd);
@@ -160,13 +164,11 @@ abstract class BaseAction implements \Serializable
      * and call the parent/super function.
      * @param Message $response A fake message that contains the subset of segments received from the server that
      *     were in response to the request segments that were created by {@link #createRequest()}.
-     * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
      * @throws UnexpectedResponseException When the response indicates failure.
      */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        unset($response, $bpd, $upd); // These parameters are used in sub-classes.
+        unset($response); // Only used in sub-classes.
         $this->isAvailable = true;
     }
 

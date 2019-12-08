@@ -13,7 +13,6 @@ use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\Common\Kto;
 use Fhp\Segment\Common\KtvV3;
-use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\KAZ\HIKAZ;
 use Fhp\Segment\KAZ\HIKAZS;
@@ -38,6 +37,10 @@ class GetStatementOfAccount extends BaseAction
     private $to;
     /** @var bool */
     private $allAccounts;
+
+    // Information from the BPD needed to interpret the response.
+    /** @var string */
+    private $bankName;
 
     // Response
     /** @var StatementOfAccount */
@@ -66,6 +69,17 @@ class GetStatementOfAccount extends BaseAction
         return $result;
     }
 
+    public function serialize()
+    {
+        return serialize([parent::serialize(), $this->bankName]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list($parentSerialized, $this->bankName) = unserialize($serialized);
+        parent::unserialize($parentSerialized);
+    }
+
     /**
      * @return StatementOfAccount
      * @throws \Exception See {@link #ensureSuccess()}.
@@ -79,6 +93,8 @@ class GetStatementOfAccount extends BaseAction
     /** {@inheritdoc} */
     public function createRequest($bpd, $upd)
     {
+        $this->bankName = $bpd->getBankName();
+
         /** @var HIKAZS $hikazs */
         $hikazs = $bpd->requireLatestSupportedParameters('HIKAZS');
         if ($this->allAccounts && !$hikazs->getParameter()->getAlleKontenErlaubt()) {
@@ -86,41 +102,34 @@ class GetStatementOfAccount extends BaseAction
         }
         switch ($hikazs->getVersion()) {
             case 4:
-                return [HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to)];
+                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
             case 5:
-                return [HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 6:
-                return [HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 7:
-                return [HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to)];
+                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
         }
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
 
         // Banks send just 3010 and no HIKAZ in case there are no transactions.
-        $isUnavailable = false;
-        $responseHirms = $response->findSegments(HIRMSv2::class);
-        /** @var HIRMSv2 $hirms */
-        foreach ($responseHirms as $hirms) {
-            if ($hirms->findRueckmeldung(Rueckmeldungscode::UNAVAILABLE) !== null) {
-                $isUnavailable = true;
-            }
-        }
+        $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
         $responseHikaz = $response->findSegments(HIKAZ::class);
         $numResponseSegments = count($responseHikaz);
         if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
             throw new UnexpectedResponseException("Only got $numResponseSegments HIKAZ response segments!");
         }
 
-        if (strpos(strtolower($bpd->getBankName()), 'sparda') !== false) {
+        if (strpos(strtolower($this->bankName), 'sparda') !== false) {
             $parser = new SpardaMT940();
-        } elseif (strpos(strtolower($bpd->getBankName()), 'postbank') !== false) {
+        } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
             $parser = new PostbankMT940();
         } else {
             $parser = new MT940();

@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
@@ -10,7 +12,6 @@ use Fhp\Segment\CAZ\HICAZv1;
 use Fhp\Segment\CAZ\HKCAZv1;
 use Fhp\Segment\CAZ\UnterstuetzteCamtMessages;
 use Fhp\Segment\Common\Kti;
-use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\UnsupportedException;
 
@@ -33,7 +34,7 @@ class GetStatementOfAccountXML extends BaseAction
     private $allAccounts;
 
     // Response
-    /** @var string */
+    /** @var string|null */
     private $xml;
 
     /**
@@ -62,7 +63,7 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /**
-     * @return string
+     * @return string|null The XML received from the bank, or null if the statement is unavailable/empty.
      * @throws \Exception See {@link #ensureSuccess()}.
      */
     public function getBookedXML()
@@ -87,41 +88,30 @@ class GetStatementOfAccountXML extends BaseAction
             case 1:
                 $unterstuetzteCamtMessages = new UnterstuetzteCamtMessages();
                 $unterstuetzteCamtMessages->camtDescriptor = [$this->camtURN];
-                return [HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to)];
+                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKCAZ version: ' . $hicazs->getVersion());
         }
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
 
         // Banks send just 3010 and no HICAZ in case there are no transactions.
-        $isUnavailable = false;
-        $responseHirms = $response->findSegments(HIRMSv2::class);
-        /** @var HIRMSv2 $hirms */
-        foreach ($responseHirms as $hirms) {
-            if ($hirms->findRueckmeldung(Rueckmeldungscode::UNAVAILABLE) !== null) {
-                $isUnavailable = true;
-            }
-        }
-
-        if ($isUnavailable) {
+        if ($response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null) {
             return;
         }
 
         /** @var HICAZv1[] $responseHicaz */
         $responseHicaz = $response->findSegments(HICAZv1::class);
-
         $numResponseSegments = count($responseHicaz);
-        if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
+        if ($numResponseSegments < count($this->getRequestSegmentNumbers())) {
             throw new UnexpectedResponseException("Only got $numResponseSegments HICAZ response segments!");
         }
-
         if ($numResponseSegments > 1) {
-            throw new UnexpectedResponseException('More than 1 HICAZ response segment is not supported at the moment!');
+            throw new UnsupportedException('More than 1 HICAZ response segment is not supported at the moment!');
         }
         $this->xml = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
 

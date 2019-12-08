@@ -8,6 +8,8 @@ use Fhp\Credentials;
 use Fhp\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIRMS\Rueckmeldung;
+use Fhp\Segment\HIRMS\RueckmeldungContainer;
 use Fhp\Segment\HNHBK\HNHBKv3;
 use Fhp\Segment\HNHBS\HNHBSv1;
 use Fhp\Segment\HNSHA\BenutzerdefinierteSignaturV1;
@@ -164,20 +166,16 @@ class Message
     }
 
     /**
-     * @param SegmentInterface[]|int[] $referenceSegments The reference segments (or their numbers).
+     * @param int[] $referenceNumbers The numbers of the reference segments.
      * @return Message A new message that just contains the plain segment from $this message which refer to one
      *     of the given $referenceSegments.
      */
-    public function filterByReferenceSegments($referenceSegments)
+    public function filterByReferenceSegments($referenceNumbers)
     {
         $result = new Message();
-        if (empty($referenceSegments)) {
+        if (empty($referenceNumbers)) {
             return $result;
         }
-        $referenceNumbers = array_map(function ($referenceSegment) {
-            /* @var SegmentInterface|int $referenceSegment */
-            return is_int($referenceSegment) ? $referenceSegment : $referenceSegment->getSegmentNumber();
-        }, $referenceSegments);
         $result->plainSegments = array_filter($this->plainSegments, function ($segment) use ($referenceNumbers) {
             /** @var BaseSegment $segment */
             $referenceNumber = $segment->segmentkopf->bezugselement;
@@ -188,6 +186,23 @@ class Message
         $result->signatureHeader = $this->signatureHeader;
         $result->signatureFooter = $this->signatureFooter;
         return $result;
+    }
+
+    /**
+     * @param int $code The response code to search for.
+     * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
+     */
+    public function findRueckmeldung($code)
+    {
+        foreach ($this->plainSegments as $segment) {
+            if ($segment instanceof RueckmeldungContainer) {
+                $rueckmeldung = $segment->findRueckmeldung($code);
+                if ($rueckmeldung !== null) {
+                    return $rueckmeldung;
+                }
+            }
+        }
+        return null;
     }
 
     /**

@@ -50,18 +50,18 @@ class GetSEPAAccounts extends BaseAction
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         switch ($hispas->getVersion()) {
             case 1:
-                return [HKSPAv1::createEmpty()];
+                return HKSPAv1::createEmpty();
             case 2:
-                return [HKSPAv2::createEmpty()];
+                return HKSPAv2::createEmpty();
             default:
                 throw new UnsupportedException('Unsupported HKSPA version: ' . $hispas->getVersion());
         }
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
         /** @var HISPA $hispa */
         $hispa = $response->requireSegment(HISPA::class);
         $this->accounts = array_map(function ($ktz) {

@@ -2,6 +2,8 @@
 
 namespace Fhp\Protocol;
 
+use Fhp\Segment\BaseSegment;
+
 class ServerExceptionTest extends \PHPUnit\Framework\TestCase
 {
     const RESPONSE_WITH_WARNINGS = "HNHBK:1:3+000000000489+300+0+1+0:1'HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Angemeldet.+3076::Keine starke Authentifizierung erforderlich.+0901::PIN gultig.'HIRMS:4:2:4+0020::Informationen fehlerfrei entgegengenommen.+3920::Zugelassene Ein- und Zwei-Schritt-Verfahren fur den Benutzer:900'HIRMS:5:2:6+0020::Die Synchronisierung der Kundensystem-ID war erfolgreich.'HISYN:6:4:6+111111111111111111111111111111'HITAN:7:6:5+4++noref+nochallenge'HNHBS:8:1+1'";
@@ -79,7 +81,10 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
     {
         $request = Message::parse(static::REQUEST_WITH_SEGMENT_NUMBERS);
         $exception = $this->getTestServerException();
-        $extracted = $exception->extractErrorsForReference($request->plainSegments);
+        $extracted = $exception->extractErrorsForReference(array_map(function ($segment) {
+            /** @var BaseSegment $segment */
+            return $segment->getSegmentNumber();
+        }, $request->plainSegments));
         $this->assertCount(1, $exception->getErrors()); // HIRMG
         $this->assertCount(0, $exception->getWarnings()); // No warnings remain
         $this->assertCount(1, $extracted->getErrors()); // HIRMS 9010

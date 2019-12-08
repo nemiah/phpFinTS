@@ -143,9 +143,9 @@ class DialogInitialization extends BaseAction
         return $request;
     }
 
-    public function processResponse($response, $bpd, $upd)
+    public function processResponse($response)
     {
-        parent::processResponse($response, $bpd, $upd);
+        parent::processResponse($response);
         $this->dialogId = $response->header->dialogId;
 
         if ($this->kundensystemId === null) {
@@ -159,10 +159,12 @@ class DialogInitialization extends BaseAction
 
         if (UPD::containedInResponse($response)) {
             $this->upd = UPD::extractFromResponse($response);
-        } elseif ($upd === null && $this->hktanRef === 'HKIDN') {
-            // We're authenticated and indicated to the bank that we don't have any UPD, so it must send it.
-            throw new UnexpectedResponseException('No UPD received');
         }
+    }
+
+    public function isStronglyAuthenticated(): bool
+    {
+        return $this->hktanRef === 'HKIDN';
     }
 
     /**
