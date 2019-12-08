@@ -213,7 +213,7 @@ class FinTsNew
 
         try {
             $response = $this->sendMessage($request);
-            $fakeResponseMessage = $response->filterByReferenceSegments($requestSegments);
+            $fakeResponseMessage = $response->filterByReferenceSegments($action->getRequestSegmentNumbers());
         } catch (ServerException $e) {
             $actionError = $e->extractErrorsForReference($requestSegments);
             if ($actionError !== null) {

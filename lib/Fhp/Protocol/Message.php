@@ -166,20 +166,16 @@ class Message
     }
 
     /**
-     * @param SegmentInterface[]|int[] $referenceSegments The reference segments (or their numbers).
+     * @param int[] $referenceNumbers The numbers of the reference segments.
      * @return Message A new message that just contains the plain segment from $this message which refer to one
      *     of the given $referenceSegments.
      */
-    public function filterByReferenceSegments($referenceSegments)
+    public function filterByReferenceSegments($referenceNumbers)
     {
         $result = new Message();
-        if (empty($referenceSegments)) {
+        if (empty($referenceNumbers)) {
             return $result;
         }
-        $referenceNumbers = array_map(function ($referenceSegment) {
-            /* @var SegmentInterface|int $referenceSegment */
-            return is_int($referenceSegment) ? $referenceSegment : $referenceSegment->getSegmentNumber();
-        }, $referenceSegments);
         $result->plainSegments = array_filter($this->plainSegments, function ($segment) use ($referenceNumbers) {
             /** @var BaseSegment $segment */
             $referenceNumber = $segment->segmentkopf->bezugselement;
