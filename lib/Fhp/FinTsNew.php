@@ -199,52 +199,53 @@ class FinTsNew
             return;
         }
         if (empty($requestSegments)) {
-            // No request needed, just use an empty dummy response.
-            $fakeResponseMessage = new Message();
-        } else {
-            $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
-            if ($this->bpd->tanRequiredForRequest($requestSegments)) {
-                $message->add(HKTANv6::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium));
-            }
-            $request = $this->buildMessage($message);
-            $action->setRequestSegmentNumbers(array_map(function ($segment) {
-                /* @var BaseSegment $segment */
-                return $segment->getSegmentNumber();
-            }, $requestSegments));
-
-            try {
-                $response = $this->sendMessage($request);
-                $fakeResponseMessage = $response->filterByReferenceSegments($requestSegments);
-            } catch (ServerException $e) {
-                $actionError = $e->extractErrorsForReference($requestSegments);
-                if ($actionError !== null) {
-                    $action->processError($actionError, $this->bpd, $this->upd);
-                }
-                if (!empty($e->getErrors())) {
-                    throw $e;
-                }
-                return;
-            }
-            $this->readBPD($response);
-
-            // Detect if a TAN was requested.
-            /** @var HITANv6 $hitan */
-            $hitan = $response->findSegment(HITANv6::class);
-            if ($hitan !== null && $hitan->auftragsreferenz !== HITANv6::DUMMY_REFERENCE) {
-                if ($hitan->tanProzess !== 4) {
-                    throw new UnexpectedResponseException("Unsupported TAN request type $hitan->tanProzess");
-                }
-                if ($this->bpd === null || $this->kundensystemId === null) {
-                    throw new UnexpectedResponseException('Unexpected TAN request');
-                }
-                $action->setTanRequest($hitan);
-                if ($action instanceof DialogInitialization) {
-                    $action->setDialogId($response->header->dialogId);
-                    $action->setMessageNumber($this->messageNumber);
-                }
-                return;
-            }
+            return; // No request needed.
         }
+
+        $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
+        if ($this->bpd->tanRequiredForRequest($requestSegments)) {
+            $message->add(HKTANv6::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium));
+        }
+        $request = $this->buildMessage($message);
+        $action->setRequestSegmentNumbers(array_map(function ($segment) {
+            /* @var BaseSegment $segment */
+            return $segment->getSegmentNumber();
+        }, $requestSegments));
+
+        try {
+            $response = $this->sendMessage($request);
+            $fakeResponseMessage = $response->filterByReferenceSegments($requestSegments);
+        } catch (ServerException $e) {
+            $actionError = $e->extractErrorsForReference($requestSegments);
+            if ($actionError !== null) {
+                $action->processError($actionError, $this->bpd, $this->upd);
+            }
+            if (!empty($e->getErrors())) {
+                throw $e;
+            }
+            return;
+        }
+        $this->readBPD($response);
+
+        // Detect if a TAN was requested.
+        /** @var HITANv6 $hitan */
+        $hitan = $response->findSegment(HITANv6::class);
+        if ($hitan !== null && $hitan->auftragsreferenz !== HITANv6::DUMMY_REFERENCE) {
+            if ($hitan->tanProzess !== 4) {
+                throw new UnexpectedResponseException("Unsupported TAN request type $hitan->tanProzess");
+            }
+            if ($this->bpd === null || $this->kundensystemId === null) {
+                throw new UnexpectedResponseException('Unexpected TAN request');
+            }
+            $action->setTanRequest($hitan);
+            if ($action instanceof DialogInitialization) {
+                $action->setDialogId($response->header->dialogId);
+                $action->setMessageNumber($this->messageNumber);
+            }
+            return;
+        }
+
+        // If no TAN was requested, process the response normally.
         $this->processActionResponse($action, $fakeResponseMessage);
     }
 
