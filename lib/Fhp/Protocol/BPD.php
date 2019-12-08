@@ -108,6 +108,21 @@ class BPD
     }
 
     /**
+     * @param string $type A business transaction type, see above.
+     * @param int $version The segment version of the business transaction.
+     * @return bool If that version of the given transaction type is supported by the bank.
+     */
+    public function supportsParameters($type, $version)
+    {
+        foreach ($this->parameters[$type] as $segment) {
+            if ($segment->getVersion() === $version) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
      * @return bool True if any of the given segments requires a TAN according to HIPINS.
      */

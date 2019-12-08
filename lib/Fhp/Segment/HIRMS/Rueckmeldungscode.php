@@ -41,6 +41,12 @@ abstract class Rueckmeldungscode
     }
 
     /**
+     * Umfang der Prüfung ist kreditinstitutsspezifisch. Mindestanforderung: physisch korrekt empfangen; Status ist
+     * nicht rechtsverbindlich.
+     */
+    const ENTGEGENGENOMMEN = 10;
+
+    /**
      * Bestätigung der Dialogbeendigung des Benutzers oder des Kreditinstituts.
      */
     const BEENDET = 100;
