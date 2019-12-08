@@ -24,7 +24,7 @@ class HKVVBv3 extends BaseSegment
      * 1: Deutsch, Code ‚de’ (German), Subset Deutsch, Codeset 1 (Latin 1)
      * 2: Englisch, Code ‚en’ (English), Subset Englisch, Codeset 1 (Latin 1)
      * 3: Französisch, Code ‚fr’ (French), Subset Französisch, Codeset 1 (Latin 1)
-     * @var integer
+     * @var int
      */
     public $dialogsprache = 0; // The bank's default is fine.
     /** @var string Max length: 25 */

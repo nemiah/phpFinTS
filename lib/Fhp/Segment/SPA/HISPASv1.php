@@ -10,8 +10,14 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section C.10.1.3 c)
  */
-class HISPASv1 extends BaseGeschaeftsvorfallparameter
+class HISPASv1 extends BaseGeschaeftsvorfallparameter implements HISPAS
 {
     /** @var ParameterSepaKontoverbindungAnfordernV1 */
     public $parameter;
+
+    /** {@inheritdoc} */
+    public function getParameter()
+    {
+        return $this->parameter;
+    }
 }
