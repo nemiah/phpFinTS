@@ -8,6 +8,8 @@ use Fhp\Credentials;
 use Fhp\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIRMS\Rueckmeldung;
+use Fhp\Segment\HIRMS\RueckmeldungContainer;
 use Fhp\Segment\HNHBK\HNHBKv3;
 use Fhp\Segment\HNHBS\HNHBSv1;
 use Fhp\Segment\HNSHA\BenutzerdefinierteSignaturV1;
@@ -188,6 +190,23 @@ class Message
         $result->signatureHeader = $this->signatureHeader;
         $result->signatureFooter = $this->signatureFooter;
         return $result;
+    }
+
+    /**
+     * @param int $code The response code to search for.
+     * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
+     */
+    public function findRueckmeldung($code)
+    {
+        foreach ($this->plainSegments as $segment) {
+            if ($segment instanceof RueckmeldungContainer) {
+                $rueckmeldung = $segment->findRueckmeldung($code);
+                if ($rueckmeldung !== null) {
+                    return $rueckmeldung;
+                }
+            }
+        }
+        return null;
     }
 
     /**

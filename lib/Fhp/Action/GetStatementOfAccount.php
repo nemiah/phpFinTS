@@ -13,7 +13,6 @@ use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\Common\Kto;
 use Fhp\Segment\Common\KtvV3;
-use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\KAZ\HIKAZ;
 use Fhp\Segment\KAZ\HIKAZS;
@@ -104,14 +103,7 @@ class GetStatementOfAccount extends BaseAction
         parent::processResponse($response, $bpd, $upd);
 
         // Banks send just 3010 and no HIKAZ in case there are no transactions.
-        $isUnavailable = false;
-        $responseHirms = $response->findSegments(HIRMSv2::class);
-        /** @var HIRMSv2 $hirms */
-        foreach ($responseHirms as $hirms) {
-            if ($hirms->findRueckmeldung(Rueckmeldungscode::UNAVAILABLE) !== null) {
-                $isUnavailable = true;
-            }
-        }
+        $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
         $responseHikaz = $response->findSegments(HIKAZ::class);
         $numResponseSegments = count($responseHikaz);
         if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {

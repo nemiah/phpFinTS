@@ -10,7 +10,6 @@ use Fhp\Segment\CAZ\HICAZv1;
 use Fhp\Segment\CAZ\HKCAZv1;
 use Fhp\Segment\CAZ\UnterstuetzteCamtMessages;
 use Fhp\Segment\Common\Kti;
-use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\UnsupportedException;
 
@@ -99,15 +98,7 @@ class GetStatementOfAccountXML extends BaseAction
         parent::processResponse($response, $bpd, $upd);
 
         // Banks send just 3010 and no HICAZ in case there are no transactions.
-        $isUnavailable = false;
-        $responseHirms = $response->findSegments(HIRMSv2::class);
-        /** @var HIRMSv2 $hirms */
-        foreach ($responseHirms as $hirms) {
-            if ($hirms->findRueckmeldung(Rueckmeldungscode::UNAVAILABLE) !== null) {
-                $isUnavailable = true;
-            }
-        }
-
+        $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null
         if ($isUnavailable) {
             return;
         }

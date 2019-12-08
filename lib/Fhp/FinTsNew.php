@@ -14,8 +14,6 @@ use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
-use Fhp\Segment\HIRMS\HIRMSv2;
-use Fhp\Segment\HIRMS\RueckmeldungContainer;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\HITANS\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Segment\HKEND\HKENDv1;
@@ -603,13 +601,8 @@ class FinTsNew
      */
     private function readBPD($response)
     {
-        /** @var HIRMSv2 $hirms */
-        foreach ($response->findSegments(HIRMSv2::class) as $hirms) {
-            $allowed = $hirms->findRueckmeldung(Rueckmeldungscode::ZUGELASSENE_VERFAHREN);
-            if (isset($allowed)) {
-                $this->allowedTanModes = array_map('intval', $allowed->rueckmeldungsparameter);
-                break;
-            }
+        if ($allowed = $response->findRueckmeldung(Rueckmeldungscode::ZUGELASSENE_VERFAHREN)) {
+            $this->allowedTanModes = array_map('intval', $allowed->rueckmeldungsparameter);
         }
         if (!$response->hasSegment(HIBPAv3::class)) {
             return false;
@@ -636,16 +629,7 @@ class FinTsNew
                 $message = MessageBuilder::create()->add(HKENDv1::create($this->dialogId));
                 $request = $isAnonymous ? Message::createPlainMessage($message) : $this->buildMessage($message);
                 $response = $this->sendMessage($request);
-
-                $foundConfirmation = false;
-                foreach ($response->plainSegments as $segment) {
-                    if ($segment instanceof RueckmeldungContainer &&
-                        $segment->findRueckmeldung(Rueckmeldungscode::BEENDET) !== null) {
-                        $foundConfirmation = true;
-                        break;
-                    }
-                }
-                if (!$foundConfirmation) {
+                if ($response->findRueckmeldung(Rueckmeldungscode::BEENDET) === null) {
                     throw new UnexpectedResponseException(
                         'Server did not confirm dialog end, but did not send error either');
                 }

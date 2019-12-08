@@ -52,7 +52,7 @@ abstract class Rueckmeldungscode
      * Information wird zur Zeit nicht angeboten
      * Wertpapierdatei ist bereits aktuell
      */
-    const UNAVAILABLE = 3010;
+    const NICHT_VERFUEGBAR = 3010;
 
     /**
      * Es liegen weitere Informationen vor.
