@@ -6,7 +6,6 @@ use Fhp\Segment\HIRMG\HIRMGv2;
 use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\UnsupportedException;
 
 /**
  * Thrown when the server response with a response code that indicates an error when executing the request.
@@ -152,7 +151,6 @@ class ServerException extends \Exception
      * @param Message $request The original requests, from which this function pulls the segments that errors
      *     refer to, for ease of debugging.
      * @throws ServerException In case the response indicates an error.
-     * @throws UnsupportedException In case the response indicates pagination. TODO Implement support for pagination.
      */
     public static function detectAndThrowErrors($response, $request)
     {
@@ -178,9 +176,6 @@ class ServerException extends \Exception
                     }
                 } elseif (Rueckmeldungscode::isWarning($rueckmeldung->rueckmeldungscode)) {
                     $warnings[] = $rueckmeldung;
-                    if ($rueckmeldung->rueckmeldungscode === Rueckmeldungscode::PAGINATION) {
-                        throw new UnsupportedException('Pagination not yet implemented!');
-                    }
                 }
             }
         }
