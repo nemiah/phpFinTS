@@ -11,7 +11,7 @@ use Fhp\Syntax\Serializer;
  * determine the structure of the segment. The order matters for the wire format, whereas the field names are only used
  * for documentation/readability purposes within this library. See {@link HITANSv1} for an example of a sub-class.
  */
-abstract class BaseSegment implements SegmentInterface
+abstract class BaseSegment implements SegmentInterface, \Serializable
 {
     /**
      * Reference to the descriptor for this type of segment.
@@ -76,6 +76,11 @@ abstract class BaseSegment implements SegmentInterface
     public function serialize()
     {
         return Serializer::serializeSegment($this);
+    }
+
+    public function unserialize($serialized)
+    {
+        Parser::parseSegment($serialized, $this);
     }
 
     public function __toString()
