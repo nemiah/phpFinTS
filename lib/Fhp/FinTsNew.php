@@ -341,6 +341,16 @@ class FinTsNew
     }
 
     /**
+     * Assumes that the dialog (if any is open) is gone. This can be called by the application using this library when
+     * it just restored this FinTs instance from the persisted format after a long time, so that the dialog/session has
+     * most likely been closed at the server side already.
+     */
+    public function forgetDialog()
+    {
+        $this->dialogId = null;
+    }
+
+    /**
      * Before executing any actions that might require two-step authentication (like fetching a statement or initiating
      * a wire transfer), the user needs to pick a {@link TanMode}. Note that this does not always imply that the user
      * actually needs to enter a TAN every time, but they need to have picked the mode so that the system knows how to
