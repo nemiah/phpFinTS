@@ -34,20 +34,22 @@ class GetStatementOfAccountXML extends BaseAction
     private $allAccounts;
 
     // Response
-    /** @var string|null */
-    private $xml;
+    /** @var string[] */
+    protected $xml = [];
 
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
      *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link #getAccounts()}.
-     * @param string $camtURN The URN/descriptor of the CAMT XML format you want the bank to return. Needs to be one of the reported URNs the bank supports. For example urn:iso:std:iso:20022:tech:xsd:camt.052.001.02
      * @param \DateTime|null $from If set, only transactions after this date (inclusive) are returned.
      * @param \DateTime|null $to If set, only transactions before this date (inclusive) are returned.
+     * @param string|null $camtURN The URN/descriptor of the CAMT XML format you want the bank to return.
+     *     Use null to just let the bank decide. Otherwise needs to be one of the reported URNs the bank supports.
+     *     For example urn:iso:std:iso:20022:tech:xsd:camt.052.001.02
      * @param bool $allAccounts If set to true, will return statements for all accounts of the user. You still need to
      *     pass one of the accounts into $account, though.
      * @return GetStatementOfAccountXML A new action instance.
      */
-    public static function create(SEPAAccount $account, string $camtURN, $from = null, $to = null, $allAccounts = false): GetStatementOfAccountXML
+    public static function create(SEPAAccount $account, $from = null, $to = null, ?string $camtURN = null, $allAccounts = false): GetStatementOfAccountXML
     {
         if (isset($from) && isset($to) && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');
@@ -63,10 +65,10 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /**
-     * @return string|null The XML received from the bank, or null if the statement is unavailable/empty.
+     * @return string[] The XML-Document(s) received from the bank, or empty array if the statement is unavailable/empty.
      * @throws \Exception See {@link #ensureSuccess()}.
      */
-    public function getBookedXML()
+    public function getBookedXML(): array
     {
         $this->ensureSuccess();
         return $this->xml;
@@ -77,18 +79,22 @@ class GetStatementOfAccountXML extends BaseAction
     {
         /** @var HICAZSv1 $hicazs */
         $hicazs = $bpd->requireLatestSupportedParameters('HICAZS');
-        $camtURNs = $hicazs->getParameter()->getUnterstuetzteCamtMessages()->camtDescriptor;
-        if (!in_array($this->camtURN, $camtURNs)) {
-            throw new \InvalidArgumentException('The bank does not support the CAMT format' . $this->camtURN . '. The following formats are supported: ' . implode(', ', $camtURNs));
+        $supportedCamtURNs = $hicazs->getParameter()->getUnterstuetzteCamtMessages()->camtDescriptor;
+        $camtURNs = [];
+        if (is_null($this->camtURN)) {
+            $camtURNs = $supportedCamtURNs;
+        } elseif (!in_array($this->camtURN, $supportedCamtURNs)) {
+            throw new \InvalidArgumentException('The bank does not support the CAMT format' . $this->camtURN . '. The following formats are supported: ' . implode(', ', $supportedCamtURNs));
+        } else {
+            $camtURNs = [$this->camtURN];
         }
         if ($this->allAccounts && !$hicazs->getParameter()->getAlleKontenErlaubt()) {
             throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
         }
         switch ($hicazs->getVersion()) {
             case 1:
-                $unterstuetzteCamtMessages = new UnterstuetzteCamtMessages();
-                $unterstuetzteCamtMessages->camtDescriptor = [$this->camtURN];
-                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
+                $unterstuetzteCamtMessages = UnterstuetzteCamtMessages::create($camtURNs);
+                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
             default:
                 throw new UnsupportedException('Unsupported HKCAZ version: ' . $hicazs->getVersion());
         }
@@ -113,8 +119,7 @@ class GetStatementOfAccountXML extends BaseAction
         if ($numResponseSegments > 1) {
             throw new UnsupportedException('More than 1 HICAZ response segment is not supported at the moment!');
         }
-        $this->xml = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
-
-        // TODO Implement pagination somewhere, not necessarily here.
+        // It seems that paginated responses, always contain a whole XML Document
+        $this->xml[] = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
     }
 }
