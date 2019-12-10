@@ -59,7 +59,7 @@ class HKTAN extends AbstractSegment
             $segmentIdent,
             '',
             '',
-            $version == 6 ? $processID : '',
+            $version == 6 ? FinTsInternal::escapeString($processID) : '',
             //$version != 6 ? $processID : '',
             'N', //, // 7 Weitere TAN folgt
             //'',
