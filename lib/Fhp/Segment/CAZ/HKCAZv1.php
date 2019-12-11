@@ -30,7 +30,7 @@ class HKCAZv1 extends BaseSegment
     /** @var string|null Max length: 35 */
     public $aufsetzpunkt;
 
-    public static function create(Kti $kti, UnterstuetzteCamtMessages $unterstuetzteCamtMessages, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum): HKCAZv1
+    public static function create(Kti $kti, UnterstuetzteCamtMessages $unterstuetzteCamtMessages, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null): HKCAZv1
     {
         $result = HKCAZv1::createEmpty();
         $result->kontoverbindungInternational = $kti;
@@ -38,6 +38,8 @@ class HKCAZv1 extends BaseSegment
         $result->alleKonten = $alleKonten;
         $result->vonDatum = isset($vonDatum) ? $vonDatum->format('Ymd') : null;
         $result->bisDatum = isset($bisDatum) ? $bisDatum->format('Ymd') : null;
+        $result->aufsetzpunkt = $aufsetzpunkt;
+
         return $result;
     }
 }

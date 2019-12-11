@@ -14,4 +14,11 @@ class UnterstuetzteCamtMessages extends BaseDeg
 {
     /** @var string[] @Max(99) */
     public $camtDescriptor;
+
+    public static function create(array $camtDescriptor)
+    {
+        $result = new UnterstuetzteCamtMessages();
+        $result->camtDescriptor = $camtDescriptor;
+        return $result;
+    }
 }
