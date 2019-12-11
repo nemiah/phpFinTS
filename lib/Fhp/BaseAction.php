@@ -13,6 +13,7 @@ use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIRMS\Rueckmeldungscode;
 
 /**
  * Base class for actions that can be performed against a bank server. On a high level, there are two kinds of actions:
@@ -38,8 +39,18 @@ abstract class BaseAction implements \Serializable
     /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link #createRequest()}. */
     private $requestSegmentNumbers;
 
-    /** @var TanRequest|null */
+    /**
+     * If set, the last response from the server regarding this action asked for a TAN from the user.
+     * @var TanRequest|null
+     */
     private $tanRequest;
+
+    /**
+     * If set, the last response from the server regarding this action indicated that there are more results to be
+     * fetched using this pagination token. This is called "Aufsetzpunkt" in the specification.
+     * @var string|null
+     */
+    private $paginationToken;
 
     /** @var bool */
     private $isAvailable;
@@ -59,13 +70,13 @@ abstract class BaseAction implements \Serializable
         if (!$this->needsTan()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
         }
-        return serialize([$this->requestSegmentNumbers, $this->tanRequest]);
+        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken]);
     }
 
     /** {@inheritdoc} */
     public function unserialize($serialized)
     {
-        list($this->requestSegmentNumbers, $this->tanRequest) = unserialize($serialized);
+        list($this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken) = unserialize($serialized);
     }
 
     /**
@@ -113,6 +124,24 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
+     * @return bool True if the response has not been read completely yet, i.e. additional requests to the server are
+     *     necessary to continue reading the requested data.
+     */
+    public function hasMorePages(): bool
+    {
+        return !$this->isAvailable && $this->paginationToken !== null;
+    }
+
+    /**
+     * @return string|null Possibly a pagination token to be sent to the server. For actions that support pagination,
+     *     this should be read in {@link #createRequest()}.
+     */
+    public function getPaginationToken(): ?string
+    {
+        return $this->paginationToken;
+    }
+
+    /**
      * @return ServerException|UnexpectedResponseException|\RuntimeException|null
      */
     public function getError()
@@ -146,7 +175,9 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * Called when this action is about to be executed, in order to construct the request.
+     * Called when this action is about to be executed, in order to construct the request. This function can be called
+     * multiple times in case the response is paginated. On all but the first call, {@link #getPaginationToken()} will
+     * return a non-null token that should be included in the returned request.
      * @param BPD $bpd See {@link BPD}.
      * @param UPD $upd See {@link UPD}.
      * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
@@ -159,8 +190,9 @@ abstract class BaseAction implements \Serializable
     abstract public function createRequest($bpd, $upd);
 
     /**
-     * Called when this action was executed on the server, to process the response. In case the response indicates that
-     * this action failed, this function may throw an appropriate exception. Sub-classes should override this function
+     * Called when this action was executed on the server (never if {@link #createRequest()} returned an empty request),
+     * to process the response. This function can be called multiple times in case the response is paginated.
+     * In case the response indicates that this action failed, this function may throw an appropriate exception. Sub-classes should override this function
      * and call the parent/super function.
      * @param Message $response A fake message that contains the subset of segments received from the server that
      *     were in response to the request segments that were created by {@link #createRequest()}.
@@ -168,8 +200,16 @@ abstract class BaseAction implements \Serializable
      */
     public function processResponse($response)
     {
-        unset($response); // Only used in sub-classes.
-        $this->isAvailable = true;
+        $pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION);
+        if ($pagination === null) {
+            $this->paginationToken = null;
+            $this->isAvailable = true;
+        } else {
+            if (count($pagination->rueckmeldungsparameter) !== 1) {
+                throw new UnexpectedResponseException("Unexpected pagination request: $pagination");
+            }
+            $this->paginationToken = $pagination->rueckmeldungsparameter[0];
+        }
     }
 
     /**
@@ -196,9 +236,6 @@ abstract class BaseAction implements \Serializable
      */
     final public function setRequestSegmentNumbers($requestSegmentNumbers)
     {
-        if (isset($this->requestSegmentNumbers)) {
-            throw new \AssertionError('Cannot setRequestSegmentNumbers again');
-        }
         foreach ($requestSegmentNumbers as $segmentNumber) {
             if (!is_int($segmentNumber)) {
                 throw new \InvalidArgumentException("Invalid segment number: $segmentNumber");

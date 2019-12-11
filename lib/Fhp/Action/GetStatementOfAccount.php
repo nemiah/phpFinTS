@@ -43,6 +43,8 @@ class GetStatementOfAccount extends BaseAction
     private $bankName;
 
     // Response
+    /** @var string */
+    private $rawMT940 = '';
     /** @var StatementOfAccount */
     private $statement;
 
@@ -81,6 +83,16 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /**
+     * @return string The raw MT940 data received from the server.
+     * @throws \Exception See {@link #ensureSuccess()}.
+     */
+    public function getRawMT940(): string
+    {
+        $this->ensureSuccess();
+        return $this->rawMT940;
+    }
+
+    /**
      * @return StatementOfAccount
      * @throws \Exception See {@link #ensureSuccess()}.
      */
@@ -102,13 +114,13 @@ class GetStatementOfAccount extends BaseAction
         }
         switch ($hikazs->getVersion()) {
             case 4:
-                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
+                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to, $this->getPaginationToken());
             case 5:
-                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
             case 6:
-                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
             case 7:
-                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
             default:
                 throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
         }
@@ -127,6 +139,20 @@ class GetStatementOfAccount extends BaseAction
             throw new UnexpectedResponseException("Only got $numResponseSegments HIKAZ response segments!");
         }
 
+        /** @var HIKAZ $hikaz */
+        foreach ($responseHikaz as $hikaz) {
+            $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
+        }
+
+        // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial
+        // reponse before having received all pages.
+        if (!$this->hasMorePages()) {
+            $this->parseMt940();
+        }
+    }
+
+    private function parseMt940()
+    {
         if (strpos(strtolower($this->bankName), 'sparda') !== false) {
             $parser = new SpardaMT940();
         } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
@@ -136,15 +162,10 @@ class GetStatementOfAccount extends BaseAction
         }
 
         try {
-            $this->statement = new StatementOfAccount();
-            /** @var HIKAZ $hikaz */
-            foreach ($responseHikaz as $hikaz) {
-                $parsedStatement = $parser->parse($hikaz->getGebuchteUmsaetze()->getData());
-                \Fhp\Response\GetStatementOfAccount::addFromArray($parsedStatement, $this->statement);
-            }
+            $parsedStatement = $parser->parse($this->rawMT940);
+            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($parsedStatement);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
         }
-        // TODO Implement pagination somewhere, not necessarily here.
     }
 }

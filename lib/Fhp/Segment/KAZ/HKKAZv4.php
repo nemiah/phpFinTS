@@ -30,14 +30,16 @@ class HKKAZv4 extends BaseSegment
      * @param \Fhp\Segment\Common\Kto $kto
      * @param \DateTime|null $vonDatum
      * @param \DateTime|null $bisDatum
+     * @param string|null $aufsetzpunkt
      * @return HKKAZv4
      */
-    public static function create($kto, $vonDatum, $bisDatum)
+    public static function create($kto, $vonDatum, $bisDatum, $aufsetzpunkt = null)
     {
         $result = HKKAZv4::createEmpty();
         $result->kontoverbindungAuftraggeber = $kto;
         $result->vonDatum = isset($vonDatum) ? $vonDatum->format('Ymd') : null;
         $result->bisDatum = isset($bisDatum) ? $bisDatum->format('Ymd') : null;
+        $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
     }
 }
