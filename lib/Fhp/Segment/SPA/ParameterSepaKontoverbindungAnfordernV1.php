@@ -10,7 +10,7 @@ use Fhp\Segment\BaseDeg;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: D (letter P)
  */
-class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg
+class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg implements ParameterSepaKontoverbindungAnfordern
 {
     /** @var bool */
     public $einzelkontenabrufErlaubt;
@@ -20,4 +20,10 @@ class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg
     public $strukturierterVerwendungszweckErlaubt;
     /** @var string[] @Max(99) Max length each: 256 */
     public $unterstuetzteSepaDatenformate;
+
+    /** {@inheritdoc} */
+    public function getUnterstuetzteSepaDatenformate()
+    {
+        return $this->unterstuetzteSepaDatenformate;
+    }
 }
