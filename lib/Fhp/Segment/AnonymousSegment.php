@@ -3,11 +3,12 @@
 namespace Fhp\Segment;
 
 use Fhp\Syntax\Delimiter;
+use Fhp\Syntax\Parser;
 
 /**
  * A fallback for segments that were received from the server but are not implemented in this library.
  */
-final class AnonymousSegment extends BaseSegment
+final class AnonymousSegment extends BaseSegment implements \Serializable
 {
     /**
      * The type plus version of the segment, i.e. the class name of the class that would normally implement it.
@@ -62,6 +63,14 @@ final class AnonymousSegment extends BaseSegment
                 return implode(Delimiter::GROUP, $element);
             }, $this->elements))
             . Delimiter::SEGMENT;
+    }
+
+    public function unserialize($serialized)
+    {
+        $parsed = Parser::parseAnonymousSegment($serialized);
+        $this->type = $parsed->type;
+        $this->segmentkopf = $parsed->segmentkopf;
+        $this->elements = $parsed->elements;
     }
 
     /**

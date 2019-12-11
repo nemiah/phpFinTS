@@ -141,7 +141,8 @@ class GetStatementOfAccount extends BaseAction
 
         /** @var HIKAZ $hikaz */
         foreach ($responseHikaz as $hikaz) {
-            $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
+            // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
+            $this->rawMT940 .= utf8_encode($hikaz->getGebuchteUmsaetze()->getData());
         }
 
         // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial

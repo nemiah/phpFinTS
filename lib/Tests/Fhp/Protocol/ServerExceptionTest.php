@@ -82,7 +82,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
         $request = Message::parse(static::REQUEST_WITH_SEGMENT_NUMBERS);
         $exception = $this->getTestServerException();
         $extracted = $exception->extractErrorsForReference(array_map(function ($segment) {
-            /** @var BaseSegment $segment */
+            /* @var BaseSegment $segment */
             return $segment->getSegmentNumber();
         }, $request->plainSegments));
         $this->assertCount(1, $exception->getErrors()); // HIRMG

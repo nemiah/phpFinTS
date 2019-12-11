@@ -17,7 +17,6 @@ use Fhp\Segment\HNSHA\HNSHAv2;
 use Fhp\Segment\HNSHK\HNSHKv4;
 use Fhp\Segment\HNVSD\HNVSDv1;
 use Fhp\Segment\HNVSK\HNVSKv3;
-use Fhp\Segment\SegmentInterface;
 use Fhp\Syntax\Parser;
 use Fhp\Syntax\Serializer;
 
