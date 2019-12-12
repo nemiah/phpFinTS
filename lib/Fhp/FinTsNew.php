@@ -40,7 +40,7 @@ class FinTsNew
     private $logger;
 
     // The TAN mode and medium to be used for business transactions that require a TAN.
-    /** @var VerfahrensparameterZweiSchrittVerfahrenV6|null Note that this is a sub-type of {@link TanMode} */
+    /** @var VerfahrensparameterZweiSchrittVerfahrenV6|int|null Note that this is a sub-type of {@link TanMode} */
     private $selectedTanMode;
     /** @var string|null This is a {@link TanMedium#getName()}, but we don't have the {@link TanMedium} instance. */
     private $selectedTanMedium;
@@ -169,7 +169,7 @@ class FinTsNew
         $this->requireTanMode();
         $this->ensureSynchronized();
         $this->messageNumber = 1;
-        $login = new DialogInitialization($this->options, $this->credentials, $this->selectedTanMode,
+        $login = new DialogInitialization($this->options, $this->credentials, $this->getSelectedTanMode(),
             $this->selectedTanMedium, $this->kundensystemId);
         $this->execute($login);
         return $login;
@@ -210,7 +210,7 @@ class FinTsNew
         if ($this->bpd->tanRequiredForRequest($requestSegments)) {
             $message->add(HKTANv6::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium));
         }
-        $request = $this->buildMessage($message);
+        $request = $this->buildMessage($message, $this->getSelectedTanMode());
         $action->setRequestSegmentNumbers(array_map(function ($segment) {
             /* @var BaseSegment $segment */
             return $segment->getSegmentNumber();
@@ -300,9 +300,10 @@ class FinTsNew
         }
 
         // Construct the request.
+        $tanMode = $this->requireTanMode();
         $message = MessageBuilder::create()
-            ->add(HKTANv6::createProzessvariante2Step2($this->requireTanMode(), $tanRequest->getProcessId()));
-        $request = $this->buildMessage($message, $tan);
+            ->add(HKTANv6::createProzessvariante2Step2($tanMode, $tanRequest->getProcessId()));
+        $request = $this->buildMessage($message, $tanMode, $tan);
 
         // Execute the request.
         $response = $this->sendRequestForAction($action, $request);
@@ -390,7 +391,7 @@ class FinTsNew
         // Execute the GetTanMedia request with the $tanMode swapped in temporarily.
         $oldTanMode = $this->selectedTanMode;
         $oldTanMedium = $this->selectedTanMedium;
-        $this->selectedTanMode = $this->resolveTanMode($tanMode);
+        $this->selectedTanMode = $tanMode instanceof TanMode ? $tanMode->getId() : $tanMode;
         $this->selectedTanMedium = '';
         try {
             $this->executeWeakDialogInitialization('HKTAB');
@@ -408,37 +409,15 @@ class FinTsNew
     }
 
     /**
-     * Note: While the selected TAN mode is not immediately sent to the bank server by this function, but only used in
-     * subsequent requests in {@link #execute()}, this function may need to contact the server in order to retrieve the
-     * BPD and validate the $tanMode.
      * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link #getTanModes()} or its ID.
      * @param TanMedium|string|null $tanMedium If the $tanMode has {@link TanMode#needsTanMedium()} set to true, this
      *     must be the value returned from {@link TanMedium#getName()} for one of the TAN media supported with that TAN
      *     mode. Use {@link #getTanMedia()} to obtain a list of possible TAN media options.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server resopnds with an error.
      */
     public function selectTanMode($tanMode, $tanMedium = null)
     {
-        $this->selectedTanMode = $this->resolveTanMode($tanMode);
-        if (!($this->selectedTanMode instanceof VerfahrensparameterZweiSchrittVerfahrenV6)) {
-            throw new UnsupportedException('Only supports VerfahrensparameterZweiSchrittVerfahrenV6');
-        }
-        if ($this->selectedTanMode->tanProzess !== VerfahrensparameterZweiSchrittVerfahrenV6::PROZESSVARIANTE_2) {
-            throw new UnsupportedException('Only supports Prozessvariante 2');
-        }
-
-        if ($this->selectedTanMode->needsTanMedium()) {
-            if ($tanMedium === null) {
-                throw new \InvalidArgumentException('tanMedium is mandatory for this tanMode');
-            }
-            $this->selectedTanMedium = is_string($tanMedium) ? $tanMedium : $tanMedium->getName();
-        } else {
-            if ($tanMedium !== null) {
-                throw new \InvalidArgumentException('tanMedium not allowed for this tanMode');
-            }
-            $this->selectedTanMedium = null;
-        }
+        $this->selectedTanMode = $tanMode instanceof TanMode ? $tanMode->getId() : $tanMode;
+        $this->selectedTanMedium = $tanMedium instanceof TanMedium ? $tanMedium->getName() : $tanMedium;
     }
 
     // ------------------------------------------------- IMPLEMENTATION ------------------------------------------------
@@ -526,33 +505,54 @@ class FinTsNew
     }
 
     /**
-     * @param TanMode|int $tanMode A {@link TanMode} or its ID received from the user.
-     * @return TanMode The corresponding fresh {@link TanMode} from the BPD.
+     * If the selected TAN mode was provided as an int, resolves it to a full {@link TanMode} instance, which may
+     * involve a request to the server to retrieve the BPD. Then returns it.
+     * @return VerfahrensparameterZweiSchrittVerfahrenV6|null The current TAN mode, null if none was selected, never an int.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server resopnds with an error.
+     * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
-    private function resolveTanMode($tanMode)
+    private function getSelectedTanMode()
     {
-        if (!is_int($tanMode)) {
-            $tanMode = $tanMode->getId();
+        if (is_int($this->selectedTanMode)) {
+            $this->ensureBpdAvailable();
+            if (!array_key_exists($this->selectedTanMode, $this->bpd->allTanModes)) {
+                throw new \InvalidArgumentException("Unknown TAN mode: $this->selectedTanMode");
+            }
+            $this->selectedTanMode = $this->bpd->allTanModes[$this->selectedTanMode];
+            if (!($this->selectedTanMode instanceof VerfahrensparameterZweiSchrittVerfahrenV6)) {
+                throw new UnsupportedException('Only supports VerfahrensparameterZweiSchrittVerfahrenV6');
+            }
+            if ($this->selectedTanMode->tanProzess !== VerfahrensparameterZweiSchrittVerfahrenV6::PROZESSVARIANTE_2) {
+                throw new UnsupportedException('Only supports Prozessvariante 2');
+            }
+
+            if ($this->selectedTanMode->needsTanMedium()) {
+                if ($this->selectedTanMedium === null) {
+                    throw new \InvalidArgumentException('tanMedium is mandatory for this tanMode');
+                }
+            } else {
+                if ($this->selectedTanMedium !== null) {
+                    throw new \InvalidArgumentException('tanMedium not allowed for this tanMode');
+                }
+            }
         }
-        $this->ensureBpdAvailable();
-        if (!array_key_exists($tanMode, $this->bpd->allTanModes)) {
-            throw new \InvalidArgumentException("Unknown TAN mode: $tanMode");
-        }
-        return $this->bpd->allTanModes[$tanMode];
+        return $this->selectedTanMode;
     }
 
     /**
+     * Like {@link #getSelectedTanMode()}, but throws an exception if none was selected.
      * @return VerfahrensparameterZweiSchrittVerfahrenV6 The current TAN mode.
      * @throws \RuntimeException If no TAN mode has been selected.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
     private function requireTanMode()
     {
-        if ($this->selectedTanMode === null) {
+        $tanMode = $this->getSelectedTanMode();
+        if ($tanMode === null) {
             throw new \RuntimeException('selectTanMode() must be called before executing business transactions');
         }
-        return $this->selectedTanMode;
+        return $tanMode;
     }
 
     /**
@@ -645,8 +645,8 @@ class FinTsNew
         }
 
         $this->messageNumber = 1;
-        $dialogInitialization = new DialogInitialization($this->options, $this->credentials, $this->selectedTanMode,
-            $this->selectedTanMedium, $this->kundensystemId, $hktanRef);
+        $dialogInitialization = new DialogInitialization($this->options, $this->credentials,
+            $this->getSelectedTanMode(), $this->selectedTanMedium, $this->kundensystemId, $hktanRef);
         $this->execute($dialogInitialization);
         try {
             $dialogInitialization->ensureSuccess();
@@ -690,7 +690,9 @@ class FinTsNew
         try {
             if ($this->dialogId !== null) {
                 $message = MessageBuilder::create()->add(HKENDv1::create($this->dialogId));
-                $request = $isAnonymous ? Message::createPlainMessage($message) : $this->buildMessage($message);
+                $request = $isAnonymous
+                    ? Message::createPlainMessage($message)
+                    : $this->buildMessage($message, $this->getSelectedTanMode());
                 $response = $this->sendMessage($request);
                 if ($response->findRueckmeldung(Rueckmeldungscode::BEENDET) === null) {
                     throw new UnexpectedResponseException(
@@ -715,17 +717,18 @@ class FinTsNew
     /**
      * Injects FinTsOptions/BPD/UPD/Credentials information into the message.
      * @param MessageBuilder $message The message to be built.
+     * @param TanMode|null $tanMode Optionally a TAN mode that will be used when sending this message.
      * @param string|null Optionally a TAN to sign this message with.
      * @return Message The built message.
      */
-    private function buildMessage($message, $tan = null)
+    private function buildMessage($message, $tanMode = null, $tan = null)
     {
         return Message::createWrappedMessage(
             $message,
             $this->options,
             $this->kundensystemId === null ? '0' : $this->kundensystemId,
             $this->credentials,
-            $this->selectedTanMode,
+            $tanMode,
             $tan
         );
     }
@@ -741,7 +744,7 @@ class FinTsNew
     private function sendMessage($request)
     {
         if ($request instanceof MessageBuilder) {
-            $request = $this->buildMessage($request);
+            $request = $this->buildMessage($request, $this->getSelectedTanMode());
         }
 
         $request->header->dialogId = $this->dialogId === null ? '0' : $this->dialogId;

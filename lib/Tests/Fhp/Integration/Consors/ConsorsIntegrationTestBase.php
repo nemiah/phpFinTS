@@ -42,11 +42,9 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
      */
     protected function initDialog()
     {
-        // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
+        // We already know the TAN mode (900 below), so it will only fetch the BPD (anonymously) to verify it.
         $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, static::ANONYMOUS_END_RESPONSE);
-        $this->fints->selectTanMode(900);
-        $this->assertAllMessagesSeen();
 
         // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
         $this->expectMessage(static::SYNC_REQUEST, static::SYNC_RESPONSE);
@@ -54,6 +52,8 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
 
         // And finally it can initialize the main dialog, but the bank wants a TAN.
         $this->expectMessage(static::LOGIN_REQUEST, static::LOGIN_RESPONSE);
+
+        $this->fints->selectTanMode(900);
         $login = $this->fints->login();
         $login->maybeThrowError();
         $this->assertAllMessagesSeen();
