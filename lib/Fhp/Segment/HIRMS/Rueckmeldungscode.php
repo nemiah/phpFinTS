@@ -75,6 +75,16 @@ abstract class Rueckmeldungscode
     const ZUGELASSENE_VERFAHREN = 3920;
 
     /**
+     * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.
+     */
+    const TEILWEISE_FEHLERHAFT = 9050;
+
+    /**
+     * Kreditinstitutsseitige Beendigung des Dialoges
+     */
+    const ABGEBROCHEN = 9800;
+
+    /**
      * Ihre PIN ist gesperrt.
      */
     const PIN_GESPERRT = 9930;
@@ -116,9 +126,4 @@ abstract class Rueckmeldungscode
      * TAN/Signatur ungültig
      */
     const ZEITUEBERSCHREITUNG_IM_ZWEI_SCHRITT_VERFAHREN = 9951;
-
-    /**
-     * Kreditinstitutsseitige Beendigung des Dialoges.
-     */
-    const ABGEBROCHEN = 9800;
 }

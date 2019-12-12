@@ -114,6 +114,21 @@ class ServerException extends \Exception
     }
 
     /**
+     * @param int $code A Rueckmeldungscode to look for.
+     * @return Rueckmeldung|null The first matching Rueckmeldung, which will have been removed from this instance, or
+     *     null if no match was found.
+     */
+    public function extractError($code)
+    {
+        foreach ($this->errors as $index => $error) {
+            if ($error->rueckmeldungscode === $code) {
+                return array_splice($this->errors, $index, 1)[0];
+            }
+        }
+        return null;
+    }
+
+    /**
      * @return bool True if the {@link Credentials} used to make this request are wrong. If this returns true, the
      *     application should ask the user to re-enter the credentials before making any further requests to the bank.
      */
