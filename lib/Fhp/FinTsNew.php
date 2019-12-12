@@ -80,17 +80,7 @@ class FinTsNew
         $this->credentials = $credentials;
 
         if ($persistedInstance !== null) {
-            $unserialized = unserialize($persistedInstance);
-            if (!is_array($unserialized) || empty($unserialized)) {
-                throw new \InvalidArgumentException("Invalid persistedInstance: '$persistedInstance'");
-            }
-            $version = $unserialized[0];
-            $data = array_slice($unserialized, 1);
-            if ($version === 2) {
-                $this->loadPersistedInstanceVersion2($data);
-            } else {
-                throw new \InvalidArgumentException("Unknown persistedInstace version: '{$unserialized[0]}''");
-            }
+            $this->loadPersistedInstance($persistedInstance);
         }
     }
 
@@ -136,6 +126,21 @@ class FinTsNew
             $this->dialogId,
             $this->messageNumber,
         ]);
+    }
+
+    public function loadPersistedInstance($persistedInstance)
+    {
+        $unserialized = unserialize($persistedInstance);
+        if (!is_array($unserialized) || empty($unserialized)) {
+            throw new \InvalidArgumentException("Invalid persistedInstance: '$persistedInstance'");
+        }
+        $version = $unserialized[0];
+        $data = array_slice($unserialized, 1);
+        if ($version === 2) {
+            $this->loadPersistedInstanceVersion2($data);
+        } else {
+            throw new \InvalidArgumentException("Unknown persistedInstace version: '{$unserialized[0]}''");
+        }
     }
 
     /** @param array $data */
