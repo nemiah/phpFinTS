@@ -68,11 +68,11 @@ class FinTsNew
      * @param FinTsOptions $options Configuration options for the connection to the bank.
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
-     * @param string|null The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
+     * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
      *     PHP session. Passing this in here saves 1-2 dialogs that are normally made with the bank to obtain the BPD
      *     and Kundensystem-ID.
      */
-    public function __construct($options, $credentials, $persistedInstance = null)
+    public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
     {
         $options->validate();
         $this->logger = $options->logger;
@@ -128,7 +128,17 @@ class FinTsNew
         ]);
     }
 
-    public function loadPersistedInstance($persistedInstance)
+    /**
+     * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
+     * obtain it from the user.
+     *
+     * @param string The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
+     *     PHP session.
+     *
+     * @param string $persistedInstance
+     * @throws \InvalidArgumentException
+     */
+    public function loadPersistedInstance(string $persistedInstance)
     {
         $unserialized = unserialize($persistedInstance);
         if (!is_array($unserialized) || empty($unserialized)) {
