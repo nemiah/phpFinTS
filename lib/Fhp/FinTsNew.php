@@ -99,6 +99,8 @@ class FinTsNew
      * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
      * `Credentials` need to be passed to the constructor in addition to the string returned here.
      *
+     * Alternatively you can use {@link #loadPersistedInstance) to separate constructing the instance and resuming it.
+     *
      * NOTE: Unless you're persisting this object to complete a TAN request later on, you probably want to log the user
      * out first by calling {@link #close()}.
      *
