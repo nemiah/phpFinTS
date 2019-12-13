@@ -134,10 +134,9 @@ class FinTsNew
      * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
      * obtain it from the user.
      *
-     * @param string The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
+     * @param string $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
      *     PHP session.
      *
-     * @param string $persistedInstance
      * @throws \InvalidArgumentException
      */
     public function loadPersistedInstance(string $persistedInstance)
