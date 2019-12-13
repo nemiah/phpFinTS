@@ -38,8 +38,8 @@ class HKKAZv6 extends BaseSegment
         $result = HKKAZv6::createEmpty();
         $result->kontoverbindungAuftraggeber = $ktv;
         $result->alleKonten = $alleKonten;
-        $result->vonDatum = isset($vonDatum) ? $vonDatum->format('Ymd') : null;
-        $result->bisDatum = isset($bisDatum) ? $bisDatum->format('Ymd') : null;
+        $result->vonDatum = $vonDatum === null ? null : $vonDatum->format('Ymd');
+        $result->bisDatum = $bisDatum === null ? null : $bisDatum->format('Ymd');
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
     }

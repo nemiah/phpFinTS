@@ -15,14 +15,14 @@ abstract class BaseDeg implements \Serializable
      * Reference to the descriptor for this type of segment.
      * @var DegDescriptor|null
      */
-    private $descriptor;
+    private $descriptor = null;
 
     /**
      * @return DegDescriptor The descriptor for this Deg type.
      */
     public function getDescriptor()
     {
-        if (!isset($this->descriptor)) {
+        if ($this->descriptor === null) {
             $this->descriptor = DegDescriptor::get(static::class);
         }
         return $this->descriptor;

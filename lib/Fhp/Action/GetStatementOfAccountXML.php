@@ -51,7 +51,7 @@ class GetStatementOfAccountXML extends BaseAction
      */
     public static function create(SEPAAccount $account, $from = null, $to = null, ?string $camtURN = null, $allAccounts = false): GetStatementOfAccountXML
     {
-        if (isset($from) && isset($to) && $from > $to) {
+        if ($from !== null && $to !== null && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');
         }
 

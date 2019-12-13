@@ -183,9 +183,9 @@ class ServerException extends \Exception
                 $rueckmeldung->referenceSegment = $referenceSegment;
                 if (Rueckmeldungscode::isError($rueckmeldung->rueckmeldungscode)) {
                     $errors[] = $rueckmeldung;
-                    if (isset($referenceSegment)) {
+                    if ($referenceSegment !== null) {
                         $requestSegment = $request->findSegmentByNumber($referenceSegment);
-                        if (isset($requestSegment)) {
+                        if ($requestSegment !== null) {
                             $requestSegments[] = $requestSegment;
                         }
                     }

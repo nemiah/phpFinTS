@@ -242,7 +242,7 @@ abstract class Parser
 
             // Skip optional single elements that are not present. Note that for elements with multiple fields we cannot
             // just skip because here we would only detect whether the first field is empty or not.
-            if ($isSingleField && (!isset($rawElements[$offset]) || $rawElements[$offset] === '')) {
+            if ($isSingleField && (!array_key_exists($offset, $rawElements) || $rawElements[$offset] === '')) {
                 if ($elementDescriptor->optional) {
                     ++$offset;
                     continue;
@@ -317,7 +317,7 @@ abstract class Parser
         }
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
-            if (!isset($rawElements[$index]) || $rawElements[$index] === '') {
+            if (!array_key_exists($index, $rawElements) || $rawElements[$index] === '') {
                 if ($elementDescriptor->optional) {
                     continue;
                 }

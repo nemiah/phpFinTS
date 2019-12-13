@@ -9,7 +9,7 @@ namespace Fhp\Segment;
 class SegmentDescriptor extends BaseDescriptor
 {
     /** @var SegmentDescriptor[] */
-    private static $descriptors;
+    private static $descriptors = [];
 
     /**
      * @param string $class The name of a sub-class of {@link BaseSegment}.
@@ -17,7 +17,7 @@ class SegmentDescriptor extends BaseDescriptor
      */
     public static function get($class)
     {
-        if (!isset(static::$descriptors[$class])) {
+        if (!array_key_exists($class, static::$descriptors)) {
             static::$descriptors[$class] = new SegmentDescriptor($class);
         }
         return static::$descriptors[$class];
