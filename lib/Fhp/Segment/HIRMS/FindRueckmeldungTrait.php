@@ -20,6 +20,6 @@ trait FindRueckmeldungTrait
         if (count($matches) > 1) {
             throw new \InvalidArgumentException("Unexpectedly multiple matches for Rueckmeldungscode $code");
         }
-        return empty($matches) ? null : $matches[0];
+        return count($matches) === 0 ? null : $matches[0];
     }
 }

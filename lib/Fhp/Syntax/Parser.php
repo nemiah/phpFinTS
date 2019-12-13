@@ -47,7 +47,7 @@ abstract class Parser
      */
     public static function splitEscapedString($delimiter, $str, $trailingDelimiter = false)
     {
-        if (empty($str)) {
+        if (strlen($str) === 0) {
             return [];
         }
         // Since most of the $delimiters used in FinTs are also special characters in regexes, we need to escape.
@@ -171,7 +171,6 @@ abstract class Parser
 
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
         if (
-            empty($rawValue) ||
             substr($rawValue, 0, 1) !== Delimiter::BINARY ||
             $delimiterPos === false
         ) {
@@ -362,7 +361,7 @@ abstract class Parser
         return new AnonymousSegment(
             Segmentkopf::parse(array_shift($rawElements)),
             array_map(function ($rawElement) {
-                if (empty($rawElement)) {
+                if (strlen($rawElement) === 0) {
                     return null;
                 }
                 $subElements = static::splitEscapedString(Delimiter::GROUP, $rawElement);
@@ -384,7 +383,7 @@ abstract class Parser
         }
         $rawSegment = substr($rawSegment, 0, -1); // Strip segment delimiter at the end.
         $rawElements = static::splitEscapedString(Delimiter::ELEMENT, $rawSegment);
-        if (empty($rawElements)) {
+        if (count($rawElements) === 0) {
             throw new \InvalidArgumentException("Invalid segment: $rawSegment");
         }
         return $rawElements;
@@ -450,7 +449,7 @@ abstract class Parser
      */
     public static function parseSegments($rawSegments)
     {
-        if (empty($rawSegments)) {
+        if (strlen($rawSegments) === 0) {
             return [];
         }
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);
@@ -464,7 +463,7 @@ abstract class Parser
      */
     public static function parseRawSegments($rawSegments)
     {
-        if (empty($rawSegments)) {
+        if (strlen($rawSegments) === 0) {
             return [];
         }
         $rawSegments = static::splitEscapedString(Delimiter::SEGMENT, $rawSegments, true);

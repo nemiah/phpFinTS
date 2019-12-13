@@ -41,9 +41,9 @@ class ServerException extends \Exception
         $this->requestSegments = $requestSegments;
         $this->request = $request;
         $this->response = $response;
-        $errorsStr = empty($errors) ? '' : "FinTS errors:\n" . implode("\n", $errors);
-        $warningsStr = empty($warnings) ? '' : "FinTS warnings:\n" . implode("\n", $warnings);
-        $segmentsStr = empty($requestSegments) ? '' : "Request segments:\n" . implode("\n", $requestSegments);
+        $errorsStr = count($errors) === 0 ? '' : "FinTS errors:\n" . implode("\n", $errors);
+        $warningsStr = count($warnings) === 0 ? '' : "FinTS warnings:\n" . implode("\n", $warnings);
+        $segmentsStr = count($requestSegments) === 0 ? '' : "Request segments:\n" . implode("\n", $requestSegments);
         parent::__construct(implode("\n", array_filter([$errorsStr, $warningsStr, $segmentsStr])));
     }
 
@@ -56,14 +56,14 @@ class ServerException extends \Exception
      */
     public function extractErrorsForReference($referenceNumbers)
     {
-        if (empty($referenceNumbers)) {
+        if (count($referenceNumbers) === 0) {
             return null;
         }
         $errors = array_filter($this->errors, function ($error) use ($referenceNumbers) {
             /* @var Rueckmeldung $error */
             return in_array($error->referenceSegment, $referenceNumbers);
         });
-        if (empty($errors)) {
+        if (count($errors) === 0) {
             return null;
         }
         $warnings = array_filter($this->warnings, function ($error) use ($referenceNumbers) {
@@ -194,7 +194,7 @@ class ServerException extends \Exception
                 }
             }
         }
-        if (!empty($errors)) {
+        if (count($errors) > 0) {
             throw new ServerException($errors, $warnings, $requestSegments, $request, $response);
         }
     }

@@ -47,12 +47,9 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
         $this->needles = array_merge($this->needles, static::computeNeedles($sensitiveMaterial));
     }
 
-    /** @noinspection PhpLanguageLevelInspection */
-
-    /** @noinspection PhpUndefinedClassInspection */
     public function log($level, $message, array $context = []): void
     {
-        $message .= empty($context) ? '' : ' ' . implode(', ', $context);
+        $message .= count($context) === 0 ? '' : ' ' . implode(', ', $context);
         $sanitizedMessage = static::sanitizeForLogging($message, $this->needles);
         echo "$level: $sanitizedMessage\n";
     }

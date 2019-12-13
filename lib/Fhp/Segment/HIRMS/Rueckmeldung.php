@@ -39,7 +39,7 @@ class Rueckmeldung extends BaseDeg
         if ($this->bezugsdatenelement !== null) {
             $result .= " (wrt DE $this->bezugsdatenelement)";
         }
-        if (!empty($this->rueckmeldungsparameter)) {
+        if ($this->rueckmeldungsparameter !== null && count($this->rueckmeldungsparameter) > 0) {
             $result .= ' [' . implode(', ', $this->rueckmeldungsparameter) . ']';
         }
         return $result;

@@ -142,7 +142,7 @@ class FinTsNew
     public function loadPersistedInstance(string $persistedInstance)
     {
         $unserialized = unserialize($persistedInstance);
-        if (!is_array($unserialized) || empty($unserialized)) {
+        if (!is_array($unserialized) || count($unserialized) === 0) {
             throw new \InvalidArgumentException("Invalid persistedInstance: '$persistedInstance'");
         }
         $version = $unserialized[0];
@@ -216,7 +216,7 @@ class FinTsNew
             $action->processError($e, $this->bpd, $this->upd);
             return;
         }
-        if (empty($requestSegments)) {
+        if (count($requestSegments) === 0) {
             return; // No request needed.
         }
         $this->checkPaginationToken($action, $requestSegments);
@@ -284,7 +284,7 @@ class FinTsNew
                     $this->forgetDialog();
                 }
             }
-            if (!empty($e->getErrors())) {
+            if (count($e->getErrors()) > 0) {
                 throw $e;
             }
             return null;
