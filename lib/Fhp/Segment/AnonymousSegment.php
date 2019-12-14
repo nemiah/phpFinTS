@@ -40,7 +40,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
         $this->elements = $elements;
     }
 
-    public function getDescriptor()
+    public function getDescriptor(): SegmentDescriptor
     {
         throw new \RuntimeException('AnonymousSegments do not have a descriptor');
     }
@@ -50,7 +50,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
         // Do nothing, anonymous segments are always valid.
     }
 
-    public function serialize()
+    public function serialize(): string
     {
         return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
             implode(Delimiter::ELEMENT, array_map(function ($element) {
@@ -76,7 +76,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     /**
      * Just to override the super factory.
      */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
         // Note: createEmpty() normally runs the constructor and then fills the Segmentkopf, but that is not possible
         // for AnonymousSegment. Callers should just call the constructor itself.

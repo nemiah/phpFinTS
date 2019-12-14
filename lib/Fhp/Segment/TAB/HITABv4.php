@@ -23,7 +23,7 @@ class HITABv4 extends BaseSegment implements HITAB
     public $tanMediumListe;
 
     /** {@inheritdoc} */
-    public function getTanMediumListe()
+    public function getTanMediumListe(): array
     {
         return $this->tanMediumListe;
     }

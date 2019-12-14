@@ -56,7 +56,7 @@ abstract class BaseDeg implements \Serializable
      * Parses into the current instance.
      * @param string $serialized The HBCI wire format for a DEG of this type.
      */
-    public function unserialize(string $serialized)
+    public function unserialize($serialized)
     {
         Parser::parseDeg($serialized, $this);
     }

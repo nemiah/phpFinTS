@@ -21,7 +21,7 @@ class HIKAZv4 extends BaseSegment implements HIKAZ
     /** @var Bin|null Uses SWIFT format MT942, version SRG 2001 */
     public $nichtGebuchteUmsaetze;
 
-    public function getGebuchteUmsaetze()
+    public function getGebuchteUmsaetze(): Bin
     {
         return $this->gebuchteUmsaetze;
     }

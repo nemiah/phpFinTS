@@ -6,7 +6,10 @@ namespace Fhp\Action;
 
 use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\CAZ\HICAZSv1;
 use Fhp\Segment\CAZ\HICAZv1;
 use Fhp\Segment\CAZ\HKCAZv1;
@@ -75,7 +78,7 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, UPD $upd)
     {
         if (!$upd->isRequestSupportedForAccount($this->account, 'HKCAZ')) {
             throw new UnsupportedException('The bank (or the given account/user combination) does not allow this type of request.');
@@ -84,7 +87,6 @@ class GetStatementOfAccountXML extends BaseAction
         /** @var HICAZSv1 $hicazs */
         $hicazs = $bpd->requireLatestSupportedParameters('HICAZS');
         $supportedCamtURNs = $hicazs->getParameter()->getUnterstuetzteCamtMessages()->camtDescriptor;
-        $camtURNs = [];
         if (is_null($this->camtURN)) {
             $camtURNs = $supportedCamtURNs;
         } elseif (!in_array($this->camtURN, $supportedCamtURNs)) {
@@ -106,7 +108,7 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
 

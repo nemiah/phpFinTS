@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace Fhp\Segment\HKSYN;
 
 use Fhp\Segment\BaseSegment;

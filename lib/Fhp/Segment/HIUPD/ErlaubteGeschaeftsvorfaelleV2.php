@@ -22,7 +22,7 @@ class ErlaubteGeschaeftsvorfaelleV2 extends BaseDeg implements ErlaubteGeschaeft
     public $limitTage;
 
     /** {@inheritdoc} */
-    public function getGeschaeftsvorfall()
+    public function getGeschaeftsvorfall(): string
     {
         return $this->geschaeftsvorfall;
     }

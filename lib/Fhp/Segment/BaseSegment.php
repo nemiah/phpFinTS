@@ -35,17 +35,17 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
         return $this->descriptor;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->segmentkopf->segmentkennung;
     }
 
-    public function getVersion()
+    public function getVersion(): int
     {
         return $this->segmentkopf->segmentversion;
     }
 
-    public function getSegmentNumber()
+    public function getSegmentNumber(): int
     {
         return $this->segmentkopf->segmentnummer;
     }
@@ -83,7 +83,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
         Parser::parseSegment($serialized, $this);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->serialize();
     }

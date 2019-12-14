@@ -69,7 +69,7 @@ abstract class AbstractSegment implements SegmentInterface
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }
@@ -92,7 +92,7 @@ abstract class AbstractSegment implements SegmentInterface
     /**
      * @return int
      */
-    public function getSegmentNumber()
+    public function getSegmentNumber(): int
     {
         return $this->segmentNumber;
     }
@@ -100,7 +100,7 @@ abstract class AbstractSegment implements SegmentInterface
     /**
      * @return int
      */
-    public function getVersion()
+    public function getVersion(): int
     {
         return $this->version;
     }

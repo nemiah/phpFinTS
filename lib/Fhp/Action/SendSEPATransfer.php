@@ -5,7 +5,10 @@ namespace Fhp\Action;
 use Fhp\BaseAction;
 use Fhp\DataTypes\Bin;
 use Fhp\Model\SEPAAccount;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
@@ -43,7 +46,7 @@ class SendSEPATransfer extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, UPD $upd)
     {
         if (!$bpd->supportsParameters('HICCSS', 1)) {
             throw new UnsupportedException('The bank does not support HKCCSv1');
@@ -65,7 +68,7 @@ class SendSEPATransfer extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
         if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) === null) {

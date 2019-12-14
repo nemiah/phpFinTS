@@ -104,7 +104,7 @@ class DialogInitialization extends BaseAction
         $this->hktanRef = $hktanRef;
     }
 
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([
             parent::serialize(),
@@ -128,7 +128,7 @@ class DialogInitialization extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, UPD $upd)
     {
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),
@@ -143,7 +143,7 @@ class DialogInitialization extends BaseAction
         return $request;
     }
 
-    public function processResponse($response)
+    public function processResponse(Message$response)
     {
         parent::processResponse($response);
         $this->dialogId = $response->header->dialogId;

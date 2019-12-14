@@ -4,6 +4,9 @@ namespace Fhp\Action;
 
 use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Ktz;
 use Fhp\Segment\SPA\HISPA;
@@ -44,7 +47,7 @@ class GetSEPAAccounts extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, UPD $upd)
     {
         /** @var BaseSegment $hispas */
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
@@ -59,7 +62,7 @@ class GetSEPAAccounts extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
         /** @var HISPA $hispa */

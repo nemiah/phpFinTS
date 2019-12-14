@@ -18,7 +18,7 @@ class GetTanMedia extends BaseAction
     private $tanMedia;
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, UPD $upd)
     {
         // Prepare the HKTAB request.
         $hitabs = $bpd->requireLatestSupportedParameters('HITABS');
@@ -33,7 +33,7 @@ class GetTanMedia extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
         /** @var HITAB $hitab */

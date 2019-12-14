@@ -60,21 +60,21 @@ class HITANv6 extends BaseSegment implements TanRequest
     public $bezeichnungDesTanMediums;
 
     /** {@inheritdoc} */
-    public function getProcessId()
+    public function getProcessId(): string
     {
         // Note: This is non-null because tanProzess==4.
         return $this->auftragsreferenz;
     }
 
     /** {@inheritdoc} */
-    public function getChallenge()
+    public function getChallenge(): string
     {
         // Note: This is non-null because tanProzess==4.
         return $this->challenge;
     }
 
     /** {@inheritdoc} */
-    public function getTanMediumName()
+    public function getTanMediumName(): string
     {
         return $this->bezeichnungDesTanMediums;
     }
