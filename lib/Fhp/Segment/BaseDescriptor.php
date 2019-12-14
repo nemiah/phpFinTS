@@ -99,7 +99,7 @@ abstract class BaseDescriptor
      * @throws \InvalidArgumentException If any of the fields in the given object is not valid according to the schema
      *     defined by this descriptor.
      */
-    public function validateObject(object $obj)
+    public function validateObject($obj)
     {
         if (!is_a($obj, $this->class)) {
             throw new \InvalidArgumentException("Expected $this->class, got " . gettype($obj));

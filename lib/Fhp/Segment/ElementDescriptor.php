@@ -42,7 +42,7 @@ class ElementDescriptor
      * @param object $obj The object whose $field will be validated.
      * @throws \InvalidArgumentException If $obj->$field does not correspond to the schema in this descriptor.
      */
-    public function validateField(object $obj)
+    public function validateField($obj)
     {
         if (!isset($obj->{$this->field})) {
             if ($this->optional) {
