@@ -8,7 +8,7 @@ class SpardaMT940 extends MT940
 {
     const DIALECT_ID = 'https://fints.bankingonline.de/fints/FinTs30PinTanHttpGate';
 
-    /** {@inheritDoc} */
+    /** {@inheritdoc} */
     public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, string &$rawLines): array
     {
         $otherInfo = [];

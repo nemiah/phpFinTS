@@ -8,7 +8,7 @@ class PostbankMT940 extends MT940
 {
     const DIALECT_ID = 'https://hbci.postbank.de/banking/hbci.do';
 
-    /** {@inheritDoc} */
+    /** {@inheritdoc} */
     public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, string &$rawLines): array
     {
         // z.B bei Zinsen o.ä. ist alles leer

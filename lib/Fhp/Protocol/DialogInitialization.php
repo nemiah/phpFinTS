@@ -143,7 +143,7 @@ class DialogInitialization extends BaseAction
         return $request;
     }
 
-    public function processResponse(Message$response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
         $this->dialogId = $response->header->dialogId;
