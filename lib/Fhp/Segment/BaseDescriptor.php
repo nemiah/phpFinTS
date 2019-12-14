@@ -30,9 +30,6 @@ abstract class BaseDescriptor
      */
     public $maxIndex;
 
-    /**
-     * @param \ReflectionClass $clazz
-     */
     protected function __construct(\ReflectionClass $clazz)
     {
         // Use reflection to map PHP class fields to elements in the segment/Deg.

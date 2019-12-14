@@ -37,8 +37,6 @@ class Account
     /**
      * Set id
      *
-     * @param string $id
-     *
      * @return $this
      */
     public function setId(string $id)
@@ -50,8 +48,6 @@ class Account
 
     /**
      * Get accountNumber
-     *
-     * @return string
      */
     public function getAccountNumber(): string
     {
@@ -60,8 +56,6 @@ class Account
 
     /**
      * Set accountNumber
-     *
-     * @param string $accountNumber
      *
      * @return $this
      */
@@ -74,8 +68,6 @@ class Account
 
     /**
      * Get bankCode
-     *
-     * @return string
      */
     public function getBankCode(): string
     {
@@ -84,8 +76,6 @@ class Account
 
     /**
      * Set bankCode
-     *
-     * @param string $bankCode
      *
      * @return $this
      */
@@ -98,8 +88,6 @@ class Account
 
     /**
      * Get iban
-     *
-     * @return string
      */
     public function getIban(): string
     {
@@ -108,8 +96,6 @@ class Account
 
     /**
      * Set iban
-     *
-     * @param string $iban
      *
      * @return $this
      */
@@ -122,8 +108,6 @@ class Account
 
     /**
      * Get customerId
-     *
-     * @return string
      */
     public function getCustomerId(): string
     {
@@ -132,8 +116,6 @@ class Account
 
     /**
      * Set customerId
-     *
-     * @param string $customerId
      *
      * @return $this
      */
@@ -146,8 +128,6 @@ class Account
 
     /**
      * Get currency
-     *
-     * @return string
      */
     public function getCurrency(): string
     {
@@ -156,8 +136,6 @@ class Account
 
     /**
      * Set currency
-     *
-     * @param string $currency
      *
      * @return $this
      */
@@ -170,8 +148,6 @@ class Account
 
     /**
      * Get accountOwnerName
-     *
-     * @return string
      */
     public function getAccountOwnerName(): string
     {
@@ -180,8 +156,6 @@ class Account
 
     /**
      * Set accountOwnerName
-     *
-     * @param string $accountOwnerName
      *
      * @return $this
      */
@@ -194,8 +168,6 @@ class Account
 
     /**
      * Get accountDescription
-     *
-     * @return string
      */
     public function getAccountDescription(): string
     {
@@ -204,8 +176,6 @@ class Account
 
     /**
      * Set accountDescription
-     *
-     * @param string $accountDescription
      *
      * @return $this
      */

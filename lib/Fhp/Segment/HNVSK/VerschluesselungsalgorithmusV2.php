@@ -43,9 +43,6 @@ class VerschluesselungsalgorithmusV2 extends BaseDeg
     /** @var string|null Max length: 512 Not allowed for PIN/TAN */
     public $wertDesAlgorithmusparametersIv;
 
-    /**
-     * @return VerschluesselungsalgorithmusV2
-     */
     public static function create(): VerschluesselungsalgorithmusV2
     {
         $result = new VerschluesselungsalgorithmusV2();

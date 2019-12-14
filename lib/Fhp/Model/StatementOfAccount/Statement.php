@@ -58,8 +58,6 @@ class Statement
 
     /**
      * Get startBalance
-     *
-     * @return float
      */
     public function getStartBalance(): float
     {
@@ -68,8 +66,6 @@ class Statement
 
     /**
      * Set startBalance
-     *
-     * @param float $startBalance
      *
      * @return $this
      */
@@ -82,8 +78,6 @@ class Statement
 
     /**
      * Get creditDebit
-     *
-     * @return string
      */
     public function getCreditDebit(): string
     {
@@ -92,8 +86,6 @@ class Statement
 
     /**
      * Set creditDebit
-     *
-     * @param string|null $creditDebit
      *
      * @return $this
      */
@@ -106,8 +98,6 @@ class Statement
 
     /**
      * Get date
-     *
-     * @return \DateTime
      */
     public function getDate(): \DateTime
     {
@@ -116,8 +106,6 @@ class Statement
 
     /**
      * Set date
-     *
-     * @param \DateTime $date
      *
      * @return $this
      */

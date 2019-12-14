@@ -35,16 +35,6 @@ class HNSHK extends AbstractSegment
 
     /**
      * HNSHK constructor.
-     * @param int $segmentNumber
-     * @param string $securityReference
-     * @param string $countryCode
-     * @param string $bankCode
-     * @param string $userName
-     * @param int $systemId
-     * @param int $securityFunction
-     * @param int $securityBoundary
-     * @param int $securitySupplierRole
-     * @param int $pinTanVersion
      */
     public function __construct(
         int $segmentNumber,
@@ -78,9 +68,6 @@ class HNSHK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

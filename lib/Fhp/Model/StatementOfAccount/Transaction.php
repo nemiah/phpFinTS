@@ -83,7 +83,6 @@ class Transaction
      *
      * @deprecated Use getBookingDate() instead
      * @codeCoverageIgnore
-     * @return \DateTime|null
      */
     public function getDate(): ?\DateTime
     {
@@ -92,8 +91,6 @@ class Transaction
 
     /**
      * Get booking date
-     *
-     * @return \DateTime|null
      */
     public function getBookingDate(): ?\DateTime
     {
@@ -102,8 +99,6 @@ class Transaction
 
     /**
      * Get date
-     *
-     * @return \DateTime|null
      */
     public function getValutaDate(): ?\DateTime
     {
@@ -112,8 +107,6 @@ class Transaction
 
     /**
      * Set booking date
-     *
-     * @param \DateTime|null $date
      *
      * @return $this
      */
@@ -127,8 +120,6 @@ class Transaction
     /**
      * Set valuta date
      *
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setValutaDate(\DateTime $date = null)
@@ -140,8 +131,6 @@ class Transaction
 
     /**
      * Get amount
-     *
-     * @return float
      */
     public function getAmount(): float
     {
@@ -150,8 +139,6 @@ class Transaction
 
     /**
      * Set booked status
-     *
-     * @param bool $booked
      *
      * @return $this
      */
@@ -165,8 +152,6 @@ class Transaction
     /**
      * Set amount
      *
-     * @param float $amount
-     *
      * @return $this
      */
     public function setAmount(float $amount)
@@ -178,8 +163,6 @@ class Transaction
 
     /**
      * Get creditDebit
-     *
-     * @return string
      */
     public function getCreditDebit(): string
     {
@@ -188,8 +171,6 @@ class Transaction
 
     /**
      * Set creditDebit
-     *
-     * @param string $creditDebit
      *
      * @return $this
      */
@@ -202,8 +183,6 @@ class Transaction
 
     /**
      * Get bookingCode
-     *
-     * @return string
      */
     public function getBookingCode(): string
     {
@@ -212,8 +191,6 @@ class Transaction
 
     /**
      * Set bookingCode
-     *
-     * @param string $bookingCode
      *
      * @return $this
      */
@@ -226,8 +203,6 @@ class Transaction
 
     /**
      * Get bookingText
-     *
-     * @return string
      */
     public function getBookingText(): string
     {
@@ -236,8 +211,6 @@ class Transaction
 
     /**
      * Set bookingText
-     *
-     * @param string $bookingText
      *
      * @return $this
      */
@@ -250,8 +223,6 @@ class Transaction
 
     /**
      * Get description1
-     *
-     * @return string
      */
     public function getDescription1(): string
     {
@@ -260,8 +231,6 @@ class Transaction
 
     /**
      * Set description1
-     *
-     * @param string $description1
      *
      * @return $this
      */
@@ -274,8 +243,6 @@ class Transaction
 
     /**
      * Get description2
-     *
-     * @return string
      */
     public function getDescription2(): string
     {
@@ -284,8 +251,6 @@ class Transaction
 
     /**
      * Set description2
-     *
-     * @param string $description2
      *
      * @return $this
      */
@@ -322,8 +287,6 @@ class Transaction
 
     /**
      * Get the main description (SVWZ)
-     *
-     * @return string
      */
     public function getMainDescription(): string
     {
@@ -336,8 +299,6 @@ class Transaction
 
     /**
      * Get the end to end id (EREF)
-     *
-     * @return string
      */
     public function getEndToEndID(): string
     {
@@ -350,8 +311,6 @@ class Transaction
 
     /**
      * Get bankCode
-     *
-     * @return string
      */
     public function getBankCode(): string
     {
@@ -360,8 +319,6 @@ class Transaction
 
     /**
      * Set bankCode
-     *
-     * @param string $bankCode
      *
      * @return $this
      */
@@ -374,8 +331,6 @@ class Transaction
 
     /**
      * Get accountNumber
-     *
-     * @return string
      */
     public function getAccountNumber(): string
     {
@@ -384,8 +339,6 @@ class Transaction
 
     /**
      * Set accountNumber
-     *
-     * @param string $accountNumber
      *
      * @return $this
      */
@@ -398,8 +351,6 @@ class Transaction
 
     /**
      * Get name
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -408,8 +359,6 @@ class Transaction
 
     /**
      * Get booked status
-     *
-     * @return bool
      */
     public function getBooked(): bool
     {
@@ -418,8 +367,6 @@ class Transaction
 
     /**
      * Set name
-     *
-     * @param string $name
      *
      * @return $this
      */
@@ -432,8 +379,6 @@ class Transaction
 
     /**
      * Get primanota number
-     *
-     * @return int
      */
     public function getPN(): int
     {
@@ -442,8 +387,6 @@ class Transaction
 
     /**
      * Set primanota number
-     *
-     * @param int $nr
      *
      * @return $this
      */

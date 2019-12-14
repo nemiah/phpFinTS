@@ -21,11 +21,6 @@ class HKCDL extends AbstractSegment
 
     /**
      * HKCDL constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     * @param Kti $kti
-     * @param string $SEPADescriptor
-     * @param SEPAStandingOrder $SEPAStandingOrder
      */
     public function __construct(int $version, int $segmentNumber, Kti $kti, string $SEPADescriptor, SEPAStandingOrder $SEPAStandingOrder)
     {
@@ -50,9 +45,6 @@ class HKCDL extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

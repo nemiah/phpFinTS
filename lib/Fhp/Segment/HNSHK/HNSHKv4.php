@@ -66,7 +66,6 @@ class HNSHKv4 extends BaseSegment
      * @param Credentials $credentials See {@link Credentials}.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
      * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2#identifizierungDerPartei}.
-     * @return HNSHKv4
      */
     public static function create(string $sicherheitskontrollreferenz, FinTsOptions $options, Credentials $credentials, ?TanMode $tanMode, string $kundensystemId): HNSHKv4
     {

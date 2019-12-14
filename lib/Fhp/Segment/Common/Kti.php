@@ -43,8 +43,6 @@ class Kti extends BaseDeg
     }
 
     /**
-     * @param string $iban
-     * @param string $bic
      * @return Kti
      */
     public static function create(string $iban, string $bic)
@@ -56,7 +54,6 @@ class Kti extends BaseDeg
     }
 
     /**
-     * @param SEPAAccount $account
      * @return Kti
      */
     public static function fromAccount(SEPAAccount $account)

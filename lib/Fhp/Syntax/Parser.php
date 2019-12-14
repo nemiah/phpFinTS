@@ -458,7 +458,6 @@ abstract class Parser
 
     /**
      * @deprecated Could be removed, if Response::$rawSegments is removed.
-     * @param string $rawSegments
      * @return string[] RawSegments
      */
     public static function parseRawSegments(string $rawSegments): array

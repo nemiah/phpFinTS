@@ -18,10 +18,7 @@ class HKSAL extends AbstractSegment
 
     /**
      * HKSAL constructor.
-     * @param int $version
-     * @param int $segmentNumber
      * @param mixed $ktv
-     * @param bool $allAccounts
      */
     public function __construct(int $version, int $segmentNumber, $ktv, bool $allAccounts)
     {
@@ -36,9 +33,6 @@ class HKSAL extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

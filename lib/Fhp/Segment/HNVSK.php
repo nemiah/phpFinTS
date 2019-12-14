@@ -36,14 +36,6 @@ class HNVSK extends AbstractSegment
 
     /**
      * HNVSK constructor.
-     * @param int $segmentNumber
-     * @param string $bankCode
-     * @param string $userName
-     * @param int $systemId
-     * @param int $securitySupplierRole
-     * @param int $countryCode
-     * @param int $compression
-     * @param int $pinTanVersion
      */
     public function __construct(
         int $segmentNumber,
@@ -72,9 +64,6 @@ class HNVSK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

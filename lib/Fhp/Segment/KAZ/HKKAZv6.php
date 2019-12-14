@@ -26,11 +26,6 @@ class HKKAZv6 extends BaseSegment
     public $aufsetzpunkt;
 
     /**
-     * @param \Fhp\Segment\Common\KtvV3 $ktv
-     * @param bool $alleKonten
-     * @param \DateTime|null $vonDatum
-     * @param \DateTime|null $bisDatum
-     * @param string|null $aufsetzpunkt
      * @return HKKAZv6
      */
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null)

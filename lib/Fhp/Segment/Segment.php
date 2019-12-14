@@ -7,7 +7,6 @@ use Fhp\Syntax\Parser;
 class Segment extends AbstractSegment
 {
     /**
-     * @param string $string
      * @return BaseSegment|AbstractSegment
      */
     public static function createFromString(string $string)

@@ -18,8 +18,6 @@ class HNVSD extends AbstractSegment
 
     /**
      * HNVSD constructor.
-     * @param int $segmentNumber
-     * @param string $encodedData
      */
     public function __construct(int $segmentNumber, string $encodedData)
     {
@@ -31,9 +29,6 @@ class HNVSD extends AbstractSegment
         );
     }
 
-    /**
-     * @return Bin
-     */
     public function getEncodedData(): Bin
     {
         $des = $this->getDataElements();
@@ -41,17 +36,11 @@ class HNVSD extends AbstractSegment
         return $des[0];
     }
 
-    /**
-     * @param string $data
-     */
     public function setEncodedData(string $data)
     {
         $this->setDataElements([new Bin($data)]);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

@@ -13,7 +13,6 @@ class HKTAB extends AbstractSegment
 
     /**
      * HKTAB constructor.
-     * @param int $segmentNumber
      */
     public function __construct(int $segmentNumber)
     {
@@ -28,9 +27,6 @@ class HKTAB extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

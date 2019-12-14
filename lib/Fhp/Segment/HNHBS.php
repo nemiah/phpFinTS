@@ -16,8 +16,6 @@ class HNHBS extends AbstractSegment
 
     /**
      * HNHBS constructor.
-     * @param int $segmentNumber
-     * @param int $messageNumber
      */
     public function __construct(
         int $segmentNumber,
@@ -31,9 +29,6 @@ class HNHBS extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

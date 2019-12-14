@@ -14,8 +14,6 @@ class MT940
     const CD_DEBIT = 'debit';
 
     /**
-     * @param string $rawData
-     * @return array
      * @throws MT940Exception
      */
     public function parse(string $rawData): array
@@ -179,7 +177,6 @@ class MT940
      * @param string[] $lines that contain the remittance information
      * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
      * @param string $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
-     * @return array
      */
     protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, string &$rawLines): array
     {
@@ -212,10 +209,6 @@ class MT940
         return $description;
     }
 
-    /**
-     * @param string $val
-     * @return string
-     */
     protected function getDate(string $val): string
     {
         $val = '20' . $val;

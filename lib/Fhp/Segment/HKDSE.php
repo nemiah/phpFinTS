@@ -20,11 +20,6 @@ class HKDSE extends AbstractSegment
 
     /**
      * HKDSE constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     * @param Kti $kti
-     * @param string $SEPADescriptor
-     * @param string $painMessage
      */
     public function __construct(int $version, int $segmentNumber, Kti $kti, string $SEPADescriptor, string $painMessage)
     {
@@ -40,9 +35,6 @@ class HKDSE extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

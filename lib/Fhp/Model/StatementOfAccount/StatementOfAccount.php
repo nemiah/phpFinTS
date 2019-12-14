@@ -38,9 +38,6 @@ class StatementOfAccount
         return false;
     }
 
-    /**
-     * @param Statement $statement
-     */
     public function addStatement(Statement $statement)
     {
         $this->statements[] = $statement;
@@ -50,7 +47,6 @@ class StatementOfAccount
      * Gets statement for given date.
      *
      * @param string|\DateTime $date
-     * @return Statement|null
      */
     public function getStatementForDate($date): ?Statement
     {
@@ -71,7 +67,6 @@ class StatementOfAccount
      * Checks if a statement with given date exists.
      *
      * @param string|\DateTime $date
-     * @return bool
      */
     public function hasStatementForDate($date): bool
     {

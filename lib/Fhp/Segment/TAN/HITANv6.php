@@ -79,49 +79,31 @@ class HITANv6 extends BaseSegment implements TanRequest
         return $this->bezeichnungDesTanMediums;
     }
 
-    /**
-     * @return int
-     */
     public function getTanProzess(): int
     {
         return $this->tanProzess;
     }
 
-    /**
-     * @return Bin|null
-     */
     public function getAuftragsHashwert(): ?Bin
     {
         return $this->auftragsHashwert;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAuftragsreferenz(): ?string
     {
         return $this->auftragsreferenz;
     }
 
-    /**
-     * @return Bin|null
-     */
     public function getChallengeHhdUc(): ?Bin
     {
         return $this->challengeHhdUc;
     }
 
-    /**
-     * @return GueltigkeitsdatumUndUhrzeitFuerChallenge|null
-     */
     public function getGueltigkeitsdatumUndUhrzeitFuerChallenge(): ?GueltigkeitsdatumUndUhrzeitFuerChallenge
     {
         return $this->gueltigkeitsdatumUndUhrzeitFuerChallenge;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBezeichnungDesTanMediums(): ?string
     {
         return $this->bezeichnungDesTanMediums;

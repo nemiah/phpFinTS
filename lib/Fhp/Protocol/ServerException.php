@@ -31,8 +31,6 @@ class ServerException extends \Exception
      * @param Rueckmeldung[] $errors
      * @param Rueckmeldung[] $warnings
      * @param string[] $requestSegments (already serialized and sanitized)
-     * @param Message $request
-     * @param Message $response
      */
     public function __construct(array $errors, array $warnings, array $requestSegments, Message $request, Message $response)
     {

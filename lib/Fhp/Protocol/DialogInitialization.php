@@ -82,8 +82,6 @@ class DialogInitialization extends BaseAction
     private $upd;
 
     /**
-     * @param FinTsOptions $options
-     * @param Credentials $credentials
      * @param TanMode|null $tanMode The TAN mode selected by the user.
      * @param string|null $tanMedium Possibly a TAN medium selected by the user.
      * @param string|null $kundensystemId The current Kundensystem-ID, if the client already has one.
@@ -167,33 +165,21 @@ class DialogInitialization extends BaseAction
         return $this->hktanRef === 'HKIDN';
     }
 
-    /**
-     * @return string|null
-     */
     public function getKundensystemId(): ?string
     {
         return $this->kundensystemId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMessageNumber(): ?int
     {
         return $this->messageNumber;
     }
 
-    /**
-     * @param int|null $messageNumber
-     */
     public function setMessageNumber(?int $messageNumber): void
     {
         $this->messageNumber = $messageNumber;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDialogId(): ?string
     {
         return $this->dialogId;
@@ -201,16 +187,12 @@ class DialogInitialization extends BaseAction
 
     /**
      * To be called when a TAN is required for login, but we need to intermittently store the Dialog-ID.
-     * @param string|null $dialogId
      */
     public function setDialogId(?string $dialogId): void
     {
         $this->dialogId = $dialogId;
     }
 
-    /**
-     * @return UPD|null
-     */
     public function getUpd(): ?UPD
     {
         return $this->upd;

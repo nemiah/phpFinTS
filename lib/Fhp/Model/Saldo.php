@@ -21,8 +21,6 @@ class Saldo
 
     /**
      * Get currency
-     *
-     * @return string
      */
     public function getCurrency(): string
     {
@@ -31,8 +29,6 @@ class Saldo
 
     /**
      * Set currency
-     *
-     * @param string $currency
      *
      * @return $this
      */
@@ -45,8 +41,6 @@ class Saldo
 
     /**
      * Get amount
-     *
-     * @return float
      */
     public function getAmount(): float
     {
@@ -55,8 +49,6 @@ class Saldo
 
     /**
      * Set amount
-     *
-     * @param float $amount
      *
      * @return $this
      */
@@ -69,8 +61,6 @@ class Saldo
 
     /**
      * Get valuta
-     *
-     * @return \DateTime
      */
     public function getValuta(): \DateTime
     {
@@ -79,8 +69,6 @@ class Saldo
 
     /**
      * Set valuta
-     *
-     * @param \DateTime $valuta
      *
      * @return $this
      */

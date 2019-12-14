@@ -20,7 +20,6 @@ class SecurityDateTime extends Deg
      * SecurityDateTime constructor.
      *
      * @param int $type
-     * @param \DateTime|null $dateTime
      */
     public function __construct($type = self::DATETIME_TYPE_STS, \DateTime $dateTime = null)
     {

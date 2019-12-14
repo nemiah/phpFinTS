@@ -20,8 +20,6 @@ class HKSYN extends AbstractSegment
 
     /**
      * HKSYN constructor.
-     * @param int $segmentNumber
-     * @param int $syncMode
      */
     public function __construct(
         int $segmentNumber,
@@ -35,9 +33,6 @@ class HKSYN extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

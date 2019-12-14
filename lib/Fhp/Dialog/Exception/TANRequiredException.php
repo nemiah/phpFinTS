@@ -44,57 +44,36 @@ class TANRequiredException extends \Exception
         parent::__construct('Sicherheitsfreigabe erforderlich; Challenge: ' . $response->getTanChallenge());
     }
 
-    /**
-     * @return GetTANRequest
-     */
     public function getResponse(): GetTANRequest
     {
         return $this->response;
     }
 
-    /**
-     * @return string
-     */
     public function getTanMechanism(): string
     {
         return $this->tanMechanism;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTanMediaName(): ?string
     {
         return $this->tanMediaName;
     }
 
-    /**
-     * @return string
-     */
     public function getSystemId(): string
     {
         return $this->systemId;
     }
 
-    /**
-     * @return string
-     */
     public function getDialogId(): string
     {
         return $this->dialogId;
     }
 
-    /**
-     * @return int
-     */
     public function getMessageNumber(): int
     {
         return $this->messageNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getProcessId(): string
     {
         return $this->processId;
@@ -104,8 +83,6 @@ class TANRequiredException extends \Exception
      * Konkateniert die benötigten Wert mit Tilde (~),
      * da Tilde nicht im FinTS-Basiszeichensatz enthalten ist und somit nicht in einem
      * dieser Wert vorkommen kann und ~ außerdem URL-Safe ist.
-     *
-     * @return string
      */
     public function getTANToken(): string
     {

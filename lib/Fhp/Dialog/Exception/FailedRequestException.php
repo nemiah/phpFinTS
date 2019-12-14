@@ -24,8 +24,6 @@ class FailedRequestException extends \Exception
 
     /**
      * FailedRequestException constructor.
-     *
-     * @param array $summary
      */
     public function __construct(array $summary)
     {

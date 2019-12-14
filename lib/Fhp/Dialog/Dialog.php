@@ -105,12 +105,10 @@ class Dialog
     /**
      * Dialog constructor.
      *
-     * @param Connection $connection
      * @param string $bankCode
      * @param string $username
      * @param string $pin
      * @param string $systemId
-     * @param LoggerInterface $logger
      * @param string $productName
      * @param string $productVersion
      */
@@ -273,7 +271,6 @@ class Dialog
     }
 
     /**
-     * @param Response $response
      * @throws \Exception
      */
     protected function handleResponse(Response $response)
@@ -317,8 +314,6 @@ class Dialog
 
     /**
      * Gets the dialog ID.
-     *
-     * @return string
      */
     public function getDialogId(): string
     {
@@ -337,8 +332,6 @@ class Dialog
 
     /**
      * Gets the system ID.
-     *
-     * @return string
      */
     public function getSystemId(): string
     {

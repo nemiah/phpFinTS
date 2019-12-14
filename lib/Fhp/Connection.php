@@ -29,10 +29,6 @@ class Connection
 
     /**
      * Connection constructor.
-     *
-     * @param string $url
-     * @param int $timeoutConnect
-     * @param int $timeoutResponse
      */
     public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
     {

@@ -34,12 +34,6 @@ class HKIDNv2 extends BaseSegment
      */
     public $kundensystemStatus = 1; // This library only supports PIN/TAN, hence 1 is the right choice.
 
-    /**
-     * @param string $kreditinstitutionscode
-     * @param Credentials $credentials
-     * @param string $kundensystemId
-     * @return HKIDNv2
-     */
     public static function create(string $kreditinstitutionscode, Credentials $credentials, string $kundensystemId): HKIDNv2
     {
         $result = HKIDNv2::createEmpty();
@@ -50,10 +44,6 @@ class HKIDNv2 extends BaseSegment
         return $result;
     }
 
-    /**
-     * @param string $kreditinstitutionscode
-     * @return HKIDNv2
-     */
     public static function createAnonymous(string $kreditinstitutionscode): HKIDNv2
     {
         $result = HKIDNv2::createEmpty();

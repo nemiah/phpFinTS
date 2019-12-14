@@ -85,7 +85,6 @@ class NameMapping
     ];
 
     /**
-     * @param string $code
      * @return string
      */
     public static function codeToName(string $code)
@@ -94,7 +93,6 @@ class NameMapping
     }
 
     /**
-     * @param string $name
      * @return string
      */
     public static function nameToCode(string $name)
@@ -104,7 +102,6 @@ class NameMapping
     }
 
     /**
-     * @param string $text
      * @return string
      */
     public static function translateResponse(string $text)

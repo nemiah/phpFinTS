@@ -69,8 +69,6 @@ class Message extends AbstractMessage
      * @param $systemId
      * @param int $dialogId
      * @param int $messageNumber
-     * @param array $segments
-     * @param array $options
      */
     public function __construct(
         $bankCode,
@@ -137,9 +135,6 @@ class Message extends AbstractMessage
         ));
     }
 
-    /**
-     * @return string
-     */
     public function getSecurityFunction(): string
     {
         return $this->securityFunction;
@@ -185,8 +180,6 @@ class Message extends AbstractMessage
 
     /**
      * Adds a encrypted segment to the message.
-     *
-     * @param SegmentInterface $segment
      */
     protected function addEncryptedSegment(SegmentInterface $segment)
     {

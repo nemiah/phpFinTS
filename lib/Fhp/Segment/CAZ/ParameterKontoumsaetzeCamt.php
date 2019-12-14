@@ -15,9 +15,6 @@ class ParameterKontoumsaetzeCamt extends ParameterKontoumsaetzeV2
     /** @var UnterstuetzteCamtMessages $unterstuetzteCamtMessages */
     public $unterstuetzteCamtMessages;
 
-    /**
-     * @return UnterstuetzteCamtMessages
-     */
     public function getUnterstuetzteCamtMessages(): UnterstuetzteCamtMessages
     {
         return $this->unterstuetzteCamtMessages;

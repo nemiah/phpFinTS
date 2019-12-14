@@ -20,8 +20,6 @@ class SEPAAccount
 
     /**
      * Get iban
-     *
-     * @return string
      */
     public function getIban(): string
     {
@@ -30,8 +28,6 @@ class SEPAAccount
 
     /**
      * Set iban
-     *
-     * @param string $iban
      *
      * @return $this
      */
@@ -44,8 +40,6 @@ class SEPAAccount
 
     /**
      * Get bic
-     *
-     * @return string
      */
     public function getBic(): string
     {
@@ -54,8 +48,6 @@ class SEPAAccount
 
     /**
      * Set bic
-     *
-     * @param string $bic
      *
      * @return $this
      */
@@ -68,8 +60,6 @@ class SEPAAccount
 
     /**
      * Get accountNumber
-     *
-     * @return string
      */
     public function getAccountNumber(): string
     {
@@ -78,8 +68,6 @@ class SEPAAccount
 
     /**
      * Set accountNumber
-     *
-     * @param string $accountNumber
      *
      * @return $this
      */
@@ -92,8 +80,6 @@ class SEPAAccount
 
     /**
      * Get subAccount
-     *
-     * @return string
      */
     public function getSubAccount(): string
     {
@@ -102,8 +88,6 @@ class SEPAAccount
 
     /**
      * Set subAccount
-     *
-     * @param string $subAccount
      *
      * @return $this
      */
@@ -116,8 +100,6 @@ class SEPAAccount
 
     /**
      * Get blz
-     *
-     * @return string
      */
     public function getBlz(): string
     {
@@ -126,8 +108,6 @@ class SEPAAccount
 
     /**
      * Set blz
-     *
-     * @param string $blz
      *
      * @return $this
      */

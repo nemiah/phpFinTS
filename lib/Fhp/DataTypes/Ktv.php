@@ -25,10 +25,6 @@ class Ktv
 
     /**
      * Ktv constructor.
-     *
-     * @param string $accountNumber
-     * @param string $subAccountFeature
-     * @param Kik $kik
      */
     public function __construct(string $accountNumber, string $subAccountFeature, Kik $kik)
     {
@@ -37,17 +33,11 @@ class Ktv
         $this->kik = $kik;
     }
 
-    /**
-     * @return string
-     */
     public function toString(): string
     {
         return $this->accountNumber . ':' . $this->subAccountFeature . ':' . (string) $this->kik;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->toString();

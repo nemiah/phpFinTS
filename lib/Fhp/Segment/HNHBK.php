@@ -19,9 +19,6 @@ class HNHBK extends AbstractSegment
 
     /**
      * HNHBK constructor.
-     * @param string $messageLength
-     * @param string $dialogId
-     * @param int $messageNumber
      */
     public function __construct(string $messageLength, string $dialogId, int $messageNumber)
     {
@@ -42,9 +39,6 @@ class HNHBK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

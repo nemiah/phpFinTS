@@ -18,9 +18,6 @@ class HNSHA extends AbstractSegment
 
     /**
      * HNSHA constructor.
-     * @param int $segmentNumber
-     * @param string $securityControlReference
-     * @param string $pin
      */
     public function __construct(
         int $segmentNumber,
@@ -46,9 +43,6 @@ class HNSHA extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

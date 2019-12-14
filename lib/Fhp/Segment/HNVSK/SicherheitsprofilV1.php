@@ -26,7 +26,6 @@ class SicherheitsprofilV1 extends BaseDeg
 
     /**
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
-     * @return SicherheitsprofilV1
      */
     public static function createPIN(?TanMode $tanMode): SicherheitsprofilV1
     {

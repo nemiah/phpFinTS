@@ -29,7 +29,6 @@ class Kik extends BaseDeg
     }
 
     /**
-     * @param string $kreditinstitutscode
      * @return Kik
      */
     public static function create(string $kreditinstitutscode)

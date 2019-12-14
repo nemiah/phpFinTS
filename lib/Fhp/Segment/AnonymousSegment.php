@@ -30,7 +30,6 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     private $elements = [];
 
     /**
-     * @param Segmentkopf $segmentkopf
      * @param string[]|string[][] $elements
      */
     public function __construct(Segmentkopf $segmentkopf, array $elements)

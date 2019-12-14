@@ -27,12 +27,6 @@ class HKVVB extends AbstractSegment
 
     /**
      * HKVVB constructor.
-     * @param int $segmentNumber
-     * @param int $bpdVersion
-     * @param int $updVersion
-     * @param int $dialogLanguage
-     * @param string $productName
-     * @param string $productVersion
      */
     public function __construct(
         int $segmentNumber,
@@ -56,9 +50,6 @@ class HKVVB extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

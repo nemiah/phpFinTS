@@ -25,12 +25,6 @@ class KtvV3 extends BaseDeg
     /** @var Kik */
     public $kik;
 
-    /**
-     * @param string $kontonummer
-     * @param string|null $unterkontomerkmal
-     * @param Kik $kik
-     * @return KtvV3
-     */
     public static function create(string $kontonummer, ?string $unterkontomerkmal, Kik $kik): KtvV3
     {
         $result = new KtvV3();
@@ -40,10 +34,6 @@ class KtvV3 extends BaseDeg
         return $result;
     }
 
-    /**
-     * @param SEPAAccount $account
-     * @return KtvV3
-     */
     public static function fromAccount(SEPAAccount $account): KtvV3
     {
         return static::create($account->getAccountNumber(), $account->getSubAccount(), Kik::create($account->getBlz()));

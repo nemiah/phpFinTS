@@ -27,10 +27,6 @@ class HKKAZv4 extends BaseSegment
     public $aufsetzpunkt;
 
     /**
-     * @param \Fhp\Segment\Common\Kto $kto
-     * @param \DateTime|null $vonDatum
-     * @param \DateTime|null $bisDatum
-     * @param string|null $aufsetzpunkt
      * @return HKKAZv4
      */
     public static function create(\Fhp\Segment\Common\Kto $kto, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null)

@@ -22,7 +22,6 @@ class HNSHAv2 extends BaseSegment
     /**
      * @param string $sicherheitskontrollreferenz The same number that was passed to HNSHK.
      * @param BenutzerdefinierteSignaturV1 $benutzerdefinierteSignatur Contains PIN, and optionally the TAN
-     * @return HNSHAv2
      */
     public static function create(string $sicherheitskontrollreferenz, BenutzerdefinierteSignaturV1 $benutzerdefinierteSignatur): HNSHAv2
     {

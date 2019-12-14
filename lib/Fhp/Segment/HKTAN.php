@@ -20,8 +20,6 @@ class HKTAN extends AbstractSegment
 
     /**
      * HKCDL constructor.
-     * @param int $version
-     * @param int $segmentNumber
      */
     public function __construct(int $version, int $segmentNumber, $processID = null, $tanMediaName = '')
     {

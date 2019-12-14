@@ -33,7 +33,6 @@ class GetSaldo extends Response
     /**
      * Creates a Saldo model from array.
      *
-     * @param array $array
      * @return Saldo
      * @throws \Exception
      */

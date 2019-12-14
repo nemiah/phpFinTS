@@ -33,9 +33,6 @@ class HKVVBv3 extends BaseSegment
     public $produktversion;
 
     /**
-     * @param FinTsOptions $options
-     * @param BPD|null $bpd
-     * @param UPD|null $upd
      * @return HKVVBv3
      */
     public static function create(FinTsOptions $options, ?BPD $bpd, ?UPD $upd)

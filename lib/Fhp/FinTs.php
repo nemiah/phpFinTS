@@ -250,9 +250,6 @@ class FinTs extends FinTsInternal
     /**
      * Gets statement of account.
      *
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
      * @param \Closure $tanCallback
      * @param $interval
      * @return Model\StatementOfAccount\StatementOfAccount|null
@@ -343,9 +340,6 @@ class FinTs extends FinTsInternal
     /**
      * Gets Bank To Customer Account Report as camt XML
      *
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
      * @return string[]
      * @throws \Exception
      */
@@ -394,7 +388,6 @@ class FinTs extends FinTsInternal
     /**
      * Gets the saldo of given SEPAAccount.
      *
-     * @param SEPAAccount $account
      * @return Model\Saldo|null
      * @throws \CurlException
      * @throws \Exception
@@ -476,7 +469,6 @@ class FinTs extends FinTsInternal
      * Executes SEPA transfer
      * You have to call finishSEPATAN(), if $tanCallback is not set
      *
-     * @param SEPAAccount $account
      * @param string $painMessage
      * @param \Closure $tanCallback
      */
@@ -570,8 +562,6 @@ class FinTs extends FinTsInternal
      *
      * You have to call finishSEPATAN(), if $tanCallback is not set
      *
-     * @param SEPAAccount $account
-     * @param SEPAStandingOrder $order
      * @param \Closure $tanCallback
      */
     public function deleteSEPAStandingOrder(SEPAAccount $account, SEPAStandingOrder $order, \Closure $tanCallback = null)

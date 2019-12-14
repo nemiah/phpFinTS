@@ -19,13 +19,7 @@ class HKKAZ extends AbstractSegment
 
     /**
      * HKKAZ constructor.
-     * @param int $version
-     * @param int $segmentNumber
      * @param mixed $ktv
-     * @param array $allAccounts
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @param string|null $touchdown
      */
     public function __construct(
         int $version,
@@ -51,9 +45,6 @@ class HKKAZ extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

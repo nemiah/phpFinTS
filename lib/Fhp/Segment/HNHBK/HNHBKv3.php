@@ -35,9 +35,6 @@ class HNHBKv3 extends BaseSegment
     /** @var BezugsnachrichtV1|null Never sent to server, but always present in responses. */
     public $bezugsnachricht;
 
-    /**
-     * @return int
-     */
     public function getNachrichtengroesse(): int
     {
         return intval($this->nachrichtengroesse);

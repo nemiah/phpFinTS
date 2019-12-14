@@ -115,9 +115,6 @@ abstract class BaseAction implements \Serializable
         return !$this->isAvailable && $this->tanRequest !== null;
     }
 
-    /**
-     * @return TanRequest|null
-     */
     public function getTanRequest(): ?TanRequest
     {
         return $this->tanRequest;
@@ -246,7 +243,6 @@ abstract class BaseAction implements \Serializable
 
     /**
      * To be called only by the FinTs instance that executes this action.
-     * @param TanRequest|null $tanRequest
      */
     final public function setTanRequest(?TanRequest $tanRequest)
     {
