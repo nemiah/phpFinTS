@@ -17,7 +17,7 @@ class HICAZv1 extends BaseSegment
 {
     /**
      * Kontoverbindung international
-     * @var Fhp\Segment\Common\Kti
+     * @var \Fhp\Segment\Common\Kti
      */
     public $kontoverbindungInternational;
 
@@ -47,9 +47,9 @@ class HICAZv1 extends BaseSegment
     public $nichtGebuchteUmsaetze;
 
     /**
-     * @return Fhp\Segment\Common\Kti
+     * @return \Fhp\Segment\Common\Kti
      */
-    public function getKontoverbindungInternational(): Fhp\Segment\Common\Kti
+    public function getKontoverbindungInternational(): \Fhp\Segment\Common\Kti
     {
         return $this->kontoverbindungInternational;
     }
@@ -63,7 +63,7 @@ class HICAZv1 extends BaseSegment
     }
 
     /**
-     * @return string
+     * @return Bin
      */
     public function getGebuchteUmsaetze(): Bin
     {
