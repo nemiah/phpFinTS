@@ -174,11 +174,11 @@ class MT940
     }
 
     /**
-     * @param string[] $lines that contain the remittance information
+     * @param string[] $descriptionLines that contain the remittance information
      * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
-     * @param string $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
+     * @param string[] $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
      */
-    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, string &$rawLines): array
+    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines): array
     {
         $description = [];
         if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {

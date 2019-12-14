@@ -388,11 +388,12 @@ class Transaction
     /**
      * Set primanota number
      *
+     * @param int|mixed $nr Will be parsed to an int.
      * @return $this
      */
-    public function setPN(int $nr)
+    public function setPN($nr)
     {
-        $this->pn = (int) $nr;
+        $this->pn = intval($nr);
         return $this;
     }
 }
