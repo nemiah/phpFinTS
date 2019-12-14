@@ -9,9 +9,6 @@ class Dat
      */
     protected $value;
 
-    /**
-     * Dat constructor.
-     */
     public function __construct(\DateTime $dateTime)
     {
         $this->value = $dateTime;

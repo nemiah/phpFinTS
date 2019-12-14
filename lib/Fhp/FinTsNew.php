@@ -64,7 +64,6 @@ class FinTsNew
     private $messageNumber = 1;
 
     /**
-     * FinTsNew constructor.
      * @param FinTsOptions $options Configuration options for the connection to the bank.
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.

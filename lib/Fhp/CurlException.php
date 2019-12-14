@@ -14,12 +14,7 @@ class CurlException extends \Exception
      */
     protected $response;
 
-    /**
-     * CurlException constructor.
-     *
-     * @param mixed $curlInfo
-     */
-    public function __construct(string $message, ?string $response, int $code = 0, $curlInfo = [])
+    public function __construct(string $message, ?string $response, int $code = 0, array $curlInfo = [])
     {
         parent::__construct($message, $code, null);
         $this->response = $response;

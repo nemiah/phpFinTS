@@ -27,9 +27,6 @@ class Connection
      */
     protected $timeoutResponse = 30;
 
-    /**
-     * Connection constructor.
-     */
     public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
     {
         $this->url = $url;

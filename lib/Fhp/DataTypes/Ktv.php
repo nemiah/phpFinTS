@@ -23,9 +23,6 @@ class Ktv
      */
     protected $kik;
 
-    /**
-     * Ktv constructor.
-     */
     public function __construct(string $accountNumber, string $subAccountFeature, Kik $kik)
     {
         $this->accountNumber = $accountNumber;

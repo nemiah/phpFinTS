@@ -9,9 +9,6 @@ class Bin
      */
     protected $string;
 
-    /**
-     * Bin constructor.
-     */
     public function __construct(string $string)
     {
         $this->string = $string;

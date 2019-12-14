@@ -29,9 +29,6 @@ class Kti
      */
     protected $kik;
 
-    /**
-     * Kti constructor.
-     */
     public function __construct(string $iban, string $bic, string $accountNumber, string $subAccountFeature, Kik $kik)
     {
         $this->iban = $iban;

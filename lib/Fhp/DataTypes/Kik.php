@@ -14,9 +14,6 @@ class Kik
      */
     protected $bankCode;
 
-    /**
-     * Kik constructor.
-     */
     public function __construct(string $countryCode, string $bankCode)
     {
         $this->countryCode = (string) $countryCode;
