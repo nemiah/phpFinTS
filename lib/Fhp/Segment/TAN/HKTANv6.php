@@ -113,6 +113,8 @@ class HKTANv6 extends BaseSegment
     /**
      * @param TanMode|null $tanMode Parameters retrieved from the server during dialog initialization that describe how
      *     the TAN processes need to be parameterized.
+     * @param string|null $tanMedium The TAN medium selected by the user. Mandatory if $tanMode is present and requires
+     *     a TAN medium.
      * @param string $segmentkennung The segment that we want to authenticate with the HKTAN instance.
      * @return HKTANv6 A HKTAN instance to signal to the server that Prozessvariante 2 shall be used.
      */
