@@ -67,7 +67,7 @@ abstract class BaseDeg implements \Serializable
      * @param string $rawElements The serialized wire format for a data element group.
      * @return static The parsed value.
      */
-    public static function parse(string $rawElements): self
+    public static function parse(string $rawElements)
     {
         if (static::class === BaseDeg::class) {
             throw new UnsupportedException('Must not call BaseDeg::parse() on the base class');

@@ -101,7 +101,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.
      */
-    public static function parse(string $rawSegment): self
+    public static function parse(string $rawSegment)
     {
         if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
@@ -115,7 +115,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     /**
      * @return static A new segment of the type on which this function was called, with the Segmentkopf initialized.
      */
-    public static function createEmpty(): self
+    public static function createEmpty()
     {
         if (static::class === BaseSegment::class) {
             throw new \InvalidArgumentException('Must not call BaseSegment::createEmpty() on the super class');
