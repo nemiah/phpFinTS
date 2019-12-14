@@ -85,7 +85,7 @@ class Transaction
      * @codeCoverageIgnore
      * @return \DateTime|null
      */
-    public function getDate()
+    public function getDate(): ?\DateTime
     {
         return $this->getBookingDate();
     }
@@ -95,7 +95,7 @@ class Transaction
      *
      * @return \DateTime|null
      */
-    public function getBookingDate()
+    public function getBookingDate(): ?\DateTime
     {
         return $this->bookingDate;
     }
@@ -105,7 +105,7 @@ class Transaction
      *
      * @return \DateTime|null
      */
-    public function getValutaDate()
+    public function getValutaDate(): ?\DateTime
     {
         return $this->valutaDate;
     }
@@ -143,7 +143,7 @@ class Transaction
      *
      * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -155,7 +155,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setBooked($booked)
+    public function setBooked(bool $booked)
     {
         $this->booked = $booked;
 
@@ -169,7 +169,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setAmount($amount)
+    public function setAmount(float $amount)
     {
         $this->amount = (float) $amount;
 
@@ -181,7 +181,7 @@ class Transaction
      *
      * @return string
      */
-    public function getCreditDebit()
+    public function getCreditDebit(): string
     {
         return $this->creditDebit;
     }
@@ -193,7 +193,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setCreditDebit($creditDebit)
+    public function setCreditDebit(string $creditDebit)
     {
         $this->creditDebit = $creditDebit;
 
@@ -205,7 +205,7 @@ class Transaction
      *
      * @return string
      */
-    public function getBookingCode()
+    public function getBookingCode(): string
     {
         return $this->bookingCode;
     }
@@ -217,7 +217,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingCode($bookingCode)
+    public function setBookingCode(string $bookingCode)
     {
         $this->bookingCode = (string) $bookingCode;
 
@@ -229,7 +229,7 @@ class Transaction
      *
      * @return string
      */
-    public function getBookingText()
+    public function getBookingText(): string
     {
         return $this->bookingText;
     }
@@ -241,7 +241,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingText($bookingText)
+    public function setBookingText(string $bookingText)
     {
         $this->bookingText = (string) $bookingText;
 
@@ -253,7 +253,7 @@ class Transaction
      *
      * @return string
      */
-    public function getDescription1()
+    public function getDescription1(): string
     {
         return $this->description1;
     }
@@ -265,7 +265,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setDescription1($description1)
+    public function setDescription1(string $description1)
     {
         $this->description1 = (string) $description1;
 
@@ -277,7 +277,7 @@ class Transaction
      *
      * @return string
      */
-    public function getDescription2()
+    public function getDescription2(): string
     {
         return $this->description2;
     }
@@ -289,7 +289,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setDescription2($description2)
+    public function setDescription2(string $description2)
     {
         $this->description2 = (string) $description2;
 
@@ -301,7 +301,7 @@ class Transaction
      *
      * @return string[]
      */
-    public function getStructuredDescription()
+    public function getStructuredDescription(): array
     {
         return $this->structuredDescription;
     }
@@ -313,7 +313,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setStructuredDescription($structuredDescription)
+    public function setStructuredDescription(array $structuredDescription)
     {
         $this->structuredDescription = $structuredDescription;
 
@@ -325,7 +325,7 @@ class Transaction
      *
      * @return string
      */
-    public function getMainDescription()
+    public function getMainDescription(): string
     {
         if (array_key_exists('SVWZ', $this->structuredDescription)) {
             return $this->structuredDescription['SVWZ'];
@@ -339,7 +339,7 @@ class Transaction
      *
      * @return string
      */
-    public function getEndToEndID()
+    public function getEndToEndID(): string
     {
         if (array_key_exists('EREF', $this->structuredDescription)) {
             return $this->structuredDescription['EREF'];
@@ -353,7 +353,7 @@ class Transaction
      *
      * @return string
      */
-    public function getBankCode()
+    public function getBankCode(): string
     {
         return $this->bankCode;
     }
@@ -365,7 +365,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setBankCode($bankCode)
+    public function setBankCode(string $bankCode)
     {
         $this->bankCode = (string) $bankCode;
 
@@ -377,7 +377,7 @@ class Transaction
      *
      * @return string
      */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->accountNumber;
     }
@@ -389,7 +389,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber)
     {
         $this->accountNumber = (string) $accountNumber;
 
@@ -401,7 +401,7 @@ class Transaction
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -411,7 +411,7 @@ class Transaction
      *
      * @return bool
      */
-    public function getBooked()
+    public function getBooked(): bool
     {
         return $this->booked;
     }
@@ -423,7 +423,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = (string) $name;
 
@@ -435,7 +435,7 @@ class Transaction
      *
      * @return int
      */
-    public function getPN()
+    public function getPN(): int
     {
         return $this->pn;
     }
@@ -447,7 +447,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setPN($nr)
+    public function setPN(int $nr)
     {
         $this->pn = (int) $nr;
         return $this;

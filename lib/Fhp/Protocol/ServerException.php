@@ -34,7 +34,7 @@ class ServerException extends \Exception
      * @param Message $request
      * @param Message $response
      */
-    public function __construct($errors, $warnings, $requestSegments, $request, $response)
+    public function __construct(array $errors, array $warnings, array $requestSegments, Message $request, Message $response)
     {
         $this->errors = $errors;
         $this->warnings = $warnings;
@@ -54,7 +54,7 @@ class ServerException extends \Exception
      * @return ServerException|null The part of the exception that pertains to the given reference segments, or null if
      *     none of the errors refer to them.
      */
-    public function extractErrorsForReference($referenceNumbers)
+    public function extractErrorsForReference(array $referenceNumbers): ?ServerException
     {
         if (count($referenceNumbers) === 0) {
             return null;
@@ -103,7 +103,7 @@ class ServerException extends \Exception
      * @param int $code A Rueckmeldungscode to look for.
      * @return bool Whether an error with this code is present.
      */
-    public function hasError($code)
+    public function hasError(int $code): bool
     {
         foreach ($this->errors as $error) {
             if ($error->rueckmeldungscode === $code) {
@@ -132,7 +132,7 @@ class ServerException extends \Exception
      * @return bool True if the {@link Credentials} used to make this request are wrong. If this returns true, the
      *     application should ask the user to re-enter the credentials before making any further requests to the bank.
      */
-    public function indicatesBadLoginData()
+    public function indicatesBadLoginData(): bool
     {
         return $this->hasError(Rueckmeldungscode::PIN_UNGUELTIG);
     }
@@ -143,7 +143,7 @@ class ServerException extends \Exception
      *     refrain from logging in / using that account in any automated way before getting confirmation from the user
      *     that it has been unlocked.
      */
-    public function indicatesLocked()
+    public function indicatesLocked(): bool
     {
         return $this->hasError(Rueckmeldungscode::PIN_GESPERRT)
             || $this->hasError(Rueckmeldungscode::TEILNEHMER_GESPERRT)
@@ -154,7 +154,7 @@ class ServerException extends \Exception
      * @return bool True if the provided TAN is invalid (including entirely wrong, used for another transaction already,
      *     or exceeded its expiration time).
      */
-    public function indicatesBadTan()
+    public function indicatesBadTan(): bool
     {
         return $this->hasError(Rueckmeldungscode::TAN_UNGUELTIG)
             || $this->hasError(Rueckmeldungscode::TAN_BEREITS_VERBRAUCHT)
@@ -167,7 +167,7 @@ class ServerException extends \Exception
      *     refer to, for ease of debugging.
      * @throws ServerException In case the response indicates an error.
      */
-    public static function detectAndThrowErrors($response, $request)
+    public static function detectAndThrowErrors(Message $response, Message $request)
     {
         /** @var HIRMGv2[]|HIRMSv2[] $segments */
         $segments = array_merge(

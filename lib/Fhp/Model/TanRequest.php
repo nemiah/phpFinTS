@@ -12,16 +12,16 @@ interface TanRequest
     /**
      * @return string An identifier used by the bank to match the provided TAN with the original request.
      */
-    public function getProcessId();
+    public function getProcessId(): string;
 
     /**
      * @return string A challenge to be displayed to the user.
      */
-    public function getChallenge();
+    public function getChallenge(): string;
 
     /**
      * @return string|null Possibly the name of the {@link TanMedium} to be used. If present, this should be displayed
      *     to the user, so that they know what to do.
      */
-    public function getTanMediumName();
+    public function getTanMediumName(): ?string;
 }

@@ -15,7 +15,7 @@ class SegmentDescriptor extends BaseDescriptor
      * @param string $class The name of a sub-class of {@link BaseSegment}.
      * @return SegmentDescriptor The descriptor for the class.
      */
-    public static function get($class)
+    public static function get(string $class): SegmentDescriptor
     {
         if (!array_key_exists($class, static::$descriptors)) {
             static::$descriptors[$class] = new SegmentDescriptor($class);
@@ -30,7 +30,7 @@ class SegmentDescriptor extends BaseDescriptor
      * Please use the factory above.
      * @param string $class The name of a sub-class of {@link BaseSegment}.
      */
-    protected function __construct($class)
+    protected function __construct(string $class)
     {
         $this->class = $class;
         try {

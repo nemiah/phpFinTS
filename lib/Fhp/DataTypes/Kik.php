@@ -20,7 +20,7 @@ class Kik
      * @param string $countryCode
      * @param string $bankCode
      */
-    public function __construct($countryCode, $bankCode)
+    public function __construct(string $countryCode, string $bankCode)
     {
         $this->countryCode = (string) $countryCode;
         $this->bankCode = (string) $bankCode;
@@ -29,7 +29,7 @@ class Kik
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->countryCode . ':' . $this->bankCode;
     }
@@ -37,7 +37,7 @@ class Kik
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

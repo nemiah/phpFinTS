@@ -42,7 +42,7 @@ class ElementDescriptor
      * @param object $obj The object whose $field will be validated.
      * @throws \InvalidArgumentException If $obj->$field does not correspond to the schema in this descriptor.
      */
-    public function validateField($obj)
+    public function validateField(object $obj)
     {
         if (!isset($obj->{$this->field})) {
             if ($this->optional) {
@@ -77,7 +77,7 @@ class ElementDescriptor
      * @param string $type A potential PHP scalar type.
      * @return bool True if parseDataElement() would understand it.
      */
-    public static function isScalarType($type)
+    public static function isScalarType(string $type): bool
     {
         return array_key_exists($type, static::TYPE_MAP);
     }

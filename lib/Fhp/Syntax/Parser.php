@@ -45,7 +45,7 @@ abstract class Parser
      *     end of each returned substring, i.e. it's considered part of each item instead of a delimiter between items.
      * @return string[] The splitted substrings. Note that escaped characters inside will still be escaped.
      */
-    public static function splitEscapedString($delimiter, $str, $trailingDelimiter = false)
+    public static function splitEscapedString(string $delimiter, string $str, bool $trailingDelimiter = false): array
     {
         if (strlen($str) === 0) {
             return [];
@@ -111,7 +111,7 @@ abstract class Parser
      * @param string $str The raw string, usually a response from the server.
      * @return string The string with the escaping removed.
      */
-    public static function unescape($str)
+    public static function unescape(string $str): string
     {
         return preg_replace('/\?([+:\'?@])/', '$1', $str);
     }
@@ -127,7 +127,7 @@ abstract class Parser
      *     {@link ElementDescriptor#isScalarType()} returns true.
      * @return mixed|null The parsed value of type $type, null if the $rawValue was empty.
      */
-    public static function parseDataElement($rawValue, $type)
+    public static function parseDataElement(string $rawValue, string $type)
     {
         if ($rawValue === '') {
             return null;
@@ -163,7 +163,7 @@ abstract class Parser
      * @param string $rawValue The raw value (wire format), e.g. "@4@abcd".
      * @return Bin|null The parsed value, or null if $rawValue was empty.
      */
-    public static function parseBinaryBlock($rawValue)
+    public static function parseBinaryBlock(string $rawValue): ?Bin
     {
         if ($rawValue === '') {
             return null;
@@ -199,7 +199,7 @@ abstract class Parser
      * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @return BaseDeg|null The parsed value, of type $type, or null if all fields were empty and $allowEmpty is true.
      */
-    public static function parseDeg($rawElements, $type, $allowEmpty = false)
+    public static function parseDeg(string $rawElements, $type, bool $allowEmpty = false): ?BaseDeg
     {
         $rawElements = static::splitEscapedString(Delimiter::GROUP, $rawElements);
         list($result, $offset) = static::parseDegElements($rawElements, $type, $allowEmpty);
@@ -223,7 +223,7 @@ abstract class Parser
      *     2. The offset at which parsing should continue. The difference between this returned offset and the $offset
      *        that was passed in is the number of elements that this function call consumed.
      */
-    private static function parseDegElements($rawElements, $type, $allowEmpty = false, $offset = 0)
+    private static function parseDegElements(array $rawElements, $type, bool $allowEmpty = false, int $offset = 0): array
     {
         /** @var BaseDeg $result */
         $result = is_string($type) ? new $type() : $type;
@@ -305,7 +305,7 @@ abstract class Parser
      *     instance to write to (the same instance will be returned from this function).
      * @return BaseSegment The parsed segment of type $type.
      */
-    public static function parseSegment($rawSegment, $type)
+    public static function parseSegment(string $rawSegment, $type): BaseSegment
     {
         /** @var BaseSegment $result */
         $result = is_string($type) ? new $type() : $type;
@@ -355,7 +355,7 @@ abstract class Parser
      *     the end).
      * @return AnonymousSegment The segment parsed as an anonymous segment.
      */
-    public static function parseAnonymousSegment($rawSegment)
+    public static function parseAnonymousSegment(string $rawSegment): AnonymousSegment
     {
         $rawElements = static::splitIntoSegmentElements($rawSegment);
         return new AnonymousSegment(
@@ -376,7 +376,7 @@ abstract class Parser
      * @param string $rawSegment The serialized wire format for a single segment incl delimiter at the end.
      * @return string[] The segment splitted into raw elements.
      */
-    private static function splitIntoSegmentElements($rawSegment)
+    private static function splitIntoSegmentElements(string $rawSegment): array
     {
         if (substr($rawSegment, -1) !== Delimiter::SEGMENT) {
             throw new \InvalidArgumentException("Raw segment does not end with delimiter: $rawSegment");
@@ -395,7 +395,7 @@ abstract class Parser
      * @param ElementDescriptor $descriptor The descriptor that describes the expected format of the element.
      * @return mixed|null The parsed value, or null if it was empty.
      */
-    private static function parseSegmentElement($rawElement, $descriptor)
+    private static function parseSegmentElement(string $rawElement, ElementDescriptor $descriptor)
     {
         if (is_string($descriptor->type)) { // Scalar value / DE
             return static::parseDataElement($rawElement, $descriptor->type);
@@ -411,7 +411,7 @@ abstract class Parser
      *     the end). This should be ISO-8859-1-encoded.
      * @return BaseSegment The parsed segment, possibly an {@link AnonymousSegment}.
      */
-    public static function detectAndParseSegment($rawSegment)
+    public static function detectAndParseSegment(string $rawSegment): BaseSegment
     {
         if (substr($rawSegment, -1) !== Delimiter::SEGMENT) {
             throw new \InvalidArgumentException("Raw segment does not end with delimiter: $rawSegment");
@@ -447,7 +447,7 @@ abstract class Parser
      * @param string $rawSegments Concatenated segments in wire format.
      * @return BaseSegment[] The parsed segments.
      */
-    public static function parseSegments($rawSegments)
+    public static function parseSegments(string $rawSegments): array
     {
         if (strlen($rawSegments) === 0) {
             return [];
@@ -461,7 +461,7 @@ abstract class Parser
      * @param string $rawSegments
      * @return string[] RawSegments
      */
-    public static function parseRawSegments($rawSegments)
+    public static function parseRawSegments(string $rawSegments): array
     {
         if (strlen($rawSegments) === 0) {
             return [];

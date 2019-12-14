@@ -18,7 +18,7 @@ class MT940
      * @return array
      * @throws MT940Exception
      */
-    public function parse($rawData)
+    public function parse(string $rawData): array
     {
         // The divider can be either \r\n or @@
         $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
@@ -181,7 +181,7 @@ class MT940
      * @param string $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
      * @return array
      */
-    protected function extractStructuredDataFromRemittanceLines($descriptionLines, &$gvc, &$rawLines)
+    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, string &$rawLines): array
     {
         $description = [];
         if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
@@ -216,7 +216,7 @@ class MT940
      * @param string $val
      * @return string
      */
-    protected function getDate($val)
+    protected function getDate(string $val): string
     {
         $val = '20' . $val;
         preg_match('/(\d{4})(\d{2})(\d{2})/', $val, $m);

@@ -17,7 +17,7 @@ class HISPAv1 extends BaseSegment implements HISPA
     public $sepaKontoverbindung;
 
     /** @return \Fhp\Segment\Common\Ktz[] */
-    public function getSepaKontoverbindung()
+    public function getSepaKontoverbindung(): array
     {
         return $this->sepaKontoverbindung ?? [];
     }

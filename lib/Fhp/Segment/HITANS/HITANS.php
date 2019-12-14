@@ -12,5 +12,5 @@ use Fhp\Segment\SegmentInterface;
 interface HITANS extends SegmentInterface
 {
     /** @return ParameterZweiSchrittTanEinreichung */
-    public function getParameterZweiSchrittTanEinreichung();
+    public function getParameterZweiSchrittTanEinreichung(): ParameterZweiSchrittTanEinreichung;
 }

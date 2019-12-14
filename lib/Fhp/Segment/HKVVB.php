@@ -35,12 +35,12 @@ class HKVVB extends AbstractSegment
      * @param string $productVersion
      */
     public function __construct(
-        $segmentNumber,
-        $bpdVersion = self::DEFAULT_BPD_VERSION,
-        $updVersion = self::DEFAULT_UPD_VERSION,
-        $dialogLanguage = self::LANG_DEFAULT,
-        $productName = self::DEFAULT_PRODUCT_NAME,
-        $productVersion = self::DEFAULT_PRODUCT_VERSION
+        int $segmentNumber,
+        int $bpdVersion = self::DEFAULT_BPD_VERSION,
+        int $updVersion = self::DEFAULT_UPD_VERSION,
+        int $dialogLanguage = self::LANG_DEFAULT,
+        string $productName = self::DEFAULT_PRODUCT_NAME,
+        string $productVersion = self::DEFAULT_PRODUCT_VERSION
     ) {
         parent::__construct(
             static::NAME,
@@ -59,7 +59,7 @@ class HKVVB extends AbstractSegment
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

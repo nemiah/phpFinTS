@@ -28,7 +28,7 @@ class GetSEPAAccounts extends BaseAction
     /**
      * @return GetSEPAAccounts A new action instance.
      */
-    public static function create()
+    public static function create(): GetSEPAAccounts
     {
         return new GetSEPAAccounts();
     }

@@ -40,7 +40,7 @@ class HKIDNv2 extends BaseSegment
      * @param string $kundensystemId
      * @return HKIDNv2
      */
-    public static function create($kreditinstitutionscode, $credentials, $kundensystemId)
+    public static function create(string $kreditinstitutionscode, Credentials $credentials, string $kundensystemId): HKIDNv2
     {
         $result = HKIDNv2::createEmpty();
         $result->kreditinstitutskennung = \Fhp\Segment\Common\Kik::create($kreditinstitutionscode);
@@ -54,7 +54,7 @@ class HKIDNv2 extends BaseSegment
      * @param string $kreditinstitutionscode
      * @return HKIDNv2
      */
-    public static function createAnonymous($kreditinstitutionscode)
+    public static function createAnonymous(string $kreditinstitutionscode): HKIDNv2
     {
         $result = HKIDNv2::createEmpty();
         $result->kreditinstitutskennung = \Fhp\Segment\Common\Kik::create($kreditinstitutionscode);

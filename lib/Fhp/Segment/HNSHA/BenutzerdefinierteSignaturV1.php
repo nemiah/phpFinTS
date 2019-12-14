@@ -22,7 +22,7 @@ class BenutzerdefinierteSignaturV1 extends BaseDeg
      * @param string|null $tan
      * @return BenutzerdefinierteSignaturV1
      */
-    public static function create($pin, $tan)
+    public static function create(string $pin, ?string $tan): BenutzerdefinierteSignaturV1
     {
         $result = new BenutzerdefinierteSignaturV1();
         $result->pin = $pin;

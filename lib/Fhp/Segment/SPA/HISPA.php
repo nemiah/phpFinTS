@@ -10,5 +10,5 @@ use Fhp\Segment\Common\Ktz;
 interface HISPA
 {
     /** @return Ktz[] */
-    public function getSepaKontoverbindung();
+    public function getSepaKontoverbindung(): array;
 }

@@ -32,7 +32,7 @@ class HNVSDv1 extends BaseSegment
      * @param BaseSegment[] $segments Some segments that will be serialized into the data field.
      * @return HNVSDv1
      */
-    public static function create($segments)
+    public static function create(array $segments): HNVSDv1
     {
         $result = HNVSDv1::createEmpty();
         $result->segmentkopf->segmentnummer = static::SEGMENT_NUMBER;

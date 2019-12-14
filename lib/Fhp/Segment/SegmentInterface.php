@@ -9,22 +9,22 @@ interface SegmentInterface
      *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Gets the name of the segment.
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return int
      */
-    public function getVersion();
+    public function getVersion(): int;
 
     /**
      * @return int
      */
-    public function getSegmentNumber();
+    public function getSegmentNumber(): int;
 }

@@ -8,5 +8,5 @@ namespace Fhp\Segment\SPA;
 interface HISPAS
 {
     /** @return ParameterSepaKontoverbindungAnfordern */
-    public function getParameter();
+    public function getParameter(): ParameterSepaKontoverbindungAnfordern;
 }

@@ -138,7 +138,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
      * @param StatementOfAccount $statement
      * @throws \Exception
      */
-    private function checkResult($statement)
+    private function checkResult(StatementOfAccount $statement)
     {
         $this->assertCount(2, $statement->getStatements());
 

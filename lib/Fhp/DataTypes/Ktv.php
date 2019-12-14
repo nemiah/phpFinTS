@@ -30,7 +30,7 @@ class Ktv
      * @param string $subAccountFeature
      * @param Kik $kik
      */
-    public function __construct($accountNumber, $subAccountFeature, Kik $kik)
+    public function __construct(string $accountNumber, string $subAccountFeature, Kik $kik)
     {
         $this->accountNumber = $accountNumber;
         $this->subAccountFeature = $subAccountFeature;
@@ -40,7 +40,7 @@ class Ktv
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->accountNumber . ':' . $this->subAccountFeature . ':' . (string) $this->kik;
     }
@@ -48,7 +48,7 @@ class Ktv
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

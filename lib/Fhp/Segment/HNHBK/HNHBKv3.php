@@ -38,7 +38,7 @@ class HNHBKv3 extends BaseSegment
     /**
      * @return int
      */
-    public function getNachrichtengroesse()
+    public function getNachrichtengroesse(): int
     {
         return intval($this->nachrichtengroesse);
     }
@@ -46,7 +46,7 @@ class HNHBKv3 extends BaseSegment
     /**
      * @param int $nachrichtengroesse Length of the entire message in bytes.
      */
-    public function setNachrichtengroesse($nachrichtengroesse)
+    public function setNachrichtengroesse(int $nachrichtengroesse)
     {
         $this->nachrichtengroesse = str_pad($nachrichtengroesse, static::NACHRICHTENGROESSE_LENGTH, '0', STR_PAD_LEFT);
     }

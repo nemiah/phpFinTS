@@ -94,7 +94,7 @@ class DialogInitialization extends BaseAction
      *     If it is one of the special PIN/TAN management segments (e.g. HKTAB), then the dialog does not have strong
      *     authentication (no TAN required) and can only be used for that one particular transaction.
      */
-    public function __construct($options, $credentials, $tanMode, $tanMedium, $kundensystemId, $hktanRef = 'HKIDN')
+    public function __construct(FinTsOptions $options, Credentials $credentials, ?TanMode $tanMode, ?string $tanMedium, ?string $kundensystemId, ?string $hktanRef = 'HKIDN')
     {
         $this->options = $options;
         $this->credentials = $credentials;

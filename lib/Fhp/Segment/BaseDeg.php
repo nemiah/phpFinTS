@@ -20,7 +20,7 @@ abstract class BaseDeg implements \Serializable
     /**
      * @return DegDescriptor The descriptor for this Deg type.
      */
-    public function getDescriptor()
+    public function getDescriptor(): DegDescriptor
     {
         if ($this->descriptor === null) {
             $this->descriptor = DegDescriptor::get(static::class);
@@ -47,7 +47,7 @@ abstract class BaseDeg implements \Serializable
      * Short-hand for {@link Serializer#serializeDeg()}.
      * @return string The HBCI wire format representation of this DEG.
      */
-    public function serialize()
+    public function serialize(): string
     {
         return Serializer::serializeDeg($this, $this->getDescriptor());
     }
@@ -56,7 +56,7 @@ abstract class BaseDeg implements \Serializable
      * Parses into the current instance.
      * @param string $serialized The HBCI wire format for a DEG of this type.
      */
-    public function unserialize($serialized)
+    public function unserialize(string $serialized)
     {
         Parser::parseDeg($serialized, $this);
     }
@@ -67,7 +67,7 @@ abstract class BaseDeg implements \Serializable
      * @param string $rawElements The serialized wire format for a data element group.
      * @return static The parsed value.
      */
-    public static function parse($rawElements)
+    public static function parse(string $rawElements): self
     {
         if (static::class === BaseDeg::class) {
             throw new UnsupportedException('Must not call BaseDeg::parse() on the base class');

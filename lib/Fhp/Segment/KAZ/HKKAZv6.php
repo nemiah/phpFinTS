@@ -33,7 +33,7 @@ class HKKAZv6 extends BaseSegment
      * @param string|null $aufsetzpunkt
      * @return HKKAZv6
      */
-    public static function create($ktv, $alleKonten, $vonDatum, $bisDatum, $aufsetzpunkt = null)
+    public static function create(\Fhp\Segment\Common\KtvV3 $ktv, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null)
     {
         $result = HKKAZv6::createEmpty();
         $result->kontoverbindungAuftraggeber = $ktv;

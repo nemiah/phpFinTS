@@ -74,7 +74,7 @@ class HNVSKv3 extends BaseSegment
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
      * @return HNVSKv3
      */
-    public static function create($options, $credentials, $kundensystemId, $tanMode)
+    public static function create(FinTsOptions $options, Credentials $credentials, string $kundensystemId, ?TanMode $tanMode): HNVSKv3
     {
         $result = HNVSKv3::createEmpty();
         $result->segmentkopf->segmentnummer = static::SEGMENT_NUMBER;

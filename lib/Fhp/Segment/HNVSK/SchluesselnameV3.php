@@ -43,7 +43,7 @@ class SchluesselnameV3 extends BaseDeg
      * @param string $schluesselart
      * @return SchluesselnameV3
      */
-    public static function create($kik, $benutzerkennung, $schluesselart)
+    public static function create(\Fhp\Segment\Common\Kik $kik, string $benutzerkennung, string $schluesselart): SchluesselnameV3
     {
         $result = new SchluesselnameV3();
         $result->kreditinstitutskennung = $kik;

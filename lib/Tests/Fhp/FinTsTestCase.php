@@ -116,7 +116,7 @@ abstract class FinTsTestCase extends TestCase
      * @param string $response Can be a full response (starting with HNHBK) or just the inner part of HNVSD, more
      *     precisely the slice *between* the HNSHK and HNSHA segments.
      */
-    protected function expectMessage($request, $response)
+    protected function expectMessage(string $request, string $response)
     {
         $this->expectedMessages[] = [$request, $response];
     }

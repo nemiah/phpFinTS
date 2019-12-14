@@ -24,7 +24,7 @@ class HNSHAv2 extends BaseSegment
      * @param BenutzerdefinierteSignaturV1 $benutzerdefinierteSignatur Contains PIN, and optionally the TAN
      * @return HNSHAv2
      */
-    public static function create($sicherheitskontrollreferenz, $benutzerdefinierteSignatur)
+    public static function create(string $sicherheitskontrollreferenz, BenutzerdefinierteSignaturV1 $benutzerdefinierteSignatur): HNSHAv2
     {
         $result = HNSHAv2::createEmpty();
         $result->sicherheitskontrollreferenz = $sicherheitskontrollreferenz;

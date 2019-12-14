@@ -29,7 +29,7 @@ class Dat
     /**
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->value;
     }
@@ -37,7 +37,7 @@ class Dat
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->value->format('Ymd');
     }
@@ -45,7 +45,7 @@ class Dat
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

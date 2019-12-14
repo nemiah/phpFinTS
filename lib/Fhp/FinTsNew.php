@@ -114,7 +114,7 @@ class FinTsNew
      *     for user data). The returned string never contains highly sensitive information (not the user's password or
      *     PIN), so it probably does not need to be encrypted.
      */
-    public function persist(bool $minimal = false)
+    public function persist(bool $minimal = false): string
     {
         // IMPORTANT: Be sure not to include highly sensitive user information here.
         return serialize([ // This should match loadPersistedInstanceVersion1().
@@ -155,7 +155,7 @@ class FinTsNew
     }
 
     /** @param array $data */
-    private function loadPersistedInstanceVersion2($data)
+    private function loadPersistedInstanceVersion2(array $data)
     {
         list( // This should match persist().
             $this->bpd,
@@ -180,7 +180,7 @@ class FinTsNew
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
      *     passed to the $action instead.
      */
-    public function login()
+    public function login(): DialogInitialization
     {
         $this->requireTanMode();
         $this->ensureSynchronized();
@@ -202,7 +202,7 @@ class FinTsNew
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
      *     passed to the $action instead.
      */
-    public function execute($action)
+    public function execute(BaseAction $action)
     {
         if ($this->dialogId === null && !($action instanceof DialogInitialization)) {
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
@@ -271,7 +271,7 @@ class FinTsNew
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message.
      */
-    private function sendRequestForAction($action, $request)
+    private function sendRequestForAction(BaseAction $action, Message $request): ?Message
     {
         try {
             $response = $this->sendMessage($request);
@@ -304,7 +304,7 @@ class FinTsNew
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
      *     passed to the $action instead.
      */
-    public function submitTan($action, $tan)
+    public function submitTan(BaseAction $action, string $tan)
     {
         // Check the action's state.
         $tanRequest = $action->getTanRequest();
@@ -380,7 +380,7 @@ class FinTsNew
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error.
      */
-    public function getTanModes()
+    public function getTanModes(): array
     {
         $this->ensureTanModesAvailable();
         return array_combine($this->allowedTanModes, array_map(function ($tanModeId) {
@@ -399,7 +399,7 @@ class FinTsNew
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server responds with an error.
      */
-    public function getTanMedia($tanMode)
+    public function getTanMedia($tanMode): array
     {
         if ($this->dialogId !== null) {
             $this->endDialog();
@@ -531,7 +531,7 @@ class FinTsNew
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
-    private function getSelectedTanMode()
+    private function getSelectedTanMode(): ?VerfahrensparameterZweischrittVerfahrenV6
     {
         if (is_int($this->selectedTanMode)) {
             $this->ensureBpdAvailable();
@@ -566,7 +566,7 @@ class FinTsNew
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
-    private function requireTanMode()
+    private function requireTanMode(): VerfahrensparameterZweiSchrittVerfahrenV6
     {
         $tanMode = $this->getSelectedTanMode();
         if ($tanMode === null) {
@@ -579,7 +579,7 @@ class FinTsNew
      * Creates a new connection based on the {@link #$options}. This can be overridden for unit testing purposes.
      * @return Connection A newly instantiated connection.
      */
-    protected function newConnection()
+    protected function newConnection(): Connection
     {
         return new Connection($this->options->url, $this->options->timeoutConnect, $this->options->timeoutResponse);
     }
@@ -603,7 +603,7 @@ class FinTsNew
      * @throws UnsupportedException If the action has a pagination token from a previous execution, but did not include
      *     it in the request, i.e. it does not appear to support pagination even though it should.
      */
-    private function checkPaginationToken($action, $requestSegments)
+    private function checkPaginationToken(BaseAction $action, array $requestSegments)
     {
         $token = $action->getPaginationToken();
         if ($token === null) {
@@ -625,7 +625,7 @@ class FinTsNew
      * @param BaseAction $action The action to which the response belongs.
      * @param Message $fakeResponseMessage A messsage that contains the response segments for this action.
      */
-    private function processActionResponse($action, $fakeResponseMessage)
+    private function processActionResponse(BaseAction $action, Message $fakeResponseMessage)
     {
         try {
             $action->processResponse($fakeResponseMessage);
@@ -658,7 +658,7 @@ class FinTsNew
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
      *     passed to the $action instead.
      */
-    private function executeWeakDialogInitialization($hktanRef)
+    private function executeWeakDialogInitialization(?string $hktanRef)
     {
         if ($this->dialogId !== null) {
             throw new \RuntimeException('Cannot init another dialog.');
@@ -682,7 +682,7 @@ class FinTsNew
      * @param Message $response A response retrieved from the server that may or may not contain the BPD.
      * @return bool Whether the BPD was found in the response.
      */
-    private function readBPD($response)
+    private function readBPD(Message $response): bool
     {
         if ($allowed = $response->findRueckmeldung(Rueckmeldungscode::ZUGELASSENE_VERFAHREN)) {
             $this->allowedTanModes = array_map('intval', $allowed->rueckmeldungsparameter);
@@ -701,7 +701,7 @@ class FinTsNew
      * @throws ServerException When the server responds with an error instead of closing the dialog. This means that
      *     the connection is tainted and can probably not be used for another dialog.
      */
-    protected function endDialog($isAnonymous = false)
+    protected function endDialog(bool $isAnonymous = false)
     {
         if ($this->connection === null) {
             $this->dialogId = null;
@@ -741,7 +741,7 @@ class FinTsNew
      * @param string|null Optionally a TAN to sign this message with.
      * @return Message The built message.
      */
-    private function buildMessage($message, $tanMode = null, $tan = null)
+    private function buildMessage(MessageBuilder $message, ?TanMode $tanMode = null, ?string $tan = null): Message
     {
         return Message::createWrappedMessage(
             $message,
@@ -761,7 +761,7 @@ class FinTsNew
      * @throws CurlException When the request failed on the physical or TCP/HTTPS protocol level.
      * @throws ServerException When the response contains an error.
      */
-    private function sendMessage($request)
+    private function sendMessage($request): Message
     {
         if ($request instanceof MessageBuilder) {
             $request = $this->buildMessage($request, $this->getSelectedTanMode());

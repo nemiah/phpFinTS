@@ -41,7 +41,7 @@ class Account
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(string $id)
     {
         $this->id = $id;
 
@@ -53,7 +53,7 @@ class Account
      *
      * @return string
      */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->accountNumber;
     }
@@ -65,7 +65,7 @@ class Account
      *
      * @return $this
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber)
     {
         $this->accountNumber = (string) $accountNumber;
 
@@ -77,7 +77,7 @@ class Account
      *
      * @return string
      */
-    public function getBankCode()
+    public function getBankCode(): string
     {
         return $this->bankCode;
     }
@@ -89,7 +89,7 @@ class Account
      *
      * @return $this
      */
-    public function setBankCode($bankCode)
+    public function setBankCode(string $bankCode)
     {
         $this->bankCode = (string) $bankCode;
 
@@ -101,7 +101,7 @@ class Account
      *
      * @return string
      */
-    public function getIban()
+    public function getIban(): string
     {
         return $this->iban;
     }
@@ -113,7 +113,7 @@ class Account
      *
      * @return $this
      */
-    public function setIban($iban)
+    public function setIban(string $iban)
     {
         $this->iban = (string) $iban;
 
@@ -125,7 +125,7 @@ class Account
      *
      * @return string
      */
-    public function getCustomerId()
+    public function getCustomerId(): string
     {
         return $this->customerId;
     }
@@ -137,7 +137,7 @@ class Account
      *
      * @return $this
      */
-    public function setCustomerId($customerId)
+    public function setCustomerId(string $customerId)
     {
         $this->customerId = (string) $customerId;
 
@@ -149,7 +149,7 @@ class Account
      *
      * @return string
      */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
@@ -161,7 +161,7 @@ class Account
      *
      * @return $this
      */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency)
     {
         $this->currency = (string) $currency;
 
@@ -173,7 +173,7 @@ class Account
      *
      * @return string
      */
-    public function getAccountOwnerName()
+    public function getAccountOwnerName(): string
     {
         return $this->accountOwnerName;
     }
@@ -185,7 +185,7 @@ class Account
      *
      * @return $this
      */
-    public function setAccountOwnerName($accountOwnerName)
+    public function setAccountOwnerName(string $accountOwnerName)
     {
         $this->accountOwnerName = (string) $accountOwnerName;
 
@@ -197,7 +197,7 @@ class Account
      *
      * @return string
      */
-    public function getAccountDescription()
+    public function getAccountDescription(): string
     {
         return $this->accountDescription;
     }
@@ -209,7 +209,7 @@ class Account
      *
      * @return $this
      */
-    public function setAccountDescription($accountDescription)
+    public function setAccountDescription(string $accountDescription)
     {
         $this->accountDescription = (string) $accountDescription;
 

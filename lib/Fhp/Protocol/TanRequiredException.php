@@ -15,7 +15,7 @@ class TanRequiredException extends \RuntimeException
     /**
      * @param TanRequest $tanRequest
      */
-    public function __construct($tanRequest)
+    public function __construct(TanRequest $tanRequest)
     {
         parent::__construct('This action requires a TAN to be completed.');
         $this->tanRequest = $tanRequest;

@@ -34,7 +34,7 @@ class Connection
      * @param int $timeoutConnect
      * @param int $timeoutResponse
      */
-    public function __construct($url, $timeoutConnect = 15, $timeoutResponse = 30)
+    public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
     {
         $this->url = $url;
         $this->timeoutConnect = $timeoutConnect;
@@ -72,7 +72,7 @@ class Connection
      * @return string The response from the server, in HBCI/FinTS wire format, ISO-8859-1 encoded.
      * @throws CurlException When the request fails.
      */
-    public function send($message)
+    public function send(string $message): string
     {
         if (!$this->curlHandle) {
             $this->connect();

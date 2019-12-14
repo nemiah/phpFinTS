@@ -46,7 +46,7 @@ class VerschluesselungsalgorithmusV2 extends BaseDeg
     /**
      * @return VerschluesselungsalgorithmusV2
      */
-    public static function create()
+    public static function create(): VerschluesselungsalgorithmusV2
     {
         $result = new VerschluesselungsalgorithmusV2();
         // Note: The correct representation of the value that the specification recommends is "\0\0\0\0\0\0\0\0". But

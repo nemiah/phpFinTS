@@ -5,8 +5,8 @@ namespace Fhp\Segment\HITANS;
 interface ParameterZweiSchrittTanEinreichung
 {
     /** @return bool */
-    public function getEinschrittVerfahrenErlaubt();
+    public function getEinschrittVerfahrenErlaubt(): bool;
 
     /** @return VerfahrensparameterZweiSchrittVerfahren[] */
-    public function getVerfahrensparameterZweiSchrittVerfahren();
+    public function getVerfahrensparameterZweiSchrittVerfahren(): array;
 }

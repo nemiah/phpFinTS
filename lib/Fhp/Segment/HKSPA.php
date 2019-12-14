@@ -21,7 +21,7 @@ class HKSPA extends AbstractSegment
      * @param int $segmentNumber
      * @param Ktv|null $ktv
      */
-    public function __construct($segmentNumber, Ktv $ktv = null)
+    public function __construct(int $segmentNumber, Ktv $ktv = null)
     {
         parent::__construct(
             static::NAME,
@@ -34,7 +34,7 @@ class HKSPA extends AbstractSegment
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

@@ -32,7 +32,7 @@ class Statement
      *
      * @return Transaction[]
      */
-    public function getTransactions()
+    public function getTransactions(): array
     {
         return $this->transactions;
     }
@@ -61,7 +61,7 @@ class Statement
      *
      * @return float
      */
-    public function getStartBalance()
+    public function getStartBalance(): float
     {
         return $this->startBalance;
     }
@@ -73,7 +73,7 @@ class Statement
      *
      * @return $this
      */
-    public function setStartBalance($startBalance)
+    public function setStartBalance(float $startBalance)
     {
         $this->startBalance = (float) $startBalance;
 
@@ -85,7 +85,7 @@ class Statement
      *
      * @return string
      */
-    public function getCreditDebit()
+    public function getCreditDebit(): string
     {
         return $this->creditDebit;
     }
@@ -97,7 +97,7 @@ class Statement
      *
      * @return $this
      */
-    public function setCreditDebit($creditDebit)
+    public function setCreditDebit(?string $creditDebit)
     {
         $this->creditDebit = $creditDebit;
 
@@ -109,7 +109,7 @@ class Statement
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }

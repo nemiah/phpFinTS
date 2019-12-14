@@ -28,7 +28,7 @@ class SicherheitsidentifikationDetailsV2 extends BaseDeg
      *     synchronization.
      * @return SicherheitsidentifikationDetailsV2
      */
-    public static function createForSender($kundensystemId)
+    public static function createForSender(string $kundensystemId): SicherheitsidentifikationDetailsV2
     {
         $result = new SicherheitsidentifikationDetailsV2();
         $result->identifizierungDerPartei = $kundensystemId;

@@ -23,7 +23,7 @@ class SEPAAccount
      *
      * @return string
      */
-    public function getIban()
+    public function getIban(): string
     {
         return $this->iban;
     }
@@ -35,7 +35,7 @@ class SEPAAccount
      *
      * @return $this
      */
-    public function setIban($iban)
+    public function setIban(string $iban)
     {
         $this->iban = (string) $iban;
 
@@ -47,7 +47,7 @@ class SEPAAccount
      *
      * @return string
      */
-    public function getBic()
+    public function getBic(): string
     {
         return $this->bic;
     }
@@ -59,7 +59,7 @@ class SEPAAccount
      *
      * @return $this
      */
-    public function setBic($bic)
+    public function setBic(string $bic)
     {
         $this->bic = (string) $bic;
 
@@ -71,7 +71,7 @@ class SEPAAccount
      *
      * @return string
      */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->accountNumber;
     }
@@ -83,7 +83,7 @@ class SEPAAccount
      *
      * @return $this
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber)
     {
         $this->accountNumber = (string) $accountNumber;
 
@@ -95,7 +95,7 @@ class SEPAAccount
      *
      * @return string
      */
-    public function getSubAccount()
+    public function getSubAccount(): string
     {
         return $this->subAccount;
     }
@@ -107,7 +107,7 @@ class SEPAAccount
      *
      * @return $this
      */
-    public function setSubAccount($subAccount)
+    public function setSubAccount(string $subAccount)
     {
         $this->subAccount = (string) $subAccount;
 
@@ -119,7 +119,7 @@ class SEPAAccount
      *
      * @return string
      */
-    public function getBlz()
+    public function getBlz(): string
     {
         return $this->blz;
     }
@@ -131,7 +131,7 @@ class SEPAAccount
      *
      * @return $this
      */
-    public function setBlz($blz)
+    public function setBlz(string $blz)
     {
         $this->blz = (string) $blz;
 

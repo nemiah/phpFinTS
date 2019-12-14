@@ -27,7 +27,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     /**
      * @return SegmentDescriptor The descriptor for this segment's type.
      */
-    public function getDescriptor()
+    public function getDescriptor(): SegmentDescriptor
     {
         if ($this->descriptor === null) {
             $this->descriptor = SegmentDescriptor::get(static::class);
@@ -54,7 +54,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      * @param int $segmentNumber The new segment number.
      * @return $this The same instance.
      */
-    public function setSegmentNumber($segmentNumber)
+    public function setSegmentNumber(int $segmentNumber)
     {
         $this->segmentkopf->segmentnummer = $segmentNumber;
         return $this;
@@ -73,7 +73,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
      *     segment delimiter.
      */
-    public function serialize()
+    public function serialize(): string
     {
         return Serializer::serializeSegment($this);
     }
@@ -101,7 +101,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.
      */
-    public static function parse($rawSegment)
+    public static function parse(string $rawSegment): self
     {
         if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
@@ -115,7 +115,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     /**
      * @return static A new segment of the type on which this function was called, with the Segmentkopf initialized.
      */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
         if (static::class === BaseSegment::class) {
             throw new \InvalidArgumentException('Must not call BaseSegment::createEmpty() on the super class');

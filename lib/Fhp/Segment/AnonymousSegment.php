@@ -33,7 +33,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
      * @param Segmentkopf $segmentkopf
      * @param string[]|string[][] $elements
      */
-    public function __construct($segmentkopf, $elements)
+    public function __construct(Segmentkopf $segmentkopf, array $elements)
     {
         $this->segmentkopf = $segmentkopf;
         $this->type = $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;

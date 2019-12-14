@@ -14,7 +14,7 @@ class Bin
      *
      * @param string $string
      */
-    public function __construct($string)
+    public function __construct(string $string)
     {
         $this->string = $string;
     }
@@ -25,7 +25,7 @@ class Bin
      * @param string $data
      * @return $this
      */
-    public function setData($data)
+    public function setData(string $data)
     {
         $this->string = $data;
 
@@ -37,7 +37,7 @@ class Bin
      *
      * @return string
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->string;
     }
@@ -47,7 +47,7 @@ class Bin
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return '@' . strlen($this->string) . '@' . $this->string;
     }
@@ -55,7 +55,7 @@ class Bin
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

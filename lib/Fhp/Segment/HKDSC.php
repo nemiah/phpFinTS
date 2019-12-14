@@ -26,7 +26,7 @@ class HKDSC extends AbstractSegment
      * @param string $SEPADescriptor
      * @param string $painMessage
      */
-    public function __construct($version, $segmentNumber, $kti, $SEPADescriptor, $painMessage)
+    public function __construct(int $version, int $segmentNumber, Kti $kti, string $SEPADescriptor, string $painMessage)
     {
         parent::__construct(
             static::NAME,
@@ -43,7 +43,7 @@ class HKDSC extends AbstractSegment
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

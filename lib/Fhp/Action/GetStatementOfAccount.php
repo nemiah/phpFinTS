@@ -61,7 +61,7 @@ class GetStatementOfAccount extends BaseAction
      *     pass one of the accounts into $account, though.
      * @return GetStatementOfAccount A new action instance.
      */
-    public static function create(SEPAAccount $account, $from = null, $to = null, $allAccounts = false)
+    public static function create(SEPAAccount $account, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false): GetStatementOfAccount
     {
         if ($from !== null && $to !== null && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');

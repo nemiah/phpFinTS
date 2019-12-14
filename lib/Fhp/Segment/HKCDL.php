@@ -27,7 +27,7 @@ class HKCDL extends AbstractSegment
      * @param string $SEPADescriptor
      * @param SEPAStandingOrder $SEPAStandingOrder
      */
-    public function __construct($version, $segmentNumber, $kti, $SEPADescriptor, SEPAStandingOrder $SEPAStandingOrder)
+    public function __construct(int $version, int $segmentNumber, Kti $kti, string $SEPADescriptor, SEPAStandingOrder $SEPAStandingOrder)
     {
         $deg = new \Fhp\Deg();
         $deg->addDataElement($SEPAStandingOrder->getFirstExecution());
@@ -53,7 +53,7 @@ class HKCDL extends AbstractSegment
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

@@ -78,7 +78,7 @@ abstract class AbstractSegment implements SegmentInterface
      * @param bool $translateCodes
      * @return string
      */
-    public function humanReadable($translateCodes = false)
+    public function humanReadable(bool $translateCodes = false)
     {
         return str_replace(
             ["'", '+'],

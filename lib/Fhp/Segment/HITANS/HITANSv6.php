@@ -21,7 +21,7 @@ class HITANSv6 extends BaseGeschaeftsvorfallparameter implements HITANS
     public $parameterZweiSchrittTanEinreichung;
 
     /** @return ParameterZweiSchrittTanEinreichungV6 */
-    public function getParameterZweiSchrittTanEinreichung()
+    public function getParameterZweiSchrittTanEinreichung(): ParameterZweiSchrittTanEinreichungV6
     {
         return $this->parameterZweiSchrittTanEinreichung;
     }

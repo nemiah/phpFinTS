@@ -106,7 +106,7 @@ class Message
      * @param string $segmentType The PHP type (class name or interface) of the segment(s).
      * @return BaseSegment[] All segments of this type (possibly an empty array).
      */
-    public function findSegments($segmentType)
+    public function findSegments(string $segmentType): array
     {
         return array_values(array_filter($this->plainSegments, function ($segment) use ($segmentType) {
             /* @var BaseSegment $segment */
@@ -118,7 +118,7 @@ class Message
      * @param string $segmentType The PHP type (class name or interface) of the segment.
      * @return BaseSegment|null The segment, or null if it was found.
      */
-    public function findSegment($segmentType)
+    public function findSegment(string $segmentType): ?BaseSegment
     {
         $matchedSegments = $this->findSegments($segmentType);
         if (count($matchedSegments) > 1) {
@@ -131,7 +131,7 @@ class Message
      * @param string $segmentType The PHP type (class name or interface) of the segment.
      * @return bool Whether any such segment exists.
      */
-    public function hasSegment($segmentType)
+    public function hasSegment(string $segmentType): bool
     {
         return $this->findSegment($segmentType) !== null;
     }
@@ -141,7 +141,7 @@ class Message
      * @return BaseSegment The segment, never null.
      * @throws UnexpectedResponseException If the segment was not found.
      */
-    public function requireSegment($segmentType)
+    public function requireSegment(string $segmentType): BaseSegment
     {
         $matchedSegment = $this->findSegment($segmentType);
         if ($matchedSegment === null) {
@@ -154,7 +154,7 @@ class Message
      * @param int $segmentNumber The segment number to search for.
      * @return BaseSegment|null The segment with that number, or null if there is none.
      */
-    public function findSegmentByNumber($segmentNumber)
+    public function findSegmentByNumber(int $segmentNumber): ?BaseSegment
     {
         foreach ($this->getAllSegments() as $segment) {
             if ($segment->getSegmentNumber() === $segmentNumber) {
@@ -169,7 +169,7 @@ class Message
      * @return Message A new message that just contains the plain segment from $this message which refer to one
      *     of the given $referenceSegments.
      */
-    public function filterByReferenceSegments($referenceNumbers)
+    public function filterByReferenceSegments(array $referenceNumbers): Message
     {
         $result = new Message();
         if (count($referenceNumbers) === 0) {
@@ -191,7 +191,7 @@ class Message
      * @param int $code The response code to search for.
      * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
      */
-    public function findRueckmeldung($code)
+    public function findRueckmeldung(int $code): ?Rueckmeldung
     {
         foreach ($this->plainSegments as $segment) {
             if ($segment instanceof RueckmeldungContainer) {
@@ -207,7 +207,7 @@ class Message
     /**
      * @return string The HBCI/FinTS wire format for this message, ISO-8859-1 encoded.
      */
-    public function serialize()
+    public function serialize(): string
     {
         $result = '';
         foreach ($this->wrapperSegments as $segment) {
@@ -227,7 +227,7 @@ class Message
      * @param string|null The TAN to be sent to the server (in HNSHA). If this is present, $tanMode must be present.
      * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
      */
-    public static function createWrappedMessage($plainSegments, $options, $kundensystemId, $credentials, $tanMode, $tan)
+    public static function createWrappedMessage($plainSegments, FinTsOptions $options, string $kundensystemId, Credentials $credentials, ?TanMode $tanMode, $tan): Message
     {
         $message = new Message();
         $message->plainSegments = $plainSegments instanceof MessageBuilder ? $plainSegments->segments : $plainSegments;
@@ -259,7 +259,7 @@ class Message
      * @param BaseSegment[]|MessageBuilder $segments
      * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
      */
-    public static function createPlainMessage($segments)
+    public static function createPlainMessage($segments): Message
     {
         $message = new Message();
         $message->plainSegments = $segments instanceof MessageBuilder ? $segments->segments : $segments;
@@ -280,7 +280,7 @@ class Message
      * @return Message The parsed message.
      * @throws \InvalidArgumentException When the parsing fails.
      */
-    public static function parse($rawMessage)
+    public static function parse(string $rawMessage): Message
     {
         $result = new Message();
         $segments = Parser::parseSegments($rawMessage);
@@ -337,7 +337,7 @@ class Message
      * @param int $segmentNumber The number for the *first* segment, subsequent segment get the subsequent integers.
      * @return BaseSegment[] The same array, for chaining.
      */
-    private static function setSegmentNumbers($segments, $segmentNumber)
+    private static function setSegmentNumbers(array $segments, int $segmentNumber): array
     {
         foreach ($segments as $segment) {
             $segment->segmentkopf->segmentnummer = $segmentNumber;

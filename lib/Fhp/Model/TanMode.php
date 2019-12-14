@@ -27,40 +27,40 @@ interface TanMode
      * @return int The ID of this TanMode. This is what the application needs to persist when it wants to remember
      *     the users decision for future transactions.
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * @return string A user-readable name, e.g. for display in a list.
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return string A user-readable label for the text field that displays the challenge to the user.
      */
-    public function getChallengeLabel();
+    public function getChallengeLabel(): string;
 
     /**
      * @return int The maximum length of the challenge. The application can use this to appropriately resize the
      *     text field that displays the challenge to the user.
      */
-    public function getMaxChallengeLength();
+    public function getMaxChallengeLength(): int;
 
     /**
      * @return int The maximum length of TANs entered in this mode. The application can use this to restrict the TAN
      *     input field or to do client-side validation.
      */
-    public function getMaxTanLength();
+    public function getMaxTanLength(): int;
 
     /**
      * @return int The allowed TAN format. See the FORMAT_* constants above. The application can use this to
      *     restrict the TAN input field or to do client-side validation.
      */
-    public function getTanFormat();
+    public function getTanFormat(): int;
 
     /**
      * @return bool If true, there are potentially multiple {@link TanMedium} choices (e.g. multiple mobile phones)
      *     associated with this TanMode (e.g. if it's the smsTAN mode), and the user needs to pick the medium in
      *     addition to and after picking this TanMode.
      */
-    public function needsTanMedium();
+    public function needsTanMedium(): bool;
 }

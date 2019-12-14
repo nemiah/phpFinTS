@@ -24,7 +24,7 @@ class Kto extends BaseDeg
      * @param Kik $kik
      * @return Kto
      */
-    public static function create($kontonummer, $kik)
+    public static function create(string $kontonummer, Kik $kik): Kto
     {
         $result = new Kto();
         $result->kontonummer = $kontonummer;
@@ -36,7 +36,7 @@ class Kto extends BaseDeg
      * @param SEPAAccount $account
      * @return Kto
      */
-    public static function fromAccount($account)
+    public static function fromAccount(SEPAAccount $account): Kto
     {
         return static::create($account->getAccountNumber(), Kik::create($account->getBlz()));
     }

@@ -15,10 +15,10 @@ interface HIUPD
      * @param SEPAAccount $account An account.
      * @return bool True if this HIUPD segment pertains to the given account.
      */
-    public function matchesAccount(SEPAAccount $account);
+    public function matchesAccount(SEPAAccount $account): bool;
 
     /**
      * @return ErlaubteGeschaeftsvorfaelle[]
      */
-    public function getErlaubteGeschaeftsvorfaelle();
+    public function getErlaubteGeschaeftsvorfaelle(): array;
 }

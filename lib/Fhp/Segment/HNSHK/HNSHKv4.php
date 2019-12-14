@@ -68,7 +68,7 @@ class HNSHKv4 extends BaseSegment
      * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2#identifizierungDerPartei}.
      * @return HNSHKv4
      */
-    public static function create($sicherheitskontrollreferenz, $options, $credentials, $tanMode, $kundensystemId)
+    public static function create(string $sicherheitskontrollreferenz, FinTsOptions $options, Credentials $credentials, ?TanMode $tanMode, string $kundensystemId): HNSHKv4
     {
         $result = HNSHKv4::createEmpty();
         $result->sicherheitsprofil =

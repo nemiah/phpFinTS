@@ -15,12 +15,12 @@ interface TanMedium
      * @return string A user-readable name for this TAN medium, which serves as its identifier at the same time. This is
      *     what the application needs to persist when it wants to remember the users decision for future transactions.
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return string|null In case this is a mobileTAN/smsTAN medium, this is its (possibly obfuscated) phone number.
      */
-    public function getPhoneNumber();
+    public function getPhoneNumber(): ?string;
 
     // TODO Consider making more information from TanMediumListeV4 available here.
 }

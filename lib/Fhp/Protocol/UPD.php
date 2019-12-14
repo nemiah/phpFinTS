@@ -28,7 +28,7 @@ class UPD
      * @return bool True if the UPD data is contained in the response and {@link #extractFromResponse()} would
      *     succeed.
      */
-    public static function containedInResponse($response)
+    public static function containedInResponse(Message $response): bool
     {
         return $response->hasSegment(HIUPAv4::class);
     }
@@ -38,7 +38,7 @@ class UPD
      *     data.
      * @return UPD A new UPD instance with the extracted configuration data.
      */
-    public static function extractFromResponse($response)
+    public static function extractFromResponse(Message $response): UPD
     {
         $upd = new UPD();
         $upd->hiupa = $response->requireSegment(HIUPAv4::class);
@@ -50,7 +50,7 @@ class UPD
      * @param SEPAAccount $account An account.
      * @return HIUPD|null The HIUPD segment for this account, or null if none exists for this account.
      */
-    public function findHiupd(SEPAAccount $account)
+    public function findHiupd(SEPAAccount $account): ?HIUPD
     {
         foreach ($this->hiupd as $hiupd) {
             if ($hiupd->matchesAccount($account)) {
@@ -65,7 +65,7 @@ class UPD
      * @param string $requestName The request that shall be sent to the bank.
      * @return bool True if the given request can be used by the current user for the given account.
      */
-    public function isRequestSupportedForAccount(SEPAAccount $account, $requestName)
+    public function isRequestSupportedForAccount(SEPAAccount $account, string $requestName): bool
     {
         $hiupd = $this->findHiupd($account);
         if ($hiupd !== null) {

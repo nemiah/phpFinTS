@@ -7,20 +7,20 @@ use Fhp\Model\TanMode;
 interface VerfahrensparameterZweiSchrittVerfahren extends TanMode
 {
     /** @return int */
-    public function getId();
+    public function getId(): int;
 
     /** @return string */
-    public function getName();
+    public function getName(): string;
 
     /** @return bool */
-    public function getSmsAbbuchungskontoErforderlich();
+    public function getSmsAbbuchungskontoErforderlich(): bool;
 
     /** @return bool */
-    public function getAuftraggeberkontoErforderlich();
+    public function getAuftraggeberkontoErforderlich(): bool;
 
     /** @return bool */
-    public function getChallengeKlasseErforderlich();
+    public function getChallengeKlasseErforderlich(): bool;
 
     /** @return bool */
-    public function getAntwortHhdUcErforderlich();
+    public function getAntwortHhdUcErforderlich(): bool;
 }
