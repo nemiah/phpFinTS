@@ -19,6 +19,15 @@ class Kik extends BaseDeg
     /** @var string|null Max length: 30 (Mandatory/absent depending on the country) */
     public $kreditinstitutscode;
 
+    /** {@inheritdoc} */
+    public function validate()
+    {
+        parent::validate();
+        if ($this->laenderkennzeichen === self::DEFAULT_COUNTRY_CODE && $this->kreditinstitutscode === null) {
+            throw new \InvalidArgumentException('Kik.kreditinstitutscode is mandatory for German banks (BLZ)');
+        }
+    }
+
     /**
      * @param string $kreditinstitutscode
      * @return Kik
