@@ -28,10 +28,7 @@ class Kik extends BaseDeg
         }
     }
 
-    /**
-     * @return Kik
-     */
-    public static function create(string $kreditinstitutscode)
+    public static function create(string $kreditinstitutscode): Kik
     {
         $result = new Kik();
         $result->laenderkennzeichen = static::DEFAULT_COUNTRY_CODE;

@@ -42,10 +42,7 @@ class Kti extends BaseDeg
         }
     }
 
-    /**
-     * @return Kti
-     */
-    public static function create(string $iban, string $bic)
+    public static function create(string $iban, string $bic): Kti
     {
         $result = new Kti();
         $result->iban = $iban;
@@ -53,10 +50,7 @@ class Kti extends BaseDeg
         return $result;
     }
 
-    /**
-     * @return Kti
-     */
-    public static function fromAccount(SEPAAccount $account)
+    public static function fromAccount(SEPAAccount $account): Kti
     {
         $result = static::create($account->getIban(), $account->getBic());
         $result->kontonummer = $account->getAccountNumber();
