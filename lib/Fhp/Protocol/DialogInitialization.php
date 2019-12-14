@@ -126,7 +126,7 @@ class DialogInitialization extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, UPD $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),

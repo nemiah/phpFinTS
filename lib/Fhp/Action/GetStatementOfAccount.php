@@ -122,7 +122,7 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, UPD $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->bankName = $bpd->getBankName();
 

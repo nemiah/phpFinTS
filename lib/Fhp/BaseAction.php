@@ -176,7 +176,8 @@ abstract class BaseAction implements \Serializable
      * multiple times in case the response is paginated. On all but the first call, {@link #getPaginationToken()} will
      * return a non-null token that should be included in the returned request.
      * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
+     * @param UPD|null $upd See {@link UPD}. This is usually present (non-null), except for a few special login and TAN
+     *     management actions.
      * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
      *     Note that an action can return an empty array to indicate that it does not need to make a request to the
      *     server, but can instead compute the result just from the BPD/UPD, in which case it should set
@@ -184,7 +185,7 @@ abstract class BaseAction implements \Serializable
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
-    abstract public function createRequest(BPD $bpd, UPD $upd);
+    abstract public function createRequest(BPD $bpd, ?UPD $upd);
 
     /**
      * Called when this action was executed on the server (never if {@link #createRequest()} returned an empty request),

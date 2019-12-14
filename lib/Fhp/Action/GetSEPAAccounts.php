@@ -47,7 +47,7 @@ class GetSEPAAccounts extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, UPD $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hispas */
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');

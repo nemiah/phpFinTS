@@ -18,7 +18,7 @@ class GetTanMedia extends BaseAction
     private $tanMedia;
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, UPD $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         // Prepare the HKTAB request.
         $hitabs = $bpd->requireLatestSupportedParameters('HITABS');

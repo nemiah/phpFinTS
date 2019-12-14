@@ -78,7 +78,7 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, UPD $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         if (!$upd->isRequestSupportedForAccount($this->account, 'HKCAZ')) {
             throw new UnsupportedException('The bank (or the given account/user combination) does not allow this type of request.');
