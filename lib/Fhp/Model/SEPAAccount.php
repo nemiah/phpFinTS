@@ -7,113 +7,90 @@ namespace Fhp\Model;
  */
 class SEPAAccount
 {
-    /** @var string */
+    // All fields are nullable, but the overall SEPAAccount is only valid if at least {IBAN,BIC} or {accountNumber,blz} are present.
+
+    /** @var string|null */
     protected $iban;
-    /** @var string */
+    /** @var string|null */
     protected $bic;
-    /** @var string */
+    /** @var string|null */
     protected $accountNumber;
-    /** @var string */
+    /** @var string|null */
     protected $subAccount;
-    /** @var string */
+    /** @var string|null */
     protected $blz;
 
-    /**
-     * Get iban
-     */
-    public function getIban(): string
+    public function getIban(): ?string
     {
         return $this->iban;
     }
 
     /**
-     * Set iban
-     *
      * @return $this
      */
-    public function setIban(string $iban)
+    public function setIban(?string $iban)
     {
-        $this->iban = (string) $iban;
+        $this->iban = $iban;
 
         return $this;
     }
 
-    /**
-     * Get bic
-     */
-    public function getBic(): string
+    public function getBic(): ?string
     {
         return $this->bic;
     }
 
     /**
-     * Set bic
-     *
      * @return $this
      */
-    public function setBic(string $bic)
+    public function setBic(?string $bic)
     {
-        $this->bic = (string) $bic;
+        $this->bic = $bic;
 
         return $this;
     }
 
-    /**
-     * Get accountNumber
-     */
-    public function getAccountNumber(): string
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
     /**
-     * Set accountNumber
-     *
      * @return $this
      */
-    public function setAccountNumber(string $accountNumber)
+    public function setAccountNumber(?string $accountNumber)
     {
-        $this->accountNumber = (string) $accountNumber;
+        $this->accountNumber = $accountNumber;
 
         return $this;
     }
 
-    /**
-     * Get subAccount
-     */
-    public function getSubAccount(): string
+    public function getSubAccount(): ?string
     {
         return $this->subAccount;
     }
 
     /**
-     * Set subAccount
-     *
      * @return $this
      */
-    public function setSubAccount(string $subAccount)
+    public function setSubAccount(?string $subAccount)
     {
-        $this->subAccount = (string) $subAccount;
+        $this->subAccount = $subAccount;
 
         return $this;
     }
 
-    /**
-     * Get blz
-     */
-    public function getBlz(): string
+    public function getBlz(): ?string
     {
         return $this->blz;
     }
 
     /**
-     * Set blz
-     *
      * @return $this
      */
-    public function setBlz(string $blz)
+    public function setBlz(?string $blz)
     {
-        $this->blz = (string) $blz;
+        $this->blz = $blz;
 
         return $this;
     }

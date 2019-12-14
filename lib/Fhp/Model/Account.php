@@ -7,181 +7,139 @@ namespace Fhp\Model;
  */
 class Account
 {
-    /** @var string */
+    /** @var string|null */
     protected $id;
-    /** @var string */
+    /** @var string|null */
     protected $accountNumber;
-    /** @var string */
+    /** @var string|null */
     protected $bankCode;
-    /** @var string */
+    /** @var string|null */
     protected $iban;
-    /** @var string */
+    /** @var string|null */
     protected $customerId;
-    /** @var string */
+    /** @var string|null */
     protected $currency;
-    /** @var string */
+    /** @var string|null */
     protected $accountOwnerName;
-    /** @var string */
+    /** @var string|null */
     protected $accountDescription;
 
-    /**
-     * Get id
-     *
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * Set id
-     *
      * @return $this
      */
-    public function setId(string $id)
+    public function setId(?string $id)
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get accountNumber
-     */
-    public function getAccountNumber(): string
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
     /**
-     * Set accountNumber
-     *
      * @return $this
      */
-    public function setAccountNumber(string $accountNumber)
+    public function setAccountNumber(?string $accountNumber)
     {
-        $this->accountNumber = (string) $accountNumber;
+        $this->accountNumber = $accountNumber;
 
         return $this;
     }
 
-    /**
-     * Get bankCode
-     */
-    public function getBankCode(): string
+    public function getBankCode(): ?string
     {
         return $this->bankCode;
     }
 
     /**
-     * Set bankCode
-     *
      * @return $this
      */
-    public function setBankCode(string $bankCode)
+    public function setBankCode(?string $bankCode)
     {
-        $this->bankCode = (string) $bankCode;
+        $this->bankCode = $bankCode;
 
         return $this;
     }
 
-    /**
-     * Get iban
-     */
-    public function getIban(): string
+    public function getIban(): ?string
     {
         return $this->iban;
     }
 
     /**
-     * Set iban
-     *
      * @return $this
      */
-    public function setIban(string $iban)
+    public function setIban(?string $iban)
     {
-        $this->iban = (string) $iban;
+        $this->iban = $iban;
 
         return $this;
     }
 
-    /**
-     * Get customerId
-     */
-    public function getCustomerId(): string
+    public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
 
     /**
-     * Set customerId
-     *
      * @return $this
      */
-    public function setCustomerId(string $customerId)
+    public function setCustomerId(?string $customerId)
     {
-        $this->customerId = (string) $customerId;
+        $this->customerId = $customerId;
 
         return $this;
     }
 
-    /**
-     * Get currency
-     */
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
     /**
-     * Set currency
-     *
      * @return $this
      */
-    public function setCurrency(string $currency)
+    public function setCurrency(?string $currency)
     {
-        $this->currency = (string) $currency;
+        $this->currency = $currency;
 
         return $this;
     }
 
-    /**
-     * Get accountOwnerName
-     */
-    public function getAccountOwnerName(): string
+    public function getAccountOwnerName(): ?string
     {
         return $this->accountOwnerName;
     }
 
     /**
-     * Set accountOwnerName
-     *
      * @return $this
      */
-    public function setAccountOwnerName(string $accountOwnerName)
+    public function setAccountOwnerName(?string $accountOwnerName)
     {
-        $this->accountOwnerName = (string) $accountOwnerName;
+        $this->accountOwnerName = $accountOwnerName;
 
         return $this;
     }
 
-    /**
-     * Get accountDescription
-     */
-    public function getAccountDescription(): string
+    public function getAccountDescription(): ?string
     {
         return $this->accountDescription;
     }
 
     /**
-     * Set accountDescription
-     *
      * @return $this
      */
-    public function setAccountDescription(string $accountDescription)
+    public function setAccountDescription(?string $accountDescription)
     {
-        $this->accountDescription = (string) $accountDescription;
+        $this->accountDescription = $accountDescription;
 
         return $this;
     }
