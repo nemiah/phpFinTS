@@ -157,8 +157,7 @@ class GetStatementOfAccount extends BaseAction
 
         /** @var HIKAZ $hikaz */
         foreach ($responseHikaz as $hikaz) {
-            // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
-            $this->rawMT940 .= utf8_encode($hikaz->getGebuchteUmsaetze()->getData());
+            $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
         }
 
         // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial
@@ -179,7 +178,12 @@ class GetStatementOfAccount extends BaseAction
         }
 
         try {
-            $this->parsedMT940 = $parser->parse($this->rawMT940);
+            // Note: Some banks encode their MT 940 data as SWIFT/ISO-8859 like it should be according to the
+            // specification (e.g. DKB), others just send UTF-8 (e.g. Consorsbank), so we try to detect it here.
+            $rawMT940 = mb_detect_encoding($this->rawMT940, 'UTF-8', true) === false
+                ? utf8_encode($this->rawMT940) : $this->rawMT940;
+            $this->parsedMT940 = $parser->parse($rawMT940);
+            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->parsedMT940);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
         }
