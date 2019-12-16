@@ -77,6 +77,10 @@ class GetStatementOfAccountXML extends BaseAction
     /** {@inheritdoc} */
     public function createRequest($bpd, $upd)
     {
+        if (!$upd->isRequestSupportedForAccount($this->account, 'HKCAZ')) {
+            throw new UnsupportedException('The bank (or the given account/user combination) does not allow this type of request.');
+        }
+
         /** @var HICAZSv1 $hicazs */
         $hicazs = $bpd->requireLatestSupportedParameters('HICAZS');
         $supportedCamtURNs = $hicazs->getParameter()->getUnterstuetzteCamtMessages()->camtDescriptor;
@@ -88,6 +92,7 @@ class GetStatementOfAccountXML extends BaseAction
         } else {
             $camtURNs = [$this->camtURN];
         }
+
         if ($this->allAccounts && !$hicazs->getParameter()->getAlleKontenErlaubt()) {
             throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
         }

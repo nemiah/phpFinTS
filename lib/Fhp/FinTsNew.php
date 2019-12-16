@@ -68,11 +68,11 @@ class FinTsNew
      * @param FinTsOptions $options Configuration options for the connection to the bank.
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
-     * @param string|null The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
+     * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
      *     PHP session. Passing this in here saves 1-2 dialogs that are normally made with the bank to obtain the BPD
      *     and Kundensystem-ID.
      */
-    public function __construct($options, $credentials, $persistedInstance = null)
+    public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
     {
         $options->validate();
         $this->logger = $options->logger;
@@ -80,17 +80,7 @@ class FinTsNew
         $this->credentials = $credentials;
 
         if ($persistedInstance !== null) {
-            $unserialized = unserialize($persistedInstance);
-            if (!is_array($unserialized) || empty($unserialized)) {
-                throw new \InvalidArgumentException("Invalid persistedInstance: '$persistedInstance'");
-            }
-            $version = $unserialized[0];
-            $data = array_slice($unserialized, 1);
-            if ($version === 2) {
-                $this->loadPersistedInstanceVersion2($data);
-            } else {
-                throw new \InvalidArgumentException("Unknown persistedInstace version: '{$unserialized[0]}''");
-            }
+            $this->loadPersistedInstance($persistedInstance);
         }
     }
 
@@ -108,6 +98,8 @@ class FinTsNew
      * Returns a serialized form of parts of this object. This is different from PHP's `\Serializable` in that it only
      * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
      * `Credentials` need to be passed to the constructor in addition to the string returned here.
+     *
+     * Alternatively you can use {@link #loadPersistedInstance) to separate constructing the instance and resuming it.
      *
      * NOTE: Unless you're persisting this object to complete a TAN request later on, you probably want to log the user
      * out first by calling {@link #close()}.
@@ -136,6 +128,30 @@ class FinTsNew
             $this->dialogId,
             $this->messageNumber,
         ]);
+    }
+
+    /**
+     * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
+     * obtain it from the user.
+     *
+     * @param string $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
+     *     PHP session.
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function loadPersistedInstance(string $persistedInstance)
+    {
+        $unserialized = unserialize($persistedInstance);
+        if (!is_array($unserialized) || empty($unserialized)) {
+            throw new \InvalidArgumentException("Invalid persistedInstance: '$persistedInstance'");
+        }
+        $version = $unserialized[0];
+        $data = array_slice($unserialized, 1);
+        if ($version === 2) {
+            $this->loadPersistedInstanceVersion2($data);
+        } else {
+            throw new \InvalidArgumentException("Unknown persistedInstace version: '{$unserialized[0]}''");
+        }
     }
 
     /** @param array $data */

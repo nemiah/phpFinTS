@@ -45,6 +45,10 @@ class GetStatementOfAccount extends BaseAction
     // Response
     /** @var string */
     private $rawMT940 = '';
+
+    /** @var array */
+    protected $parsedMT940 = [];
+
     /** @var StatementOfAccount */
     private $statement;
 
@@ -93,12 +97,24 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /**
+     * @return array The parsed MT940 data.
+     * @throws \Exception See {@link #ensureSuccess()}.
+     */
+    public function getParsedMT940(): array
+    {
+        $this->ensureSuccess();
+        return $this->parsedMT940;
+    }
+
+    /**
      * @return StatementOfAccount
      * @throws \Exception See {@link #ensureSuccess()}.
      */
     public function getStatement()
     {
-        $this->ensureSuccess();
+        if (is_null($this->statement)) {
+            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->getParsedMT940());
+        }
         return $this->statement;
     }
 
@@ -163,8 +179,7 @@ class GetStatementOfAccount extends BaseAction
         }
 
         try {
-            $parsedStatement = $parser->parse($this->rawMT940);
-            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($parsedStatement);
+            $this->parsedMT940 = $parser->parse($this->rawMT940);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
         }
