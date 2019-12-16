@@ -22,7 +22,7 @@ class InitializationErrorTest extends FinTsTestCase
         $this->expectException(ServerException::class);
         $this->expectExceptionMessageMatches('/Pflichtfeld nicht gefunden/');
         $this->fints->selectTanMode(921, 'SomePhone1');
-        $this->fints->initDialog();
+        $this->fints->login();
     }
 
     /**
@@ -40,6 +40,6 @@ class InitializationErrorTest extends FinTsTestCase
         $this->expectException(ServerException::class);
         $this->expectExceptionMessageMatches('/Falsche Segmentzusammenstellung/');
         $this->fints->selectTanMode(921, 'SomePhone1');
-        $this->fints->initDialog();
+        $this->fints->login();
     }
 }

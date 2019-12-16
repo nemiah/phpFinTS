@@ -37,16 +37,17 @@ class DKBIntegrationTestBase extends FinTsTestCase
      */
     protected function initDialog()
     {
-        // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
+        // We already know the TAN mode (921 below), so it will only fetch the BPD (anonymously) to verify it.
         $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, static::ANONYMOUS_END_RESPONSE);
-        $this->fints->selectTanMode(921, 'SomePhone1');
 
         // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
         $this->expectMessage(static::SYNC_REQUEST, static::SYNC_RESPONSE);
         $this->expectMessage(static::SYNC_END_REQUEST, static::SYNC_END_RESPONSE);
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, static::INIT_RESPONSE);
+
+        $this->fints->selectTanMode(921, 'SomePhone1');
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();
