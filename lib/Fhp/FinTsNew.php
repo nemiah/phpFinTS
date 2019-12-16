@@ -279,6 +279,10 @@ class FinTsNew
             $actionError = $e->extractErrorsForReference($action->getRequestSegmentNumbers());
             if ($actionError !== null) {
                 $action->processError($actionError, $this->bpd, $this->upd);
+                $e->extractError(Rueckmeldungscode::TEILWEISE_FEHLERHAFT); // Drop global error.
+                if ($e->extractError(Rueckmeldungscode::ABGEBROCHEN) !== null) {
+                    $this->forgetDialog();
+                }
             }
             if (!empty($e->getErrors())) {
                 throw $e;
