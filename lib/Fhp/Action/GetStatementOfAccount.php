@@ -112,7 +112,9 @@ class GetStatementOfAccount extends BaseAction
      */
     public function getStatement()
     {
-        $this->ensureSuccess();
+        if (is_null($this->statement)) {
+            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->getParsedMT940());
+        }
         return $this->statement;
     }
 
@@ -178,7 +180,6 @@ class GetStatementOfAccount extends BaseAction
 
         try {
             $this->parsedMT940 = $parser->parse($this->rawMT940);
-            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->parsedMT940);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
         }
