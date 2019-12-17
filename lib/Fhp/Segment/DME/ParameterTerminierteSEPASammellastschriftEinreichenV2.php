@@ -21,10 +21,10 @@ class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends BaseDeg
     /** @var bool */
     public $einzelbuchungErlaubt;
 
-    /** @var string[]|null @Max(4096) */
+    /** @var string|null Max Length: 4096 */
     public $zulaessigePurposecodes;
 
-    /** @var string[]|null @Max(256) */
+    /** @var string[]|null @Max(9) Max Length: 256 */
     public $unterstuetzteSEPADatenformate;
 
     public function getMinimaleVorlaufzeit(string $seqType, string $coreType = 'CORE')

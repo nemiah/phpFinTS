@@ -11,13 +11,10 @@ use Fhp\Segment\DSE\HIDSESv1;
 /**
  * Retrieves information about lead times for SEPA Direct Debit Requests
  */
-class GetSepaDirectDebitLeadTime extends BaseAction
+class GetSEPADirectDebitLeadTime extends BaseAction
 {
     const SEQUENCE_TYPES = ['FRST', 'OOFF', 'FNAL', 'RCUR'];
     const CORE_TYPES = ['CORE', 'COR1'];
-
-    /** @var MinimaleVorlaufzeitSEPALastschrift|null */
-    private $leadTime;
 
     /** @var string */
     private $coreType;
@@ -28,6 +25,9 @@ class GetSepaDirectDebitLeadTime extends BaseAction
     /** @var bool */
     private $singleDirectDebit;
 
+    /** @var MinimaleVorlaufzeitSEPALastschrift|null */
+    private $minimalLeadTime;
+
     public static function create(string $seqType, bool $singleDirectDebit, string $coreType = 'CORE')
     {
         if (!in_array($coreType, self::CORE_TYPES)) {
@@ -36,7 +36,7 @@ class GetSepaDirectDebitLeadTime extends BaseAction
         if (!in_array($seqType, self::SEQUENCE_TYPES)) {
             throw new \InvalidArgumentException('Unknown SEPA Sequence Type');
         }
-        $result = new GetSepaDirectDebitLeadTime();
+        $result = new GetSEPADirectDebitLeadTime();
         $result->coreType = $coreType;
         $result->seqType = $seqType;
         $result->singleDirectDebit = $singleDirectDebit;
@@ -49,17 +49,17 @@ class GetSepaDirectDebitLeadTime extends BaseAction
     {
         $type = $this->singleDirectDebit ? 'HIDSES' : 'HIDMES';
 
-        $hidxes = $bpd->getLatestSupportedParameters($type);
+        $hidxes = $bpd->requireLatestSupportedParameters($type);
 
         switch ($hidxes->getVersion()) {
             case 1:
                 /* @var HIDMESv1|HIDSESv1 $hidxes */
-                $leadTime = in_array($this->seqType, ['FRST', 'OFF']) ? $hidxes->parameter->minimaleVorlaufzeitFRSTOOFF : $hidxes->parameter->minimaleVorlaufzeitFNALRCUR;
-                $this->leadTime = MinimaleVorlaufzeitSEPALastschrift::create($leadTime, '235959');
+                $leadTime = in_array($this->seqType, ['FRST', 'OOFF']) ? $hidxes->parameter->minimaleVorlaufzeitFRSTOOFF : $hidxes->parameter->minimaleVorlaufzeitFNALRCUR;
+                $this->minimalLeadTime = MinimaleVorlaufzeitSEPALastschrift::create($leadTime, '235959');
                 break;
             case 2:
                 /* @var HIDMESv2|HIDSESv2 $hidxes */
-                $this->leadTime = $hidxes->parameter->getMinimaleVorlaufzeit($this->seqType, $this->coreType);
+                $this->minimalLeadTime = $hidxes->parameter->getMinimaleVorlaufzeit($this->seqType, $this->coreType);
                 break;
         }
         // No request to the bank required
@@ -69,8 +69,9 @@ class GetSepaDirectDebitLeadTime extends BaseAction
     /**
      * @return MinimaleVorlaufzeitSEPALastschrift|null The information about the lead time for the given Sequence Type and Core Type
      */
-    public function getLeadTime(): ?MinimaleVorlaufzeitSEPALastschrift
+    public function getMinimalLeadTime(): ?MinimaleVorlaufzeitSEPALastschrift
     {
-        return $this->leadTime;
+        //$this->ensureSuccess();
+        return $this->minimalLeadTime;
     }
 }

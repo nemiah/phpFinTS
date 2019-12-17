@@ -13,13 +13,13 @@ class ParameterTerminierteSEPAEinzellastschriftEinreichenV2 extends BaseDeg
     /** @var string */
     public $maximaleVorlaufzeitCodiert;
 
-    /** @var string[]|null @Max(4096) */
+    /** @var string|null Max Length: 4096 */
     public $zulaessigePurposecodes;
 
-    /** @var string[]|null @Max(256) */
+    /** @var string[]|null @Max(9) Max length: 256 */
     public $unterstuetzteSEPADatenformate;
 
-    public function getMinimaleVorlaufzeit(string $seqType, string $coreType = 'CORE')
+    public function getMinimaleVorlaufzeit(string $seqType, string $coreType = 'CORE'): ?MinimaleVorlaufzeitSEPALastschrift
     {
         $parsed = MinimaleVorlaufzeitSEPALastschrift::parseCoded($this->minimaleVorlaufzeitCodiert);
         return $parsed[$coreType][$seqType] ?? null;
