@@ -36,7 +36,8 @@ class MinimaleVorlaufzeitSEPALastschrift
     /** @var string After this time the request will fail when the value of $minimaleSEPAVorlaufzeit is used, for example 130000 meaning 1pm */
     public $cutOffZeit;
 
-    public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit, int $unterstuetzteSEPALastschriftartenCodiert = null, int $sequenceTypeCodiert = null)
+    public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit,int $unterstuetzteSEPALastschriftartenCodiert = null,
+                                  int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
     {
         $result = new MinimaleVorlaufzeitSEPALastschrift();
         $result->unterstuetzteSEPALastschriftartenCodiert = $unterstuetzteSEPALastschriftartenCodiert;
@@ -48,7 +49,7 @@ class MinimaleVorlaufzeitSEPALastschrift
     }
 
     /** @return MinimaleVorlaufzeitSEPALastschrift[][]|array */
-    public static function parseCoded(string $coded)
+    public static function parseCoded(string $coded): array
     {
         $result = [];
         foreach (array_chunk(explode(';', $coded), 4) as list($unterstuetzteSEPALastschriftartenCodiert, $sequenceTypeCodiert, $minimaleSEPAVorlaufzeit, $cutOffZeit)) {
