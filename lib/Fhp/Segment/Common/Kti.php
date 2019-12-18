@@ -27,6 +27,21 @@ class Kti extends BaseDeg
     /** @var Kik|null */
     public $kreditinstitutskennung;
 
+    /** {@inheritdoc} */
+    public function validate()
+    {
+        parent::validate();
+        if ($this->iban !== null) {
+            if ($this->bic == null) {
+                throw new \InvalidArgumentException('Kti cannot have IBAN without BIC');
+            }
+        } else {
+            if ($this->kontonummer === null || $this->kreditinstitutskennung === null) {
+                throw new \InvalidArgumentException('Kti must have IBAN+BIC or Kontonummer+Kik or both');
+            }
+        }
+    }
+
     /**
      * @param string $iban
      * @param string $bic
