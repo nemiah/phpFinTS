@@ -2,7 +2,10 @@
 
 [![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
 
-:exclamation:**Note: The current developer version contains changes to the parameters of FinTs::_construct! [Release 1.6](https://github.com/nemiah/phpFinTS/tree/1.6) still uses the old format.** :exclamation:
+:exclamation:**Note: The current developer version contains a new API in the `FinTsNew` class.
+If you are just starting to use this library, consider using that already and ignore the `FinTs` class.**
+If you want to (continue) using the old class, note that its constructor has changed, whereas the
+[Release 1.6](https://github.com/nemiah/phpFinTS/tree/1.6) still has the old constructor. :exclamation:
 
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
@@ -28,7 +31,7 @@ composer require nemiah/php-fints
 ## Usage
 
 Before using this library, you have to register your software with [Die Deutsche Kreditwirtschaft](https://www.hbci-zka.de/register/hersteller.htm) in order to get your registration number.
-See the examples in the "[Samples](/Samples)" folder. Fill out the required configuration and execute the file.
+See the examples in the "[Samples](/Samples)" folder (or "[SamplesNew](/SamplesNew)" for the new API). Fill out the required configuration and execute the file.
 
 Server details can be obtained at [www.hbci-zka.de](https://www.hbci-zka.de) after registration.
 
