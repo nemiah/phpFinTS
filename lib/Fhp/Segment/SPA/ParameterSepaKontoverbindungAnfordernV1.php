@@ -12,6 +12,8 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg implements ParameterSepaKontoverbindungAnfordern
 {
+    use GetUnterstuetzteSepaDatenformateTrait;
+
     /** @var bool */
     public $einzelkontenabrufErlaubt;
     /** @var bool */
@@ -20,10 +22,4 @@ class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg implements Paramet
     public $strukturierterVerwendungszweckErlaubt;
     /** @var string[] @Max(99) Max length each: 256 */
     public $unterstuetzteSepaDatenformate;
-
-    /** {@inheritdoc} */
-    public function getUnterstuetzteSepaDatenformate()
-    {
-        return $this->unterstuetzteSepaDatenformate;
-    }
 }
