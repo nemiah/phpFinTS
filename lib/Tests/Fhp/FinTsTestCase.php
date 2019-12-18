@@ -74,7 +74,7 @@ abstract class FinTsTestCase extends TestCase
             list($expectedRequest, $mockResponse) = array_shift($this->expectedMessages);
 
             // Check that the request matches the expectation.
-            if (!empty($expectedRequest) && strpos($expectedRequest, 'HNHBK') !== 0) {
+            if (strlen($expectedRequest) > 0 && strpos($expectedRequest, 'HNHBK') !== 0) {
                 // The expected request is just the inner part, so we need to unwrap the actual request. This is done in
                 // in a quick and hacky way, which slices everything from HNSHK's terminating delimiter to the start of
                 // HNSHA.

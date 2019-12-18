@@ -124,7 +124,7 @@ class Message
         if (count($matchedSegments) > 1) {
             throw new UnexpectedResponseException("Multiple segments matched $segmentType");
         }
-        return empty($matchedSegments) ? null : $matchedSegments[0];
+        return count($matchedSegments) === 0 ? null : $matchedSegments[0];
     }
 
     /**
@@ -172,7 +172,7 @@ class Message
     public function filterByReferenceSegments($referenceNumbers)
     {
         $result = new Message();
-        if (empty($referenceNumbers)) {
+        if (count($referenceNumbers) === 0) {
             return $result;
         }
         $result->plainSegments = array_filter($this->plainSegments, function ($segment) use ($referenceNumbers) {

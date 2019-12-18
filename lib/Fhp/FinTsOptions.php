@@ -58,16 +58,16 @@ class FinTsOptions
         $this->productVersion = trim($this->productVersion);
         $this->bankCode = trim($this->bankCode);
         $this->url = trim($this->url);
-        if (empty($this->productName)) {
+        if (strlen($this->productName) === 0) {
             throw new \InvalidArgumentException('Product name required!');
         }
-        if (empty($this->productVersion)) {
+        if (strlen($this->productVersion) === 0) {
             throw new \InvalidArgumentException('Product version required!');
         }
-        if (empty($this->bankCode)) {
+        if (strlen($this->bankCode) === 0) {
             throw new \InvalidArgumentException('Bank code required!');
         }
-        if (empty($this->url)) {
+        if (strlen($this->url) === 0) {
             throw new \InvalidArgumentException('Server URL required!');
         }
         if ($this->logger === null) {

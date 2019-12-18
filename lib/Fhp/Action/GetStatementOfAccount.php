@@ -63,7 +63,7 @@ class GetStatementOfAccount extends BaseAction
      */
     public static function create(SEPAAccount $account, $from = null, $to = null, $allAccounts = false)
     {
-        if (isset($from) && isset($to) && $from > $to) {
+        if ($from !== null && $to !== null && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');
         }
 

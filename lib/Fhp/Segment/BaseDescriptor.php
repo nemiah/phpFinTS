@@ -62,7 +62,7 @@ abstract class BaseDescriptor
             $descriptor = new ElementDescriptor();
             $descriptor->field = $property->getName();
             $type = static::getVarAnnotation($docComment);
-            if (empty($type)) {
+            if ($type === null) {
                 throw new \InvalidArgumentException("Need type on property $property");
             }
             $maxCount = static::getIntAnnotation('Max', $docComment);
@@ -87,7 +87,7 @@ abstract class BaseDescriptor
             $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
-        if (empty($this->elements)) {
+        if (count($this->elements) === 0) {
             throw new \InvalidArgumentException("No fields found in $clazz->name");
         }
         ksort($this->elements); // Make sure elements are parsed in wire-format order.

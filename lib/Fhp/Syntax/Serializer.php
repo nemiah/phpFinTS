@@ -103,7 +103,7 @@ abstract class Serializer
             }
             $elementDescriptor = $descriptor->elements[$index];
             $value = $obj === null ? null : $obj->{$elementDescriptor->field};
-            if (isset($serializedElements[$index])) {
+            if (array_key_exists($index, $serializedElements)) {
                 throw new \AssertionError("Duplicate index $index");
             }
             if ($elementDescriptor->repeated === 0) {

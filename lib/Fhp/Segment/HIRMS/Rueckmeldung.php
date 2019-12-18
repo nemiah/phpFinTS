@@ -34,12 +34,12 @@ class Rueckmeldung extends BaseDeg
 
     public function __toString()
     {
-        $referenceSegment = isset($this->referenceSegment) ? "wrt seg $this->referenceSegment" : 'global';
+        $referenceSegment = $this->referenceSegment === null ? 'global' : "wrt seg $this->referenceSegment";
         $result = "$this->rueckmeldungscode ($referenceSegment): $this->rueckmeldungstext";
-        if (isset($this->bezugsdatenelement)) {
+        if ($this->bezugsdatenelement !== null) {
             $result .= " (wrt DE $this->bezugsdatenelement)";
         }
-        if (!empty($this->rueckmeldungsparameter)) {
+        if ($this->rueckmeldungsparameter !== null && count($this->rueckmeldungsparameter) > 0) {
             $result .= ' [' . implode(', ', $this->rueckmeldungsparameter) . ']';
         }
         return $result;

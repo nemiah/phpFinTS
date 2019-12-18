@@ -37,8 +37,8 @@ class HKKAZv4 extends BaseSegment
     {
         $result = HKKAZv4::createEmpty();
         $result->kontoverbindungAuftraggeber = $kto;
-        $result->vonDatum = isset($vonDatum) ? $vonDatum->format('Ymd') : null;
-        $result->bisDatum = isset($bisDatum) ? $bisDatum->format('Ymd') : null;
+        $result->vonDatum = $vonDatum === null ? null : $vonDatum->format('Ymd');
+        $result->bisDatum = $bisDatum === null ? null : $bisDatum->format('Ymd');
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
     }

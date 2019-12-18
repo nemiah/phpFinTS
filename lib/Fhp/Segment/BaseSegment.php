@@ -17,7 +17,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      * Reference to the descriptor for this type of segment.
      * @var SegmentDescriptor|null
      */
-    private $descriptor;
+    private $descriptor = null;
 
     /**
      * @var Segmentkopf
@@ -29,7 +29,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      */
     public function getDescriptor()
     {
-        if (!isset($this->descriptor)) {
+        if ($this->descriptor === null) {
             $this->descriptor = SegmentDescriptor::get(static::class);
         }
         return $this->descriptor;
