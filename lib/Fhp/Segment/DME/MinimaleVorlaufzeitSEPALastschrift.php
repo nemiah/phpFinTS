@@ -53,9 +53,9 @@ class MinimaleVorlaufzeitSEPALastschrift
         $result = [];
         foreach (array_chunk(explode(';', $coded), 4) as list($unterstuetzteSEPALastschriftartenCodiert, $sequenceTypeCodiert, $minimaleSEPAVorlaufzeit, $cutOffZeit)) {
             $coreTypes = self::UNTERSTUETZTE_SEPA_LASTSCHRIFTARTEN_CODIERT[$unterstuetzteSEPALastschriftartenCodiert] ?? [];
-            $seqType = self::SEQUENCE_TYPE_CODIERT[$sequenceTypeCodiert] ?? [];
+            $seqTypes = self::SEQUENCE_TYPE_CODIERT[$sequenceTypeCodiert] ?? [];
             foreach ($coreTypes as $coreType) {
-                foreach ($seqType as $seqType) {
+                foreach ($seqTypes as $seqType) {
                     $result[$coreType][$seqType] = MinimaleVorlaufzeitSEPALastschrift::create($minimaleSEPAVorlaufzeit, $cutOffZeit, $unterstuetzteSEPALastschriftartenCodiert, $sequenceTypeCodiert);
                 }
             }
