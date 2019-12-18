@@ -65,6 +65,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->assertEquals(new \DateTime('2019-11-20'), $transaction2->getBookingDate());
         $this->assertEquals(Statement::CD_DEBIT, $transaction2->getCreditDebit());
         $this->assertEquals(11.30, $transaction2->getAmount());
+        $this->assertEquals('Lastschrift (Einzugsermächtigung)', $transaction2->getBookingText());
         $this->assertEquals('ZAA0987654321', $transaction2->getStructuredDescription()['EREF']);
         $this->assertEquals('LOGPAY FINANCIAL SERVICES GMBH', $transaction2->getName());
         $transaction3 = $statement2->getTransactions()[1];
