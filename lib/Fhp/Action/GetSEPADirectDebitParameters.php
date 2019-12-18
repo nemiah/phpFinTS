@@ -29,10 +29,10 @@ class GetSEPADirectDebitParameters extends BaseAction
     public static function create(string $seqType, bool $singleDirectDebit, string $coreType = 'CORE')
     {
         if (!in_array($coreType, self::CORE_TYPES)) {
-            throw new \InvalidArgumentException('Unknown CORE Type');
+            throw new \InvalidArgumentException('Unknown CORE type, possible values are ' . implode(', ', self::CORE_TYPES));
         }
         if (!in_array($seqType, self::SEQUENCE_TYPES)) {
-            throw new \InvalidArgumentException('Unknown SEPA Sequence Type');
+            throw new \InvalidArgumentException('Unknown SEPA sequence type, possible values are ' . implode(', ', self::SEQUENCE_TYPES));
         }
         $result = new GetSEPADirectDebitParameters();
         $result->coreType = $coreType;
