@@ -2,16 +2,8 @@
 
 namespace Fhp\Segment\DME;
 
-use Fhp\Segment\BaseDeg;
-
-class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends BaseDeg
+class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2
 {
-    /** @var string */
-    public $minimaleVorlaufzeitCodiert;
-
-    /** @var string */
-    public $maximaleVorlaufzeitCodiert;
-
     /** @var int */
     public $maximaleAnzahlDirectDebitTransferTransactionInformation;
 
@@ -26,10 +18,4 @@ class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends BaseDeg
 
     /** @var string[]|null @Max(9) Max Length: 256 */
     public $unterstuetzteSEPADatenformate;
-
-    public function getMinimaleVorlaufzeit(string $seqType, string $coreType = 'CORE')
-    {
-        $parsed = MinimaleVorlaufzeitSEPALastschrift::parseCoded($this->minimaleVorlaufzeitCodiert);
-        return $parsed[$coreType][$seqType] ?? null;
-    }
 }

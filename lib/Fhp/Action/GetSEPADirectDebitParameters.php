@@ -3,15 +3,13 @@
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
-use Fhp\Segment\DME\HIDMESv1;
-use Fhp\Segment\DME\HIDMESv2;
+use Fhp\Segment\DME\HIDXES;
 use Fhp\Segment\DME\MinimaleVorlaufzeitSEPALastschrift;
-use Fhp\Segment\DSE\HIDSESv1;
 
 /**
- * Retrieves information about lead times for SEPA Direct Debit Requests
+ * Retrieves information about SEPA Direct Debit Requests
  */
-class GetSEPADirectDebitLeadTime extends BaseAction
+class GetSEPADirectDebitParameters extends BaseAction
 {
     const SEQUENCE_TYPES = ['FRST', 'OOFF', 'FNAL', 'RCUR'];
     const CORE_TYPES = ['CORE', 'COR1'];
@@ -36,7 +34,7 @@ class GetSEPADirectDebitLeadTime extends BaseAction
         if (!in_array($seqType, self::SEQUENCE_TYPES)) {
             throw new \InvalidArgumentException('Unknown SEPA Sequence Type');
         }
-        $result = new GetSEPADirectDebitLeadTime();
+        $result = new GetSEPADirectDebitParameters();
         $result->coreType = $coreType;
         $result->seqType = $seqType;
         $result->singleDirectDebit = $singleDirectDebit;
@@ -49,19 +47,11 @@ class GetSEPADirectDebitLeadTime extends BaseAction
     {
         $type = $this->singleDirectDebit ? 'HIDSES' : 'HIDMES';
 
+        /** @var HIDXES $hidxes */
         $hidxes = $bpd->requireLatestSupportedParameters($type);
 
-        switch ($hidxes->getVersion()) {
-            case 1:
-                /* @var HIDMESv1|HIDSESv1 $hidxes */
-                $leadTime = in_array($this->seqType, ['FRST', 'OOFF']) ? $hidxes->parameter->minimaleVorlaufzeitFRSTOOFF : $hidxes->parameter->minimaleVorlaufzeitFNALRCUR;
-                $this->minimalLeadTime = MinimaleVorlaufzeitSEPALastschrift::create($leadTime, '235959');
-                break;
-            case 2:
-                /* @var HIDMESv2|HIDSESv2 $hidxes */
-                $this->minimalLeadTime = $hidxes->parameter->getMinimaleVorlaufzeit($this->seqType, $this->coreType);
-                break;
-        }
+        $this->minimalLeadTime = $hidxes->getParameter()->getMinimalLeadTime($this->seqType, $this->coreType);
+
         // No request to the bank required
         return [];
     }

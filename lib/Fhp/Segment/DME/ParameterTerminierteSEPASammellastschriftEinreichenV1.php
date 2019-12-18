@@ -2,22 +2,10 @@
 
 namespace Fhp\Segment\DME;
 
-use Fhp\Segment\BaseDeg;
+use Fhp\Segment\DSE\ParameterTerminierteSEPAEinzellastschriftEinreichenV1;
 
-class ParameterTerminierteSEPASammellastschriftEinreichenV1 extends BaseDeg
+class ParameterTerminierteSEPASammellastschriftEinreichenV1 extends ParameterTerminierteSEPAEinzellastschriftEinreichenV1
 {
-    /** @var int Must be => 1 */
-    public $minimaleVorlaufzeitFNALRCUR;
-
-    /** @var int */
-    public $maximaleVorlaufzeitFNALRCUR;
-
-    /** @var int Must be => 1 */
-    public $minimaleVorlaufzeitFRSTOOFF;
-
-    /** @var int */
-    public $maximaleVorlaufzeitFRSTOOFF;
-
     /** @var int */
     public $maximaleAnzahlDirectDebitTransferTransactionInformation;
 
