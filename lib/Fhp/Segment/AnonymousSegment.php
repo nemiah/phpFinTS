@@ -30,17 +30,16 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     private $elements = [];
 
     /**
-     * @param Segmentkopf $segmentkopf
      * @param string[]|string[][] $elements
      */
-    public function __construct($segmentkopf, $elements)
+    public function __construct(Segmentkopf $segmentkopf, array $elements)
     {
         $this->segmentkopf = $segmentkopf;
         $this->type = $segmentkopf->segmentkennung . 'v' . $segmentkopf->segmentversion;
         $this->elements = $elements;
     }
 
-    public function getDescriptor()
+    public function getDescriptor(): SegmentDescriptor
     {
         throw new \RuntimeException('AnonymousSegments do not have a descriptor');
     }
@@ -50,7 +49,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
         // Do nothing, anonymous segments are always valid.
     }
 
-    public function serialize()
+    public function serialize(): string
     {
         return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
             implode(Delimiter::ELEMENT, array_map(function ($element) {

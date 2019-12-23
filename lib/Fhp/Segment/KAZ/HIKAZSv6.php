@@ -15,7 +15,7 @@ class HIKAZSv6 extends BaseGeschaeftsvorfallparameter implements HIKAZS
     /** @var ParameterKontoumsaetzeV2 */
     public $parameter;
 
-    public function getParameter()
+    public function getParameter(): ParameterKontoumsaetze
     {
         return $this->parameter;
     }

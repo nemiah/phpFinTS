@@ -14,7 +14,7 @@ abstract class Rueckmeldungscode
      * @param int $code A code received from the server.
      * @return bool Whether it is a success code (indicating that the action was executed normally).
      */
-    public static function isSuccess($code)
+    public static function isSuccess(int $code): bool
     {
         return 0 < $code && $code < 1000;
     }
@@ -26,7 +26,7 @@ abstract class Rueckmeldungscode
      * @return bool Whether it is a warning code (indicating that the action was executed, but there may have been a
      *     problem in doing so).
      */
-    public static function isWarning($code)
+    public static function isWarning(int $code): bool
     {
         return 3000 < $code && $code < 4000;
     }
@@ -35,7 +35,7 @@ abstract class Rueckmeldungscode
      * @param int $code A code received from the server.
      * @return bool Whether it is a warning code (indicating that the action was rejected).
      */
-    public static function isError($code)
+    public static function isError(int $code): bool
     {
         return 9000 < $code && $code < 9999;
     }

@@ -30,8 +30,6 @@ class GetStatementOfAccount extends Response
     /**
      * Adds statements to an existing StatementOfAccount object.
      *
-     * @param array $array
-     * @param StatementOfAccount $statementOfAccount
      * @return StatementOfAccount
      */
     public static function addFromArray(array $array, StatementOfAccount $statementOfAccount)
@@ -88,7 +86,6 @@ class GetStatementOfAccount extends Response
     /**
      * Creates a StatementOfAccount model from array.
      *
-     * @param array $array
      * @return StatementOfAccount
      */
     public static function createModelFromArray(array $array)

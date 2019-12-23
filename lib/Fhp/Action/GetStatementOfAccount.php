@@ -9,7 +9,10 @@ use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
 use Fhp\MT940\MT940Exception;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\Common\Kto;
 use Fhp\Segment\Common\KtvV3;
@@ -61,7 +64,7 @@ class GetStatementOfAccount extends BaseAction
      *     pass one of the accounts into $account, though.
      * @return GetStatementOfAccount A new action instance.
      */
-    public static function create(SEPAAccount $account, $from = null, $to = null, $allAccounts = false)
+    public static function create(SEPAAccount $account, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false): GetStatementOfAccount
     {
         if ($from !== null && $to !== null && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');
@@ -75,7 +78,7 @@ class GetStatementOfAccount extends BaseAction
         return $result;
     }
 
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([parent::serialize(), $this->bankName]);
     }
@@ -119,7 +122,7 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->bankName = $bpd->getBankName();
 
@@ -143,7 +146,7 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
 

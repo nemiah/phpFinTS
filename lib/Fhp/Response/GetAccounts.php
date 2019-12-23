@@ -32,7 +32,6 @@ class GetAccounts extends Response
     /**
      * Creates a Account model from array.
      *
-     * @param array $array
      * @return Account
      */
     protected function createModelFromArray(array $array)

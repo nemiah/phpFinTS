@@ -35,7 +35,6 @@ class GetSEPAAccounts extends Response
     /**
      * Creates a SEPAAccount model from array.
      *
-     * @param array $array
      * @return SEPAAccount
      */
     protected function createModelFromArray(array $array)

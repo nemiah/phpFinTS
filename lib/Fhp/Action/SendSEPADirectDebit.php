@@ -5,6 +5,8 @@ namespace Fhp\Action;
 use Fhp\BaseAction;
 use Fhp\DataTypes\Bin;
 use Fhp\Model\SEPAAccount;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
@@ -55,7 +57,7 @@ class SendSEPADirectDebit extends BaseAction
         return $result;
     }
 
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $type = $this->singleDirectDebit ? 'S' : 'M';
 

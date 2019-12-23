@@ -17,7 +17,7 @@ class HICAZv1 extends BaseSegment
 {
     /**
      * Kontoverbindung international
-     * @var Fhp\Segment\Common\Kti
+     * @var \Fhp\Segment\Common\Kti
      */
     public $kontoverbindungInternational;
 
@@ -46,33 +46,21 @@ class HICAZv1 extends BaseSegment
      */
     public $nichtGebuchteUmsaetze;
 
-    /**
-     * @return Fhp\Segment\Common\Kti
-     */
-    public function getKontoverbindungInternational(): Fhp\Segment\Common\Kti
+    public function getKontoverbindungInternational(): \Fhp\Segment\Common\Kti
     {
         return $this->kontoverbindungInternational;
     }
 
-    /**
-     * @return string
-     */
     public function getCamtDescriptor(): string
     {
         return $this->camtDescriptor;
     }
 
-    /**
-     * @return string
-     */
     public function getGebuchteUmsaetze(): Bin
     {
         return $this->gebuchteUmsaetze;
     }
 
-    /**
-     * @return Bin|null
-     */
     public function getNichtGebuchteUmsaetze(): ?Bin
     {
         return $this->nichtGebuchteUmsaetze;

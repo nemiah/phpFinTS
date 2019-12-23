@@ -57,7 +57,6 @@ abstract class FinTsInternal
     }
 
     /**
-     * @param SEPAAccount $account
      * @param string $painMessage
      * @return GetTANRequest
      */
@@ -93,9 +92,6 @@ abstract class FinTsInternal
      * Helper method to retrieve a pre configured message object.
      * Factory for poor people :)
      *
-     * @param Dialog $dialog
-     * @param array $segments
-     * @param array $options
      * @return Message
      */
     protected function getNewMessage(Dialog $dialog, array $segments, array $options = [])
@@ -181,10 +177,6 @@ abstract class FinTsInternal
     /**
      * Helper method to create a "Statement of Account Message".
      *
-     * @param Dialog $dialog
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
      * @param string|null $touchdown
      * @return Message
      * @throws \Exception
@@ -221,10 +213,6 @@ abstract class FinTsInternal
     /**
      * Helper method to create a "Statement of Account Message".
      *
-     * @param Dialog $dialog
-     * @param SEPAAccount $account
-     * @param \DateTime $from
-     * @param \DateTime $to
      * @param string|null $touchdown
      * @return Message
      * @throws \Exception

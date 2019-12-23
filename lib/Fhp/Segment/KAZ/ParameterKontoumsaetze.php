@@ -8,5 +8,5 @@ namespace Fhp\Segment\KAZ;
 interface ParameterKontoumsaetze
 {
     /** @return bool */
-    public function getAlleKontenErlaubt();
+    public function getAlleKontenErlaubt(): bool;
 }

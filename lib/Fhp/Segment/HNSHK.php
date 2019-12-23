@@ -35,28 +35,18 @@ class HNSHK extends AbstractSegment
 
     /**
      * HNSHK constructor.
-     * @param int $segmentNumber
-     * @param string $securityReference
-     * @param string $countryCode
-     * @param string $bankCode
-     * @param string $userName
-     * @param int $systemId
-     * @param int $securityFunction
-     * @param int $securityBoundary
-     * @param int $securitySupplierRole
-     * @param int $pinTanVersion
      */
     public function __construct(
-        $segmentNumber,
-        $securityReference,
-        $countryCode,
-        $bankCode,
-        $userName,
-        $systemId = 0,
-        $securityFunction = self::SECURITY_FUNC_999,
-        $securityBoundary = self::SECURITY_BOUNDARY_SHM,
-        $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
-        $pinTanVersion = SecurityProfile::PROFILE_VERSION_1
+        int $segmentNumber,
+        string $securityReference,
+        string $countryCode,
+        string $bankCode,
+        string $userName,
+        int $systemId = 0,
+        int $securityFunction = self::SECURITY_FUNC_999,
+        int $securityBoundary = self::SECURITY_BOUNDARY_SHM,
+        int $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
+        int $pinTanVersion = SecurityProfile::PROFILE_VERSION_1
     ) {
         parent::__construct(
             static::NAME,
@@ -78,10 +68,7 @@ class HNSHK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

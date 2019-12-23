@@ -8,5 +8,5 @@ namespace Fhp\Segment\HIUPD;
 interface ErlaubteGeschaeftsvorfaelle
 {
     /** @return string References a segment type name (Segmentkennung) */
-    public function getGeschaeftsvorfall();
+    public function getGeschaeftsvorfall(): string;
 }

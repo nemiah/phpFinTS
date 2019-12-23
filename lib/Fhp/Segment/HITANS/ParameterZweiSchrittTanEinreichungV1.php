@@ -28,13 +28,13 @@ class ParameterZweiSchrittTanEinreichungV1 extends BaseDeg implements ParameterZ
     public $verfahrensparameterZweiSchrittVerfahren;
 
     /** @return bool */
-    public function getEinschrittVerfahrenErlaubt()
+    public function getEinschrittVerfahrenErlaubt(): bool
     {
         return $this->einschrittVerfahrenErlaubt;
     }
 
     /** @return VerfahrensparameterZweiSchrittVerfahrenV1[] */
-    public function getVerfahrensparameterZweiSchrittVerfahren()
+    public function getVerfahrensparameterZweiSchrittVerfahren(): array
     {
         return $this->verfahrensparameterZweiSchrittVerfahren;
     }

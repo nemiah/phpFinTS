@@ -34,7 +34,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
      *     some sensitive information. This array may also contain plain strings, which are themselves interpreted as
      *     sensitive.
      */
-    public function __construct($sensitiveMaterial)
+    public function __construct(array $sensitiveMaterial)
     {
         $this->needles = static::computeNeedles($sensitiveMaterial);
     }
@@ -42,7 +42,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
     /**
      * @param array $sensitiveMaterial See the constructor.
      */
-    public function addSensitiveMaterial($sensitiveMaterial)
+    public function addSensitiveMaterial(array $sensitiveMaterial)
     {
         $this->needles = array_merge($this->needles, static::computeNeedles($sensitiveMaterial));
     }
@@ -60,7 +60,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
      *     sensitive.
      * @return string[] An array of search-replacement "needles" that should be replaced in log messages.
      */
-    public static function computeNeedles($sensitiveMaterial)
+    public static function computeNeedles(array $sensitiveMaterial): array
     {
         $needles = [];
         foreach ($sensitiveMaterial as $item) {
@@ -85,7 +85,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
             }
         }
         $needles = array_filter($needles); // Filter out empty entries.
-        $escapedNeedles = array_map(function ($needle) {
+        $escapedNeedles = array_map(function (string $needle) {
             // The wire format is ISO-8859-1, so thats what will be logged and thats what needs to looked for when replacing
             return utf8_decode(Serializer::escape($needle));
         }, $needles);
@@ -99,7 +99,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
      * @param string[] The sensitive values to be replaced, usually from {@link #computeNeedles()}.
      * @return string The same string, but with sensitive values removed.
      */
-    public static function sanitizeForLogging($str, $needles)
+    public static function sanitizeForLogging(string $str, $needles): string
     {
         $replacements = array_map(function ($needle) {
             $len = strlen($needle) - 1;

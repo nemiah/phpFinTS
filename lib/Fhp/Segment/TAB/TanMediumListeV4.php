@@ -59,13 +59,13 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
     public $freigeschaltetAm;
 
     /** {@inheritdoc} */
-    public function getName()
+    public function getName(): string
     {
         return $this->bezeichnungDesTanMediums;
     }
 
     /** {@inheritdoc} */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): ?string
     {
         return $this->mobiltelefonnummer !== null ? $this->mobiltelefonnummer : $this->mobiltelefonnummerVerschleiert;
     }

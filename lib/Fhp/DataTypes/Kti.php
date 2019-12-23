@@ -29,16 +29,7 @@ class Kti
      */
     protected $kik;
 
-    /**
-     * Kti constructor.
-     *
-     * @param string $iban
-     * @param string $bic
-     * @param string $accountNumber
-     * @param string $subAccountFeature
-     * @param Kik $kik
-     */
-    public function __construct($iban, $bic, $accountNumber, $subAccountFeature, Kik $kik)
+    public function __construct(string $iban, string $bic, string $accountNumber, string $subAccountFeature, Kik $kik)
     {
         $this->iban = $iban;
         $this->bic = $bic;
@@ -47,10 +38,7 @@ class Kti
         $this->kik = $kik;
     }
 
-    /**
-     * @return string
-     */
-    public function toString()
+    public function toString(): string
     {
         return $this->iban . ':'
             . $this->bic . ':'
@@ -59,10 +47,7 @@ class Kti
             . (string) $this->kik;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

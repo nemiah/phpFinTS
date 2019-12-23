@@ -28,7 +28,7 @@ class SicherheitsdatumUndUhrzeitV2 extends BaseDeg
     /**
      * @return SicherheitsdatumUndUhrzeitV2 For the current time.
      */
-    public static function now()
+    public static function now(): SicherheitsdatumUndUhrzeitV2
     {
         $result = new SicherheitsdatumUndUhrzeitV2();
         try {

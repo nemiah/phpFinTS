@@ -10,5 +10,5 @@ use Fhp\Segment\SegmentInterface;
 interface HITAB extends SegmentInterface
 {
     /** @return TanMediumListe[]|null */
-    public function getTanMediumListe();
+    public function getTanMediumListe(): ?array;
 }

@@ -16,7 +16,7 @@ class MessageBuilder
     public $segments = [];
 
     /** @return MessageBuilder A new instance. */
-    public static function create()
+    public static function create(): MessageBuilder
     {
         return new MessageBuilder();
     }

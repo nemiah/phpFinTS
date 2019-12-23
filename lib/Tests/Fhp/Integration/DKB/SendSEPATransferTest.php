@@ -91,7 +91,6 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @return SendSEPATransfer
      * @throws \Throwable
      */
     private function runInitialRequest(): SendSEPATransfer
@@ -103,7 +102,6 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @param SendSEPATransfer $sendTransfer
      * @throws \Throwable
      */
     private function completeWithTan(SendSEPATransfer $sendTransfer)

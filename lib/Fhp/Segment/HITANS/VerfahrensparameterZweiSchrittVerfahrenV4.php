@@ -58,67 +58,67 @@ class VerfahrensparameterZweiSchrittVerfahrenV4 extends BaseDeg implements Verfa
     public $anzahlUnterstuetzterAktiverTanMedien;
 
     /** {@inheritdoc} */
-    public function getId()
+    public function getId(): int
     {
         return $this->sicherheitsfunktion;
     }
 
     /** {@inheritdoc} */
-    public function getName()
+    public function getName(): string
     {
         return $this->nameDesZweiSchrittVerfahrens;
     }
 
     /** {@inheritdoc} */
-    public function getSmsAbbuchungskontoErforderlich()
+    public function getSmsAbbuchungskontoErforderlich(): bool
     {
         return $this->smsAbbuchungskontoErforderlich;
     }
 
     /** {@inheritdoc} */
-    public function getAuftraggeberkontoErforderlich()
+    public function getAuftraggeberkontoErforderlich(): bool
     {
         return false;
     }
 
     /** {@inheritdoc} */
-    public function getChallengeKlasseErforderlich()
+    public function getChallengeKlasseErforderlich(): bool
     {
         return $this->challengeKlasseErforderlich;
     }
 
     /** {@inheritdoc} */
-    public function getAntwortHhdUcErforderlich()
+    public function getAntwortHhdUcErforderlich(): bool
     {
         return false;
     }
 
     /** {@inheritdoc} */
-    public function getChallengeLabel()
+    public function getChallengeLabel(): string
     {
         return $this->textZurBelegungDesRueckgabewertes;
     }
 
     /** {@inheritdoc} */
-    public function getMaxChallengeLength()
+    public function getMaxChallengeLength(): int
     {
         return $this->maximaleLaengeDesRueckgabewertes;
     }
 
     /** {@inheritdoc} */
-    public function getMaxTanLength()
+    public function getMaxTanLength(): int
     {
         return $this->maximaleLaengeDesTanEingabewertes;
     }
 
     /** {@inheritdoc} */
-    public function getTanFormat()
+    public function getTanFormat(): int
     {
         return $this->erlaubtesFormat;
     }
 
     /** {@inheritdoc} */
-    public function needsTanMedium()
+    public function needsTanMedium(): bool
     {
         return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }

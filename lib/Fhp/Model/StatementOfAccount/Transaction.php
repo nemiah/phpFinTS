@@ -83,37 +83,30 @@ class Transaction
      *
      * @deprecated Use getBookingDate() instead
      * @codeCoverageIgnore
-     * @return \DateTime|null
      */
-    public function getDate()
+    public function getDate(): ?\DateTime
     {
         return $this->getBookingDate();
     }
 
     /**
      * Get booking date
-     *
-     * @return \DateTime|null
      */
-    public function getBookingDate()
+    public function getBookingDate(): ?\DateTime
     {
         return $this->bookingDate;
     }
 
     /**
      * Get date
-     *
-     * @return \DateTime|null
      */
-    public function getValutaDate()
+    public function getValutaDate(): ?\DateTime
     {
         return $this->valutaDate;
     }
 
     /**
      * Set booking date
-     *
-     * @param \DateTime|null $date
      *
      * @return $this
      */
@@ -127,8 +120,6 @@ class Transaction
     /**
      * Set valuta date
      *
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setValutaDate(\DateTime $date = null)
@@ -140,10 +131,8 @@ class Transaction
 
     /**
      * Get amount
-     *
-     * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -151,11 +140,9 @@ class Transaction
     /**
      * Set booked status
      *
-     * @param bool $booked
-     *
      * @return $this
      */
-    public function setBooked($booked)
+    public function setBooked(bool $booked)
     {
         $this->booked = $booked;
 
@@ -165,11 +152,9 @@ class Transaction
     /**
      * Set amount
      *
-     * @param float $amount
-     *
      * @return $this
      */
-    public function setAmount($amount)
+    public function setAmount(float $amount)
     {
         $this->amount = (float) $amount;
 
@@ -178,10 +163,8 @@ class Transaction
 
     /**
      * Get creditDebit
-     *
-     * @return string
      */
-    public function getCreditDebit()
+    public function getCreditDebit(): string
     {
         return $this->creditDebit;
     }
@@ -189,11 +172,9 @@ class Transaction
     /**
      * Set creditDebit
      *
-     * @param string $creditDebit
-     *
      * @return $this
      */
-    public function setCreditDebit($creditDebit)
+    public function setCreditDebit(string $creditDebit)
     {
         $this->creditDebit = $creditDebit;
 
@@ -202,10 +183,8 @@ class Transaction
 
     /**
      * Get bookingCode
-     *
-     * @return string
      */
-    public function getBookingCode()
+    public function getBookingCode(): string
     {
         return $this->bookingCode;
     }
@@ -213,11 +192,9 @@ class Transaction
     /**
      * Set bookingCode
      *
-     * @param string $bookingCode
-     *
      * @return $this
      */
-    public function setBookingCode($bookingCode)
+    public function setBookingCode(string $bookingCode)
     {
         $this->bookingCode = (string) $bookingCode;
 
@@ -226,10 +203,8 @@ class Transaction
 
     /**
      * Get bookingText
-     *
-     * @return string
      */
-    public function getBookingText()
+    public function getBookingText(): string
     {
         return $this->bookingText;
     }
@@ -237,11 +212,9 @@ class Transaction
     /**
      * Set bookingText
      *
-     * @param string $bookingText
-     *
      * @return $this
      */
-    public function setBookingText($bookingText)
+    public function setBookingText(string $bookingText)
     {
         $this->bookingText = (string) $bookingText;
 
@@ -250,10 +223,8 @@ class Transaction
 
     /**
      * Get description1
-     *
-     * @return string
      */
-    public function getDescription1()
+    public function getDescription1(): string
     {
         return $this->description1;
     }
@@ -261,11 +232,9 @@ class Transaction
     /**
      * Set description1
      *
-     * @param string $description1
-     *
      * @return $this
      */
-    public function setDescription1($description1)
+    public function setDescription1(string $description1)
     {
         $this->description1 = (string) $description1;
 
@@ -274,10 +243,8 @@ class Transaction
 
     /**
      * Get description2
-     *
-     * @return string
      */
-    public function getDescription2()
+    public function getDescription2(): string
     {
         return $this->description2;
     }
@@ -285,11 +252,9 @@ class Transaction
     /**
      * Set description2
      *
-     * @param string $description2
-     *
      * @return $this
      */
-    public function setDescription2($description2)
+    public function setDescription2(string $description2)
     {
         $this->description2 = (string) $description2;
 
@@ -301,7 +266,7 @@ class Transaction
      *
      * @return string[]
      */
-    public function getStructuredDescription()
+    public function getStructuredDescription(): array
     {
         return $this->structuredDescription;
     }
@@ -313,7 +278,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setStructuredDescription($structuredDescription)
+    public function setStructuredDescription(array $structuredDescription)
     {
         $this->structuredDescription = $structuredDescription;
 
@@ -322,10 +287,8 @@ class Transaction
 
     /**
      * Get the main description (SVWZ)
-     *
-     * @return string
      */
-    public function getMainDescription()
+    public function getMainDescription(): string
     {
         if (array_key_exists('SVWZ', $this->structuredDescription)) {
             return $this->structuredDescription['SVWZ'];
@@ -336,10 +299,8 @@ class Transaction
 
     /**
      * Get the end to end id (EREF)
-     *
-     * @return string
      */
-    public function getEndToEndID()
+    public function getEndToEndID(): string
     {
         if (array_key_exists('EREF', $this->structuredDescription)) {
             return $this->structuredDescription['EREF'];
@@ -350,10 +311,8 @@ class Transaction
 
     /**
      * Get bankCode
-     *
-     * @return string
      */
-    public function getBankCode()
+    public function getBankCode(): string
     {
         return $this->bankCode;
     }
@@ -361,11 +320,9 @@ class Transaction
     /**
      * Set bankCode
      *
-     * @param string $bankCode
-     *
      * @return $this
      */
-    public function setBankCode($bankCode)
+    public function setBankCode(string $bankCode)
     {
         $this->bankCode = (string) $bankCode;
 
@@ -374,10 +331,8 @@ class Transaction
 
     /**
      * Get accountNumber
-     *
-     * @return string
      */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->accountNumber;
     }
@@ -385,11 +340,9 @@ class Transaction
     /**
      * Set accountNumber
      *
-     * @param string $accountNumber
-     *
      * @return $this
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber)
     {
         $this->accountNumber = (string) $accountNumber;
 
@@ -398,20 +351,16 @@ class Transaction
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Get booked status
-     *
-     * @return bool
      */
-    public function getBooked()
+    public function getBooked(): bool
     {
         return $this->booked;
     }
@@ -419,11 +368,9 @@ class Transaction
     /**
      * Set name
      *
-     * @param string $name
-     *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = (string) $name;
 
@@ -432,10 +379,8 @@ class Transaction
 
     /**
      * Get primanota number
-     *
-     * @return int
      */
-    public function getPN()
+    public function getPN(): int
     {
         return $this->pn;
     }
@@ -443,13 +388,12 @@ class Transaction
     /**
      * Set primanota number
      *
-     * @param int $nr
-     *
+     * @param int|mixed $nr Will be parsed to an int.
      * @return $this
      */
     public function setPN($nr)
     {
-        $this->pn = (int) $nr;
+        $this->pn = intval($nr);
         return $this;
     }
 }

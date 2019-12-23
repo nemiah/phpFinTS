@@ -14,7 +14,7 @@ class StatementOfAccount
      *
      * @return Statement[]
      */
-    public function getStatements()
+    public function getStatements(): array
     {
         return $this->statements;
     }
@@ -38,9 +38,6 @@ class StatementOfAccount
         return false;
     }
 
-    /**
-     * @param Statement $statement
-     */
     public function addStatement(Statement $statement)
     {
         $this->statements[] = $statement;
@@ -50,9 +47,8 @@ class StatementOfAccount
      * Gets statement for given date.
      *
      * @param string|\DateTime $date
-     * @return Statement|null
      */
-    public function getStatementForDate($date)
+    public function getStatementForDate($date): ?Statement
     {
         if (is_string($date)) {
             $date = new \DateTime($date);
@@ -71,9 +67,8 @@ class StatementOfAccount
      * Checks if a statement with given date exists.
      *
      * @param string|\DateTime $date
-     * @return bool
      */
-    public function hasStatementForDate($date)
+    public function hasStatementForDate($date): bool
     {
         if (is_string($date)) {
             $date = new \DateTime($date);

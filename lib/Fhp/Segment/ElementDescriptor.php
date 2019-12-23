@@ -77,7 +77,7 @@ class ElementDescriptor
      * @param string $type A potential PHP scalar type.
      * @return bool True if parseDataElement() would understand it.
      */
-    public static function isScalarType($type)
+    public static function isScalarType(string $type): bool
     {
         return array_key_exists($type, static::TYPE_MAP);
     }

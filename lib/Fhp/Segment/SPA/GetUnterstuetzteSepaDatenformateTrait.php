@@ -9,7 +9,7 @@ namespace Fhp\Segment\SPA;
 trait GetUnterstuetzteSepaDatenformateTrait
 {
     /** @return string[] */
-    public function getUnterstuetzteSepaDatenformate()
+    public function getUnterstuetzteSepaDatenformate(): array
     {
         // Something like "sepade.pain.00x.001.0y.xsd" is allowed here, which is not a valid SEPA XML URN / Namespace
         return array_map(function ($sepaUrn) {

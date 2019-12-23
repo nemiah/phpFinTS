@@ -20,12 +20,10 @@ class HKSYN extends AbstractSegment
 
     /**
      * HKSYN constructor.
-     * @param int $segmentNumber
-     * @param int $syncMode
      */
     public function __construct(
-        $segmentNumber,
-        $syncMode = self::SYNC_MODE_NEW_CUSTOMER_ID
+        int $segmentNumber,
+        int $syncMode = self::SYNC_MODE_NEW_CUSTOMER_ID
     ) {
         parent::__construct(
             static::NAME,
@@ -35,10 +33,7 @@ class HKSYN extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

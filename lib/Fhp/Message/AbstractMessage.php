@@ -31,8 +31,6 @@ class AbstractMessage
 
     /**
      * Adds a segment to the message.
-     *
-     * @param SegmentInterface $segment
      */
     protected function addSegment(SegmentInterface $segment)
     {
@@ -49,9 +47,6 @@ class AbstractMessage
         return $this->segments;
     }
 
-    /**
-     * @return string
-     */
     public function getSystemId(): string
     {
         return $this->systemId;
@@ -69,8 +64,6 @@ class AbstractMessage
 
     /**
      * Gets the dialog ID.
-     *
-     * @return string
      */
     public function getDialogId(): string
     {

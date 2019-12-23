@@ -79,7 +79,7 @@ class BPD
      * @return BaseSegment|null The latest parameter segment that is explicitly implemented in this library (never an
      *     AnonymousSegment), or null if none exists.
      */
-    public function getLatestSupportedParameters($type)
+    public function getLatestSupportedParameters(string $type): ?BaseSegment
     {
         if (!array_key_exists($type, $this->parameters)) {
             return null;
@@ -97,7 +97,7 @@ class BPD
      * @return BaseSegment The latest parameter segment, never null.
      * @throws UnexpectedResponseException If no version exists.
      */
-    public function requireLatestSupportedParameters($type)
+    public function requireLatestSupportedParameters(string $type): BaseSegment
     {
         $result = $this->getLatestSupportedParameters($type);
         if ($result === null) {
@@ -112,7 +112,7 @@ class BPD
      * @param int $version The segment version of the business transaction.
      * @return bool If that version of the given transaction type is supported by the bank.
      */
-    public function supportsParameters($type, $version)
+    public function supportsParameters(string $type, int $version): bool
     {
         foreach ($this->parameters[$type] as $segment) {
             if ($segment->getVersion() === $version) {
@@ -126,7 +126,7 @@ class BPD
      * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
      * @return bool True if any of the given segments requires a TAN according to HIPINS.
      */
-    public function tanRequiredForRequest($requestSegments)
+    public function tanRequiredForRequest(array $requestSegments): bool
     {
         foreach ($requestSegments as $segment) {
             if ($this->tanRequired[$segment->getName()] ?? false) {
@@ -141,7 +141,7 @@ class BPD
      * @param FinTsOptions $options See {@link FinTsOptions}.
      * @return BPD A new BPD instance with the extracted configuration data.
      */
-    public static function extractFromResponse($response, $options)
+    public static function extractFromResponse(Message $response, FinTsOptions $options): BPD
     {
         $bpd = new BPD();
         $bpd->hibpa = $response->requireSegment(HIBPAv3::class);

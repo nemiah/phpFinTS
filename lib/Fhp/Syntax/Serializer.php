@@ -28,7 +28,7 @@ abstract class Serializer
      * @param string $str The unescaped string.
      * @return string The escaped string in wire format.
      */
-    public static function escape($str)
+    public static function escape(string $str): string
     {
         return preg_replace('/([+:\'?@])/', '?$1', $str);
     }
@@ -39,7 +39,7 @@ abstract class Serializer
      *     {@link ElementDescriptor#isScalarType()} returns true.
      * @return string The HBCI wire format representation of the value.
      */
-    public static function serializeDataElement($value, $type)
+    public static function serializeDataElement($value, string $type): string
     {
         if ($value === null) {
             return '';
@@ -63,7 +63,7 @@ abstract class Serializer
      * @param DegDescriptor $descriptor The descriptor for the DEG type.
      * @return string The HBCI wire format representation of the DEG.
      */
-    public static function serializeDeg($deg, $descriptor)
+    public static function serializeDeg(?BaseDeg $deg, DegDescriptor $descriptor): string
     {
         $serializedElements = Serializer::serializeElements($deg, $descriptor);
         return implode(Delimiter::GROUP, static::flattenAndTrimEnd($serializedElements));
@@ -74,7 +74,7 @@ abstract class Serializer
      * @return string The HBCI wire format representation of the segment, in ISO-8859-1 encoding, terminated by the
      *     segment delimiter.
      */
-    public static function serializeSegment($segment)
+    public static function serializeSegment(BaseSegment $segment): string
     {
         if ($segment instanceof AnonymousSegment) {
             throw new \InvalidArgumentException('Cannot serialize anonymous segments');
@@ -91,7 +91,7 @@ abstract class Serializer
      *     position, the returned array may contain emtpy strings as gaps/buffers in the middle (for subsequent elements
      *     in $obj) and/or at the end (for subsequent elements added by the caller for data following $obj).
      */
-    private static function serializeElements($obj, $descriptor)
+    private static function serializeElements($obj, BaseDescriptor $descriptor): array
     {
         $isSegment = $descriptor instanceof SegmentDescriptor;
         $serializedElements = [];
@@ -130,7 +130,7 @@ abstract class Serializer
      * @return string|array The serialized value. In case $type is a complex type and $fullySerialize is false, this
      *     returns a (possibly nested) array of strings.
      */
-    private static function serializeElement($value, $type, $fullySerialize)
+    private static function serializeElement($value, $type, bool $fullySerialize)
     {
         if (is_string($type)) {
             return static::serializeDataElement($value, $type);
@@ -149,7 +149,7 @@ abstract class Serializer
      * @return string[] A flat array with the same string values (using in-order tree traversal), but empty values
      *     removed from the end.
      */
-    private static function flattenAndTrimEnd($elements)
+    private static function flattenAndTrimEnd(array $elements): array
     {
         $result = [];
         $nonemptyLength = 0;

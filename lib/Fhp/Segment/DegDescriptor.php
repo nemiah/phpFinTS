@@ -15,7 +15,7 @@ class DegDescriptor extends BaseDescriptor
      * @param string $class The name of a sub-class of {@link BaseDeg}.
      * @return DegDescriptor The descriptor for the class.
      */
-    public static function get($class)
+    public static function get(string $class): DegDescriptor
     {
         if (!array_key_exists($class, static::$descriptors)) {
             static::$descriptors[$class] = new DegDescriptor($class);
@@ -27,7 +27,7 @@ class DegDescriptor extends BaseDescriptor
      * Please use the factory above.
      * @param string $class The name of a sub-class of {@link BaseDeg}.
      */
-    protected function __construct($class)
+    protected function __construct(string $class)
     {
         $this->class = $class;
         try {

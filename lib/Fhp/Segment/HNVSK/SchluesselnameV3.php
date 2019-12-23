@@ -37,13 +37,7 @@ class SchluesselnameV3 extends BaseDeg
     /** @var int */
     public $schluesselversion = 0; // Dummy value for PIN/TAN.
 
-    /**
-     * @param \Fhp\Segment\Common\Kik $kik
-     * @param string $benutzerkennung
-     * @param string $schluesselart
-     * @return SchluesselnameV3
-     */
-    public static function create($kik, $benutzerkennung, $schluesselart)
+    public static function create(\Fhp\Segment\Common\Kik $kik, string $benutzerkennung, string $schluesselart): SchluesselnameV3
     {
         $result = new SchluesselnameV3();
         $result->kreditinstitutskennung = $kik;

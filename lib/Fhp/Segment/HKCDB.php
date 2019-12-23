@@ -20,12 +20,8 @@ class HKCDB extends AbstractSegment
 
     /**
      * HKCDB constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     * @param Kti $kti
-     * @param array $supportedPain
      */
-    public function __construct($version, $segmentNumber, $kti, $supportedPain)
+    public function __construct(int $version, int $segmentNumber, Kti $kti, array $supportedPain)
     {
         $deg = new Deg();
         foreach ($supportedPain as $pain) {
@@ -43,10 +39,7 @@ class HKCDB extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

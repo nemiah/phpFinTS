@@ -8,5 +8,5 @@ namespace Fhp\Segment\SPA;
 interface ParameterSepaKontoverbindungAnfordern
 {
     /** @return string[] */
-    public function getUnterstuetzteSepaDatenformate();
+    public function getUnterstuetzteSepaDatenformate(): array;
 }

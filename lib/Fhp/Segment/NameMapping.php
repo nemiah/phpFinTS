@@ -85,29 +85,26 @@ class NameMapping
     ];
 
     /**
-     * @param string $code
      * @return string
      */
-    public static function codeToName($code)
+    public static function codeToName(string $code)
     {
         return isset(static::$mapping[$code]) ? static::$mapping[$code] : $code;
     }
 
     /**
-     * @param string $name
      * @return string
      */
-    public static function nameToCode($name)
+    public static function nameToCode(string $name)
     {
         $flipped = array_flip(static::$mapping);
         return isset($flipped[$name]) ? $flipped[$name] : $name;
     }
 
     /**
-     * @param string $text
      * @return string
      */
-    public static function translateResponse($text)
+    public static function translateResponse(string $text)
     {
         return str_replace(array_flip(static::$mapping), static::$mapping, $text);
     }

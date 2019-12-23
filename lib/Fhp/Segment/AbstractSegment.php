@@ -22,7 +22,6 @@ abstract class AbstractSegment implements SegmentInterface
      * @param $type
      * @param $segmentNumber
      * @param $version
-     * @param array $dataElements
      */
     public function __construct($type, $segmentNumber, $version, array $dataElements = [])
     {
@@ -32,9 +31,6 @@ abstract class AbstractSegment implements SegmentInterface
         $this->dataElements = $dataElements;
     }
 
-    /**
-     * @param array $dataElements
-     */
     public function setDataElements(array $dataElements = [])
     {
         $this->dataElements = $dataElements;
@@ -66,19 +62,15 @@ abstract class AbstractSegment implements SegmentInterface
         return $string . static::SEGMENT_SEPARATOR;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }
 
     /**
-     * @param bool $translateCodes
      * @return string
      */
-    public function humanReadable($translateCodes = false)
+    public function humanReadable(bool $translateCodes = false)
     {
         return str_replace(
             ["'", '+'],
@@ -89,18 +81,12 @@ abstract class AbstractSegment implements SegmentInterface
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getSegmentNumber()
+    public function getSegmentNumber(): int
     {
         return $this->segmentNumber;
     }
 
-    /**
-     * @return int
-     */
-    public function getVersion()
+    public function getVersion(): int
     {
         return $this->version;
     }

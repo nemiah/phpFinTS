@@ -82,8 +82,6 @@ class DialogInitialization extends BaseAction
     private $upd;
 
     /**
-     * @param FinTsOptions $options
-     * @param Credentials $credentials
      * @param TanMode|null $tanMode The TAN mode selected by the user.
      * @param string|null $tanMedium Possibly a TAN medium selected by the user.
      * @param string|null $kundensystemId The current Kundensystem-ID, if the client already has one.
@@ -94,7 +92,7 @@ class DialogInitialization extends BaseAction
      *     If it is one of the special PIN/TAN management segments (e.g. HKTAB), then the dialog does not have strong
      *     authentication (no TAN required) and can only be used for that one particular transaction.
      */
-    public function __construct($options, $credentials, $tanMode, $tanMedium, $kundensystemId, $hktanRef = 'HKIDN')
+    public function __construct(FinTsOptions $options, Credentials $credentials, ?TanMode $tanMode, ?string $tanMedium, ?string $kundensystemId, ?string $hktanRef = 'HKIDN')
     {
         $this->options = $options;
         $this->credentials = $credentials;
@@ -104,7 +102,7 @@ class DialogInitialization extends BaseAction
         $this->hktanRef = $hktanRef;
     }
 
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([
             parent::serialize(),
@@ -128,7 +126,7 @@ class DialogInitialization extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),
@@ -143,7 +141,7 @@ class DialogInitialization extends BaseAction
         return $request;
     }
 
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         parent::processResponse($response);
         $this->dialogId = $response->header->dialogId;
@@ -167,33 +165,21 @@ class DialogInitialization extends BaseAction
         return $this->hktanRef === 'HKIDN';
     }
 
-    /**
-     * @return string|null
-     */
     public function getKundensystemId(): ?string
     {
         return $this->kundensystemId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMessageNumber(): ?int
     {
         return $this->messageNumber;
     }
 
-    /**
-     * @param int|null $messageNumber
-     */
     public function setMessageNumber(?int $messageNumber): void
     {
         $this->messageNumber = $messageNumber;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDialogId(): ?string
     {
         return $this->dialogId;
@@ -201,16 +187,12 @@ class DialogInitialization extends BaseAction
 
     /**
      * To be called when a TAN is required for login, but we need to intermittently store the Dialog-ID.
-     * @param string|null $dialogId
      */
     public function setDialogId(?string $dialogId): void
     {
         $this->dialogId = $dialogId;
     }
 
-    /**
-     * @return UPD|null
-     */
     public function getUpd(): ?UPD
     {
         return $this->upd;

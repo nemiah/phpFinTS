@@ -16,7 +16,8 @@ class FinTsPeer extends FinTsNew
      */
     public $mockConnection;
 
-    protected function newConnection()
+    /** {@inheritdoc} */
+    protected function newConnection(): Connection
     {
         return $this->mockConnection;
     }
@@ -25,7 +26,7 @@ class FinTsPeer extends FinTsNew
      * {@inheritdoc}
      * @throws ServerException
      */
-    public function endDialog($isAnonymous = false) // parent::endDialog() is protected
+    public function endDialog(bool $isAnonymous = false) // parent::endDialog() is protected
     {
         parent::endDialog($isAnonymous);
     }

@@ -49,7 +49,6 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @return GetStatementOfAccount
      * @throws \Throwable
      */
     private function runInitialRequest(): GetStatementOfAccount
@@ -74,7 +73,6 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @param GetStatementOfAccount $getStatement
      * @throws \Throwable
      */
     private function completeWithTan(GetStatementOfAccount $getStatement)
@@ -135,10 +133,9 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @param StatementOfAccount $statement
      * @throws \Exception
      */
-    private function checkResult($statement)
+    private function checkResult(StatementOfAccount $statement)
     {
         $this->assertCount(2, $statement->getStatements());
 

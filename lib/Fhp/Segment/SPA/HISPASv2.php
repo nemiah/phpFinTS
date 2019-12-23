@@ -16,7 +16,7 @@ class HISPASv2 extends BaseGeschaeftsvorfallparameter implements HISPAS
     public $parameter;
 
     /** {@inheritdoc} */
-    public function getParameter()
+    public function getParameter(): ParameterSepaKontoverbindungAnfordern
     {
         return $this->parameter;
     }

@@ -113,11 +113,12 @@ class HKTANv6 extends BaseSegment
     /**
      * @param TanMode|null $tanMode Parameters retrieved from the server during dialog initialization that describe how
      *     the TAN processes need to be parameterized.
-     * @param string|null $tanMedium
+     * @param string|null $tanMedium The TAN medium selected by the user. Mandatory if $tanMode is present and requires
+     *     a TAN medium.
      * @param string $segmentkennung The segment that we want to authenticate with the HKTAN instance.
      * @return HKTANv6 A HKTAN instance to signal to the server that Prozessvariante 2 shall be used.
      */
-    public static function createProzessvariante2Step1($tanMode = null, $tanMedium = null, $segmentkennung = 'HKIDN')
+    public static function createProzessvariante2Step1(?TanMode $tanMode = null, ?string $tanMedium = null, string $segmentkennung = 'HKIDN'): HKTANv6
     {
         // TODO: Implement the inclusion of the account for which an action is called, in the HKTAN Segment
         // A lot of Banks announce they need the account when in fact they work fine without it.
@@ -148,7 +149,7 @@ class HKTANv6 extends BaseSegment
      * @return HKTANv6 A HKTAN instance to signal to the server that the client supports strong authentication but wants
      *     to use weak authentication in this dialog, which only consists of the special business transaction.
      */
-    public static function createWeakAuthenticationFor($segmentkennung)
+    public static function createWeakAuthenticationFor(string $segmentkennung): HKTANv6
     {
         $result = HKTANv6::createProzessvariante2Step1();
         $result->segmentkennung = $segmentkennung;
@@ -161,7 +162,7 @@ class HKTANv6 extends BaseSegment
      * @param string $auftragsreferenz The reference number received from the server in step 1 response (HITAN).
      * @return HKTANv6 A HKTAN instance to tell the server the reference of the previously submitted order.
      */
-    public static function createProzessvariante2Step2($params, $auftragsreferenz)
+    public static function createProzessvariante2Step2(TanMode $params, string $auftragsreferenz): HKTANv6
     {
         if ($params->getAntwortHhdUcErforderlich()) {
             // TODO Implement photoTAN support.

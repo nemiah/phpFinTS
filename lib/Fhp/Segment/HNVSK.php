@@ -36,24 +36,16 @@ class HNVSK extends AbstractSegment
 
     /**
      * HNVSK constructor.
-     * @param int $segmentNumber
-     * @param string $bankCode
-     * @param string $userName
-     * @param int $systemId
-     * @param int $securitySupplierRole
-     * @param int $countryCode
-     * @param int $compression
-     * @param int $pinTanVersion
      */
     public function __construct(
-        $segmentNumber,
-        $bankCode,
-        $userName,
-        $systemId = 0,
-        $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
-        $countryCode = self::DEFAULT_COUNTRY_CODE,
-        $compression = self::COMPRESSION_NONE,
-        $pinTanVersion = SecurityProfile::PROFILE_VERSION_1
+        int $segmentNumber,
+        string $bankCode,
+        string $userName,
+        int $systemId = 0,
+        int $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
+        int $countryCode = self::DEFAULT_COUNTRY_CODE,
+        int $compression = self::COMPRESSION_NONE,
+        int $pinTanVersion = SecurityProfile::PROFILE_VERSION_1
     ) {
         parent::__construct(
             static::NAME,
@@ -72,10 +64,7 @@ class HNVSK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

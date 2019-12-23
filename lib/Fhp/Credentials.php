@@ -26,7 +26,7 @@ class Credentials
      *     could contain alphabetical or even arbitrary characters.
      * @return Credentials A new Credentials instance.
      */
-    public static function create($benutzerkennung, $pin)
+    public static function create(string $benutzerkennung, string $pin): Credentials
     {
         $result = new Credentials();
         $result->benutzerkennung = $benutzerkennung;

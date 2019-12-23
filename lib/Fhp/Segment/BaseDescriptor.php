@@ -30,10 +30,7 @@ abstract class BaseDescriptor
      */
     public $maxIndex;
 
-    /**
-     * @param \ReflectionClass $clazz
-     */
-    protected function __construct($clazz)
+    protected function __construct(\ReflectionClass $clazz)
     {
         // Use reflection to map PHP class fields to elements in the segment/Deg.
         $implicitIndex = true;
@@ -114,7 +111,7 @@ abstract class BaseDescriptor
      * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
      *     with the parents' properties *first*.
      */
-    private static function enumerateProperties($clazz)
+    private static function enumerateProperties(\ReflectionClass $clazz)
     {
         if ($clazz->getParentClass() !== false) {
             yield from static::enumerateProperties($clazz->getParentClass());
@@ -133,7 +130,7 @@ abstract class BaseDescriptor
      * @param string $docComment The documentation string of a PHP field.
      * @return string|null The content of the annotation, or null if absent.
      */
-    private static function getAnnotation($name, $docComment)
+    private static function getAnnotation(string $name, string $docComment): ?string
     {
         $ret = preg_match("/@$name\\((.*?)\\)/", $docComment, $match);
         if ($ret === false) {
@@ -148,7 +145,7 @@ abstract class BaseDescriptor
      * @param string $docComment The documentation string of a PHP field.
      * @return int|null The value of the annotation as an integer, or null if absent.
      */
-    private static function getIntAnnotation($name, $docComment)
+    private static function getIntAnnotation(string $name, string $docComment): ?int
     {
         $val = static::getAnnotation($name, $docComment);
         if ($val === null) {
@@ -165,7 +162,7 @@ abstract class BaseDescriptor
      * @param string $docComment The documentation string of a PHP field.
      * @return bool Whether the annotation with the given name is present.
      */
-    private static function getBoolAnnotation($name, $docComment)
+    private static function getBoolAnnotation(string $name, string $docComment): bool
     {
         return strpos("@$name ", $docComment) !== false
             || strpos("@$name())", $docComment) !== false;
@@ -176,7 +173,7 @@ abstract class BaseDescriptor
      * @param string $docComment The documentation string of a PHP field.
      * @return string|null The value of the {@}var annotation, or null if absent.
      */
-    private static function getVarAnnotation($docComment)
+    private static function getVarAnnotation(string $docComment): ?string
     {
         $ret = preg_match('/@var ([^\\s]+)/', $docComment, $match);
         if ($ret === false) {
@@ -192,7 +189,7 @@ abstract class BaseDescriptor
      *     classes in the same package.
      * @return string|\ReflectionClass The class that the type name refers to, or the scalar type name as a string.
      */
-    private static function resolveType($typeName, $contextClass)
+    private static function resolveType(string $typeName, \ReflectionClass $contextClass)
     {
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;

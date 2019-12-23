@@ -10,5 +10,5 @@ use Fhp\DataTypes\Bin;
 interface HIKAZ
 {
     /** @return Bin */
-    public function getGebuchteUmsaetze();
+    public function getGebuchteUmsaetze(): Bin;
 }

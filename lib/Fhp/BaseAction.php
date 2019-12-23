@@ -65,7 +65,7 @@ abstract class BaseAction implements \Serializable
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      * @return string The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
      */
-    public function serialize()
+    public function serialize(): string
     {
         if (!$this->needsTan()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
@@ -83,7 +83,7 @@ abstract class BaseAction implements \Serializable
      * @return bool Whether the underlying operation has completed (whether successfully or not) and the result or error
      *     message in this future is available. Note: If this returns false, check {@link #needsTan()}.
      */
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return $this->isAvailable;
     }
@@ -92,7 +92,7 @@ abstract class BaseAction implements \Serializable
      * @return bool Whether the underlying operation has completed successfully and the result in this future is
      *     available.
      */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->isAvailable && $this->error === null;
     }
@@ -101,7 +101,7 @@ abstract class BaseAction implements \Serializable
      * @return bool Whether the underlying operation has completed unsuccessfully and the {@link #getError()} is
      *     available.
      */
-    public function isError()
+    public function isError(): bool
     {
         return $this->isAvailable && $this->error !== null;
     }
@@ -110,14 +110,11 @@ abstract class BaseAction implements \Serializable
      * @return bool If this returns true, the underlying operation has not completed because it is awaiting a TAN. You
      *     should ask the user for this TAN and pass it to {@link #submitTan()}.
      */
-    public function needsTan()
+    public function needsTan(): bool
     {
         return !$this->isAvailable && $this->tanRequest !== null;
     }
 
-    /**
-     * @return TanRequest|null
-     */
     public function getTanRequest(): ?TanRequest
     {
         return $this->tanRequest;
@@ -179,7 +176,8 @@ abstract class BaseAction implements \Serializable
      * multiple times in case the response is paginated. On all but the first call, {@link #getPaginationToken()} will
      * return a non-null token that should be included in the returned request.
      * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
+     * @param UPD|null $upd See {@link UPD}. This is usually present (non-null), except for a few special login and TAN
+     *     management actions.
      * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
      *     Note that an action can return an empty array to indicate that it does not need to make a request to the
      *     server, but can instead compute the result just from the BPD/UPD, in which case it should set
@@ -187,7 +185,7 @@ abstract class BaseAction implements \Serializable
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
-    abstract public function createRequest($bpd, $upd);
+    abstract public function createRequest(BPD $bpd, ?UPD $upd);
 
     /**
      * Called when this action was executed on the server (never if {@link #createRequest()} returned an empty request),
@@ -198,7 +196,7 @@ abstract class BaseAction implements \Serializable
      *     were in response to the request segments that were created by {@link #createRequest()}.
      * @throws UnexpectedResponseException When the response indicates failure.
      */
-    public function processResponse($response)
+    public function processResponse(Message $response)
     {
         $pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION);
         if ($pagination === null) {
@@ -217,7 +215,7 @@ abstract class BaseAction implements \Serializable
      * @param BPD $bpd See {@link BPD}.
      * @param UPD $upd See {@link UPD}.
      */
-    public function processError($error, $bpd, $upd)
+    public function processError(\Exception $error, BPD $bpd, UPD $upd)
     {
         unset($bpd, $upd); // These parameters are used in sub-classes.
         $this->isAvailable = true;
@@ -225,7 +223,7 @@ abstract class BaseAction implements \Serializable
     }
 
     /** @return int[] */
-    public function getRequestSegmentNumbers()
+    public function getRequestSegmentNumbers(): array
     {
         return $this->requestSegmentNumbers;
     }
@@ -234,7 +232,7 @@ abstract class BaseAction implements \Serializable
      * To be called only by the FinTs instance that executes this action.
      * @param int[] $requestSegmentNumbers
      */
-    final public function setRequestSegmentNumbers($requestSegmentNumbers)
+    final public function setRequestSegmentNumbers(array $requestSegmentNumbers)
     {
         foreach ($requestSegmentNumbers as $segmentNumber) {
             if (!is_int($segmentNumber)) {
@@ -246,9 +244,8 @@ abstract class BaseAction implements \Serializable
 
     /**
      * To be called only by the FinTs instance that executes this action.
-     * @param TanRequest|null $tanRequest
      */
-    final public function setTanRequest($tanRequest)
+    final public function setTanRequest(?TanRequest $tanRequest)
     {
         $this->tanRequest = $tanRequest;
     }

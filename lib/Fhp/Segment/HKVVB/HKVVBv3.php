@@ -32,13 +32,7 @@ class HKVVBv3 extends BaseSegment
     /** @var string Max length: 5 */
     public $produktversion;
 
-    /**
-     * @param FinTsOptions $options
-     * @param BPD|null $bpd
-     * @param UPD|null $upd
-     * @return HKVVBv3
-     */
-    public static function create($options, $bpd, $upd)
+    public static function create(FinTsOptions $options, ?BPD $bpd, ?UPD $upd): HKVVBv3
     {
         $result = HKVVBv3::createEmpty();
         $result->bpdVersion = $bpd === null ? 0 : $bpd->getVersion();

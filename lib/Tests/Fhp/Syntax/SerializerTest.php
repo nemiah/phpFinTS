@@ -22,7 +22,6 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
             ['?\'', '\''],
             ['????', '??'],
             ['', ''],
-            ['', null],
         ];
     }
 

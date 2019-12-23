@@ -15,11 +15,7 @@ class HKENDv1 extends BaseSegment
     /** @var string */
     public $dialogId;
 
-    /**
-     * @param string $dialogId
-     * @return HKENDv1
-     */
-    public static function create($dialogId)
+    public static function create(string $dialogId): HKENDv1
     {
         $result = HKENDv1::createEmpty();
         $result->dialogId = $dialogId;

@@ -3,6 +3,8 @@
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
+use Fhp\Protocol\BPD;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\DME\HIDXES;
 use Fhp\Segment\DME\MinimaleVorlaufzeitSEPALastschrift;
 
@@ -43,7 +45,7 @@ class GetSEPADirectDebitParameters extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest($bpd, $upd)
+    public function createRequest(BPD $bpd, ?UPD $upd)
     {
         $type = $this->singleDirectDebit ? 'HIDSES' : 'HIDMES';
 

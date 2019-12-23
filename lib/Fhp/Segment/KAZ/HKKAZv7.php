@@ -25,15 +25,7 @@ class HKKAZv7 extends BaseSegment
     /** @var string|null Max length: 35 */
     public $aufsetzpunkt;
 
-    /**
-     * @param \Fhp\Segment\Common\Kti $kti
-     * @param bool $alleKonten
-     * @param \DateTime|null $vonDatum
-     * @param \DateTime|null $bisDatum
-     * @param string|null $aufsetzpunkt
-     * @return HKKAZv7
-     */
-    public static function create($kti, $alleKonten, $vonDatum, $bisDatum, $aufsetzpunkt = null)
+    public static function create(\Fhp\Segment\Common\Kti $kti, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null): HKKAZv7
     {
         $result = HKKAZv7::createEmpty();
         $result->kontoverbindungInternational = $kti;

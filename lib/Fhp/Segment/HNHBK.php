@@ -19,11 +19,8 @@ class HNHBK extends AbstractSegment
 
     /**
      * HNHBK constructor.
-     * @param string $messageLength
-     * @param string $dialogId
-     * @param int $messageNumber
      */
-    public function __construct($messageLength, $dialogId, $messageNumber)
+    public function __construct(string $messageLength, string $dialogId, int $messageNumber)
     {
         if (strlen($messageLength) != 12) {
             $messageLength = str_pad((int) $messageLength + static::HEADER_LENGTH + strlen($dialogId) + strlen($messageNumber), 12, '0', STR_PAD_LEFT);
@@ -42,10 +39,7 @@ class HNHBK extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

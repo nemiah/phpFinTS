@@ -131,8 +131,6 @@ class Response
     /**
      * Some kind of HBCI pagination.
      *
-     * @param AbstractMessage $message
-     *
      * @return array
      */
     public function getTouchDowns(AbstractMessage $message)
@@ -319,7 +317,6 @@ class Response
 
     /**
      * @param string           $name
-     * @param SegmentInterface $reference
      *
      * @return string|null
      */

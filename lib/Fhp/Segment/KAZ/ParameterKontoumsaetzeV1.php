@@ -19,7 +19,7 @@ class ParameterKontoumsaetzeV1 extends BaseDeg implements ParameterKontoumsaetze
     public $eingabeAnzahlEintraegeErlaubt;
 
     /** @return bool */
-    public function getAlleKontenErlaubt()
+    public function getAlleKontenErlaubt(): bool
     {
         return false;
     }

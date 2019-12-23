@@ -3,7 +3,6 @@
 namespace Fhp\Segment\CAZ;
 
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\Common\Kti;
 
 /**
  * Segment: Kontoumsätze/Zeitraum (camt)
@@ -30,7 +29,8 @@ class HKCAZv1 extends BaseSegment
     /** @var string|null Max length: 35 */
     public $aufsetzpunkt;
 
-    public static function create(Kti $kti, UnterstuetzteCamtMessages $unterstuetzteCamtMessages, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null): HKCAZv1
+    public static function create(\Fhp\Segment\Common\Kti $kti, UnterstuetzteCamtMessages $unterstuetzteCamtMessages,
+                                  bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null): HKCAZv1
     {
         $result = HKCAZv1::createEmpty();
         $result->kontoverbindungInternational = $kti;

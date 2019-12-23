@@ -9,12 +9,7 @@ class Bin
      */
     protected $string;
 
-    /**
-     * Bin constructor.
-     *
-     * @param string $string
-     */
-    public function __construct($string)
+    public function __construct(string $string)
     {
         $this->string = $string;
     }
@@ -22,10 +17,9 @@ class Bin
     /**
      * Sets the binary data.
      *
-     * @param string $data
      * @return $this
      */
-    public function setData($data)
+    public function setData(string $data)
     {
         $this->string = $data;
 
@@ -34,28 +28,21 @@ class Bin
 
     /**
      * Gets the binary data.
-     *
-     * @return string
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->string;
     }
 
     /**
      * Convert to string.
-     *
-     * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return '@' . strlen($this->string) . '@' . $this->string;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

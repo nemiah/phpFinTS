@@ -14,30 +14,18 @@ class Kik
      */
     protected $bankCode;
 
-    /**
-     * Kik constructor.
-     *
-     * @param string $countryCode
-     * @param string $bankCode
-     */
-    public function __construct($countryCode, $bankCode)
+    public function __construct(string $countryCode, string $bankCode)
     {
         $this->countryCode = (string) $countryCode;
         $this->bankCode = (string) $bankCode;
     }
 
-    /**
-     * @return string
-     */
-    public function toString()
+    public function toString(): string
     {
         return $this->countryCode . ':' . $this->bankCode;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

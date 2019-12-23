@@ -22,24 +22,16 @@ class HKCAZ extends AbstractSegment
 
     /**
      * HKCAZ constructor.
-     * @param int $version
-     * @param int $segmentNumber
-     * @param Kti $kti
-     * @param string $camtFormat
-     * @param array $allAccounts
-     * @param \DateTime $from
-     * @param \DateTime $to
-     * @param string|null $touchdown
      */
     public function __construct(
-        $version,
-        $segmentNumber,
-        $kti,
-        $camtFormat,
-        $allAccounts,
+        int $version,
+        int $segmentNumber,
+        Kti $kti,
+        string $camtFormat,
+        array $allAccounts,
         \DateTime $from,
         \DateTime $to,
-        $touchdown = null
+        ?string $touchdown = null
     ) {
         parent::__construct(
             static::NAME,
@@ -57,10 +49,7 @@ class HKCAZ extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

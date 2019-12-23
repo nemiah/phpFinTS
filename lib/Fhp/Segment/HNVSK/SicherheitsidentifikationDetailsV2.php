@@ -26,9 +26,8 @@ class SicherheitsidentifikationDetailsV2 extends BaseDeg
     /**
      * @param string $kundensystemId The Kundensystem-ID as retrieved from the bank previously, or '0' during
      *     synchronization.
-     * @return SicherheitsidentifikationDetailsV2
      */
-    public static function createForSender($kundensystemId)
+    public static function createForSender(string $kundensystemId): SicherheitsidentifikationDetailsV2
     {
         $result = new SicherheitsidentifikationDetailsV2();
         $result->identifizierungDerPartei = $kundensystemId;

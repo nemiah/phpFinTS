@@ -14,35 +14,22 @@ class CurlException extends \Exception
      */
     protected $response;
 
-    /**
-     * CurlException constructor.
-     *
-     * @param string $message
-     * @param string|null $response
-     * @param int $code
-     * @param mixed $curlInfo
-     */
-    public function __construct($message, $response, $code = 0, $curlInfo = [])
+    public function __construct(string $message, ?string $response, int $code = 0, array $curlInfo = [])
     {
         parent::__construct($message, $code, null);
         $this->response = $response;
         $this->curlInfo = $curlInfo;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResponse()
+    public function getResponse(): ?string
     {
         return $this->response;
     }
 
     /**
      * Gets the curl info from request / response.
-     *
-     * @return array
      */
-    public function getCurlInfo()
+    public function getCurlInfo(): array
     {
         return $this->curlInfo;
     }
