@@ -4,6 +4,7 @@ namespace Fhp\Segment\DSE;
 
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 use Fhp\Segment\DME\HIDXES;
+use Fhp\Segment\DME\SEPADirectDebitMinimalLeadTimeProvider;
 
 /**
  * Segment: Terminierte SEPA-Einzellastschrift einreichen Parameter
@@ -16,7 +17,7 @@ class HIDSESv1 extends BaseGeschaeftsvorfallparameter implements HIDXES
     /** @var ParameterTerminierteSEPAEinzellastschriftEinreichenV1 */
     public $parameter;
 
-    public function getParameter(): ParameterTerminierteSEPAEinzellastschriftEinreichenV1
+    public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
     {
         return $this->parameter;
     }
