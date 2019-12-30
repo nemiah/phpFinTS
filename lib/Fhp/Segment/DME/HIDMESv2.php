@@ -15,7 +15,7 @@ class HIDMESv2 extends BaseGeschaeftsvorfallparameter implements HIDXES
     /** @var ParameterTerminierteSEPASammellastschriftEinreichenV2 */
     public $parameter;
 
-    public function getParameter(): ParameterTerminierteSEPASammellastschriftEinreichenV2
+    public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
     {
         return $this->parameter;
     }
