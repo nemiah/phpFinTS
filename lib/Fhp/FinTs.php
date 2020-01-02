@@ -699,7 +699,7 @@ class FinTs extends FinTsInternal
             // TODO: Nur TAN-Medien-Namen anzeigen, die zum TAN-Mechanismus passen
             $devices = $this->getTANDevices($tanMechanism);
             $dialog->endDialog();
-            throw new \Exception('Bitte einen der folgenden TAN-Media-Namen angeben: ' . implode(', ', $devices));
+            throw new \Exception('Bitte einen der folgenden TAN-Media-Namen angeben: "' . implode('", "', $devices).'"');
         }
 
         $response = $dialog->initDialog($this->tanMechanism, $this->tanMediaName, $tanCallback);
