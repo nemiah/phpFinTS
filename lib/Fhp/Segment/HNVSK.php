@@ -41,9 +41,9 @@ class HNVSK extends AbstractSegment
         int $segmentNumber,
         string $bankCode,
         string $userName,
-        int $systemId = 0,
+        $systemId = 0,
         int $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
-        int $countryCode = self::DEFAULT_COUNTRY_CODE,
+        $countryCode = self::DEFAULT_COUNTRY_CODE,
         int $compression = self::COMPRESSION_NONE,
         int $pinTanVersion = SecurityProfile::PROFILE_VERSION_1
     ) {
