@@ -21,7 +21,7 @@ class HKDSE extends AbstractSegment
     /**
      * HKDSE constructor.
      */
-    public function __construct(int $version, int $segmentNumber, Kti $kti, string $SEPADescriptor, string $painMessage)
+    public function __construct(int $version, int $segmentNumber, \Fhp\DataTypes\Kti $kti, string $SEPADescriptor, string $painMessage)
     {
         parent::__construct(
             static::NAME,
