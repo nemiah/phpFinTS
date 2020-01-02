@@ -20,7 +20,7 @@ class HKIDN extends AbstractSegment
     /**
      * HKIDN constructor.
      */
-    public function __construct(int $segmentNumber, string $bankCode, string $userName, int $systemId = 0)
+    public function __construct(int $segmentNumber, string $bankCode, string $userName, $systemId = 0)
     {
         parent::__construct(
             static::NAME,
