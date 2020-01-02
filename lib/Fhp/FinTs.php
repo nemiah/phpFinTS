@@ -467,38 +467,26 @@ class FinTs extends FinTsInternal
 
     /**
      * Executes SEPA transfer
-     * You have to call finishSEPATAN(), if $tanCallback is not set
+     * You have to call finishSEPATAN()
      *
+     * @param SEPAAccount $account
      * @param string $painMessage
-     * @param \Closure $tanCallback
      */
-    public function executeSEPATransfer(SEPAAccount $account, $painMessage, \Closure $tanCallback = null)
+    public function executeSEPATransfer(SEPAAccount $account, $painMessage)
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
-        $response = $this->startSEPATransfer($account, $painMessage);
-
-        if ($tanCallback === null) {
-            return $response;
-        }
-
-        echo "Waiting max. 120 seconds for TAN from callback\n";
-        for ($i = 0; $i < 120; ++$i) {
-            sleep(1);
-
-            $tan = trim($tanCallback());
-            if ($tan == '') {
-                echo 'No TAN found, waiting '.(120 - $i)."!\n";
-                continue;
-            }
-
-            break;
-        }
-
-        $this->finishSEPATAN($response, $tan);
+        return $this->startSEPATransfer($account, $painMessage);
     }
 
-    public function executeSEPADirectDebit(SEPAAccount $account, $painMessage, \Closure $tanCallback, $interval = 1)
+    /**
+     * Executes SEPA direct debit
+     * You have to call finishSEPATAN()
+     *
+     * @param SEPAAccount $account
+     * @param string $painMessage
+     */
+    public function executeSEPADirectDebit(SEPAAccount $account, $painMessage)
     {
         $this->logger->debug(__CLASS__ . ':' . __FUNCTION__ . ' called');
 
@@ -528,33 +516,8 @@ class FinTs extends FinTsInternal
         $class = explode('\\', get_class($hkdsx));
         $this->logger->info('');
         $this->logger->info($class[count($class) - 1].' (SEPA direct debit) initialize');
-        $response = $dialog->sendMessage($message, $this->tanMechanism, $tanCallback);
+        $dialog->sendMessage($message, $this->tanMechanism);
         $this->logger->info($class[count($class) - 1].' end');
-
-        //$response = new GetTANRequest($response->rawResponse);
-        //print_r($response);
-
-        //var_dump($response->get()->getProcessID());
-        //$this->logger->info("Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)...");
-        //echo "Waiting max. 120 seconds for TAN from callback. Checking every $interval second(s)…\n";
-        /*for ($i = 0; $i < 120; $i += $interval) {
-            sleep($interval);
-
-            $tan = trim($tanCallback());
-            if ($tan == '') {
-                $this->logger->info('No TAN found, waiting '.(120 - $i).'!');
-                continue;
-            }
-
-            break;
-        }
-
-
-        if ($tan == '') {
-            throw new TANException('No TAN received!');
-        }
-
-        $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);*/
     }
 
     /**
