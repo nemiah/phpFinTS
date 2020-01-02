@@ -526,11 +526,11 @@ class FinTsNew
     /**
      * If the selected TAN mode was provided as an int, resolves it to a full {@link TanMode} instance, which may
      * involve a request to the server to retrieve the BPD. Then returns it.
-     * @return VerfahrensparameterZweiSchrittVerfahrenV6|null The current TAN mode, null if none was selected, never an int.
+     * @return TanMode|null The current TAN mode, null if none was selected, never an int.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
-    private function getSelectedTanMode(): ?VerfahrensparameterZweischrittVerfahrenV6
+    public function getSelectedTanMode(): ?TanMode
     {
         if (is_int($this->selectedTanMode)) {
             $this->ensureBpdAvailable();
@@ -560,12 +560,12 @@ class FinTsNew
 
     /**
      * Like {@link #getSelectedTanMode()}, but throws an exception if none was selected.
-     * @return VerfahrensparameterZweiSchrittVerfahrenV6 The current TAN mode.
+     * @return TanMode The current TAN mode.
      * @throws \RuntimeException If no TAN mode has been selected.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error during the BPD fetch.
      */
-    private function requireTanMode(): VerfahrensparameterZweiSchrittVerfahrenV6
+    private function requireTanMode(): TanMode
     {
         $tanMode = $this->getSelectedTanMode();
         if ($tanMode === null) {
