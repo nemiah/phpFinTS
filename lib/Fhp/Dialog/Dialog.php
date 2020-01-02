@@ -514,7 +514,10 @@ class Dialog
         }
         $this->bankName = $response->getBankName();
 
-        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse), ['logger' => $this->logger]);
+        $FTO = new \Fhp\FinTsOptions();
+        $FTO->logger = $this->logger;
+        
+        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse), $FTO);
 
         // max version for segment HKSAL (Saldo abfragen)
         $this->hksalVersion = $response->getHksalMaxVersion();
