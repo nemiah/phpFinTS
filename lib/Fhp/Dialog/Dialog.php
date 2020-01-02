@@ -431,8 +431,11 @@ class Dialog
         $rawResponse = $response->rawResponse;
 
         $parsedMessage = \Fhp\Protocol\Message::parse($rawResponse);
+        
+        $FPO = new \Fhp\FinTsOptions();
+        $FPO->logger = $this->logger;
         // Update the BPD, as it could differ from the values received via syncDialog
-        $this->bpd = BPD::extractFromResponse($parsedMessage, ['logger' => $this->logger]);
+        $this->bpd = BPD::extractFromResponse($parsedMessage, $FPO);
 
         if (UPD::containedInResponse($parsedMessage)) {
             $this->upd = UPD::extractFromResponse($parsedMessage);
