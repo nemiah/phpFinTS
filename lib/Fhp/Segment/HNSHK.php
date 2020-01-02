@@ -42,7 +42,7 @@ class HNSHK extends AbstractSegment
         string $countryCode,
         string $bankCode,
         string $userName,
-        int $systemId = 0,
+        $systemId = 0,
         int $securityFunction = self::SECURITY_FUNC_999,
         int $securityBoundary = self::SECURITY_BOUNDARY_SHM,
         int $securitySupplierRole = self::SECURITY_SUPPLIER_ROLE_ISS,
