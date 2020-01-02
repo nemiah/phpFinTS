@@ -25,7 +25,7 @@ class HKKAZ extends AbstractSegment
         int $version,
         int $segmentNumber,
         $ktv,
-        array $allAccounts,
+        $allAccounts,
         \DateTime $from,
         \DateTime $to,
         ?string $touchdown = null
