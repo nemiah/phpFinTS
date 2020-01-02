@@ -74,7 +74,7 @@ class HITANv6 extends BaseSegment implements TanRequest
     }
 
     /** {@inheritdoc} */
-    public function getTanMediumName(): string
+    public function getTanMediumName(): ?string
     {
         return $this->bezeichnungDesTanMediums;
     }
