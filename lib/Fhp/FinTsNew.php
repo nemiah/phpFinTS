@@ -569,7 +569,7 @@ class FinTsNew
     {
         $tanMode = $this->getSelectedTanMode();
         if ($tanMode === null) {
-            throw new \RuntimeException('selectTanMode() must be called before executing business transactions');
+            throw new \RuntimeException('selectTanMode() must be called before login() or execute()');
         }
         return $tanMode;
     }
