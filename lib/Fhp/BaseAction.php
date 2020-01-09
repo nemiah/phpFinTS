@@ -212,10 +212,8 @@ abstract class BaseAction implements \Serializable
 
     /**
      * @param \Exception $error The error that occurred when executing this action.
-     * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
      */
-    public function processError(\Exception $error, BPD $bpd, UPD $upd)
+    public function processError(\Exception $error, ?BPD $bpd = null, ?UPD $upd = null)
     {
         unset($bpd, $upd); // These parameters are used in sub-classes.
         $this->isAvailable = true;
