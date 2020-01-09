@@ -212,8 +212,6 @@ abstract class BaseAction implements \Serializable
 
     /**
      * @param \Exception $error The error that occurred when executing this action.
-     * @param BPD $bpd See {@link BPD}.
-     * @param UPD $upd See {@link UPD}.
      */
     public function processError(\Exception $error, ?BPD $bpd = null, ?UPD $upd = null)
     {
