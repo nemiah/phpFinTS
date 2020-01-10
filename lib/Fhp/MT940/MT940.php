@@ -92,19 +92,36 @@ class MT940
                     // 16 = year
                     // 0511 = valuta date
                     // 0509 = booking date
+                    
                     $year = substr($transaction, 0, 2);
                     $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
+                    $bookingDatePart = substr($transaction, 6, 4);
 
-                    $bookingDate = substr($transaction, 6, 4);
-                    if (preg_match('/^\d{4}$/', $bookingDate)) {
-                        // if valuta date is earlier than booking date, then it must be in the new year.
-                        $year = substr($transaction, 2, 2) < substr($transaction, 6, 2) ? --$year : $year;
-                        if (substr($transaction, 2, 2) == '12' && substr($transaction, 6, 2) == '01') {
-                            ++$year;
-                        } elseif (substr($transaction, 2, 2) == '01' && substr($transaction, 6, 2) == '12') {
-                            --$year;
+                    if (preg_match('/^\d{4}$/', $bookingDatePart) === 1) {
+                        // try to guess the correct year of the booking date
+
+                        $valutaDateTime = new \DateTime($valutaDate);
+                        $bookingDateTime = new \DateTime($this->getDate($year . $bookingDatePart));
+
+                        // the booking date can be before or after the valuata date
+                        // and one of them can be in another year for example 12-31 and 01-01
+                        
+                        $diff = $valutaDateTime->diff($bookingDateTime);
+
+                        //if diff is more than half a year
+                        if($diff->days > 182){
+                            //and positive
+                            if($diff->invert === 0){
+                                //its in the last year
+                                $year--;
+                            }
+                            //and negative
+                            else {
+                                //its in the next year
+                               $year++;
+                            }
                         }
-                        $bookingDate = $this->getDate($year . $bookingDate);
+                        $bookingDate = $this->getDate($year . $bookingDatePart);
                     } else {
                         // if booking date not set in :61, then we have to take it from :60F
                         $bookingDate = $soaDate;
