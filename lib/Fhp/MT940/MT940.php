@@ -95,12 +95,13 @@ class MT940
                     
                     $year = substr($transaction, 0, 2);
                     $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
+                    $bookingDatePart = substr($transaction, 6, 4);
 
-                    if (preg_match('/^\d{4}$/', substr($transaction, 6, 4)) === 1) {
+                    if (preg_match('/^\d{4}$/', $bookingDatePart) === 1) {
                         // try to guess the correct year of the booking date
 
                         $valutaDateTime = new \DateTime($valutaDate);
-                        $bookingDateTime = new \DateTime($this->getDate($year . substr($transaction, 6, 4)));
+                        $bookingDateTime = new \DateTime($this->getDate($year . $bookingDatePart));
 
                         // the booking date can be before or after the valuata date
                         // and one of them can be in another year for example 12-31 and 01-01
@@ -120,7 +121,7 @@ class MT940
                                $year++;
                             }
                         }
-                        $bookingDate = $this->getDate($year . substr($transaction, 6, 4));
+                        $bookingDate = $this->getDate($year . $bookingDatePart);
                     } else {
                         // if booking date not set in :61, then we have to take it from :60F
                         $bookingDate = $soaDate;
