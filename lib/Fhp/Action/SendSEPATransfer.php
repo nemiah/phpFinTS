@@ -71,7 +71,7 @@ class SendSEPATransfer extends BaseAction
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
-        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) === null) {
+        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) === null && $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) === null) {
             throw new UnexpectedResponseException('Bank did not confirm SEPATransfer execution');
         }
     }

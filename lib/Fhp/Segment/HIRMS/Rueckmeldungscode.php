@@ -47,6 +47,11 @@ abstract class Rueckmeldungscode
     const ENTGEGENGENOMMEN = 10;
 
     /**
+     * Der Auftrag wurde ausgeführt.
+     */
+    const AUSGEFUEHRT = 20;
+
+    /**
      * Bestätigung der Dialogbeendigung des Benutzers oder des Kreditinstituts.
      */
     const BEENDET = 100;
