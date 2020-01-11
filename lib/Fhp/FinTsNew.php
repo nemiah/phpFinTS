@@ -15,12 +15,12 @@ use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\HITANS\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Segment\HKEND\HKENDv1;
 use Fhp\Segment\HKIDN\HKIDNv2;
 use Fhp\Segment\HKVVB\HKVVBv3;
 use Fhp\Segment\TAN\HITANv6;
 use Fhp\Segment\TAN\HKTANv6;
+use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Syntax\InvalidResponseException;
 use Fhp\Syntax\Serializer;
 use Psr\Log\LoggerInterface;
@@ -676,7 +676,7 @@ class FinTsNew
         if (!$response->hasSegment(HIBPAv3::class)) {
             return false;
         }
-        $this->bpd = BPD::extractFromResponse($response, $this->options);
+        $this->bpd = BPD::extractFromResponse($response);
         return true;
     }
 

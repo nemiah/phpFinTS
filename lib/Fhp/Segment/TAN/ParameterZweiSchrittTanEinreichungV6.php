@@ -1,10 +1,10 @@
 <?php /** @noinspection PhpUnused */
 
-namespace Fhp\Segment\HITANS;
+namespace Fhp\Segment\TAN;
 
 use Fhp\Segment\BaseDeg;
 
-class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg implements ParameterZweiSchrittTanEinreichung
+class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg
 {
     /** @var bool */
     public $einschrittVerfahrenErlaubt;
@@ -19,16 +19,4 @@ class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg implements ParameterZ
     public $auftragsHashwertverfahren;
     /** @var VerfahrensparameterZweiSchrittVerfahrenV6[] @Max(98) */
     public $verfahrensparameterZweiSchrittVerfahren;
-
-    /** @return bool */
-    public function getEinschrittVerfahrenErlaubt(): bool
-    {
-        return $this->einschrittVerfahrenErlaubt;
-    }
-
-    /** @return VerfahrensparameterZweiSchrittVerfahrenV6[] */
-    public function getVerfahrensparameterZweiSchrittVerfahren(): array
-    {
-        return $this->verfahrensparameterZweiSchrittVerfahren;
-    }
 }

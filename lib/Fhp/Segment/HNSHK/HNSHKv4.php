@@ -25,7 +25,7 @@ class HNSHKv4 extends BaseSegment
      * For the PIN/TAN profile (see section B.9.8), this must be:
      *   - 998 for Ein-Schritt-Verfahren, or
      *   - the value in the 900--997 range as received in
-     *     {@link \Fhp\Segment\HITANS\VerfahrensparameterZweiSchrittVerfahren#getId()}
+     *     {@link \Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenv6#sicherheitsfunktion}
      * @var int
      */
     public $sicherheitsfunktion;

@@ -5,7 +5,7 @@ namespace Fhp\Response;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\HIRMSv2;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\HITANS\HITANS;
+use Fhp\Segment\TAN\HITANSv6;
 
 class GetVariables extends Response
 {
@@ -42,10 +42,13 @@ class GetVariables extends Response
                 $segmentRaw .= "'";
             }
             $hitans = BaseSegment::parse($segmentRaw);
-            if (!($hitans instanceof HITANS)) {
-                throw new \InvalidArgumentException('All HITANS segments must implement the HITANS interface');
+            if ($hitans->getVersion() !== 6) {
+                continue;
             }
-            foreach ($hitans->getParameterZweiSchrittTanEinreichung()->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
+            if (!($hitans instanceof HITANSv6)) {
+                throw new \AssertionError();
+            }
+            foreach ($hitans->parameterZweiSchrittTanEinreichung->verfahrensparameterZweiSchrittVerfahren as $verfahren) {
                 if ($allowedModes === null || in_array($verfahren->getId(), $allowedModes)) {
                     $result[$verfahren->getId()] = $verfahren->getName();
                 }
