@@ -70,7 +70,6 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
                 $needles[] = $item->benutzerkennung;
                 $needles[] = $item->pin;
             } elseif ($item instanceof FinTsOptions) {
-                $needles[] = $item->bankCode;
                 $needles[] = $item->productName;
             } elseif ($item instanceof Account) {
                 $needles[] = $item->getIban();
