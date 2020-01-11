@@ -4,6 +4,7 @@ namespace Fhp;
 
 use Fhp\Model\TanMedium;
 use Fhp\Model\TanMode;
+use Fhp\Options\SanitizingLogger;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\DialogInitialization;
 use Fhp\Protocol\GetTanMedia;
@@ -37,7 +38,7 @@ class FinTsNew
     private $options;
     /** @var Credentials */
     private $credentials;
-    /** @var LoggerInterface */
+    /** @var SanitizingLogger */
     private $logger;
 
     // The TAN mode and medium to be used for business transactions that require a TAN.
@@ -170,11 +171,24 @@ class FinTsNew
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @return SanitizingLogger
+     */
+    public function getLogger(): SanitizingLogger
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @param LoggerInterface $logger The logger to use going forward. Note that it will be wrapped in a
+     *     {@link SanitizingLogger} to protect sensitive information like usernames and PINs.
      */
     public function setLogger(LoggerInterface $logger): void
     {
-        $this->logger = $logger;
+        if ($logger instanceof SanitizingLogger) {
+            $this->logger = $logger;
+        } else {
+            $this->logger = new SanitizingLogger($logger, [$this->options, $this->credentials]);
+        }
     }
 
     /**

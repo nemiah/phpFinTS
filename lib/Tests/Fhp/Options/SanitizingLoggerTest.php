@@ -1,20 +1,21 @@
 <?php
 
-namespace Tests\Fhp;
+namespace Tests\Fhp\Options;
 
 use Fhp\Credentials;
 use Fhp\FinTsOptions;
+use Fhp\Options\SanitizingLogger;
 
-class SanitizingCLILoggerTest extends \PHPUnit\Framework\TestCase
+class SanitizingLoggerTest extends \PHPUnit\Framework\TestCase
 {
     public function test_sanitize()
     {
         $credentials = Credentials::create('USER123', 'pw+?123');
         $options = new FinTsOptions();
         $options->productName = 'ABCDEFGHIJKLMNOPQRS';
-        $needles = SanitizingCLILogger::computeNeedles([$credentials, $options, 'RAWNEEDLE']);
+        $needles = SanitizingLogger::computeNeedles([$credentials, $options, 'RAWNEEDLE']);
         $sanitize = function ($str) use ($needles) {
-            $result = SanitizingCLILogger::sanitizeForLogging($str, $needles);
+            $result = SanitizingLogger::sanitizeForLogging($str, $needles);
             $this->assertEquals(strlen($str), strlen($result));
             return $result;
         };

@@ -184,12 +184,12 @@ To minify the impact on these accounts (undesired transactions, account locks du
 integration testing (against fake backends) has proven very useful (in addition to the usual regression-catching
 benefits of those tests).
 
-The `SanitizingCLILogger` class can be used to record requests/responses during a (manually scripted) dialog with the
-bank.
+The `CLILogger` class can be used to record requests/responses during a (manually scripted) dialog with the bank.
 The recorded messages can then be filled into a `PhpUnit` test.
-While the logger already replaces the most important sensitive values (username, PIN, ...), the recorded segments
-regularly still contain personal information (e.g. IBANs and names of other parties involved in transactions,
-descriptions of transactions, etc.).
+When used through `FinTsNew::setLogger()`, the logger already replaces the most important sensitive values
+(username, PIN, ...) with placeholders.
+But the recorded segments regularly still contain personal information (e.g. IBANs and names of other parties involved
+in transactions, descriptions of transactions, etc.).
 In order to remove this information, it is advisable not to change the overall length (i.e. using the `Ins` mode in the
 code editor to overwrite it with some dummy data), because the wire format hard-codes the length of subsequent data in
 various places and simply removing it would result in parsing failures.

@@ -1,41 +1,37 @@
 <?php
 
-namespace Tests\Fhp;
+namespace Fhp\Options;
 
 use Fhp\Credentials;
 use Fhp\FinTsOptions;
 use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
 use Fhp\Syntax\Serializer;
+use Psr\Log\LoggerInterface;
 
 /**
- * A logger that prints log messages to the console (just PHP `echo`) but attempts to remove confidential information
- * like usernames, passwords/PINs and so on. This class is designed to be used only for testing purposes, specifically
- * to record real traffic for integration tests, which ends up hard-coded in the Git repository.
+ * A logger that forwards to another PSR logger, but attempts to remove confidential information
+ * like usernames, passwords/PINs and so on.
  *
- * Example usage:
- * $credentials = \Fhp\Credentials::create('username', 'sensitivePIN');
- * $options = new \Fhp\FinTsOptions();
- * $options->productName = 'YourProductRegistrationID';
- * $options->productVersion = '1.0';
- * $logger = new \Fhp\SanitizingCLILogger([$options, $credentials]);
- * ...
- * $sepaAccount = new SEPAAccount();
- * $sepaAccount->setIban('DE45SENSITIVEIBAN');
- * $logger->addSensitiveMaterial([$sepaAccount])
+ * Note: This is internally used by {@link FinTs#setLogger()}, so application could usually does not need to instantiate
+ * this class manually.
  */
-class SanitizingCLILogger extends \Psr\Log\AbstractLogger
+class SanitizingLogger extends \Psr\Log\AbstractLogger
 {
+    /** @var LoggerInterface */
+    private $logger;
     /** @var string[] */
     private $needles;
 
     /**
+     * @param LoggerInterface $logger The inner logger, to which the SanitizingLogger forwards its output.
      * @param array $sensitiveMaterial An array of various objects typically used with the phpFinTS library that contain
      *     some sensitive information. This array may also contain plain strings, which are themselves interpreted as
      *     sensitive.
      */
-    public function __construct(array $sensitiveMaterial)
+    public function __construct(LoggerInterface $logger, array $sensitiveMaterial)
     {
+        $this->logger = $logger;
         $this->needles = static::computeNeedles($sensitiveMaterial);
     }
 
@@ -50,8 +46,7 @@ class SanitizingCLILogger extends \Psr\Log\AbstractLogger
     public function log($level, $message, array $context = []): void
     {
         $message .= count($context) === 0 ? '' : ' ' . implode(', ', $context);
-        $sanitizedMessage = static::sanitizeForLogging($message, $this->needles);
-        echo "$level: $sanitizedMessage\n";
+        $this->logger->log($level, static::sanitizeForLogging($message, $this->needles));
     }
 
     /**

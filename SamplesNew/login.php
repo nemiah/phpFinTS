@@ -18,7 +18,7 @@ $options->productName = ''; // The number you receive after registration / FinTS
 $options->productVersion = '1.0'; // Your own Software product version
 $credentials = \Fhp\Credentials::create('username', 'pin'); // This is NOT the PIN of your bank card!
 $fints = new \Fhp\FinTsNew($options, $credentials);
-$fints->setLogger(new \Tests\Fhp\SanitizingCLILogger([$options, $credentials]));
+$fints->setLogger(new \Tests\Fhp\CLILogger());
 
 /**
  * This function is key to how FinTS works in times of PSD2 regulations. Most actions like wire transfers, getting
@@ -61,7 +61,7 @@ function handleTan(\Fhp\BaseAction $action)
         // This example code stores them in a text file, but you might write them to your database (use a BLOB, not a
         // CHAR/TEXT field to allow for arbitrary encoding) or in some other storage (possibly base64-encoded to make it
         // ASCII).
-        file_put_contents(__DIR__ . 'state.txt', serialize([$fints->persist(), serialize($action)]));
+        file_put_contents(__DIR__ . 'state.txt', serialize([$persistedFints, $persistedAction]));
     }
 
     echo "Please enter the TAN:\n";
