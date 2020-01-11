@@ -131,8 +131,10 @@ class DialogInitialization extends BaseAction
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),
             HKVVBv3::create($this->options, $bpd, $upd),
-            HKTANv6::createProzessvariante2Step1($this->tanMode, $this->tanMedium, $this->hktanRef ?? 'HKIDN'),
         ];
+        if ($this->tanMode !== null) {
+            $request[] = HKTANv6::createProzessvariante2Step1($this->tanMode, $this->tanMedium, $this->hktanRef ?? 'HKIDN');
+        }
 
         if ($this->kundensystemId === null) {
             // NOTE: HKSYN must be *after* HKTAN.
