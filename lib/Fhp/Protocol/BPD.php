@@ -54,7 +54,8 @@ class BPD
     /**
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
      * Section: B.8.2
-     * @var TanMode[] All TAN modes supported by this bank. Note that the UPD contains the modes that the user can use.
+     * @var TanMode[] All TAN modes supported by this bank, indexed by their IDs. Note that the UPD contains the modes
+     * that the user can use.
      */
     public $allTanModes = [];
 

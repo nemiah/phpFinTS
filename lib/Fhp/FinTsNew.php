@@ -502,19 +502,6 @@ class FinTsNew
     {
         if ($this->kundensystemId === null) {
             $this->ensureBpdAvailable();
-            if ($this->selectedTanMode === null && !$this->bpd->singleStepTanModeAllowed) {
-                // Some banks do not support the fake TAN mode 999 (i.e. tanMode=null). Instead, they only declare a
-                // single TAN mode in their BPD and expect clients to pick that implicitly instead.
-                if (count($this->bpd->allTanModes) !== 1) {
-                    throw new UnsupportedException(
-                        'Server does not allow single-step TAN mode, but there are multiple to pick from');
-                }
-                $this->selectedTanMode = reset($this->bpd->allTanModes);
-                if ($this->selectedTanMode->needsTanMedium()) {
-                    throw new UnsupportedException('Server does not allow single-step TAN mode, '
-                        . 'but the only two-step TAN mode requires a TAN medium');
-                }
-            }
             $this->executeWeakDialogInitialization(null);
             if ($this->kundensystemId === null) {
                 throw new UnexpectedResponseException('No Kundensystem-ID retrieved from sync.');
