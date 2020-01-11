@@ -2,9 +2,6 @@
 
 namespace Fhp;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
-
 /**
  * Holds options for FinTS connections and operations. These options are independent of the user and depend only on the
  * bank system and the client system that uses this library.
@@ -46,9 +43,6 @@ class FinTsOptions
     /** @var int */
     public $timeoutResponse = 30;
 
-    /** @var LoggerInterface */
-    public $logger;
-
     /**
      * @throws \InvalidArgumentException If the options are invalid.
      */
@@ -69,9 +63,6 @@ class FinTsOptions
         }
         if (strlen($this->url) === 0) {
             throw new \InvalidArgumentException('Server URL required!');
-        }
-        if ($this->logger === null) {
-            $this->logger = new NullLogger();
         }
     }
 }

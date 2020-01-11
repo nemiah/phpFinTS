@@ -18,11 +18,11 @@ use Fhp\Syntax\Serializer;
  * $options = new \Fhp\FinTsOptions();
  * $options->productName = 'YourProductRegistrationID';
  * $options->productVersion = '1.0';
- * $options->logger = new \Fhp\SanitizingCLILogger([$options, $credentials]);
+ * $logger = new \Fhp\SanitizingCLILogger([$options, $credentials]);
  * ...
  * $sepaAccount = new SEPAAccount();
  * $sepaAccount->setIban('DE45SENSITIVEIBAN');
- * $options->logger->addSensitiveMaterial([$sepaAccount])
+ * $logger->addSensitiveMaterial([$sepaAccount])
  */
 class SanitizingCLILogger extends \Psr\Log\AbstractLogger
 {

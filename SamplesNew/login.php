@@ -17,8 +17,8 @@ $options->bankCode = ''; // Your bank code / Bankleitzahl
 $options->productName = ''; // The number you receive after registration / FinTS-Registrierungsnummer
 $options->productVersion = '1.0'; // Your own Software product version
 $credentials = \Fhp\Credentials::create('username', 'pin'); // This is NOT the PIN of your bank card!
-$options->logger = new \Tests\Fhp\SanitizingCLILogger([$options, $credentials]);
 $fints = new \Fhp\FinTsNew($options, $credentials);
+$fints->setLogger(new \Tests\Fhp\SanitizingCLILogger([$options, $credentials]));
 
 /**
  * This function is key to how FinTS works in times of PSD2 regulations. Most actions like wire transfers, getting

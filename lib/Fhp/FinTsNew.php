@@ -24,6 +24,7 @@ use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Syntax\InvalidResponseException;
 use Fhp\Syntax\Serializer;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * This is the main class of this library. Please see the Samples directory for how to use it.
@@ -73,8 +74,8 @@ class FinTsNew
      */
     public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
     {
+        $this->logger = new NullLogger();
         $options->validate();
-        $this->logger = $options->logger;
         $this->options = $options;
         $this->credentials = $credentials;
 
@@ -166,6 +167,14 @@ class FinTsNew
             $this->dialogId,
             $this->messageNumber
             ) = $data;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 
     /**
