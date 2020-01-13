@@ -9,7 +9,7 @@ class SpardaMT940 extends MT940
     const DIALECT_ID = 'https://fints.bankingonline.de/fints/FinTs30PinTanHttpGate';
 
     /** {@inheritdoc} */
-    public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines): array
+    public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines, array $transaction): array
     {
         $otherInfo = [];
         $structuredStartFound = false;
@@ -55,7 +55,12 @@ class SpardaMT940 extends MT940
 
             switch ($bookingText) {
                 case 'SEPA-ÜBERWEISUNG':
-                    $gvc = '166';
+                    if ($transaction['credit_debit'] === static::CD_CREDIT) {
+                        $gvc = '166';
+                    }
+                    if ($transaction['credit_debit'] === static::CD_DEBIT) {
+                        $gvc = '177';
+                    }
                     break;
                 case 'SEPA-BASISLASTSCHRIFT':
                     $gvc = '105';
@@ -70,7 +75,7 @@ class SpardaMT940 extends MT940
             $rawLines[33] .= array_pop($otherInfo);
         }
 
-        $desc = parent::extractStructuredDataFromRemittanceLines($correctedLines, $gvc, $rawLines);
+        $desc = parent::extractStructuredDataFromRemittanceLines($correctedLines, $gvc, $rawLines, $transaction);
 
         if (isset($desc['SVWZ']) && strpos($desc['SVWZ'], 'Dauerauftrag') === 0) {
             $gvc = '152';
