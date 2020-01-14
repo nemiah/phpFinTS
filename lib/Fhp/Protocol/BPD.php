@@ -2,14 +2,14 @@
 
 namespace Fhp\Protocol;
 
-use Fhp\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\AnonymousSegment;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIPINS\HIPINSv1;
-use Fhp\Segment\HITANS\HITANS;
 use Fhp\Segment\SegmentInterface;
+use Fhp\Segment\TAN\HITANSv6;
+use Fhp\UnsupportedException;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -139,10 +139,9 @@ class BPD
 
     /**
      * @param Message $response The dialog initialization response from the server.
-     * @param FinTsOptions $options See {@link FinTsOptions}.
      * @return BPD A new BPD instance with the extracted configuration data.
      */
-    public static function extractFromResponse(Message $response, FinTsOptions $options): BPD
+    public static function extractFromResponse(Message $response): BPD
     {
         $bpd = new BPD();
         $bpd->hibpa = $response->requireSegment(HIBPAv3::class);
@@ -166,15 +165,14 @@ class BPD
         }
 
         // Extract all TanModes from HIPINS.
-        /** @var HITANS $hitans */
-        $hitans = $bpd->requireLatestSupportedParameters('HITANS');
-        if ($hitans->getVersion() < 6) {
-            $options['logger']->warning('HITANSv' . $hitans->getSegmentNumber()
-                . ' is deprecated. Please let the phpFinTS maintainers know that your bank still uses this.');
+        if (!$bpd->supportsParameters('HITANS', 6)) {
+            throw new UnsupportedException('The bank does not support HITANSv6 (PSD2)');
         }
-        $tanParams = $hitans->getParameterZweiSchrittTanEinreichung();
-        $bpd->singleStepTanModeAllowed = $tanParams->getEinschrittVerfahrenErlaubt();
-        foreach ($tanParams->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
+        /** @var HITANSv6 $hitans */
+        $hitans = $bpd->requireLatestSupportedParameters('HITANS');
+        $tanParams = $hitans->parameterZweiSchrittTanEinreichung;
+        $bpd->singleStepTanModeAllowed = $tanParams->einschrittVerfahrenErlaubt;
+        foreach ($tanParams->verfahrensparameterZweiSchrittVerfahren as $verfahren) {
             $bpd->allTanModes[$verfahren->getId()] = $verfahren;
         }
         return $bpd;

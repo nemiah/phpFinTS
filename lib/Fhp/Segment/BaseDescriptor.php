@@ -9,7 +9,7 @@ use Fhp\DataTypes\Bin;
  */
 abstract class BaseDescriptor
 {
-    /** @var string Example: "Fhp\Segment\HITANSv1" (Segment) or "Fhp\Segment\Segmentkopf" (Deg) */
+    /** @var string Example: "Fhp\Segment\TAN\HITANSv6" (Segment) or "Fhp\Common\Kik" (Deg) */
     public $class;
     /** @var int Example: 1 */
     public $version = 1;

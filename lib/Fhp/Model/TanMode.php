@@ -63,4 +63,16 @@ interface TanMode
      *     addition to and after picking this TanMode.
      */
     public function needsTanMedium(): bool;
+
+    /** @return bool */
+    public function getSmsAbbuchungskontoErforderlich(): bool;
+
+    /** @return bool */
+    public function getAuftraggeberkontoErforderlich(): bool;
+
+    /** @return bool */
+    public function getChallengeKlasseErforderlich(): bool;
+
+    /** @return bool */
+    public function getAntwortHhdUcErforderlich(): bool;
 }

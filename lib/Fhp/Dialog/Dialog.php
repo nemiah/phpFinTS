@@ -432,10 +432,8 @@ class Dialog
 
         $parsedMessage = \Fhp\Protocol\Message::parse($rawResponse);
         
-        $FPO = new \Fhp\FinTsOptions();
-        $FPO->logger = $this->logger;
         // Update the BPD, as it could differ from the values received via syncDialog
-        $this->bpd = BPD::extractFromResponse($parsedMessage, $FPO);
+        $this->bpd = BPD::extractFromResponse($parsedMessage);
 
         if (UPD::containedInResponse($parsedMessage)) {
             $this->upd = UPD::extractFromResponse($parsedMessage);
@@ -517,10 +515,7 @@ class Dialog
         }
         $this->bankName = $response->getBankName();
 
-        $FTO = new \Fhp\FinTsOptions();
-        $FTO->logger = $this->logger;
-        
-        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse), $FTO);
+        $this->bpd = BPD::extractFromResponse(\Fhp\Protocol\Message::parse($response->rawResponse));
 
         // max version for segment HKSAL (Saldo abfragen)
         $this->hksalVersion = $response->getHksalMaxVersion();

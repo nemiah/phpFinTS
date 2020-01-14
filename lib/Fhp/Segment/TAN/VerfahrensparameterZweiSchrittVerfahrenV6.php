@@ -1,17 +1,24 @@
 <?php /** @noinspection PhpUnused */
 
-namespace Fhp\Segment\HITANS;
+namespace Fhp\Segment\TAN;
 
+use Fhp\Model\TanMode;
 use Fhp\Segment\BaseDeg;
 
-class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements VerfahrensparameterZweiSchrittVerfahren
+class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMode
 {
+    const PROZESSVARIANTE_2 = 2;
+
     /** @var int Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var int Allowed values: 1, 2, 3, 4; See specification for details */
+    /** @var int Allowed values: 1, 2; See specification or {@link HKTANv6#$tanProzess} for details. */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
+    /** @var string|null Max length: 32 */
+    public $zkaTanVerfahren;
+    /** @var string|null Max length: 10 */
+    public $versionZkaTanVerfahren;
     /** @var string Max length: 30 */
     public $nameDesZweiSchrittVerfahrens;
     /** @var int */
@@ -22,12 +29,36 @@ class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements Verfa
     public $textZurBelegungDesRueckgabewertes;
     /** @var int Allowed values: 1 through 256 */
     public $maximaleLaengeDesRueckgabewertes;
-    /** @var int|null */
-    public $anzahlUnterstuetzterAktiverTanListen;
     /** @var bool */
     public $mehrfachTanErlaubt;
+    /**
+     * In case of multi-TAN (see {@link #$mehrfachTanErlaubt}), this specifies whether all TANs must be entered in the
+     * same dialog and at the same time, or not.
+     * 1 TAN nicht zeitversetzt / dialogübergreifend erlaubt
+     * 2 TAN zeitversetzt / dialogübergreifend erlaubt
+     * 3 beide Verfahren unterstützt
+     * 4 nicht zutreffend
+     * @var int
+     */
+    public $tanZeitUndDialogbezug;
     /** @var bool */
-    public $tanZeitversetztDialoguebergreifendErlaubt;
+    public $auftragsstornoErlaubt;
+    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    public $smsAbbuchungskontoErforderlich;
+    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    public $auftraggeberkontoErforderlich;
+    /** @var bool */
+    public $challengeKlasseErforderlich;
+    /** @var bool */
+    public $challengeStrukturiert;
+    /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
+    public $initialisierungsmodus;
+    /** @var int Allowed values: 0 (cannot), 2 (must) */
+    public $bezeichnungDesTanMediumsErforderlich;
+    /** @var bool */
+    public $antwortHhdUcErforderlich;
+    /** @var int|null */
+    public $anzahlUnterstuetzterAktiverTanMedien;
 
     /** {@inheritdoc} */
     public function getId(): int
@@ -44,25 +75,25 @@ class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements Verfa
     /** {@inheritdoc} */
     public function getSmsAbbuchungskontoErforderlich(): bool
     {
-        return false;
+        return $this->smsAbbuchungskontoErforderlich === 2;
     }
 
     /** {@inheritdoc} */
     public function getAuftraggeberkontoErforderlich(): bool
     {
-        return false;
+        return $this->auftraggeberkontoErforderlich === 2;
     }
 
     /** {@inheritdoc} */
     public function getChallengeKlasseErforderlich(): bool
     {
-        return false;
+        return $this->challengeKlasseErforderlich;
     }
 
     /** {@inheritdoc} */
     public function getAntwortHhdUcErforderlich(): bool
     {
-        return false;
+        return $this->antwortHhdUcErforderlich;
     }
 
     /** {@inheritdoc} */
@@ -92,6 +123,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV1 extends BaseDeg implements Verfa
     /** {@inheritdoc} */
     public function needsTanMedium(): bool
     {
-        return false;
+        return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
 }
