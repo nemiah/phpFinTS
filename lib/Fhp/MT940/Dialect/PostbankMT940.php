@@ -9,7 +9,7 @@ class PostbankMT940 extends MT940
     const DIALECT_ID = 'https://hbci.postbank.de/banking/hbci.do';
 
     /** {@inheritdoc} */
-    public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines): array
+    public function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines, array $transaction): array
     {
         // z.B bei Zinsen o.ä. ist alles leer
         if (!isset($descriptionLines[0])) {
@@ -18,7 +18,7 @@ class PostbankMT940 extends MT940
         $structuredStartFound = preg_match('/^[A-Z]{4}\+/', $descriptionLines[0]) === 1;
 
         if ($structuredStartFound) {
-            return parent::extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $rawLines);
+            return parent::extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $rawLines, $transaction);
         }
 
         // Bie Auslandsüberweisungen (=210)

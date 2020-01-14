@@ -85,9 +85,6 @@ class MT940
                     $amount = str_replace(',', '.', $amount);
                     $trx[count($trx) - 1]['amount'] = $amount;
 
-                    $description = $this->parseDescription($description);
-                    $trx[count($trx) - 1]['description'] = $description;
-
                     // :61:1605110509D198,02NMSCNONREF
                     // 16 = year
                     // 0511 = valuta date
@@ -130,6 +127,9 @@ class MT940
                     $trx[count($trx) - 1]['booking_date'] = $bookingDate;
                     $trx[count($trx) - 1]['valuta_date'] = $valutaDate;
                     $trx[count($trx) - 1]['booked'] = $booked;
+
+                    $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
+
                 }
             }
         }
@@ -137,7 +137,7 @@ class MT940
         return $result;
     }
 
-    protected function parseDescription($descr)
+    protected function parseDescription($descr, $transaction)
     {
         // Geschäftsvorfall-Code
         $gvc = substr($descr, 0, 3);
@@ -173,7 +173,7 @@ class MT940
             $prepared[$index] = $m[2];
         }
 
-        $description = $this->extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $prepared);
+        $description = $this->extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $prepared, $transaction);
 
         $result['booking_code'] = $gvc;
         $result['booking_text'] = trim($prepared[0]);
@@ -195,7 +195,7 @@ class MT940
      * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
      * @param string[] $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
      */
-    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines): array
+    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines, array $transaction): array
     {
         $description = [];
         if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
