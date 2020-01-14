@@ -196,4 +196,14 @@ class ServerException extends \Exception
             throw new ServerException($errors, $warnings, $requestSegments, $request, $response);
         }
     }
+
+    /**
+     * The response that the bank sent, that contained the errors
+     *
+     * @return Message
+     */
+    public function getResponse(): Message
+    {
+        return $this->response;
+    }
 }
