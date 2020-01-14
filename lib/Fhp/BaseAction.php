@@ -58,6 +58,13 @@ abstract class BaseAction implements \Serializable
     private $error;
 
     /**
+     * Will be populated with the message the bank sent along with the success indication, can be used to show to
+     * the user.
+     * @var string
+     */
+    public $successMessage;
+
+    /**
      * NOTE: A common mistake is to call this function directly. Instead, you probably want `serialize($instance)`.
      *
      * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
@@ -202,6 +209,11 @@ abstract class BaseAction implements \Serializable
         if ($pagination === null) {
             $this->paginationToken = null;
             $this->isAvailable = true;
+
+            $info = $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) ?? $response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN);
+            if ($info !== null) {
+                $this->successMessage = $info->rueckmeldungstext;
+            }
         } else {
             if (count($pagination->rueckmeldungsparameter) !== 1) {
                 throw new UnexpectedResponseException("Unexpected pagination request: $pagination");
