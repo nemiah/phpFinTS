@@ -3,8 +3,8 @@
 namespace Tests\Fhp;
 
 use Fhp\Connection;
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Segment\HNHBK\HNHBKv3;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

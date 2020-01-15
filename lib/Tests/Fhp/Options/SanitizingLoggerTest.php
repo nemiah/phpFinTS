@@ -2,8 +2,8 @@
 
 namespace Tests\Fhp\Options;
 
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Options\SanitizingLogger;
 
 class SanitizingLoggerTest extends \PHPUnit\Framework\TestCase

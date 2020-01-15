@@ -2,8 +2,8 @@
 
 namespace Tests\Fhp\Segment;
 
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Segment\HNVSK\HNVSKv3;
 use Fhp\Segment\HNVSK\SchluesselnameV3;
 use PHPUnit\Framework\TestCase;

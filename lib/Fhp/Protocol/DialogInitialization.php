@@ -3,8 +3,8 @@
 namespace Fhp\Protocol;
 
 use Fhp\BaseAction;
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\HISYN\HISYNv4;
 use Fhp\Segment\HKIDN\HKIDNv2;

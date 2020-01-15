@@ -4,6 +4,8 @@ namespace Fhp;
 
 use Fhp\Model\TanMedium;
 use Fhp\Model\TanMode;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Options\SanitizingLogger;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\DialogInitialization;

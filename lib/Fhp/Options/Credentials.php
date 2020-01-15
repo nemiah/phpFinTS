@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp;
+namespace Fhp\Options;
 
 /**
  * Login information for a user.

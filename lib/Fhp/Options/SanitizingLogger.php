@@ -2,8 +2,6 @@
 
 namespace Fhp\Options;
 
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
 use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
 use Fhp\Syntax\Serializer;

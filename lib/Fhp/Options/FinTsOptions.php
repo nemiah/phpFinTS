@@ -1,10 +1,11 @@
 <?php
 
-namespace Fhp;
+namespace Fhp\Options;
 
 /**
  * Holds options for FinTS connections and operations. These options are independent of the user and depend only on the
- * bank system and the client system that uses this library.
+ * bank system and the client system that uses this library. This class mostly serves to pass the data around internally
+ * within the library.
  */
 class FinTsOptions
 {
