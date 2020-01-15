@@ -33,7 +33,9 @@ class HNVSKTest extends TestCase
     {
         $options = new FinTsOptions();
         $options->bankCode = '10020030';
-        $credentials = Credentials::create('12345', 'NOT USED');
+        $credentials = new Credentials();
+        $credentials->benutzerkennung = '12345';
+        $credentials->pin = 'NOT USED';
         $hnvsk = HNVSKv3::create($options, $credentials, '2', null);
         $hnvsk->sicherheitsdatumUndUhrzeit->datum = '20020610';
         $hnvsk->sicherheitsdatumUndUhrzeit->uhrzeit = '102044';
