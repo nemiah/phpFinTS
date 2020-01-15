@@ -165,7 +165,7 @@ abstract class FinTsInternal
         return str_replace("\n", '', trim($dom->saveXml()));
     }
 
-    protected function getUsedPinTanMechanism($dialog)
+    protected function getUsedPinTanMechanisms($dialog)
     {
         $mechs = array_keys($dialog->getSupportedPinTanMechanisms());
         if ($this->tanMechanism !== null && in_array($this->tanMechanism, $mechs)) {

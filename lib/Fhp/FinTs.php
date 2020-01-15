@@ -267,7 +267,7 @@ class FinTs extends FinTsInternal
         $dialog = $this->getDialog();
 
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
-        $response = $dialog->sendMessage($message, $this->getUsedPinTanMechanism($dialog), $tanCallback, $interval);
+        $response = $dialog->sendMessage($message, $this->getUsedPinTanMechanisms($dialog)[0], $tanCallback, $interval);
         //echo get_class($response);
         if ($response->isTANRequest()) {
             return $response;
@@ -284,7 +284,7 @@ class FinTs extends FinTsInternal
         $this->dialog = $dialog;
 
         if ($tan) {
-            $response = $dialog->submitTAN($response, $this->getUsedPinTanMechanism($dialog), $tan);
+            $response = $dialog->submitTAN($response, $this->getUsedPinTanMechanisms($dialog)[0], $tan);
         }
 
         $message = $this->createStateOfAccountMessage($dialog, $account, $from, $to, null);
