@@ -4,6 +4,7 @@ namespace Fhp;
 
 use Fhp\Model\TanMedium;
 use Fhp\Model\TanMode;
+use Fhp\Options\SanitizingLogger;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\DialogInitialization;
 use Fhp\Protocol\GetTanMedia;
@@ -24,6 +25,7 @@ use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Syntax\InvalidResponseException;
 use Fhp\Syntax\Serializer;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * This is the main class of this library. Please see the Samples directory for how to use it.
@@ -36,7 +38,7 @@ class FinTsNew
     private $options;
     /** @var Credentials */
     private $credentials;
-    /** @var LoggerInterface */
+    /** @var SanitizingLogger */
     private $logger;
 
     // The TAN mode and medium to be used for business transactions that require a TAN.
@@ -73,8 +75,8 @@ class FinTsNew
      */
     public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
     {
+        $this->logger = new NullLogger();
         $options->validate();
-        $this->logger = $options->logger;
         $this->options = $options;
         $this->credentials = $credentials;
 
@@ -166,6 +168,27 @@ class FinTsNew
             $this->dialogId,
             $this->messageNumber
             ) = $data;
+    }
+
+    /**
+     * @return SanitizingLogger
+     */
+    public function getLogger(): SanitizingLogger
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @param LoggerInterface $logger The logger to use going forward. Note that it will be wrapped in a
+     *     {@link SanitizingLogger} to protect sensitive information like usernames and PINs.
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        if ($logger instanceof SanitizingLogger) {
+            $this->logger = $logger;
+        } else {
+            $this->logger = new SanitizingLogger($logger, [$this->options, $this->credentials]);
+        }
     }
 
     /**
