@@ -111,7 +111,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $persistedInstance = $this->fints->persist();
         $persistedGetStatement = serialize($getStatement);
         $this->connection->expects($this->once())->method('disconnect');
-        $this->fints = new FinTsPeer($this->options, $this->credentials, $persistedInstance);
+        $this->fints = $this->newFinTs($persistedInstance);
         $this->fints->mockConnection = $this->setUpConnection();
         /** @var GetStatementOfAccount $getStatement */
         $getStatement = unserialize($persistedGetStatement);

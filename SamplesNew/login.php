@@ -12,12 +12,13 @@ require '../vendor/autoload.php';
 // That is, even if you persist the FinTs instance, you need to be able to reproduce all this information from some
 // application-specific storage (e.g. your database) in order to use the phpFinTS library.
 $options = new \Fhp\FinTsOptions();
-$options->url = ''; // HBCI / FinTS Url can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm (use the PIN/TAN URL)
-$options->bankCode = ''; // Your bank code / Bankleitzahl
-$options->productName = ''; // The number you receive after registration / FinTS-Registrierungsnummer
-$options->productVersion = '1.0'; // Your own Software product version
-$credentials = \Fhp\Credentials::create('username', 'pin'); // This is NOT the PIN of your bank card!
-$fints = new \Fhp\FinTsNew($options, $credentials);
+$url = ''; // HBCI / FinTS Url can be found here: https://www.hbci-zka.de/institute/institut_auswahl.htm (use the PIN/TAN URL)
+$bankCode = ''; // Your bank code / Bankleitzahl
+$productName = ''; // The number you receive after registration / FinTS-Registrierungsnummer
+$productVersion = '1.0'; // Your own Software product version
+$username = 'username';
+$pin = 'pin'; // This is NOT the PIN of your bank card!
+$fints = new \Fhp\FinTsNew($url, $bankCode, $username, $pin, $productName, $productVersion);
 $fints->setLogger(new \Tests\Fhp\CLILogger());
 
 /**
@@ -41,7 +42,7 @@ $fints->setLogger(new \Tests\Fhp\CLILogger());
  */
 function handleTan(\Fhp\BaseAction $action)
 {
-    global $fints, $options, $credentials;
+    global $fints, $url, $bankCode, $username, $pin, $productName, $productVersion;
 
     // Find out what sort of TAN we need, tell the user about it.
     $tanRequest = $action->getTanRequest();
@@ -71,7 +72,7 @@ function handleTan(\Fhp\BaseAction $action)
     if ($optionallyPersistEverything) {
         $restoredState = file_get_contents('state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
-        $fints = new \Fhp\FinTsNew($options, $credentials, $persistedInstance);
+        $fints = new \Fhp\FinTsNew($url, $bankCode, $username, $pin, $productName, $productVersion, $persistedInstance);
         $action = unserialize($persistedAction);
     }
 

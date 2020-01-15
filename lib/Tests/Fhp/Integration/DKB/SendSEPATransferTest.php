@@ -140,7 +140,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
         $persistedInstance = $this->fints->persist();
         $persistedAction = serialize($sendTransfer);
         $this->connection->expects($this->once())->method('disconnect');
-        $this->fints = new FinTsPeer($this->options, $this->credentials, $persistedInstance);
+        $this->fints = $this->newFinTs($persistedInstance);
         $this->fints->mockConnection = $this->setUpConnection();
         /** @var SendSEPATransfer $sendTransfer */
         $sendTransfer = unserialize($persistedAction);
