@@ -14,12 +14,20 @@ trait FindRueckmeldungTrait
      */
     public function findRueckmeldung(int $code): ?Rueckmeldung
     {
-        $matches = array_values(array_filter($this->rueckmeldung, function ($rueckmeldung) use ($code) {
-            return $rueckmeldung->rueckmeldungscode === $code;
-        }));
+        $matches = $this->findRueckmeldungen($code);
+
         if (count($matches) > 1) {
             throw new \InvalidArgumentException("Unexpectedly multiple matches for Rueckmeldungscode $code");
         }
         return count($matches) === 0 ? null : $matches[0];
+    }
+
+    /** @return Rueckmeldung[] */
+    public function findRueckmeldungen(int $code): array
+    {
+        $matches = array_values(array_filter($this->rueckmeldung, function ($rueckmeldung) use ($code) {
+            return $rueckmeldung->rueckmeldungscode === $code;
+        }));
+        return $matches;
     }
 }

@@ -210,9 +210,12 @@ abstract class BaseAction implements \Serializable
             $this->paginationToken = null;
             $this->isAvailable = true;
 
-            $info = $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) ?? $response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN);
-            if ($info !== null) {
-                $this->successMessage = $info->rueckmeldungstext;
+            $info = $response->findRueckmeldungen(Rueckmeldungscode::AUSGEFUEHRT);
+            if (count($info) === 0) {
+                $response->findRueckmeldungen(Rueckmeldungscode::ENTGEGENGENOMMEN);
+            }
+            if (count($info) > 0) {
+                $this->successMessage = implode("\n", $info);
             }
         } else {
             if (count($pagination->rueckmeldungsparameter) !== 1) {

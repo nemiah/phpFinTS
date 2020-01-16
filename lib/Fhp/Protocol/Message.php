@@ -204,6 +204,18 @@ class Message
         return null;
     }
 
+    /** @return Rueckmeldung[] */
+    public function findRueckmeldungen(int $code): array
+    {
+        $rueckmeldungen = [];
+        foreach ($this->plainSegments as $segment) {
+            if ($segment instanceof RueckmeldungContainer) {
+                $rueckmeldungen = array_merge($rueckmeldungen, $segment->findRueckmeldungen($code));
+            }
+        }
+        return $rueckmeldungen;
+    }
+
     /**
      * @return string The HBCI/FinTS wire format for this message, ISO-8859-1 encoded.
      */
