@@ -220,6 +220,16 @@ class FinTsNew
     }
 
     /**
+     * @param int $connectTimeout The number of seconds to wait before aborting a connection attempt to the bank server.
+     * @param int $responseTimeout The number of seconds to wait before aborting a request to the bank server.
+     */
+    public function setTimeouts(int $connectTimeout, int $responseTimeout)
+    {
+        $this->options->timeoutConnect = $connectTimeout;
+        $this->options->timeoutResponse = $responseTimeout;
+    }
+
+    /**
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check this for errors
      *     using {@link BaseAction#isError()} or {@link BaseAction#maybeThrowError()}. You should also check whether a
