@@ -25,9 +25,8 @@ trait FindRueckmeldungTrait
     /** @return Rueckmeldung[] */
     public function findRueckmeldungen(int $code): array
     {
-        $matches = array_values(array_filter($this->rueckmeldung, function ($rueckmeldung) use ($code) {
+        return array_values(array_filter($this->rueckmeldung, function ($rueckmeldung) use ($code) {
             return $rueckmeldung->rueckmeldungscode === $code;
         }));
-        return $matches;
     }
 }
