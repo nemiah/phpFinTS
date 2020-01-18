@@ -469,7 +469,6 @@ class FinTs extends FinTsInternal
      * Executes SEPA transfer
      * You have to call finishSEPATAN()
      *
-     * @param SEPAAccount $account
      * @param string $painMessage
      */
     public function executeSEPATransfer(SEPAAccount $account, $painMessage)
@@ -483,7 +482,6 @@ class FinTs extends FinTsInternal
      * Executes SEPA direct debit
      * You have to call finishSEPATAN()
      *
-     * @param SEPAAccount $account
      * @param string $painMessage
      */
     public function executeSEPADirectDebit(SEPAAccount $account, $painMessage)
