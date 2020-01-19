@@ -27,6 +27,7 @@ if ($getStatement->needsTan()) {
     handleTan($getStatement); // See login.php for the implementation.
 }
 
+$soa = $getStatement->getStatement();
 foreach ($soa->getStatements() as $statement) {
     echo $statement->getDate()->format('Y-m-d') . ': Start Saldo: '
         . ($statement->getCreditDebit() == \Fhp\Model\StatementOfAccount\Statement::CD_DEBIT ? '-' : '')
