@@ -13,6 +13,7 @@ use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 
 /**
@@ -210,9 +211,14 @@ abstract class BaseAction implements \Serializable
             $this->paginationToken = null;
             $this->isAvailable = true;
 
-            $info = $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) ?? $response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN);
-            if ($info !== null) {
-                $this->successMessage = $info->rueckmeldungstext;
+            $info = $response->findRueckmeldungen(Rueckmeldungscode::AUSGEFUEHRT);
+            if (count($info) === 0) {
+                $info = $response->findRueckmeldungen(Rueckmeldungscode::ENTGEGENGENOMMEN);
+            }
+            if (count($info) > 0) {
+                $this->successMessage = implode("\n", array_map(function(Rueckmeldung $rueckmeldung) {
+                    return $rueckmeldung->rueckmeldungstext;
+                }, $info));
             }
         } else {
             if (count($pagination->rueckmeldungsparameter) !== 1) {
