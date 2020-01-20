@@ -4,6 +4,8 @@ namespace Fhp;
 
 use Fhp\Model\TanMedium;
 use Fhp\Model\TanMode;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Options\SanitizingLogger;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\DialogInitialization;
@@ -66,19 +68,45 @@ class FinTsNew
     private $messageNumber = 1;
 
     /**
-     * @param FinTsOptions $options Configuration options for the connection to the bank.
-     * @param Credentials $credentials Authentication information for the user. Note: This library does not support
-     *     anonymous connections, so the credentials are mandatory.
-     * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
-     *     PHP session. Passing this in here saves 1-2 dialogs that are normally made with the bank to obtain the BPD
-     *     and Kundensystem-ID.
+     * @param string $server The URL where the bank server can be reached. Should be HTTPS, otherwise the traffic is not
+     *     encrypted. May include a port number. Example: "https://my-bank.de/fints".
+     * @param string $bankCode The bank code (Bankleitzahl) of the bank. Note that this library uses a fixed country
+     *     code of 280, i.e. it only works with German banks.
+     * @param string $username This is the username used for login. Usually it's the same also used for web-based
+     *     online banking. Most banks initially assign a number as a username. Some banks allow users to customize the
+     *     username later on. Note that most banks equate user (Benutzer) and customer (Kunde), but some banks may
+     *     distinguish this username (Benutzerkennung) from the customer ID (Kunden-ID) e.g. in HIUPD.
+     * @param string $pin This is the PIN used for login. With most banks, the PIN does not have to be numerical but
+     *     could contain alphabetical or even arbitrary characters.
+     * @param string $productName Identifies the product (i.e. the application in which the phpFinTS library is being
+     *     used). This is used to show users which products/applications have access to their bank account. Note that
+     *     this shouldn't just be an arbitrary string, but rather the registration number obtained from the registration
+     *     with the DK-Verband.
+     * @param string $productVersion The product version, which can be an arbitrary string, though if your the
+     *     application displays a version number somewhere on its own user interface, it should match that.
+     * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance,
+     *     usually from an earlier PHP session. Passing this in here saves 1-2 dialogs that are normally made with the
+     *     bank to obtain the BPD and Kundensystem-ID.
      */
-    public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
-    {
+    public function __construct(
+        string $server,
+        string $bankCode,
+        string $username,
+        string $pin,
+        string $productName,
+        string $productVersion,
+        ?string $persistedInstance = null
+    ) {
+        $this->options = new FinTsOptions();
+        $this->options->url = $server;
+        $this->options->bankCode = $bankCode;
+        $this->options->productName = $productName;
+        $this->options->productVersion = $productVersion;
+        $this->options->validate();
+        $this->credentials = new Credentials();
+        $this->credentials->benutzerkennung = $username;
+        $this->credentials->pin = $pin;
         $this->logger = new NullLogger();
-        $options->validate();
-        $this->options = $options;
-        $this->credentials = $credentials;
 
         if ($persistedInstance !== null) {
             $this->loadPersistedInstance($persistedInstance);
@@ -189,6 +217,16 @@ class FinTsNew
         } else {
             $this->logger = new SanitizingLogger($logger, [$this->options, $this->credentials]);
         }
+    }
+
+    /**
+     * @param int $connectTimeout The number of seconds to wait before aborting a connection attempt to the bank server.
+     * @param int $responseTimeout The number of seconds to wait before aborting a request to the bank server.
+     */
+    public function setTimeouts(int $connectTimeout, int $responseTimeout)
+    {
+        $this->options->timeoutConnect = $connectTimeout;
+        $this->options->timeoutResponse = $responseTimeout;
     }
 
     /**

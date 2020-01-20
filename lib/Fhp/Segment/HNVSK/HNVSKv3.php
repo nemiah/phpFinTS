@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\HNVSK;
 
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Kik;

@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment\HKIDN;
 
-use Fhp\Credentials;
+use Fhp\Options\Credentials;
 use Fhp\Segment\BaseSegment;
 
 /**

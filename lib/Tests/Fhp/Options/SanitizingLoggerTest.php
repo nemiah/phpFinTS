@@ -2,15 +2,17 @@
 
 namespace Tests\Fhp\Options;
 
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Options\SanitizingLogger;
 
 class SanitizingLoggerTest extends \PHPUnit\Framework\TestCase
 {
     public function test_sanitize()
     {
-        $credentials = Credentials::create('USER123', 'pw+?123');
+        $credentials = new Credentials();
+        $credentials->benutzerkennung = 'USER123';
+        $credentials->pin = 'pw+?123';
         $options = new FinTsOptions();
         $options->productName = 'ABCDEFGHIJKLMNOPQRS';
         $needles = SanitizingLogger::computeNeedles([$credentials, $options, 'RAWNEEDLE']);

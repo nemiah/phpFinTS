@@ -3,8 +3,8 @@
 namespace Tests\Fhp;
 
 use Fhp\Connection;
-use Fhp\Credentials;
-use Fhp\FinTsOptions;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Segment\HNHBK\HNHBKv3;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -39,6 +39,16 @@ abstract class FinTsTestCase extends TestCase
     /** @var string[][] Series of tuples of expected request and mock response */
     protected $expectedMessages;
 
+    protected function newFinTs(?string $persistedInstance = null): FinTsPeer
+    {
+        return new FinTsPeer(
+            static::TEST_URL, static::TEST_BANK_CODE,
+            static::TEST_USERNAME, static::TEST_PIN,
+            static::TEST_PRODUCT_NAME, static::TEST_PRODUCT_VERSION,
+            $persistedInstance
+        );
+    }
+
     protected function setUp(): void
     {
         // We mock rand() for the $randomReference generation in Fhp\Protocol\Message.
@@ -49,13 +59,7 @@ abstract class FinTsTestCase extends TestCase
         $timeMock = $this->getFunctionMock('Fhp\Segment\HNVSK', 'time');
         $timeMock->expects($this->any())->with()->willReturn($this->now->getTimestamp());
 
-        $this->options = new FinTsOptions();
-        $this->options->url = static::TEST_URL;
-        $this->options->productName = static::TEST_PRODUCT_NAME;
-        $this->options->productVersion = static::TEST_PRODUCT_VERSION;
-        $this->options->bankCode = static::TEST_BANK_CODE;
-        $this->credentials = Credentials::create(static::TEST_USERNAME, static::TEST_PIN);
-        $this->fints = new FinTsPeer($this->options, $this->credentials);
+        $this->fints = $this->newFinTs();
         $this->fints->mockConnection = $this->setUpConnection();
     }
 

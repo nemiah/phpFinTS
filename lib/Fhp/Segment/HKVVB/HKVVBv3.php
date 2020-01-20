@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment\HKVVB;
 
-use Fhp\FinTsOptions;
+use Fhp\Options\FinTsOptions;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
