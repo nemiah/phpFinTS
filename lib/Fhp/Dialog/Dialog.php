@@ -431,7 +431,7 @@ class Dialog
         $rawResponse = $response->rawResponse;
 
         $parsedMessage = \Fhp\Protocol\Message::parse($rawResponse);
-        
+
         // Update the BPD, as it could differ from the values received via syncDialog
         $this->bpd = BPD::extractFromResponse($parsedMessage);
 

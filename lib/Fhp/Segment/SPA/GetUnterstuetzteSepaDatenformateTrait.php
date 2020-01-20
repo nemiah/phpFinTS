@@ -15,7 +15,7 @@ trait GetUnterstuetzteSepaDatenformateTrait
         return array_map(function ($sepaUrn) {
             return strtr($sepaUrn, [
                 'sepade:xsd:' => 'urn:iso:std:iso:20022:tech:xsd:',
-                'sepade:'     => 'urn:iso:std:iso:20022:tech:xsd:',
+                'sepade:' => 'urn:iso:std:iso:20022:tech:xsd:',
                 '.xsd' => '',
             ]);
         }, $this->unterstuetzteSepaDatenformate);

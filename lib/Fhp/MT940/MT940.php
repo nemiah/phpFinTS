@@ -89,7 +89,7 @@ class MT940
                     // 16 = year
                     // 0511 = valuta date
                     // 0509 = booking date
-                    
+
                     $year = substr($transaction, 0, 2);
                     $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
                     $bookingDatePart = substr($transaction, 6, 4);
@@ -102,20 +102,20 @@ class MT940
 
                         // the booking date can be before or after the valuata date
                         // and one of them can be in another year for example 12-31 and 01-01
-                        
+
                         $diff = $valutaDateTime->diff($bookingDateTime);
 
                         //if diff is more than half a year
-                        if($diff->days > 182){
+                        if ($diff->days > 182) {
                             //and positive
-                            if($diff->invert === 0){
+                            if ($diff->invert === 0) {
                                 //its in the last year
-                                $year--;
+                                --$year;
                             }
                             //and negative
                             else {
                                 //its in the next year
-                               $year++;
+                                ++$year;
                             }
                         }
                         $bookingDate = $this->getDate($year . $bookingDatePart);
@@ -129,7 +129,6 @@ class MT940
                     $trx[count($trx) - 1]['booked'] = $booked;
 
                     $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
-
                 }
             }
         }
