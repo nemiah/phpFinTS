@@ -30,16 +30,15 @@ class TanRequestChallengeImage
 
         $dataLengthString = substr($data, 0, 2);
         $expectedDataLength = ord($dataLengthString[0]) * 256 + ord($dataLengthString[1]);
-        $isDataLength = strlen($data) - 2;
+        $actualDataLength = strlen($data) - 2;
 
-        if($expectedDataLength != $isDataLength)
-        {
+        if ($expectedDataLength != $actualDataLength) {
             // This exception is thrown, if there is an encoding problem
             // f.e.: the serialized action was saved as a string, but not base64 encoded
             throw new \RuntimeException(
             'Unexpected data length ' .
                 '- expected: ' . $expectedDataLength .
-                ' - is: ' . $isDataLength
+                ' - is: ' . $actualDataLength
             );
         }
 

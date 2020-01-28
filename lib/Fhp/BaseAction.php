@@ -124,9 +124,6 @@ abstract class BaseAction implements \Serializable
         return !$this->isAvailable && $this->tanRequest !== null;
     }
 
-    /**
-     * @return TanRequest|HITANv6|null
-     */
     public function getTanRequest(): ?TanRequest
     {
         return $this->tanRequest;

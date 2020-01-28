@@ -52,8 +52,7 @@ function handleTan(\Fhp\BaseAction $action)
     }
 
     // Challenge Image for PhotoTan/ChipTan
-    if($tanRequest->getChallengeHhdUc())
-    {
+    if ($tanRequest->getChallengeHhdUc()) {
         $challengeImage = new \Fhp\Model\TanRequestChallengeImage(
             $tanRequest->getChallengeHhdUc()
         );
