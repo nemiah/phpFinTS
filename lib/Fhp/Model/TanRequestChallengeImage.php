@@ -25,15 +25,33 @@ class TanRequestChallengeImage
         $mimeTypeLength = ord($mimeTypeLengthString[0]) * 256 + ord($mimeTypeLengthString[1]);
 
         $this->mimeType = substr($data, 2, $mimeTypeLength);
-        $this->data = substr($data, 2 + $mimeTypeLength + 2);
+
+        $data = substr($data, 2 + $mimeTypeLength);
+
+        $dataLengthString = substr($data, 0, 2);
+        $expectedDataLength = ord($dataLengthString[0]) * 256 + ord($dataLengthString[1]);
+        $isDataLength = strlen($data) - 2;
+
+        if($expectedDataLength != $isDataLength)
+        {
+            // This exception is thrown, if there is an encoding problem
+            // f.e.: the serialized action was saved as a string, but not base64 encoded
+            throw new \RuntimeException(
+            'Unexpected data length ' .
+                '- expected: ' . $expectedDataLength .
+                ' - is: ' . $isDataLength
+            );
+        }
+
+        $this->data = substr($data, 2, $expectedDataLength);
     }
 
-    public function getMimeType()
+    public function getMimeType() : string
     {
         return $this->mimeType;
     }
 
-    public function getData()
+    public function getData() : string
     {
         return $this->data;
     }
