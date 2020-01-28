@@ -15,7 +15,6 @@ use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\TAN\HITANv6;
 
 /**
  * Base class for actions that can be performed against a bank server. On a high level, there are two kinds of actions:
