@@ -51,6 +51,18 @@ function handleTan(\Fhp\BaseAction $action)
         echo 'Please use this device: ' . $tanRequest->getTanMediumName() . "\n";
     }
 
+    // Challenge Image for PhotoTan/ChipTan
+    if($tanRequest->getChallengeHhdUc())
+    {
+        $challengeImage = new \Fhp\Model\TanRequestChallengeImage(
+            $tanRequest->getChallengeHhdUc()
+        );
+        echo "There is a challenge image." . PHP_EOL;
+        // Save the challenge image somewhere
+        // Alternative: HTML sample code
+        echo '<img src="data:' . htmlspecialchars($challengeImage->getMimeType()) . ';base64,' . base64_encode($challengeImage->getData()) . '" />' . PHP_EOL;
+    }
+
     // Optional: Instead of printing the above to the console, you can relay the information (challenge and TAN medium)
     // to the user in any other way (through your REST API, a push notification, ...). If waiting for the TAN requires
     // you to interrupt this PHP session and the TAN will arrive in a fresh (HTTP/REST/...) request, you can do so:
