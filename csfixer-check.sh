@@ -21,7 +21,7 @@ then
   exit 1
 fi
 
-if [ -z ${CHANGED_FILES} ]
+if [ -z "${CHANGED_FILES}" ]
 then
   echo "0 changed files found, exiting"
   exit 0
