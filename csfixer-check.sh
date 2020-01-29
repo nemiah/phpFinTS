@@ -15,5 +15,17 @@ fi
 IFS='
 '
 CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRTUXB "$TRAVIS_COMMIT_RANGE")
+if [ "$?" -ne "0" ]
+then
+  echo "Error: git diff response code > 0, aborting"
+  exit 1
+fi
+
+if [ -z ${CHANGED_FILES} ]
+then
+  echo "0 changed files found, exiting"
+  exit 0
+fi
+
 if ! echo "${CHANGED_FILES}" | grep -qE "^(\\.php_cs(\\.dist)?|composer\\.lock)$"; then EXTRA_ARGS=$(printf -- '--path-mode=intersection\n--\n%s' "${CHANGED_FILES}"); else EXTRA_ARGS=''; fi
 vendor/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --stop-on-violation --using-cache=no ${EXTRA_ARGS} || (echo "php-cs-fixer failed" && exit 1)
