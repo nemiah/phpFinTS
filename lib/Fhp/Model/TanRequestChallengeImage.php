@@ -45,12 +45,12 @@ class TanRequestChallengeImage
         $this->data = substr($data, 2, $expectedDataLength);
     }
 
-    public function getMimeType() : string
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    public function getData() : string
+    public function getData(): string
     {
         return $this->data;
     }

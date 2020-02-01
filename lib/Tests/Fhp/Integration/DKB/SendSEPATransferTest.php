@@ -3,7 +3,6 @@
 namespace Tests\Fhp\Integration\DKB;
 
 use Fhp\Action\SendSEPATransfer;
-use Tests\Fhp\FinTsPeer;
 
 class SendSEPATransferTest extends DKBIntegrationTestBase
 {

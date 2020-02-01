@@ -3,7 +3,6 @@
 namespace Tests\Fhp\Integration\Consors;
 
 use Fhp\Model\SEPAAccount;
-use Tests\Fhp\FinTsPeer;
 use Tests\Fhp\FinTsTestCase;
 
 class ConsorsIntegrationTestBase extends FinTsTestCase
