@@ -199,8 +199,6 @@ class ServerException extends \Exception
 
     /**
      * The response that the bank sent, that contained the errors
-     *
-     * @return Message
      */
     public function getResponse(): Message
     {

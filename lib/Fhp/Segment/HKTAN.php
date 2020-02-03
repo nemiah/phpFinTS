@@ -83,9 +83,6 @@ class HKTAN extends AbstractSegment
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;

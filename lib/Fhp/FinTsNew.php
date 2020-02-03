@@ -496,6 +496,12 @@ class FinTsNew
      */
     public function selectTanMode($tanMode, $tanMedium = null)
     {
+        if (!is_int($tanMode) && !($tanMode instanceof TanMode)) {
+            throw new \InvalidArgumentException('tanMode must be an int or a TanMode');
+        }
+        if ($tanMedium !== null && !is_string($tanMedium) && !($tanMedium instanceof TanMedium)) {
+            throw new \InvalidArgumentException('tanMedium must be a string or a TanMedium');
+        }
         $this->selectedTanMode = $tanMode instanceof TanMode ? $tanMode->getId() : $tanMode;
         $this->selectedTanMedium = $tanMedium instanceof TanMedium ? $tanMedium->getName() : $tanMedium;
     }

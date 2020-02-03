@@ -5,7 +5,6 @@ namespace Tests\Fhp\Integration\DKB;
 use Fhp\Action\GetStatementOfAccount;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
-use Tests\Fhp\FinTsPeer;
 
 class GetStatementOfAccountTest extends DKBIntegrationTestBase
 {

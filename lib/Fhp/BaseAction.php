@@ -216,7 +216,7 @@ abstract class BaseAction implements \Serializable
                 $info = $response->findRueckmeldungen(Rueckmeldungscode::ENTGEGENGENOMMEN);
             }
             if (count($info) > 0) {
-                $this->successMessage = implode("\n", array_map(function(Rueckmeldung $rueckmeldung) {
+                $this->successMessage = implode("\n", array_map(function (Rueckmeldung $rueckmeldung) {
                     return $rueckmeldung->rueckmeldungstext;
                 }, $info));
             }

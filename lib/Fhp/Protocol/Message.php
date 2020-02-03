@@ -4,9 +4,9 @@
 
 namespace Fhp\Protocol;
 
+use Fhp\Model\TanMode;
 use Fhp\Options\Credentials;
 use Fhp\Options\FinTsOptions;
-use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\RueckmeldungContainer;
