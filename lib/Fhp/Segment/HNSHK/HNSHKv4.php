@@ -22,7 +22,7 @@ class HNSHKv4 extends BaseSegment
     /** @var \Fhp\Segment\HNVSK\SicherheitsprofilV1 */
     public $sicherheitsprofil;
     /**
-     * For the PIN/TAN profile (see section B.9.8), this must be:
+     * For the PIN/TAN profile (see section B.9.4), this must be:
      *   - 998 for Ein-Schritt-Verfahren, or
      *   - the value in the 900--997 range as received in
      *     {@link \Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenv6#sicherheitsfunktion}
