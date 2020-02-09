@@ -9,6 +9,7 @@ use Fhp\Protocol\Message;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\Common\Ktz;
+use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\SPA\HISPA;
 use Fhp\Segment\SPA\HKSPAv1;
 use Fhp\Segment\SPA\HKSPAv2;
@@ -65,6 +66,14 @@ class GetSEPAAccounts extends BaseAction
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
+
+        // Banks send just 3010 and no HISPA in case there are no accounts (or at least none that the bank is able to
+        // report through HISPA).
+        if ($response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null) {
+            $this->accounts = [];
+            return;
+        }
+
         /** @var HISPA $hispa */
         $hispa = $response->requireSegment(HISPA::class);
         $this->accounts = array_map(function ($ktz) {
