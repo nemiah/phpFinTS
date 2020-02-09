@@ -40,7 +40,7 @@ class PostbankIntegrationTestBase extends FinTsTestCase
      */
     protected function initDialog()
     {
-         // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
+        // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
         $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, static::ANONYMOUS_END_RESPONSE);
 
