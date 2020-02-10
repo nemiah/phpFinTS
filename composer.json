@@ -22,6 +22,7 @@
   },
   "suggest": {
     "monolog/monolog": "Allow sending log messages to a variety of different handlers",
+    "abcaeffchen/sephpa": "1.*",
     "nemiah/php-sepa-xml": "dev-master"
   },
   "scripts": {
