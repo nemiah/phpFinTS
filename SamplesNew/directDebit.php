@@ -19,7 +19,7 @@ if ($getSepaAccounts->needsTan()) {
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
-// generate a SepaDirectDebit object (pain.008.002.02).
+// generate a SepaDirectDebit object (pain.008.003.02).
 $directDebitFile = new \AbcAeffchenSephpa\SephpaDirectDebit(
     'Name of Application',
     'Message Identifier',
@@ -40,5 +40,5 @@ $xml = $directDebitFile->generateXml(date("Y-m-d\TH:i:s", time()));
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $xml);
 $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
-    handleTan($getStatement); // See login.php for the implementation.
+    handleTan($sendSEPADirectDebit); // See login.php for the implementation.
 }
