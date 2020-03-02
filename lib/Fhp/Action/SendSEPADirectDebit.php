@@ -120,7 +120,7 @@ class SendSEPADirectDebit extends BaseAction
         $hkdxe->sepaDescriptor = $this->painNamespace;
         $hkdxe->sepaPainMessage = new Bin($this->painMessage);
 
-        if ($useSingleDirectDebit) {
+        if (!$useSingleDirectDebit) {
             $hkdxe->einzelbuchungGewuenscht = false;
 
             /* @var HIDMESv1 $hidxes */
