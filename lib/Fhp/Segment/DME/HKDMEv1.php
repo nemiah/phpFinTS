@@ -19,7 +19,7 @@ class HKDMEv1 extends BaseSegment
     /** @var \Fhp\Segment\Common\Btg|null Required if BDP „Summenfeld benötigt“ = J */
     public $summenfeld;
 
-    /** @var bool|null */
+    /** @var bool|null Optional only if „Einzelbuchung erlaubt“ = J */
     public $einzelbuchungGewuenscht;
 
     /** @var string Max length: 256 */
