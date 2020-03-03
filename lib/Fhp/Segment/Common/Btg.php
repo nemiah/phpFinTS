@@ -19,5 +19,6 @@ class Btg extends BaseDeg
         $result = new Btg();
         $result->wert = $wert;
         $result->waehrung = $waehrung;
+        return $result;
     }
 }
