@@ -80,12 +80,20 @@ class GetStatementOfAccount extends BaseAction
 
     public function serialize(): string
     {
-        return serialize([parent::serialize(), $this->bankName]);
+        return serialize([
+            parent::serialize(),
+            $this->account, $this->from, $this->to, $this->allAccounts,
+            $this->bankName,
+        ]);
     }
 
     public function unserialize($serialized)
     {
-        list($parentSerialized, $this->bankName) = unserialize($serialized);
+        list(
+            $parentSerialized,
+            $this->account, $this->from, $this->to, $this->allAccounts,
+            $this->bankName
+            ) = unserialize($serialized);
         parent::unserialize($parentSerialized);
     }
 

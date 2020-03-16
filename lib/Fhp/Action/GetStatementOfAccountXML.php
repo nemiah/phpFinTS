@@ -67,6 +67,23 @@ class GetStatementOfAccountXML extends BaseAction
         return $result;
     }
 
+    public function serialize(): string
+    {
+        return serialize([
+            parent::serialize(),
+            $this->account, $this->camtURN, $this->from, $this->to, $this->allAccounts,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $parentSerialized,
+            $this->account, $this->camtURN, $this->from, $this->to, $this->allAccounts
+            ) = unserialize($serialized);
+        parent::unserialize($parentSerialized);
+    }
+
     /**
      * @return string[] The XML-Document(s) received from the bank, or empty array if the statement is unavailable/empty.
      * @throws \Exception See {@link #ensureSuccess()}.
