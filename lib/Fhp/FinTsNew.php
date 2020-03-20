@@ -283,8 +283,10 @@ class FinTsNew
 
         // Construct the full request message.
         $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
-        if ($this->bpd->tanRequiredForRequest($requestSegments)) {
-            $message->add(HKTANv6::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium));
+        $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
+        if ($needTanForSegment !== null) {
+            $message->add(HKTANv6::createProzessvariante2Step1(
+                $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
         }
         $request = $this->buildMessage($message, $this->getSelectedTanMode());
         $action->setRequestSegmentNumbers(array_map(function ($segment) {

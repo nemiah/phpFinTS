@@ -7,7 +7,7 @@ use Fhp\Model\StatementOfAccount\Statement;
 class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
 {
     // Statement request (HKKAZ).
-    const GET_STATEMENT_REQUEST = "HKKAZ:3:7+DExxABCDEFGH1234567890:CSDBDE71XXX:1234567890::280:50220500+N+20190601+20190922'HKTAN:4:6+4+HKIDN'";
+    const GET_STATEMENT_REQUEST = "HKKAZ:3:7+DExxABCDEFGH1234567890:CSDBDE71XXX:1234567890::280:50220500+N+20190601+20190922'HKTAN:4:6+4+HKKAZ'";
 
     // Note: Consorsbank weirdly returns November statements even when only up to September was requested.
     const GET_STATEMENT_RESPONSE = "HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Der Auftrag wurde ausgefuhrt.+3076::Keine starke Authentifizierung erforderlich.+3997::Der Auftrag wurde nur teilweise ausgefuhrt.'"

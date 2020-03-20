@@ -86,7 +86,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
         // may be changed by linters and other tools, and because it contains line breaks, which are different depending
         // the platform where this test runs.
         return 'HKCCS:3:1+DExxABCDEFGH1234567890:BYLADEM1001:1234567890::280:12030000+urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.003.03+@'
-            . strlen(self::PAIN_MESSAGE) . '@' . self::PAIN_MESSAGE . "'HKTAN:4:6+4+HKIDN+++++++++SomePhone1'";
+            . strlen(self::PAIN_MESSAGE) . '@' . self::PAIN_MESSAGE . "'HKTAN:4:6+4+HKCCS+++++++++SomePhone1'";
     }
 
     /**
