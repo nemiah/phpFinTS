@@ -198,9 +198,6 @@ class FinTsNew
             ) = $data;
     }
 
-    /**
-     * @return SanitizingLogger
-     */
     public function getLogger(): SanitizingLogger
     {
         return $this->logger;
