@@ -125,16 +125,17 @@ class BPD
 
     /**
      * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
-     * @return bool True if any of the given segments requires a TAN according to HIPINS.
+     * @return string|null Identifier of the (first) segment that requires a TAN according to HIPINS, or null if none of
+     *     the segments require a TAN.
      */
-    public function tanRequiredForRequest(array $requestSegments): bool
+    public function tanRequiredForRequest(array $requestSegments): ?string
     {
         foreach ($requestSegments as $segment) {
             if ($this->tanRequired[$segment->getName()] ?? false) {
-                return true;
+                return $segment->getName();
             }
         }
-        return false;
+        return null;
     }
 
     /**
