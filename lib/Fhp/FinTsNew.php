@@ -568,11 +568,24 @@ class FinTsNew
     {
         if ($this->kundensystemId === null) {
             $this->ensureBpdAvailable();
-            $this->executeWeakDialogInitialization(null);
-            if ($this->kundensystemId === null) {
-                throw new UnexpectedResponseException('No Kundensystem-ID retrieved from sync.');
+
+            // Execute dialog initialization without a TAN mode/medium, so using the fake mode 999. While most banks
+            // accept the real TAN mode for synchronization (as defined in the specification), some get confused by the
+            // presence of anything other than 999 into thinking that strong authentication is required.
+            $oldTanMode = $this->selectedTanMode;
+            $oldTanMedium = $this->selectedTanMedium;
+            $this->selectedTanMode = null;
+            $this->selectedTanMedium = null;
+            try {
+                $this->executeWeakDialogInitialization(null);
+                if ($this->kundensystemId === null) {
+                    throw new UnexpectedResponseException('No Kundensystem-ID retrieved from sync.');
+                }
+                $this->endDialog();
+            } finally {
+                $this->selectedTanMode = $oldTanMode;
+                $this->selectedTanMedium = $oldTanMedium;
             }
-            $this->endDialog();
         }
     }
 
@@ -789,7 +802,8 @@ class FinTsNew
     /**
      * Injects FinTsOptions/BPD/UPD/Credentials information into the message.
      * @param MessageBuilder $message The message to be built.
-     * @param TanMode|null $tanMode Optionally a TAN mode that will be used when sending this message.
+     * @param TanMode|null $tanMode Optionally a TAN mode that will be used when sending this message, defaults to 999
+     *     (single step).
      * @param string|null Optionally a TAN to sign this message with.
      * @return Message The built message.
      */

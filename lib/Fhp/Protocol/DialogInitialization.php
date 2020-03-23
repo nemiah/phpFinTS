@@ -100,6 +100,9 @@ class DialogInitialization extends BaseAction
         $this->tanMedium = $tanMedium;
         $this->kundensystemId = $kundensystemId;
         $this->hktanRef = $hktanRef;
+        if ($this->hktanRef !== null && $this->tanMode === null) {
+            throw new \InvalidArgumentException('hktanRef is ignored unless a tanMode is given');
+        }
     }
 
     public function serialize(): string
