@@ -4,6 +4,7 @@
 
 namespace Fhp\Protocol;
 
+use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\TanMode;
 use Fhp\Options\Credentials;
 use Fhp\Options\FinTsOptions;
@@ -244,6 +245,7 @@ class Message
         $message = new Message();
         $message->plainSegments = $plainSegments instanceof MessageBuilder ? $plainSegments->segments : $plainSegments;
 
+        $tanMode = $tanMode instanceof NoPsd2TanMode ? null : $tanMode;
         $randomReference = strval(rand(1000000, 9999999)); // Call unqualified rand() for unit test mocking to work.
         $signature = BenutzerdefinierteSignaturV1::create($credentials->pin, $tan);
         $numPlainSegments = count($message->plainSegments); // This is N, see $encryptedSegments.

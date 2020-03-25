@@ -2,13 +2,13 @@
 
 namespace Tests\Fhp\Integration\IngDiba;
 
+use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\SEPAAccount;
 use Tests\Fhp\FinTsTestCase;
 
 class IngDibaIntegrationTestBase extends FinTsTestCase
 {
     const TEST_BANK_CODE = '50010517';
-    const TEST_TAN_MODE = '900'; // TODO Remove?
     const TEST_PIN = '123456';
     const TEST_KUNDENSYSTEM_ID = 'FAKEKUNDENSYSTEMIDabcdefghijkl';
 
@@ -40,7 +40,7 @@ class IngDibaIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, static::INIT_RESPONSE);
 
-        //$this->fints->selectTanMode(921, 'SomePhone1');
+        $this->fints->selectTanMode(new NoPsd2TanMode());
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();

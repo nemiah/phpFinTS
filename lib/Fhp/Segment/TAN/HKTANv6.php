@@ -3,6 +3,7 @@
 namespace Fhp\Segment\TAN;
 
 use Fhp\DataTypes\Bin;
+use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
 
@@ -120,6 +121,9 @@ class HKTANv6 extends BaseSegment
      */
     public static function createProzessvariante2Step1(?TanMode $tanMode = null, ?string $tanMedium = null, string $segmentkennung = 'HKIDN'): HKTANv6
     {
+        if ($tanMode instanceof NoPsd2TanMode) {
+            throw new \InvalidArgumentException('HKTANv6 should not be added when the bank does not support PSD2');
+        }
         // TODO: Implement the inclusion of the account for which an action is called, in the HKTAN Segment
         // A lot of Banks announce they need the account when in fact they work fine without it.
         /*if ($tanMode !== null && $tanMode->getAuftraggeberkontoErforderlich()) {
