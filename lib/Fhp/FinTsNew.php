@@ -2,6 +2,7 @@
 
 namespace Fhp;
 
+use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\TanMedium;
 use Fhp\Model\TanMode;
 use Fhp\Options\Credentials;
@@ -280,10 +281,12 @@ class FinTsNew
 
         // Construct the full request message.
         $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
-        $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
-        if ($needTanForSegment !== null) {
-            $message->add(HKTANv6::createProzessvariante2Step1(
-                $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
+        if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
+            $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
+            if ($needTanForSegment !== null) {
+                $message->add(HKTANv6::createProzessvariante2Step1(
+                    $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
+            }
         }
         $request = $this->buildMessage($message, $this->getSelectedTanMode());
         $action->setRequestSegmentNumbers(array_map(function ($segment) {
@@ -380,6 +383,9 @@ class FinTsNew
 
         // Construct the request.
         $tanMode = $this->requireTanMode();
+        if ($tanMode instanceof NoPsd2TanMode) {
+            throw new \InvalidArgumentException('Cannot submit TAN when the bank does not support PSD2');
+        }
         $message = MessageBuilder::create()
             ->add(HKTANv6::createProzessvariante2Step2($tanMode, $tanRequest->getProcessId()));
         $request = $this->buildMessage($message, $tanMode, $tan);
@@ -522,11 +528,18 @@ class FinTsNew
     private function ensureBpdAvailable()
     {
         if ($this->bpd !== null) {
-            return;
-        } // Nothing to do.
+            return; // Nothing to do.
+        }
         if ($this->dialogId !== null) {
             throw new \RuntimeException('Cannot init another dialog.');
         }
+        if ($this->selectedTanMode === NoPsd2TanMode::ID || $this->selectedTanMode instanceof NoPsd2TanMode) {
+            // For banks that don't support PSD2, we also don't use an anonymous dialog to obtain the BPD. The more
+            // common procedure before PSD2 was to just get the BPD upon first login. Thus execute(DialogInitialization)
+            // tolerates not having a BPD yet.
+            return;
+        }
+
         // We must always include HKTAN in order to signal that strong authentication (PSD2) is supported (section B.4.3.1).
         $initRequest = Message::createPlainMessage(MessageBuilder::create()
             ->add(HKIDNv2::createAnonymous($this->options->bankCode))
@@ -571,10 +584,13 @@ class FinTsNew
 
             // Execute dialog initialization without a TAN mode/medium, so using the fake mode 999. While most banks
             // accept the real TAN mode for synchronization (as defined in the specification), some get confused by the
-            // presence of anything other than 999 into thinking that strong authentication is required.
+            // presence of anything other than 999 into thinking that strong authentication is required. And for those
+            // banks that don't support PSD2, we just keep the dummy TAN mode, as they wouldn't even understand 999.
             $oldTanMode = $this->selectedTanMode;
             $oldTanMedium = $this->selectedTanMedium;
-            $this->selectedTanMode = null;
+            if (!($this->selectedTanMode instanceof NoPsd2TanMode)) {
+                $this->selectedTanMode = null;
+            }
             $this->selectedTanMedium = null;
             try {
                 $this->executeWeakDialogInitialization(null);
@@ -598,7 +614,9 @@ class FinTsNew
      */
     public function getSelectedTanMode(): ?TanMode
     {
-        if (is_int($this->selectedTanMode)) {
+        if ($this->selectedTanMode === NoPsd2TanMode::ID) {
+            $this->selectedTanMode = new NoPsd2TanMode();
+        } elseif (is_int($this->selectedTanMode)) {
             $this->ensureBpdAvailable();
             if (!array_key_exists($this->selectedTanMode, $this->bpd->allTanModes)) {
                 throw new \InvalidArgumentException("Unknown TAN mode: $this->selectedTanMode");
@@ -756,6 +774,9 @@ class FinTsNew
             return false;
         }
         $this->bpd = BPD::extractFromResponse($response);
+        if (!$this->bpd->supportsPsd2() && !($this->selectedTanMode instanceof NoPsd2TanMode)) {
+            throw new UnsupportedException('The bank does not support PSD2.');
+        }
         return true;
     }
 

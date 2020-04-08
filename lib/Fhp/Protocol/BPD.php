@@ -9,7 +9,6 @@ use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIPINS\HIPINSv1;
 use Fhp\Segment\SegmentInterface;
 use Fhp\Segment\TAN\HITANSv6;
-use Fhp\UnsupportedException;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -139,6 +138,14 @@ class BPD
     }
 
     /**
+     * @return bool Whether the BPD indicates that the bank supports PSD2.
+     */
+    public function supportsPsd2(): bool
+    {
+        return $this->supportsParameters('HITANS', 6);
+    }
+
+    /**
      * @param Message $response The dialog initialization response from the server.
      * @return BPD A new BPD instance with the extracted configuration data.
      */
@@ -166,16 +173,16 @@ class BPD
         }
 
         // Extract all TanModes from HIPINS.
-        if (!$bpd->supportsParameters('HITANS', 6)) {
-            throw new UnsupportedException('The bank does not support HITANSv6 (PSD2)');
+        if ($bpd->supportsPsd2()) {
+            /** @var HITANSv6 $hitans */
+            $hitans = $bpd->requireLatestSupportedParameters('HITANS');
+            $tanParams = $hitans->parameterZweiSchrittTanEinreichung;
+            $bpd->singleStepTanModeAllowed = $tanParams->einschrittVerfahrenErlaubt;
+            foreach ($tanParams->verfahrensparameterZweiSchrittVerfahren as $verfahren) {
+                $bpd->allTanModes[$verfahren->getId()] = $verfahren;
+            }
         }
-        /** @var HITANSv6 $hitans */
-        $hitans = $bpd->requireLatestSupportedParameters('HITANS');
-        $tanParams = $hitans->parameterZweiSchrittTanEinreichung;
-        $bpd->singleStepTanModeAllowed = $tanParams->einschrittVerfahrenErlaubt;
-        foreach ($tanParams->verfahrensparameterZweiSchrittVerfahren as $verfahren) {
-            $bpd->allTanModes[$verfahren->getId()] = $verfahren;
-        }
+
         return $bpd;
     }
 }

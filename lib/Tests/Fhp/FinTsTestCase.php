@@ -20,6 +20,7 @@ abstract class FinTsTestCase extends TestCase
     const TEST_USERNAME = 'test@user';
     const TEST_PIN = '12345';
     const TEST_TAN_MODE = '942'; // Can be overridden in sub-classes!
+    const TEST_KUNDENSYSTEM_ID = 'FAKEKUNDENSYSTEMIDabcdefghij';
 
     /** @var FinTsOptions */
     protected $options;
@@ -92,8 +93,11 @@ abstract class FinTsTestCase extends TestCase
                 // The mock response is just the inner part, so we need to wrap it in a fake envelope.
                 $mockPrefix = 'HNHBK:1:3+';
                 // Note: The 4242 is the message number. It's garbage and a constant, but the SUT does not verify it.
-                $mockMiddle = "+300+FAKEDIALOGIDabcdefghijklmnopqr+4242+FAKEDIALOGIDabcdefghijklmnopqr:2'HNVSK:998:3+PIN:2+998+1+2::FAKEKUNDENSYSTEMIDabcdefghij+1:20190102:030405+2:2:13:@8@00000000:5:1+280:11223344:test?@user:V:0:0+0'";
-                $hnvsdContent = 'HNSHK:2:4+PIN:2+' . static::TEST_TAN_MODE . "+9999999+1+1+2::FAKEKUNDENSYSTEMIDabcdefghij+1+1:20190102:030405+1:999:1+6:10:19+280:11223344:test?@user:S:0:0'"
+                $mockMiddle = "+300+FAKEDIALOGIDabcdefghijklmnopqr+4242+FAKEDIALOGIDabcdefghijklmnopqr:2'HNVSK:998:3+PIN:2+998+1+2::"
+                    . static::TEST_KUNDENSYSTEM_ID . "+1:20190102:030405+2:2:13:@8@00000000:5:1+280:11223344:test?@user:V:0:0+0'";
+                $hnvsdContent = 'HNSHK:2:4+PIN:2+' . static::TEST_TAN_MODE . '+9999999+1+1+2::'
+                    . static::TEST_KUNDENSYSTEM_ID
+                    . "+1+1:20190102:030405+1:999:1+6:10:19+280:11223344:test?@user:S:0:0'"
                     . $mockResponse . "HNSHA:10:2+9999999'";
                 $hnvsd = 'HNVSD:999:1+@' . strlen($hnvsdContent) . '@' . $hnvsdContent . "'";
                 $mockSuffix = "HNHBS:5:1+2'";
