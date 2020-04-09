@@ -11,7 +11,7 @@ use Fhp\Segment\BaseDeg;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: B.3.2
  */
-class Kti extends BaseDeg
+class Kti extends BaseDeg implements AccountInfo
 {
     /** @var string|null Max length: 34 */
     public $iban;
@@ -57,5 +57,17 @@ class Kti extends BaseDeg
         $result->unterkontomerkmal = $account->getSubAccount();
         $result->kreditinstitutskennung = Kik::create($account->getBlz());
         return $result;
+    }
+
+    /** {@inheritdoc} */
+    public function getAccountNumber()
+    {
+        return $this->iban ?? $this->kontonummer;
+    }
+
+    /** {@inheritdoc} */
+    public function getBankIdentifier()
+    {
+        return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;
     }
 }

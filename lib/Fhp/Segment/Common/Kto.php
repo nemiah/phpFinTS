@@ -12,7 +12,7 @@ use Fhp\Segment\BaseDeg;
  * File: Gesamtdok_HBCI210.pdf
  * Section: II.5.3.3
  */
-class Kto extends BaseDeg
+class Kto extends BaseDeg implements AccountInfo
 {
     /** @var string */
     public $kontonummer; // Aka Depotnummer
@@ -30,5 +30,17 @@ class Kto extends BaseDeg
     public static function fromAccount(SEPAAccount $account): Kto
     {
         return static::create($account->getAccountNumber(), Kik::create($account->getBlz()));
+    }
+
+    /** {@inheritdoc} */
+    public function getAccountNumber()
+    {
+        return $this->kontonummer;
+    }
+
+    /** {@inheritdoc} */
+    public function getBankIdentifier()
+    {
+        return $this->kik->kreditinstitutscode;
     }
 }

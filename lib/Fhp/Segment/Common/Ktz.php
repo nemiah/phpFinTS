@@ -10,7 +10,7 @@ use Fhp\Segment\BaseDeg;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: B.3.3
  */
-class Ktz extends BaseDeg
+class Ktz extends BaseDeg implements AccountInfo
 {
     /** @var bool Whether it's a SEPA account that has IBAN/BIC, or not (e.g. a stock depot) */
     public $kontoverwendungSepa;
@@ -24,4 +24,16 @@ class Ktz extends BaseDeg
     public $unterkontomerkmal;
     /** @var Kik */
     public $kreditinstitutskennung;
+
+    /** {@inheritdoc} */
+    public function getAccountNumber()
+    {
+        return $this->iban ?? $this->kontonummer;
+    }
+
+    /** {@inheritdoc} */
+    public function getBankIdentifier()
+    {
+        return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;
+    }
 }
