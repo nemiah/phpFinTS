@@ -79,6 +79,11 @@ function handleTan(\Fhp\BaseAction $action)
     $fints->submitTan($action, $tan);
 }
 
+// Select TAN mode and possibly medium. If you're not sure what this is about, read and run tanModesAndMedia.php first.
+$tanMode = 900; // This is just a placeholder you need to fill!
+$tanMedium = null; // This is just a placeholder you may need to fill.
+$fints->selectTanMode($tanMode, $tanMedium);
+
 // Log in.
 $login = $fints->login();
 if ($login->needsTan()) {
