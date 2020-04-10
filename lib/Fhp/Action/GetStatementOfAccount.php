@@ -124,9 +124,7 @@ class GetStatementOfAccount extends BaseAction
      */
     public function getStatement()
     {
-        if (is_null($this->statement)) {
-            $this->statement = StatementOfAccount::fromMT940Array($this->getParsedMT940());
-        }
+        $this->ensureSuccess();
         return $this->statement;
     }
 
