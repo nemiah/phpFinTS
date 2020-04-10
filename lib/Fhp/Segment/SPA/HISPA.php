@@ -2,13 +2,11 @@
 
 namespace Fhp\Segment\SPA;
 
-use Fhp\Segment\Common\Ktz;
-
 /**
  * Segment: SEPA-Kontoverbindung rückmelden
  */
 interface HISPA
 {
-    /** @return Ktz[] */
+    /** @return \Fhp\Segment\Common\Ktz[] */
     public function getSepaKontoverbindung(): array;
 }

@@ -16,7 +16,7 @@ use Fhp\Segment\BaseDeg;
  * Section: II.5.3.3
  * Note that this older specification document contains no version number and has the Kik inlined, which is equivalent.
  */
-class KtvV3 extends BaseDeg
+class KtvV3 extends BaseDeg implements AccountInfo
 {
     /** @var string */
     public $kontonummer;
@@ -37,5 +37,17 @@ class KtvV3 extends BaseDeg
     public static function fromAccount(SEPAAccount $account): KtvV3
     {
         return static::create($account->getAccountNumber(), $account->getSubAccount(), Kik::create($account->getBlz()));
+    }
+
+    /** {@inheritdoc} */
+    public function getAccountNumber()
+    {
+        return $this->kontonummer;
+    }
+
+    /** {@inheritdoc} */
+    public function getBankIdentifier()
+    {
+        return $this->kik->kreditinstitutscode;
     }
 }
