@@ -44,18 +44,7 @@ abstract class BaseDescriptor
                 continue; // Skip @Ignore-d propeties.
             }
 
-            $index = static::getIntAnnotation('Index', $docComment);
-            if ($index === null) {
-                if ($implicitIndex) {
-                    $index = $nextIndex;
-                } else {
-                    throw new \InvalidArgumentException("Property $property needs an explicit @Index");
-                }
-            } else {
-                // After one field was marked with an @Index, all subsequent fields need an explicit index too.
-                $implicitIndex = false;
-            }
-
+            $index = $nextIndex;
             $descriptor = new ElementDescriptor();
             $descriptor->field = $property->getName();
             $type = static::getVarAnnotation($docComment);
@@ -125,7 +114,7 @@ abstract class BaseDescriptor
 
     /**
      * Looks for the annotation with the given name and extracts the content of the parentheses behind it. For instance,
-     * when called with the name "Index" and a docComment that contains {@}Index(15), this would return "15".
+     * when called with the name "Max" and a docComment that contains {@}Max(15), this would return "15".
      * @param string $name The name of the annotation.
      * @param string $docComment The documentation string of a PHP field.
      * @return string|null The content of the annotation, or null if absent.
