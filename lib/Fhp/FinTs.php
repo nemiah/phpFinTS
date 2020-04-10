@@ -13,6 +13,7 @@ use Fhp\Message\Message;
 use Fhp\Model\Account;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\SEPAStandingOrder;
+use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
@@ -334,7 +335,7 @@ class FinTs extends FinTsInternal
                 break;
         }
 
-        return GetStatementOfAccount::createModelFromArray($parser->parse($rawMt940));
+        return StatementOfAccount::fromMT940Array($parser->parse($rawMt940));
     }
 
     /**

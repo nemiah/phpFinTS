@@ -37,20 +37,6 @@ class Statement
         return $this->transactions;
     }
 
-    /**
-     * Set transactions
-     *
-     * @param array $transactions
-     *
-     * @return $this
-     */
-    public function setTransactions(array $transactions = null)
-    {
-        $this->transactions = $transactions;
-
-        return $this;
-    }
-
     public function addTransaction(Transaction $transaction)
     {
         $this->transactions[] = $transaction;
