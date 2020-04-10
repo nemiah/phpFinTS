@@ -3,13 +3,13 @@
 namespace Tests\Fhp;
 
 use Fhp\Connection;
-use Fhp\FinTsNew;
+use Fhp\FinTs;
 use Fhp\Protocol\ServerException;
 
 /**
- * Sub-classes {@link FinTsNew} to expose some of the protected functions, and also to inject the Connection mock.
+ * Sub-classes {@link FinTs} to expose some of the protected functions, and also to inject the Connection mock.
  */
-class FinTsPeer extends FinTsNew
+class FinTsPeer extends FinTs
 {
     /**
      * @var Connection

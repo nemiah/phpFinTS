@@ -6,7 +6,7 @@
  * SAMPLE - Creates a new FinTs instance (init.php) and lets the user select the TAN mode they want to use.
  */
 
-/** @var \Fhp\FinTsNew $fints */
+/** @var \Fhp\FinTs $fints */
 $fints = require_once 'init.php';
 
 // First, the user has to decide which TAN mode they want to use.
