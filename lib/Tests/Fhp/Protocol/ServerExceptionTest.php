@@ -1,7 +1,9 @@
 <?php
 
-namespace Fhp\Protocol;
+namespace Tests\Fhp\Protocol;
 
+use Fhp\Protocol\Message;
+use Fhp\Protocol\ServerException;
 use Fhp\Segment\BaseSegment;
 
 class ServerExceptionTest extends \PHPUnit\Framework\TestCase

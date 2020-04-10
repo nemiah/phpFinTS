@@ -2,7 +2,7 @@
 
 namespace Fhp\Model;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 /**
  * Provides information that can be used to display a TAN request to the user, plus identifiers to track the TAN request

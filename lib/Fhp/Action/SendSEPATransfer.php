@@ -3,7 +3,6 @@
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
-use Fhp\DataTypes\Bin;
 use Fhp\Model\SEPAAccount;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
@@ -13,6 +12,7 @@ use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\SPA\HISPAS;
+use Fhp\Syntax\Bin;
 use Fhp\UnsupportedException;
 
 /**

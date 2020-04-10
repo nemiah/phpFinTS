@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 /**
  * Class HKDSC (Terminierte SEPA-COR1-Einzellastschrift einreichen)

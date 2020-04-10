@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 /**
  * Common functionality for segment/Deg descriptors.

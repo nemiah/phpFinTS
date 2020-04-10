@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 /**
  * Contains information about an element (aka. field) in a segment or Deg.

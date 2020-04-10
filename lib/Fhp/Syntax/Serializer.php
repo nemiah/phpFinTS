@@ -2,7 +2,6 @@
 
 namespace Fhp\Syntax;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\AnonymousSegment;
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\BaseDescriptor;

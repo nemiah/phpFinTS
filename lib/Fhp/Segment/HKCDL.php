@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Model\SEPAStandingOrder;
+use Fhp\Syntax\Bin;
 
 /**
  * Class HKCDL (SEPA-Dauerauftragsbestand löschen)

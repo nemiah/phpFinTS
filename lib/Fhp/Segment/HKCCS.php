@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 /**
  * Class HKCCS (SEPA Einzelüberweisung)

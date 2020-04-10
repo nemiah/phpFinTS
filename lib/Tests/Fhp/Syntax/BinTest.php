@@ -1,6 +1,8 @@
 <?php
 
-namespace Fhp\DataTypes;
+namespace Tests\Fhp\Syntax;
+
+use Fhp\Syntax\Bin;
 
 class BinTest extends \PHPUnit\Framework\TestCase
 {

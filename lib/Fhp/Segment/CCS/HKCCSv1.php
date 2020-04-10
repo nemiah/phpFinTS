@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\CCS;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseSegment;
+use Fhp\Syntax\Bin;
 
 /**
  * Segment: SEPA Einzelüberweisung (Version 1)
