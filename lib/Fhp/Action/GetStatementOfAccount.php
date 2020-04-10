@@ -100,6 +100,7 @@ class GetStatementOfAccount extends BaseAction
     /**
      * @return string The raw MT940 data received from the server.
      * @throws \Exception See {@link #ensureSuccess()}.
+     * @noinspection PhpUnused
      */
     public function getRawMT940(): string
     {
@@ -124,7 +125,7 @@ class GetStatementOfAccount extends BaseAction
     public function getStatement()
     {
         if (is_null($this->statement)) {
-            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->getParsedMT940());
+            $this->statement = StatementOfAccount::fromMT940Array($this->getParsedMT940());
         }
         return $this->statement;
     }
@@ -194,7 +195,7 @@ class GetStatementOfAccount extends BaseAction
             $rawMT940 = mb_detect_encoding($this->rawMT940, 'UTF-8', true) === false
                 ? utf8_encode($this->rawMT940) : $this->rawMT940;
             $this->parsedMT940 = $parser->parse($rawMT940);
-            $this->statement = \Fhp\Response\GetStatementOfAccount::createModelFromArray($this->parsedMT940);
+            $this->statement = StatementOfAccount::fromMT940Array($this->parsedMT940);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
         }
