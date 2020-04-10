@@ -19,25 +19,6 @@ class StatementOfAccount
         return $this->statements;
     }
 
-    /**
-     * Set statements
-     *
-     * @param array $statements
-     *
-     * @return $this
-     */
-    public function setStatements(array $statements = null)
-    {
-        $this->statements = null == $statements ? [] : $statements;
-
-        return $this;
-    }
-
-    public function isTANRequest()
-    {
-        return false;
-    }
-
     public function addStatement(Statement $statement)
     {
         $this->statements[] = $statement;
@@ -51,7 +32,11 @@ class StatementOfAccount
     public function getStatementForDate($date): ?Statement
     {
         if (is_string($date)) {
-            $date = new \DateTime($date);
+            try {
+                $date = new \DateTime($date);
+            } catch (\Exception $e) {
+                throw new \InvalidArgumentException("Invalid date: $date", 0, $e);
+            }
         }
 
         foreach ($this->statements as $stmt) {
@@ -70,10 +55,6 @@ class StatementOfAccount
      */
     public function hasStatementForDate($date): bool
     {
-        if (is_string($date)) {
-            $date = new \DateTime($date);
-        }
-
         return null !== $this->getStatementForDate($date);
     }
 }
