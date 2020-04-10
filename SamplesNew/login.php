@@ -55,7 +55,7 @@ function handleTan(\Fhp\BaseAction $action)
         $challengeImage = new \Fhp\Model\TanRequestChallengeImage(
             $tanRequest->getChallengeHhdUc()
         );
-        echo "There is a challenge image." . PHP_EOL;
+        echo 'There is a challenge image.' . PHP_EOL;
         // Save the challenge image somewhere
         // Alternative: HTML sample code
         echo '<img src="data:' . htmlspecialchars($challengeImage->getMimeType()) . ';base64,' . base64_encode($challengeImage->getData()) . '" />' . PHP_EOL;

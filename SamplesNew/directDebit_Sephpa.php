@@ -1,9 +1,16 @@
 <?php
 
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * SAMPLE - Send a direct debit request
+ *
+ * Note: The phpFinTs library only implements the FinTS protocol. For SEPA transfers, you need a separate library to
+ * produce the SEPA XML data, which is then wrapped into FinTS requests. This example uses the Sephpa library
+ * (see https://github.com/AbcAeffchen/Sephpa), which you need to install separately.
  */
 
 // See login.php, it returns a FinTs instance that is already logged in.
