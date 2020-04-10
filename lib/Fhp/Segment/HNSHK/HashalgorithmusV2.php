@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\HNSHK;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseDeg;
+use Fhp\Syntax\Bin;
 
 /**
  * Data Element Group: Hashalgorithmus (Version 2)

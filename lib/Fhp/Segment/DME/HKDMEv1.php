@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\DME;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseSegment;
+use Fhp\Syntax\Bin;
 
 /**
  * Einreichung terminierter SEPA-Sammellastschrift (Segmentversion 1)

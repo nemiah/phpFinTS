@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\HNVSD;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseSegment;
+use Fhp\Syntax\Bin;
 
 /**
  * Segment: Verschlüsselte Daten (Version 1)

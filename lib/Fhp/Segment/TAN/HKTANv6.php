@@ -2,10 +2,10 @@
 
 namespace Fhp\Segment\TAN;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
+use Fhp\Syntax\Bin;
 
 /**
  * Segment: Geschäftsvorfall Zwei-Schritt-TAN-Einreichung (Version 6)

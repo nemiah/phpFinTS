@@ -2,9 +2,9 @@
 
 namespace Fhp\Segment\TAN;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Model\TanRequest;
 use Fhp\Segment\BaseSegment;
+use Fhp\Syntax\Bin;
 
 /**
  * Segment: Geschäftsvorfall Zwei-Schritt-TAN-Einreichung Rückmeldung (Version 6)

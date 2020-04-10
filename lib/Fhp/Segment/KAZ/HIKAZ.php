@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\KAZ;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\SegmentInterface;
+use Fhp\Syntax\Bin;
 
 /**
  * Segment: Kontoumsätze rückmelden/Zeitraum

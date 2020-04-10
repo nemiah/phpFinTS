@@ -3,7 +3,6 @@
 namespace Fhp\Action;
 
 use Fhp\BaseAction;
-use Fhp\DataTypes\Bin;
 use Fhp\Model\SEPAAccount;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\UPD;
@@ -19,6 +18,7 @@ use Fhp\Segment\DSE\HIDSESv2;
 use Fhp\Segment\DSE\HKDSEv1;
 use Fhp\Segment\DSE\HKDSEv2;
 use Fhp\Segment\SPA\HISPAS;
+use Fhp\Syntax\Bin;
 use Fhp\UnsupportedException;
 
 /**

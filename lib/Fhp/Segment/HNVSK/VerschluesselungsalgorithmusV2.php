@@ -2,8 +2,8 @@
 
 namespace Fhp\Segment\HNVSK;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseDeg;
+use Fhp\Syntax\Bin;
 
 /**
  * Data Element Group: Verschlüsselungsalgorithmus (Version 2)

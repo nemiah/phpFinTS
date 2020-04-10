@@ -107,7 +107,7 @@ The element types (specified in [Formals] section B.4) are mapped to PHP types a
   (currency codes) become `string` and the maximum length is documented in phpDoc.
 - `code` (enum) is resolved to the type of the underlying value type (usually `string` or `int`) and the allowed values
   are documented in phpDoc.
-- `bin` uses the `Fhp\DataTypes\Bin` class and the maximum length is documented in phpDoc.
+- `bin` uses the `Fhp\Syntax\Bin` class and the maximum length is documented in phpDoc.
 - `dat` and `tim` are currently mapped to `string`, but could get their own class in `Fhp\DataTypes` in future.
 - Any data element group is implemented as a separate DEG class (see above), so that the PHP field can reference that
   class name as its type.

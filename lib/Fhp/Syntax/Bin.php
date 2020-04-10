@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\DataTypes;
+namespace Fhp\Syntax;
 
 class Bin
 {

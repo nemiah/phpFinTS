@@ -2,7 +2,7 @@
 
 namespace Fhp\Model;
 
-use Fhp\DataTypes\Bin;
+use Fhp\Syntax\Bin;
 
 class TanRequestChallengeImage
 {
