@@ -2,7 +2,9 @@
 
 namespace Fhp\Segment\DME;
 
-interface HIDXES
+use Fhp\Segment\SegmentInterface;
+
+interface HIDXES extends SegmentInterface
 {
     public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider;
 }
