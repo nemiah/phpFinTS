@@ -142,6 +142,17 @@ class FinTs
         ]);
     }
 
+    public function __serialize(): array
+    {
+        throw new \LogicException('FinTs cannot be serialize()-ed, you should call persist() instead.');
+    }
+
+    public function __unserialize(array $data): void
+    {
+        throw new \LogicException(
+            'FinTs cannot be unserialize()-ed, you should pass $persistedInstance to FinTs::new() instead.');
+    }
+
     /**
      * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
      * obtain it from the user.
