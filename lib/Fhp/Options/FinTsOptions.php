@@ -26,7 +26,8 @@ class FinTsOptions
     public $productVersion;
 
     /**
-     * The bank code (Bankleitzahl) of the bank. Note that this library uses a fixed country code of 280. TODO.
+     * The bank code (Bankleitzahl) of the bank. Note that this library uses a fixed country code of 280, i.e. it only
+     * works with German banks.
      * @var string
      */
     public $bankCode;
