@@ -3,6 +3,7 @@
 namespace Tests\Fhp\Integration\DKB;
 
 use Fhp\Action\SendSEPATransfer;
+use Tests\Fhp\FinTsPeer;
 
 class SendSEPATransferTest extends DKBIntegrationTestBase
 {
@@ -139,7 +140,8 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
         $persistedInstance = $this->fints->persist();
         $persistedAction = serialize($sendTransfer);
         $this->connection->expects($this->once())->method('disconnect');
-        $this->fints = $this->newFinTs($persistedInstance);
+        $this->fints = new FinTsPeer($this->options, $this->credentials);
+        $this->fints->loadPersistedInstance($persistedInstance);
         $this->fints->mockConnection = $this->setUpConnection();
         /** @var SendSEPATransfer $sendTransfer */
         $sendTransfer = unserialize($persistedAction);

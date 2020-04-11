@@ -30,7 +30,7 @@ $fints = require_once 'init.php';
  */
 function handleTan(\Fhp\BaseAction $action)
 {
-    global $fints, $url, $bankCode, $username, $pin, $productName, $productVersion;
+    global $fints, $options, $credentials;
 
     // Find out what sort of TAN we need, tell the user about it.
     $tanRequest = $action->getTanRequest();
@@ -71,7 +71,7 @@ function handleTan(\Fhp\BaseAction $action)
     if ($optionallyPersistEverything) {
         $restoredState = file_get_contents('state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
-        $fints = new \Fhp\FinTs($url, $bankCode, $username, $pin, $productName, $productVersion, $persistedInstance);
+        $fints = new \Fhp\FinTs($options, $credentials, $persistedInstance);
         $action = unserialize($persistedAction);
     }
 

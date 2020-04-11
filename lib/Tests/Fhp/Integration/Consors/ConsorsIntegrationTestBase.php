@@ -3,6 +3,7 @@
 namespace Tests\Fhp\Integration\Consors;
 
 use Fhp\Model\SEPAAccount;
+use Tests\Fhp\FinTsPeer;
 use Tests\Fhp\FinTsTestCase;
 
 class ConsorsIntegrationTestBase extends FinTsTestCase
@@ -68,7 +69,8 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
         $persistedInstance = $this->fints->persist();
         $persistedLogin = serialize($login);
         $this->connection->expects($this->once())->method('disconnect');
-        $this->fints = $this->newFinTs($persistedInstance);
+        $this->fints = new FinTsPeer($this->options, $this->credentials);
+        $this->fints->loadPersistedInstance($persistedInstance);
         $this->fints->mockConnection = $this->setUpConnection();
 
         // Now provide the TAN.
