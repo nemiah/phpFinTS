@@ -69,6 +69,7 @@ class FinTs
     private $messageNumber = 1;
 
     /**
+     * Use this factory to create new instances.
      * @param FinTsOptions $options Configuration options for the connection to the bank.
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
@@ -76,16 +77,23 @@ class FinTs
      *     usually from an earlier PHP session. Passing this in here saves 1-2 dialogs that are normally made with the
      *     bank to obtain the BPD and Kundensystem-ID.
      */
-    public function __construct(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null)
+    public static function new(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null): FinTs
     {
         $options->validate();
+        $fints = new static($options, $credentials);
+
+        if ($persistedInstance !== null) {
+            $fints->loadPersistedInstance($persistedInstance);
+        }
+        return $fints;
+    }
+
+    /** Please use the factory above. */
+    protected function __construct(FinTsOptions $options, ?Credentials $credentials)
+    {
         $this->options = $options;
         $this->credentials = $credentials;
         $this->logger = new NullLogger();
-
-        if ($persistedInstance !== null) {
-            $this->loadPersistedInstance($persistedInstance);
-        }
     }
 
     /**
@@ -101,7 +109,7 @@ class FinTs
     /**
      * Returns a serialized form of parts of this object. This is different from PHP's `\Serializable` in that it only
      * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
-     * `Credentials` need to be passed to the constructor in addition to the string returned here.
+     * `Credentials` need to be passed to FinTs::new() in addition to the string returned here.
      *
      * Alternatively you can use {@link #loadPersistedInstance) to separate constructing the instance and resuming it.
      *

@@ -71,7 +71,7 @@ function handleTan(\Fhp\BaseAction $action)
     if ($optionallyPersistEverything) {
         $restoredState = file_get_contents('state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
-        $fints = new \Fhp\FinTs($options, $credentials, $persistedInstance);
+        $fints = \Fhp\FinTs::new($options, $credentials, $persistedInstance);
         $action = unserialize($persistedAction);
     }
 

@@ -16,7 +16,7 @@ $options->bankCode = ''; // Your bank code / Bankleitzahl
 $options->productName = ''; // The number you receive after registration / FinTS-Registrierungsnummer
 $options->productVersion = '1.0'; // Your own Software product version
 $credentials = \Fhp\Options\Credentials::create('username', 'pin'); // This is NOT the PIN of your bank card!
-$fints = new \Fhp\FinTs($options, $credentials);
+$fints = \Fhp\FinTs::new($options, $credentials);
 $fints->setLogger(new \Tests\Fhp\CLILogger());
 
 // Usage:
