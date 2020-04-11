@@ -34,7 +34,7 @@ use Psr\Log\NullLogger;
  * This is the main class of this library. Please see the Samples directory for how to use it.
  * This class is not thread-safe, do not call its funtions concurrently.
  */
-class FinTsNew
+class FinTs
 {
     // Things we retrieved from the user / the calling application.
     /** @var FinTsOptions */
@@ -116,7 +116,7 @@ class FinTsNew
 
     /**
      * Destructing the object only disconnects. Please use {@link #close()} if you want to properly "log out", i.e. end
-     * the FinTs dialog. On the other hand, do *not* close in case you have serialized the FinTsNew instance and intend
+     * the FinTs dialog. On the other hand, do *not* close in case you have serialized the FinTs instance and intend
      * to resume it later due to a TAN request.
      */
     public function __destruct()

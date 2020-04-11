@@ -5,7 +5,7 @@
  */
 
 // See login.php, it returns a FinTs instance that is already logged in.
-/** @var \Fhp\FinTsNew $fints */
+/** @var \Fhp\FinTs $fints */
 $fints = require_once 'login.php';
 
 // Just pick the first account for the request, though we will request the balance of all accounts.

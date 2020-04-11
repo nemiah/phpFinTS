@@ -18,7 +18,7 @@ use nemiah\phpSepaXml\SEPADebitor;
 use nemiah\phpSepaXml\SEPATransfer;
 
 // See login.php, it returns a FinTs instance that is already logged in.
-/** @var \Fhp\FinTsNew $fints */
+/** @var \Fhp\FinTs $fints */
 $fints = require_once 'login.php';
 
 $dt = new \DateTime();

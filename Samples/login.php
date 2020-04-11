@@ -6,7 +6,7 @@
  * SAMPLE - Creates a new FinTs instance (init.php) and makes sure its logged in.
  */
 
-/** @var \Fhp\FinTsNew $fints */
+/** @var \Fhp\FinTs $fints */
 $fints = require_once 'init.php';
 
 /**
@@ -71,7 +71,7 @@ function handleTan(\Fhp\BaseAction $action)
     if ($optionallyPersistEverything) {
         $restoredState = file_get_contents('state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
-        $fints = new \Fhp\FinTsNew($url, $bankCode, $username, $pin, $productName, $productVersion, $persistedInstance);
+        $fints = new \Fhp\FinTs($url, $bankCode, $username, $pin, $productName, $productVersion, $persistedInstance);
         $action = unserialize($persistedAction);
     }
 

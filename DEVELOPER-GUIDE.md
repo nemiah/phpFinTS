@@ -186,7 +186,7 @@ benefits of those tests).
 
 The `CLILogger` class can be used to record requests/responses during a (manually scripted) dialog with the bank.
 The recorded messages can then be filled into a `PhpUnit` test.
-When used through `FinTsNew::setLogger()`, the logger already replaces the most important sensitive values
+When used through `FinTs::setLogger()`, the logger already replaces the most important sensitive values
 (username, PIN, ...) with placeholders.
 But the recorded segments regularly still contain personal information (e.g. IBANs and names of other parties involved
 in transactions, descriptions of transactions, etc.).

@@ -16,7 +16,7 @@ $productName = ''; // The number you receive after registration / FinTS-Registri
 $productVersion = '1.0'; // Your own Software product version
 $username = 'username';
 $pin = 'pin'; // This is NOT the PIN of your bank card!
-$fints = new \Fhp\FinTsNew($url, $bankCode, $username, $pin, $productName, $productVersion);
+$fints = new \Fhp\FinTs($url, $bankCode, $username, $pin, $productName, $productVersion);
 $fints->setLogger(new \Tests\Fhp\CLILogger());
 
 // Usage:

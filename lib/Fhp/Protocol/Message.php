@@ -238,7 +238,7 @@ class Message
      * @param Credentials $credentials The credentials used to authenticate the message.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
      * @param string|null The TAN to be sent to the server (in HNSHA). If this is present, $tanMode must be present.
-     * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
+     * @return Message The built message, ready to be sent to the server through {@link FinTs::sendMessage()}.
      */
     public static function createWrappedMessage($plainSegments, FinTsOptions $options, string $kundensystemId, Credentials $credentials, ?TanMode $tanMode, $tan): Message
     {
@@ -271,7 +271,7 @@ class Message
      * Builds a plain message by adding header and footer to the given segments, but no "encryption" envelope.
      * Inverse of {@link #parse()}.
      * @param BaseSegment[]|MessageBuilder $segments
-     * @return Message The built message, ready to be sent to the server through {@link FinTsNew::sendMessage()}.
+     * @return Message The built message, ready to be sent to the server through {@link FinTs::sendMessage()}.
      */
     public static function createPlainMessage($segments): Message
     {
