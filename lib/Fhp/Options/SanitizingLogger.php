@@ -72,7 +72,7 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
             } elseif ($item instanceof SEPAAccount) {
                 $needles[] = $item->getIban();
                 $needles[] = $item->getAccountNumber();
-            } else {
+            } elseif ($item !== null) {
                 throw new \InvalidArgumentException('Unsupported type of sensitive material ' . gettype($item));
             }
         }
