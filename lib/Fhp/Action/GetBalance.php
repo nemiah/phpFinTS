@@ -22,7 +22,7 @@ use Fhp\UnsupportedException;
 /**
  * Runs an HKSAL request the current balance of the given account.
  */
-class GetSaldo extends BaseAction
+class GetBalance extends BaseAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
@@ -40,9 +40,9 @@ class GetSaldo extends BaseAction
      * @param bool $allAccounts If set to true, will return balances for all accounts of the user. You still need to
      *     pass one of the accounts into $account, though.
      */
-    public static function create(SEPAAccount $account, bool $allAccounts = false): GetSaldo
+    public static function create(SEPAAccount $account, bool $allAccounts = false): GetBalance
     {
-        $result = new GetSaldo();
+        $result = new GetBalance();
         $result->account = $account;
         $result->allAccounts = $allAccounts;
         return $result;
