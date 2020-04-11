@@ -104,9 +104,7 @@ class FinTs
         $this->options->productName = $productName;
         $this->options->productVersion = $productVersion;
         $this->options->validate();
-        $this->credentials = new Credentials();
-        $this->credentials->benutzerkennung = $username;
-        $this->credentials->pin = $pin;
+        $this->credentials = Credentials::create($username, $pin);
         $this->logger = new NullLogger();
 
         if ($persistedInstance !== null) {
