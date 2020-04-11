@@ -38,7 +38,7 @@ class HKIDNv2 extends BaseSegment
     {
         $result = HKIDNv2::createEmpty();
         $result->kreditinstitutskennung = \Fhp\Segment\Common\Kik::create($kreditinstitutionscode);
-        $result->kundenId = $credentials->benutzerkennung;
+        $result->kundenId = $credentials->getBenutzerkennung();
         $result->kundensystemId = $kundensystemId;
         $result->kundensystemStatus = 1; // This library only supports PIN/TAN, hence 1 is the right choice.
         return $result;
