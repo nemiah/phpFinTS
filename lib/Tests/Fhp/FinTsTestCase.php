@@ -56,8 +56,8 @@ abstract class FinTsTestCase extends TestCase
         $this->options->productVersion = static::TEST_PRODUCT_VERSION;
         $this->options->bankCode = static::TEST_BANK_CODE;
         $this->credentials = Credentials::create(static::TEST_USERNAME, static::TEST_PIN);
+        FinTsPeer::$mockConnection = $this->setUpConnection();
         $this->fints = new FinTsPeer($this->options, $this->credentials);
-        $this->fints->mockConnection = $this->setUpConnection();
     }
 
     protected function setUpConnection()
@@ -111,6 +111,7 @@ abstract class FinTsTestCase extends TestCase
     protected function tearDown(): void
     {
         $this->assertAllMessagesSeen();
+        FinTsPeer::$mockConnection = null;
     }
 
     /**

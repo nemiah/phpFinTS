@@ -16,7 +16,7 @@ class FinTsPeer extends FinTs
     /**
      * @var Connection
      */
-    public $mockConnection;
+    public static $mockConnection;
 
     public function __construct(FinTsOptions $options, ?Credentials $credentials)
     {
@@ -26,7 +26,7 @@ class FinTsPeer extends FinTs
     /** {@inheritdoc} */
     protected function newConnection(): Connection
     {
-        return $this->mockConnection;
+        return self::$mockConnection;
     }
 
     /**
