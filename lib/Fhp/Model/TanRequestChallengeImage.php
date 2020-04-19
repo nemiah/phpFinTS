@@ -21,9 +21,19 @@ class TanRequestChallengeImage
         // mime type as string
         // 2 bytes = length of data
 
+        $dataLength = strlen($data);
+        if ($dataLength < 2) {
+            throw new \InvalidArgumentException(
+                "Invalid TAN challenge. Expected image MIME type but only found $dataLength bytes. ");
+        }
         $mimeTypeLengthString = substr($data, 0, 2);
         $mimeTypeLength = ord($mimeTypeLengthString[0]) * 256 + ord($mimeTypeLengthString[1]);
 
+        if ($dataLength < 2 + $mimeTypeLength + 2) {
+            throw new \InvalidArgumentException(
+                "Invalid TAN challenge. Expected image MIME type of length $mimeTypeLength but only found $dataLength bytes. " .
+                'Maybe the challenge is not an image but rather a URL or a flicker code.');
+        }
         $this->mimeType = substr($data, 2, $mimeTypeLength);
 
         $data = substr($data, 2 + $mimeTypeLength);
@@ -35,11 +45,8 @@ class TanRequestChallengeImage
         if ($expectedDataLength != $actualDataLength) {
             // This exception is thrown, if there is an encoding problem
             // f.e.: the serialized action was saved as a string, but not base64 encoded
-            throw new \RuntimeException(
-            'Unexpected data length ' .
-                '- expected: ' . $expectedDataLength .
-                ' - is: ' . $actualDataLength
-            );
+            throw new \InvalidArgumentException(
+                "Unexpected data length, expected $expectedDataLength but found $actualDataLength bytes.");
         }
 
         $this->data = substr($data, 2, $expectedDataLength);
