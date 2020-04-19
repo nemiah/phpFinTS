@@ -18,7 +18,7 @@ $fints = require_once 'init.php';
  * may change these requirements over time, so just because your particular bank does not need a TAN for login today
  * does not mean that it stays that way.
  *
- * The TAN can be provided it many different ways. Each application that uses the phpFinTS library has to implement
+ * The TAN can be provided in many different ways. Each application that uses the phpFinTS library has to implement
  * its own way of asking users for a TAN, depending on its user interfaces. The implementation does not have to be in a
  * function like this, it can be inlined with the calling code, or live elsewhere. The TAN can be obtained while the
  * same PHP script is still running (i.e. handleTan() is a blocking function that only returns once the TAN is known),
