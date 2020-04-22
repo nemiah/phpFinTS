@@ -4,6 +4,8 @@ namespace Tests\Fhp;
 
 use Fhp\Connection;
 use Fhp\FinTs;
+use Fhp\Options\Credentials;
+use Fhp\Options\FinTsOptions;
 use Fhp\Protocol\ServerException;
 
 /**
@@ -15,6 +17,11 @@ class FinTsPeer extends FinTs
      * @var Connection
      */
     public $mockConnection;
+
+    public function __construct(FinTsOptions $options, ?Credentials $credentials)
+    {
+        parent::__construct($options, $credentials);
+    }
 
     /** {@inheritdoc} */
     protected function newConnection(): Connection

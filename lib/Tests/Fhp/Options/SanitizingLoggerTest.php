@@ -10,9 +10,7 @@ class SanitizingLoggerTest extends \PHPUnit\Framework\TestCase
 {
     public function test_sanitize()
     {
-        $credentials = new Credentials();
-        $credentials->benutzerkennung = 'USER123';
-        $credentials->pin = 'pw+?123';
+        $credentials = Credentials::create('USER123', 'pw+?123');
         $options = new FinTsOptions();
         $options->productName = 'ABCDEFGHIJKLMNOPQRS';
         $needles = SanitizingLogger::computeNeedles([$credentials, $options, 'RAWNEEDLE']);

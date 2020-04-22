@@ -5,6 +5,7 @@ namespace Tests\Fhp\Integration\DKB;
 use Fhp\Action\GetStatementOfAccount;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
+use Tests\Fhp\FinTsPeer;
 
 class GetStatementOfAccountTest extends DKBIntegrationTestBase
 {
@@ -110,7 +111,8 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $persistedInstance = $this->fints->persist();
         $persistedGetStatement = serialize($getStatement);
         $this->connection->expects($this->once())->method('disconnect');
-        $this->fints = $this->newFinTs($persistedInstance);
+        $this->fints = new FinTsPeer($this->options, $this->credentials);
+        $this->fints->loadPersistedInstance($persistedInstance);
         $this->fints->mockConnection = $this->setUpConnection();
         /** @var GetStatementOfAccount $getStatement */
         $getStatement = unserialize($persistedGetStatement);
