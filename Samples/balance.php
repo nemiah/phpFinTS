@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
- * SAMPLE - Displays the current saldo of all accounts.
+ * SAMPLE - Displays the current balance of all accounts.
  */
 
 // See login.php, it returns a FinTs instance that is already logged in.
@@ -16,14 +16,14 @@ if ($getSepaAccounts->needsTan()) {
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
-$getSaldo = \Fhp\Action\GetSaldo::create($oneAccount, true);
-$fints->execute($getSaldo);
-if ($getSaldo->needsTan()) {
-    handleTan($getSaldo); // See login.php for the implementation.
+$getBalance = \Fhp\Action\GetBalance::create($oneAccount, true);
+$fints->execute($getBalance);
+if ($getBalance->needsTan()) {
+    handleTan($getBalance); // See login.php for the implementation.
 }
 
 /** @var \Fhp\Segment\SAL\HISAL $hisal */
-foreach ($getSaldo->getBalances() as $hisal) {
+foreach ($getBalance->getBalances() as $hisal) {
     $accNo = $hisal->getAccountInfo()->getAccountNumber();
     if ($hisal->getKontoproduktbezeichnung() !== null) {
         $accNo .= ' (' . $hisal->getKontoproduktbezeichnung() . ')';
