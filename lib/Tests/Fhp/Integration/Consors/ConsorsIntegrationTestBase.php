@@ -71,7 +71,6 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
         $this->connection->expects($this->once())->method('disconnect');
         $this->fints = new FinTsPeer($this->options, $this->credentials);
         $this->fints->loadPersistedInstance($persistedInstance);
-        $this->fints->mockConnection = $this->setUpConnection();
 
         // Now provide the TAN.
         $this->expectMessage(static::LOGIN_TAN_REQUEST, static::LOGIN_TAN_RESPONSE);

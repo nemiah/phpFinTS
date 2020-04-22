@@ -39,7 +39,7 @@ class FinTs
     // Things we retrieved from the user / the calling application.
     /** @var FinTsOptions */
     private $options;
-    /** @var Credentials */
+    /** @var Credentials|null */
     private $credentials;
     /** @var SanitizingLogger */
     private $logger;
@@ -86,6 +86,27 @@ class FinTs
             $fints->loadPersistedInstance($persistedInstance);
         }
         return $fints;
+    }
+
+    /**
+     * This function allows to fetch the BPD without knowing the user's credentials yet, by using an anonymous dialog.
+     * Note: If this fails with an error saying that your bank does not support the anonymous dialog, you probably need
+     * to use {@link NoPsd2TanMode} for regular login.
+     * @param FinTsOptions $options Configuration options for the connection to the bank.
+     * @param LoggerInterface $logger An optional logger to record messages exchanged with the bank.
+     * @return BPD Bank parameters that tell the client software what features the bank supports.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD or close the dialog properly.
+     * @throws ServerException When the server resopnds with an error.
+     */
+    public static function fetchBpd(FinTsOptions $options, ?LoggerInterface $logger = null): BPD
+    {
+        $options->validate();
+        $fints = new static($options, null);
+        if ($logger !== null) {
+            $fints->setLogger($logger);
+        }
+        return $fints->getBpd();
     }
 
     /** Please use the factory above. */
@@ -236,7 +257,7 @@ class FinTs
         $this->requireTanMode();
         $this->ensureSynchronized();
         $this->messageNumber = 1;
-        $login = new DialogInitialization($this->options, $this->credentials, $this->getSelectedTanMode(),
+        $login = new DialogInitialization($this->options, $this->requireCredentials(), $this->getSelectedTanMode(),
             $this->selectedTanMedium, $this->kundensystemId);
         $this->execute($login);
         return $login;
@@ -504,6 +525,20 @@ class FinTs
         $this->selectedTanMedium = $tanMedium instanceof TanMedium ? $tanMedium->getName() : $tanMedium;
     }
 
+    /**
+     * Fetches the BPD from the server, if they are not already present at the client, and then returns them. Note that
+     * this does not require user login.
+     * @return BPD The BPD from the bank.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD or close the dialog properly.
+     * @throws ServerException When the server resopnds with an error.
+     */
+    public function getBpd(): BPD
+    {
+        $this->ensureBpdAvailable();
+        return $this->bpd;
+    }
+
     // ------------------------------------------------- IMPLEMENTATION ------------------------------------------------
 
     /**
@@ -544,6 +579,14 @@ class FinTs
         }
         $this->dialogId = $initResponse->header->dialogId;
         $this->endDialog(true);
+    }
+
+    private function requireCredentials(): Credentials
+    {
+        if ($this->credentials === null) {
+            throw new \LogicException('This action is not allowed on a FinTs instance without Credentials');
+        }
+        return $this->credentials;
     }
 
     /**
@@ -741,7 +784,7 @@ class FinTs
         }
 
         $this->messageNumber = 1;
-        $dialogInitialization = new DialogInitialization($this->options, $this->credentials,
+        $dialogInitialization = new DialogInitialization($this->options, $this->requireCredentials(),
             $this->getSelectedTanMode(), $this->selectedTanMedium, $this->kundensystemId, $hktanRef);
         $this->execute($dialogInitialization);
         try {
@@ -827,7 +870,7 @@ class FinTs
             $message,
             $this->options,
             $this->kundensystemId === null ? '0' : $this->kundensystemId,
-            $this->credentials,
+            $this->requireCredentials(),
             $tanMode,
             $tan
         );
