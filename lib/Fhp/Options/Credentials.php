@@ -8,9 +8,9 @@ namespace Fhp\Options;
 class Credentials
 {
     /** @var string */
-    public $benutzerkennung;
+    protected $benutzerkennung;
     /** @var string */
-    public $pin;
+    protected $pin;
 
     private function __construct()
     {
@@ -28,9 +28,33 @@ class Credentials
      */
     public static function create(string $benutzerkennung, string $pin): Credentials
     {
+        if (strlen($benutzerkennung) === 0) {
+            throw new \InvalidArgumentException('benutzerkennung cannot be empty');
+        }
+        if (strlen($pin) === 0) {
+            throw new \InvalidArgumentException('pin cannot be empty');
+        }
+
         $result = new Credentials();
         $result->benutzerkennung = $benutzerkennung;
         $result->pin = $pin;
         return $result;
+    }
+
+    /** @return string */
+    public function getBenutzerkennung(): string
+    {
+        return $this->benutzerkennung;
+    }
+
+    /** @return string */
+    public function getPin(): string
+    {
+        return $this->pin;
+    }
+
+    public function __debugInfo()
+    {
+        return null; // Prevent sensitive data from leaking into logs through var_dump() or print_r().
     }
 }

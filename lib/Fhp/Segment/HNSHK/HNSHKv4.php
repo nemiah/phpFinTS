@@ -82,7 +82,7 @@ class HNSHKv4 extends BaseSegment
         $result->signaturalgorithmus = new SignaturalgorithmusV2();
         $result->schluesselname = \Fhp\Segment\HNVSK\SchluesselnameV3::create(
             Kik::create($options->bankCode),
-            $credentials->benutzerkennung,
+            $credentials->getBenutzerkennung(),
             \Fhp\Segment\HNVSK\SchluesselnameV3::SIGNIERSCHLUESSEL);
         return $result;
     }

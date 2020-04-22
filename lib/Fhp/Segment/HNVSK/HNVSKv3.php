@@ -83,7 +83,7 @@ class HNVSKv3 extends BaseSegment
         $result->verschluesselungsalgorithmus = VerschluesselungsalgorithmusV2::create();
         $result->schluesselname = SchluesselnameV3::create(
             Kik::create($options->bankCode),
-            $credentials->benutzerkennung,
+            $credentials->getBenutzerkennung(),
             SchluesselnameV3::CHIFFRIERSCHLUESSEL);
         return $result;
     }

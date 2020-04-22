@@ -60,8 +60,8 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
             if (is_string($item)) {
                 $needles[] = $item;
             } elseif ($item instanceof Credentials) {
-                $needles[] = $item->benutzerkennung;
-                $needles[] = $item->pin;
+                $needles[] = $item->getBenutzerkennung();
+                $needles[] = $item->getPin();
             } elseif ($item instanceof FinTsOptions) {
                 $needles[] = $item->productName;
             } elseif ($item instanceof Account) {
