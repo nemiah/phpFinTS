@@ -64,6 +64,14 @@ function handleTan(\Fhp\BaseAction $action)
         file_put_contents(__DIR__ . 'state.txt', serialize([$persistedFints, $persistedAction]));
     }
 
+    // Ask the user for the TAN. ----------------------------------------------------------------------------------------
+    // IMPORTANT: In your real application, you cannot use fgets(STDIN) of course (unless you're running PHP only as a
+    // command line application). So you instead want to send a response to the user. This means that, after executing
+    // the first half of handleTan() above, your real application will terminate the PHP session. The second half of
+    // handleTan() will likely live elsewhere in your application code (i.e. you will have two functions for the TAN
+    // handling, not just one like in this simplified example). You *only* need to carry over the $persistedInstance
+    // and the $persistedAction (which are simple strings) by storing them in some database or file where you can load
+    // them again in a new PHP session when the user sends the TAN.
     echo "Please enter the TAN:\n";
     $tan = trim(fgets(STDIN));
 
