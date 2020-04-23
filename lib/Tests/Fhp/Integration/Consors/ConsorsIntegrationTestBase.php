@@ -65,7 +65,7 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
         $this->assertEquals('000003QS34CK6EMOUGT3JJOI834L7Kvb', $tanRequest->getProcessId());
         $this->assertEquals('Bitte TAN eingeben.', $tanRequest->getChallenge());
 
-        // Pretend that we close everything and open everything from scratch, as if it were a new PHP session.
+        // Pretend that we close everything and open everything from scratch, as if it were a new PHP process.
         $persistedInstance = $this->fints->persist();
         $persistedLogin = serialize($login);
         $this->connection->expects($this->once())->method('disconnect');

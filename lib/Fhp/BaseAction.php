@@ -25,8 +25,8 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
  * requested information or the execution confirmation of the transaction) becomes available in the future, possibly
  * much later than when the request was sent, in case the user needs to enter a TAN.
  * All action instances are serializable, so that the execution can be interrupted to ask the user for a TAN. Once the
- * TAN is available, the execution can resume either a couple seconds later in the same PHP session using the same
- * physical connection to the bank, or on the order of minutes later in a new PHP session with a newly established
+ * TAN is available, the execution can resume either a couple seconds later in the same PHP process using the same
+ * physical connection to the bank, or on the order of minutes later in a new PHP process with a newly established
  * connection to the bank. Note that the serialization only applies to selected relevant request parameters, and not to
  * the response. Thus it is only possible to serialize an action when its execution has been attempted but resulted in a
  * TAN request.

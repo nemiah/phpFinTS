@@ -50,7 +50,7 @@ class FinTs
     /** @var string|null This is a {@link TanMedium#getName()}, but we don't have the {@link TanMedium} instance. */
     private $selectedTanMedium;
 
-    // State that persists across physical connections, dialogs and even PHP sessions.
+    // State that persists across physical connections, dialogs and even PHP executions.
     /** @var BPD|null */
     private $bpd;
     /** @var int[]|null The IDs of the {@link TanMode}s from the BPD which the user is allowed to use. */
@@ -74,7 +74,7 @@ class FinTs
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
      * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance,
-     *     usually from an earlier PHP session. Passing this in here saves 1-2 dialogs that are normally made with the
+     *     usually from an earlier PHP execution. Passing this in here saves 1-2 dialogs that are normally made with the
      *     bank to obtain the BPD and Kundensystem-ID.
      */
     public static function new(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null): FinTs
@@ -178,8 +178,8 @@ class FinTs
      * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
      * obtain it from the user.
      *
-     * @param string $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually from an earlier
-     *     PHP session.
+     * @param string $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually
+     *     from an earlier PHP execution.
      *
      * @throws \InvalidArgumentException
      */
@@ -371,8 +371,8 @@ class FinTs
 
     /**
      * For an action where {@link BaseAction#needsTan()} returns `true`, this function sends the given $tan to the
-     * server in order to complete the action. This can be done asynchronously, i.e. not in the same PHP session as the
-     * original {@link #execute()} call.
+     * server in order to complete the action. This can be done asynchronously, i.e. not in the same PHP process as
+     * the original {@link #execute()} call.
      * @param BaseAction $action The action to be completed.
      * @param string $tan The TAN entered by the user.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
