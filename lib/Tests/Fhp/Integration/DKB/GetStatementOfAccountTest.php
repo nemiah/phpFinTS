@@ -107,7 +107,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $getStatement = $this->runInitialRequest();
         $this->assertTrue($getStatement->needsTan());
 
-        // Pretend that we close everything and open everything from scratch, as if it were a new PHP session.
+        // Pretend that we close everything and open everything from scratch, as if it were a new PHP process.
         $persistedInstance = $this->fints->persist();
         $persistedGetStatement = serialize($getStatement);
         $this->connection->expects($this->once())->method('disconnect');

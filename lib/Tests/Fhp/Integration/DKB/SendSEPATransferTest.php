@@ -136,7 +136,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
         $sendTransfer = $this->runInitialRequest();
         $this->assertTrue($sendTransfer->needsTan());
 
-        // Pretend that we close everything and open everything from scratch, as if it were a new PHP session.
+        // Pretend that we close everything and open everything from scratch, as if it were a new PHP process.
         $persistedInstance = $this->fints->persist();
         $persistedAction = serialize($sendTransfer);
         $this->connection->expects($this->once())->method('disconnect');
