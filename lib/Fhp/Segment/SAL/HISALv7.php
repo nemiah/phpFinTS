@@ -33,7 +33,7 @@ class HISALv7 extends BaseSegment implements HISAL
     public $bereitsVerfuegterBetrag;
     /** @var \Fhp\Segment\Common\Btg|null This field can only be filled if $verfuegbarerBetrag is zero. */
     public $ueberziehung;
-    /** @var \Fhp\Segment\Common\Tsp */
+    /** @var \Fhp\Segment\Common\Tsp|null */
     public $buchungszeitpunkt;
     /** @var string|null JJJJMMTT gemäß ISO 8601 */
     public $faelligkeit;
