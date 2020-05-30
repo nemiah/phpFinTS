@@ -11,6 +11,13 @@ namespace Fhp\Segment\HIRMS;
 abstract class Rueckmeldungscode
 {
     /**
+     * These response codes are soft warnings because the server allows unlocking the account through FinTS. But since
+     * this library does not support the unlocking actions, we consider these warnings a hard failure, which aborts the
+     * login. The user needs to unlock the account through the bank's web interface or customer support instead.
+     */
+    const TREAT_WARNINGS_AS_ERRORS = [self::PIN_VORLAEUFIG_GESPERRT, self::ZUGANG_VORLAEUFIG_GESPERRT];
+
+    /**
      * @param int $code A code received from the server.
      * @return bool Whether it is a success code (indicating that the action was executed normally).
      */
@@ -37,7 +44,7 @@ abstract class Rueckmeldungscode
      */
     public static function isError(int $code): bool
     {
-        return 9000 < $code && $code < 9999;
+        return (9000 < $code && $code < 9999) || in_array($code, self::TREAT_WARNINGS_AS_ERRORS);
     }
 
     /**
@@ -78,6 +85,19 @@ abstract class Rueckmeldungscode
      * HITANS, or 999 to indicate Ein-Schritt-Verfahren.
      */
     const ZUGELASSENE_VERFAHREN = 3920;
+
+    /**
+     * PIN gesperrt. Entsperren mit GV "PIN-Sperre aufheben" möglich.
+     * Note that this library does not support unlocking accounts through FinTS.
+     */
+    const PIN_VORLAEUFIG_GESPERRT = 3931;
+
+    /**
+     * Ihr Zugang ist vorläufig gesperrt - bitte PIN-Sperre aufheben.
+     * Es ist die Durchführung eines HKPSA erforderlich.
+     * Note that this library does not support HKPSA.
+     */
+    const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
 
     /**
      * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.

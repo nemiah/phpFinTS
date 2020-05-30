@@ -58,14 +58,12 @@ class ServerException extends \Exception
             return null;
         }
         $errors = array_filter($this->errors, function ($error) use ($referenceNumbers) {
-            /* @var Rueckmeldung $error */
             return in_array($error->referenceSegment, $referenceNumbers);
         });
         if (count($errors) === 0) {
             return null;
         }
         $warnings = array_filter($this->warnings, function ($error) use ($referenceNumbers) {
-            /* @var Rueckmeldung $error */
             return in_array($error->referenceSegment, $referenceNumbers);
         });
         $this->errors = array_diff($this->errors, $errors);
@@ -98,13 +96,27 @@ class ServerException extends \Exception
     }
 
     /**
-     * @param int $code A Rueckmeldungscode to look for.
+     * @param int $code A Rueckmeldungscode to look for (should be an error code, i.e. 9xxx).
      * @return bool Whether an error with this code is present.
      */
     public function hasError(int $code): bool
     {
         foreach ($this->errors as $error) {
             if ($error->rueckmeldungscode === $code) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param int $code A Rueckmeldungscode to look for (should be a warning code, i.e. 3xxx).
+     * @return bool Whether a warning with this code is present.
+     */
+    public function hasWarning(int $code): bool
+    {
+        foreach ($this->warnings as $warning) {
+            if ($warning->rueckmeldungscode === $code) {
                 return true;
             }
         }
@@ -145,6 +157,8 @@ class ServerException extends \Exception
     {
         return $this->hasError(Rueckmeldungscode::PIN_GESPERRT)
             || $this->hasError(Rueckmeldungscode::TEILNEHMER_GESPERRT)
+            || $this->hasWarning(Rueckmeldungscode::PIN_VORLAEUFIG_GESPERRT)
+            || $this->hasWarning(Rueckmeldungscode::ZUGANG_VORLAEUFIG_GESPERRT)
             || $this->hasError(Rueckmeldungscode::ZUGANG_GESPERRT);
     }
 
