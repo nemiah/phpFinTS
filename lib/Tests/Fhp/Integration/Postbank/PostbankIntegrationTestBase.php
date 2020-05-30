@@ -9,8 +9,8 @@ class PostbankIntegrationTestBase extends FinTsTestCase
 {
     const TEST_BANK_CODE = '20010020';
     const TEST_TAN_MODE = 930;
-    const TEST_USERNAME = '<PRIVATE__>';
-    const TEST_PIN = '<PRIVATE_>';
+    const TEST_USERNAME = 'PRIVATE____';
+    const TEST_PIN = 'PRIVATE___';
 
     // Anonymous dialog to fetch BPD (HKVVB, then HKEND).
     const ANONYMOUS_INIT_REQUEST = "HNHBK:1:3+000000000145+300+0+1'HKIDN:2:2+280:20010020+9999999999+0+0'HKVVB:3:3+0+0+0+123456789ABCDEF0123456789+1.0'HKTAN:4:6+4+HKIDN'HNHBS:5:1+1'";
@@ -19,15 +19,15 @@ class PostbankIntegrationTestBase extends FinTsTestCase
     const ANONYMOUS_END_RESPONSE = "HNHBK:1:3+000000000183+300+FAKEDIALOGIDabcdefghijklmnopqr+2+FAKEDIALOGIDabcdefghijklmnopqr:2'HIRMG:2:2+0010::Nachricht entgegengenommen.'HIRMS:3:2:2+0100::Dialog beendet.'HNHBS:4:1+2'";
 
     // Separate dialog for synchronization (HKSYN), response does not contain BPD again.
-    const SYNC_REQUEST = "HNHBK:1:3+000000000396+300+0+1'HNVSK:998:3+PIN:1+998+1+1::0+1:20190102:030405+2:2:13:@8@00000000:5:1+280:20010020:<PRIVATE__>:V:0:0+0'HNVSD:999:1+@232@HNSHK:2:4+PIN:1+999+9999999+1+1+1::0+1+1:20190102:030405+1:999:1+6:10:19+280:20010020:<PRIVATE__>:S:0:0'HKIDN:3:2+280:20010020+<PRIVATE__>+0+1'HKVVB:4:3+14+0+0+123456789ABCDEF0123456789+1.0'HKSYN:5:3+0'HNSHA:6:2+9999999++<PRIVATE_>''HNHBS:7:1+1'";
-    const SYNC_RESPONSE = "HNHBK:1:3+000000000655+300+FAKEDIALOGIDabcdefghijklmnopqr+1+FAKEDIALOGIDabcdefghijklmnopqr:1'HNVSK:998:3+PIN:1+998+1+2::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@\x00\x00\x00\x00\x00\x00\x00\x00:5:1+280:20010020:<PRIVATE__>:V:0:0+0'HNVSD:999:1+@400@HIRMG:2:2+0020::Dialoginitialisierung erfolgreich.+3075::Starke Authentifizierung ab dem 2019-09-08 erforderlich.:2019-09-08+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Information fehlerfrei entgegengenommen.'HIRMS:4:2:4+3920::Meldung unterstützter Ein- und Zwei-Schritt-Verfahren:912:913:920:930'HIRMS:5:2:5+0020::Auftrag ausgeführt.'HISYN:6:4:5+FAKEKUNDENSYSTEMIDabcdefghijkl''HNHBS:7:1+1'";
-    const SYNC_END_REQUEST = "HNHBK:1:3+000000000426+300+FAKEDIALOGIDabcdefghijklmnopqr+2'HNVSK:998:3+PIN:1+998+1+1::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@00000000:5:1+280:20010020:<PRIVATE__>:V:0:0+0'HNVSD:999:1+@204@HNSHK:2:4+PIN:1+999+9999999+1+1+1::FAKEKUNDENSYSTEMIDabcdefghijkl+1+1:20190102:030405+1:999:1+6:10:19+280:20010020:<PRIVATE__>:S:0:0'HKEND:3:1+FAKEDIALOGIDabcdefghijklmnopqr'HNSHA:4:2+9999999++<PRIVATE_>''HNHBS:5:1+2'";
-    const SYNC_END_RESPONSE = "HNHBK:1:3+000000000332+300+FAKEKUNDENSYSTEMIDabcdefghijkl+2+FAKEKUNDENSYSTEMIDabcdefghijkl:2'HNVSK:998:3+PIN:1+998+1+2::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@\x00\x00\x00\x00\x00\x00\x00\x00:5:1+280:20010020:<PRIVATE__>:V:0:0+0'HNVSD:999:1+@78@HIRMG:2:2+0010::Nachricht entgegengenommen.'HIRMS:3:2:3+0100::Dialog beendet.''HNHBS:4:1+2'";
+    const SYNC_REQUEST = "HNHBK:1:3+000000000396+300+0+1'HNVSK:998:3+PIN:1+998+1+1::0+1:20190102:030405+2:2:13:@8@00000000:5:1+280:20010020:PRIVATE____:V:0:0+0'HNVSD:999:1+@232@HNSHK:2:4+PIN:1+999+9999999+1+1+1::0+1+1:20190102:030405+1:999:1+6:10:19+280:20010020:PRIVATE____:S:0:0'HKIDN:3:2+280:20010020+PRIVATE____+0+1'HKVVB:4:3+14+0+0+123456789ABCDEF0123456789+1.0'HKSYN:5:3+0'HNSHA:6:2+9999999++PRIVATE___''HNHBS:7:1+1'";
+    const SYNC_RESPONSE = "HNHBK:1:3+000000000655+300+FAKEDIALOGIDabcdefghijklmnopqr+1+FAKEDIALOGIDabcdefghijklmnopqr:1'HNVSK:998:3+PIN:1+998+1+2::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@\x00\x00\x00\x00\x00\x00\x00\x00:5:1+280:20010020:PRIVATE____:V:0:0+0'HNVSD:999:1+@400@HIRMG:2:2+0020::Dialoginitialisierung erfolgreich.+3075::Starke Authentifizierung ab dem 2019-09-08 erforderlich.:2019-09-08+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Information fehlerfrei entgegengenommen.'HIRMS:4:2:4+3920::Meldung unterstützter Ein- und Zwei-Schritt-Verfahren:912:913:920:930'HIRMS:5:2:5+0020::Auftrag ausgeführt.'HISYN:6:4:5+FAKEKUNDENSYSTEMIDabcdefghijkl''HNHBS:7:1+1'";
+    const SYNC_END_REQUEST = "HNHBK:1:3+000000000426+300+FAKEDIALOGIDabcdefghijklmnopqr+2'HNVSK:998:3+PIN:1+998+1+1::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@00000000:5:1+280:20010020:PRIVATE____:V:0:0+0'HNVSD:999:1+@204@HNSHK:2:4+PIN:1+999+9999999+1+1+1::FAKEKUNDENSYSTEMIDabcdefghijkl+1+1:20190102:030405+1:999:1+6:10:19+280:20010020:PRIVATE____:S:0:0'HKEND:3:1+FAKEDIALOGIDabcdefghijklmnopqr'HNSHA:4:2+9999999++PRIVATE___''HNHBS:5:1+2'";
+    const SYNC_END_RESPONSE = "HNHBK:1:3+000000000332+300+FAKEKUNDENSYSTEMIDabcdefghijkl+2+FAKEKUNDENSYSTEMIDabcdefghijkl:2'HNVSK:998:3+PIN:1+998+1+2::FAKEKUNDENSYSTEMIDabcdefghijkl+1:20190102:030405+2:2:13:@8@\x00\x00\x00\x00\x00\x00\x00\x00:5:1+280:20010020:PRIVATE____:V:0:0+0'HNVSD:999:1+@78@HIRMG:2:2+0010::Nachricht entgegengenommen.'HIRMS:3:2:3+0100::Dialog beendet.''HNHBS:4:1+2'";
 
     // Dialog initialization for main dialog (HKVVB). As this is the first time we use strong authentication, we get the UPD.
     // Also, using strong (=regular) authentication allows us to leave off the HNHBK/HNVSD wrapper here and let FinTsTestCase handle it.
-    const INIT_REQUEST = "HKIDN:3:2+280:20010020+<PRIVATE__>+FAKEKUNDENSYSTEMIDabcdefghijkl+1'HKVVB:4:3+14+0+0+123456789ABCDEF0123456789+1.0'HKTAN:5:6+4+HKIDN+++++++++mT?:<PRIVATE>'";
-    const INIT_RESPONSE = "HIRMG:2:2+0020::Dialoginitialisierung erfolgreich.+3076::Keine starke Authentifizierung erforderlich.+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Information fehlerfrei entgegengenommen.'HIRMS:4:2:4+3920::Meldung unterstützter Ein- und Zwei-Schritt-Verfahren:912:913:920:930+1050::UPD nicht mehr aktuell. Aktuelle Version folgt.'HIUPA:5:4:4+<PRIVATE__>+83+0+<PRIVATE_______>'HIUPD:6:6:4+<PRIVATE>::280:20010020+DE18200100200<PRIVATE>+<PRIVATE__>+1+EUR+<PRIVATE________________>++PB Business Giro++HKSPA:1+DKTSP:1+HKTSP:1+DKPAE:1+HKPAE:1+HKPRO:1+HKTAB:1+HKTAN:1+DKPSA:1+HKPSA:1+HKCCS:1+HKCSE:1+HKCSB:1+HKCSL:1+HKCDE:1+HKCDB:1+HKCDL:1+HKSAL:1+HKKAZ:1+HKEKA:1+HKKAU:1+HKCDN:1+HKCCM:1+HKCME:1+HKCMB:1+HKCML:1+HKDME:1+HKBME:1+HKDSC:1+HKDMC:1'HIUPD:7:6:4+++<PRIVATE__>+++<PRIVATE_______>++++HKSPA:1+DKTSP:1+HKTSP:1+DKPAE:1+HKPAE:1+HKPRO:1+HKTAB:1+HKTAN:1+DKPSA:1+HKPSA:1'HITAN:8:6:5+4++noref+nochallenge'";
+    const INIT_REQUEST = "HKIDN:3:2+280:20010020+PRIVATE____+FAKEKUNDENSYSTEMIDabcdefghijkl+1'HKVVB:4:3+14+0+0+123456789ABCDEF0123456789+1.0'HKTAN:5:6+4+HKIDN+++++++++mT?:PRIVATE__'";
+    const INIT_RESPONSE = "HIRMG:2:2+0020::Dialoginitialisierung erfolgreich.+3076::Keine starke Authentifizierung erforderlich.+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Information fehlerfrei entgegengenommen.'HIRMS:4:2:4+3920::Meldung unterstützter Ein- und Zwei-Schritt-Verfahren:912:913:920:930+1050::UPD nicht mehr aktuell. Aktuelle Version folgt.'HIUPA:5:4:4+PRIVATE____+83+0+PRIVATE_________'HIUPD:6:6:4+PRIVATE__::280:20010020+DE18200100200PRIVATE__+PRIVATE____+1+EUR+PRIVATE__________________++PB Business Giro++HKSPA:1+DKTSP:1+HKTSP:1+DKPAE:1+HKPAE:1+HKPRO:1+HKTAB:1+HKTAN:1+DKPSA:1+HKPSA:1+HKCCS:1+HKCSE:1+HKCSB:1+HKCSL:1+HKCDE:1+HKCDB:1+HKCDL:1+HKSAL:1+HKKAZ:1+HKEKA:1+HKKAU:1+HKCDN:1+HKCCM:1+HKCME:1+HKCMB:1+HKCML:1+HKDME:1+HKBME:1+HKDSC:1+HKDMC:1'HIUPD:7:6:4+++PRIVATE____+++PRIVATE_________++++HKSPA:1+DKTSP:1+HKTSP:1+DKPAE:1+HKPAE:1+HKPRO:1+HKTAB:1+HKTAN:1+DKPSA:1+HKPSA:1'HITAN:8:6:5+4++noref+nochallenge'";
 
     // Dialog end for main dialog (HKEND).
     const FINAL_END_REQUEST = "HKEND:3:1+FAKEDIALOGIDabcdefghijklmnopqr'";
@@ -49,7 +49,7 @@ class PostbankIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, utf8_decode(static::INIT_RESPONSE));
 
-        $this->fints->selectTanMode(self::TEST_TAN_MODE, 'mT:<PRIVATE>');
+        $this->fints->selectTanMode(self::TEST_TAN_MODE, 'mT:PRIVATE__');
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();
