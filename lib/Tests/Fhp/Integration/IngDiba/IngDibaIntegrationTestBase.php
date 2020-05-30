@@ -34,10 +34,11 @@ class IngDibaIntegrationTestBase extends FinTsTestCase
      */
     protected function initDialog()
     {
-        // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
+        // When we initialize a dialog, it should skip the anonymous dialog (due to NoPsd2TanMode) and do BPD fetch and
+        // synchronization in a single dialog.
         $this->expectMessage(static::SYNC_REQUEST, static::SYNC_RESPONSE);
         $this->expectMessage(static::SYNC_END_REQUEST, static::SYNC_END_RESPONSE);
-        // And finally it can initialize the main dialog.
+        // The UPD is fetched only later when the mail dialog is initialized.
         $this->expectMessage(static::INIT_REQUEST, static::INIT_RESPONSE);
 
         $this->fints->selectTanMode(new NoPsd2TanMode());
