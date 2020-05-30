@@ -54,7 +54,7 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog, but the bank wants a TAN.
         $this->expectMessage(static::LOGIN_REQUEST, static::LOGIN_RESPONSE);
 
-        $this->fints->selectTanMode(900);
+        $this->fints->selectTanMode(intval(static::TEST_TAN_MODE));
         $login = $this->fints->login();
         $login->maybeThrowError();
         $this->assertAllMessagesSeen();
