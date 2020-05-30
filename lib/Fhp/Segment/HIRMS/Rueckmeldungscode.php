@@ -80,6 +80,12 @@ abstract class Rueckmeldungscode
     const ZUGELASSENE_VERFAHREN = 3920;
 
     /**
+     * Ihr Zugang ist vorläufig gesperrt - bitte PIN-Sperre aufheben.
+     * Es ist die Durchführung eines HKPSA erforderlich.
+     */
+    const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
+
+    /**
      * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.
      */
     const TEILWEISE_FEHLERHAFT = 9050;

@@ -7,6 +7,7 @@ use Fhp\Model\NoPsd2TanMode;
 use Fhp\Model\TanMode;
 use Fhp\Options\Credentials;
 use Fhp\Options\FinTsOptions;
+use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\HISYN\HISYNv4;
 use Fhp\Segment\HKIDN\HKIDNv2;
 use Fhp\Segment\HKSYN\HKSYNv3;
@@ -156,6 +157,15 @@ class DialogInitialization extends BaseAction
     {
         parent::processResponse($response);
         $this->dialogId = $response->header->dialogId;
+
+        if ($lockedWarning = $response->findRueckmeldung(Rueckmeldungscode::ZUGANG_VORLAEUFIG_GESPERRT)) {
+            // While errors are detected and thrown automatically, this response code is a soft warning because the
+            // server allows unlocking the account through FinTS using the HKPSA message. But since this library does
+            // not support HKPSA, we consider this warning a hard failure too and abort the login. The user needs to
+            // unlock the account through the bank's web interface or customer support instead.
+            throw new UnexpectedResponseException(
+                'Your account appears to be locked. The bank responded: ' . $lockedWarning->rueckmeldungstext);
+        }
 
         if ($this->kundensystemId === null) {
             /** @var HISYNv4 $hisyn */
