@@ -47,7 +47,7 @@ class DKBIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, static::INIT_RESPONSE);
 
-        $this->fints->selectTanMode(921, 'SomePhone1');
+        $this->fints->selectTanMode(intval(static::TEST_TAN_MODE), 'SomePhone1');
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();

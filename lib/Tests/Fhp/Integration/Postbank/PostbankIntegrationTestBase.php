@@ -49,7 +49,7 @@ class PostbankIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, utf8_decode(static::INIT_RESPONSE));
 
-        $this->fints->selectTanMode(self::TEST_TAN_MODE, 'mT:PRIVATE__');
+        $this->fints->selectTanMode(intval(self::TEST_TAN_MODE), 'mT:PRIVATE__');
         $login = $this->fints->login();
         $login->ensureSuccess();
         $this->assertAllMessagesSeen();
