@@ -94,9 +94,9 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
     public static function sanitizeForLogging(string $str, $needles): string
     {
         $replacements = array_map(function ($needle) {
-            $len = strlen($needle) - 1;
-            $prefix = '<PRIVATE';
-            return substr($prefix, 0, $len) . str_repeat('_', max(0, $len - strlen($prefix))) . '>';
+            $len = strlen($needle);
+            $prefix = 'PRIVATE';
+            return substr($prefix, 0, $len) . str_repeat('_', max(0, $len - strlen($prefix)));
         }, $needles);
         return str_replace($needles, $replacements, $str);
     }
