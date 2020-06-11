@@ -42,7 +42,7 @@ class GetStatementOfAccountXML extends BaseAction
 
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
-     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link #getAccounts()}.
+     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
      * @param \DateTime|null $from If set, only transactions after this date (inclusive) are returned.
      * @param \DateTime|null $to If set, only transactions before this date (inclusive) are returned.
      * @param string|null $camtURN The URN/descriptor of the CAMT XML format you want the bank to return.
@@ -86,7 +86,7 @@ class GetStatementOfAccountXML extends BaseAction
 
     /**
      * @return string[] The XML-Document(s) received from the bank, or empty array if the statement is unavailable/empty.
-     * @throws \Exception See {@link #ensureSuccess()}.
+     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getBookedXML(): array
     {

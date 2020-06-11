@@ -25,7 +25,7 @@ use Fhp\Segment\TAN\HKTANv6;
  * which it runs.
  * This action automatically executes synchroniziation if `$kundensystemId=null` was passed to the constructor. In this
  * case, the opened dialog must not be used for any other (financial/business) actions, so the caller must call
- * {@link FinTs#endDialog()} immediately after executing a {@link DialogInitialization} without pre-existing
+ * {@link FinTs::endDialog()} immediately after executing a {@link DialogInitialization} without pre-existing
  * Kundensystem-ID.
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
  * Section: C.8
@@ -41,7 +41,7 @@ use Fhp\Segment\TAN\HKTANv6;
  * Rough overview of the initialization procedure with no prior information on the client side:
  * 1. Open connection.
  * 2. Initialize and close anonymously to retrieve BPD (HITANS, HIPINS, ...). This is implemented in
- *    {@link FinTs#ensureBpdAvailable()}.
+ *    {@link FinTs::ensureBpdAvailable()}.
  * 3. Initialize a dialog with $kundensystemId=null ("synchronization") and $hktanRef=null, and close it again. At this
  *    point, the allowed TAN modes are available, so the user can select a $tanMode.
  * 4. Optional: If the user needs to select a TAN medium, initialize another dialog with $hktanRef=HKTAB to execute

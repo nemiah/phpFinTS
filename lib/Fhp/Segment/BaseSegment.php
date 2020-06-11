@@ -69,7 +69,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     }
 
     /**
-     * Short-hand for {@link Serializer#serializeSegment()}.
+     * Short-hand for {@link Serializer::serializeSegment()}.
      * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
      *     segment delimiter.
      */
@@ -96,7 +96,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     }
 
     /**
-     * Convenience function for {@link Parser#parseSegment()}.
+     * Convenience function for {@link Parser::parseSegment()}.
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
      *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.

@@ -25,7 +25,7 @@ class UPD
 
     /**
      * @param Message $response A dialog initialization response from the server.
-     * @return bool True if the UPD data is contained in the response and {@link #extractFromResponse()} would
+     * @return bool True if the UPD data is contained in the response and {@link extractFromResponse()} would
      *     succeed.
      */
     public static function containedInResponse(Message $response): bool

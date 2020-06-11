@@ -47,7 +47,7 @@ class FinTs
     // The TAN mode and medium to be used for business transactions that require a TAN.
     /** @var VerfahrensparameterZweiSchrittVerfahrenV6|int|null Note that this is a sub-type of {@link TanMode} */
     private $selectedTanMode;
-    /** @var string|null This is a {@link TanMedium#getName()}, but we don't have the {@link TanMedium} instance. */
+    /** @var string|null This is a {@link TanMedium::getName()}, but we don't have the {@link TanMedium} instance. */
     private $selectedTanMedium;
 
     // State that persists across physical connections, dialogs and even PHP executions.
@@ -73,7 +73,7 @@ class FinTs
      * @param FinTsOptions $options Configuration options for the connection to the bank.
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
-     * @param string|null $persistedInstance The return value of {@link #persist()} of a previous FinTs instance,
+     * @param string|null $persistedInstance The return value of {@link persist()} of a previous FinTs instance,
      *     usually from an earlier PHP execution. Passing this in here saves 1-2 dialogs that are normally made with the
      *     bank to obtain the BPD and Kundensystem-ID.
      */
@@ -118,7 +118,7 @@ class FinTs
     }
 
     /**
-     * Destructing the object only disconnects. Please use {@link #close()} if you want to properly "log out", i.e. end
+     * Destructing the object only disconnects. Please use {@link close()} if you want to properly "log out", i.e. end
      * the FinTs dialog. On the other hand, do *not* close in case you have serialized the FinTs instance and intend
      * to resume it later due to a TAN request.
      */
@@ -132,10 +132,10 @@ class FinTs
      * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
      * `Credentials` need to be passed to FinTs::new() in addition to the string returned here.
      *
-     * Alternatively you can use {@link #loadPersistedInstance) to separate constructing the instance and resuming it.
+     * Alternatively you can use {@link loadPersistedInstance) to separate constructing the instance and resuming it.
      *
      * NOTE: Unless you're persisting this object to complete a TAN request later on, you probably want to log the user
-     * out first by calling {@link #close()}.
+     * out first by calling {@link close()}.
      *
      * @param bool $minimal If true, the return value only contains only those values that are necessary to complete an
      *     outstanding TAN request, but not the relatively large BPD/UPD, which can always be retrieved again later with
@@ -178,7 +178,7 @@ class FinTs
      * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
      * obtain it from the user.
      *
-     * @param string $persistedInstance The return value of {@link #persist()} of a previous FinTs instance, usually
+     * @param string $persistedInstance The return value of {@link persist()} of a previous FinTs instance, usually
      *     from an earlier PHP execution.
      *
      * @throws \InvalidArgumentException
@@ -244,9 +244,9 @@ class FinTs
     /**
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check this for errors
-     *     using {@link BaseAction#isError()} or {@link BaseAction#maybeThrowError()}. You should also check whether a
-     *     TAN is needed using {@link BaseAction#needsTan()} and, if so, finish the login by passing {@link BaseAction}
-     *     returned here to {@link #submitTan()}.
+     *     using {@link BaseAction::isError()} or {@link BaseAction::maybeThrowError()}. You should also check whether a
+     *     TAN is needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing {@link BaseAction}
+     *     returned here to {@link submitTan()}.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
@@ -264,9 +264,9 @@ class FinTs
     }
 
     /**
-     * Executes an action. Be sure to {@link #login()} first. See the `\Fhp\Action` package for actions that can be
+     * Executes an action. Be sure to {@link login()} first. See the `\Fhp\Action` package for actions that can be
      * executed with this function. Note that, after this function returns, the result of the action is stored inside
-     * the action itself, so you need to check its {@link BaseAction#isSuccess()}, {@link BaseAction#needsTan()} and
+     * the action itself, so you need to check its {@link BaseAction::isSuccess()}, {@link BaseAction::needsTan()} and
      * other getters in order to obtain its status and result.
      * @param BaseAction $action The action to be executed. Its status will be updated when this function returns.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -370,9 +370,9 @@ class FinTs
     }
 
     /**
-     * For an action where {@link BaseAction#needsTan()} returns `true`, this function sends the given $tan to the
+     * For an action where {@link BaseAction::needsTan()} returns `true`, this function sends the given $tan to the
      * server in order to complete the action. This can be done asynchronously, i.e. not in the same PHP process as
-     * the original {@link #execute()} call.
+     * the original {@link execute()} call.
      * @param BaseAction $action The action to be completed.
      * @param string $tan The TAN entered by the user.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -468,13 +468,13 @@ class FinTs
     }
 
     /**
-     * For TAN modes where {@link TanMode#needsTanMedium()} returns true, the user additionally needs to pick a TAN
+     * For TAN modes where {@link TanMode::needsTanMedium()} returns true, the user additionally needs to pick a TAN
      * medium. This function returns a list of possible TAN media. Note that, depending on the bank, this list may
      * contain all the user's TAN media, or just the ones that are compatible with the given $tanMode.
-     * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link #getTanModes()} or its ID.
+     * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link getTanModes()} or its ID.
      * @return TanMedium[] A list of possible TAN media.
      * @throws UnexpectedResponseException Among other situations, this is thrown if the bank does not support
-     *     enumerating TAN media. In that case, hopefully {@link TanMode#needsTanMedium()} didn't return true.
+     *     enumerating TAN media. In that case, hopefully {@link TanMode::needsTanMedium()} didn't return true.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server responds with an error.
      */
@@ -508,10 +508,10 @@ class FinTs
     }
 
     /**
-     * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link #getTanModes()} or its ID.
-     * @param TanMedium|string|null $tanMedium If the $tanMode has {@link TanMode#needsTanMedium()} set to true, this
-     *     must be the value returned from {@link TanMedium#getName()} for one of the TAN media supported with that TAN
-     *     mode. Use {@link #getTanMedia()} to obtain a list of possible TAN media options.
+     * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link getTanModes()} or its ID.
+     * @param TanMedium|string|null $tanMedium If the $tanMode has {@link TanMode::needsTanMedium()} set to true, this
+     *     must be the value returned from {@link TanMedium::getName()} for one of the TAN media supported with that TAN
+     *     mode. Use {@link getTanMedia()} to obtain a list of possible TAN media options.
      */
     public function selectTanMode($tanMode, $tanMedium = null)
     {
@@ -544,7 +544,7 @@ class FinTs
     /**
      * Ensures that the latest BPD data is present by executing an anonymous dialog (including initialization and
      * termination of the dialog) if necessary. Executing this does not require (strong or any) authentication, and it
-     * makes the {@link #$bpd} available.
+     * makes the {@link $bpd} available.
      *
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
      * Section: C.5.1 (and also C.3.1.1)
@@ -590,7 +590,7 @@ class FinTs
     }
 
     /**
-     * Ensures that the {@link #$allowedTanModes} are available by executing a personalized, TAN-less dialog
+     * Ensures that the {@link $allowedTanModes} are available by executing a personalized, TAN-less dialog
      * initialization (and closing the dialog again), if necessary. Executing this only requires the {@link Credentials}
      * but no strong authentication.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -608,7 +608,7 @@ class FinTs
     }
 
     /**
-     * Ensures that we have a {@link #$kundensystemId} by executing a synchronization dialog (and closing it again) if
+     * Ensures that we have a {@link $kundensystemId} by executing a synchronization dialog (and closing it again) if
      * if necessary. Executing this does not require strong authentication.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws ServerException When the server resopnds with an error.
@@ -679,7 +679,7 @@ class FinTs
     }
 
     /**
-     * Like {@link #getSelectedTanMode()}, but throws an exception if none was selected.
+     * Like {@link getSelectedTanMode()}, but throws an exception if none was selected.
      * @return TanMode The current TAN mode.
      * @throws \RuntimeException If no TAN mode has been selected.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -695,7 +695,7 @@ class FinTs
     }
 
     /**
-     * Creates a new connection based on the {@link #$options}. This can be overridden for unit testing purposes.
+     * Creates a new connection based on the {@link $options}. This can be overridden for unit testing purposes.
      * @return Connection A newly instantiated connection.
      */
     protected function newConnection(): Connection

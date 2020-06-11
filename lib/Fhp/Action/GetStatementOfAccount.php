@@ -57,7 +57,7 @@ class GetStatementOfAccount extends BaseAction
 
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
-     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link #getAccounts()}.
+     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
      * @param \DateTime|null $from If set, only transactions after this date (inclusive) are returned.
      * @param \DateTime|null $to If set, only transactions before this date (inclusive) are returned.
      * @param bool $allAccounts If set to true, will return statements for all accounts of the user. You still need to
@@ -99,7 +99,7 @@ class GetStatementOfAccount extends BaseAction
 
     /**
      * @return string The raw MT940 data received from the server.
-     * @throws \Exception See {@link #ensureSuccess()}.
+     * @throws \Exception See {@link ensureSuccess()}.
      * @noinspection PhpUnused
      */
     public function getRawMT940(): string
@@ -110,7 +110,7 @@ class GetStatementOfAccount extends BaseAction
 
     /**
      * @return array The parsed MT940 data.
-     * @throws \Exception See {@link #ensureSuccess()}.
+     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getParsedMT940(): array
     {
@@ -120,7 +120,7 @@ class GetStatementOfAccount extends BaseAction
 
     /**
      * @return StatementOfAccount
-     * @throws \Exception See {@link #ensureSuccess()}.
+     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getStatement()
     {

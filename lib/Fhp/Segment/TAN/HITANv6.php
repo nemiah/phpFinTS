@@ -17,7 +17,7 @@ class HITANv6 extends BaseSegment implements TanRequest
     const DUMMY_REFERENCE = 'noref';
 
     /**
-     * @var int Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6#$tanProzess} for details.
+     * @var int Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
      */
     public $tanProzess;
     /**

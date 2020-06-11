@@ -11,7 +11,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
 
     /** @var int Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var int Allowed values: 1, 2; See specification or {@link HKTANv6#$tanProzess} for details. */
+    /** @var int Allowed values: 1, 2; See specification or {@link HKTANv6::$$tanProzess} for details. */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
@@ -32,7 +32,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     /** @var bool */
     public $mehrfachTanErlaubt;
     /**
-     * In case of multi-TAN (see {@link #$mehrfachTanErlaubt}), this specifies whether all TANs must be entered in the
+     * In case of multi-TAN (see {@link $mehrfachTanErlaubt}), this specifies whether all TANs must be entered in the
      * same dialog and at the same time, or not.
      * 1 TAN nicht zeitversetzt / dialogübergreifend erlaubt
      * 2 TAN zeitversetzt / dialogübergreifend erlaubt
