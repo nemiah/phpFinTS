@@ -25,8 +25,7 @@ $fints = require_once 'init.php';
  * but it is also possible to interrupt the PHP execution entirely while asking for the TAN.
  *
  * @param \Fhp\BaseAction $action Some action that requires a TAN.
- * @throws \Fhp\CurlException
- * @throws \Fhp\Protocol\ServerException
+ * @throws \Exception See {@link FinTs::execute()} for details on the exception types.
  */
 function handleTan(\Fhp\BaseAction $action)
 {

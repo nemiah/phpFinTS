@@ -43,7 +43,7 @@ class IngDibaIntegrationTestBase extends FinTsTestCase
 
         $this->fints->selectTanMode(new NoPsd2TanMode());
         $login = $this->fints->login();
-        $login->ensureSuccess();
+        $login->ensureSuccess(); // No TAN required upon login.
         $this->assertAllMessagesSeen();
     }
 

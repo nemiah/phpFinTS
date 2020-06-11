@@ -243,14 +243,10 @@ class FinTs
 
     /**
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
-     * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check this for errors
-     *     using {@link BaseAction::isError()} or {@link BaseAction::maybeThrowError()}. You should also check whether a
-     *     TAN is needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing {@link BaseAction}
+     * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check whether a TAN is
+     *     needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing the {@link BaseAction}
      *     returned here to {@link submitTan()}.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
-     * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
-     *     passed to the $action instead.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     public function login(): DialogInitialization
     {
@@ -266,15 +262,32 @@ class FinTs
     /**
      * Executes an action. Be sure to {@link login()} first. See the `\Fhp\Action` package for actions that can be
      * executed with this function. Note that, after this function returns, the result of the action is stored inside
-     * the action itself, so you need to check its {@link BaseAction::isSuccess()}, {@link BaseAction::needsTan()} and
-     * other getters in order to obtain its status and result.
+     * the action itself, so you need to check {@link BaseAction::needsTan()} to see if it needs a TAN before being
+     * completed and use its getters in order to obtain the result. In case the action fails, the corresponding
+     * exception will be thrown from this function.
+     * @param BaseAction $action The action to be executed. Its status will be updated when this function returns.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
+     *     that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
+     * @throws \Exception When any other error occurs while processing the action.
+     */
+    public function execute(BaseAction $action)
+    {
+        $this->executeInternal($action);
+        $action->maybeThrowError();
+    }
+
+    /**
+     * Like {@link FinTs::execute()}, but does not throw the action's errors, i.e. {@link BaseAction::isSuccess()} could
+     * still be `false` when this returns.
      * @param BaseAction $action The action to be executed. Its status will be updated when this function returns.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
      *     passed to the $action instead.
      */
-    public function execute(BaseAction $action)
+    private function executeInternal(BaseAction $action)
     {
         if ($this->dialogId === null && !($action instanceof DialogInitialization)) {
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
@@ -335,7 +348,7 @@ class FinTs
         // If no TAN is needed, process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
         if ($action->hasMorePages()) {
-            $this->execute($action);
+            $this->executeInternal($action);
         }
     }
 
@@ -375,10 +388,7 @@ class FinTs
      * the original {@link execute()} call.
      * @param BaseAction $action The action to be completed.
      * @param string $tan The TAN entered by the user.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
-     * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
-     *     passed to the $action instead.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     public function submitTan(BaseAction $action, string $tan)
     {
@@ -424,8 +434,10 @@ class FinTs
         // Process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
         if ($action->hasMorePages()) {
-            $this->execute($action);
+            $this->executeInternal($action);
         }
+
+        $action->maybeThrowError();
     }
 
     /**
@@ -456,8 +468,7 @@ class FinTs
      * actually needs to enter a TAN every time, but they need to have picked the mode so that the system knows how to
      * deliver a TAN, if necesssary.
      * @return TanMode[] The TAN modes that are available to the user, indexed by their IDs.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server resopnds with an error.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     public function getTanModes(): array
     {
@@ -473,10 +484,9 @@ class FinTs
      * contain all the user's TAN media, or just the ones that are compatible with the given $tanMode.
      * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link getTanModes()} or its ID.
      * @return TanMedium[] A list of possible TAN media.
-     * @throws UnexpectedResponseException Among other situations, this is thrown if the bank does not support
-     *     enumerating TAN media. In that case, hopefully {@link TanMode::needsTanMedium()} didn't return true.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server responds with an error.
+     * @throws \Exception See {@link execute()} for details on the exception types. UnexpectedResponseException is
+     *     thrown (among other situations) if the bank does not support enumerating TAN media. In that case, hopefully
+     *     {@link TanMode::needsTanMedium()} didn't return true.
      */
     public function getTanMedia($tanMode): array
     {
@@ -593,8 +603,7 @@ class FinTs
      * Ensures that the {@link $allowedTanModes} are available by executing a personalized, TAN-less dialog
      * initialization (and closing the dialog again), if necessary. Executing this only requires the {@link Credentials}
      * but no strong authentication.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server resopnds with an error.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     private function ensureTanModesAvailable()
     {
@@ -610,8 +619,7 @@ class FinTs
     /**
      * Ensures that we have a {@link $kundensystemId} by executing a synchronization dialog (and closing it again) if
      * if necessary. Executing this does not require strong authentication.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server resopnds with an error.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     private function ensureSynchronized()
     {
@@ -772,10 +780,7 @@ class FinTs
      * Section: B.3
      * @param string|null $hktanRef The identifier of the main PIN/TAN management segment to be executed in this dialog,
      *     or null for a general weakly authenticated dialog. See {@link DialogInitialization} for documentation.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
-     * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
-     *     passed to the $action instead.
+     * @throws \Exception See {@link execute()} for details on the exception types.
      */
     private function executeWeakDialogInitialization(?string $hktanRef)
     {
@@ -787,11 +792,6 @@ class FinTs
         $dialogInitialization = new DialogInitialization($this->options, $this->requireCredentials(),
             $this->getSelectedTanMode(), $this->selectedTanMedium, $this->kundensystemId, $hktanRef);
         $this->execute($dialogInitialization);
-        try {
-            $dialogInitialization->ensureSuccess();
-        } catch (\Exception $e) {
-            throw new UnexpectedResponseException('Failed to initialize weakly authenticated dialog', 0, $e);
-        }
         if ($dialogInitialization->needsTan()) {
             throw new UnexpectedResponseException('Server asked for TAN on a dialog meant for weak authentication');
         }

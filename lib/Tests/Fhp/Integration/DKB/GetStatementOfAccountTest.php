@@ -56,7 +56,6 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $getStatement = GetStatementOfAccount::create($this->getTestAccount(),
             new \DateTime('2019-09-01'), new \DateTime('2019-09-22'), false);
         $this->fints->execute($getStatement);
-        $getStatement->maybeThrowError();
         return $getStatement;
     }
 

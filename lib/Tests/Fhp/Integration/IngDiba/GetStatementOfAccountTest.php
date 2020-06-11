@@ -21,7 +21,6 @@ class GetStatementOfAccountTest extends IngDibaIntegrationTestBase
         $getStatement = GetStatementOfAccount::create($this->getTestAccount(),
             new \DateTime('2020-03-01'), new \DateTime('2020-03-25'), false);
         $this->fints->execute($getStatement);
-        $getStatement->maybeThrowError();
         $this->assertFalse($getStatement->needsTan());
         $this->assertEmpty($getStatement->getStatement()->getStatements());
     }

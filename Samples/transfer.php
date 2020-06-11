@@ -52,5 +52,3 @@ $fints->execute($sendSEPATransfer);
 if ($sendSEPATransfer->needsTan()) {
     handleTan($sendSEPATransfer); // See login.php for the implementation.
 }
-
-$sendSEPATransfer->ensureSuccess();

@@ -65,5 +65,3 @@ $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
     handleTan($sendSEPADirectDebit); // See login.php for the implementation.
 }
-
-$sendSEPADirectDebit->ensureSuccess();

@@ -165,9 +165,20 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
+     * Throws an error unless this action has been successfully executed, i.e. in the following cases:
+     *  - the action has not been {@link FinTs::execute()}-d at all,
+     *  - the action is awaiting a TAN that first needs to be supplied with {@link FinTs::submitTan()},
+     *  - the action was executed but the bank reported a failure.
+     *
+     * After executing an action, you can use this function to make sure that it succeeded. This is especially useful
+     * for actions that don't have any results (as each result getter would call {@link ensureSuccess()} internally).
+     * On the other hand, you do not need to call this function if you make sure that (1) you called
+     * {@link FinTs::execute()} and (2) you checked {@link needsTan()} and, if it returned true, supplied a TAN by
+     * calling {@ink FinTs::submitTan()}.
      * @throws ActionIncompleteException If the action hasn't even been executed.
      * @throws TanRequiredException If the action needs a TAN.
-     * @throws \Exception If the action failed.
+     * @throws \Exception If the action failed. Note that this is the same exception that you would also have received
+     *     from {@link FinTs::execute()} or {@ink FinTs::submitTan()} before.
      */
     public function ensureSuccess()
     {
