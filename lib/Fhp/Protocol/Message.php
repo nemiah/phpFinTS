@@ -230,11 +230,11 @@ class Message
     }
 
     /**
-     * Wraps the given segments in an "encryption" envelope (see class documentation). Inverse of {@link #parse()}.
+     * Wraps the given segments in an "encryption" envelope (see class documentation). Inverse of {@link parse()}.
      * @param BaseSegment[]|MessageBuilder $plainSegments The plain segments to be wrapped. Segment numbers do not need
      *     to be set yet (or they will be overwritten).
      * @param FinTsOptions $options See {@link FinTsOptions}.
-     * @param string $kundensystemId See {@link #$kundensystemId}.
+     * @param string $kundensystemId See {@link $kundensystemId}.
      * @param Credentials $credentials The credentials used to authenticate the message.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
      * @param string|null The TAN to be sent to the server (in HNSHA). If this is present, $tanMode must be present.
@@ -269,7 +269,7 @@ class Message
 
     /**
      * Builds a plain message by adding header and footer to the given segments, but no "encryption" envelope.
-     * Inverse of {@link #parse()}.
+     * Inverse of {@link parse()}.
      * @param BaseSegment[]|MessageBuilder $segments
      * @return Message The built message, ready to be sent to the server through {@link FinTs::sendMessage()}.
      */
@@ -287,8 +287,8 @@ class Message
 
     /**
      * Parses the given wire format and unwraps the "encryption" envelope (see class documentation) if it exists
-     * (in which case this function acts as the inverse of {@link #createWrappedMessage()}), or leaves as is otherwise
-     * (and acts as inverse of {@link #createPlainMessage()}).
+     * (in which case this function acts as the inverse of {@link createWrappedMessage()}), or leaves as is otherwise
+     * (and acts as inverse of {@link createPlainMessage()}).
      *
      * @param string $rawMessage The received message in HBCI/FinTS wire format. This should be ISO-8859-1-encoded.
      * @return Message The parsed message.

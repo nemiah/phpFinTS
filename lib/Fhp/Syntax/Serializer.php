@@ -35,7 +35,7 @@ abstract class Serializer
     /**
      * @param mixed|null $value A scalar (DE) value.
      * @param string $type The PHP type of this value. This should support exactly the values for which
-     *     {@link ElementDescriptor#isScalarType()} returns true.
+     *     {@link ElementDescriptor::isScalarType()} returns true.
      * @return string The HBCI wire format representation of the value.
      */
     public static function serializeDataElement($value, string $type): string

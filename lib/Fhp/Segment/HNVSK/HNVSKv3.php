@@ -70,7 +70,7 @@ class HNVSKv3 extends BaseSegment
     /**
      * @param FinTsOptions $options See {@link FinTsOptions}.
      * @param Credentials $credentials See {@link Credentials}.
-     * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2#identifizierungDerPartei}.
+     * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2::$identifizierungDerPartei}.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
      */
     public static function create(FinTsOptions $options, Credentials $credentials, string $kundensystemId, ?TanMode $tanMode): HNVSKv3

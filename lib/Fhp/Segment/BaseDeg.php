@@ -44,7 +44,7 @@ abstract class BaseDeg implements \Serializable
     }
 
     /**
-     * Short-hand for {@link Serializer#serializeDeg()}.
+     * Short-hand for {@link Serializer::serializeDeg()}.
      * @return string The HBCI wire format representation of this DEG.
      */
     public function serialize(): string
@@ -62,7 +62,7 @@ abstract class BaseDeg implements \Serializable
     }
 
     /**
-     * Convenience function for {@link Parser#parseGroup()}. This function should not be called on BaseDeg itself, but
+     * Convenience function for {@link Parser::parseGroup()}. This function should not be called on BaseDeg itself, but
      * only on one of its sub-classes.
      * @param string $rawElements The serialized wire format for a data element group.
      * @return static The parsed value.

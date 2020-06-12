@@ -11,8 +11,8 @@ use Psr\Log\LoggerInterface;
  * A logger that forwards to another PSR logger, but attempts to remove confidential information
  * like usernames, passwords/PINs and so on.
  *
- * Note: This is internally used by {@link FinTs#setLogger()}, so application could usually does not need to instantiate
- * this class manually.
+ * Note: This is internally used by {@link FinTs::setLogger()}, so application could usually does not need to
+ * instantiate this class manually.
  */
 class SanitizingLogger extends \Psr\Log\AbstractLogger
 {
@@ -88,7 +88,7 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
      * Removes sensitive values from the given string, while preserving its overall length, so that wrappers like FinTS
      * messages or Bin containers, which declare the length of their contents, remain parsable.
      * @param string $str Some string.
-     * @param string[] The sensitive values to be replaced, usually from {@link #computeNeedles()}.
+     * @param string[] The sensitive values to be replaced, usually from {@link computeNeedles()}.
      * @return string The same string, but with sensitive values removed.
      */
     public static function sanitizeForLogging(string $str, $needles): string

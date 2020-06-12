@@ -25,7 +25,7 @@ class HNSHKv4 extends BaseSegment
      * For the PIN/TAN profile (see section B.9.4), this must be:
      *   - 998 for Ein-Schritt-Verfahren, or
      *   - the value in the 900--997 range as received in
-     *     {@link \Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenv6#sicherheitsfunktion}
+     *     {@link \Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenv6::$sicherheitsfunktion}
      * @var int
      */
     public $sicherheitsfunktion;
@@ -65,7 +65,7 @@ class HNSHKv4 extends BaseSegment
      * @param FinTsOptions $options See {@link FinTsOptions}.
      * @param Credentials $credentials See {@link Credentials}.
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).
-     * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2#identifizierungDerPartei}.
+     * @param string $kundensystemId See {@link SicherheitsidentifikationDetailsV2::$identifizierungDerPartei}.
      */
     public static function create(string $sicherheitskontrollreferenz, FinTsOptions $options, Credentials $credentials, ?TanMode $tanMode, string $kundensystemId): HNSHKv4
     {

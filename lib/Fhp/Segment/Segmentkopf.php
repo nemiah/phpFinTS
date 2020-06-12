@@ -5,7 +5,7 @@ namespace Fhp\Segment;
 class Segmentkopf extends BaseDeg
 {
     /**
-     * The name/type of the segment, e.g. "HITANS", corresponding to {@link SegmentDescriptor#kennung}.
+     * The name/type of the segment, e.g. "HITANS", corresponding to {@link SegmentDescriptor::$kennung}.
      * Max length: 6
      * @var string
      */
@@ -19,14 +19,14 @@ class Segmentkopf extends BaseDeg
     public $segmentnummer;
 
     /**
-     * Version of the segment, corresponding to {@link SegmentDescriptor#version}.
+     * Version of the segment, corresponding to {@link SegmentDescriptor::$version}.
      * @var int
      */
     public $segmentversion;
 
     /**
      * Not allowed in requests, optionally present in responses.
-     * In a response message, this refers to the {@link #segmentnummer} of a segment in the request message.
+     * In a response message, this refers to the {@link $segmentnummer} of a segment in the request message.
      * @var int|null
      */
     public $bezugselement;

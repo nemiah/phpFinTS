@@ -37,7 +37,7 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
  */
 abstract class BaseAction implements \Serializable
 {
-    /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link #createRequest()}. */
+    /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link createRequest()}. */
     private $requestSegmentNumbers;
 
     /**
@@ -89,7 +89,7 @@ abstract class BaseAction implements \Serializable
 
     /**
      * @return bool Whether the underlying operation has completed (whether successfully or not) and the result or error
-     *     message in this future is available. Note: If this returns false, check {@link #needsTan()}.
+     *     message in this future is available. Note: If this returns false, check {@link needsTan()}.
      */
     public function isAvailable(): bool
     {
@@ -106,7 +106,7 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * @return bool Whether the underlying operation has completed unsuccessfully and the {@link #getError()} is
+     * @return bool Whether the underlying operation has completed unsuccessfully and the {@link getError()} is
      *     available.
      */
     public function isError(): bool
@@ -116,7 +116,7 @@ abstract class BaseAction implements \Serializable
 
     /**
      * @return bool If this returns true, the underlying operation has not completed because it is awaiting a TAN. You
-     *     should ask the user for this TAN and pass it to {@link #submitTan()}.
+     *     should ask the user for this TAN and pass it to {@link submitTan()}.
      */
     public function needsTan(): bool
     {
@@ -139,7 +139,7 @@ abstract class BaseAction implements \Serializable
 
     /**
      * @return string|null Possibly a pagination token to be sent to the server. For actions that support pagination,
-     *     this should be read in {@link #createRequest()}.
+     *     this should be read in {@link createRequest()}.
      */
     public function getPaginationToken(): ?string
     {
@@ -181,7 +181,7 @@ abstract class BaseAction implements \Serializable
 
     /**
      * Called when this action is about to be executed, in order to construct the request. This function can be called
-     * multiple times in case the response is paginated. On all but the first call, {@link #getPaginationToken()} will
+     * multiple times in case the response is paginated. On all but the first call, {@link getPaginationToken()} will
      * return a non-null token that should be included in the returned request.
      * @param BPD $bpd See {@link BPD}.
      * @param UPD|null $upd See {@link UPD}. This is usually present (non-null), except for a few special login and TAN
@@ -189,19 +189,19 @@ abstract class BaseAction implements \Serializable
      * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
      *     Note that an action can return an empty array to indicate that it does not need to make a request to the
      *     server, but can instead compute the result just from the BPD/UPD, in which case it should set
-     *     `$this->isAvailable = true;` already in {@link #createRequest()} and {@link #processResponse()} will never
+     *     `$this->isAvailable = true;` already in {@link createRequest()} and {@link processResponse()} will never
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
     abstract public function createRequest(BPD $bpd, ?UPD $upd);
 
     /**
-     * Called when this action was executed on the server (never if {@link #createRequest()} returned an empty request),
+     * Called when this action was executed on the server (never if {@link createRequest()} returned an empty request),
      * to process the response. This function can be called multiple times in case the response is paginated.
      * In case the response indicates that this action failed, this function may throw an appropriate exception. Sub-classes should override this function
      * and call the parent/super function.
      * @param Message $response A fake message that contains the subset of segments received from the server that
-     *     were in response to the request segments that were created by {@link #createRequest()}.
+     *     were in response to the request segments that were created by {@link createRequest()}.
      * @throws UnexpectedResponseException When the response indicates failure.
      */
     public function processResponse(Message $response)

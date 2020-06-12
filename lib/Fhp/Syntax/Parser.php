@@ -123,7 +123,7 @@ abstract class Parser
      *
      * @param string $rawValue The raw value (wire format).
      * @param string $type The PHP type that we need. This should support exactly the values for which
-     *     {@link ElementDescriptor#isScalarType()} returns true.
+     *     {@link ElementDescriptor::isScalarType()} returns true.
      * @return mixed|null The parsed value of type $type, null if the $rawValue was empty.
      */
     public static function parseDataElement(string $rawValue, string $type)
