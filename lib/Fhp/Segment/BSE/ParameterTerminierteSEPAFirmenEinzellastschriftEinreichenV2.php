@@ -1,8 +1,8 @@
 <?php
 
-namespace Fhp\Segment\DSE;
+namespace Fhp\Segment\BSE;
 
-class ParameterTerminierteSEPAEinzellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2
+class ParameterTerminierteSEPAFirmenEinzellastschriftEinreichenV2 extends ParameterTerminierteSEPAFirmenLastschriftEinreichenV2
 {
     /** @var string|null Max Length: 4096 */
     public $zulaessigePurposecodes;

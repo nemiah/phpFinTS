@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Segment\DME;
+namespace Fhp\Segment\DSE;
 
 interface SEPADirectDebitMinimalLeadTimeProvider
 {
