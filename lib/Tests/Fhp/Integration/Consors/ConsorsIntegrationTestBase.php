@@ -56,7 +56,6 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
 
         $this->fints->selectTanMode(intval(static::TEST_TAN_MODE));
         $login = $this->fints->login();
-        $login->maybeThrowError();
         $this->assertAllMessagesSeen();
 
         $this->assertTrue($login->needsTan(), 'Expected a TAN request, but got none.');

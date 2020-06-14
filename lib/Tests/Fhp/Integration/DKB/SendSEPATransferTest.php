@@ -97,7 +97,6 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     {
         $sendTransfer = SendSEPATransfer::create($this->getTestAccount(), static::PAIN_MESSAGE);
         $this->fints->execute($sendTransfer);
-        $sendTransfer->maybeThrowError();
         return $sendTransfer;
     }
 

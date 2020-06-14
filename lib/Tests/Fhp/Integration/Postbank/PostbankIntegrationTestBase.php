@@ -51,7 +51,7 @@ class PostbankIntegrationTestBase extends FinTsTestCase
 
         $this->fints->selectTanMode(intval(self::TEST_TAN_MODE), 'mT:PRIVATE__');
         $login = $this->fints->login();
-        $login->ensureSuccess();
+        $login->ensureSuccess(); // No TAN required upon login.
         $this->assertAllMessagesSeen();
     }
 

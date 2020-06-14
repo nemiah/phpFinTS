@@ -45,7 +45,7 @@ class KSKIntegrationTestBase extends FinTsTestCase
 
         $this->fints->selectTanMode(intval(self::TEST_TAN_MODE));
         $login = $this->fints->login();
-        $login->ensureSuccess();
+        $login->ensureSuccess(); // No TAN required upon login.
         $this->assertAllMessagesSeen();
     }
 
