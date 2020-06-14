@@ -27,21 +27,24 @@ use Fhp\UnsupportedException;
 class SendSEPADirectDebit extends BaseAction
 {
     /** @var SEPAAccount */
-    private $account;
+    protected $account;
 
     /** @var string */
-    private $painMessage;
+    protected $painMessage;
 
     /** @var string */
-    private $painNamespace;
+    protected $painNamespace;
 
     /** @var float */
-    private $ctrlSum;
+    protected $ctrlSum;
 
     /** @var bool */
-    private $singleDirectDebit = false;
+    protected $singleDirectDebit = false;
 
-    public static function create(SEPAAccount $account, string $painMessage): SendSEPADirectDebit
+    /** @var bool */
+    protected $tryToUseControlSumForSingleTransactions = false;
+
+    public static function create(SEPAAccount $account, string $painMessage, bool $tryToUseControlSumForSingleTransactions = false): SendSEPADirectDebit
     {
         if (preg_match('/xmlns="(?<namespace>[^"]+)"/s', $painMessage, $matches) === 1) {
             $painNamespace = $matches['namespace'];
@@ -69,6 +72,8 @@ class SendSEPADirectDebit extends BaseAction
 
         $result->singleDirectDebit = $nbOfTxs === 1;
 
+        $result->tryToUseControlSumForSingleTransactions = $tryToUseControlSumForSingleTransactions;
+
         return $result;
     }
 
@@ -77,7 +82,7 @@ class SendSEPADirectDebit extends BaseAction
         $useSingleDirectDebit = $this->singleDirectDebit;
 
         // If the PAIN message contains a control sum, we should use it, if the bank also supports it
-        if ($useSingleDirectDebit && !is_null($this->ctrlSum) && !is_null($bpd->getLatestSupportedParameters('HIDMES'))) {
+        if ($useSingleDirectDebit && $this->tryToUseControlSumForSingleTransactions && !is_null($this->ctrlSum) && !is_null($bpd->getLatestSupportedParameters('HIDMES'))) {
             $useSingleDirectDebit = false;
         }
 
