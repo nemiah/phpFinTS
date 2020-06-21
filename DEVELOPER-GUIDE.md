@@ -96,6 +96,9 @@ As an example, consider the `HIUPDv6` class that implements the "Kontoinformatio
 from the [Formals] document.
 
 Within each segment/DEG class, the elements defined in the specification are translated one by one to class fields.
+It is important that the fields occur in the *same order* as in the specification and that no fields are left out, because
+the absolute index/position of each field in the segment class must map to its index in HBCI's wire format.
+Segment classes may inherit from other segment classes, in which case the fields of the parent class come first.
 The name of the field/element is taken directly from the specification, so it is usually in German.
 Special characters like Umlauts are replaced with their expanded versions and the whole name is transformed to camel case.
 
@@ -135,8 +138,8 @@ Segments are terminated (and thus also delimited) by `'`.
 They contain a series of DEs and DEGs, delimited by `:` and `+`. 
 Note that these delimiters aren't very consistent (see below).
 
-The values essentially form a tree, where the leaves are data elements (similar to scalar values), inner nodes are data
-element groups (similar to compound values) and the roots are segments.
+The values essentially form an ordered tree, where the leaves are data elements (similar to scalar values), inner nodes
+are data element groups (similar to compound values) and the roots are segments.
 The entries of a segment (i.e. the second level of the tree), which can be a mix of DEs and DEGs, are delimited by `+`.
 The entries of any lower-level inner node are delimited by `:`.
 Such a tree can be arbitrarily deep, which leads to ambiguities.
