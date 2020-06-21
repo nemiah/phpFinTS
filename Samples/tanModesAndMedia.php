@@ -25,7 +25,7 @@ print_r($tanModeNames);
 
 echo "Which one do you want to use? Index:\n";
 $tanModeIndex = trim(fgets(STDIN));
-if (empty($tanModeIndex) || !array_key_exists(intval($tanModeIndex), $tanModes)) {
+if (!is_numeric($tanModeIndex) || !array_key_exists(intval($tanModeIndex), $tanModes)) {
     echo 'Invalid index!';
     return;
 }
@@ -49,7 +49,7 @@ if ($tanMode->needsTanMedium()) {
 
     echo "Which one do you want to use? Index:\n";
     $tanMediumIndex = trim(fgets(STDIN));
-    if (empty($tanMediumIndex) || !array_key_exists(intval($tanMediumIndex), $tanMedia)) {
+    if (!is_numeric($tanMediumIndex) || !array_key_exists(intval($tanMediumIndex), $tanMedia)) {
         echo 'Invalid index!';
         return;
     }
