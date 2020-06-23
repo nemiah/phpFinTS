@@ -132,7 +132,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Throwable
      */
     private function checkResult(StatementOfAccount $statement)
     {

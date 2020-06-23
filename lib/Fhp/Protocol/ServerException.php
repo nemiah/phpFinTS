@@ -46,32 +46,6 @@ class ServerException extends \Exception
     }
 
     /**
-     * Takes all errors and warnings that pertain to any of the given $referenceSegments, puts them in a new
-     * ServerException instance (if any) and removes them from this instance.
-     * @param int[] $referenceNumbers The numbers of thte reference segments.
-     * @return ServerException|null The part of the exception that pertains to the given reference segments, or null if
-     *     none of the errors refer to them.
-     */
-    public function extractErrorsForReference(array $referenceNumbers): ?ServerException
-    {
-        if (count($referenceNumbers) === 0) {
-            return null;
-        }
-        $errors = array_filter($this->errors, function ($error) use ($referenceNumbers) {
-            return in_array($error->referenceSegment, $referenceNumbers);
-        });
-        if (count($errors) === 0) {
-            return null;
-        }
-        $warnings = array_filter($this->warnings, function ($error) use ($referenceNumbers) {
-            return in_array($error->referenceSegment, $referenceNumbers);
-        });
-        $this->errors = array_diff($this->errors, $errors);
-        $this->warnings = array_diff($this->warnings, $warnings);
-        return new ServerException($errors, $warnings, $this->requestSegments, $this->request, $this->response);
-    }
-
-    /**
      * @return Rueckmeldung[]
      */
     public function getErrors()
@@ -121,21 +95,6 @@ class ServerException extends \Exception
             }
         }
         return false;
-    }
-
-    /**
-     * @param int $code A Rueckmeldungscode to look for.
-     * @return Rueckmeldung|null The first matching Rueckmeldung, which will have been removed from this instance, or
-     *     null if no match was found.
-     */
-    public function extractError($code)
-    {
-        foreach ($this->errors as $index => $error) {
-            if ($error->rueckmeldungscode === $code) {
-                return array_splice($this->errors, $index, 1)[0];
-            }
-        }
-        return null;
     }
 
     /**

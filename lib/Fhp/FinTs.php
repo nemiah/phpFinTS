@@ -213,6 +213,7 @@ class FinTs
             ) = $data;
     }
 
+    /** @noinspection PhpUnused */
     public function getLogger(): SanitizingLogger
     {
         return $this->logger;
@@ -234,6 +235,7 @@ class FinTs
     /**
      * @param int $connectTimeout The number of seconds to wait before aborting a connection attempt to the bank server.
      * @param int $responseTimeout The number of seconds to wait before aborting a request to the bank server.
+     * @noinspection PhpUnused
      */
     public function setTimeouts(int $connectTimeout, int $responseTimeout)
     {
@@ -246,7 +248,10 @@ class FinTs
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check whether a TAN is
      *     needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing the {@link BaseAction}
      *     returned here to {@link submitTan()}.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
+     *     that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
      */
     public function login(): DialogInitialization
     {
@@ -265,42 +270,22 @@ class FinTs
      * the action itself, so you need to check {@link BaseAction::needsTan()} to see if it needs a TAN before being
      * completed and use its getters in order to obtain the result. In case the action fails, the corresponding
      * exception will be thrown from this function.
-     * @param BaseAction $action The action to be executed. Its status will be updated when this function returns.
+     * @param BaseAction $action The action to be executed. Its {@link BaseAction::isDone()} status will be updated when
+     *     this function returns successfully.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
      *     that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
-     * @throws \Exception When any other error occurs while processing the action.
      */
     public function execute(BaseAction $action)
-    {
-        $this->executeInternal($action);
-        $action->maybeThrowError();
-    }
-
-    /**
-     * Like {@link FinTs::execute()}, but does not throw the action's errors, i.e. {@link BaseAction::isSuccess()} could
-     * still be `false` when this returns.
-     * @param BaseAction $action The action to be executed. Its status will be updated when this function returns.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
-     * @throws ServerException When the server responds with a (FinTS-encoded) error message. Note that some errors are
-     *     passed to the $action instead.
-     */
-    private function executeInternal(BaseAction $action)
     {
         if ($this->dialogId === null && !($action instanceof DialogInitialization)) {
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
 
         // Let the BaseAction implementation build its request segments.
-        try {
-            $requestSegments = $action->createRequest($this->bpd, $this->upd);
-            $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
-        } catch (\Exception $e) {
-            $action->processError($e, $this->bpd, $this->upd);
-            return;
-        }
+        $requestSegments = $action->createRequest($this->bpd, $this->upd);
+        $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
         if (count($requestSegments) === 0) {
             return; // No request needed.
         }
@@ -322,10 +307,8 @@ class FinTs
         }, $requestSegments));
 
         // Execute the request.
-        $response = $this->sendRequestForAction($action, $request);
-        if ($response === null) {
-            return; // Error occurred and was written to $action.
-        }
+        $response = $this->sendMessage($request);
+        $this->readBPD($response);
 
         // Detect if the bank wants a TAN.
         /** @var HITANv6 $hitan */
@@ -348,38 +331,8 @@ class FinTs
         // If no TAN is needed, process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
         if ($action->hasMorePages()) {
-            $this->executeInternal($action);
+            $this->execute($action);
         }
-    }
-
-    /**
-     * @param BaseAction $action The action being executed.
-     * @param Message $request The request that has been constructed for the action and should be sent.
-     * @return Message|null The full response from the server, or null if an action-level error occurred and the
-     *     response should not be processed further.
-     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
-     * @throws ServerException When the server responds with a (FinTS-encoded) error message.
-     */
-    private function sendRequestForAction(BaseAction $action, Message $request): ?Message
-    {
-        try {
-            $response = $this->sendMessage($request);
-        } catch (ServerException $e) {
-            $actionError = $e->extractErrorsForReference($action->getRequestSegmentNumbers());
-            if ($actionError !== null) {
-                $action->processError($actionError, $this->bpd, $this->upd);
-                $e->extractError(Rueckmeldungscode::TEILWEISE_FEHLERHAFT); // Drop global error.
-                if ($e->extractError(Rueckmeldungscode::ABGEBROCHEN) !== null) {
-                    $this->forgetDialog();
-                }
-            }
-            if (count($e->getErrors()) > 0) {
-                throw $e;
-            }
-            return null;
-        }
-        $this->readBPD($response);
-        return $response;
     }
 
     /**
@@ -388,7 +341,10 @@ class FinTs
      * the original {@link execute()} call.
      * @param BaseAction $action The action to be completed.
      * @param string $tan The TAN entered by the user.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
+     *     that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
      */
     public function submitTan(BaseAction $action, string $tan)
     {
@@ -415,10 +371,8 @@ class FinTs
         $request = $this->buildMessage($message, $tanMode, $tan);
 
         // Execute the request.
-        $response = $this->sendRequestForAction($action, $request);
-        if ($response === null) {
-            return; // Error occurred and was written to $action.
-        }
+        $response = $this->sendMessage($request);
+        $this->readBPD($response);
 
         // Ensure that the TAN was accepted.
         /** @var HITANv6 $hitan */
@@ -434,10 +388,8 @@ class FinTs
         // Process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
         if ($action->hasMorePages()) {
-            $this->executeInternal($action);
+            $this->execute($action);
         }
-
-        $action->maybeThrowError();
     }
 
     /**
@@ -468,7 +420,10 @@ class FinTs
      * actually needs to enter a TAN every time, but they need to have picked the mode so that the system knows how to
      * deliver a TAN, if necesssary.
      * @return TanMode[] The TAN modes that are available to the user, indexed by their IDs.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD, the Kundensystem-ID or the TAN modes
+     *     like it should according to the protocol, or when the dialog is not closed properly.
+     * @throws ServerException When the server responds with an error.
      */
     public function getTanModes(): array
     {
@@ -484,9 +439,11 @@ class FinTs
      * contain all the user's TAN media, or just the ones that are compatible with the given $tanMode.
      * @param TanMode|int $tanMode Either a {@link TanMode} instance obtained from {@link getTanModes()} or its ID.
      * @return TanMedium[] A list of possible TAN media.
-     * @throws \Exception See {@link execute()} for details on the exception types. UnexpectedResponseException is
-     *     thrown (among other situations) if the bank does not support enumerating TAN media. In that case, hopefully
-     *     {@link TanMode::needsTanMedium()} didn't return true.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD, the Kundensystem-ID or the TAN media
+     *     (which includes the case where the server does not support enumerating TAN media, which is indicated by
+     *     {@link TanMode::needsTanMedium()} returning false), or when the dialog is not closed properly.
+     * @throws ServerException When the server responds with an error.
      */
     public function getTanMedia($tanMode): array
     {
@@ -509,8 +466,6 @@ class FinTs
             return $getTanMedia->getTanMedia();
         } catch (UnexpectedResponseException | CurlException | ServerException $e) {
             throw $e;
-        } catch (\Exception $e) {
-            throw new UnexpectedResponseException('Failed to retrieve TAN media', 0, $e);
         } finally {
             $this->selectedTanMode = $oldTanMode;
             $this->selectedTanMedium = $oldTanMedium;
@@ -603,7 +558,10 @@ class FinTs
      * Ensures that the {@link $allowedTanModes} are available by executing a personalized, TAN-less dialog
      * initialization (and closing the dialog again), if necessary. Executing this only requires the {@link Credentials}
      * but no strong authentication.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD, the Kundensystem-ID or the TAN modes
+     *     like it should according to the protocol, or when the dialog is not closed properly.
+     * @throws ServerException When the server responds with an error.
      */
     private function ensureTanModesAvailable()
     {
@@ -619,7 +577,10 @@ class FinTs
     /**
      * Ensures that we have a {@link $kundensystemId} by executing a synchronization dialog (and closing it again) if
      * if necessary. Executing this does not require strong authentication.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD or the Kundensystem-ID, or when the
+     *     dialog is not closed properly.
+     * @throws ServerException When the server responds with an error.
      */
     private function ensureSynchronized()
     {
@@ -747,28 +708,24 @@ class FinTs
     }
 
     /**
-     * Passes the response segments to the action for post-processing of the response. If this fails, passes the error
-     * itself to the action too, so that this function itself never throws an exception.
+     * Passes the response segments to the action for post-processing of the response.
      * @param BaseAction $action The action to which the response belongs.
      * @param Message $fakeResponseMessage A messsage that contains the response segments for this action.
+     * @throws UnexpectedResponseException When the server responded with a valid but unexpected message.
      */
     private function processActionResponse(BaseAction $action, Message $fakeResponseMessage)
     {
-        try {
-            $action->processResponse($fakeResponseMessage);
-            if ($action instanceof DialogInitialization) {
-                $this->dialogId = $action->getDialogId();
-                if ($this->kundensystemId === null && $action->getKundensystemId()) {
-                    $this->kundensystemId = $action->getKundensystemId();
-                }
-                if ($action->getUpd() !== null) {
-                    $this->upd = $action->getUpd();
-                } elseif ($this->upd === null && $action->isStronglyAuthenticated()) {
-                    throw new UnexpectedResponseException('No UPD received');
-                }
+        $action->processResponse($fakeResponseMessage);
+        if ($action instanceof DialogInitialization) {
+            $this->dialogId = $action->getDialogId();
+            if ($this->kundensystemId === null && $action->getKundensystemId()) {
+                $this->kundensystemId = $action->getKundensystemId();
             }
-        } catch (\Exception $e) {
-            $action->processError($e, $this->bpd, $this->upd);
+            if ($action->getUpd() !== null) {
+                $this->upd = $action->getUpd();
+            } elseif ($this->upd === null && $action->isStronglyAuthenticated()) {
+                throw new UnexpectedResponseException('No UPD received');
+            }
         }
     }
 
@@ -780,7 +737,11 @@ class FinTs
      * Section: B.3
      * @param string|null $hktanRef The identifier of the main PIN/TAN management segment to be executed in this dialog,
      *     or null for a general weakly authenticated dialog. See {@link DialogInitialization} for documentation.
-     * @throws \Exception See {@link execute()} for details on the exception types.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server does not send the BPD or the Kundensystem-ID as it should
+     *     according to the protocol, when it asks for a TAN even though it shouldn't, or when the dialog is not closed
+     *     properly.
+     * @throws ServerException When the server responds with an error.
      */
     private function executeWeakDialogInitialization(?string $hktanRef)
     {
@@ -907,24 +868,27 @@ class FinTs
         try {
             $rawResponse = $this->connection->send($rawRequest);
             $this->logger->debug('< ' . $rawResponse);
-            try {
-                $response = Message::parse($rawResponse);
-            } catch (\InvalidArgumentException $e) {
-                throw new InvalidResponseException('Invalid response from server', 0, $e);
-            }
-        } catch (\Exception $e) {
+        } catch (CurlException $e) {
             $this->logger->critical($e->getMessage());
-            if ($e instanceof CurlException) {
-                $this->logger->debug(print_r($e->getCurlInfo(), true));
-            }
+            $this->logger->debug(print_r($e->getCurlInfo(), true));
             $this->disconnect();
             throw $e;
+        }
+
+        try {
+            $response = Message::parse($rawResponse);
+        } catch (\InvalidArgumentException $e) {
+            $this->disconnect();
+            throw new InvalidResponseException('Invalid response from server', 0, $e);
         }
 
         try {
             ServerException::detectAndThrowErrors($response, $request);
         } catch (ServerException $e) {
             $this->disconnect();
+            if ($e->hasError(Rueckmeldungscode::ABGEBROCHEN)) {
+                $this->forgetDialog();
+            }
             throw $e;
         }
         return $response;

@@ -49,7 +49,7 @@ class DKBIntegrationTestBase extends FinTsTestCase
 
         $this->fints->selectTanMode(intval(static::TEST_TAN_MODE), 'SomePhone1');
         $login = $this->fints->login();
-        $login->ensureSuccess(); // No TAN required upon login.
+        $login->ensureDone(); // No TAN required upon login.
         $this->assertAllMessagesSeen();
     }
 

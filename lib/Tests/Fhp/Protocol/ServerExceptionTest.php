@@ -4,7 +4,6 @@ namespace Tests\Fhp\Protocol;
 
 use Fhp\Protocol\Message;
 use Fhp\Protocol\ServerException;
-use Fhp\Segment\BaseSegment;
 
 class ServerExceptionTest extends \PHPUnit\Framework\TestCase
 {
@@ -34,62 +33,5 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
         $response = Message::parse(static::RESPONSE_WITH_ERRORS);
         $this->expectException(ServerException::class);
         ServerException::detectAndThrowErrors($response, $request);
-    }
-
-    private function getTestServerException()
-    {
-        $request = Message::parse(static::REQUEST_WITH_SEGMENT_NUMBERS);
-        $response = Message::parse(static::RESPONSE_WITH_HIRMS_NUMBERS);
-        try {
-            ServerException::detectAndThrowErrors($response, $request);
-            $this->assertTrue(false);
-            return null;
-        } catch (ServerException $exception) {
-            $this->assertCount(2, $exception->getErrors()); // 9050 and 9010
-            $this->assertCount(2, $exception->getWarnings()); // 3076 and 3070
-            return $exception;
-        }
-    }
-
-    public function test_extractErrorsForReference_takeNothing()
-    {
-        $exception = $this->getTestServerException();
-        $extracted = $exception->extractErrorsForReference([]);
-        $this->assertNull($extracted);
-        $this->assertCount(2, $exception->getErrors()); // Unchanged
-        $this->assertCount(2, $exception->getWarnings()); // Unchanged
-    }
-
-    public function test_extractErrorsForReference_takeSomeIncludingError()
-    {
-        $exception = $this->getTestServerException();
-        $extracted = $exception->extractErrorsForReference([2]); // The 9010 references segment 2.
-        $this->assertCount(1, $exception->getErrors()); // HIRMG
-        $this->assertCount(1, $exception->getWarnings()); // 3070
-        $this->assertCount(1, $extracted->getErrors()); // HIRMS 9010
-        $this->assertCount(1, $extracted->getWarnings()); // 3076
-    }
-
-    public function test_extractErrorsForReference_takeSomeWithoutError()
-    {
-        $exception = $this->getTestServerException();
-        $extracted = $exception->extractErrorsForReference([3]); // No error references segment 3.
-        $this->assertNull($extracted);
-        $this->assertCount(2, $exception->getErrors()); // Unchanged
-        $this->assertCount(2, $exception->getWarnings()); // Unchanged
-    }
-
-    public function test_extractErrorsForReference_takeAll()
-    {
-        $request = Message::parse(static::REQUEST_WITH_SEGMENT_NUMBERS);
-        $exception = $this->getTestServerException();
-        $extracted = $exception->extractErrorsForReference(array_map(function ($segment) {
-            /* @var BaseSegment $segment */
-            return $segment->getSegmentNumber();
-        }, $request->plainSegments));
-        $this->assertCount(1, $exception->getErrors()); // HIRMG
-        $this->assertCount(0, $exception->getWarnings()); // No warnings remain
-        $this->assertCount(1, $extracted->getErrors()); // HIRMS 9010
-        $this->assertCount(2, $extracted->getWarnings()); // 3076 and 3070
     }
 }
