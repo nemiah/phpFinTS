@@ -43,11 +43,10 @@ class GetTanMedia extends BaseAction
 
     /**
      * @return TanMediumListe[]|null
-     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getTanMedia(): ?array
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->tanMedia;
     }
 }

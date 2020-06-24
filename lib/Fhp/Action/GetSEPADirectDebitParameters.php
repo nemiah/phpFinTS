@@ -63,7 +63,7 @@ class GetSEPADirectDebitParameters extends BaseAction
      */
     public function getMinimalLeadTime(): ?MinimaleVorlaufzeitSEPALastschrift
     {
-        //$this->ensureSuccess();
+        //$this->ensureDone();
         return $this->minimalLeadTime;
     }
 }

@@ -8,7 +8,6 @@ use Fhp\Model\TanRequest;
 use Fhp\Protocol\ActionIncompleteException;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
-use Fhp\Protocol\ServerException;
 use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
@@ -54,9 +53,7 @@ abstract class BaseAction implements \Serializable
     private $paginationToken;
 
     /** @var bool */
-    private $isAvailable;
-    /** @var ServerException|UnexpectedResponseException|\RuntimeException|null */
-    private $error;
+    private $isDone;
 
     /**
      * Will be populated with the message the bank sent along with the success indication, can be used to show to
@@ -88,30 +85,12 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * @return bool Whether the underlying operation has completed (whether successfully or not) and the result or error
-     *     message in this future is available. Note: If this returns false, check {@link needsTan()}.
+     * @return bool Whether the underlying operation has completed successfully and the result in this "future" is
+     *     available. Note: If this returns false, check {@link needsTan()}.
      */
-    public function isAvailable(): bool
+    public function isDone(): bool
     {
-        return $this->isAvailable;
-    }
-
-    /**
-     * @return bool Whether the underlying operation has completed successfully and the result in this future is
-     *     available.
-     */
-    public function isSuccess(): bool
-    {
-        return $this->isAvailable && $this->error === null;
-    }
-
-    /**
-     * @return bool Whether the underlying operation has completed unsuccessfully and the {@link getError()} is
-     *     available.
-     */
-    public function isError(): bool
-    {
-        return $this->isAvailable && $this->error !== null;
+        return $this->isDone;
     }
 
     /**
@@ -120,7 +99,7 @@ abstract class BaseAction implements \Serializable
      */
     public function needsTan(): bool
     {
-        return !$this->isAvailable && $this->tanRequest !== null;
+        return !$this->isDone && $this->tanRequest !== null;
     }
 
     public function getTanRequest(): ?TanRequest
@@ -134,7 +113,7 @@ abstract class BaseAction implements \Serializable
      */
     public function hasMorePages(): bool
     {
-        return !$this->isAvailable && $this->paginationToken !== null;
+        return !$this->isDone && $this->paginationToken !== null;
     }
 
     /**
@@ -147,45 +126,25 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * @return ServerException|UnexpectedResponseException|\RuntimeException|null
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * @throws \Exception If the action failed.
-     */
-    public function maybeThrowError()
-    {
-        if ($this->error !== null) {
-            throw $this->error;
-        }
-    }
-
-    /**
-     * Throws an error unless this action has been successfully executed, i.e. in the following cases:
-     *  - the action has not been {@link FinTs::execute()}-d at all,
-     *  - the action is awaiting a TAN that first needs to be supplied with {@link FinTs::submitTan()},
-     *  - the action was executed but the bank reported a failure.
+     * Throws an exception unless this action has been successfully executed, i.e. in the following cases:
+     *  - the action has not been {@link FinTs::execute()}-d at all or the {@link FinTs::execute()} call for it threw an
+     *    exception,
+     *  - the action is awaiting a TAN that first needs to be supplied with {@link FinTs::submitTan()}.
      *
      * After executing an action, you can use this function to make sure that it succeeded. This is especially useful
-     * for actions that don't have any results (as each result getter would call {@link ensureSuccess()} internally).
+     * for actions that don't have any results (as each result getter would call {@link ensureDone()} internally).
      * On the other hand, you do not need to call this function if you make sure that (1) you called
      * {@link FinTs::execute()} and (2) you checked {@link needsTan()} and, if it returned true, supplied a TAN by
-     * calling {@ink FinTs::submitTan()}.
+     * calling {@ink FinTs::submitTan()}. Note that both exception types thrown from this method are sub-classes of
+     * {@link \RuntimeException}, so you shouldn't need a try-catch block at the call site for this.
      * @throws ActionIncompleteException If the action hasn't even been executed.
      * @throws TanRequiredException If the action needs a TAN.
-     * @throws \Exception If the action failed. Note that this is the same exception that you would also have received
-     *     from {@link FinTs::execute()} or {@ink FinTs::submitTan()} before.
      */
-    public function ensureSuccess()
+    public function ensureDone()
     {
-        $this->maybeThrowError();
         if ($this->tanRequest !== null) {
             throw new TanRequiredException($this->tanRequest);
-        } elseif (!$this->isAvailable) {
+        } elseif (!$this->isDone) {
             throw new ActionIncompleteException();
         }
     }
@@ -200,7 +159,7 @@ abstract class BaseAction implements \Serializable
      * @return BaseSegment|BaseSegment[] A segment or a series of segments that should be sent to the bank server.
      *     Note that an action can return an empty array to indicate that it does not need to make a request to the
      *     server, but can instead compute the result just from the BPD/UPD, in which case it should set
-     *     `$this->isAvailable = true;` already in {@link createRequest()} and {@link processResponse()} will never
+     *     `$this->isDone = true;` already in {@link createRequest()} and {@link processResponse()} will never
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
@@ -220,7 +179,7 @@ abstract class BaseAction implements \Serializable
         $pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION);
         if ($pagination === null) {
             $this->paginationToken = null;
-            $this->isAvailable = true;
+            $this->isDone = true;
 
             $info = $response->findRueckmeldungen(Rueckmeldungscode::AUSGEFUEHRT);
             if (count($info) === 0) {
@@ -237,16 +196,6 @@ abstract class BaseAction implements \Serializable
             }
             $this->paginationToken = $pagination->rueckmeldungsparameter[0];
         }
-    }
-
-    /**
-     * @param \Exception $error The error that occurred when executing this action.
-     */
-    public function processError(\Exception $error, ?BPD $bpd = null, ?UPD $upd = null)
-    {
-        unset($bpd, $upd); // These parameters are used in sub-classes.
-        $this->isAvailable = true;
-        $this->error = $error;
     }
 
     /** @return int[] */

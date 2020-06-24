@@ -99,32 +99,29 @@ class GetStatementOfAccount extends BaseAction
 
     /**
      * @return string The raw MT940 data received from the server.
-     * @throws \Exception See {@link ensureSuccess()}.
      * @noinspection PhpUnused
      */
     public function getRawMT940(): string
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->rawMT940;
     }
 
     /**
      * @return array The parsed MT940 data.
-     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getParsedMT940(): array
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->parsedMT940;
     }
 
     /**
      * @return StatementOfAccount
-     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getStatement()
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->statement;
     }
 

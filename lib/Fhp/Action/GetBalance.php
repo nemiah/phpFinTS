@@ -67,11 +67,10 @@ class GetBalance extends BaseAction
 
     /**
      * @return HISAL[]
-     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getBalances()
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->response;
     }
 

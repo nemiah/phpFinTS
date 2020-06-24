@@ -2,6 +2,10 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
+use Fhp\CurlException;
+use Fhp\Protocol\ServerException;
+use Fhp\Protocol\UnexpectedResponseException;
+
 /**
  * SAMPLE - Creates a new FinTs instance (init.php) and makes sure its logged in.
  */
@@ -25,7 +29,7 @@ $fints = require_once 'init.php';
  * but it is also possible to interrupt the PHP execution entirely while asking for the TAN.
  *
  * @param \Fhp\BaseAction $action Some action that requires a TAN.
- * @throws \Exception See {@link FinTs::execute()} for details on the exception types.
+ * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
 function handleTan(\Fhp\BaseAction $action)
 {

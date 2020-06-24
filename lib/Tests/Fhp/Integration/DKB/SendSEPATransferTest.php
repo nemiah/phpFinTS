@@ -108,7 +108,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
         $this->expectMessage(static::SEND_TAN_REQUEST, static::SEND_TAN_RESPONSE);
         $this->fints->submitTan($sendTransfer, '666555');
         $this->assertFalse($sendTransfer->needsTan());
-        $this->assertTrue($sendTransfer->isSuccess());
+        $this->assertTrue($sendTransfer->isDone());
     }
 
     /**

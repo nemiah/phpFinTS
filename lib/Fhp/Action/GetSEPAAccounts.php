@@ -39,11 +39,10 @@ class GetSEPAAccounts extends BaseAction
 
     /**
      * @return SEPAAccount[]
-     * @throws \Exception See {@link ensureSuccess()}.
      */
     public function getAccounts()
     {
-        $this->ensureSuccess();
+        $this->ensureDone();
         return $this->accounts;
     }
 
