@@ -37,7 +37,7 @@ class MessageBuilder
         return $this;
     }
 
-    private function addInternal($segment)
+    private function addInternal(BaseSegment $segment)
     {
         if ($segment->segmentkopf === null) {
             throw new \InvalidArgumentException(

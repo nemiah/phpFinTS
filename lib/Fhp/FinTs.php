@@ -283,22 +283,30 @@ class FinTs
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
 
-        // Let the BaseAction implementation build its request segments.
-        $requestSegments = $action->createRequest($this->bpd, $this->upd);
-        $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
-        if (count($requestSegments) === 0) {
-            return; // No request needed.
-        }
-        $this->checkPaginationToken($action, $requestSegments);
-
-        // Construct the full request message.
-        $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
-        if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
-            $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
-            if ($needTanForSegment !== null) {
-                $message->add(HKTANv6::createProzessvariante2Step1(
-                    $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
+        if (($message = $action->getMessage()) === null) {
+            // Let the BaseAction implementation build its request segments.
+            $requestSegments = $action->createRequest($this->bpd, $this->upd);
+            $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
+            if (count($requestSegments) === 0) {
+                return; // No request needed.
             }
+            $this->checkPaginationToken($action, $requestSegments);
+
+            // Construct the full request message.
+            $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
+            if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
+                $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
+                if ($needTanForSegment !== null) {
+                    $message->add(HKTANv6::createProzessvariante2Step1(
+                        $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
+                }
+            }
+            // Only store constructed message when there is only one request segment
+            if (count($requestSegments) === 1) {
+                $action->setMessage($message);
+            }
+        } else {
+            $requestSegments = [$message->segments[0]];
         }
         $request = $this->buildMessage($message, $this->getSelectedTanMode());
         $action->setRequestSegmentNumbers(array_map(function ($segment) {

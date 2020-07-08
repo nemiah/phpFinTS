@@ -8,12 +8,14 @@ use Fhp\Model\TanRequest;
 use Fhp\Protocol\ActionIncompleteException;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
+use Fhp\Protocol\MessageBuilder;
 use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
+use Fhp\Segment\PaginateableInterface;
 
 /**
  * Base class for actions that can be performed against a bank server. On a high level, there are two kinds of actions:
@@ -38,6 +40,9 @@ abstract class BaseAction implements \Serializable
 {
     /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link createRequest()}. */
     private $requestSegmentNumbers;
+
+    /** @var ?MessageBuilder Stores the message that is the result of processing the segment created by @createRequest() */
+    private $message = null;
 
     /**
      * If set, the last response from the server regarding this action asked for a TAN from the user.
@@ -75,13 +80,13 @@ abstract class BaseAction implements \Serializable
         if (!$this->needsTan()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
         }
-        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken]);
+        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken, $this->message]);
     }
 
     /** {@inheritdoc} */
     public function unserialize($serialized)
     {
-        list($this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken) = unserialize($serialized);
+        list($this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken, $this->message) = unserialize($serialized);
     }
 
     /**
@@ -224,5 +229,21 @@ abstract class BaseAction implements \Serializable
     final public function setTanRequest(?TanRequest $tanRequest)
     {
         $this->tanRequest = $tanRequest;
+    }
+
+    final public function setMessage(MessageBuilder $message)
+    {
+        $this->message = $message;
+    }
+
+    final public function getMessage()
+    {
+        if ($this->getPaginationToken() !== null && $this->message instanceof MessageBuilder) {
+            $requestSegment = $this->message->segments[0];
+            if ($requestSegment instanceof PaginateableInterface) {
+                $requestSegment->setPaginationToken($this->getPaginationToken());
+            }
+        }
+        return $this->message;
     }
 }

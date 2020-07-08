@@ -3,6 +3,8 @@
 namespace Fhp\Segment\KAZ;
 
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\PaginateableInterface;
+use Fhp\Segment\PaginateableTrait;
 
 /**
  * Segment: Kontoumsätze anfordern/Zeitraum (Version 4)
@@ -11,8 +13,10 @@ use Fhp\Segment\BaseSegment;
  * File: Gesamtdok_HBCI210.pdf
  * Section: VII.2.1.1 a)
  */
-class HKKAZv4 extends BaseSegment
+class HKKAZv4 extends BaseSegment implements PaginateableInterface
 {
+    use PaginateableTrait;
+
     /** @var \Fhp\Segment\Common\Kto */
     public $kontoverbindungAuftraggeber;
     /** @var string|null */
