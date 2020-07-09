@@ -3,8 +3,7 @@
 namespace Fhp\Segment\KAZ;
 
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\PaginateableInterface;
-use Fhp\Segment\PaginateableTrait;
+use Fhp\Segment\Paginateable;
 
 /**
  * Segment: Kontoumsätze anfordern/Zeitraum (Version 4)
@@ -13,10 +12,8 @@ use Fhp\Segment\PaginateableTrait;
  * File: Gesamtdok_HBCI210.pdf
  * Section: VII.2.1.1 a)
  */
-class HKKAZv4 extends BaseSegment implements PaginateableInterface
+class HKKAZv4 extends BaseSegment implements Paginateable
 {
-    use PaginateableTrait;
-
     /** @var \Fhp\Segment\Common\Kto */
     public $kontoverbindungAuftraggeber;
     /** @var string|null */
@@ -38,5 +35,10 @@ class HKKAZv4 extends BaseSegment implements PaginateableInterface
         $result->bisDatum = $bisDatum === null ? null : $bisDatum->format('Ymd');
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
+    }
+
+    public function setPaginationToken(string $paginationToken)
+    {
+        $this->aufsetzpunkt = $paginationToken;
     }
 }

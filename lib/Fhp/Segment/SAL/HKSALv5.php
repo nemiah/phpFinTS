@@ -3,8 +3,7 @@
 namespace Fhp\Segment\SAL;
 
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\PaginateableInterface;
-use Fhp\Segment\PaginateableTrait;
+use Fhp\Segment\Paginateable;
 
 /**
  * Segment: Saldenabfrage (Version 5)
@@ -13,10 +12,8 @@ use Fhp\Segment\PaginateableTrait;
  * File: HBCI22 Final.pdf
  * Section: VII.2.2 a)
  */
-class HKSALv5 extends BaseSegment implements PaginateableInterface
+class HKSALv5 extends BaseSegment implements Paginateable
 {
-    use PaginateableTrait;
-
     /** @var \Fhp\Segment\Common\KtvV3 */
     public $kontoverbindungAuftraggeber;
     /** @var bool */
@@ -33,5 +30,10 @@ class HKSALv5 extends BaseSegment implements PaginateableInterface
         $result->alleKonten = $alleKonten;
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
+    }
+
+    public function setPaginationToken(string $paginationToken)
+    {
+        $this->aufsetzpunkt = $paginationToken;
     }
 }

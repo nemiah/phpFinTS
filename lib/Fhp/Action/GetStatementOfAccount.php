@@ -2,13 +2,13 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
 use Fhp\MT940\MT940Exception;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
@@ -29,7 +29,7 @@ use Fhp\UnsupportedException;
  * Retrieves statements for one specific account or for all accounts that the user has access to. A statement is a
  * series of financial transactions that pertain to the account, grouped by day.
  */
-class GetStatementOfAccount extends BaseAction
+class GetStatementOfAccount extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */

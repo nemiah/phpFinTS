@@ -26,7 +26,6 @@ use Fhp\Segment\TAN\HITANv6;
 use Fhp\Segment\TAN\HKTANv6;
 use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Syntax\InvalidResponseException;
-use Fhp\Syntax\Serializer;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -283,31 +282,22 @@ class FinTs
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
 
-        if (($message = $action->getMessage()) === null) {
-            // Let the BaseAction implementation build its request segments.
-            $requestSegments = $action->createRequest($this->bpd, $this->upd);
-            $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
-            if (count($requestSegments) === 0) {
-                return; // No request needed.
-            }
-            $this->checkPaginationToken($action, $requestSegments);
+        $requestSegments = $action->getNextRequest($this->bpd, $this->upd);
 
-            // Construct the full request message.
-            $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
-            if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
-                $needTanForSegment = $this->bpd->tanRequiredForRequest($requestSegments);
-                if ($needTanForSegment !== null) {
-                    $message->add(HKTANv6::createProzessvariante2Step1(
-                        $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
-                }
-            }
-            // Only store constructed message when there is only one request segment
-            if (count($requestSegments) === 1) {
-                $action->setMessage($message);
-            }
-        } else {
-            $requestSegments = [$message->segments[0]];
+        if (count($requestSegments) === 0) {
+            return; // No request needed.
         }
+
+        // Construct the full request message.
+        $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
+
+        if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
+            if ($action->needTanForSegment !== null) {
+                $message->add(HKTANv6::createProzessvariante2Step1(
+                    $this->requireTanMode(), $this->selectedTanMedium, $action->needTanForSegment));
+            }
+        }
+
         $request = $this->buildMessage($message, $this->getSelectedTanMode());
         $action->setRequestSegmentNumbers(array_map(function ($segment) {
             /* @var BaseSegment $segment */
@@ -338,7 +328,7 @@ class FinTs
 
         // If no TAN is needed, process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
-        if ($action->hasMorePages()) {
+        if ($action instanceof PaginateableAction && $action->hasMorePages()) {
             $this->execute($action);
         }
     }
@@ -395,7 +385,7 @@ class FinTs
 
         // Process the response normally, and maybe keep going for more pages.
         $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
-        if ($action->hasMorePages()) {
+        if ($action instanceof PaginateableAction && $action->hasMorePages()) {
             $this->execute($action);
         }
     }
@@ -689,30 +679,6 @@ class FinTs
             $this->connection->disconnect();
             $this->connection = null;
         }
-    }
-
-    /**
-     * Ensures that the action included its pagination token in the request, if it has one. This is to prevent infinite
-     * loops of requests for the first page in case an action does not (properly) implement pagination.
-     * @param BaseAction $action An action that is about to be executed.
-     * @param BaseSegment[] $requestSegments The segments that the action built as its request.
-     * @throws UnsupportedException If the action has a pagination token from a previous execution, but did not include
-     *     it in the request, i.e. it does not appear to support pagination even though it should.
-     */
-    private function checkPaginationToken(BaseAction $action, array $requestSegments)
-    {
-        $token = $action->getPaginationToken();
-        if ($token === null) {
-            return;
-        }
-        $token = Serializer::serializeDataElement($token, 'string');
-        foreach ($requestSegments as $segment) {
-            if (strpos($segment->serialize(), $token) !== false) {
-                return;
-            }
-        }
-        throw new UnsupportedException(
-            'The action has a pagination token but does not appear to support pagination: ' . get_class($action));
     }
 
     /**

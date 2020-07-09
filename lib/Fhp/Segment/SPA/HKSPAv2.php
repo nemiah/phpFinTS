@@ -3,8 +3,7 @@
 namespace Fhp\Segment\SPA;
 
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\PaginateableInterface;
-use Fhp\Segment\PaginateableTrait;
+use Fhp\Segment\Paginateable;
 
 /**
  * Segment: SEPA-Kontoverbindung anfordern (Version 2)
@@ -12,10 +11,8 @@ use Fhp\Segment\PaginateableTrait;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section C.10.1.4 a)
  */
-class HKSPAv2 extends BaseSegment implements PaginateableInterface
+class HKSPAv2 extends BaseSegment implements Paginateable
 {
-    use PaginateableTrait;
-
     /**
      * If left empty, all accounts will be returned.
      * @var \Fhp\Segment\Common\KtvV3[]|null @Max(999)
@@ -25,4 +22,9 @@ class HKSPAv2 extends BaseSegment implements PaginateableInterface
     public $maximaleAnzahlEintraege;
     /** @var string|null For pagination. */
     public $aufsetzpunkt;
+
+    public function setPaginationToken(string $paginationToken)
+    {
+        $this->aufsetzpunkt = $paginationToken;
+    }
 }

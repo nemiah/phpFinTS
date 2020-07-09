@@ -3,8 +3,7 @@
 namespace Fhp\Segment\CAZ;
 
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\PaginateableInterface;
-use Fhp\Segment\PaginateableTrait;
+use Fhp\Segment\Paginateable;
 
 /**
  * Segment: Kontoumsätze/Zeitraum (camt)
@@ -12,10 +11,8 @@ use Fhp\Segment\PaginateableTrait;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.2.3.1.1.1
  */
-class HKCAZv1 extends BaseSegment implements PaginateableInterface
+class HKCAZv1 extends BaseSegment implements Paginateable
 {
-    use PaginateableTrait;
-
     /** @var \Fhp\Segment\Common\Kti */
     public $kontoverbindungInternational;
 
@@ -45,5 +42,10 @@ class HKCAZv1 extends BaseSegment implements PaginateableInterface
         $result->aufsetzpunkt = $aufsetzpunkt;
 
         return $result;
+    }
+
+    public function setPaginationToken(string $paginationToken)
+    {
+        $this->aufsetzpunkt = $paginationToken;
     }
 }

@@ -54,6 +54,8 @@ class GetSEPADirectDebitParameters extends BaseAction
 
         $this->minimalLeadTime = $hidxes->getParameter()->getMinimalLeadTime($this->seqType, $this->coreType);
 
+        $this->isDone = true;
+
         // No request to the bank required
         return [];
     }

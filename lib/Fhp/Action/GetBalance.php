@@ -2,8 +2,8 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
@@ -22,7 +22,7 @@ use Fhp\UnsupportedException;
 /**
  * Runs an HKSAL request the current balance of the given account.
  */
-class GetBalance extends BaseAction
+class GetBalance extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
