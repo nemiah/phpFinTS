@@ -2,11 +2,16 @@
 
 namespace Tests\Fhp\Integration\GLS;
 
+use Fhp\Model\SEPAAccount;
 use Tests\Fhp\FinTsTestCase;
 
 class GLSIntegrationTestBase extends FinTsTestCase
 {
+    const TEST_USERNAME = 'PRIVATE__';
+    const TEST_PIN = 'PRIVATE_____________';
     const TEST_BANK_CODE = '43060967';
+    const TEST_TAN_MODE = '942';
+    const TEST_KUNDENSYSTEM_ID = 'FAKEKUNDENSYSTE';
 
     // Anonymous dialog to fetch BPD (HKVVB, then HKEND).
     const ANONYMOUS_INIT_REQUEST = "HNHBK:1:3+000000000145+300+0+1'HKIDN:2:2+280:43060967+9999999999+0+0'HKVVB:3:3+0+0+0+123456789ABCDEF0123456789+1.0'HKTAN:4:6+4+HKIDN'HNHBS:5:1+1'";
@@ -14,15 +19,71 @@ class GLSIntegrationTestBase extends FinTsTestCase
     const ANONYMOUS_END_REQUEST = "HNHBK:1:3+000000000083+300+FAKEDIALOGIDabc+2'HKEND:2:1+FAKEDIALOGIDabc'HNHBS:3:1+2'";
     const ANONYMOUS_END_RESPONSE = "HNHBK:1:3+000000000141+300+FAKEDIALOGIDabc+2+FAKEDIALOGIDabc:2'HIRMG:2:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.'HNHBS:3:1+2'";
 
+    const SYNC_REQUEST = "HNHBK:1:3+000000000400+300+0+1'HNVSK:998:3+PIN:1+998+1+1::0+1:20190102:030405+2:2:13:@8@00000000:5:1+280:43060967:PRIVATE__:V:0:0+0'HNVSD:999:1+@238@HNSHK:2:4+PIN:1+999+9999999+1+1+1::0+1+1:20190102:030405+1:999:1+6:10:19+280:43060967:PRIVATE__:S:0:0'HKIDN:3:2+280:43060967+PRIVATE__+0+1'HKVVB:4:3+10+0+0+123456789ABCDEF0123456789+1.0'HKSYN:5:3+0'HNSHA:6:2+9999999++PRIVATE_____________''HNHBS:7:1+1'";
+
+    const SYNC_RESPONSE = "HNHBK:1:3+000000000589+300+FAKEDIALOGIDabc+1+FAKEDIALOGIDabc:1'HNVSK:998:3+PIN:1+998+1+2::0+1:20200708:130857+2:2:13:@8@00000000:5:1+280:43060967:PRIVATE__:V:0:0+0'HNVSD:999:1+@395@HNSHK:2:4+PIN:1+999+9999999+1+1+2::0+1+1:20200708:130857+1:999:1+6:10:19+280:43060967:PRIVATE__:S:0:0'HIRMG:3:2+3060::Bitte beachten Sie die enthaltenen Warnungen/Hinweise.'HIRMS:4:2:5+0020::Auftrag ausgeführt.'HIRMS:5:2:4+3920::Zugelassene TAN-Verfahren für den Benutzer:942+0901::*PIN gültig.+0020::*Dialoginitialisierung erfolgreich'HISYN:6:4:5+FAKEKUNDENSYSTEMIDabcdefghij'HNSHA:7:2+9999999''HNHBS:8:1+1'";
+
+    const SYNC_END_REQUEST = "HNHBK:1:3+000000000398+300+FAKEDIALOGIDabc+2'HNVSK:998:3+PIN:1+998+1+1::FAKEKUNDENSYSTEMIDabcdefghij+1:20190102:030405+2:2:13:@8@00000000:5:1+280:43060967:PRIVATE__:V:0:0+0'HNVSD:999:1+@195@HNSHK:2:4+PIN:1+999+9999999+1+1+1::FAKEKUNDENSYSTEMIDabcdefghij+1+1:20190102:030405+1:999:1+6:10:19+280:43060967:PRIVATE__:S:0:0'HKEND:3:1+FAKEDIALOGIDabc'HNSHA:4:2+9999999++PRIVATE_____________''HNHBS:5:1+2'";
+    const SYNC_END_RESPONSE = "HNHBK:1:3+000000000402+300+FAKEKUNDENSYSTE+2+FAKEKUNDENSYSTE:2'HNVSK:998:3+PIN:1+998+1+2::FAKEDIALOGIDabcdefghijklmnop+1+2:2:13:@8@00000000:5:1+280:43060967:PRIVATE__:V:0:0+0'HNVSD:999:1+@197@HNSHK:2:4+PIN:1+999+5357538+1+1+2::FAKEDIALOGIDabcdefghijklmnop+1+1+1:999:1+6:10:19+280:43060967:PRIVATE__:S:0:0'HIRMG:3:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.'HNSHA:4:2+5357538''HNHBS:5:1+2'";
+
+    // Dialog initialization for main dialog (HKVVB). As this is the first time we use strong authentication, we get the UPD.
+    // Also, using strong (=regular) authentication allows us to leave off the HNHBK/HNVSD wrapper here and let FinTsTestCase handle it.
+    const INIT_REQUEST = "HKIDN:3:2+280:43060967+PRIVATE__+FAKEKUNDENSYSTEMIDabcdefghij+1'HKVVB:4:3+10+0+0+123456789ABCDEF0123456789+1.0'HKTAN:5:6+4+HKIDN'";
+    const INIT_RESPONSE = "HIRMG:3:2+3060::Bitte beachten Sie die enthaltenen Warnungen/Hinweise.'HIRMS:4:2:4+3050::UPD nicht mehr aktuell, aktuelle Version enthalten.+3920::Zugelassene TAN-Verfahren für den Benutzer:942+0901::*PIN gültig.+0020::*Dialoginitialisierung erfolgreich'HIRMS:5:2:5+3076::Starke Kundenauthentifizierung nicht notwendig.'HIUPA:6:4:4+PRIVATE__+703+0'" .
+        "HIUPD:7:6:4+PRIVATE___::280:43060967+DExxABCDEFGH1234567890+PRIVATE__+1+EUR+PRIVATE__________________++Kontokorrent++HKSAK:1+HKISA:1+HKSSP:1+HKCAZ:1+HKEKA:1+HKKAU:1+HKDDB:1+HKCDB:1+HKPSP:1+HKBML:1+HKBSL:1+HKDML:1+HKCML:1+HKDSL:1+HKCSL:1+HKDDL:1+HKCDL:1+HKPAE:1+HKDVK:1+HKPPD:1+HKBSA:1+HKDSA:1+HKCSA:1+HKDDN:1+HKCDN:1+HKBMB:1+HKBBS:1+HKDMB:1+HKCMB:1+HKDBS:1+HKCSB:1+HKCUB:1+HKKAA:1+HKPOF:1+HKQTG:1+HKSPA:1+HKDSB:1+HKIPZ:1+HKIPS:1+HKCCM:1+HKCUM:1+HKCCS:1+HKDDE:1+HKCDE:1+HKBME:1+HKBSE:1+HKDME:1+HKCME:1+HKDSE:1+HKCSE:1+HKDMC:1+HKDSC:1+HKDSW:1+HKSAL:1+HKKIF:1+HKKAZ:1+HKAUB:1+GKVPU:1+GKVPD:1+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++{\"umsltzt\"?:\"2020-07-08-13.08.57.000642\"}'" .
+        "HIUPD:8:6:4+PRIVATE___::280:43060967+DExxABCDEFGH1234567890+PRIVATE__+1+EUR+PRIVATE__________________++Kontokorrent++HKSAK:1+HKISA:1+HKSSP:1+HKCAZ:1+HKEKA:1+HKKAU:1+HKDDB:1+HKCDB:1+HKPSP:1+HKBML:1+HKBSL:1+HKDML:1+HKCML:1+HKDSL:1+HKCSL:1+HKDDL:1+HKCDL:1+HKPAE:1+HKDVK:1+HKPPD:1+HKBSA:1+HKDSA:1+HKCSA:1+HKDDN:1+HKCDN:1+HKBMB:1+HKBBS:1+HKDMB:1+HKCMB:1+HKDBS:1+HKCSB:1+HKCUB:1+HKKAA:1+HKPOF:1+HKQTG:1+HKSPA:1+HKDSB:1+HKIPZ:1+HKIPS:1+HKCCM:1+HKCUM:1+HKCCS:1+HKDDE:1+HKCDE:1+HKBME:1+HKBSE:1+HKDME:1+HKCME:1+HKDSE:1+HKCSE:1+HKDMC:1+HKDSC:1+HKDSW:1+HKSAL:1+HKKIF:1+HKKAZ:1+HKAUB:1+GKVPU:1+GKVPD:1+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++{\"umsltzt\"?:\"2020-07-08-12.02.19.000836\"}'" .
+        "HITAN:16:6:5+4++noref+nochallenge'"
+    ;
+
+    // Dialog end for main dialog (HKEND).
+    const FINAL_END_REQUEST = "HKEND:3:1+FAKEDIALOGIDabcdefghijklmnopqr'";
+    const FINAL_END_RESPONSE = "HIRMG:3:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.'";
+
     /**
      * Executes dialog synchronization and initialization, so that BPD and UPD are filled.
      * @throws \Throwable
      */
     protected function InitAnonymous()
     {
-        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);
-        $this->expectMessage(static::ANONYMOUS_END_REQUEST, static::ANONYMOUS_END_RESPONSE);
+        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, utf8_decode(static::ANONYMOUS_INIT_RESPONSE));
+        $this->expectMessage(static::ANONYMOUS_END_REQUEST, utf8_decode(static::ANONYMOUS_END_RESPONSE));
 
         $this->fints->getBpd();
+    }
+
+    /**
+     * Executes dialog synchronization and initialization, so that BPD and UPD are filled.
+     * @throws \Throwable
+     */
+    protected function initDialog()
+    {
+        // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
+        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, utf8_decode(static::ANONYMOUS_INIT_RESPONSE));
+        $this->expectMessage(static::ANONYMOUS_END_REQUEST, utf8_decode(static::ANONYMOUS_END_RESPONSE));
+
+        // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
+        $this->expectMessage(static::SYNC_REQUEST, utf8_decode(static::SYNC_RESPONSE));
+        $this->expectMessage(static::SYNC_END_REQUEST, utf8_decode(static::SYNC_END_RESPONSE));
+
+        // And finally it can initialize the main dialog.
+        $this->expectMessage(static::INIT_REQUEST, utf8_decode(static::INIT_RESPONSE));
+
+        $this->fints->selectTanMode(intval(static::TEST_TAN_MODE));
+        $login = $this->fints->login();
+        $login->ensureDone(); // No TAN required upon login.*/
+        $this->assertAllMessagesSeen();
+    }
+
+    /**
+     * @return SEPAAccount
+     */
+    protected function getTestAccount()
+    {
+        $sepaAccount = new SEPAAccount();
+        $sepaAccount->setIban('DExxABCDEFGH1234567890');
+        $sepaAccount->setBic('GENODEM1GLS');
+        $sepaAccount->setAccountNumber('1234567890');
+        $sepaAccount->setBlz(self::TEST_BANK_CODE);
+        return $sepaAccount;
     }
 }
