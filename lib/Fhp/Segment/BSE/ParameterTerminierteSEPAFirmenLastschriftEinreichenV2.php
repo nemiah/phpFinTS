@@ -14,9 +14,11 @@ abstract class ParameterTerminierteSEPAFirmenLastschriftEinreichenV2 extends Bas
     /** @var string */
     public $maximaleVorlaufzeitCodiert;
 
-    public function getMinimalLeadTime(string $seqType, string $coreType = 'CORE'): ?MinimaleVorlaufzeitSEPALastschrift
+    /** @return MinimaleVorlaufzeitSEPALastschrift[] */
+    public function getMinimalLeadTime(string $seqType)
     {
-        $parsed = MinimaleVorlaufzeitSEPALastschrift::parseCodedB2B($this->minimaleVorlaufzeitCodiert);
-        return $parsed[$seqType] ?? null;
+        return array_map(function ($value) use ($seqType) {
+            return $value[$seqType] ?? null;
+        }, MinimaleVorlaufzeitSEPALastschrift::parseCodedB2B($this->minimaleVorlaufzeitCodiert));
     }
 }

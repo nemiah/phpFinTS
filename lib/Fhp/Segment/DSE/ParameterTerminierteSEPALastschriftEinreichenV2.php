@@ -12,9 +12,10 @@ abstract class ParameterTerminierteSEPALastschriftEinreichenV2 extends BaseDeg i
     /** @var string */
     public $maximaleVorlaufzeitCodiert;
 
-    public function getMinimalLeadTime(string $seqType, string $coreType = 'CORE'): ?MinimaleVorlaufzeitSEPALastschrift
+    public function getMinimalLeadTime(string $seqType)
     {
-        $parsed = MinimaleVorlaufzeitSEPALastschrift::parseCoded($this->minimaleVorlaufzeitCodiert);
-        return $parsed[$coreType][$seqType] ?? null;
+        return array_map(function ($value) use ($seqType) {
+            return $value[$seqType] ?? null;
+        }, MinimaleVorlaufzeitSEPALastschrift::parseCoded($this->minimaleVorlaufzeitCodiert));
     }
 }

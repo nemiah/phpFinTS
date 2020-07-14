@@ -64,14 +64,14 @@ class MinimaleVorlaufzeitSEPALastschrift
         return $result;
     }
 
-    /** @return MinimaleVorlaufzeitSEPALastschrift[]|array */
+    /** @return MinimaleVorlaufzeitSEPALastschrift[][]|array */
     public static function parseCodedB2B(string $coded): array
     {
         $result = [];
         foreach (array_chunk(explode(';', $coded), 3) as list($sequenceTypeCodiert, $minimaleSEPAVorlaufzeit, $cutOffZeit)) {
             $seqTypes = self::SEQUENCE_TYPE_CODIERT[$sequenceTypeCodiert] ?? [];
             foreach ($seqTypes as $seqType) {
-                $result[$seqType] = MinimaleVorlaufzeitSEPALastschrift::create($minimaleSEPAVorlaufzeit, $cutOffZeit, null, $sequenceTypeCodiert);
+                $result['B2B'][$seqType] = MinimaleVorlaufzeitSEPALastschrift::create($minimaleSEPAVorlaufzeit, $cutOffZeit, null, $sequenceTypeCodiert);
             }
         }
         return $result;

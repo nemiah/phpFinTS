@@ -4,5 +4,6 @@ namespace Fhp\Segment\DSE;
 
 interface SEPADirectDebitMinimalLeadTimeProvider
 {
-    public function getMinimalLeadTime(string $seqType, string $coreType = 'CORE'): ?MinimaleVorlaufzeitSEPALastschrift;
+    /** @return MinimaleVorlaufzeitSEPALastschrift|MinimaleVorlaufzeitSEPALastschrift[]*/
+    public function getMinimalLeadTime(string $seqType);
 }

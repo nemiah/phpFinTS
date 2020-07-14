@@ -18,7 +18,7 @@ class ParameterTerminierteSEPAEinzellastschriftEinreichenV1 extends BaseDeg impl
     /** @var int */
     public $maximaleVorlaufzeitFRSTOOFF;
 
-    public function getMinimalLeadTime(string $seqType, string $coreType = 'CORE'): ?MinimaleVorlaufzeitSEPALastschrift
+    public function getMinimalLeadTime(string $seqType): ?MinimaleVorlaufzeitSEPALastschrift
     {
         $leadTime = in_array($seqType, ['FRST', 'OOFF']) ? $this->minimaleVorlaufzeitFRSTOOFF : $this->minimaleVorlaufzeitFNALRCUR;
         return MinimaleVorlaufzeitSEPALastschrift::create($leadTime, '235959');

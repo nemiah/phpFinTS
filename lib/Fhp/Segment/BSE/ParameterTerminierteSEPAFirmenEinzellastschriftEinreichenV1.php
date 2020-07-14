@@ -20,7 +20,7 @@ class ParameterTerminierteSEPAFirmenEinzellastschriftEinreichenV1 extends BaseDe
     /** @var int */
     public $maximaleVorlaufzeitFRSTOOFF;
 
-    public function getMinimalLeadTime(string $seqType, string $coreType = 'B2B'): ?MinimaleVorlaufzeitSEPALastschrift
+    public function getMinimalLeadTime(string $seqType): ?MinimaleVorlaufzeitSEPALastschrift
     {
         $leadTime = in_array($seqType, ['FRST', 'OOFF']) ? $this->minimaleVorlaufzeitFRSTOOFF : $this->minimaleVorlaufzeitFNALRCUR;
         return MinimaleVorlaufzeitSEPALastschrift::create($leadTime, '235959');

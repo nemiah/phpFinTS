@@ -14,10 +14,10 @@ use Fhp\Segment\DSE\MinimaleVorlaufzeitSEPALastschrift;
 class GetSEPADirectDebitParameters extends BaseAction
 {
     const SEQUENCE_TYPES = ['FRST', 'OOFF', 'FNAL', 'RCUR'];
-    const CORE_TYPES = ['CORE', 'COR1', 'B2B'];
+    const DIRECT_DEBIT_TYPES = ['CORE', 'COR1', 'B2B'];
 
     /** @var string */
-    private $coreType;
+    private $directDebitType;
 
     /** @var string */
     private $seqType;
@@ -28,49 +28,51 @@ class GetSEPADirectDebitParameters extends BaseAction
     /** @var HIDXES */
     private $hidxes;
 
-    public static function create(string $seqType, bool $singleDirectDebit, string $coreType = 'CORE')
+    public static function create(string $seqType, bool $singleDirectDebit, string $directDebitType = 'CORE')
     {
-        if (!in_array($coreType, self::CORE_TYPES)) {
-            throw new \InvalidArgumentException('Unknown CORE type, possible values are ' . implode(', ', self::CORE_TYPES));
+        if (!in_array($directDebitType, self::DIRECT_DEBIT_TYPES)) {
+            throw new \InvalidArgumentException('Unknown CORE type, possible values are ' . implode(', ', self::DIRECT_DEBIT_TYPES));
         }
         if (!in_array($seqType, self::SEQUENCE_TYPES)) {
             throw new \InvalidArgumentException('Unknown SEPA sequence type, possible values are ' . implode(', ', self::SEQUENCE_TYPES));
         }
         $result = new GetSEPADirectDebitParameters();
-        $result->coreType = $coreType;
+        $result->directDebitType = $directDebitType;
         $result->seqType = $seqType;
         $result->singleDirectDebit = $singleDirectDebit;
         return $result;
     }
 
-    public static function getHixxesSegmentName(string $coreType, bool $singleDirectDebit): string
+    public static function getHixxesSegmentName(string $directDebitType, bool $singleDirectDebit): string
     {
-        switch ($coreType) {
+        switch ($directDebitType) {
             case 'CORE':
             case 'COR1':
                 return $singleDirectDebit ? 'HIDSES' : 'HIDMES';
             case 'B2B':
                 return $singleDirectDebit ? 'HIBSES' : 'HIBMES';
             default:
-                throw new \InvalidArgumentException('Unknown CORE type, possible values are ' . implode(', ', self::CORE_TYPES));
+                throw new \InvalidArgumentException('Unknown DirectDebitTypes type, possible values are ' . implode(', ', self::DIRECT_DEBIT_TYPES));
         }
     }
 
     /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-        $this->hidxes = $bpd->requireLatestSupportedParameters(static::getHixxesSegmentName($this->coreType, $this->singleDirectDebit));
-        
+        $this->hidxes = $bpd->requireLatestSupportedParameters(static::getHixxesSegmentName($this->directDebitType, $this->singleDirectDebit));
         $this->isDone = true;
-        
         return []; // No request to the bank required
     }
 
     /**
-     * @return MinimaleVorlaufzeitSEPALastschrift|null The information about the lead time for the given Sequence Type and Core Type
+     * @return MinimaleVorlaufzeitSEPALastschrift|null The information about the lead time for the given Sequence Type and Direct Debit Type
      */
     public function getMinimalLeadTime(): ?MinimaleVorlaufzeitSEPALastschrift
     {
-        return $this->hidxes->getParameter()->getMinimalLeadTime($this->seqType, $this->coreType);
+        $parsed = $this->hidxes->getParameter()->getMinimalLeadTime($this->seqType);
+        if ($parsed instanceof MinimaleVorlaufzeitSEPALastschrift) {
+            return $parsed;
+        }
+        return  $parsed[$this->directDebitType] ?? null;
     }
 }
