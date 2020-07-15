@@ -75,7 +75,7 @@ class GetBalance extends PaginateableAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hisals */
         $hisals = $bpd->requireLatestSupportedParameters('HISALS');

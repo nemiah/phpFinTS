@@ -129,13 +129,19 @@ class DialogInitialization extends BaseAction
         parent::unserialize($parentSerialized);
     }
 
+    /** {@inheritdoc} */
+    protected function createRequest(BPD $bpd, ?UPD $upd)
+    {
+        throw new \AssertionError('DialogInitialization::createRequest should not be used.');
+    }
+
     /**
      * @param BPD|null $bpd The BPD. Note that we support null here because a dialog initialization is how the BPD can
      *     be obtained in the first place.
      * @param UPD|null $upd The UPD.
      * @return array|\Fhp\Segment\BaseSegment|\Fhp\Segment\BaseSegment[]
      */
-    public function createRequest(?BPD $bpd, ?UPD $upd)
+    public function getNextRequest(?BPD $bpd, ?UPD $upd)
     {
         $request = [
             HKIDNv2::create($this->options->bankCode, $this->credentials, $this->kundensystemId ?? '0'),

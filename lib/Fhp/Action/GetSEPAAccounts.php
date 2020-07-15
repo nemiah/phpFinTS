@@ -47,7 +47,7 @@ class GetSEPAAccounts extends PaginateableAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hispas */
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');

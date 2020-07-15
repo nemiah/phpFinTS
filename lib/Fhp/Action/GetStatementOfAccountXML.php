@@ -94,7 +94,7 @@ class GetStatementOfAccountXML extends PaginateableAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         if ($upd === null) {
             throw new UnsupportedException('The UPD is needed to be able to create a request for GetStatementOfAccountXML.');

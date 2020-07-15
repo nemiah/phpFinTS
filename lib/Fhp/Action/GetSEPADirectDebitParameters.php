@@ -45,7 +45,7 @@ class GetSEPADirectDebitParameters extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $type = $this->singleDirectDebit ? 'HIDSES' : 'HIDMES';
 

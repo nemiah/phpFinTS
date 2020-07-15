@@ -39,10 +39,11 @@ abstract class BaseAction implements \Serializable
     /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link createRequest()}. */
     protected $requestSegmentNumbers;
 
-    /** @var string|null Contains the name of the segment, that might need a tan, used by FinTs::execute to signal
+    /**
+     * @var string|null Contains the name of the segment, that might need a tan, used by FinTs::execute to signal
      * to the bank that supplying a tan is supported.
      */
-    public $needTanForSegment = null;
+    protected $needTanForSegment = null;
 
     /**
      * If set, the last response from the server regarding this action asked for a TAN from the user.
@@ -51,7 +52,7 @@ abstract class BaseAction implements \Serializable
     protected $tanRequest;
 
     /** @var bool */
-    protected $isDone;
+    protected $isDone = false;
 
     /**
      * Will be populated with the message the bank sent along with the success indication, can be used to show to
@@ -97,7 +98,12 @@ abstract class BaseAction implements \Serializable
      */
     public function needsTan(): bool
     {
-        return !$this->isDone && $this->tanRequest !== null;
+        return !$this->isDone() && $this->tanRequest !== null;
+    }
+
+    public function getNeedTanForSegment(): ?string
+    {
+        return $this->needTanForSegment;
     }
 
     public function getTanRequest(): ?TanRequest
@@ -124,7 +130,7 @@ abstract class BaseAction implements \Serializable
     {
         if ($this->tanRequest !== null) {
             throw new TanRequiredException($this->tanRequest);
-        } elseif (!$this->isDone) {
+        } elseif (!$this->isDone()) {
             throw new ActionIncompleteException();
         }
     }
@@ -141,7 +147,7 @@ abstract class BaseAction implements \Serializable
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
-    abstract public function createRequest(BPD $bpd, ?UPD $upd);
+    abstract protected function createRequest(BPD $bpd, ?UPD $upd);
 
     /**
      * Called by FinTs::execute when this action is about to be executed, in order to get a request. This function can
@@ -155,12 +161,12 @@ abstract class BaseAction implements \Serializable
      *      An empty array means that no request is necessary at all.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
-    public function getNextRequest(?BPD $bpd, ?UPD $upd)
+    public function getNextRequest(BPD $bpd, ?UPD $upd)
     {
         $requestSegments = $this->createRequest($bpd, $upd);
         $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
 
-        $this->needTanForSegment = $bpd !== null ? $bpd->tanRequiredForRequest($requestSegments) : null;
+        $this->needTanForSegment = $bpd->tanRequiredForRequest($requestSegments);
 
         return $requestSegments;
     }
