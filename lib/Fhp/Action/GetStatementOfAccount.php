@@ -2,13 +2,13 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
 use Fhp\MT940\MT940;
 use Fhp\MT940\MT940Exception;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
@@ -29,7 +29,7 @@ use Fhp\UnsupportedException;
  * Retrieves statements for one specific account or for all accounts that the user has access to. A statement is a
  * series of financial transactions that pertain to the account, grouped by day.
  */
-class GetStatementOfAccount extends BaseAction
+class GetStatementOfAccount extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
@@ -126,7 +126,7 @@ class GetStatementOfAccount extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->bankName = $bpd->getBankName();
 
@@ -137,13 +137,13 @@ class GetStatementOfAccount extends BaseAction
         }
         switch ($hikazs->getVersion()) {
             case 4:
-                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to, $this->getPaginationToken());
+                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
             case 5:
-                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
+                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 6:
-                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
+                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             case 7:
-                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
+                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
         }

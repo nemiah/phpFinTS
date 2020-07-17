@@ -2,8 +2,8 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UPD;
@@ -21,7 +21,7 @@ use Fhp\UnsupportedException;
  * TODO In future, once all banks populate the BIC in HIUPD.erweiterungKontobezogen, or if we force library users to
  * supply the BIC to us, we won't need to send an HKSPA anymore, but we can simply fulfil this action from the UPD.
  */
-class GetSEPAAccounts extends BaseAction
+class GetSEPAAccounts extends PaginateableAction
 {
     // Empty request, in order to retrieve all accounts.
 
@@ -47,7 +47,7 @@ class GetSEPAAccounts extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hispas */
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');

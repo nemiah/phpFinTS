@@ -45,7 +45,7 @@ class GetSEPADirectDebitParameters extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $type = $this->singleDirectDebit ? 'HIDSES' : 'HIDMES';
 
@@ -53,6 +53,8 @@ class GetSEPADirectDebitParameters extends BaseAction
         $hidxes = $bpd->requireLatestSupportedParameters($type);
 
         $this->minimalLeadTime = $hidxes->getParameter()->getMinimalLeadTime($this->seqType, $this->coreType);
+
+        $this->isDone = true;
 
         // No request to the bank required
         return [];

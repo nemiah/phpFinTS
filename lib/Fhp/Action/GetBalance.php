@@ -2,8 +2,8 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
@@ -22,7 +22,7 @@ use Fhp\UnsupportedException;
 /**
  * Runs an HKSAL request the current balance of the given account.
  */
-class GetBalance extends BaseAction
+class GetBalance extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
@@ -75,19 +75,19 @@ class GetBalance extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hisals */
         $hisals = $bpd->requireLatestSupportedParameters('HISALS');
         switch ($hisals->getVersion()) {
             case 4:
-                return HKSALv4::create(Kto::fromAccount($this->account), $this->getPaginationToken());
+                return HKSALv4::create(Kto::fromAccount($this->account));
             case 5:
-                return HKSALv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->getPaginationToken());
+                return HKSALv5::create(KtvV3::fromAccount($this->account), $this->allAccounts);
             case 6:
-                return HKSALv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->getPaginationToken());
+                return HKSALv6::create(KtvV3::fromAccount($this->account), $this->allAccounts);
             case 7:
-                return HKSALv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->getPaginationToken());
+                return HKSALv7::create(Kti::fromAccount($this->account), $this->allAccounts);
             default:
                 throw new UnsupportedException('Unsupported HKSAL version: ' . $hisals->getVersion());
         }

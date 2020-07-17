@@ -3,6 +3,7 @@
 namespace Fhp\Segment\SAL;
 
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\Paginateable;
 
 /**
  * Segment: Saldenabfrage (Version 4)
@@ -11,7 +12,7 @@ use Fhp\Segment\BaseSegment;
  * File: Gesamtdok_HBCI21o.pdf
  * Section: VII.2.2 a)
  */
-class HKSALv4 extends BaseSegment
+class HKSALv4 extends BaseSegment implements Paginateable
 {
     /** @var \Fhp\Segment\Common\Kto */
     public $kontoverbindungAuftraggeber;
@@ -30,5 +31,10 @@ class HKSALv4 extends BaseSegment
         $result->kontoverbindungAuftraggeber = $kto;
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
+    }
+
+    public function setPaginationToken(string $paginationToken)
+    {
+        $this->aufsetzpunkt = $paginationToken;
     }
 }

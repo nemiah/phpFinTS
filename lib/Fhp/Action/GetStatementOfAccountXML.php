@@ -4,8 +4,8 @@
 
 namespace Fhp\Action;
 
-use Fhp\BaseAction;
 use Fhp\Model\SEPAAccount;
+use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
@@ -22,7 +22,7 @@ use Fhp\UnsupportedException;
  * Retrieves statements for one specific account or for all accounts that the user has access to. A statement is a
  * series of financial transactions that pertain to the account, grouped by day.
  */
-class GetStatementOfAccountXML extends BaseAction
+class GetStatementOfAccountXML extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
@@ -94,10 +94,14 @@ class GetStatementOfAccountXML extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
+        if ($upd === null) {
+            throw new UnsupportedException('The UPD is needed to be able to create a request for GetStatementOfAccountXML.');
+        }
+
         if (!$upd->isRequestSupportedForAccount($this->account, 'HKCAZ')) {
-            throw new UnsupportedException('The bank (or the given account/user combination) does not allow this type of request.');
+            throw new UnsupportedException('The bank (or the given account/user combination) does not support GetStatementOfAccountXML.');
         }
 
         /** @var HICAZSv1 $hicazs */
@@ -117,7 +121,7 @@ class GetStatementOfAccountXML extends BaseAction
         switch ($hicazs->getVersion()) {
             case 1:
                 $unterstuetzteCamtMessages = UnterstuetzteCamtMessages::create($camtURNs);
-                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to, $this->getPaginationToken());
+                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKCAZ version: ' . $hicazs->getVersion());
         }

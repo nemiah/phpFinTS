@@ -46,7 +46,7 @@ class SendSEPATransfer extends BaseAction
     }
 
     /** {@inheritdoc} */
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         if (!$bpd->supportsParameters('HICCSS', 1)) {
             throw new UnsupportedException('The bank does not support HKCCSv1');

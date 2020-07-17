@@ -37,23 +37,22 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
 abstract class BaseAction implements \Serializable
 {
     /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link createRequest()}. */
-    private $requestSegmentNumbers;
+    protected $requestSegmentNumbers;
+
+    /**
+     * @var string|null Contains the name of the segment, that might need a tan, used by FinTs::execute to signal
+     * to the bank that supplying a tan is supported.
+     */
+    protected $needTanForSegment = null;
 
     /**
      * If set, the last response from the server regarding this action asked for a TAN from the user.
      * @var TanRequest|null
      */
-    private $tanRequest;
-
-    /**
-     * If set, the last response from the server regarding this action indicated that there are more results to be
-     * fetched using this pagination token. This is called "Aufsetzpunkt" in the specification.
-     * @var string|null
-     */
-    private $paginationToken;
+    protected $tanRequest;
 
     /** @var bool */
-    private $isDone;
+    protected $isDone = false;
 
     /**
      * Will be populated with the message the bank sent along with the success indication, can be used to show to
@@ -75,13 +74,13 @@ abstract class BaseAction implements \Serializable
         if (!$this->needsTan()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
         }
-        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken]);
+        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->needTanForSegment]);
     }
 
     /** {@inheritdoc} */
     public function unserialize($serialized)
     {
-        list($this->requestSegmentNumbers, $this->tanRequest, $this->paginationToken) = unserialize($serialized);
+        list($this->requestSegmentNumbers, $this->tanRequest, $this->needTanForSegment) = unserialize($serialized);
     }
 
     /**
@@ -99,30 +98,17 @@ abstract class BaseAction implements \Serializable
      */
     public function needsTan(): bool
     {
-        return !$this->isDone && $this->tanRequest !== null;
+        return !$this->isDone() && $this->tanRequest !== null;
+    }
+
+    public function getNeedTanForSegment(): ?string
+    {
+        return $this->needTanForSegment;
     }
 
     public function getTanRequest(): ?TanRequest
     {
         return $this->tanRequest;
-    }
-
-    /**
-     * @return bool True if the response has not been read completely yet, i.e. additional requests to the server are
-     *     necessary to continue reading the requested data.
-     */
-    public function hasMorePages(): bool
-    {
-        return !$this->isDone && $this->paginationToken !== null;
-    }
-
-    /**
-     * @return string|null Possibly a pagination token to be sent to the server. For actions that support pagination,
-     *     this should be read in {@link createRequest()}.
-     */
-    public function getPaginationToken(): ?string
-    {
-        return $this->paginationToken;
     }
 
     /**
@@ -144,15 +130,13 @@ abstract class BaseAction implements \Serializable
     {
         if ($this->tanRequest !== null) {
             throw new TanRequiredException($this->tanRequest);
-        } elseif (!$this->isDone) {
+        } elseif (!$this->isDone()) {
             throw new ActionIncompleteException();
         }
     }
 
     /**
-     * Called when this action is about to be executed, in order to construct the request. This function can be called
-     * multiple times in case the response is paginated. On all but the first call, {@link getPaginationToken()} will
-     * return a non-null token that should be included in the returned request.
+     * Called when this action is about to be executed, in order to construct the request.
      * @param BPD $bpd See {@link BPD}.
      * @param UPD|null $upd See {@link UPD}. This is usually present (non-null), except for a few special login and TAN
      *     management actions.
@@ -163,7 +147,29 @@ abstract class BaseAction implements \Serializable
      *     be executed.
      * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
      */
-    abstract public function createRequest(BPD $bpd, ?UPD $upd);
+    abstract protected function createRequest(BPD $bpd, ?UPD $upd);
+
+    /**
+     * Called by FinTs::execute when this action is about to be executed, in order to get a request. This function can
+     * be called multiple times in case the response is paginated.
+     * This method also tries to check if the segments might need a tan and stores this information for use in
+     * FinTs::execute
+     * @param BPD|null $bpd See {@link BPD}.
+     * @param UPD|null $upd See {@link UPD}. This is usually present (non-null), except for a few special login and TAN
+     *     management actions.
+     * @return BaseSegment[] A segment or a series of segments that should be sent to the bank server.
+     *      An empty array means that no request is necessary at all.
+     * @throws \InvalidArgumentException When the request cannot be built because the input data or BPD/UPD is invalid.
+     */
+    public function getNextRequest(BPD $bpd, ?UPD $upd)
+    {
+        $requestSegments = $this->createRequest($bpd, $upd);
+        $requestSegments = is_array($requestSegments) ? $requestSegments : [$requestSegments];
+
+        $this->needTanForSegment = $bpd->tanRequiredForRequest($requestSegments);
+
+        return $requestSegments;
+    }
 
     /**
      * Called when this action was executed on the server (never if {@link createRequest()} returned an empty request),
@@ -176,25 +182,16 @@ abstract class BaseAction implements \Serializable
      */
     public function processResponse(Message $response)
     {
-        $pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION);
-        if ($pagination === null) {
-            $this->paginationToken = null;
-            $this->isDone = true;
+        $this->isDone = true;
 
-            $info = $response->findRueckmeldungen(Rueckmeldungscode::AUSGEFUEHRT);
-            if (count($info) === 0) {
-                $info = $response->findRueckmeldungen(Rueckmeldungscode::ENTGEGENGENOMMEN);
-            }
-            if (count($info) > 0) {
-                $this->successMessage = implode("\n", array_map(function (Rueckmeldung $rueckmeldung) {
-                    return $rueckmeldung->rueckmeldungstext;
-                }, $info));
-            }
-        } else {
-            if (count($pagination->rueckmeldungsparameter) !== 1) {
-                throw new UnexpectedResponseException("Unexpected pagination request: $pagination");
-            }
-            $this->paginationToken = $pagination->rueckmeldungsparameter[0];
+        $info = $response->findRueckmeldungen(Rueckmeldungscode::AUSGEFUEHRT);
+        if (count($info) === 0) {
+            $info = $response->findRueckmeldungen(Rueckmeldungscode::ENTGEGENGENOMMEN);
+        }
+        if (count($info) > 0) {
+            $this->successMessage = implode("\n", array_map(function (Rueckmeldung $rueckmeldung) {
+                return $rueckmeldung->rueckmeldungstext;
+            }, $info));
         }
     }
 

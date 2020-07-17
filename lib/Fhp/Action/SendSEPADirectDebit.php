@@ -77,7 +77,7 @@ class SendSEPADirectDebit extends BaseAction
         return $result;
     }
 
-    public function createRequest(BPD $bpd, ?UPD $upd)
+    protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $useSingleDirectDebit = $this->singleDirectDebit;
 
