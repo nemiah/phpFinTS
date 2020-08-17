@@ -54,4 +54,17 @@ class Sdo extends BaseDeg
     {
         return \DateTime::createFromFormat('Ymd His', $this->datum . ' ' . ($this->uhrzeit ?? '000000'));
     }
+
+    public static function create(float $amount, string $currency, \DateTime $timestamp)
+    {
+        $result = new Sdo();
+        $result->sollHabenKennzeichen = $amount < 0 ? self::DEBIT : self::CREDIT;
+        $result->betrag = Btg::create($amount, $currency);
+        $result->datum = $timestamp->format('Ymd');
+        $result->uhrzeit = $timestamp->format('His');
+        if ($result->uhrzeit == '000000') {
+            $result->uhrzeit = null;
+        }
+        return $result;
+    }
 }

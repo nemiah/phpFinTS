@@ -298,6 +298,40 @@ abstract class Parser
     }
 
     /**
+     * Tries to (recursively) create an empty instance for a field with the given descriptor. For optional fields, this
+     * is simply null. If the field type is a subclass of {@link BaseDeg} and all fields in the DEG have valid empty
+     * values (recursively), then an empty instance will be returned. Otherwise, the value cannot be empty and this
+     * function returns false.
+     *
+     * @param ElementDescriptor $descriptor The descriptor of the field to fill in.
+     * @return BaseDeg|false|null A new empty instance of the field's value type, or null if that's a valid empty value
+     *     for the field, or false if no empty value is possible, i.e. if there is at least one non-optional field
+     *     within.
+     */
+    private static function tryConstructEmptyValue(ElementDescriptor $descriptor)
+    {
+        if ($descriptor->optional) {
+            return null; // No need to fill optional fields.
+        }
+        if ($descriptor->repeated !== 0) {
+            return false; // Cannot fill a repeated field that requires at least one entry.
+        }
+        if (!($descriptor->type instanceof \ReflectionClass && $descriptor->type->isSubclassOf(BaseDeg::class))) {
+            return false; // Cannot create empty value for non-DEG field.
+        }
+        /** @var BaseDeg $result */
+        $result = $descriptor->type->newInstance();
+        foreach ($result->getDescriptor()->elements as $elementDescriptor) {
+            $emptyValue = static::tryConstructEmptyValue($elementDescriptor);
+            if ($emptyValue === false) {
+                return false;
+            }
+            $result->{$elementDescriptor->field} = $emptyValue;
+        }
+        return $result;
+    }
+
+    /**
      * @param string $rawSegment The serialized wire format for a single segment (segment delimiter must be present at
      *     the end). This should be ISO-8859-1-encoded.
      * @param string|BaseSegment $type The type (PHP class name) of the segment to be parsed, or alternatively the
@@ -316,10 +350,12 @@ abstract class Parser
         // The iteration order guarantees that $index is strictly monotonically increasing, but there can be gaps.
         foreach ($descriptor->elements as $index => $elementDescriptor) {
             if (!array_key_exists($index, $rawElements) || $rawElements[$index] === '') {
-                if ($elementDescriptor->optional) {
-                    continue;
+                $emptyValue = static::tryConstructEmptyValue($elementDescriptor);
+                if ($emptyValue === false) {
+                    throw new \InvalidArgumentException("Missing field $descriptor->class.$elementDescriptor->field");
                 }
-                throw new \InvalidArgumentException("Missing field $descriptor->class.$elementDescriptor->field");
+                $result->{$elementDescriptor->field} = $emptyValue;
+                continue;
             }
 
             // Note: The handling of empty values may be incorrect here, parseSegmentElement() can return null.
