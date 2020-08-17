@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Segment\DME;
+namespace Fhp\Segment\DSE;
 
 class MinimaleVorlaufzeitSEPALastschrift
 {
@@ -33,11 +33,11 @@ class MinimaleVorlaufzeitSEPALastschrift
     /** @var int In Days */
     public $minimaleSEPAVorlaufzeit;
 
-    /** @var string After this time the request will fail when the value of $minimaleSEPAVorlaufzeit is used, for example 130000 meaning 1pm */
+    /** @var string After this time the request will fail when the value of is used, for example 130000 meaning 1pm */
     public $cutOffZeit;
 
-    public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit,int $unterstuetzteSEPALastschriftartenCodiert = null,
-                                  int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
+    public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit, ?int $unterstuetzteSEPALastschriftartenCodiert = null,
+                                  ?int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
     {
         $result = new MinimaleVorlaufzeitSEPALastschrift();
         $result->unterstuetzteSEPALastschriftartenCodiert = $unterstuetzteSEPALastschriftartenCodiert;
@@ -59,6 +59,19 @@ class MinimaleVorlaufzeitSEPALastschrift
                 foreach ($seqTypes as $seqType) {
                     $result[$coreType][$seqType] = MinimaleVorlaufzeitSEPALastschrift::create($minimaleSEPAVorlaufzeit, $cutOffZeit, $unterstuetzteSEPALastschriftartenCodiert, $sequenceTypeCodiert);
                 }
+            }
+        }
+        return $result;
+    }
+
+    /** @return MinimaleVorlaufzeitSEPALastschrift[][]|array */
+    public static function parseCodedB2B(string $coded): array
+    {
+        $result = [];
+        foreach (array_chunk(explode(';', $coded), 3) as list($sequenceTypeCodiert, $minimaleSEPAVorlaufzeit, $cutOffZeit)) {
+            $seqTypes = self::SEQUENCE_TYPE_CODIERT[$sequenceTypeCodiert] ?? [];
+            foreach ($seqTypes as $seqType) {
+                $result['B2B'][$seqType] = MinimaleVorlaufzeitSEPALastschrift::create($minimaleSEPAVorlaufzeit, $cutOffZeit, null, $sequenceTypeCodiert);
             }
         }
         return $result;

@@ -11,12 +11,8 @@ use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\DME\HIDMESv1;
 use Fhp\Segment\DME\HIDMESv2;
-use Fhp\Segment\DME\HIDXES;
-use Fhp\Segment\DME\HKDMEv1;
-use Fhp\Segment\DME\HKDMEv2;
 use Fhp\Segment\DSE\HIDSESv2;
-use Fhp\Segment\DSE\HKDSEv1;
-use Fhp\Segment\DSE\HKDSEv2;
+use Fhp\Segment\DSE\HIDXES;
 use Fhp\Segment\SPA\HISPAS;
 use Fhp\Syntax\Bin;
 use Fhp\UnsupportedException;
@@ -44,6 +40,9 @@ class SendSEPADirectDebit extends BaseAction
     /** @var bool */
     protected $tryToUseControlSumForSingleTransactions = false;
 
+    /** @var string */
+    private $coreType;
+
     public static function create(SEPAAccount $account, string $painMessage, bool $tryToUseControlSumForSingleTransactions = false): SendSEPADirectDebit
     {
         if (preg_match('/xmlns="(?<namespace>[^"]+)"/s', $painMessage, $matches) === 1) {
@@ -56,8 +55,14 @@ class SendSEPADirectDebit extends BaseAction
         $nbOfTxs = substr_count($painMessage, '<DrctDbtTxInf>');
         $ctrlSum = null;
 
-        if (preg_match('/<GrpHdr>.*<CtrlSum>(?<ctrlsum>[.0-9]+)<\/CtrlSum>.*<\/GrpHdr>/s', $painMessage, $matches) === 1) {
+        if (preg_match('@<GrpHdr>.*<CtrlSum>(?<ctrlsum>[.0-9]+)</CtrlSum>.*</GrpHdr>@s', $painMessage, $matches) === 1) {
             $ctrlSum = $matches['ctrlsum'];
+        }
+
+        if (preg_match('@<PmtTpInf>.*<LclInstrm>.*<Cd>(?<coretype>CORE|COR1|B2B)</Cd>.*</LclInstrm>.*</PmtTpInf>@s', $painMessage, $matches) === 1) {
+            $coreType = $matches['coretype'];
+        } else {
+            throw new \InvalidArgumentException('The type CORE/COR1/B2B is missing in PAIN message');
         }
 
         if ($nbOfTxs > 1 && is_null($ctrlSum)) {
@@ -69,6 +74,7 @@ class SendSEPADirectDebit extends BaseAction
         $result->painMessage = $painMessage;
         $result->painNamespace = $painNamespace;
         $result->ctrlSum = $ctrlSum;
+        $result->coreType = $coreType;
 
         $result->singleDirectDebit = $nbOfTxs === 1;
 
@@ -86,8 +92,8 @@ class SendSEPADirectDebit extends BaseAction
             $useSingleDirectDebit = false;
         }
 
-        /** @var HIDXES|BaseSegment $hidxes */
-        $hidxes = $bpd->requireLatestSupportedParameters($useSingleDirectDebit ? 'HIDSES' : 'HIDMES');
+        /* @var HIDXES|BaseSegment $hidxes */
+        $hidxes = $bpd->requireLatestSupportedParameters(GetSEPADirectDebitParameters::getHixxesSegmentName($this->coreType, $useSingleDirectDebit));
 
         $supportedPainNamespaces = null;
 
@@ -108,19 +114,8 @@ class SendSEPADirectDebit extends BaseAction
                 . implode(', ', $supportedPainNamespaces));
         }
 
-        /** @var HKDMEv1|HKDSEv1 $hkdxe */
-        $hkdxe = null;
-        switch ($hidxes->getVersion()) {
-            case 1:
-                $hkdxe = $useSingleDirectDebit ? HKDSEv1::createEmpty() : HKDMEv1::createEmpty();
-            break;
-            case 2:
-                $hkdxe = $useSingleDirectDebit ? HKDSEv2::createEmpty() : HKDMEv2::createEmpty();
-            break;
-            default:
-                throw new UnsupportedException('Unsupported HKDME or HKDSE version: ' . $hidxes->getVersion());
-        }
-
+        /** @var mixed $hkdxe */ // TODO Put a new interface type here.
+        $hkdxe = $hidxes->createRequestSegment();
         $hkdxe->kontoverbindungInternational = Kti::fromAccount($this->account);
         $hkdxe->sepaDescriptor = $this->painNamespace;
         $hkdxe->sepaPainMessage = new Bin($this->painMessage);

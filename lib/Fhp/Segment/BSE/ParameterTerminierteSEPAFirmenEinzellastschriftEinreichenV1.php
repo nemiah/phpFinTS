@@ -1,10 +1,12 @@
 <?php
 
-namespace Fhp\Segment\DSE;
+namespace Fhp\Segment\BSE;
 
 use Fhp\Segment\BaseDeg;
+use Fhp\Segment\DSE\MinimaleVorlaufzeitSEPALastschrift;
+use Fhp\Segment\DSE\SEPADirectDebitMinimalLeadTimeProvider;
 
-class ParameterTerminierteSEPAEinzellastschriftEinreichenV1 extends BaseDeg implements SEPADirectDebitMinimalLeadTimeProvider
+class ParameterTerminierteSEPAFirmenEinzellastschriftEinreichenV1 extends BaseDeg implements SEPADirectDebitMinimalLeadTimeProvider
 {
     /** @var int Must be => 1 */
     public $minimaleVorlaufzeitFNALRCUR;

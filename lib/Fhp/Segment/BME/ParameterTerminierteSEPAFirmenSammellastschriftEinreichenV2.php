@@ -1,10 +1,10 @@
 <?php
 
-namespace Fhp\Segment\DME;
+namespace Fhp\Segment\BME;
 
-use Fhp\Segment\DSE\ParameterTerminierteSEPALastschriftEinreichenV2;
+use Fhp\Segment\BSE\ParameterTerminierteSEPAFirmenLastschriftEinreichenV2;
 
-class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2
+class ParameterTerminierteSEPAFirmenSammellastschriftEinreichenV2 extends ParameterTerminierteSEPAFirmenLastschriftEinreichenV2
 {
     /** @var int */
     public $maximaleAnzahlDirectDebitTransferTransactionInformation;
