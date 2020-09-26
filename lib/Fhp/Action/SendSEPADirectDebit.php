@@ -83,6 +83,23 @@ class SendSEPADirectDebit extends BaseAction
         return $result;
     }
 
+    public function serialize(): string
+    {
+        return serialize([
+            parent::serialize(),
+            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $parentSerialized,
+            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account
+            ) = unserialize($serialized);
+        parent::unserialize($parentSerialized);
+    }
+
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $useSingleDirectDebit = $this->singleDirectDebit;
