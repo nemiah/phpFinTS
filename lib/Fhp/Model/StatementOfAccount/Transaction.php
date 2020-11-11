@@ -79,6 +79,11 @@ class Transaction
     protected $pn;
 
     /**
+     * @var int
+     */
+    protected $textKeyAddition;
+
+    /**
      * Get booking date.
      *
      * @deprecated Use getBookingDate() instead
@@ -394,6 +399,26 @@ class Transaction
     public function setPN($nr)
     {
         $this->pn = intval($nr);
+        return $this;
+    }
+
+    /**
+     * Get text key addition
+     */
+    public function getTextKeyAddition(): int
+    {
+        return $this->textKeyAddition;
+    }
+
+    /**
+     * Set text key addition
+     *
+     * @param int|mixed $textKeyAddition Will be parsed to an int.
+     * @return $this
+     */
+    public function setTextKeyAddition($textKeyAddition)
+    {
+        $this->textKeyAddition = intval($textKeyAddition);
         return $this;
     }
 }
