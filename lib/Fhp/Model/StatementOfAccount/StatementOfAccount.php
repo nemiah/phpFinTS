@@ -108,6 +108,7 @@ class StatementOfAccount
                     $transaction->setName($trx['description']['name']);
                     $transaction->setBooked($trx['booked']);
                     $transaction->setPN($trx['description']['primanoten_nr']);
+                    $transaction->setTextKeyAddition($trx['description']['text_key_addition']);
                     $statementModel->addTransaction($transaction);
                 }
             }
