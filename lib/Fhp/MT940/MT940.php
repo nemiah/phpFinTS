@@ -165,9 +165,7 @@ class MT940
                 } else {
                     $description2 .= $m[2];
                 }
-                if (!empty($m[2])) {
-                    $descriptionLines[] = $m[2];
-                }
+                $descriptionLines[] = $m[2];
             }
             $prepared[$index] = $m[2];
         }
