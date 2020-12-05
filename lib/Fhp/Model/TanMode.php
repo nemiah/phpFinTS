@@ -2,6 +2,9 @@
 
 namespace Fhp\Model;
 
+use Fhp\Segment\BaseSegment;
+use Fhp\Segment\TAN\HKTAN;
+
 /**
  * For two-step authentication, users need to enter a TAN, which can be obtained in various ways (SMS, TAN generator
  * device, and so on). Users regularly have multiple ways to obtain a TAN even for a single bank, so they will need to
@@ -75,4 +78,10 @@ interface TanMode
 
     /** @return bool */
     public function getAntwortHhdUcErforderlich(): bool;
+
+    /**
+     * This function is for internal use by the library implementation.
+     * @return HKTAN&BaseSegment A newly created segment.
+     */
+    public function createHKTAN(): HKTAN;
 }

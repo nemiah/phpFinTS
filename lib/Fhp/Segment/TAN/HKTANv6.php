@@ -2,8 +2,6 @@
 
 namespace Fhp\Segment\TAN;
 
-use Fhp\Model\NoPsd2TanMode;
-use Fhp\Model\TanMode;
 use Fhp\Segment\BaseSegment;
 use Fhp\Syntax\Bin;
 
@@ -13,7 +11,7 @@ use Fhp\Syntax\Bin;
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: B.5.1 a)
  */
-class HKTANv6 extends BaseSegment
+class HKTANv6 extends BaseSegment implements HKTAN
 {
     /**
      * Allowed values (ordered chronologically):
@@ -112,72 +110,38 @@ class HKTANv6 extends BaseSegment
     public $antwortHhdUc;
 
     /**
-     * @param TanMode|null $tanMode Parameters retrieved from the server during dialog initialization that describe how
-     *     the TAN processes need to be parameterized.
-     * @param string|null $tanMedium The TAN medium selected by the user. Mandatory if $tanMode is present and requires
-     *     a TAN medium.
-     * @param string $segmentkennung The segment that we want to authenticate with the HKTAN instance.
-     * @return HKTANv6 A HKTAN instance to signal to the server that Prozessvariante 2 shall be used.
+     * @return HKTANv6 A dummy HKTANv6 segment to signal PSD2 readiness.
      */
-    public static function createProzessvariante2Step1(?TanMode $tanMode = null, ?string $tanMedium = null, string $segmentkennung = 'HKIDN'): HKTANv6
+    public static function createDummy(): HKTANv6
     {
-        if ($tanMode instanceof NoPsd2TanMode) {
-            throw new \InvalidArgumentException('HKTANv6 should not be added when the bank does not support PSD2');
-        }
-        // TODO: Implement the inclusion of the account for which an action is called, in the HKTAN Segment
-        // A lot of Banks announce they need the account when in fact they work fine without it.
-        /*if ($tanMode !== null && $tanMode->getAuftraggeberkontoErforderlich()) {
-            throw new \InvalidArgumentException('Auftraggeberkonto not supported');
-        }*/
-        if ($tanMode !== null && $tanMode->getSmsAbbuchungskontoErforderlich()) {
-            throw new \InvalidArgumentException('SMS-Abbuchungskonto not supported');
-        }
-
         $result = HKTANv6::createEmpty();
         $result->tanProzess = 4;
-        $result->segmentkennung = $segmentkennung;
-        if ($tanMode !== null && $tanMode->needsTanMedium()) {
-            if ($tanMedium === null) {
-                throw new \InvalidArgumentException('Missing tanMedium');
-            }
-            $result->bezeichnungDesTanMediums = $tanMedium;
-        }
+        $result->segmentkennung = 'HKIDN';
         return $result;
     }
 
-    /**
-     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
-     * Section: B.4.3.1
-     * @param string $segmentkennung The name of the main business transaction segment that shall be executed in the
-     *     dialog. Must be one of the segments whitelisted for weak authentication (see the specification linked above).
-     * @return HKTANv6 A HKTAN instance to signal to the server that the client supports strong authentication but wants
-     *     to use weak authentication in this dialog, which only consists of the special business transaction.
-     */
-    public static function createWeakAuthenticationFor(string $segmentkennung): HKTANv6
+    public function setTanProzess(int $tanProzess): void
     {
-        $result = HKTANv6::createProzessvariante2Step1();
-        $result->segmentkennung = $segmentkennung;
-        return $result;
+        $this->tanProzess = $tanProzess;
     }
 
-    /**
-     * @param TanMode $params Parameters retrieved from the server during dialog initialization that describe how the
-     *     TAN processes need to be parameterized.
-     * @param string $auftragsreferenz The reference number received from the server in step 1 response (HITAN).
-     * @return HKTANv6 A HKTAN instance to tell the server the reference of the previously submitted order.
-     */
-    public static function createProzessvariante2Step2(TanMode $params, string $auftragsreferenz): HKTANv6
+    public function setSegmentkennung(?string $segmentkennung): void
     {
-        if ($params->getAntwortHhdUcErforderlich()) {
-            // TODO Implement photoTAN support.
-            // TODO Consorsbank sets this despite not actually requiring it.
-            //throw new \InvalidArgumentException("HHD_UC not supported");
-        }
+        $this->segmentkennung = $segmentkennung;
+    }
 
-        $result = HKTANv6::createEmpty();
-        $result->tanProzess = 2;
-        $result->auftragsreferenz = $auftragsreferenz;
-        $result->weitereTanFolgt = false; // No Mehrfach-TAN support, so we'll never send true here.
-        return $result;
+    public function setBezeichnungDesTanMediums(?string $bezeichnungDesTanMediums): void
+    {
+        $this->bezeichnungDesTanMediums = $bezeichnungDesTanMediums;
+    }
+
+    public function setAuftragsreferenz(?string $auftragsreferenz): void
+    {
+        $this->auftragsreferenz = $auftragsreferenz;
+    }
+
+    public function setWeitereTanFolgt(?bool $weitereTanFolgt): void
+    {
+        $this->weitereTanFolgt = $weitereTanFolgt;
     }
 }

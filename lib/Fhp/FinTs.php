@@ -23,6 +23,7 @@ use Fhp\Segment\HKEND\HKENDv1;
 use Fhp\Segment\HKIDN\HKIDNv2;
 use Fhp\Segment\HKVVB\HKVVBv3;
 use Fhp\Segment\TAN\HITANv6;
+use Fhp\Segment\TAN\HKTANFactory;
 use Fhp\Segment\TAN\HKTANv6;
 use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
 use Fhp\Syntax\InvalidResponseException;
@@ -92,7 +93,7 @@ class FinTs
      * Note: If this fails with an error saying that your bank does not support the anonymous dialog, you probably need
      * to use {@link NoPsd2TanMode} for regular login.
      * @param FinTsOptions $options Configuration options for the connection to the bank.
-     * @param LoggerInterface $logger An optional logger to record messages exchanged with the bank.
+     * @param ?LoggerInterface $logger An optional logger to record messages exchanged with the bank.
      * @return BPD Bank parameters that tell the client software what features the bank supports.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server does not send the BPD or close the dialog properly.
@@ -292,7 +293,7 @@ class FinTs
         $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
         if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
             if (($needTanForSegment = $action->getNeedTanForSegment()) !== null) {
-                $message->add(HKTANv6::createProzessvariante2Step1(
+                $message->add(HKTANFactory::createProzessvariante2Step1(
                     $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
             }
         }
@@ -363,7 +364,7 @@ class FinTs
             throw new \InvalidArgumentException('Cannot submit TAN when the bank does not support PSD2');
         }
         $message = MessageBuilder::create()
-            ->add(HKTANv6::createProzessvariante2Step2($tanMode, $tanRequest->getProcessId()));
+            ->add(HKTANFactory::createProzessvariante2Step2($tanMode, $tanRequest->getProcessId()));
         $request = $this->buildMessage($message, $tanMode, $tan);
 
         // Execute the request.
@@ -529,11 +530,13 @@ class FinTs
             return;
         }
 
-        // We must always include HKTAN in order to signal that strong authentication (PSD2) is supported (section B.4.3.1).
+        // We must always include HKTAN in order to signal that strong authentication (PSD2) is supported (section
+        // B.4.3.1). As this is the first contact with the server, we don't know which HKTAN versions it supports, so we
+        // just sent HKTANv6 as it's currently most supported by banks.
         $initRequest = Message::createPlainMessage(MessageBuilder::create()
             ->add(HKIDNv2::createAnonymous($this->options->bankCode))
             ->add(HKVVBv3::create($this->options, null, null)) // Pretend we have no BPD/UPD.
-            ->add(HKTANv6::createProzessvariante2Step1()));
+            ->add(HKTANv6::createDummy()));
         $initResponse = $this->sendMessage($initRequest);
         if (!$this->readBPD($initResponse)) {
             throw new UnexpectedResponseException('Did not receive BPD');

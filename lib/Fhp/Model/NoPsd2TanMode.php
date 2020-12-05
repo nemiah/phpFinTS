@@ -2,6 +2,8 @@
 
 namespace Fhp\Model;
 
+use Fhp\Segment\TAN\HKTAN;
+
 /**
  * This is a placeholder used instead of a real {@link TanMode} in order to signal that the bank's HBCI interface
  * supports no strong authentication whatsoever and thus also no TAN modes. While it should still support the
@@ -78,5 +80,10 @@ final class NoPsd2TanMode implements TanMode
     public function getAntwortHhdUcErforderlich(): bool
     {
         return false;
+    }
+
+    public function createHKTAN(): HKTAN
+    {
+        throw new \AssertionError('HKTAN should not be needed when the bank does not support PSD2');
     }
 }

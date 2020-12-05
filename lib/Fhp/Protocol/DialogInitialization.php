@@ -11,7 +11,7 @@ use Fhp\Segment\HISYN\HISYNv4;
 use Fhp\Segment\HKIDN\HKIDNv2;
 use Fhp\Segment\HKSYN\HKSYNv3;
 use Fhp\Segment\HKVVB\HKVVBv3;
-use Fhp\Segment\TAN\HKTANv6;
+use Fhp\Segment\TAN\HKTANFactory;
 
 /**
  * Initializes a FinTs dialog. The dialog initialization message is usually the first message that should be sent over
@@ -148,7 +148,8 @@ class DialogInitialization extends BaseAction
             HKVVBv3::create($this->options, $bpd, $upd),
         ];
         if ($this->tanMode !== null) {
-            $request[] = HKTANv6::createProzessvariante2Step1($this->tanMode, $this->tanMedium, $this->hktanRef ?? 'HKIDN');
+            $request[] = HKTANFactory::createProzessvariante2Step1(
+                $this->tanMode, $this->tanMedium, $this->hktanRef ?? 'HKIDN');
         }
 
         if ($this->kundensystemId === null) {

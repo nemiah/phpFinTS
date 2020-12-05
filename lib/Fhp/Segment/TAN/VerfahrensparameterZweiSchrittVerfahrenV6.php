@@ -125,4 +125,10 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     {
         return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
+
+    /** {@inheritdoc} */
+    public function createHKTAN(): HKTAN
+    {
+        return HKTANv6::createEmpty();
+    }
 }
