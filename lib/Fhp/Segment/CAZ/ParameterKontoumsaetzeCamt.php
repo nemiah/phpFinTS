@@ -12,7 +12,7 @@ use Fhp\Segment\KAZ\ParameterKontoumsaetzeV2;
  */
 class ParameterKontoumsaetzeCamt extends ParameterKontoumsaetzeV2
 {
-    /** @var UnterstuetzteCamtMessages $unterstuetzteCamtMessages */
+    /** @var UnterstuetzteCamtMessages */
     public $unterstuetzteCamtMessages;
 
     public function getUnterstuetzteCamtMessages(): UnterstuetzteCamtMessages

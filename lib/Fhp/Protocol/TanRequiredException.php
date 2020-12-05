@@ -9,7 +9,7 @@ use Fhp\Model\TanRequest;
  */
 class TanRequiredException extends \RuntimeException
 {
-    /** @var TanRequest $hitan */
+    /** @var TanRequest */
     private $tanRequest;
 
     public function __construct(TanRequest $tanRequest)
