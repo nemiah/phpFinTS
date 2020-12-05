@@ -247,7 +247,7 @@ class FinTs
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check whether a TAN is
      *     needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing the {@link BaseAction}
-     *     returned here to {@link submitTan()}.
+     *     returned here to {@link submitTan()} or {@link checkDecoupledSubmission()}.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
@@ -317,6 +317,7 @@ class FinTs
             if ($this->bpd === null || $this->kundensystemId === null) {
                 throw new UnexpectedResponseException('Unexpected TAN request');
             }
+            // NOTE: In case of a decoupled TAN mode, the response code 3955 must be present, but it seems useless to us.
             $action->setTanRequest($hitan);
             if ($action instanceof DialogInitialization) {
                 $action->setDialogId($response->header->dialogId);
@@ -333,9 +334,13 @@ class FinTs
     }
 
     /**
-     * For an action where {@link BaseAction::needsTan()} returns `true`, this function sends the given $tan to the
-     * server in order to complete the action. This can be done asynchronously, i.e. not in the same PHP process as
-     * the original {@link execute()} call.
+     * For an action where {@link BaseAction::needsTan()} returns `true` and {@link TanMode::isDecoupled()} returns
+     * `false`, this function sends the given $tan to the server in order to complete the action. This can be done
+     * asynchronously, i.e. not in the same PHP process as the original {@link execute()} call.
+     *
+     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
+     * Section B.4.2.1.1
+     *
      * @param BaseAction $action The action to be completed.
      * @param string $tan The TAN entered by the user.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -363,6 +368,9 @@ class FinTs
         if ($tanMode instanceof NoPsd2TanMode) {
             throw new \InvalidArgumentException('Cannot submit TAN when the bank does not support PSD2');
         }
+        if ($tanMode->isDecoupled()) {
+            throw new \InvalidArgumentException('Cannot submit TAN for a decoupled TAN mode');
+        }
         $message = MessageBuilder::create()
             ->add(HKTANFactory::createProzessvariante2Step2($tanMode, $tanRequest->getProcessId()));
         $request = $this->buildMessage($message, $tanMode, $tan);
@@ -377,7 +385,7 @@ class FinTs
         if ($hitan === null) {
             throw new UnexpectedResponseException('HITAN missing after submitting TAN');
         }
-        if ($hitan->getTanProzess() !== HKTAN::TAN_PROZESS_2
+        if ($hitan->getTanProzess() !== HKTAN::TAN_PROZESS_2 // We only support the case "(B)" in the specification.
             || $hitan->getAuftragsreferenz() !== $tanRequest->getProcessId()) {
             throw new UnexpectedResponseException("Bank has not accepted TAN: $hitan");
         }
@@ -388,6 +396,102 @@ class FinTs
         if ($action instanceof PaginateableAction && $action->hasMorePages()) {
             $this->execute($action);
         }
+    }
+
+    /**
+     * For an action where {@link BaseAction::needsTan()} returns `true` and {@link TanMode::isDecoupled()} returns
+     * `true`, this function checks with the server whether the second factor authentication has been completed yet on
+     * the secondary device of the user. If this, this completes the given action and returns `true`, otherwise it
+     * returns `false` and the action remains in its previous, uncompleted state.
+     * This function can be called asynchronously, i.e. not in the same PHP process as the original {@link execute()}
+     * call, and also repeatedly subject to the delays specified in the {@link TanMode}.
+     *
+     * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
+     * Section B.4.2.2
+     *
+     * @param BaseAction $action The action to be completed.
+     * @return bool True if the decoupled authentication is done and the $action was completed. If false, the
+     *     {@link TanRequest} inside the action has been updated, which *may* provide new/more instructions to the user,
+     *     though probably it rarely does in practice.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
+     *     that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
+     */
+    public function checkDecoupledSubmission(BaseAction $action): bool
+    {
+        // Check the action's state.
+        $tanRequest = $action->getTanRequest();
+        if ($tanRequest === null) {
+            throw new \InvalidArgumentException('This action is not awaiting decoupled confirmation');
+        }
+        if ($action instanceof DialogInitialization) {
+            if ($this->dialogId !== null) {
+                throw new \RuntimeException('Cannot init another dialog.');
+            }
+            $this->dialogId = $action->getDialogId();
+            $this->messageNumber = $action->getMessageNumber();
+        }
+
+        // (2a) Construct the request.
+        $tanMode = $this->requireTanMode();
+        if ($tanMode instanceof NoPsd2TanMode) {
+            throw new \InvalidArgumentException('Cannot check decoupled status when the bank does not support PSD2');
+        }
+        if (!$tanMode->isDecoupled()) {
+            throw new \InvalidArgumentException('Cannot check decoupled status for a non-decoupled TAN mode');
+        }
+        $message = MessageBuilder::create()
+            ->add(HKTANFactory::createProzessvariante2StepS($tanMode, $tanRequest->getProcessId()));
+        $request = $this->buildMessage($message, $tanMode);
+
+        // Execute the request.
+        $response = $this->sendMessage($request);
+        $this->readBPD($response);
+
+        // Determine if the decoupled authentication has completed. See section B.4.2.2.1.
+        // There is always at least one HITAN segment with TAN-Prozess=S and the reference ID.
+        // (2b) The response code 3956 indicates that the authentication is still outstanding. There could also be more
+        //      information for the user in the HITAN challenge field, but we ignore that for now.
+        // (2c) Note that we only support the (B) variant here. There is additionally a HITAN segment with TAN-Prozess=2
+        //      and the reference ID to indicate that the authentication has completed. In this case, the response also
+        //      contains the response segments for the executed action, if any.
+        $hitanS = null;
+        $isSuccess = false;
+        /** @var HITAN $hitan */
+        foreach ($response->findSegments(HITAN::class) as $hitan) {
+            if ($hitan->getAuftragsreferenz() !== $tanRequest->getProcessId()) {
+                throw new UnexpectedResponseException('Unexpected Auftragsreferenz: ' . $hitan->getAuftragsreferenz());
+            }
+            if ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_S) {
+                $hitanS = $hitan;
+            } elseif ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_2) {
+                $isSuccess = true;
+            }
+        }
+        if ($hitanS === null) {
+            throw new UnexpectedResponseException('Missing HITAN with tanProzess=S in the response');
+        }
+        $outstanding = $response->findRueckmeldung(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND);
+
+        if ($isSuccess) {
+            if ($outstanding !== null) {
+                throw new UnexpectedResponseException('Got both 3956 and HITAN with tanProzess=2');
+            }
+            $action->setTanRequest(null);
+
+            // Process the response normally, and maybe keep going for more pages.
+            $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
+            if ($action instanceof PaginateableAction && $action->hasMorePages()) {
+                $this->execute($action);
+            }
+        } else {
+            if ($outstanding === null) {
+                throw new UnexpectedResponseException('Got neither 3956 nor HITAN with tanProzess=2');
+            }
+            $action->setTanRequest($hitanS);
+        }
+        return $isSuccess;
     }
 
     /**

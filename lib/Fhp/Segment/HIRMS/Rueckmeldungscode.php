@@ -6,7 +6,7 @@ namespace Fhp\Segment\HIRMS;
  * Enum for the response codes that the server can send.
  *
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/FinTS_Rueckmeldungscodes_2019-07-22_final_version.pdf
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
  */
 abstract class Rueckmeldungscode
 {
@@ -98,6 +98,12 @@ abstract class Rueckmeldungscode
      * Note that this library does not support HKPSA.
      */
     const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
+
+    /**
+     * Starke Kundenauthentifizierung noch ausstehend.
+     * Indicates that the decoupled authentication is still outstanding.
+     */
+    const STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND = 3956;
 
     /**
      * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.

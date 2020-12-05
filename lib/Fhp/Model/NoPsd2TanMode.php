@@ -93,6 +93,36 @@ final class NoPsd2TanMode implements TanMode
         return false;
     }
 
+    /** {@inheritdoc} */
+    public function getMaxDecoupledChecks(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getFirstDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getPeriodicDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsManualConfirmation(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsAutomatedPolling(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
     public function createHKTAN(): HKTAN
     {
         throw new \AssertionError('HKTAN should not be needed when the bank does not support PSD2');

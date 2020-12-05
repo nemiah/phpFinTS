@@ -137,6 +137,36 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     }
 
     /** {@inheritdoc} */
+    public function getMaxDecoupledChecks(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getFirstDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getPeriodicDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsManualConfirmation(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsAutomatedPolling(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
     public function createHKTAN(): HKTAN
     {
         return HKTANv6::createEmpty();

@@ -17,7 +17,8 @@ interface TanRequest
     public function getProcessId(): string;
 
     /**
-     * @return ?string A challenge to be displayed to the user.
+     * @return ?string A challenge to be displayed to the user. In case of a decopled TAN mode, this may contain
+     *     important instructions for the user.
      */
     public function getChallenge(): ?string;
 
