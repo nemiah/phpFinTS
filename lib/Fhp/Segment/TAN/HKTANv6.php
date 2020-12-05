@@ -27,12 +27,18 @@ class HKTANv6 extends BaseSegment implements HKTAN
      *    (from the server's HITAN). Along with this HKTAN the client sends the TAN (response to the challenge from
      *    step 1) in the same message. The server responds with the same reference (but no more challenge) to confirm
      *    that the TAN was accepted.
+     * S: Only supported in HKTANv7 (which inherits this field). In Prozessvariante 2 for decoupled modes, instead of
+     *    exectuting the step 2 above, the client polls the server regularly using step S to find out if the
+     *    authentication process on the side channel (e.g. the user's smartphone) has completed. This HKTAN contains a
+     *    reference ($auftragsreferenz) to a previously posted order (from the server's HITAN). The server responds with
+     *    the same reference and a status code TODO.
      *
      * Note: It is not up to the application/library to choose this process, but rather it needs to execute the process
      * configured in the BPD ({@link VerfahrensparameterZweiSchrittVerfahren} field $tanProzess). In practice,
      * Prozessvariante 2 is much more common.
      *
-     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4
+     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4.
+     *     NOTE: This field is re-used in HITANv7, where the value 'S' is also allowed.
      */
     public $tanProzess;
     /**
@@ -55,13 +61,13 @@ class HKTANv6 extends BaseSegment implements HKTAN
      */
     public $auftragsHashwert;
     /**
-     * M: bei TAN-Prozess=2, 3
+     * M: bei TAN-Prozess=2, 3 (and S)
      * O: TAN-Prozess=1, 4
      * @var string|null Max length: 36
      */
     public $auftragsreferenz;
     /**
-     * M: bei TAN-Prozess=1, 2
+     * M: bei TAN-Prozess=1, 2 (and S)
      * N: bei TAN-Prozess=3, 4
      * @var bool|null
      */

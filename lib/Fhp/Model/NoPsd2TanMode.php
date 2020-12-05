@@ -34,6 +34,12 @@ final class NoPsd2TanMode implements TanMode
     }
 
     /** {@inheritdoc} */
+    public function isDecoupled(): bool
+    {
+        return false;
+    }
+
+    /** {@inheritdoc} */
     public function getChallengeLabel(): string
     {
         return '';

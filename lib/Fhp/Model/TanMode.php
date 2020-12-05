@@ -45,6 +45,13 @@ interface TanMode
     public function isProzessvariante2(): bool;
 
     /**
+     * @return bool True if the TAN mode is a "decoupled" one, meaning that there are no actual TANs passed back to the
+     *     server. Instead, the user just presses some kind of "confirm" button on a separate device and the client
+     *     application resumes processing with the server without submitting a TAN.
+     */
+    public function isDecoupled(): bool;
+
+    /**
      * @return string A user-readable label for the text field that displays the challenge to the user.
      */
     public function getChallengeLabel(): string;
@@ -58,12 +65,14 @@ interface TanMode
     /**
      * @return int The maximum length of TANs entered in this mode. The application can use this to restrict the TAN
      *     input field or to do client-side validation.
+     * @throws \RuntimeException If {@link TanMode::isDecoupled()} returns true.
      */
     public function getMaxTanLength(): int;
 
     /**
      * @return int The allowed TAN format. See the FORMAT_* constants above. The application can use this to
      *     restrict the TAN input field or to do client-side validation.
+     * @throws \RuntimeException If {@link TanMode::isDecoupled()} returns true.
      */
     public function getTanFormat(): int;
 
