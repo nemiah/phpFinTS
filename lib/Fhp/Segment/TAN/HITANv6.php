@@ -18,7 +18,7 @@ class HITANv6 extends BaseSegment implements TanRequest
     const DUMMY_CHALLENGE = 'nochallenge';
 
     /**
-     * @var int Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
+     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
      */
     public $tanProzess;
     /**
@@ -80,7 +80,7 @@ class HITANv6 extends BaseSegment implements TanRequest
         return $this->bezeichnungDesTanMediums;
     }
 
-    public function getTanProzess(): int
+    public function getTanProzess(): string
     {
         return $this->tanProzess;
     }

@@ -23,6 +23,7 @@ use Fhp\Segment\HKEND\HKENDv1;
 use Fhp\Segment\HKIDN\HKIDNv2;
 use Fhp\Segment\HKVVB\HKVVBv3;
 use Fhp\Segment\TAN\HITANv6;
+use Fhp\Segment\TAN\HKTAN;
 use Fhp\Segment\TAN\HKTANFactory;
 use Fhp\Segment\TAN\HKTANv6;
 use Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenV6;
@@ -311,7 +312,7 @@ class FinTs
         /** @var HITANv6 $hitan */
         $hitan = $response->findSegment(HITANv6::class);
         if ($hitan !== null && $hitan->auftragsreferenz !== HITANv6::DUMMY_REFERENCE) {
-            if ($hitan->tanProzess !== 4) {
+            if ($hitan->tanProzess !== HKTAN::TAN_PROZESS_4) {
                 throw new UnexpectedResponseException("Unsupported TAN request type $hitan->tanProzess");
             }
             if ($this->bpd === null || $this->kundensystemId === null) {
@@ -377,7 +378,7 @@ class FinTs
         if ($hitan === null) {
             throw new UnexpectedResponseException('HITAN missing after submitting TAN');
         }
-        if ($hitan->tanProzess !== 2 || $hitan->auftragsreferenz !== $tanRequest->getProcessId()) {
+        if ($hitan->tanProzess !== HKTAN::TAN_PROZESS_2 || $hitan->auftragsreferenz !== $tanRequest->getProcessId()) {
             throw new UnexpectedResponseException("Bank has not accepted TAN: $hitan");
         }
         $action->setTanRequest(null);
@@ -629,7 +630,7 @@ class FinTs
             if (!($this->selectedTanMode instanceof VerfahrensparameterZweiSchrittVerfahrenV6)) {
                 throw new UnsupportedException('Only supports VerfahrensparameterZweiSchrittVerfahrenV6');
             }
-            if ($this->selectedTanMode->tanProzess !== VerfahrensparameterZweiSchrittVerfahrenV6::PROZESSVARIANTE_2) {
+            if ($this->selectedTanMode->tanProzess !== HKTAN::TAN_PROZESS_2) {
                 throw new UnsupportedException('Only supports Prozessvariante 2');
             }
 

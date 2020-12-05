@@ -32,7 +32,7 @@ class HKTANv6 extends BaseSegment implements HKTAN
      * configured in the BPD ({@link VerfahrensparameterZweiSchrittVerfahren} field $tanProzess). In practice,
      * Prozessvariante 2 is much more common.
      *
-     * @var int Allowed values: 1 (for Prozessvariante 1), 2, 3, 4
+     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4
      */
     public $tanProzess;
     /**
@@ -115,12 +115,12 @@ class HKTANv6 extends BaseSegment implements HKTAN
     public static function createDummy(): HKTANv6
     {
         $result = HKTANv6::createEmpty();
-        $result->tanProzess = 4;
+        $result->tanProzess = HKTAN::TAN_PROZESS_4;
         $result->segmentkennung = 'HKIDN';
         return $result;
     }
 
-    public function setTanProzess(int $tanProzess): void
+    public function setTanProzess(string $tanProzess): void
     {
         $this->tanProzess = $tanProzess;
     }

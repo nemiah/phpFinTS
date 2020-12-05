@@ -25,7 +25,7 @@ class HKTANFactory
         }
 
         $result = $tanMode->createHKTAN();
-        $result->setTanProzess(4);
+        $result->setTanProzess(HKTAN::TAN_PROZESS_4);
         $result->setSegmentkennung($segmentkennung);
         if ($tanMode !== null && $tanMode->needsTanMedium()) {
             if ($tanMedium === null) {
@@ -45,7 +45,7 @@ class HKTANFactory
     public static function createProzessvariante2Step2(TanMode $tanMode, string $auftragsreferenz): BaseSegment
     {
         $result = $tanMode->createHKTAN();
-        $result->setTanProzess(2);
+        $result->setTanProzess(HKTAN::TAN_PROZESS_2);
         $result->setAuftragsreferenz($auftragsreferenz);
         $result->setWeitereTanFolgt(false); // No Mehrfach-TAN support, so we'll never send true here.
         return $result;
