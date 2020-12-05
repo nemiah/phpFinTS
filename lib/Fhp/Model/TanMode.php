@@ -38,6 +38,13 @@ interface TanMode
     public function getName(): string;
 
     /**
+     * @return bool True if this TAN mode can be used with Prozessvariante 2. Since that's the only mode currently
+     *     implemented in this library, you likely want to filter out any TAN modes that return false here, though those
+     *     are rare in practice anyway.
+     */
+    public function isProzessvariante2(): bool;
+
+    /**
      * @return string A user-readable label for the text field that displays the challenge to the user.
      */
     public function getChallengeLabel(): string;

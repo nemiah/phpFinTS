@@ -2,7 +2,6 @@
 
 namespace Fhp\Segment\TAN;
 
-use Fhp\Model\TanRequest;
 use Fhp\Segment\BaseSegment;
 use Fhp\Syntax\Bin;
 
@@ -12,11 +11,8 @@ use Fhp\Syntax\Bin;
  * @link: https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2018-02-23_final_version.pdf
  * Section: B.5.1 b)
  */
-class HITANv6 extends BaseSegment implements TanRequest
+class HITANv6 extends BaseSegment implements HITAN
 {
-    const DUMMY_REFERENCE = 'noref';
-    const DUMMY_CHALLENGE = 'nochallenge';
-
     /**
      * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
      */

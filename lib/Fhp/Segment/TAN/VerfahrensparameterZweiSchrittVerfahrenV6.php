@@ -71,6 +71,12 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     }
 
     /** {@inheritdoc} */
+    public function isProzessvariante2(): bool
+    {
+        return $this->tanProzess === HKTAN::TAN_PROZESS_2;
+    }
+
+    /** {@inheritdoc} */
     public function getSmsAbbuchungskontoErforderlich(): bool
     {
         return $this->smsAbbuchungskontoErforderlich === 2;

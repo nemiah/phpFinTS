@@ -4,7 +4,7 @@ namespace Fhp\Segment\TAN;
 
 use Fhp\Segment\BaseDeg;
 
-class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg
+class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg implements ParameterZweiSchrittTanEinreichung
 {
     /** @var bool */
     public $einschrittVerfahrenErlaubt;
@@ -19,4 +19,14 @@ class ParameterZweiSchrittTanEinreichungV6 extends BaseDeg
     public $auftragsHashwertverfahren;
     /** @var VerfahrensparameterZweiSchrittVerfahrenV6[] @Max(98) */
     public $verfahrensparameterZweiSchrittVerfahren;
+
+    public function isEinschrittVerfahrenErlaubt(): bool
+    {
+        return $this->einschrittVerfahrenErlaubt;
+    }
+
+    public function getVerfahrensparameterZweiSchrittVerfahren(): array
+    {
+        return $this->verfahrensparameterZweiSchrittVerfahren;
+    }
 }

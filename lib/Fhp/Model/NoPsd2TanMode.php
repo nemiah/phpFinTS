@@ -28,6 +28,11 @@ final class NoPsd2TanMode implements TanMode
         return 'No PSD2/TANs supported';
     }
 
+    public function isProzessvariante2(): bool
+    {
+        return false;
+    }
+
     /** {@inheritdoc} */
     public function getChallengeLabel(): string
     {
