@@ -29,27 +29,27 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
      * @var int
      */
     public $status;
-    /** @var string|null Only for $tanMediumKlasse=='G' */
+    /** @var string|null Only for tanMediumKlasse=='G' */
     public $kartennummer;
-    /** @var string|null Only for $tanMediumKlasse=='G' */
+    /** @var string|null Only for tanMediumKlasse=='G' */
     public $kartenfolgenummer;
-    /** @var int|null Only and optional for $tanMediumKlasse=='G' and if BPD allows it */
+    /** @var int|null Only and optional for tanMediumKlasse=='G' and if BPD allows it */
     public $kartenart;
-    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for $tanMediumKlasse=='G' */
+    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for tanMediumKlasse=='G' */
     public $kontoverbindungAuftraggeber;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
+    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
     public $gueltigAb;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for $tanMediumKlasse=='G' */
+    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
     public $gueltigBis;
-    /** @var string|null Only for $tanMediumKlasse=='L' */
+    /** @var string|null Only for tanMediumKlasse=='L' */
     public $tanListennumer;
-    /** @var string|null Must for $tanMediumKlasse=='M', optional otherwise. Max length: 32 */
+    /** @var string|null Must for tanMediumKlasse=='M', optional otherwise. Max length: 32 */
     public $bezeichnungDesTanMediums;
-    /** @var string|null Only and optional for $tanMediumKlasse=='M' */
+    /** @var string|null Only and optional for tanMediumKlasse=='M' */
     public $mobiltelefonnummerVerschleiert;
-    /** @var string|null Only and optional for $tanMediumKlasse=='M' */
+    /** @var string|null Only and optional for tanMediumKlasse=='M' */
     public $mobiltelefonnummer;
-    /** @var \Fhp\Segment\Common\Kti|null Only and optional for $tanMediumKlasse=='M' */
+    /** @var \Fhp\Segment\Common\Kti|null Only and optional for tanMediumKlasse=='M' */
     public $smsAbbuchungskonto;
     /** @var int|null */
     public $anzahlFreieTans;
