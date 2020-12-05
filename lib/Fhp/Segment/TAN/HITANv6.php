@@ -15,6 +15,7 @@ use Fhp\Syntax\Bin;
 class HITANv6 extends BaseSegment implements TanRequest
 {
     const DUMMY_REFERENCE = 'noref';
+    const DUMMY_CHALLENGE = 'nochallenge';
 
     /**
      * @var int Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
@@ -67,10 +68,10 @@ class HITANv6 extends BaseSegment implements TanRequest
     }
 
     /** {@inheritdoc} */
-    public function getChallenge(): string
+    public function getChallenge(): ?string
     {
         // Note: This is non-null because tanProzess==4.
-        return $this->challenge;
+        return $this->challenge === static::DUMMY_CHALLENGE ? null : $this->challenge;
     }
 
     /** {@inheritdoc} */
