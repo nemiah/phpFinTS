@@ -15,7 +15,7 @@ $fints = require_once 'login.php';
 $getSepaAccounts = \Fhp\Action\GetSEPAAccounts::create();
 $fints->execute($getSepaAccounts);
 if ($getSepaAccounts->needsTan()) {
-    handleTan($getSepaAccounts); // See login.php for the implementation.
+    handleStrongAuthentication($getSepaAccounts); // See login.php for the implementation.
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
@@ -24,7 +24,7 @@ $to = new \DateTime();
 $getStatement = \Fhp\Action\GetStatementOfAccount::create($oneAccount, $from, $to);
 $fints->execute($getStatement);
 if ($getStatement->needsTan()) {
-    handleTan($getStatement); // See login.php for the implementation.
+    handleStrongAuthentication($getStatement); // See login.php for the implementation.
 }
 
 $soa = $getStatement->getStatement();

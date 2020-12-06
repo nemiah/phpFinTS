@@ -50,5 +50,5 @@ $sepaDD->addCreditor(new SEPACreditor([ //this is who you want to send money to
 $sendSEPATransfer = \Fhp\Action\SendSEPATransfer::create($oneAccount, $sepaDD->toXML());
 $fints->execute($sendSEPATransfer);
 if ($sendSEPATransfer->needsTan()) {
-    handleTan($sendSEPATransfer); // See login.php for the implementation.
+    handleStrongAuthentication($sendSEPATransfer); // See login.php for the implementation.
 }

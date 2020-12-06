@@ -56,12 +56,12 @@ $sepaDD->addDebitor(new SEPADebitor([ //this is who you want to get money from
 $getSepaAccounts = \Fhp\Action\GetSEPAAccounts::create();
 $fints->execute($getSepaAccounts);
 if ($getSepaAccounts->needsTan()) {
-    handleTan($getSepaAccounts); // See login.php for the implementation.
+    handleStrongAuthentication($getSepaAccounts); // See login.php for the implementation.
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $sepaDD->toXML());
 $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
-    handleTan($sendSEPADirectDebit); // See login.php for the implementation.
+    handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
 }

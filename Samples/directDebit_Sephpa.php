@@ -22,7 +22,7 @@ $fints = require_once 'login.php';
 $getSepaAccounts = \Fhp\Action\GetSEPAAccounts::create();
 $fints->execute($getSepaAccounts);
 if ($getSepaAccounts->needsTan()) {
-    handleTan($getSepaAccounts); // See login.php for the implementation.
+    handleStrongAuthentication($getSepaAccounts); // See login.php for the implementation.
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
@@ -47,5 +47,5 @@ $xml = $directDebitFile->generateXml(date("Y-m-d\TH:i:s", time()));
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $xml);
 $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
-    handleTan($sendSEPADirectDebit); // See login.php for the implementation.
+    handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
 }
