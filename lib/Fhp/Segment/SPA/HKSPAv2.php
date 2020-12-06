@@ -18,7 +18,7 @@ class HKSPAv2 extends BaseSegment implements Paginateable
      * @var \Fhp\Segment\Common\KtvV3[]|null @Max(999)
      */
     public $kontoverbindung;
-    /** @var int|null Only allowed if HISPAS $eingabeAnzahlEintraegeErlaubt allows it. */
+    /** @var int|null Only allowed if {@link ParameterSepaKontoverbindungAnfordernV2::$eingabeAnzahlEintraegeErlaubt} says so. */
     public $maximaleAnzahlEintraege;
     /** @var string|null For pagination. */
     public $aufsetzpunkt;

@@ -2,6 +2,9 @@
 
 namespace Fhp\Model;
 
+use Fhp\Segment\BaseSegment;
+use Fhp\Segment\TAN\HKTAN;
+
 /**
  * For two-step authentication, users need to enter a TAN, which can be obtained in various ways (SMS, TAN generator
  * device, and so on). Users regularly have multiple ways to obtain a TAN even for a single bank, so they will need to
@@ -33,6 +36,13 @@ interface TanMode
      * @return string A user-readable name, e.g. for display in a list.
      */
     public function getName(): string;
+
+    /**
+     * @return bool True if this TAN mode can be used with Prozessvariante 2. Since that's the only mode currently
+     *     implemented in this library, you likely want to filter out any TAN modes that return false here, though those
+     *     are rare in practice anyway.
+     */
+    public function isProzessvariante2(): bool;
 
     /**
      * @return string A user-readable label for the text field that displays the challenge to the user.
@@ -75,4 +85,10 @@ interface TanMode
 
     /** @return bool */
     public function getAntwortHhdUcErforderlich(): bool;
+
+    /**
+     * This function is for internal use by the library implementation.
+     * @return HKTAN&BaseSegment A newly created segment.
+     */
+    public function createHKTAN(): HKTAN;
 }

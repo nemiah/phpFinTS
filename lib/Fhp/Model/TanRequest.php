@@ -17,18 +17,19 @@ interface TanRequest
     public function getProcessId(): string;
 
     /**
-     * @return string A challenge to be displayed to the user.
+     * @return ?string A challenge to be displayed to the user.
      */
-    public function getChallenge(): string;
+    public function getChallenge(): ?string;
 
     /**
-     * @return string|null Possibly the name of the {@link TanMedium} to be used. If present, this should be displayed
+     * @return ?string Possibly the name of the {@link TanMedium} to be used. If present, this should be displayed
      *     to the user, so that they know what to do.
      */
     public function getTanMediumName(): ?string;
 
     /**
-     * @return Bin|null An additional binary challenge payload. Used to receive the PhotoTan/ChipTan image. Use TanRequestChallengeImage to parse the binary.
+     * @return ?Bin An additional binary challenge payload. Used to receive the PhotoTan/ChipTan image. Use
+     *     {@link TanRequestChallengeImage} to parse the payload.
      */
     public function getChallengeHhdUc(): ?Bin;
 }

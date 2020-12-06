@@ -19,13 +19,13 @@ class HKCAZv1 extends BaseSegment implements Paginateable
     /** @var UnterstuetzteCamtMessages */
     public $unterstuetzteCamtMessages;
 
-    /** @var bool Only allowed if HIKAZS $alleKontenErlaubt says so. */
+    /** @var bool Only allowed if {@link ParameterKontoumsaetzeCamt::$alleKontenErlaubt} says so. */
     public $alleKonten;
     /** @var string|null JJJJMMTT gemäß ISO 8601 */
     public $vonDatum;
     /** @var string|null JJJJMMTT gemäß ISO 8601 */
     public $bisDatum;
-    /** @var int|null Only allowed if HIKAZS $eingabeAnzahlEintraegeErlaubt says so. */
+    /** @var int|null Only allowed if {@link ParameterKontoumsaetzeCamt::$eingabeAnzahlEintraegeErlaubt} says so. */
     public $maximaleAnzahlEintraege;
     /** @var string|null Max length: 35 */
     public $aufsetzpunkt;

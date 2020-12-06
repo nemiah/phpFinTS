@@ -22,7 +22,7 @@ class HKKAZv4 extends BaseSegment implements Paginateable
     public $vonDatum;
     /** @var string|null JJJJMMTT gemäß ISO 8601 */
     public $bisDatum;
-    /** @var int|null Only allowed if HIKAZS $eingabeAnzahlEintraegeErlaubt says so. */
+    /** @var int|null Only allowed if {@link ParameterKontoumsaetzeV1::$eingabeAnzahlEintraegeErlaubt} says so. */
     public $maximaleAnzahlEintraege;
     /** @var string|null Max length: 35 */
     public $aufsetzpunkt;

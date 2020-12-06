@@ -8,7 +8,7 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIPINS\HIPINSv1;
 use Fhp\Segment\SegmentInterface;
-use Fhp\Segment\TAN\HITANSv6;
+use Fhp\Segment\TAN\HITANS;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -174,11 +174,11 @@ class BPD
 
         // Extract all TanModes from HIPINS.
         if ($bpd->supportsPsd2()) {
-            /** @var HITANSv6 $hitans */
+            /** @var HITANS $hitans */
             $hitans = $bpd->requireLatestSupportedParameters('HITANS');
-            $tanParams = $hitans->parameterZweiSchrittTanEinreichung;
-            $bpd->singleStepTanModeAllowed = $tanParams->einschrittVerfahrenErlaubt;
-            foreach ($tanParams->verfahrensparameterZweiSchrittVerfahren as $verfahren) {
+            $tanParams = $hitans->getParameterZweiSchrittTanEinreichung();
+            $bpd->singleStepTanModeAllowed = $tanParams->isEinschrittVerfahrenErlaubt();
+            foreach ($tanParams->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
                 $bpd->allTanModes[$verfahren->getId()] = $verfahren;
             }
         }

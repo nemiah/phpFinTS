@@ -20,7 +20,7 @@ class SicherheitsidentifikationDetailsV2 extends BaseDeg
     public $bezeichnerFuerSicherheitspartei = 1; // Unless we receive another value that overwrites this one, we're sending.
     /** @var string|null Only allowed and mandatory for Chip-card, so this library does not support it. */
     public $cid = null;
-    /** @var string|null Must be set to the $kundensystemId, or '0' during synchronization. */
+    /** @var string|null Must be set to the {@link FinTs::$kundensystemId}, or '0' during synchronization. */
     public $identifizierungDerPartei;
 
     /**
