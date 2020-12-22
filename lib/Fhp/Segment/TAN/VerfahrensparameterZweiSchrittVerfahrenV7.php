@@ -5,23 +5,33 @@ namespace Fhp\Segment\TAN;
 use Fhp\Model\TanMode;
 use Fhp\Segment\BaseDeg;
 
-class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMode
+class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMode
 {
     /** @var int Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var string Allowed values: 1, 2; See specification or {@link HKTANv6::$$tanProzess} for details. */
+    /** @var int Allowed values: 1, 2; See specification or {@link HKTANv7::$$tanProzess} for details. */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
-    /** @var string|null Max length: 32 */
-    public $zkaTanVerfahren;
+    /**
+     * Allowed values:
+     * - HHD
+     * - HHDUC
+     * - HHDOPT1
+     * - mobileTAN
+     * - App
+     * - Decoupled
+     * - DecoupledPush
+     * @var string|null Max length: 32
+     */
+    public $dkTanVerfahren;
     /** @var string|null Max length: 10 */
-    public $versionZkaTanVerfahren;
+    public $versionDkTanVerfahren;
     /** @var string Max length: 30 */
     public $nameDesZweiSchrittVerfahrens;
-    /** @var int */
+    /** @var int|null Present iff !isDecoupled. */
     public $maximaleLaengeDesTanEingabewertes;
-    /** @var int Allowed values: 1 = numerisch, 2 = alfanumerisch */
+    /** @var int|null Present iff !isDecoupled. Allowed values: 1 = numerisch, 2 = alfanumerisch */
     public $erlaubtesFormat;
     /** @var string */
     public $textZurBelegungDesRueckgabewertes;
@@ -57,6 +67,16 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     public $antwortHhdUcErforderlich;
     /** @var int|null */
     public $anzahlUnterstuetzterAktiverTanMedien;
+    /** @var int|null Present iff isDecoupled. 0 means infinity. */
+    public $maximaleAnzahlStatusabfragen;
+    /** @var int|null Present iff isDecoupled. In seconds. */
+    public $wartezeitVorErsterStatusabfrage;
+    /** @var int|null Present iff isDecoupled. In seconds. */
+    public $wartezeitVorNaechsterStatusabfrage;
+    /** @var bool|null Maybe present if isDecoupled. */
+    public $manuelleBestaetigungMoeglich;
+    /** @var bool|null Maybe present if isDecoupled. */
+    public $automatisierteStatusabfragenErlaubt;
 
     /** {@inheritdoc} */
     public function getId(): int
@@ -79,7 +99,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     /** {@inheritdoc} */
     public function isDecoupled(): bool
     {
-        return false;
+        return $this->dkTanVerfahren === 'Decoupled' || $this->dkTanVerfahren === 'DecoupledPush';
     }
 
     /** {@inheritdoc} */
@@ -121,12 +141,24 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     /** {@inheritdoc} */
     public function getMaxTanLength(): int
     {
+        if ($this->isDecoupled()) {
+            throw new \RuntimeException('getMaxTanLength is not available for decoupled TAN modes');
+        }
+        if ($this->maximaleLaengeDesTanEingabewertes === null) {
+            throw new \AssertionError('maximaleLaengeDesTanEingabewertes is unexpectedly absent');
+        }
         return $this->maximaleLaengeDesTanEingabewertes;
     }
 
     /** {@inheritdoc} */
     public function getTanFormat(): int
     {
+        if ($this->isDecoupled()) {
+            throw new \RuntimeException('getTanFormat is not available for decoupled TAN modes');
+        }
+        if ($this->erlaubtesFormat === null) {
+            throw new \AssertionError('erlaubtesFormat is unexpectedly absent');
+        }
         return $this->erlaubtesFormat;
     }
 
@@ -139,36 +171,66 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
     /** {@inheritdoc} */
     public function getMaxDecoupledChecks(): int
     {
-        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        if (!$this->isDecoupled()) {
+            throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        }
+        if ($this->maximaleAnzahlStatusabfragen === null) {
+            throw new \AssertionError('maximaleAnzahlStatusabfragen is unexpectedly absent');
+        }
+        return $this->maximaleAnzahlStatusabfragen;
     }
 
     /** {@inheritdoc} */
     public function getFirstDecoupledCheckDelaySeconds(): int
     {
-        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        if (!$this->isDecoupled()) {
+            throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        }
+        if ($this->wartezeitVorErsterStatusabfrage === null) {
+            throw new \AssertionError('wartezeitVorErsterStatusabfrage is unexpectedly absent');
+        }
+        return $this->wartezeitVorErsterStatusabfrage;
     }
 
     /** {@inheritdoc} */
     public function getPeriodicDecoupledCheckDelaySeconds(): int
     {
-        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        if (!$this->isDecoupled()) {
+            throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        }
+        if ($this->wartezeitVorNaechsterStatusabfrage === null) {
+            throw new \AssertionError('wartezeitVorNaechsterStatusabfrage is unexpectedly absent');
+        }
+        return $this->wartezeitVorNaechsterStatusabfrage;
     }
 
     /** {@inheritdoc} */
     public function allowsManualConfirmation(): bool
     {
-        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        if (!$this->isDecoupled()) {
+            throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        }
+        if ($this->manuelleBestaetigungMoeglich === null) {
+            throw new \AssertionError('manuelleBestaetigungMoeglich is unexpectedly absent');
+        }
+        return $this->manuelleBestaetigungMoeglich;
     }
 
     /** {@inheritdoc} */
     public function allowsAutomatedPolling(): bool
     {
-        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        if (!$this->isDecoupled()) {
+            throw new \RuntimeException('Only allowed for decoupled TAN modes');
+        }
+        if ($this->automatisierteStatusabfragenErlaubt === null) {
+            throw new \AssertionError('automatisierteStatusabfragenErlaubt is unexpectedly absent');
+        }
+        return $this->automatisierteStatusabfragenErlaubt;
     }
 
     /** {@inheritdoc} */
     public function createHKTAN(): HKTAN
     {
-        return HKTANv6::createEmpty();
+        return HKTANv7::createEmpty();
     }
 }

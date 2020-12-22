@@ -34,6 +34,12 @@ final class NoPsd2TanMode implements TanMode
     }
 
     /** {@inheritdoc} */
+    public function isDecoupled(): bool
+    {
+        return false;
+    }
+
+    /** {@inheritdoc} */
     public function getChallengeLabel(): string
     {
         return '';
@@ -85,6 +91,36 @@ final class NoPsd2TanMode implements TanMode
     public function getAntwortHhdUcErforderlich(): bool
     {
         return false;
+    }
+
+    /** {@inheritdoc} */
+    public function getMaxDecoupledChecks(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getFirstDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function getPeriodicDecoupledCheckDelaySeconds(): int
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsManualConfirmation(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
+    }
+
+    /** {@inheritdoc} */
+    public function allowsAutomatedPolling(): bool
+    {
+        throw new \RuntimeException('Only allowed for decoupled TAN modes');
     }
 
     public function createHKTAN(): HKTAN

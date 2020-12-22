@@ -93,8 +93,9 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * @return bool If this returns true, the underlying operation has not completed because it is awaiting a TAN. You
-     *     should ask the user for this TAN and pass it to {@link submitTan()}.
+     * @return bool If this returns true, the underlying operation has not completed because it is awaiting a TAN or a
+     *     "decoupled" confirmation. You should ask the user for this TAN/confirmation and pass it to
+     *     {@link FinTs::submitTan()} or call {@link FinTs::checkDecoupledSubmission()}, respectively.
      */
     public function needsTan(): bool
     {
@@ -115,7 +116,7 @@ abstract class BaseAction implements \Serializable
      * Throws an exception unless this action has been successfully executed, i.e. in the following cases:
      *  - the action has not been {@link FinTs::execute()}-d at all or the {@link FinTs::execute()} call for it threw an
      *    exception,
-     *  - the action is awaiting a TAN that first needs to be supplied with {@link FinTs::submitTan()}.
+     *  - the action is awaiting a TAN/confirmation (as per {@link BaseAction::needsTan()}.
      *
      * After executing an action, you can use this function to make sure that it succeeded. This is especially useful
      * for actions that don't have any results (as each result getter would call {@link ensureDone()} internally).

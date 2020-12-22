@@ -12,14 +12,14 @@ $fints = require_once 'login.php';
 $getSepaAccounts = \Fhp\Action\GetSEPAAccounts::create();
 $fints->execute($getSepaAccounts);
 if ($getSepaAccounts->needsTan()) {
-    handleTan($getSepaAccounts); // See login.php for the implementation.
+    handleStrongAuthentication($getSepaAccounts); // See login.php for the implementation.
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
 $getBalance = \Fhp\Action\GetBalance::create($oneAccount, true);
 $fints->execute($getBalance);
 if ($getBalance->needsTan()) {
-    handleTan($getBalance); // See login.php for the implementation.
+    handleStrongAuthentication($getBalance); // See login.php for the implementation.
 }
 
 /** @var \Fhp\Segment\SAL\HISAL $hisal */

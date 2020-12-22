@@ -14,7 +14,8 @@ use Fhp\Syntax\Bin;
 class HITANv6 extends BaseSegment implements HITAN
 {
     /**
-     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$$tanProzess} for details.
+     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$tanProzess} for details.
+     *     NOTE: This field is re-used in HITANv7, where the value 'S' is also allowed.
      */
     public $tanProzess;
     /**
@@ -26,7 +27,7 @@ class HITANv6 extends BaseSegment implements HITAN
     public $auftragsHashwert;
     /**
      * Special value "noref" means that no TAN is needed.
-     * M: bei TAN-Prozess=2, 3, 4
+     * M: bei TAN-Prozess=2, 3, 4 (and S)
      * O: TAN-Prozess=1
      * @var string|null Max length: 35
      */
@@ -38,7 +39,7 @@ class HITANv6 extends BaseSegment implements HITAN
      * presenting the challenge to the user.
      *
      * M: bei TAN-Prozess=1, 3, 4
-     * O: bei TAN-Prozess=2
+     * O: bei TAN-Prozess=2 (and S)
      * @var string|null Max length: 2048
      */
     public $challenge;
