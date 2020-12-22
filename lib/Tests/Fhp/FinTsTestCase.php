@@ -46,7 +46,7 @@ abstract class FinTsTestCase extends TestCase
         $randMock = $this->getFunctionMock('Fhp\Protocol', 'rand');
         $randMock->expects($this->any())->with(1000000, 9999999)->willReturn(9999999);
         // We mock time() for the timestamps in the encryption/signature headers in SicherheitsdatumUndUhrzeitV2.php.
-        $this->now = new \DateTime('2019-01-02 03:04:05');
+        $this->now = new \DateTime('2019-01-02 03:04:05', new \DateTimeZone('UTC'));
         $timeMock = $this->getFunctionMock('Fhp\Segment\HNVSK', 'time');
         $timeMock->expects($this->any())->with()->willReturn($this->now->getTimestamp());
 
