@@ -2,7 +2,7 @@
   "name": "nemiah/php-fints",
   "description": "PHP Library for the protocols fints and hbci",
   "homepage": "https://github.com/nemiah/phpFinTS",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "MIT",
   "autoload": {
     "psr-0": {
