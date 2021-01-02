@@ -36,7 +36,7 @@ class GetBalance extends PaginateableAction
 
     /**
      * @param SEPAAccount $account The account to get the balance for. This can be constructed based on information
-     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
+     *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link GetSEPAAccounts}.
      * @param bool $allAccounts If set to true, will return balances for all accounts of the user. You still need to
      *     pass one of the accounts into $account, though.
      */

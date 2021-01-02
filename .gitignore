@@ -12,6 +12,9 @@ test.php
 /Samples/*.test.php
 /Samples/*.log
 /Samples/analyzeLogs.php
+/Samplesstate.txt
+/Samples/state.txt
+/Samples/session_*
 /doc/
 .phpunit.result.cache
 .php_cs.cache
