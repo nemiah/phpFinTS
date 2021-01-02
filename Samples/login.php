@@ -91,7 +91,7 @@ function handleTan(\Fhp\BaseAction $action)
         // This example code stores them in a text file, but you might write them to your database (use a BLOB, not a
         // CHAR/TEXT field to allow for arbitrary encoding) or in some other storage (possibly base64-encoded to make it
         // ASCII).
-        file_put_contents(__DIR__ . 'state.txt', serialize([$persistedFints, $persistedAction]));
+        file_put_contents(__DIR__ . '/state.txt', serialize([$persistedFints, $persistedAction]));
     }
 
     // Ask the user for the TAN. ----------------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ function handleTan(\Fhp\BaseAction $action)
 
     // Optional: If the state was persisted above, we can restore it now (imagine this is a new PHP execution).
     if ($optionallyPersistEverything) {
-        $restoredState = file_get_contents('state.txt');
+        $restoredState = file_get_contents(__DIR__ . '/state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
         $fints = \Fhp\FinTs::new($options, $credentials, $persistedInstance);
         $action = unserialize($persistedAction);
