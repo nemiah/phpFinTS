@@ -76,6 +76,20 @@ class BPD
     /**
      * @param string $type A business transaction type, represented by the segment name of the respective parameter
      *     segment (Geschäftsvorfallparameter segment, aka. Segmentparametersegment). Example: 'HIKAZS'.
+     * @return BaseSegment[] All parameter segments of that type ordered descendingly by version (newest first),
+     *     excluding such that are not explicitly implemented in this library (no AnonymousSegments). The returned array
+     *     is possibly empty if no versions offered by the bank are also supported by the library.
+     */
+    public function getAllSupportedParameters(string $type): array
+    {
+        return array_filter($this->parameters[$type] ?? [], function (BaseSegment $segment) {
+            return !($segment instanceof AnonymousSegment);
+        });
+    }
+
+    /**
+     * @param string $type A business transaction type, represented by the segment name of the respective parameter
+     *     segment (Geschäftsvorfallparameter segment, aka. Segmentparametersegment). Example: 'HIKAZS'.
      * @return BaseSegment|null The latest parameter segment that is explicitly implemented in this library (never an
      *     AnonymousSegment), or null if none exists.
      */
@@ -174,12 +188,20 @@ class BPD
 
         // Extract all TanModes from HIPINS.
         if ($bpd->supportsPsd2()) {
-            /** @var HITANS $hitans */
-            $hitans = $bpd->requireLatestSupportedParameters('HITANS');
-            $tanParams = $hitans->getParameterZweiSchrittTanEinreichung();
-            $bpd->singleStepTanModeAllowed = $tanParams->isEinschrittVerfahrenErlaubt();
-            foreach ($tanParams->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
-                $bpd->allTanModes[$verfahren->getId()] = $verfahren;
+            /** @var HITANS[] $allHitans */
+            $allHitans = $bpd->getAllSupportedParameters('HITANS');
+            if (count($allHitans) === 0) {
+                throw new UnexpectedResponseException(
+                    'The server does not support any HITANS versions implemented in this library');
+            }
+            foreach ($allHitans as $hitans) {
+                $tanParams = $hitans->getParameterZweiSchrittTanEinreichung();
+                $bpd->singleStepTanModeAllowed = $tanParams->isEinschrittVerfahrenErlaubt();
+                foreach ($tanParams->getVerfahrensparameterZweiSchrittVerfahren() as $verfahren) {
+                    if (!array_key_exists($verfahren->getId(), $bpd->allTanModes)) {
+                        $bpd->allTanModes[$verfahren->getId()] = $verfahren;
+                    }
+                }
             }
         }
 
