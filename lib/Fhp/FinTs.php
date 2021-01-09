@@ -456,7 +456,7 @@ class FinTs
         // (2c) Note that we only support the (B) variant here. There is additionally a HITAN segment with TAN-Prozess=2
         //      and the reference ID to indicate that the authentication has completed. In this case, the response also
         //      contains the response segments for the executed action, if any.
-        $hitanS = null;
+        $hitanProcessS = null;
         $isSuccess = false;
         /** @var HITAN $hitan */
         foreach ($response->findSegments(HITAN::class) as $hitan) {
@@ -464,12 +464,12 @@ class FinTs
                 throw new UnexpectedResponseException('Unexpected Auftragsreferenz: ' . $hitan->getAuftragsreferenz());
             }
             if ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_S) {
-                $hitanS = $hitan;
+                $hitanProcessS = $hitan;
             } elseif ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_2) {
                 $isSuccess = true;
             }
         }
-        if ($hitanS === null) {
+        if ($hitanProcessS === null) {
             throw new UnexpectedResponseException('Missing HITAN with tanProzess=S in the response');
         }
         $outstanding = $response->findRueckmeldung(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND);
@@ -489,7 +489,7 @@ class FinTs
             if ($outstanding === null) {
                 throw new UnexpectedResponseException('Got neither 3956 nor HITAN with tanProzess=2');
             }
-            $action->setTanRequest($hitanS);
+            $action->setTanRequest($hitanProcessS);
         }
         return $isSuccess;
     }
