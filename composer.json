@@ -16,9 +16,9 @@
     "ext-curl": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "8.4.*",
-    "php-mock/php-mock-phpunit": "2.5.*",
-    "friendsofphp/php-cs-fixer": "2.16.*"
+    "phpunit/phpunit": "9.5.*",
+    "php-mock/php-mock-phpunit": "2.6.*",
+    "friendsofphp/php-cs-fixer": "2.17.*"
   },
   "suggest": {
     "monolog/monolog": "Allow sending log messages to a variety of different handlers",
