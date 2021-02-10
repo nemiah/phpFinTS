@@ -38,11 +38,11 @@ Once you are able to login without any issues, you can move on to the other exam
 
 ## Banks with special needs
 
-If you are developing a general online banking application with this library, please be aware of the following exceptions:
+If you are developing an online banking application with this library, please be aware of the following exceptions:
 
 ### Hypovereinsbank
 
-The BLZ 71120078 will get you a "Unbekanntes Kreditinstitut" exception when used with the URL https://hbci-01.hypovereinsbank.de/bank/hbci. 
+The BLZ 71120078 will throw an "Unbekanntes Kreditinstitut" exception when used with the URL https://hbci-01.hypovereinsbank.de/bank/hbci. 
 You have to use BLZ 70020270 instead.
 ```
 if (trim($url) == 'https://hbci-01.hypovereinsbank.de/bank/hbci')
