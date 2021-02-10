@@ -2,9 +2,6 @@
 
 [![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
 
-:exclamation:**Note: Be sure to grab the latest version, currently from the `master` branch until we have a fresher
-release.**
-
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
  * Get accounts
@@ -38,6 +35,27 @@ Fill out the required configuration in `init.php` (server details can be obtaine
 [www.hbci-zka.de](https://www.hbci-zka.de) after registration).
 Then execute `tanModesAndMedia.php` and later `login.php`.
 Once you are able to login without any issues, you can move on to the other examples.
+
+## Banks with special needs
+
+If you are developing a general online banking application with this library, please be aware of the following exceptions:
+
+### Hypovereinsbank
+
+The BLZ 71120078 will get you a "Unbekanntes Kreditinstitut" exception when used with the URL https://hbci-01.hypovereinsbank.de/bank/hbci. 
+You have to use BLZ 70020270 instead.
+```
+if (trim($url) == 'https://hbci-01.hypovereinsbank.de/bank/hbci')
+	$blz = '70020270';
+```
+
+### ING Diba
+
+This bank does not support PSD2:
+```
+if(trim($blz) == "50010517")
+	$fints->selectTanMode(new Fhp\Model\NoPsd2TanMode());
+```
 
 ## Contribute
 
