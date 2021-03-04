@@ -10,7 +10,7 @@ class HKCCSTest extends TestCase
     // This lacks a bank code (BLZ) after the 280, so the Kik is incomplete.
     const INVALID_HKCCS = "HKCCS:3:1+PRIVATE_______________:GENODEM1GLS:::280+urn?:iso?:std?:iso?:20022?:tech?:xsd?:pain.001.001.03+@1@0'";
 
-    public function test_validate_HBCI22_example1()
+    public function testValidateHBCI22Example1()
     {
         $parsed = HKCCSv1::parse(utf8_decode(static::INVALID_HKCCS));
         $this->expectException(\InvalidArgumentException::class);

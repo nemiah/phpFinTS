@@ -9,7 +9,7 @@ class GetBPDTest extends ConsorsIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getBpd()
+    public function testGetBpd()
     {
         // For this test, only the BPD should be requested in an anonymous dialog.
         $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);

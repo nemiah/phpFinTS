@@ -12,7 +12,7 @@ class InitDialogWithBlockedPinTest extends IngDibaIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_init_dialog_with_blocked_pin()
+    public function testInitDialogWithBlockedPin()
     {
         $this->expectException(ServerException::class);
         $this->expectExceptionMessageMatches('/.*Log-in fehlgeschlagen.*/');

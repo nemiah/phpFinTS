@@ -17,7 +17,7 @@ class InitEndDialogTest extends ConsorsIntegrationTestBase
      * @throws CurlException
      * @throws ServerException
      */
-    public function test_getTanModes_and_getTanMedia()
+    public function testGetTanModesAndGetTanMedia()
     {
         // When we request the TAN modes, it should first request the BPD anonymously.
         $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, static::ANONYMOUS_INIT_RESPONSE);
@@ -39,7 +39,7 @@ class InitEndDialogTest extends ConsorsIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_init_and_end_dialog()
+    public function testInitAndEndDialog()
     {
         $this->initDialog();
         $this->assertNotNull($this->fints->getDialogId());

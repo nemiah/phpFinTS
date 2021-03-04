@@ -14,7 +14,7 @@ class GetStatementOfAccountTest extends IngDibaIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getStatementOfAccountTest()
+    public function testGetStatementOfAccountTest()
     {
         $this->initDialog();
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_RESPONSE);

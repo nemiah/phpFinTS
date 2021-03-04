@@ -14,7 +14,7 @@ class HNVSDTest extends TestCase
      */
     const REAL_DKB_RESPONSE = 'HNVSD:999:1+@198@HNSHK:2:4+PIN:1+999+7000000+1+1+2::tgxxxxxxxxxxxxxxxxxxxxxxxxxA+1+1+1:999:1+6:10:16+280:12030000:xxx?@xxxxx:S:0:0\'HIRMG:3:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.\'HNSHA:4:2+7000000\'\'';
 
-    public function test_parse_real_consors_response()
+    public function testParseRealConsorsResponse()
     {
         // The point of this unit test is to ensure that the parser does not get confused by all the syntax characters
         // nested in the binary field.
@@ -22,21 +22,21 @@ class HNVSDTest extends TestCase
         $this->assertEquals(198, strlen($hnvsd->datenVerschluesselt->getData()));
     }
 
-    public function test_length_too_long()
+    public function testLengthTooLong()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Incomplete binary block');
         HNVSDv1::parse(str_replace('@198@', '@199@', static::REAL_DKB_RESPONSE));
     }
 
-    public function test_length_too_short()
+    public function testLengthTooShort()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('got 198');
         HNVSDv1::parse(str_replace('@198@', '@197@', static::REAL_DKB_RESPONSE));
     }
 
-    public function test_iso_8859_encoded_length()
+    public function testIso8859EncodedLength()
     {
         // In UTF-8 (used by PHP), the character ä uses two bytes:
         $this->assertEquals(2, strlen('ä'));

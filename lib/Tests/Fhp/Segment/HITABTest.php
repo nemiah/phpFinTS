@@ -8,7 +8,7 @@ class HITABTest extends \PHPUnit\Framework\TestCase
 {
     const REAL_DKB_RESPONSE = "HITAB:1:4:3+0+A:1:::::::::::pushtan::::::::+A:1:::::::::::SomePhone1::::::::'";
 
-    public function test_parse_DKB()
+    public function testParseDKB()
     {
         // NOTE: Among the many colons, the response contains a KtvV3 and a Kti nested inside TanMediumListeV4. Each is
         // a DEG nested inside another DEG. In that case, if the nested DEG is absent (null), we still need all the
@@ -22,7 +22,7 @@ class HITABTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('SomePhone1', $liste[1]->getName());
     }
 
-    public function test_serialize()
+    public function testSerialize()
     {
         // NOTE: Our serializer produces fewer redundant colons, but after parsing it again, it should be the same.
         $parsed = HITABv4::parse(static::REAL_DKB_RESPONSE);

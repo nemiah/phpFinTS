@@ -16,7 +16,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws ServerException This should not actually throw because there are only warnings in the response.
      */
-    public function test_detectAndThrowErrors_onlyWarnings()
+    public function testDetectAndThrowErrorsOnlyWarnings()
     {
         $request = Message::createPlainMessage([]);
         $response = Message::parse(static::RESPONSE_WITH_WARNINGS);
@@ -27,7 +27,7 @@ class ServerExceptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws ServerException This should not actually throw because there are only warnings in the response.
      */
-    public function test_detectAndThrowErrors_withErrors()
+    public function testDetectAndThrowErrorsWithErrors()
     {
         $request = Message::createPlainMessage([]);
         $response = Message::parse(static::RESPONSE_WITH_ERRORS);

@@ -32,7 +32,7 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_with_tan_paginated()
+    public function testWithTanPaginated()
     {
         $this->initDialog();
 
@@ -46,7 +46,7 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_with_tan_minimal_persist_paginated()
+    public function testWithTanMinimalPersistPaginated()
     {
         $this->initDialog();
 

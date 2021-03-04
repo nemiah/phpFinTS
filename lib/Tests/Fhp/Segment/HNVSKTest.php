@@ -19,7 +19,7 @@ class HNVSKTest extends TestCase
      */
     const HBCI22_EXAMPLE = "HNVSK:998:3+PIN:1+998+1+1::2+1:20020610:102044+2:2:13:@8@00000000:5:1+280:10020030:12345:V:0:0+0'";
 
-    public function test_parse()
+    public function testParse()
     {
         $hnvsk = HNVSKv3::parse(static::HBCI22_EXAMPLE);
         $this->assertEquals('00000000', $hnvsk->verschluesselungsalgorithmus->wertDesAlgorithmusparametersSchluessel->getData());
@@ -29,7 +29,7 @@ class HNVSKTest extends TestCase
         $this->assertEquals(SchluesselnameV3::CHIFFRIERSCHLUESSEL, $hnvsk->schluesselname->schluesselart);
     }
 
-    public function test_serialize()
+    public function testSerialize()
     {
         $options = new FinTsOptions();
         $options->bankCode = '10020030';

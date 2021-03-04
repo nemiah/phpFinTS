@@ -21,7 +21,7 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
         "HIUPD:17:4:4+1234568::280:10020030+12345+DEM+Ernst Müller++Sparkonto 2000++HKPRO:1+HKSAK:0+HKISA:1+HKSSP:0+HKUEB:2:Z:1000,:DEM:7+HKKAN:1+HKKAZ:1+HKSAL:2'",
     ];
 
-    public function test_parse_HBCI22_example1()
+    public function testParseHBCI22Example1()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
         $this->assertSame(16, $parsed->segmentkopf->segmentnummer);
@@ -43,20 +43,20 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(9, $parsed->erlaubteGeschaeftsvorfaelle);
     }
 
-    public function test_validate_HBCI22_example1()
+    public function testValidateHBCI22Example1()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
         $parsed->validate(); // Should not throw.
         $this->assertTrue(true);
     }
 
-    public function test_serialize_HBCI22_example1()
+    public function testSerializeHBCI22Example1()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[0]));
         $this->assertEquals(utf8_decode(static::HBCI22_EXAMPLES[0]), $parsed->serialize());
     }
 
-    public function test_parse_HBCI22_example2()
+    public function testParseHBCI22Example2()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
         $this->assertSame('1234568', $parsed->kontoverbindung->kontonummer);
@@ -72,14 +72,14 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(7, $parsed->erlaubteGeschaeftsvorfaelle[4]->limitTage);
     }
 
-    public function test_validate_HBCI22_example2()
+    public function testValidateHBCI22Example2()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
         $parsed->validate(); // Should not throw.
         $this->assertTrue(true);
     }
 
-    public function test_serialize_HBCI22_example2()
+    public function testSerializeHBCI22Example2()
     {
         $parsed = HIUPDv4::parse(utf8_decode(static::HBCI22_EXAMPLES[1]));
         $this->assertEquals(utf8_decode(static::HBCI22_EXAMPLES[1]), $parsed->serialize());

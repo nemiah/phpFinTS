@@ -7,7 +7,7 @@ class InitEndDialogTest extends IngDibaIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_init_and_end_dialog()
+    public function testInitAndEndDialog()
     {
         $this->initDialog();
         $this->assertNotNull($this->fints->getDialogId());

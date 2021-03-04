@@ -10,7 +10,7 @@ class HISALTest extends \PHPUnit\Framework\TestCase
 {
     const REAL_DKB_RESPONSE = "HITAB:1:4:3+0+A:1:::::::::::pushtan::::::::+A:1:::::::::::SomePhone1::::::::'";
 
-    public function test_empty_kti()
+    public function testEmptyKti()
     {
         $hisal = HISALv7::createEmpty();
         $hisal->segmentkopf->segmentnummer = 11;
