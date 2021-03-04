@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpDocSignatureInspection */
+<?php
+/** @noinspection PhpDocSignatureInspection */
 
 namespace Tests\Fhp\Syntax;
 
