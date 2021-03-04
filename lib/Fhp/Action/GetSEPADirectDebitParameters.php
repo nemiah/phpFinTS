@@ -73,6 +73,6 @@ class GetSEPADirectDebitParameters extends BaseAction
         if ($parsed instanceof MinimaleVorlaufzeitSEPALastschrift) {
             return $parsed;
         }
-        return  $parsed[$this->directDebitType] ?? null;
+        return $parsed[$this->directDebitType] ?? null;
     }
 }
