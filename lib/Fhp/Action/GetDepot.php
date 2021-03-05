@@ -149,7 +149,7 @@ class GetDepot extends PaginateableAction
 
         try {
             // Note: Some banks encode their MT 535 data as SWIFT/ISO-8859 like it should be according to the
-            // specification (e.g. DKB), others just send UTF-8 (e.g. Consorsbank), so we try to detect it here.
+            // specification, others just send UTF-8, so we try to detect it here.
             $rawMT535 = mb_detect_encoding($this->rawMT535, 'UTF-8', true) === false
                 ? utf8_encode($this->rawMT535) : $this->rawMT535;
             $this->parsedMT535 = $parser->parse($rawMT535);
