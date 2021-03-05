@@ -46,13 +46,9 @@ class GetDepot extends PaginateableAction
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
      *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
-     * @param \DateTime|null $from If set, only transactions after this date (inclusive) are returned.
-     * @param \DateTime|null $to If set, only transactions before this date (inclusive) are returned.
-     * @param bool $allAccounts If set to true, will return statements for all accounts of the user. You still need to
-     *     pass one of the accounts into $account, though.
-     * @return GetStatementOfAccount A new action instance.
+     * @return GetDepot A new action instance.
      */
-    public static function create(SEPAAccount $account /*, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false*/): GetDepot
+    public static function create(SEPAAccount $account): GetDepot
     {
         $result = new GetDepot();
         $result->account = $account;
@@ -96,7 +92,7 @@ class GetDepot extends PaginateableAction
     }
 
     /**
-     * @return StatementOfAccount
+     * @return StatementOfHolding
      */
     public function getStatement()
     {
@@ -149,13 +145,7 @@ class GetDepot extends PaginateableAction
 
     private function parseMt535()
     {
-        if (strpos(strtolower($this->bankName), 'sparda') !== false) {
-            $parser = new SpardaMT535();
-        } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
-            $parser = new PostbankMT535();
-        } else {
-            $parser = new MT535();
-        }
+        $parser = new MT535();
 
         try {
             // Note: Some banks encode their MT 535 data as SWIFT/ISO-8859 like it should be according to the
