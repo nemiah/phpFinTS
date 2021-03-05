@@ -8,11 +8,10 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 use Fhp\Segment\BaseGeschaeftsvorfallparameterOld;
 
 /**
- * Segment: Saldenabfrage Parameter (Version 5)
+ * Segment: Parameter Depotaufstellung
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
- * File: HBCI22 Final.pdf
- * Section: VII.2.2 c)
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
+ * Section: O - Parameter Depotaufstellung
  */
  
 class HIWPDSv5 extends BaseGeschaeftsvorfallparameterOld implements HIWPDS
