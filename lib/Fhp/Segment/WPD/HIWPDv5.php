@@ -6,14 +6,12 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Syntax\Bin;
 
 /**
- * Segment: Saldenabfrage (Version 5)
+ * Segment: Depotaufstellung Kreditinstitutsrückmledung (Version 5)
  *
- * There will be one segment instance per account.
- *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
- * File: HBCI22 Final.pdf
- * Section: VII.2.2 b)
+ * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
+ * Section: C.4.3.1b
  */
+
 class HIWPDv5 extends BaseSegment implements HIWPD
 {
     /** @var Bin Uses SWIFT format MT940, version SRG 2001 */
