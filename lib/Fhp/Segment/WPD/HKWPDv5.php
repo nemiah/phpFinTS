@@ -14,8 +14,14 @@ use Fhp\Segment\Paginateable;
 class HKWPDv5 extends BaseSegment implements Paginateable
 {
     /** @var \Fhp\Segment\Common\KtvV3 */
-    public $kontoverbindungAuftraggeber;
+    public $depot;
     
+    /* @var string*/
+    public $waehrungDerDepotaufstellung;
+    
+    /* @var \Fhp\Segment\Common\Kursqualitaet*/
+    public $kursqualitaet;
+        
     /** @var int|null Only allowed if {@link ParameterKontoumsaetzeV2::$eingabeAnzahlEintraegeErlaubt} says so. */
     public $maximaleAnzahlEintraege;
 
@@ -23,7 +29,7 @@ class HKWPDv5 extends BaseSegment implements Paginateable
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv): HKWPDv5
     {
         $result = HKWPDv5::createEmpty();
-        $result->kontoverbindungAuftraggeber = $ktv;
+        $result->depot = $ktv;
         return $result;
     }
 
