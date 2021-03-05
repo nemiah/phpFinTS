@@ -28,13 +28,13 @@ if ($getStatement->needsTan()) {
 
 $soa = $getStatement->getStatement();
 foreach ($soa->getStatements() as $statement) {
-			echo '=======================================' . PHP_EOL;
-			echo 'Name        : ' . $statement->getName() . PHP_EOL;
-			echo 'Amount      : ' . $statement->getAmount() . PHP_EOL;
-			echo 'Price		  : ' . $statement->getPrice()." ".$statement->getCurrency() . PHP_EOL;
-			echo 'WKN 		  : ' . $statement->getWKN() . PHP_EOL;
-			echo 'ISIN        : ' . $statement->getISIN() . PHP_EOL;
-			echo 'B-Datum     : ' . $statement->getDate()->format('Y-m-d') . PHP_EOL;
-			echo '=======================================' . PHP_EOL . PHP_EOL;
-		}
+    echo '=======================================' . PHP_EOL;
+    echo 'Name        : ' . $statement->getName() . PHP_EOL;
+    echo 'Amount      : ' . $statement->getAmount() . PHP_EOL;
+    echo 'Price		  : ' . $statement->getPrice()." ".$statement->getCurrency() . PHP_EOL;
+    echo 'WKN 		  : ' . $statement->getWKN() . PHP_EOL;
+    echo 'ISIN        : ' . $statement->getISIN() . PHP_EOL;
+    echo 'B-Datum     : ' . $statement->getDate()->format('Y-m-d') . PHP_EOL;
+    echo '=======================================' . PHP_EOL . PHP_EOL;
+}
 echo 'Found ' . count($soa->getStatements()) . ' statements.' . PHP_EOL;
