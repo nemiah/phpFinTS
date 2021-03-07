@@ -13,7 +13,7 @@ class InitDialogWithBlockedPinTest extends KSKIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_init_dialog_with_blocked_pin()
+    public function testInitDialogWithBlockedPin()
     {
         $this->expectException(ServerException::class);
         $this->expectExceptionMessageMatches('/Ihr Zugang ist vorlaufig gesperrt/');

@@ -12,7 +12,7 @@ class GetBalanceTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getBalance()
+    public function testGetBalance()
     {
         $this->initDialog();
 

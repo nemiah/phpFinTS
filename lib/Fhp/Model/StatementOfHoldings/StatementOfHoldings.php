@@ -40,8 +40,8 @@ class StatementOfHoldings
 */
         return null;
     }
-	
-	public function getStatementForISIN($isin): ?Statement
+
+    public function getStatementForISIN($isin): ?Statement
     {
         /*if (is_string($date)) {
             $date = static::parseDate($date);
@@ -55,7 +55,6 @@ class StatementOfHoldings
 */
         return null;
     }
-
 
     private static function parseDate(string $date): \DateTime
     {
@@ -74,20 +73,44 @@ class StatementOfHoldings
     {
         $result = new StatementOfHoldings();
         foreach ($array as $h) {
-
             $holdingModel = new Holding();
-            if(property_exists($h,"date")) $holdingModel->setDate(static::parseDate($h->date));
-            if(property_exists($h,"isin")) $holdingModel->setISIN($h->isin);
-			if(property_exists($h,"wkn")) $holdingModel->setWKN($h->wkn);
-			if(property_exists($h,"name")) $holdingModel->setName($h->name);
-			if(property_exists($h,"price")) $holdingModel->setPrice($h->price);
-			if(property_exists($h,"amount")) $holdingModel->setAmount($h->amount);
-			if(property_exists($h,"price") && property_exists($h,"amount")) $holdingModel->setValue($h->price * $h->amount);
-			if(property_exists($h,"currency")) $holdingModel->setCurrency($h->currency);
-			if(property_exists($h,"time")) $holdingModel->setTime($h->time);
+            if (property_exists($h, 'date')) {
+                $holdingModel->setDate(static::parseDate($h->date));
+            }
+            if (property_exists($h, 'isin')) {
+                $holdingModel->setISIN($h->isin);
+            }
+            if (property_exists($h, 'wkn')) {
+                $holdingModel->setWKN($h->wkn);
+            }
+            if (property_exists($h, 'name')) {
+                $holdingModel->setName($h->name);
+            }
+            if (property_exists($h, 'price')) {
+                if ($h->currency == '%') {
+                    $holdingModel->setPrice($h->price / 100);
+                } else {
+                    $holdingModel->setPrice($h->price);
+                }
+            }
+            if (property_exists($h, 'amount')) {
+                $holdingModel->setAmount($h->amount);
+            }
+            if (property_exists($h, 'price') && property_exists($h, 'amount')) {
+                if ($h->currency == '%') {
+                    $holdingModel->setValue($h->price / 100);
+                } else {
+                    $holdingModel->setValue($h->price * $h->amount);
+                }
+            }
+            if (property_exists($h, 'currency')) {
+                $holdingModel->setCurrency($h->currency);
+            }
+            if (property_exists($h, 'time')) {
+                $holdingModel->setTime($h->time);
+            }
 
             $result->statements[] = $holdingModel;
-
         }
         return $result;
     }

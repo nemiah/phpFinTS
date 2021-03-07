@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HKSPATest extends TestCase
 {
-    public function test_serialize()
+    public function testSerialize()
     {
         $hkspa = HKSPAv2::createEmpty();
         $hkspa->setSegmentNumber(42);

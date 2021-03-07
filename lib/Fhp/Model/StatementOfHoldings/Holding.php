@@ -4,21 +4,21 @@ namespace Fhp\Model\StatementOfHoldings;
 
 class Holding
 {
-	/**
+    /**
      * @var string
      */
     protected $isin;
-	
-	/**
+
+    /**
      * @var string
      */
     protected $wkn;
-	
-	/**
+
+    /**
      * @var string
      */
     protected $name;
-	
+
     /**
      * @var float
      */
@@ -28,8 +28,8 @@ class Holding
      * @var float
      */
     protected $amount = 0.0;
-	
-	/**
+
+    /**
      * @var float
      */
     protected $value = 0.0;
@@ -39,51 +39,53 @@ class Holding
      */
     protected $date;
 
-	/**
+    /**
      * @var \DateTime|null
      */
     protected $time;
-	
-	/**
+
+    /**
      * @var string
      */
     protected $currency;
 
-   
-	/**
+    /**
      * Set ISIN
      *
      * @return $this
      */
-	public function setISIN(?string $isin){
-		$this->isin = $isin;
-		
-		return $this;
-	}
-	
-	/**
+    public function setISIN(?string $isin)
+    {
+        $this->isin = $isin;
+
+        return $this;
+    }
+
+    /**
      * Set WKN
      *
      * @return $this
      */
-	public function setWKN(?string $wkn){
-		$this->wkn = $wkn;
-		
-		return $this;
-	}
-	
-	/**
+    public function setWKN(?string $wkn)
+    {
+        $this->wkn = $wkn;
+
+        return $this;
+    }
+
+    /**
      * Set Name
      *
      * @return $this
      */
-	public function setName(?string $name){
-		$this->name = $name;
-		
-		return $this;
-	}
+    public function setName(?string $name)
+    {
+        $this->name = $name;
 
-	/**
+        return $this;
+    }
+
+    /**
      * Set value
      *
      * @return $this
@@ -94,8 +96,8 @@ class Holding
 
         return $this;
     }
-	
-	/**
+
+    /**
      * Set price
      *
      * @return $this
@@ -106,8 +108,8 @@ class Holding
 
         return $this;
     }
-	
-	/**
+
+    /**
      * Set amount
      *
      * @return $this
@@ -118,8 +120,8 @@ class Holding
 
         return $this;
     }
-	
-	/**
+
+    /**
      * Set currency
      *
      * @return $this
@@ -131,7 +133,7 @@ class Holding
         return $this;
     }
 
-	    /**
+    /**
      * Set date
      *
      * @return $this
@@ -142,8 +144,8 @@ class Holding
 
         return $this;
     }
-	
-	    /**
+
+    /**
      * Set time
      *
      * @return $this
@@ -160,32 +162,32 @@ class Holding
      *
      * @return ISIN
      */
-	public function getISIN(): ?string
-	{
-		return $this->isin;
-	}
-	
-	/**
+    public function getISIN(): ?string
+    {
+        return $this->isin;
+    }
+
+    /**
      * Set WKN
      *
      * @return $this
      */
-	public function getWKN(): ?string
-	{
-		return $this->wkn;
-	}
-	
-	/**
+    public function getWKN(): ?string
+    {
+        return $this->wkn;
+    }
+
+    /**
      * Set Name
      *
      * @return $this
      */
-	public function getName(): ?string
-	{
-		return $this->name;
-	}
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-	/**
+    /**
      * Set price
      *
      * @return $this
@@ -195,7 +197,7 @@ class Holding
         return $this->price;
     }
 
-	/**
+    /**
      * Set price
      *
      * @return $this
@@ -204,8 +206,8 @@ class Holding
     {
         return $this->price;
     }
-	
-	/**
+
+    /**
      * Set amount
      *
      * @return $this
@@ -214,8 +216,8 @@ class Holding
     {
         return $this->amount;
     }
-	
-	/**
+
+    /**
      * Set currency
      *
      * @return $this
@@ -225,8 +227,7 @@ class Holding
         return $this->currency;
     }
 
-	
-	    /**
+    /**
      * Set time
      *
      * @return $this
@@ -243,6 +244,4 @@ class Holding
     {
         return $this->date;
     }
-
-
 }

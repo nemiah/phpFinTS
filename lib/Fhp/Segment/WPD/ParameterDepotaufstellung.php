@@ -10,5 +10,4 @@ namespace Fhp\Segment\WPD;
  */
 interface ParameterDepotaufstellung
 {
-
 }

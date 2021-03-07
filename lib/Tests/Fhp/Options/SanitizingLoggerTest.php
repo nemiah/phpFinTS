@@ -8,7 +8,7 @@ use Fhp\Options\SanitizingLogger;
 
 class SanitizingLoggerTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_sanitize()
+    public function testSanitize()
     {
         $credentials = Credentials::create('USER123', 'pw+?123');
         $options = new FinTsOptions();

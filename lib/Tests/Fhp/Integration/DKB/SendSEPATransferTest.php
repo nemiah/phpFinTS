@@ -114,7 +114,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_sendSEPATransfer()
+    public function testSendSEPATransfer()
     {
         $this->initDialog();
 
@@ -127,7 +127,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_sendSEPATransfer_persist()
+    public function testSendSEPATransferPersist()
     {
         $this->initDialog();
 

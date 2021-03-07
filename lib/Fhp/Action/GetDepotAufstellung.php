@@ -14,7 +14,6 @@ use Fhp\Protocol\UPD;
 use Fhp\Segment\Common\KtvV3;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\WPD\HIWPDv5;
-use Fhp\Segment\WPD\HIWPDSv5;
 use Fhp\Segment\WPD\HKWPDv5;
 use Fhp\UnsupportedException;
 
@@ -23,7 +22,7 @@ use Fhp\UnsupportedException;
  * MT535
  * ZwenAusZwota
  */
-class GetDepot extends PaginateableAction
+class GetDepotAufstellung extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
@@ -50,7 +49,7 @@ class GetDepot extends PaginateableAction
      */
     public static function create(SEPAAccount $account): GetDepot
     {
-        $result = new GetDepot();
+        $result = new GetDepotAufstellung();
         $result->account = $account;
         return $result;
     }
@@ -67,8 +66,7 @@ class GetDepot extends PaginateableAction
     {
         list(
             $parentSerialized,
-            $this->account,
-            ) = unserialize($serialized);
+            $this->account) = unserialize($serialized);
         parent::unserialize($parentSerialized);
     }
 
@@ -103,7 +101,6 @@ class GetDepot extends PaginateableAction
     /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-
         /** @var HIWPDS $hiwpds */
         $hiwpds = $bpd->requireLatestSupportedParameters('HIWPDS');
 
@@ -113,19 +110,16 @@ class GetDepot extends PaginateableAction
             default:
                 throw new UnsupportedException('Unsupported HKWPD version: ' . $hiwpds->getVersion());
         }
-		print_r($hiwpds);
     }
 
     /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
-		
-
         parent::processResponse($response);
 
         $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
         $responseHiwpd = $response->findSegments(HIWPDv5::class);
-		
+
         $numResponseSegments = count($responseHiwpd);
         if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
             throw new UnexpectedResponseException("Only got $numResponseSegments HIWPD response segments!");

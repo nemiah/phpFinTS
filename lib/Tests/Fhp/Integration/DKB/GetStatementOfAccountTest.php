@@ -62,7 +62,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_simple()
+    public function testSimple()
     {
         $this->initDialog();
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_RESPONSE . static::getHikazContent() . "'");
@@ -85,7 +85,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_withTan()
+    public function testWithTan()
     {
         $this->initDialog();
 
@@ -98,7 +98,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_withTan_persist()
+    public function testWithTanPersist()
     {
         $this->initDialog();
 
@@ -121,7 +121,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_paginated()
+    public function testPaginated()
     {
         $this->initDialog();
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_PAGE_1_RESPONSE . static::getHikazContentPage1() . "'");

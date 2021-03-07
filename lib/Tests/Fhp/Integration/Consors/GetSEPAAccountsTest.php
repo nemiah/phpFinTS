@@ -10,7 +10,7 @@ class GetSEPAAccountsTest extends ConsorsIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getSEPAAccounts()
+    public function testGetSEPAAccounts()
     {
         $this->initDialog();
 

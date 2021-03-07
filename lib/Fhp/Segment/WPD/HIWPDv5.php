@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpUnused */
+<?php
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\WPD;
 
@@ -11,15 +12,21 @@ use Fhp\Syntax\Bin;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
  * Section: C.4.3.1b
  */
-
 class HIWPDv5 extends BaseSegment implements HIWPD
 {
-    /** @var Bin Uses SWIFT format MT940, version SRG 2001 */
+    /** @var Bin Uses SWIFT format MT353, version SRG 1998 */
     public $depotaufstellung;
-    
-	public function getDepotaufstellung(): Bin
+
+    /** @var ParameterDepotaufstellungV2|null */
+    public $parameterDepotaufstellung;
+
+    public function getDepotaufstellung(): Bin
     {
         return $this->depotaufstellung;
     }
-	
+
+    public function getParameter(): ParameterDepotaufstellung
+    {
+        return $this->parameterDepotaufstellung;
+    }
 }

@@ -14,3 +14,7 @@ class Kursqualitaet extends BaseDeg
 {
     const DELAYED = 1;  // delayed-Kurs
     const REALTIME = 2; // Echtzeit-Kurs
+
+    /** @var int */
+    public $kursqualitaet;
+}

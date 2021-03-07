@@ -11,7 +11,7 @@ class GetSEPAAccountsTest extends PostbankIntegrationTestBase
      * @see https://github.com/nemiah/phpFinTS/issues/231#issuecomment-583286097
      * @throws \Throwable
      */
-    public function test_getSEPAAccounts_emptyResponse()
+    public function testGetSEPAAccountsEmptyResponse()
     {
         $this->initDialog();
 

@@ -6,7 +6,7 @@ use Fhp\Syntax\Bin;
 
 class BinTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_to_string()
+    public function testToString()
     {
         $string = md5(uniqid());
         $string2 = md5(uniqid());

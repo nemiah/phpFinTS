@@ -6,13 +6,13 @@ use Fhp\Syntax\Parser;
 
 class ParserTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_splitEscapedString_empty()
+    public function testSplitEscapedStringEmpty()
     {
         $this->assertEquals([], Parser::splitEscapedString('+', ''));
         $this->assertEquals(['', ''], Parser::splitEscapedString('+', '+'));
     }
 
-    public function test_splitEscapedString_without_escaping()
+    public function testSplitEscapedStringWithoutEscaping()
     {
         $this->assertEquals(['ABC', 'DEF'], Parser::splitEscapedString('+', 'ABC+DEF'));
         $this->assertEquals(['ABC', '', 'DEF'], Parser::splitEscapedString('+', 'ABC++DEF'));
@@ -20,7 +20,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['', '', 'ABC'], Parser::splitEscapedString('+', '++ABC'));
     }
 
-    public function test_splitEscapedString_with_escaping()
+    public function testSplitEscapedStringWithEscaping()
     {
         $this->assertEquals(['A?+', 'DEF'], Parser::splitEscapedString('+', 'A?++DEF'));
         $this->assertEquals(['?+C', '', 'D?+'], Parser::splitEscapedString('+', '?+C++D?+'));
@@ -28,7 +28,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['', '', '?+C'], Parser::splitEscapedString('+', '++?+C'));
     }
 
-    public function test_splitEscapedString_with_binaryBlock()
+    public function testSplitEscapedStringWithBinaryBlock()
     {
         $this->assertEquals(['A@4@xxxxD', 'EF'], Parser::splitEscapedString('+', 'A@4@xxxxD+EF'));
         $this->assertEquals(['A@4@++++D', 'EF'], Parser::splitEscapedString('+', 'A@4@++++D+EF'));
@@ -39,7 +39,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['@4@++++'], Parser::splitEscapedString('+', '@4@++++'));
     }
 
-    public function test_splitEscapedString_with_escaping_and_binaryBlock()
+    public function testSplitEscapedStringWithEscapingAndBinaryBlock()
     {
         $this->assertEquals(['A@4@xxxxD', '?+'], Parser::splitEscapedString('+', 'A@4@xxxxD+?+'));
         $this->assertEquals(['A@4@xxxx?+', 'EF'], Parser::splitEscapedString('+', 'A@4@xxxx?++EF'));
@@ -47,7 +47,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['?+@4@xxx+D', '?+'], Parser::splitEscapedString('+', '?+@4@xxx+D+?+'));
     }
 
-    public function test_unescape()
+    public function testUnescape()
     {
         $this->assertEquals('ABC+DEF', Parser::unescape('ABC+DEF'));
         $this->assertEquals('ABC+DEF', Parser::unescape('ABC?+DEF'));
@@ -56,7 +56,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('ABC:DEF', Parser::unescape('ABC?:DEF'));
     }
 
-    public function test_parseDataElement()
+    public function testParseDataElement()
     {
         $this->assertSame(15, Parser::parseDataElement('15', 'int'));
         $this->assertSame(1000, Parser::parseDataElement('1000', 'integer'));
@@ -72,25 +72,25 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(null, Parser::parseDataElement('', 'string'));
     }
 
-    public function test_parseDataElement_invalid_int()
+    public function testParseDataElementInvalidInt()
     {
         $this->expectException(\InvalidArgumentException::class);
         Parser::parseDataElement('lala', 'int');
     }
 
-    public function test_parseDataElement_invalid_float_wrong_decimal_separator()
+    public function testParseDataElementInvalidFloatWrongDecimalSeparator()
     {
         $this->expectException(\InvalidArgumentException::class);
         Parser::parseDataElement('15.5', 'float');
     }
 
-    public function test_parseDataElement_invalid_float_multiple_decimal_separator()
+    public function testParseDataElementInvalidFloatMultipleDecimalSeparator()
     {
         $this->expectException(\InvalidArgumentException::class);
         Parser::parseDataElement('15,5,5', 'float');
     }
 
-    public function test_parseDataElement_invalid_float_no_decimal_separator()
+    public function testParseDataElementInvalidFloatNoDecimalSeparator()
     {
         $this->expectException(\InvalidArgumentException::class);
         Parser::parseDataElement('15', 'float');

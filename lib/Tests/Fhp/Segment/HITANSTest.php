@@ -16,7 +16,7 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
         "HITANS:167:6:4+1+1+1+J:N:0:910:2:HHD1.3.0:::chipTAN manuell:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:911:2:HHD1.3.2OPT:HHDOPT1:1.3.2:chipTAN optisch:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:912:2:HHD1.3.2USB:HHDUSB1:1.3.2:chipTAN-USB:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:913:2:Q1S:Secoder_UC:1.2.0:chipTAN-QR:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:920:2:smsTAN:::smsTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:5:921:2:TAN2go:::TAN2go:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:2:900:2:iTAN:::iTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:0'",
     ];
 
-    public function test_parse_DKB_response_v6()
+    public function testParseDKBResponseV6()
     {
         $parsed = HITANSv6::parse(static::REAL_DKB_RESPONSE[2]);
         $this->assertEquals(1, $parsed->maximaleAnzahlAuftraege);
@@ -30,7 +30,7 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('00', $parsedParams->verfahrensparameterZweiSchrittVerfahren[6]->initialisierungsmodus);
     }
 
-    public function test_segmentVersion_detection()
+    public function testSegmentVersionDetection()
     {
         $this->assertEquals(1, BaseSegment::parse(static::REAL_DKB_RESPONSE[0])->getVersion());
         $this->assertEquals(3, BaseSegment::parse(static::REAL_DKB_RESPONSE[1])->getVersion());
@@ -38,14 +38,14 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
             BaseSegment::parse(static::REAL_DKB_RESPONSE[2]));
     }
 
-    public function test_validate_invalid_segmentkopf()
+    public function testValidateInvalidSegmentkopf()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('@Invalid int: LALA@');
         HITANSv6::parse("HITANS:LALA:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:J:J'");
     }
 
-    public function test_validate_invalid_deg()
+    public function testValidateInvalidDeg()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('@Invalid bool: LALA@');

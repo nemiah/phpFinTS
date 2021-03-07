@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpUnused */
+<?php
+/** @noinspection PhpUnused */
 
 namespace Fhp\Segment\WPD;
 
@@ -15,16 +16,15 @@ class HKWPDv5 extends BaseSegment implements Paginateable
 {
     /** @var \Fhp\Segment\Common\KtvV3 */
     public $depot;
-    
-    /* @var string*/
-    public $waehrungDerDepotaufstellung;
-    
-    /* @var \Fhp\Segment\Common\Kursqualitaet*/
-    public $kursqualitaet;
-        
-    /** @var int|null Only allowed if {@link ParameterKontoumsaetzeV2::$eingabeAnzahlEintraegeErlaubt} says so. */
-    public $maximaleAnzahlEintraege;
 
+    /** @var string|null */
+    public $waehrungDerDepotaufstellung;
+
+    /** @var \Fhp\Segment\Common\Kursqualitaet|null */
+    public $kursqualitaet;
+
+    /** @var int|null Only allowed if {@link ParameterDepotaufstellungV2::$eingabeAnzahlEintraegeErlaubt} says so. */
+    public $maximaleAnzahlEintraege;
 
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv): HKWPDv5
     {

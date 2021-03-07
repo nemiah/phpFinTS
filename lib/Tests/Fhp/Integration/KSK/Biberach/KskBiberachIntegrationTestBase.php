@@ -2,7 +2,6 @@
 
 namespace Tests\Fhp\Integration\KSK\Biberach;
 
-use Fhp\Model\SEPAAccount;
 use Tests\Fhp\FinTsTestCase;
 
 class KskBiberachIntegrationTestBase extends FinTsTestCase
