@@ -10,7 +10,7 @@ class GetSEPAAccountsTest extends IngDibaIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getSEPAAccounts()
+    public function testGetSEPAAccounts()
     {
         $this->initDialog();
 

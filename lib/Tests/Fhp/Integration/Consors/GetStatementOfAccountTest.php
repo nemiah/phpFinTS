@@ -26,7 +26,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getStatementOfAccount()
+    public function testGetStatementOfAccount()
     {
         $this->initDialog();
 
@@ -76,7 +76,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    public function test_getStatementOfAccount_empty()
+    public function testGetStatementOfAccountEmpty()
     {
         $this->initDialog();
 

@@ -1,14 +1,16 @@
 <?php
 
-// This is based on the `@Symfony` rule set in `vendor/friendsofphp/php-cs-fixer/src/RuleSet.php`.
+// This is based on the `@Symfony` rule set documented in `vendor/friendsofphp/php-cs-fixer/doc/ruleSets/Symfony.rst`.
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/lib');
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules([
+        // We essentially use the Symfony style guide.
         '@Symfony' => true,
 
+        // But then we have some exclusions, i.e. we disable some of the checks/rules from Symfony:
         // Logic
         'yoda_style' => null, // Allow both Yoda-style and regular comparisons.
 

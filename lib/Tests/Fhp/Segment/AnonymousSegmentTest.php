@@ -21,7 +21,7 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_parse()
+    public function testParse()
     {
         $segment = Parser::parseAnonymousSegment(static::RAW_SEGMENT);
         $this->assertEquals('HNXXX', $segment->getName());
@@ -33,13 +33,13 @@ class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($segment, $segment2);
     }
 
-    public function test_parse_empty()
+    public function testParseEmpty()
     {
         $this->expectException(\InvalidArgumentException::class);
         Parser::parseAnonymousSegment('');
     }
 
-    public function test_serialize()
+    public function testSerialize()
     {
         $segment = Parser::parseAnonymousSegment(static::RAW_SEGMENT);
         $this->assertEquals(static::RAW_SEGMENT, $segment->serialize());

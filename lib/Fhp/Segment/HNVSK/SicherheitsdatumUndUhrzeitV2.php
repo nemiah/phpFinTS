@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpUnused */
+<?php
+/** @noinspection PhpUnused */
 
 // NOTE: In FinTsTestCase, this namespace name is hard-coded in order to be able to mock the time() function below.
 

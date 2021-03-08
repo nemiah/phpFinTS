@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpDocSignatureInspection */
+<?php
+/** @noinspection PhpDocSignatureInspection */
 
 namespace Tests\Fhp\Syntax;
 
@@ -26,7 +27,7 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @dataProvider escapeProvider */
-    public function test_escape($expected, $input)
+    public function testEscape($expected, $input)
     {
         $this->assertEquals($expected, Serializer::escape($input));
     }
@@ -50,7 +51,7 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @dataProvider provideSerializeDataElement */
-    public function test_serializeDataElement($expected, $value, $type)
+    public function testSerializeDataElement($expected, $value, $type)
     {
         $this->assertSame($expected, Serializer::serializeDataElement($value, $type));
     }
