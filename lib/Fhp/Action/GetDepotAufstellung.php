@@ -47,7 +47,7 @@ class GetDepotAufstellung extends PaginateableAction
      *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
      * @return GetDepot A new action instance.
      */
-    public static function create(SEPAAccount $account): GetDepot
+    public static function create(SEPAAccount $account): GetDepotAufstellung
     {
         $result = new GetDepotAufstellung();
         $result->account = $account;
@@ -147,9 +147,18 @@ class GetDepotAufstellung extends PaginateableAction
             $rawMT535 = mb_detect_encoding($this->rawMT535, 'UTF-8', true) === false
                 ? utf8_encode($this->rawMT535) : $this->rawMT535;
             $this->parsedMT535 = $parser->parse($rawMT535);
-            $this->statement = StatementOfHoldings::fromMT535Object($this->parsedMT535);
+            $this->statement = StatementOfHoldings::fromMT535Object($this->parsedMT535->blockB);
         } catch (MT535Exception $e) {
             throw new \InvalidArgumentException('Invalid MT535 data', 0, $e);
         }
     }
+	
+	public function getDepotWert()
+	{
+		$ret = new \StdClass();
+		$ret->betrag = 0.0;
+		preg_match("/EUR(.*)/sm",$this->parsedMT535->blockC[1],$matches);
+		$ret->betrag = floatval($matches[1]);
+		return $ret;
+	}
 }

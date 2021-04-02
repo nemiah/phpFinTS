@@ -13,7 +13,7 @@ class MT535
     /**
      * @throws MT535Exception
      */
-    public function parse(string $rawData): array
+    public function parse(string $rawData): object
     {
         // The divider can be either \r\n or @@
         $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
@@ -23,6 +23,8 @@ class MT535
         preg_match('/:16R:GENL(.*?):16S:GENL/sm', $cleanedRawData, $blockA);
         preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $cleanedRawData, $blockC);
         preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $cleanedRawData, $blockB);
+
+		$ret = new \StdClass();
 
         $result = [];
         foreach ($blockB[1] as $block) {
@@ -81,8 +83,10 @@ class MT535
 
             $result[] = $o;
         }
-
-        return $result;
+		$ret->blockA = $blockA;
+		$ret->blockB = $result;
+		$ret->blockC = $blockC;
+        return $ret;
     }
 
     protected function parseDescription($descr, $transaction)
