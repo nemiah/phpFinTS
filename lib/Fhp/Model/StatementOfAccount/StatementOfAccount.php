@@ -102,6 +102,7 @@ class StatementOfAccount
                     $transaction->setBookingText($trx['description']['booking_text']);
                     $transaction->setDescription1($trx['description']['description_1']);
                     $transaction->setDescription2($trx['description']['description_2']);
+					$transaction->setMatches($trx['description']['matches']);
                     $transaction->setStructuredDescription($trx['description']['description']);
                     $transaction->setBankCode($trx['description']['bank_code']);
                     $transaction->setAccountNumber($trx['description']['account_number']);

@@ -6,6 +6,7 @@ use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\MT940\Dialect\PostbankMT940;
 use Fhp\MT940\Dialect\SpardaMT940;
+use Fhp\MT940\Dialect\ComdirectMT940;
 use Fhp\MT940\MT940;
 use Fhp\MT940\MT940Exception;
 use Fhp\PaginateableAction;
@@ -176,12 +177,15 @@ class GetStatementOfAccount extends PaginateableAction
 
     private function parseMt940()
     {
-        if (strpos(strtolower($this->bankName), 'sparda') !== false) {
-            $parser = new SpardaMT940();
-        } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
-            $parser = new PostbankMT940();
-        } else {
-            $parser = new MT940();
+		if(strpos(strtolower($this->bankName),'sparda') !== false){
+			$parser = new SpardaMT940();
+		}else if(strpos(strtolower($this->bankName),'postbank')!== false){
+			$parser = new PostbankMT940();
+		/*}else if(strpos(strtolower($this->bankName),'comdirect')!== false){
+
+			$parser = new ComdirectMT940();*/
+		}else{
+			$parser = new MT940();
         }
 
         try {

@@ -64,7 +64,6 @@ class MT940
                 ) {
                     $transaction = substr($day[$i], 3);
                     $description = substr($day[$i + 1], 3);
-
                     if (!isset($result[$soaDate]['transactions'])) {
                         $result[$soaDate]['transactions'] = [];
                     }
@@ -155,7 +154,7 @@ class MT940
 
         $descriptionLines = [];
         $description1 = ''; // Legacy, could be removed.
-        $description2 = ''; // Legacy, could be removed.
+        $description2 = '';
         foreach ($matches as $m) {
             $index = (int) $m[1];
 
@@ -183,6 +182,7 @@ class MT940
         $result['text_key_addition'] = trim($prepared[34]);
         $result['description_2'] = $description2;
         $result['desc_lines'] = $descriptionLines;
+		$result['matches'] = $matches;
 
         return $result;
     }

@@ -47,6 +47,11 @@ class Transaction
      * @var string
      */
     protected $description2;
+	
+	/**
+     * @var string[]
+     */
+	protected $matches;
 
     /**
      * Array keys are identifiers like "SVWZ" for the main description.
@@ -422,4 +427,14 @@ class Transaction
         $this->textKeyAddition = intval($textKeyAddition);
         return $this;
     }
+	
+	public function setMatches($matches){
+		$this->matches = $matches;
+		return $this;
+	}
+	
+	public function getMatches(): array
+	{
+		return $this->matches;
+	}
 }
