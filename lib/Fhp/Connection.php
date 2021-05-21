@@ -79,7 +79,8 @@ class Connection
                 'Failed connection to ' . $this->url . ': ' . curl_error($this->curlHandle),
                 null,
                 curl_errno($this->curlHandle),
-                curl_getinfo($this->curlHandle)
+                curl_getinfo($this->curlHandle),
+				curl_error($this->curlHandle)
             );
         }
 
