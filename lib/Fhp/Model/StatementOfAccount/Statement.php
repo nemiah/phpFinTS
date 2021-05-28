@@ -23,6 +23,11 @@ class Statement
     protected $creditDebit;
 
     /**
+     * @var bool
+     */
+    protected $isStorno;
+
+    /**
      * @var \DateTime|null
      */
     protected $date;
@@ -78,6 +83,26 @@ class Statement
     public function setCreditDebit(?string $creditDebit)
     {
         $this->creditDebit = $creditDebit;
+
+        return $this;
+    }
+
+    /**
+     * Get isStorno
+     */
+    public function isStorno(): bool
+    {
+        return $this->isStorno;
+    }
+
+    /**
+     * Set isStorno
+     *
+     * @return $this
+     */
+    public function setIsStorno(bool $isStorno)
+    {
+        $this->isStorno = $isStorno;
 
         return $this;
     }
