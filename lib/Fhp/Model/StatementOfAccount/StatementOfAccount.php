@@ -97,6 +97,7 @@ class StatementOfAccount
                     $transaction->setBookingDate(static::parseDate($trx['booking_date']));
                     $transaction->setValutaDate(static::parseDate($trx['valuta_date']));
                     $transaction->setCreditDebit($trx['credit_debit']);
+                    $transaction->setIsStorno($trx['is_storno']);
                     $transaction->setAmount($trx['amount']);
                     $transaction->setBookingCode($trx['description']['booking_code']);
                     $transaction->setBookingText($trx['description']['booking_text']);
