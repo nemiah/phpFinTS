@@ -81,6 +81,8 @@ class MT940
                         throw new MT940Exception('cd mark not found in: ' . $transaction);
                     }
 
+                    $trx[count($trx) - 1]['is_storno'] = ($trxMatch[2] == 'RC' or $trxMatch[2] == 'RD');
+
                     $amount = $trxMatch[4];
                     $amount = str_replace(',', '.', $amount);
                     $trx[count($trx) - 1]['amount'] = $amount;
