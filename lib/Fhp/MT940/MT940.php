@@ -185,7 +185,7 @@ class MT940
         $result['text_key_addition'] = trim($prepared[34]);
         $result['description_2'] = $description2;
         $result['desc_lines'] = $descriptionLines;
-	$result['matches'] = $matches;
+        $result['matches'] = $matches;
 
         return $result;
     }

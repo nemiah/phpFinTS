@@ -24,7 +24,7 @@ class MT535
         preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $cleanedRawData, $blockC);
         preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $cleanedRawData, $blockB);
 
-		$ret = new \StdClass();
+        $ret = new \StdClass();
 
         $result = [];
         foreach ($blockB[1] as $block) {
@@ -83,9 +83,9 @@ class MT535
 
             $result[] = $o;
         }
-		$ret->blockA = $blockA;
-		$ret->blockB = $result;
-		$ret->blockC = $blockC;
+        $ret->blockA = $blockA;
+        $ret->blockB = $result;
+        $ret->blockC = $blockC;
         return $ret;
     }
 

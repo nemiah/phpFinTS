@@ -26,149 +26,147 @@ class ComdirectMT940
         $booked = true;
         $result = [];
         $days = explode($divider . '-', $cleanedRawData);
-		
+
         $soaDate = null;
         foreach ($days as $day) {
-			
-			//Auftragsreferenznummer
-			if (preg_match('/^:20:(.*?):/sm', $day, $match)) {
-				$date = explode("-",$match[1])[1];
-				echo "$date<br>";
-			}
-			
-			//Bezugsreferenznummer
-			if (preg_match('/^:21:(.*?):/sm', $day, $match)) {
-				print_r($match);
-			}
-			
-			//Kontobezeichnung
-			if (preg_match('/^:25:(.*?):/sm', $day, $match)) {
-				print_r($match);
-			}
-			
-			//Auszugsnummer
-			if (preg_match('/^:28C:(.*?):/sm', $day, $match)) {
-				print_r($match);
-			}
-			
-			//Anfangssaldo
-			if (preg_match('/^:60[FM]:(.*?):/sm', $day, $match)) {
-				print_r($match);
-			}
-			
-			//Wiederholungszyklus
-			if (preg_match('/^:61:(.*?):62[FM]:/sm', $day, $match)) {
-				print_r($match);
-			}
-			
-			//Schlussaldo
-			if (preg_match('/^:62[FM]:(.*?)-/sm', $day, $match)) {
-				print_r($match);
-			}
-			
+            //Auftragsreferenznummer
+            if (preg_match('/^:20:(.*?):/sm', $day, $match)) {
+                $date = explode('-', $match[1])[1];
+                echo "$date<br>";
+            }
 
-           /* $day = explode($divider . ':', $day);
+            //Bezugsreferenznummer
+            if (preg_match('/^:21:(.*?):/sm', $day, $match)) {
+                print_r($match);
+            }
 
-            for ($i = 0, $cnt = count($day); $i < $cnt; ++$i) {
-                if (preg_match("/\+\@[0-9]+\@$/", trim($day[$i]))) {
-                    $booked = false;
-                }
+            //Kontobezeichnung
+            if (preg_match('/^:25:(.*?):/sm', $day, $match)) {
+                print_r($match);
+            }
 
-                // handle start balance
-                // 60F:C160401EUR1234,56
-                if (preg_match('/^60(F|M):/', $day[$i])) {
-                    // remove 60(F|M): for better parsing
-                    $day[$i] = substr($day[$i], 4);
-                    $soaDate = $this->getDate(substr($day[$i], 1, 6));
+            //Auszugsnummer
+            if (preg_match('/^:28C:(.*?):/sm', $day, $match)) {
+                print_r($match);
+            }
 
-                    if (!isset($result[$soaDate])) {
-                        $result[$soaDate] = ['start_balance' => []];
-                    }
+            //Anfangssaldo
+            if (preg_match('/^:60[FM]:(.*?):/sm', $day, $match)) {
+                print_r($match);
+            }
 
-                    $cdMark = substr($day[$i], 0, 1);
-                    if ($cdMark == 'C') {
-                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($cdMark == 'D') {
-                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
-                    }
+            //Wiederholungszyklus
+            if (preg_match('/^:61:(.*?):62[FM]:/sm', $day, $match)) {
+                print_r($match);
+            }
 
-                    $amount = str_replace(',', '.', substr($day[$i], 10));
-                    $result[$soaDate]['start_balance']['amount'] = $amount;
-                } elseif (
-                    // found transaction
-                    // trx:61:1603310331DR637,39N033NONREF
-                    0 === strpos($day[$i], '61:')
-                    && isset($day[$i + 1])
-                    && 0 === strpos($day[$i + 1], '86:')
-                ) {
-                    $transaction = substr($day[$i], 3);
-                    $description = substr($day[$i + 1], 3);
-                    if (!isset($result[$soaDate]['transactions'])) {
-                        $result[$soaDate]['transactions'] = [];
-                    }
+            //Schlussaldo
+            if (preg_match('/^:62[FM]:(.*?)-/sm', $day, $match)) {
+                print_r($match);
+            }
 
-                    // short form for better handling
-                    $trx = &$result[$soaDate]['transactions'];
+            /* $day = explode($divider . ':', $day);
 
-                    preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
-                    if ($trxMatch[2] == 'C' or $trxMatch[2] == 'RC') {
-                        $trx[count($trx)]['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($trxMatch[2] == 'D' or $trxMatch[2] == 'RD') {
-                        $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
-                    } else {
-                        throw new MT940Exception('cd mark not found in: ' . $transaction);
-                    }
+             for ($i = 0, $cnt = count($day); $i < $cnt; ++$i) {
+                 if (preg_match("/\+\@[0-9]+\@$/", trim($day[$i]))) {
+                     $booked = false;
+                 }
 
-                    $amount = $trxMatch[4];
-                    $amount = str_replace(',', '.', $amount);
-                    $trx[count($trx) - 1]['amount'] = $amount;
+                 // handle start balance
+                 // 60F:C160401EUR1234,56
+                 if (preg_match('/^60(F|M):/', $day[$i])) {
+                     // remove 60(F|M): for better parsing
+                     $day[$i] = substr($day[$i], 4);
+                     $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
-                    // :61:1605110509D198,02NMSCNONREF
-                    // 16 = year
-                    // 0511 = valuta date
-                    // 0509 = booking date
+                     if (!isset($result[$soaDate])) {
+                         $result[$soaDate] = ['start_balance' => []];
+                     }
 
-                    $year = substr($transaction, 0, 2);
-                    $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
-                    $bookingDatePart = substr($transaction, 6, 4);
+                     $cdMark = substr($day[$i], 0, 1);
+                     if ($cdMark == 'C') {
+                         $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
+                     } elseif ($cdMark == 'D') {
+                         $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
+                     }
 
-                    if (preg_match('/^\d{4}$/', $bookingDatePart) === 1) {
-                        // try to guess the correct year of the booking date
+                     $amount = str_replace(',', '.', substr($day[$i], 10));
+                     $result[$soaDate]['start_balance']['amount'] = $amount;
+                 } elseif (
+                     // found transaction
+                     // trx:61:1603310331DR637,39N033NONREF
+                     0 === strpos($day[$i], '61:')
+                     && isset($day[$i + 1])
+                     && 0 === strpos($day[$i + 1], '86:')
+                 ) {
+                     $transaction = substr($day[$i], 3);
+                     $description = substr($day[$i + 1], 3);
+                     if (!isset($result[$soaDate]['transactions'])) {
+                         $result[$soaDate]['transactions'] = [];
+                     }
 
-                        $valutaDateTime = new \DateTime($valutaDate);
-                        $bookingDateTime = new \DateTime($this->getDate($year . $bookingDatePart));
+                     // short form for better handling
+                     $trx = &$result[$soaDate]['transactions'];
 
-                        // the booking date can be before or after the valuata date
-                        // and one of them can be in another year for example 12-31 and 01-01
+                     preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
+                     if ($trxMatch[2] == 'C' or $trxMatch[2] == 'RC') {
+                         $trx[count($trx)]['credit_debit'] = static::CD_CREDIT;
+                     } elseif ($trxMatch[2] == 'D' or $trxMatch[2] == 'RD') {
+                         $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
+                     } else {
+                         throw new MT940Exception('cd mark not found in: ' . $transaction);
+                     }
 
-                        $diff = $valutaDateTime->diff($bookingDateTime);
+                     $amount = $trxMatch[4];
+                     $amount = str_replace(',', '.', $amount);
+                     $trx[count($trx) - 1]['amount'] = $amount;
 
-                        //if diff is more than half a year
-                        if ($diff->days > 182) {
-                            //and positive
-                            if ($diff->invert === 0) {
-                                //its in the last year
-                                --$year;
-                            }
-                            //and negative
-                            else {
-                                //its in the next year
-                                ++$year;
-                            }
-                        }
-                        $bookingDate = $this->getDate($year . $bookingDatePart);
-                    } else {
-                        // if booking date not set in :61, then we have to take it from :60F
-                        $bookingDate = $soaDate;
-                    }
+                     // :61:1605110509D198,02NMSCNONREF
+                     // 16 = year
+                     // 0511 = valuta date
+                     // 0509 = booking date
 
-                    $trx[count($trx) - 1]['booking_date'] = $bookingDate;
-                    $trx[count($trx) - 1]['valuta_date'] = $valutaDate;
-                    $trx[count($trx) - 1]['booked'] = $booked;
+                     $year = substr($transaction, 0, 2);
+                     $valutaDate = $this->getDate($year . substr($transaction, 2, 4));
+                     $bookingDatePart = substr($transaction, 6, 4);
 
-                    $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
-                }
-            }*/
+                     if (preg_match('/^\d{4}$/', $bookingDatePart) === 1) {
+                         // try to guess the correct year of the booking date
+
+                         $valutaDateTime = new \DateTime($valutaDate);
+                         $bookingDateTime = new \DateTime($this->getDate($year . $bookingDatePart));
+
+                         // the booking date can be before or after the valuata date
+                         // and one of them can be in another year for example 12-31 and 01-01
+
+                         $diff = $valutaDateTime->diff($bookingDateTime);
+
+                         //if diff is more than half a year
+                         if ($diff->days > 182) {
+                             //and positive
+                             if ($diff->invert === 0) {
+                                 //its in the last year
+                                 --$year;
+                             }
+                             //and negative
+                             else {
+                                 //its in the next year
+                                 ++$year;
+                             }
+                         }
+                         $bookingDate = $this->getDate($year . $bookingDatePart);
+                     } else {
+                         // if booking date not set in :61, then we have to take it from :60F
+                         $bookingDate = $soaDate;
+                     }
+
+                     $trx[count($trx) - 1]['booking_date'] = $bookingDate;
+                     $trx[count($trx) - 1]['valuta_date'] = $valutaDate;
+                     $trx[count($trx) - 1]['booked'] = $booked;
+
+                     $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
+                 }
+             }*/
         }
         return $result;
     }
@@ -220,7 +218,7 @@ class ComdirectMT940
         $result['text_key_addition'] = trim($prepared[34]);
         $result['description_2'] = $description2;
         $result['desc_lines'] = $descriptionLines;
-		$result['matches'] = $matches;
+        $result['matches'] = $matches;
 
         return $result;
     }

@@ -152,13 +152,13 @@ class GetDepotAufstellung extends PaginateableAction
             throw new \InvalidArgumentException('Invalid MT535 data', 0, $e);
         }
     }
-	
-	public function getDepotWert()
-	{
-		$ret = new \StdClass();
-		$ret->betrag = 0.0;
-		preg_match("/EUR(.*)/sm",$this->parsedMT535->blockC[1],$matches);
-		$ret->betrag = floatval($matches[1]);
-		return $ret;
-	}
+
+    public function getDepotWert()
+    {
+        $ret = new \StdClass();
+        $ret->betrag = 0.0;
+        preg_match('/EUR(.*)/sm', $this->parsedMT535->blockC[1], $matches);
+        $ret->betrag = floatval($matches[1]);
+        return $ret;
+    }
 }
