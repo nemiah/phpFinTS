@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\MT940;
+namespace Fhp\MT940\Dialect;
 
 /**
  * Data format: MT 940 (Version SRG 2001)
@@ -8,7 +8,7 @@ namespace Fhp\MT940;
  * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
  * Section: B.8
  */
-class MT940
+class ComdirectMT940
 {
     const CD_CREDIT = 'credit';
     const CD_DEBIT = 'debit';
@@ -26,9 +26,48 @@ class MT940
         $booked = true;
         $result = [];
         $days = explode($divider . '-', $cleanedRawData);
+		
         $soaDate = null;
-        foreach ($days as &$day) {
-            $day = explode($divider . ':', $day);
+        foreach ($days as $day) {
+			
+			//Auftragsreferenznummer
+			if (preg_match('/^:20:(.*?):/sm', $day, $match)) {
+				$date = explode("-",$match[1])[1];
+				echo "$date<br>";
+			}
+			
+			//Bezugsreferenznummer
+			if (preg_match('/^:21:(.*?):/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+			//Kontobezeichnung
+			if (preg_match('/^:25:(.*?):/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+			//Auszugsnummer
+			if (preg_match('/^:28C:(.*?):/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+			//Anfangssaldo
+			if (preg_match('/^:60[FM]:(.*?):/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+			//Wiederholungszyklus
+			if (preg_match('/^:61:(.*?):62[FM]:/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+			//Schlussaldo
+			if (preg_match('/^:62[FM]:(.*?)-/sm', $day, $match)) {
+				print_r($match);
+			}
+			
+
+           /* $day = explode($divider . ':', $day);
 
             for ($i = 0, $cnt = count($day); $i < $cnt; ++$i) {
                 if (preg_match("/\+\@[0-9]+\@$/", trim($day[$i]))) {
@@ -64,7 +103,6 @@ class MT940
                 ) {
                     $transaction = substr($day[$i], 3);
                     $description = substr($day[$i + 1], 3);
-
                     if (!isset($result[$soaDate]['transactions'])) {
                         $result[$soaDate]['transactions'] = [];
                     }
@@ -80,8 +118,6 @@ class MT940
                     } else {
                         throw new MT940Exception('cd mark not found in: ' . $transaction);
                     }
-
-                    $trx[count($trx) - 1]['is_storno'] = ($trxMatch[2] == 'RC' or $trxMatch[2] == 'RD');
 
                     $amount = $trxMatch[4];
                     $amount = str_replace(',', '.', $amount);
@@ -132,9 +168,8 @@ class MT940
 
                     $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
                 }
-            }
+            }*/
         }
-
         return $result;
     }
 
@@ -157,7 +192,7 @@ class MT940
 
         $descriptionLines = [];
         $description1 = ''; // Legacy, could be removed.
-        $description2 = ''; // Legacy, could be removed.
+        $description2 = '';
         foreach ($matches as $m) {
             $index = (int) $m[1];
 
@@ -185,7 +220,7 @@ class MT940
         $result['text_key_addition'] = trim($prepared[34]);
         $result['description_2'] = $description2;
         $result['desc_lines'] = $descriptionLines;
-	$result['matches'] = $matches;
+		$result['matches'] = $matches;
 
         return $result;
     }
