@@ -10,9 +10,6 @@ namespace Fhp\MT535;
  */
 class MT535
 {
-    /**
-     * @throws MT535Exception
-     */
     public function parse(string $rawData): object
     {
         // The divider can be either \r\n or @@
@@ -87,93 +84,6 @@ class MT535
         $ret->blockB = $result;
         $ret->blockC = $blockC;
         return $ret;
-    }
-
-    protected function parseDescription($descr, $transaction)
-    {
-        // Geschäftsvorfall-Code
-        $gvc = substr($descr, 0, 3);
-
-        $prepared = [];
-        $result = [];
-
-        // prefill with empty values
-        for ($i = 0; $i <= 63; ++$i) {
-            $prepared[$i] = null;
-        }
-
-        $descr = str_replace('? ', '?', $descr);
-
-        preg_match_all('/\?(\d{2})([^\?]+)/', $descr, $matches, PREG_SET_ORDER);
-
-        $descriptionLines = [];
-        $description1 = ''; // Legacy, could be removed.
-        $description2 = ''; // Legacy, could be removed.
-        foreach ($matches as $m) {
-            $index = (int) $m[1];
-
-            if ((20 <= $index && $index <= 29) || (60 <= $index && $index <= 63)) {
-                if (20 <= $index && $index <= 29) {
-                    $description1 .= $m[2];
-                } else {
-                    $description2 .= $m[2];
-                }
-                $descriptionLines[] = $m[2];
-            }
-            $prepared[$index] = $m[2];
-        }
-
-        $description = $this->extractStructuredDataFromRemittanceLines($descriptionLines, $gvc, $prepared, $transaction);
-
-        $result['booking_code'] = $gvc;
-        $result['booking_text'] = trim($prepared[0]);
-        $result['description'] = $description;
-        $result['primanoten_nr'] = trim($prepared[10]);
-        $result['description_1'] = trim($description1);
-        $result['bank_code'] = trim($prepared[30]);
-        $result['account_number'] = trim($prepared[31]);
-        $result['name'] = trim($prepared[32] . $prepared[33]);
-        $result['text_key_addition'] = trim($prepared[34]);
-        $result['description_2'] = $description2;
-        $result['desc_lines'] = $descriptionLines;
-
-        return $result;
-    }
-
-    /**
-     * @param string[] $descriptionLines that contain the remittance information
-     * @param string $gvc Geschätsvorfallcode; Out-Parameter, might be changed from information in remittance info
-     * @param string[] $rawLines All the lines in the Multi-Purpose-Field 86; Out-Parameter, might be changed from information in remittance info
-     */
-    protected function extractStructuredDataFromRemittanceLines($descriptionLines, string &$gvc, array &$rawLines, array $transaction): array
-    {
-        $description = [];
-        if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
-            $description['SVWZ'] = implode('', $descriptionLines);
-        } else {
-            $lastType = null;
-            foreach ($descriptionLines as $line) {
-                if (strlen($line) >= 5 && $line[4] === '+') {
-                    if ($lastType != null) {
-                        $description[$lastType] = trim($description[$lastType]);
-                    }
-                    $lastType = substr($line, 0, 4);
-                    $description[$lastType] = substr($line, 5);
-                } else {
-                    $description[$lastType] .= $line;
-                }
-                if (strlen($line) < 27) {
-                    // Usually, lines are 27 characters long. In case characters are missing, then it's either the end
-                    // of the current type or spaces have been trimmed from the end. We want to collapse multiple spaces
-                    // into one and we don't want to leave trailing spaces behind. So add a single space here to make up
-                    // for possibly missing spaces, and if it's the end of the type, it will be trimmed off later.
-                    $description[$lastType] .= ' ';
-                }
-            }
-            $description[$lastType] = trim($description[$lastType]);
-        }
-
-        return $description;
     }
 
     protected function getDate(string $val): string

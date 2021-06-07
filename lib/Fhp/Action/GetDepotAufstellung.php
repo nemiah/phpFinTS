@@ -5,7 +5,6 @@ namespace Fhp\Action;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfHoldings\StatementOfHoldings;
 use Fhp\MT535\MT535;
-use Fhp\MT535\MT535Exception;
 use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
@@ -148,7 +147,7 @@ class GetDepotAufstellung extends PaginateableAction
                 ? utf8_encode($this->rawMT535) : $this->rawMT535;
             $this->parsedMT535 = $parser->parse($rawMT535);
             $this->statement = StatementOfHoldings::fromMT535Object($this->parsedMT535->blockB);
-        } catch (MT535Exception $e) {
+        } catch (\Exception $e) {
             throw new \InvalidArgumentException('Invalid MT535 data', 0, $e);
         }
     }
