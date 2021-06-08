@@ -17,16 +17,8 @@ class HIWPDv5 extends BaseSegment implements HIWPD
     /** @var Bin Uses SWIFT format MT353, version SRG 1998 */
     public $depotaufstellung;
 
-    /** @var ParameterDepotaufstellungV2|null */
-    public $parameterDepotaufstellung;
-
     public function getDepotaufstellung(): Bin
     {
         return $this->depotaufstellung;
-    }
-
-    public function getParameter(): ParameterDepotaufstellung
-    {
-        return $this->parameterDepotaufstellung;
     }
 }
