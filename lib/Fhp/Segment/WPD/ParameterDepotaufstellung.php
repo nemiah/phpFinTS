@@ -10,4 +10,9 @@ namespace Fhp\Segment\WPD;
  */
 interface ParameterDepotaufstellung
 {
+    public function getEingabeAnzahlEintraegeErlaubt(): bool;
+
+    public function getWaehrungDepotaufstellungWaehlbar(): bool;
+
+    public function getKursqualitaetWaehlbar(): bool;
 }
