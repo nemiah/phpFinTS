@@ -7,53 +7,18 @@ use Fhp\MT535\MT535;
 class StatementOfHoldings
 {
     /**
-     * @var Statement[]
+     * @var Holding[]
      */
-    protected $statements = [];
+    protected $holdings = [];
 
     /**
      * Get statements
      *
-     * @return Statement[]
+     * @return Holding[]
      */
-    public function getStatements(): array
+    public function getHoldings(): array
     {
-        return $this->statements;
-    }
-
-    /**
-     * Gets statement for given date.
-     *
-     * @param string|\DateTime $date
-     */
-    public function getStatementForWKN($wkn): ?Statement
-    {
-        /*if (is_string($date)) {
-            $date = static::parseDate($date);
-        }
-
-        foreach ($this->statements as $stmt) {
-            if ($stmt->getDate() == $date) {
-                return $stmt;
-            }
-        }
-*/
-        return null;
-    }
-
-    public function getStatementForISIN($isin): ?Statement
-    {
-        /*if (is_string($date)) {
-            $date = static::parseDate($date);
-        }
-
-        foreach ($this->statements as $stmt) {
-            if ($stmt->getDate() == $date) {
-                return $stmt;
-            }
-        }
-*/
-        return null;
+        return $this->holdings;
     }
 
     private static function parseDate(string $date): \DateTime

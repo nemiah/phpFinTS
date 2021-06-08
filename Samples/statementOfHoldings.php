@@ -26,14 +26,14 @@ if ($getStatement->needsTan()) {
 }
 
 $soa = $getStatement->getStatement();
-foreach ($soa->getStatements() as $statement) {
+foreach ($soa->getHoldings() as $holding) {
     echo '=======================================' . PHP_EOL;
-    echo 'Name        : ' . $statement->getName() . PHP_EOL;
-    echo 'Amount      : ' . $statement->getAmount() . PHP_EOL;
-    echo 'Price		  : ' . $statement->getPrice().' '.$statement->getCurrency() . PHP_EOL;
-    echo 'WKN 		  : ' . $statement->getWKN() . PHP_EOL;
-    echo 'ISIN        : ' . $statement->getISIN() . PHP_EOL;
-    echo 'B-Datum     : ' . $statement->getDate()->format('Y-m-d') . PHP_EOL;
+    echo 'Name        : ' . $holding->getName() . PHP_EOL;
+    echo 'Amount      : ' . $holding->getAmount() . PHP_EOL;
+    echo 'Price		  : ' . $holding->getPrice().' '.$holding->getCurrency() . PHP_EOL;
+    echo 'WKN 		  : ' . $holding->getWKN() . PHP_EOL;
+    echo 'ISIN        : ' . $holding->getISIN() . PHP_EOL;
+    echo 'B-Datum     : ' . $holding->getDate()->format('Y-m-d') . PHP_EOL;
     echo '=======================================' . PHP_EOL . PHP_EOL;
 }
-echo 'Found ' . count($soa->getStatements()) . ' statements.' . PHP_EOL;
+echo 'Found ' . count($soa->getHoldings()) . ' statements.' . PHP_EOL;
