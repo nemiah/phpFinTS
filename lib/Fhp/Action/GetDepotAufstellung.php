@@ -35,11 +35,11 @@ class GetDepotAufstellung extends PaginateableAction
     /** @var string */
     private $rawMT535 = '';
 
-    /** @var array */
-    protected $parsedMT535 = [];
-
-    /** @var Holding */
+    /** @var StatementOfHoldings */
     private $statement;
+
+    /** @var float */
+    private $depotWert;
 
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
@@ -79,22 +79,16 @@ class GetDepotAufstellung extends PaginateableAction
         return $this->rawMT535;
     }
 
-    /**
-     * @return array The parsed MT535 data.
-     */
-    public function getParsedMT535(): array
-    {
-        $this->ensureDone();
-        return $this->parsedMT535;
-    }
-
-    /**
-     * @return StatementOfHolding
-     */
-    public function getStatement()
+    public function getStatement(): StatementOfHoldings
     {
         $this->ensureDone();
         return $this->statement;
+    }
+
+    public function getDepotWert(): float
+    {
+        $this->ensureDone();
+        return $this->depotWert;
     }
 
     /** {@inheritdoc} */
@@ -138,26 +132,16 @@ class GetDepotAufstellung extends PaginateableAction
 
     private function parseMt535()
     {
-        $parser = new MT535();
-
         try {
             // Note: Some banks encode their MT 535 data as SWIFT/ISO-8859 like it should be according to the
             // specification, others just send UTF-8, so we try to detect it here.
             $rawMT535 = mb_detect_encoding($this->rawMT535, 'UTF-8', true) === false
                 ? utf8_encode($this->rawMT535) : $this->rawMT535;
-            $this->parsedMT535 = $parser->parse($rawMT535);
-            $this->statement = StatementOfHoldings::fromMT535Object($this->parsedMT535->blockB);
+            $parser = new MT535($rawMT535);
+            $this->statement = $parser->parseHoldings();
+            $this->depotWert = $parser->parseDepotWert();
         } catch (\Exception $e) {
             throw new \InvalidArgumentException('Invalid MT535 data', 0, $e);
         }
-    }
-
-    public function getDepotWert()
-    {
-        $ret = new \StdClass();
-        $ret->betrag = 0.0;
-        preg_match('/EUR(.*)/sm', $this->parsedMT535->blockC[1], $matches);
-        $ret->betrag = floatval($matches[1]);
-        return $ret;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Fhp\MT535;
 
+use Fhp\Model\StatementOfHoldings\Holding;
+use Fhp\Model\StatementOfHoldings\StatementOfHoldings;
+
 /**
  * Data format: MT 535 (Version SRG 1998)
  *
@@ -10,31 +13,38 @@ namespace Fhp\MT535;
  */
 class MT535
 {
-    public function parse(string $rawData): object
+    /** @var string */
+    private $cleanedRawData;
+
+    public function __construct(string $rawData)
     {
         // The divider can be either \r\n or @@
         $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
+        $this->cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $rawData);
+    }
 
-        $cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $rawData);
+    public function parseDepotWert(): float
+    {
+        preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $this->cleanedRawData, $block);
+        preg_match('/EUR(.*)/sm', $block[1], $matches);
+        return floatval($matches[1]);
+    }
 
-        preg_match('/:16R:GENL(.*?):16S:GENL/sm', $cleanedRawData, $blockA);
-        preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $cleanedRawData, $blockC);
-        preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $cleanedRawData, $blockB);
-
-        $ret = new \StdClass();
-
-        $result = [];
-        foreach ($blockB[1] as $block) {
-            $o = new \stdClass();
+    public function parseHoldings(): StatementOfHoldings
+    {
+        $result = new StatementOfHoldings();
+        preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $this->cleanedRawData, $blocks);
+        foreach ($blocks[1] as $block) {
+            $holding = new Holding();
             // handle ISIN, WKN & Name
             // :35B:ISIN DE0005190003/DE/519000BAY.MOTOREN WERKE AG ST
             if (preg_match('/^:35B:(.*?):/sm', $block, $iwn)) {
                 preg_match('/^.{5}(.{12})/sm', $iwn[1], $r);
-                $o->isin = $r[1];
+                $holding->setISIN($r[1]);
                 preg_match('/^.{21}(.{6})/sm', $iwn[1], $r);
-                $o->wkn = $r[1];
+                $holding->setWKN($r[1]);
                 preg_match('/^.{27}(.*)/sm', $iwn[1], $r);
-                $o->name = $r[1];
+                $holding->setName($r[1]);
             }
 
             // handle Price
@@ -44,15 +54,15 @@ class MT535
                 if ($iwn[1] == 'B') {
                     //Currency
                     preg_match('/^.{11}(.{3})/sm', $iwn[2], $r);
-                    $o->currency = $r[1];
+                    $holding->setCurrency($r[1]);
                     //Price
                     preg_match('/^.{14}(.*)/sm', $iwn[2], $r);
-                    $o->price = floatval(str_replace(',', '.', $r[1]));
+                    $holding->setPrice(floatval(str_replace(',', '.', $r[1])));
                 } elseif ($iwn[1] == 'A') {
-                    $o->currency = '%';
+                    $holding->setCurrency('%');
                     //Price
                     preg_match('/^.{11}(.*)/sm', $iwn[2], $r);
-                    $o->price = floatval(str_replace(',', '.', $r[1]));
+                    $holding->setPrice(floatval(str_replace(',', '.', $r[1])) / 100);
                 }
             }
 
@@ -61,34 +71,45 @@ class MT535
             if (preg_match('/:93B::(.*?):/sm', $block, $iwn)) {
                 //Amount
                 preg_match('/^.{11}(.*)/sm', $iwn[1], $r);
-                $o->amount = floatval(str_replace(',', '.', $r[1]));
+                $holding->setAmount(floatval(str_replace(',', '.', $r[1])));
+            }
+
+            if ($holding->getAmount() !== null && $holding->getPrice() !== null) {
+                if ($holding->getCurrency() === '%') {
+                    $holding->setValue($holding->getPrice() / 100);
+                } else {
+                    $holding->setValue($holding->getPrice() * $holding->getAmount());
+                }
             }
 
             //Bereitstellungsdatum
             //:98A::PRIC//20210304
-            if (preg_match('/:98(A|C)::(.*?):/sm', $block, $iwn)) {
+            if (preg_match('/:98[AC]::(.*?):/sm', $block, $iwn)) {
                 preg_match('/^.{6}(.{8})/sm', $iwn[2], $r);
-                $o->date = $this->getDate($r[1]);
+                $holding->setDate($this->getDate($r[1]));
+                // TODO The time code looks wrong.
                 if ($iwn[1] == 'C') {
                     preg_match('/^.{14}(.{6})/sm', $iwn[2], $r);
-                    $o->time = $r[1];
+                    $holding->setTime($r[1]);
                 } else {
-                    $o->time = new \DateTime();
-                    $o->time->setTime(0, 0);
+                    $time = new \DateTime();
+                    $time->setTime(0, 0);
+                    $holding->setTime($time);
                 }
             }
 
-            $result[] = $o;
+            $result->addHolding($holding);
         }
-        $ret->blockA = $blockA;
-        $ret->blockB = $result;
-        $ret->blockC = $blockC;
-        return $ret;
+        return $result;
     }
 
-    protected function getDate(string $val): string
+    protected function getDate(string $val): \DateTime
     {
         preg_match('/(\d{4})(\d{2})(\d{2})/', $val, $m);
-        return $m[1] . '-' . $m[2] . '-' . $m[3];
+        try {
+            return new \DateTime($m[1] . '-' . $m[2] . '-' . $m[3]);
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException("Invalid date: $val", 0, $e);
+        }
     }
 }
