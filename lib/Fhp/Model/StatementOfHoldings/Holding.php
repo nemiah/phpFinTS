@@ -158,9 +158,9 @@ class Holding
     }
 
     /**
-     * get ISIN
+     * Get ISIN
      *
-     * @return ISIN
+     * @return ?string
      */
     public function getISIN(): ?string
     {
@@ -168,9 +168,9 @@ class Holding
     }
 
     /**
-     * Set WKN
+     * Get WKN
      *
-     * @return $this
+     * @return ?string
      */
     public function getWKN(): ?string
     {
@@ -178,9 +178,9 @@ class Holding
     }
 
     /**
-     * Set Name
+     * Get Name
      *
-     * @return $this
+     * @return ?string
      */
     public function getName(): ?string
     {
@@ -188,9 +188,9 @@ class Holding
     }
 
     /**
-     * Set price
+     * Get value
      *
-     * @return $this
+     * @return ?float
      */
     public function getValue(): ?float
     {
@@ -198,9 +198,9 @@ class Holding
     }
 
     /**
-     * Set price
+     * Get price
      *
-     * @return $this
+     * @return ?float
      */
     public function getPrice(): ?float
     {
@@ -208,9 +208,9 @@ class Holding
     }
 
     /**
-     * Set amount
+     * Get amount
      *
-     * @return $this
+     * @return ?float
      */
     public function getAmount(): ?float
     {
@@ -218,9 +218,9 @@ class Holding
     }
 
     /**
-     * Set currency
+     * Get currency
      *
-     * @return $this
+     * @return ?string
      */
     public function getCurrency(): ?string
     {
@@ -228,11 +228,11 @@ class Holding
     }
 
     /**
-     * Set time
+     * Get time
      *
-     * @return $this
+     * @return ?\DateTime
      */
-    public function getTime(): \DateTime
+    public function getTime(): ?\DateTime
     {
         return $this->time;
     }
@@ -240,7 +240,7 @@ class Holding
     /**
      * Get date
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }

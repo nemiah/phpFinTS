@@ -12,6 +12,8 @@ use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\Common\KtvV3;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
+use Fhp\Segment\WPD\HIWPD;
+use Fhp\Segment\WPD\HIWPDS;
 use Fhp\Segment\WPD\HIWPDv5;
 use Fhp\Segment\WPD\HKWPDv5;
 use Fhp\UnsupportedException;
@@ -19,17 +21,12 @@ use Fhp\UnsupportedException;
 /**
  * Depotaufstellung HKWPD
  * MT535
- * ZwenAusZwota
  */
 class GetDepotAufstellung extends PaginateableAction
 {
     // Request (not available after serialization, i.e. not available in processResponse()).
     /** @var SEPAAccount */
     private $account;
-
-    // Information from the BPD needed to interpret the response.
-    /** @var string */
-    private $bankName;
 
     // Response
     /** @var string */
@@ -44,7 +41,7 @@ class GetDepotAufstellung extends PaginateableAction
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
      *     that the user entered, or it can be {@link SEPAAccount} instance retrieved from {@link getAccounts()}.
-     * @return GetDepot A new action instance.
+     * @return GetDepotAufstellung A new action instance.
      */
     public static function create(SEPAAccount $account): GetDepotAufstellung
     {

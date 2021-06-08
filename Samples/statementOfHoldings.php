@@ -19,7 +19,7 @@ if ($getSepaAccounts->needsTan()) {
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
-$getStatement = \Fhp\Action\GetDepot::create($oneAccount);
+$getStatement = \Fhp\Action\GetDepotAufstellung::create($oneAccount);
 $fints->execute($getStatement);
 if ($getStatement->needsTan()) {
     handleStrongAuthentication($getStatement); // See login.php for the implementation.
@@ -30,10 +30,11 @@ foreach ($soa->getHoldings() as $holding) {
     echo '=======================================' . PHP_EOL;
     echo 'Name        : ' . $holding->getName() . PHP_EOL;
     echo 'Amount      : ' . $holding->getAmount() . PHP_EOL;
-    echo 'Price		  : ' . $holding->getPrice().' '.$holding->getCurrency() . PHP_EOL;
-    echo 'WKN 		  : ' . $holding->getWKN() . PHP_EOL;
+    echo 'Price       : ' . $holding->getPrice() . ' ' . $holding->getCurrency() . PHP_EOL;
+    echo 'WKN         : ' . $holding->getWKN() . PHP_EOL;
     echo 'ISIN        : ' . $holding->getISIN() . PHP_EOL;
     echo 'B-Datum     : ' . $holding->getDate()->format('Y-m-d') . PHP_EOL;
     echo '=======================================' . PHP_EOL . PHP_EOL;
 }
 echo 'Found ' . count($soa->getHoldings()) . ' statements.' . PHP_EOL;
+echo 'Depotwert: ' . $getStatement->getDepotWert() . PHP_EOL;
