@@ -43,7 +43,7 @@ class CurlException extends \Exception
     /**
      * Gets the curl message from request / response.
      */
-    public function getCurlMessage(): string
+    public function getCurlMessage(): ?string
     {
         return $this->curlMessage;
     }
