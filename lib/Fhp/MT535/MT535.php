@@ -84,7 +84,7 @@ class MT535
 
             //Bereitstellungsdatum
             //:98A::PRIC//20210304
-            if (preg_match('/:98[AC]::(.*?):/sm', $block, $iwn)) {
+            if (preg_match('/:98([AC])::(.*?):/sm', $block, $iwn)) {
                 preg_match('/^.{6}(.{8})/sm', $iwn[2], $r);
                 $holding->setDate($this->getDate($r[1]));
                 // TODO The time code looks wrong.
