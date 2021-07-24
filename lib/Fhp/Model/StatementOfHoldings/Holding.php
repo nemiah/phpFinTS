@@ -194,7 +194,7 @@ class Holding
      */
     public function getValue(): ?float
     {
-        return $this->price;
+        return $this->value;
     }
 
     /**
