@@ -22,6 +22,11 @@ class Holding
     /**
      * @var float|null
      */
+    protected $acquisitionPrice;
+
+    /**
+     * @var float|null
+     */
     protected $price;
 
     /**
@@ -105,6 +110,18 @@ class Holding
     public function setPrice(?float $price)
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Set acquisition price
+     *
+     * @return $this
+     */
+    public function setAcquisitionPrice(?float $price)
+    {
+        $this->acquisitionPrice = $price;
 
         return $this;
     }
@@ -195,6 +212,16 @@ class Holding
     public function getValue(): ?float
     {
         return $this->value;
+    }
+
+    /**
+     * Get acquisition price
+     *
+     * @return float|null
+     */
+    public function getAcquisitionPrice(): ?float
+    {
+        return $this->acquisitionPrice;
     }
 
     /**
