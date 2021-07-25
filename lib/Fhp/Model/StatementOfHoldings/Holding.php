@@ -176,8 +176,6 @@ class Holding
 
     /**
      * Get ISIN
-     *
-     * @return string|null
      */
     public function getISIN(): ?string
     {
@@ -186,8 +184,6 @@ class Holding
 
     /**
      * Get WKN
-     *
-     * @return string|null
      */
     public function getWKN(): ?string
     {
@@ -196,8 +192,6 @@ class Holding
 
     /**
      * Get Name
-     *
-     * @return string|null
      */
     public function getName(): ?string
     {
@@ -206,8 +200,6 @@ class Holding
 
     /**
      * Get value
-     *
-     * @return float|null
      */
     public function getValue(): ?float
     {
@@ -216,8 +208,6 @@ class Holding
 
     /**
      * Get acquisition price
-     *
-     * @return float|null
      */
     public function getAcquisitionPrice(): ?float
     {
@@ -226,8 +216,6 @@ class Holding
 
     /**
      * Get price
-     *
-     * @return float|null
      */
     public function getPrice(): ?float
     {
@@ -236,8 +224,6 @@ class Holding
 
     /**
      * Get amount
-     *
-     * @return float|null
      */
     public function getAmount(): ?float
     {
@@ -246,8 +232,6 @@ class Holding
 
     /**
      * Get currency
-     *
-     * @return string|null
      */
     public function getCurrency(): ?string
     {
@@ -256,8 +240,6 @@ class Holding
 
     /**
      * Get time
-     *
-     * @return \DateTime|null
      */
     public function getTime(): ?\DateTime
     {
@@ -266,8 +248,6 @@ class Holding
 
     /**
      * Get date
-     *
-     * @return \DateTime|null
      */
     public function getDate(): ?\DateTime
     {

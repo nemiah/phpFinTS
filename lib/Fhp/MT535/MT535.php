@@ -50,7 +50,7 @@ class MT535
             // handle acquisition price
             // e.g ':70E::HOLD//1STK23,968293+EUR'
             if (preg_match('/:70E::HOLD\/\/\d*STK2(\d*),(\d*)\+([A-Z]{3})/sm', $block, $iwn)) {
-                $holding->setAcquisitionPrice((float) $iwn[1].".".$iwn[2]);
+                $holding->setAcquisitionPrice((float) $iwn[1].'.'.$iwn[2]);
                 if ($holding->getCurrency() === null) {
                     $holding->setCurrency($iwn[3]);
                 }
