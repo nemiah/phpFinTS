@@ -5,34 +5,39 @@ namespace Fhp\Model\StatementOfHoldings;
 class Holding
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $isin;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $wkn;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var float
+     * @var float|null
      */
-    protected $price = 0.0;
+    protected $acquisitionPrice;
 
     /**
-     * @var float
+     * @var float|null
      */
-    protected $amount = 0.0;
+    protected $price;
 
     /**
-     * @var float
+     * @var float|null
      */
-    protected $value = 0.0;
+    protected $amount;
+
+    /**
+     * @var float|null
+     */
+    protected $value;
 
     /**
      * @var \DateTime|null
@@ -45,7 +50,7 @@ class Holding
     protected $time;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $currency;
 
@@ -92,7 +97,7 @@ class Holding
      */
     public function setValue(?float $value)
     {
-        $this->value = (float) $value;
+        $this->value = $value;
 
         return $this;
     }
@@ -104,7 +109,19 @@ class Holding
      */
     public function setPrice(?float $price)
     {
-        $this->price = (float) $price;
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Set acquisition price
+     *
+     * @return $this
+     */
+    public function setAcquisitionPrice(?float $price)
+    {
+        $this->acquisitionPrice = $price;
 
         return $this;
     }
@@ -116,7 +133,7 @@ class Holding
      */
     public function setAmount(?float $amount)
     {
-        $this->amount = (float) $amount;
+        $this->amount = $amount;
 
         return $this;
     }
@@ -159,8 +176,6 @@ class Holding
 
     /**
      * Get ISIN
-     *
-     * @return ?string
      */
     public function getISIN(): ?string
     {
@@ -169,8 +184,6 @@ class Holding
 
     /**
      * Get WKN
-     *
-     * @return ?string
      */
     public function getWKN(): ?string
     {
@@ -179,8 +192,6 @@ class Holding
 
     /**
      * Get Name
-     *
-     * @return ?string
      */
     public function getName(): ?string
     {
@@ -189,18 +200,22 @@ class Holding
 
     /**
      * Get value
-     *
-     * @return ?float
      */
     public function getValue(): ?float
     {
-        return $this->price;
+        return $this->value;
+    }
+
+    /**
+     * Get acquisition price
+     */
+    public function getAcquisitionPrice(): ?float
+    {
+        return $this->acquisitionPrice;
     }
 
     /**
      * Get price
-     *
-     * @return ?float
      */
     public function getPrice(): ?float
     {
@@ -209,8 +224,6 @@ class Holding
 
     /**
      * Get amount
-     *
-     * @return ?float
      */
     public function getAmount(): ?float
     {
@@ -219,8 +232,6 @@ class Holding
 
     /**
      * Get currency
-     *
-     * @return ?string
      */
     public function getCurrency(): ?string
     {
@@ -229,8 +240,6 @@ class Holding
 
     /**
      * Get time
-     *
-     * @return ?\DateTime
      */
     public function getTime(): ?\DateTime
     {

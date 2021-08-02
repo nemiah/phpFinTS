@@ -47,6 +47,15 @@ class MT535
                 $holding->setName($r[1]);
             }
 
+            // handle acquisition price
+            // e.g ':70E::HOLD//1STK23,968293+EUR'
+            if (preg_match('/:70E::HOLD\/\/\d*STK2(\d*),(\d*)\+([A-Z]{3})/sm', $block, $iwn)) {
+                $holding->setAcquisitionPrice((float) $iwn[1].'.'.$iwn[2]);
+                if ($holding->getCurrency() === null) {
+                    $holding->setCurrency($iwn[3]);
+                }
+            }
+
             // handle Price
             // :90B::MRKT//ACTU/EUR76,06
             //A1G1UF
@@ -84,7 +93,7 @@ class MT535
 
             //Bereitstellungsdatum
             //:98A::PRIC//20210304
-            if (preg_match('/:98[AC]::(.*?):/sm', $block, $iwn)) {
+            if (preg_match('/:98([AC])::(.*?):/sm', $block, $iwn)) {
                 preg_match('/^.{6}(.{8})/sm', $iwn[2], $r);
                 $holding->setDate($this->getDate($r[1]));
                 // TODO The time code looks wrong.
