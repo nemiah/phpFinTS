@@ -4,8 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec2dccada288475cf9884395088821cd",
+    "content-hash": "abfe36fd5b28ea790f8626727dfd0150",
     "packages": [
+        {
+            "name": "meyfa/php-svg",
+            "version": "v0.11.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/meyfa/php-svg.git",
+                "reference": "619033e906043a48439bf1661ba0b07b3624d9d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/meyfa/php-svg/zipball/619033e906043a48439bf1661ba0b07b3624d9d6",
+                "reference": "619033e906043a48439bf1661ba0b07b3624d9d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "meyfa/phpunit-assert-gd": "^1.1",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^4.8"
+            },
+            "suggest": {
+                "ext-gd": "Needed to rasterize images",
+                "ext-simplexml": "Needed to read SVG strings and files"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SVG\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Meyer",
+                    "homepage": "http://meyfa.net"
+                }
+            ],
+            "description": "Read, edit, write, and render SVG files with PHP",
+            "homepage": "https://github.com/meyfa/php-svg",
+            "keywords": [
+                "svg"
+            ],
+            "support": {
+                "issues": "https://github.com/meyfa/php-svg/issues",
+                "source": "https://github.com/meyfa/php-svg/tree/v0.11.2"
+            },
+            "time": "2021-05-25T07:38:49+00:00"
+        },
         {
             "name": "psr/log",
             "version": "1.1.3",
@@ -4252,5 +4305,5 @@
         "ext-curl": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
