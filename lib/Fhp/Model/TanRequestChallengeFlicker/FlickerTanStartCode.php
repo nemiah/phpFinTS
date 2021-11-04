@@ -33,8 +33,6 @@ class FlickerTanStartCode extends FlickerTanDataElement
     }
 
     /**
-     * @param array $ctrlBytes
-     * @param string $data
      * @throws InvalidArgumentException if $ctrlBytes are unequal to ['01'] -> old version not supported so far
      */
     protected function __construct(array $ctrlBytes, string $data)
@@ -59,7 +57,6 @@ class FlickerTanStartCode extends FlickerTanDataElement
      * Helper function to parse the control bytes
      * @param $challenge
      * @param $hasControl
-     * @return array
      */
     private static function parseControlBytes($challenge, $hasControl): array
     {

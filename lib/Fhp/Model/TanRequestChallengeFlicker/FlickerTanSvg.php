@@ -87,7 +87,6 @@ class FlickerTanSvg extends SVG
 
     /**
      * @param int $channelNumber flickerRectangles numbered from left to right, 0 is clock, 1 is 2^0, ..., 4 is 2^3 half byte representation
-     * @return SVGAnimate
      */
     public function getAnimation(int $channelNumber): SVGAnimate
     {
