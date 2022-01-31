@@ -69,6 +69,9 @@ class TanRequestChallengeFlicker
         return base_convert($xor, 10, 16);
     }
 
+    /**
+     * @return string returns hex representation of the flicker code
+     */
     private function getHexPayload(): string
     {
         $hex = $this->startCode->toHex();
@@ -81,6 +84,9 @@ class TanRequestChallengeFlicker
         return $lc . $hex;
     }
 
+    /**
+     * calculates Luhn Checksum over the whole code
+     */
     private function calcLuhnChecksum(): int
     {
         $luhn = $this->startCode->getLuhnChecksum();
@@ -103,14 +109,40 @@ class TanRequestChallengeFlicker
     }
 
     /**
-     * @param int $freq frequency of the flicker challenge
-     * @param int $width width of the flicker challenge
-     * @return FlickerTanSvg SVG File with flicker code
+     * takes Hex Representation and builds bit patterns from it. Notable differences to the hex code:
+     * - prefixes 0FFF to the hex code (F0FF after swap)
+     * - swaps half bytes e.g. 0F FF ... -> F0 FF ...
+     * Hints for rendering:
+     *  - 1 equals white, 0 equals black rectangle (other colors are possible, as long contrast is high enough, but unadvised)
+     *  - The Tan Generator expects the following pattern: | clock | 2^0 | 2^1 | 2^2 | 2^3 |
+     *  - Tan Generators read all 4 values on white to black flank, it is suggested to change the pattern on the black to white flank
+     *  - each entry in the returned array will be hold for the whole clock cycle (both colors)
+     * @return string[] integer indexed array with strings, each 4 chars long with 0 or 1, which represent the expected flicker patterns
      */
-    public function getSVG(int $freq = 10, int $width = 300): FlickerTanSvg
+    public function getFlickerPattern(): array
     {
         $hexCode = $this->getHex();
-        return new FlickerTanSvg($hexCode, $freq, $width, $width / 2);
+        $bitPattern = [];
+        // starting pattern - beginning of the pattern 0xFOFF
+        $bitPattern[] = '1111';
+        $bitPattern[] = '0000';
+        $bitPattern[] = '1111';
+        $bitPattern[] = '1111';
+        // convert hex code to flicker pattern
+        $len = strlen($hexCode);
+        for ($i = 0; $i < $len; $i += 2) {
+            // convert hex to bin representation of 1 byte at a time
+            $byte = base_convert(substr($hexCode, $i, 2), 16, 2);
+            // add missing zeros to the left
+            $byte = str_pad($byte, 8, '0', STR_PAD_LEFT);
+            // reverse order of half-bytes;  flicker pattern is | clock | 2^0 | 2^1 | 2^2 | 2^3 |
+            $firstHalfByte = strrev(substr($byte, 0, 4));
+            $secondHalfByte = strrev(substr($byte, 4, 4));
+            // change order from first and second half byte (@see C.2)
+            $bitPattern[] = $secondHalfByte;
+            $bitPattern[] = $firstHalfByte;
+        }
+        return $bitPattern;
     }
 
     public function __debugInfo(): ?array

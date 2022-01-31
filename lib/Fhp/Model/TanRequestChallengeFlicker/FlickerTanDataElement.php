@@ -2,6 +2,7 @@
 
 namespace Fhp\Model\TanRequestChallengeFlicker;
 
+
 class FlickerTanDataElement
 {
     public const ENC_ASCII = '1';
@@ -130,7 +131,7 @@ class FlickerTanDataElement
     }
 
     /**
-     * @return int calculates the Luhn checksum of an hex string
+     * @return int calculates the Luhn checksum of a given hex string
      */
     protected function calcLuhn(string $hex): int
     {

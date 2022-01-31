@@ -20,16 +20,36 @@ class FlickerTanStartCode extends FlickerTanDataElement
         $header = substr($challenge, 0, 2);
         $rest = substr($challenge, 2);
         $byte = self::hexToByte($header);
-        /* LS encoded base 16 idx:
-         * 2 - 7: length start code
+        /* LS encoded base 16, bit idx:
+         * 0: 0=without ctrl byte 1=with ctrl byte
          * 1: 0=BCD 1=ASC // never set
-         * 0: 0=without ctrl byte 1=with ctrl byte */
+         * 2 - 7: intval: start code length
+         */
         $hasControl = $byte[0] === '1';
         $length = (int) base_convert(substr($byte, 2, 6), 2, 10);
         [$ctrlBytes, $rest] = self::parseControlBytes($rest, $hasControl);
         $data = substr($rest, 0, $length);
         $rest = substr($rest, $length);
         return [$rest, new self($ctrlBytes, $data)];
+    }
+
+    /**
+     * Helper function to parse the control bytes
+     * @param string $challenge the unparsed rest of the challenge string
+     * @param bool $hasControl is a controlbyte expected
+     * @return array [string[] of controlbytes, string unparsed rest of the challenge]
+     */
+    private static function parseControlBytes(string $challenge, bool $hasControl): array
+    {
+        $controlBytes = [];
+        $rest = $challenge;
+        while ($hasControl) {
+            $ctrl = substr($challenge, 0, 2);
+            $controlBytes[] = $ctrl;
+            $rest = substr($challenge, 2);
+            $hasControl = self::hexToByte($ctrl)[0] === '1';
+        }
+        return [$controlBytes, $rest];
     }
 
     /**
@@ -51,24 +71,6 @@ class FlickerTanStartCode extends FlickerTanDataElement
     public function toHex(): string
     {
         return $this->getHeaderHex() . implode('', $this->controlBytes) . $this->getDataHex();
-    }
-
-    /**
-     * Helper function to parse the control bytes
-     * @param $challenge
-     * @param $hasControl
-     */
-    private static function parseControlBytes($challenge, $hasControl): array
-    {
-        $controlBytes = [];
-        $rest = $challenge;
-        while ($hasControl) {
-            $ctrl = substr($challenge, 0, 2);
-            $controlBytes[] = $ctrl;
-            $rest = substr($challenge, 2);
-            $hasControl = self::hexToByte($ctrl)[0] === '1';
-        }
-        return [$controlBytes, $rest];
     }
 
     /**
