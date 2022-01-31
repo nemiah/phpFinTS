@@ -2,7 +2,6 @@
 
 namespace Fhp\Model\TanRequestChallengeFlicker;
 
-
 class FlickerTanDataElement
 {
     public const ENC_ASCII = '1';
