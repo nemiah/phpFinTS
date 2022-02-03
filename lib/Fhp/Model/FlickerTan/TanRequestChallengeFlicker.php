@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Model\TanRequestChallengeFlicker;
+namespace Fhp\Model\FlickerTan;
 
 use Fhp\Syntax\Bin;
 use InvalidArgumentException;
@@ -13,22 +13,22 @@ class TanRequestChallengeFlicker
     private $challenge;
 
     /**
-     * @var FlickerTanStartCode holds and parses the startcode block of the challenge
+     * @var StartCode holds and parses the startcode block of the challenge
      */
     private $startCode;
 
     /**
-     * @var FlickerTanDataElement Holds and parses the first DataElement of the challenge
+     * @var DataElement Holds and parses the first DataElement of the challenge
      */
     private $de1;
 
     /**
-     * @var FlickerTanDataElement Holds and parses the second DataElement of the challenge
+     * @var DataElement Holds and parses the second DataElement of the challenge
      */
     private $de2;
 
     /**
-     * @var FlickerTanDataElement Holds and parses the third DataElement of the challenge
+     * @var DataElement Holds and parses the third DataElement of the challenge
      */
     private $de3;
 
@@ -48,10 +48,10 @@ class TanRequestChallengeFlicker
             throw new InvalidArgumentException('Wrong length of TAN Challenge - only Version 1.4 supported');
         }
 
-        [$reducedChallenge, $this->startCode] = FlickerTanStartCode::parseNextBlock($reducedChallenge);
-        [$reducedChallenge, $this->de1] = FlickerTanDataElement::parseNextBlock($reducedChallenge);
-        [$reducedChallenge, $this->de2] = FlickerTanDataElement::parseNextBlock($reducedChallenge);
-        [$reducedChallenge, $this->de3] = FlickerTanDataElement::parseNextBlock($reducedChallenge);
+        [$reducedChallenge, $this->startCode] = StartCode::parseNextBlock($reducedChallenge);
+        [$reducedChallenge, $this->de1] = DataElement::parseNextBlock($reducedChallenge);
+        [$reducedChallenge, $this->de2] = DataElement::parseNextBlock($reducedChallenge);
+        [$reducedChallenge, $this->de3] = DataElement::parseNextBlock($reducedChallenge);
 
         if (!empty($reducedChallenge)) {
             throw new InvalidArgumentException("Challenge has unexpected ending $reducedChallenge");

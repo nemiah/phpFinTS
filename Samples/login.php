@@ -72,12 +72,12 @@ function handleTan(Fhp\BaseAction $action)
     // Challenge Image for PhotoTan/ChipTan
     if ($tanRequest->getChallengeHhdUc()) {
         try {
-            $flicker = new \Fhp\Model\TanRequestChallengeFlicker\TanRequestChallengeFlicker($tanRequest->getChallengeHhdUc());
+            $flicker = new \Fhp\Model\FlickerTan\TanRequestChallengeFlicker($tanRequest->getChallengeHhdUc());
             echo 'There is a challenge flicker.' . PHP_EOL;
             // save or output svg
             $flickerPattern = $flicker->getFlickerPattern();
             // other renderers can be implemented with this pattern
-            $svg = new \Fhp\Model\TanRequestChallengeFlicker\FlickerTanSvgRenderer($flickerPattern);
+            $svg = new \Fhp\Model\FlickerTan\SvgRenderer($flickerPattern);
             echo $svg->getImage();
         } catch (InvalidArgumentException $e) {
             // was not a flicker

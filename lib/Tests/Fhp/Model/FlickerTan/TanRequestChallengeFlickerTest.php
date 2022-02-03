@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Model\TanRequestChallengeFlicker;
+namespace Fhp\Model\FlickerTan;
 
 use Fhp\Syntax\Bin;
 use InvalidArgumentException;

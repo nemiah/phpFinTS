@@ -1,10 +1,10 @@
 <?php
 
-namespace Fhp\Model\TanRequestChallengeFlicker;
+namespace Fhp\Model\FlickerTan;
 
 use InvalidArgumentException;
 
-class FlickerTanStartCode extends FlickerTanDataElement
+class StartCode extends DataElement
 {
     /**
      * @var string[] of the control bytes in hex representation

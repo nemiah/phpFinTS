@@ -2,7 +2,7 @@
 
 namespace Fhp\Model;
 
-use Fhp\Model\TanRequestChallengeFlicker\TanRequestChallengeFlicker;
+use Fhp\Model\FlickerTan\TanRequestChallengeFlicker;
 use Fhp\Syntax\Bin;
 
 /**

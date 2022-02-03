@@ -1,8 +1,8 @@
 <?php
 
-namespace Fhp\Model\TanRequestChallengeFlicker;
+namespace Fhp\Model\FlickerTan;
 
-class FlickerTanDataElement
+class DataElement
 {
     public const ENC_ASCII = '1';
     public const ENC_ASC = self::ENC_ASCII;

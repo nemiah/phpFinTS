@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Model\TanRequestChallengeFlicker;
+namespace Fhp\Model\FlickerTan;
 
 use SVG\SVG;
 
@@ -8,7 +8,7 @@ use SVG\SVG;
  * inspired by @see https://github.com/willuhn/hbci4java/blob/master/src/org/kapott/hbci/manager/FlickerCode.java
  * documentation @see tan_hhd_uc_v14.pdf
  */
-class FlickerTanSvgRenderer
+class SvgRenderer
 {
     private $svg;
 
