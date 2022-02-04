@@ -4,7 +4,6 @@ namespace Fhp\Model\FlickerTan;
 
 use InvalidArgumentException;
 
-
 /**
  * Represents a startcode in the TAN Flicker Challenge. Shortens the given challenge
  * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf

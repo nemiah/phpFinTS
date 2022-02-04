@@ -5,7 +5,6 @@ namespace Fhp\Model\FlickerTan;
 use Fhp\Syntax\Bin;
 use InvalidArgumentException;
 
-
 /**
  * Parses the HHDUC Flicker Tan Challenge to a Flicker pattern with suffixed control sequence
  * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
