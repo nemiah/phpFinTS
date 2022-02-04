@@ -4,6 +4,11 @@ namespace Fhp\Model\FlickerTan;
 
 use InvalidArgumentException;
 
+
+/**
+ * Represents a startcode in the TAN Flicker Challenge. Shortens the given challenge
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
+ */
 class StartCode extends DataElement
 {
     /**
@@ -13,6 +18,7 @@ class StartCode extends DataElement
 
     /**
      * Parses Header information, control bytes and start code
+     * @param string the rest of the given challenge from the bank to parse
      * @return array [string, FlickerTanStartCode]
      */
     public static function parseNextBlock(string $challenge): array
@@ -80,9 +86,9 @@ class StartCode extends DataElement
     {
         $luhn = 0;
         foreach ($this->controlBytes as $ctrl) {
-            $luhn = $this->calcLuhn($ctrl);
+            $luhn = self::calcLuhn($ctrl);
         }
-        $luhn += parent::getLuhnChecksum(); // Luhn from Startcode data
+        $luhn += parent::getLuhnChecksum(); // Luhn from the data (of the startcode)
         return $luhn;
     }
 

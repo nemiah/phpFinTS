@@ -2,6 +2,10 @@
 
 namespace Fhp\Model\FlickerTan;
 
+/**
+ * Represents a Data Element which is part of the Flicker Tan Challenge. Shortens the whole challenge.
+ * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
+ */
 class DataElement
 {
     public const ENC_ASCII = '1';
@@ -26,6 +30,7 @@ class DataElement
     /**
      * @param $challenge string raw challenge text
      * @return array [string $reducedChallenge, FlickerTanDataElement $dataElementObject]
+     * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
      */
     public static function parseNextBlock(string $challenge): array
     {
@@ -35,7 +40,7 @@ class DataElement
         $length = (int) substr($challenge, 0, 2);
         $data = substr($challenge, 2, $length);
         if (strlen($data) !== $length) {
-            throw new \InvalidArgumentException('Parsing went wromg');
+            throw new \InvalidArgumentException('Parsing went wrong');
         }
         $rest = substr($challenge, 2 + $length);
         return [$rest, new self($data)];
@@ -126,13 +131,13 @@ class DataElement
      */
     public function getLuhnChecksum(): int
     {
-        return $this->calcLuhn($this->getDataHex());
+        return self::calcLuhn($this->getDataHex());
     }
 
     /**
      * @return int calculates the Luhn checksum of a given hex string
      */
-    protected function calcLuhn(string $hex): int
+    protected static function calcLuhn(string $hex): int
     {
         $sum = 0;
         $doubleIt = false;
