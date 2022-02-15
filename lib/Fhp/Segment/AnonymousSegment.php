@@ -50,7 +50,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     }
 
     /**
-     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
      */
     public function serialize(): string
     {
@@ -58,7 +58,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     }
 
     /**
-     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
      *
      * @param $serialized
      * @return void

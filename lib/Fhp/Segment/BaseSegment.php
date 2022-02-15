@@ -69,7 +69,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     }
 
     /**
-     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
      *
      * Short-hand for {@link Serializer::serializeSegment()}.
      * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
@@ -81,7 +81,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     }
 
     /**
-     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
      *
      * @param string $serialized
      * @return void
