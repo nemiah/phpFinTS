@@ -27,5 +27,10 @@ then
   exit 0
 fi
 
+# February 2022: PHP CS FIXER is currently not PHP 8.1 compatible:
+# "you may experience code modified in a wrong way"
+# "To ignore this requirement please set `PHP_CS_FIXER_IGNORE_ENV`."
+export PHP_CS_FIXER_IGNORE_ENV="1"
+
 if ! echo "${CHANGED_FILES}" | grep -qE "^(\\.php_cs(\\.dist)?|composer\\.lock)$"; then EXTRA_ARGS=$(printf -- '--path-mode=intersection\n--\n%s' "${CHANGED_FILES}"); else EXTRA_ARGS=''; fi
 vendor/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --stop-on-violation --using-cache=no ${EXTRA_ARGS} || (echo "php-cs-fixer failed" && exit 1)
