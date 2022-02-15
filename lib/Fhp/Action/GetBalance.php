@@ -82,7 +82,9 @@ class GetBalance extends PaginateableAction
             $this->account, $this->allAccounts
             ) = $serialized;
 
-        parent::__unserialize($parentSerialized);
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     /**

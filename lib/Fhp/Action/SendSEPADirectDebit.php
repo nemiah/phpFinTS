@@ -117,7 +117,9 @@ class SendSEPADirectDebit extends BaseAction
             $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account
             ) = $serialized;
 
-        parent::__unserialize($parentSerialized);
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     protected function createRequest(BPD $bpd, ?UPD $upd)

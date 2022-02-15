@@ -114,7 +114,9 @@ class GetStatementOfAccount extends PaginateableAction
             $this->bankName
             ) = $serialized;
 
-        parent::__unserialize($parentSerialized);
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     /**

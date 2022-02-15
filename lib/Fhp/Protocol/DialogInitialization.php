@@ -146,7 +146,9 @@ class DialogInitialization extends BaseAction
             $this->dialogId
             ) = $serialized;
 
-        parent::__unserialize($parentSerialized);
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     /** {@inheritdoc} */
