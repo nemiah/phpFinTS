@@ -88,7 +88,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      */
     public function unserialize($serialized)
     {
-        $this->__unserialize([$serialized]);
+        self::__unserialize([$serialized]);
     }
 
     /**

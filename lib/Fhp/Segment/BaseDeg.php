@@ -62,7 +62,7 @@ abstract class BaseDeg implements \Serializable
      */
     public function unserialize($serialized)
     {
-        $this->__unserialize([$serialized]);
+        self::__unserialize([$serialized]);
     }
 
     /**

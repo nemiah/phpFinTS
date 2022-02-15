@@ -58,7 +58,7 @@ abstract class PaginateableAction extends BaseAction
      */
     public function unserialize($serialized)
     {
-        $this->__unserialize(unserialize($serialized));
+        self::__unserialize(unserialize($serialized));
     }
 
     public function __unserialize(array $serialized): void
