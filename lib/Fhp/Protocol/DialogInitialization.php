@@ -106,18 +106,37 @@ class DialogInitialization extends BaseAction
         $this->hktanRef = $hktanRef;
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     */
     public function serialize(): string
     {
-        return serialize([
-            parent::serialize(),
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
             $this->hktanRef,
             $this->kundensystemId,
             $this->messageNumber,
             $this->dialogId,
-        ]);
+        ];
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
+     * @param string $serialized
+     * @return void
+     */
     public function unserialize($serialized)
+    {
+        $this->__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
     {
         list(
             $parentSerialized,
@@ -125,8 +144,9 @@ class DialogInitialization extends BaseAction
             $this->kundensystemId,
             $this->messageNumber,
             $this->dialogId
-            ) = unserialize($serialized);
-        parent::unserialize($parentSerialized);
+            ) = $serialized;
+
+        parent::__unserialize($parentSerialized);
     }
 
     /** {@inheritdoc} */

@@ -69,18 +69,42 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     }
 
     /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
      * Short-hand for {@link Serializer::serializeSegment()}.
      * @return string The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
      *     segment delimiter.
      */
     public function serialize(): string
     {
-        return Serializer::serializeSegment($this);
+        return $this->__serialize()[0];
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
+     * @param string $serialized
+     * @return void
+     */
     public function unserialize($serialized)
     {
-        Parser::parseSegment($serialized, $this);
+        $this->__unserialize([$serialized]);
+    }
+
+    /**
+     * Short-hand for {@link Serializer::serializeSegment()}.
+     *
+     * @return array [0]: The HBCI wire format representation of this segment, in ISO-8859-1 encoding, terminated by the
+     *     segment delimiter.
+     */
+    public function __serialize(): array
+    {
+        return [Serializer::serializeSegment($this)];
+    }
+
+    public function __unserialize(array $serialized): void
+    {
+        Parser::parseSegment($serialized[0], $this);
     }
 
     public function __toString(): string

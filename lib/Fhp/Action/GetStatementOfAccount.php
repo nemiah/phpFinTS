@@ -78,23 +78,43 @@ class GetStatementOfAccount extends PaginateableAction
         return $result;
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     */
     public function serialize(): string
     {
-        return serialize([
-            parent::serialize(),
-            $this->account, $this->from, $this->to, $this->allAccounts,
-            $this->bankName,
-        ]);
+        return serialize($this->__serialize());
     }
 
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
+            $this->account, $this->from, $this->to, $this->allAccounts,
+            $this->bankName,
+        ];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
+     * @param string $serialized
+     * @return void
+     */
     public function unserialize($serialized)
+    {
+        $this->__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
     {
         list(
             $parentSerialized,
             $this->account, $this->from, $this->to, $this->allAccounts,
             $this->bankName
-            ) = unserialize($serialized);
-        parent::unserialize($parentSerialized);
+            ) = $serialized;
+
+        parent::__unserialize($parentSerialized);
     }
 
     /**

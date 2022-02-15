@@ -62,6 +62,8 @@ abstract class BaseAction implements \Serializable
     public $successMessage;
 
     /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
      * NOTE: A common mistake is to call this function directly. Instead, you probably want `serialize($instance)`.
      *
      * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
@@ -71,16 +73,46 @@ abstract class BaseAction implements \Serializable
      */
     public function serialize(): string
     {
+        return serialize($this->__serialize());
+    }
+
+    /**
+     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
+     * present yet.
+     * If a sub-class overrides this, it should call the parent function and include it in its result.
+     *
+     * @return array The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
+     */
+    public function __serialize(): array
+    {
         if (!$this->needsTan()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
         }
-        return serialize([$this->requestSegmentNumbers, $this->tanRequest, $this->needTanForSegment]);
+        return [
+            $this->requestSegmentNumbers,
+            $this->tanRequest,
+            $this->needTanForSegment,
+        ];
     }
 
-    /** {@inheritdoc} */
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used, then this method is never called
+     *
+     * @param string $serialized
+     * @return void
+     */
     public function unserialize($serialized)
     {
-        list($this->requestSegmentNumbers, $this->tanRequest, $this->needTanForSegment) = unserialize($serialized);
+        $this->__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
+    {
+        list(
+            $this->requestSegmentNumbers,
+            $this->tanRequest,
+            $this->needTanForSegment
+            ) = $serialized;
     }
 
     /**
