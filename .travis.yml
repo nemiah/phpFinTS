@@ -5,6 +5,7 @@ script:
   - ./csfixer-check.sh
   - ./phplint.sh ./lib/
   - ./vendor/bin/phpunit
+dist: bionic
 php:
   - '7.4'
   - '8.0'
