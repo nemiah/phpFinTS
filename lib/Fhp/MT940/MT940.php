@@ -10,8 +10,8 @@ namespace Fhp\MT940;
  */
 class MT940
 {
-    const CD_CREDIT = 'credit';
-    const CD_DEBIT = 'debit';
+    public const CD_CREDIT = 'credit';
+    public const CD_DEBIT = 'debit';
 
     /**
      * @throws MT940Exception
