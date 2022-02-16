@@ -32,17 +32,45 @@ abstract class PaginateableAction extends BaseAction
      */
     protected $paginationToken;
 
-    /** {@inheritdoc} */
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * {@inheritdoc}
+     */
     public function serialize(): string
     {
-        return serialize([parent::serialize(), $this->paginationToken, $this->requestSegments]);
+        return serialize($this->__serialize());
     }
 
-    /** {@inheritdoc} */
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
+            $this->paginationToken,
+            $this->requestSegments,
+        ];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * {@inheritdoc}
+     */
     public function unserialize($serialized)
     {
-        list($parentSerialized, $this->paginationToken, $this->requestSegments) = unserialize($serialized);
-        parent::unserialize($parentSerialized);
+        self::__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
+    {
+        list(
+            $parentSerialized,
+            $this->paginationToken,
+            $this->requestSegments) = $serialized;
+
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     /**

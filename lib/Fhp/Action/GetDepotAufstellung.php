@@ -50,20 +50,43 @@ class GetDepotAufstellung extends PaginateableAction
         return $result;
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     */
     public function serialize(): string
     {
-        return serialize([
-            parent::serialize(),
-            $this->account,
-        ]);
+        return serialize($this->__serialize());
     }
 
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
+            $this->account,
+        ];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * @param string $serialized
+     * @return void
+     */
     public function unserialize($serialized)
+    {
+        self::__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
     {
         list(
             $parentSerialized,
-            $this->account) = unserialize($serialized);
-        parent::unserialize($parentSerialized);
+            $this->account
+            ) = $serialized;
+
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     /**

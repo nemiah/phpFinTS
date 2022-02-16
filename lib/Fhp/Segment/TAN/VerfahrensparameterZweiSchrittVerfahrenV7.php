@@ -10,7 +10,7 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
 {
     /** @var int Allowed values: 900 through 997 */
     public $sicherheitsfunktion;
-    /** @var int Allowed values: 1, 2; See specification or {@link HKTANv7::$$tanProzess} for details. */
+    /** @var string Allowed values: 1, 2; See specification or {@link HKTANv7::$$tanProzess} for details. */
     public $tanProzess;
     /** @var string */
     public $technischeIdentifikationTanVerfahren;
