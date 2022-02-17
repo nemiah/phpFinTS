@@ -13,7 +13,7 @@ use Fhp\Segment\BaseSegment;
  */
 class HNHBKv3 extends BaseSegment
 {
-    const NACHRICHTENGROESSE_LENGTH = 12;
+    public const NACHRICHTENGROESSE_LENGTH = 12;
 
     /**
      * The length of the entire message (after encryption and compression) in bytes. While this is morally a number, the

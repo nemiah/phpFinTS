@@ -6,7 +6,7 @@ use Fhp\Segment\TAB\HITABv4;
 
 class HITABTest extends \PHPUnit\Framework\TestCase
 {
-    const REAL_DKB_RESPONSE = "HITAB:1:4:3+0+A:1:::::::::::pushtan::::::::+A:1:::::::::::SomePhone1::::::::'";
+    public const REAL_DKB_RESPONSE = "HITAB:1:4:3+0+A:1:::::::::::pushtan::::::::+A:1:::::::::::SomePhone1::::::::'";
 
     public function testParseDKB()
     {

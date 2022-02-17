@@ -18,8 +18,8 @@ class HKIDNv2 extends BaseSegment
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
      * Section C.5
      */
-    const ANONYMOUS_KUNDEN_ID = '9999999999';
-    const MISSING_KUNDENSYSTEM_ID = '0';
+    public const ANONYMOUS_KUNDEN_ID = '9999999999';
+    public const MISSING_KUNDENSYSTEM_ID = '0';
 
     /** @var \Fhp\Segment\Common\Kik */
     public $kreditinstitutskennung;

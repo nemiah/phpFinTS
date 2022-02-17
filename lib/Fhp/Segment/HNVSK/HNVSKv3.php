@@ -27,7 +27,7 @@ class HNVSKv3 extends BaseSegment
     /**
      * The specification demands that HNVSK always has segment number 998. See section B.8.
      */
-    const SEGMENT_NUMBER = 998;
+    public const SEGMENT_NUMBER = 998;
 
     /** @var SicherheitsprofilV1 */
     public $sicherheitsprofil;

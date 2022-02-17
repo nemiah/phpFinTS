@@ -19,7 +19,7 @@ class HNVSDv1 extends BaseSegment
     /**
      * The specification demands that HNVSD always has segment number 998. See section B.8.
      */
-    const SEGMENT_NUMBER = 999;
+    public const SEGMENT_NUMBER = 999;
 
     /**
      * Note: This field is called "encrypted", but for PIN/TAN it contains plaintext data anyway, because the encryption

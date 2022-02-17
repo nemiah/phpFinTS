@@ -13,8 +13,8 @@ use Fhp\Segment\DSE\MinimaleVorlaufzeitSEPALastschrift;
  */
 class GetSEPADirectDebitParameters extends BaseAction
 {
-    const SEQUENCE_TYPES = ['FRST', 'OOFF', 'FNAL', 'RCUR'];
-    const DIRECT_DEBIT_TYPES = ['CORE', 'COR1', 'B2B'];
+    public const SEQUENCE_TYPES = ['FRST', 'OOFF', 'FNAL', 'RCUR'];
+    public const DIRECT_DEBIT_TYPES = ['CORE', 'COR1', 'B2B'];
 
     /** @var string */
     private $directDebitType;

@@ -14,14 +14,14 @@ abstract class FinTsTestCase extends TestCase
 {
     use \phpmock\phpunit\PHPMock;
 
-    const TEST_URL = 'https://testbank.de/hbci';
-    const TEST_BANK_CODE = '11223344'; // Can be overridden in sub-classes!
-    const TEST_PRODUCT_NAME = '123456789ABCDEF0123456789';
-    const TEST_PRODUCT_VERSION = '1.0';
-    const TEST_USERNAME = 'test@user';
-    const TEST_PIN = '12345';
-    const TEST_TAN_MODE = '942'; // Can be overridden in sub-classes!
-    const TEST_KUNDENSYSTEM_ID = 'FAKEKUNDENSYSTEMIDabcdefghij';
+    public const TEST_URL = 'https://testbank.de/hbci';
+    public const TEST_BANK_CODE = '11223344'; // Can be overridden in sub-classes!
+    public const TEST_PRODUCT_NAME = '123456789ABCDEF0123456789';
+    public const TEST_PRODUCT_VERSION = '1.0';
+    public const TEST_USERNAME = 'test@user';
+    public const TEST_PIN = '12345';
+    public const TEST_TAN_MODE = '942'; // Can be overridden in sub-classes!
+    public const TEST_KUNDENSYSTEM_ID = 'FAKEKUNDENSYSTEMIDabcdefghij';
 
     /** @var FinTsOptions */
     protected $options;

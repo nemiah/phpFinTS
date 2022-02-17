@@ -12,7 +12,7 @@ use Fhp\Segment\BaseDeg;
  */
 class Kik extends BaseDeg
 {
-    const DEFAULT_COUNTRY_CODE = '280'; // Germany
+    public const DEFAULT_COUNTRY_CODE = '280'; // Germany
 
     /** @var string (ISO 3166-1; has leading zeros; Germany is 280, see also chapter E.4 */
     public $laenderkennzeichen;

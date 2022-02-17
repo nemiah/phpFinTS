@@ -12,7 +12,7 @@ class HNVSDTest extends TestCase
      * segments are just nested inside of its `datenVerschluesselt` field, though they might as well be some other 198
      * arbitrary characters.
      */
-    const REAL_DKB_RESPONSE = 'HNVSD:999:1+@198@HNSHK:2:4+PIN:1+999+7000000+1+1+2::tgxxxxxxxxxxxxxxxxxxxxxxxxxA+1+1+1:999:1+6:10:16+280:12030000:xxx?@xxxxx:S:0:0\'HIRMG:3:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.\'HNSHA:4:2+7000000\'\'';
+    public const REAL_DKB_RESPONSE = 'HNVSD:999:1+@198@HNSHK:2:4+PIN:1+999+7000000+1+1+2::tgxxxxxxxxxxxxxxxxxxxxxxxxxA+1+1+1:999:1+6:10:16+280:12030000:xxx?@xxxxx:S:0:0\'HIRMG:3:2+0010::Nachricht entgegengenommen.+0100::Dialog beendet.\'HNSHA:4:2+7000000\'\'';
 
     public function testParseRealConsorsResponse()
     {
