@@ -15,7 +15,7 @@ abstract class Rueckmeldungscode
      * this library does not support the unlocking actions, we consider these warnings a hard failure, which aborts the
      * login. The user needs to unlock the account through the bank's web interface or customer support instead.
      */
-    const TREAT_WARNINGS_AS_ERRORS = [self::PIN_VORLAEUFIG_GESPERRT, self::ZUGANG_VORLAEUFIG_GESPERRT];
+    public const TREAT_WARNINGS_AS_ERRORS = [self::PIN_VORLAEUFIG_GESPERRT, self::ZUGANG_VORLAEUFIG_GESPERRT];
 
     /**
      * @param int $code A code received from the server.
@@ -51,17 +51,17 @@ abstract class Rueckmeldungscode
      * Umfang der Prüfung ist kreditinstitutsspezifisch. Mindestanforderung: physisch korrekt empfangen; Status ist
      * nicht rechtsverbindlich.
      */
-    const ENTGEGENGENOMMEN = 10;
+    public const ENTGEGENGENOMMEN = 10;
 
     /**
      * Der Auftrag wurde ausgeführt.
      */
-    const AUSGEFUEHRT = 20;
+    public const AUSGEFUEHRT = 20;
 
     /**
      * Bestätigung der Dialogbeendigung des Benutzers oder des Kreditinstituts.
      */
-    const BEENDET = 100;
+    public const BEENDET = 100;
 
     /**
      * Nicht verfügbar.
@@ -70,74 +70,74 @@ abstract class Rueckmeldungscode
      * Information wird zur Zeit nicht angeboten
      * Wertpapierdatei ist bereits aktuell
      */
-    const NICHT_VERFUEGBAR = 3010;
+    public const NICHT_VERFUEGBAR = 3010;
 
     /**
      * Es liegen weitere Informationen vor.
      * Tells the client that the response is incomplete and the request needs to be re-sent with the pagination token
      * ("Aufsetzpunkt") that is contained in the Rueckmeldung parameters.
      */
-    const PAGINATION = 3040;
+    public const PAGINATION = 3040;
 
     /**
      * Zugelassene Ein- und Zwei-Schritt-Verfahren für den Benutzer (+ Rückmeldungsparameter).
      * The parameters reference the VerfahrensparameterZweiSchrittVerfahren.sicherheitsfunktion values (900..997) from
      * HITANS, or 999 to indicate Ein-Schritt-Verfahren.
      */
-    const ZUGELASSENE_VERFAHREN = 3920;
+    public const ZUGELASSENE_VERFAHREN = 3920;
 
     /**
      * PIN gesperrt. Entsperren mit GV "PIN-Sperre aufheben" möglich.
      * Note that this library does not support unlocking accounts through FinTS.
      */
-    const PIN_VORLAEUFIG_GESPERRT = 3931;
+    public const PIN_VORLAEUFIG_GESPERRT = 3931;
 
     /**
      * Ihr Zugang ist vorläufig gesperrt - bitte PIN-Sperre aufheben.
      * Es ist die Durchführung eines HKPSA erforderlich.
      * Note that this library does not support HKPSA.
      */
-    const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
+    public const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
 
     /**
      * Starke Kundenauthentifizierung noch ausstehend.
      * Indicates that the decoupled authentication is still outstanding.
      */
-    const STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND = 3956;
+    public const STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND = 3956;
 
     /**
      * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.
      */
-    const TEILWEISE_FEHLERHAFT = 9050;
+    public const TEILWEISE_FEHLERHAFT = 9050;
 
     /**
      * Kreditinstitutsseitige Beendigung des Dialoges
      */
-    const ABGEBROCHEN = 9800;
+    public const ABGEBROCHEN = 9800;
 
     /**
      * Ihre PIN ist gesperrt.
      */
-    const PIN_GESPERRT = 9930;
+    public const PIN_GESPERRT = 9930;
 
     /**
      * Sperrung des Kontos nach %1 Fehlversuchen
      * Teilnehmersperre durchgeführt
      * Teilnehmersperre durchgeführt, Entsperren nur durch Kreditinstitut
      */
-    const TEILNEHMER_GESPERRT = 9931;
+    public const TEILNEHMER_GESPERRT = 9931;
 
     /**
      * Ihr Zugang ist gesperrt - Bitte informieren Sie Ihren Berater.
      * @link https://wiki.windata.de/index.php?title=HBCI-Fehlermeldungen
      */
-    const ZUGANG_GESPERRT = 9933;
+    public const ZUGANG_GESPERRT = 9933;
 
     /**
      * TAN ungültig.
      * Signatur ungültig.
      */
-    const TAN_UNGUELTIG = 9941;
+    public const TAN_UNGUELTIG = 9941;
 
     /**
      * PIN ungültig.
@@ -145,16 +145,16 @@ abstract class Rueckmeldungscode
      * Neue PIN zu kurz.
      * Neue PIN zu lang.
      */
-    const PIN_UNGUELTIG = 9942;
+    public const PIN_UNGUELTIG = 9942;
 
     /**
      *  TAN bereits verbraucht.
      */
-    const TAN_BEREITS_VERBRAUCHT = 9943;
+    public const TAN_BEREITS_VERBRAUCHT = 9943;
 
     /**
      * Zeitüberschreitung im Zwei-Schritt-Verfahren
      * TAN/Signatur ungültig
      */
-    const ZEITUEBERSCHREITUNG_IM_ZWEI_SCHRITT_VERFAHREN = 9951;
+    public const ZEITUEBERSCHREITUNG_IM_ZWEI_SCHRITT_VERFAHREN = 9951;
 }

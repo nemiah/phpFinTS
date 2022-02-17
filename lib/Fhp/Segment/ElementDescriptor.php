@@ -66,7 +66,7 @@ class ElementDescriptor
     /**
      * Maps types declared in a {@}var comment to the return format of `gettype()`.
      */
-    const TYPE_MAP = [
+    public const TYPE_MAP = [
         'int' => 'integer', 'integer' => 'integer',
         'float' => 'double',
         'bool' => 'boolean', 'boolean' => 'boolean',

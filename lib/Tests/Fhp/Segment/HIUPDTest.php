@@ -11,7 +11,7 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
      * File: HBCI22 Final.pdf
      * Search for: "HIUPD:"
      */
-    const HBCI22_EXAMPLES = [
+    public const HBCI22_EXAMPLES = [
         // NOTE: These two examples are likely outdated in the document because the new $unterkontomerkmal field was
         // added. So it's `::280` and not just `:280`. The first of these two examples occurs twice in the document,
         // once in the correct format. Here both of them are "fixed" (hopefully).

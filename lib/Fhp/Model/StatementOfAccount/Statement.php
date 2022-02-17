@@ -4,8 +4,8 @@ namespace Fhp\Model\StatementOfAccount;
 
 class Statement
 {
-    const CD_CREDIT = 'credit';
-    const CD_DEBIT = 'debit';
+    public const CD_CREDIT = 'credit';
+    public const CD_DEBIT = 'debit';
 
     /**
      * @var array of Transaction

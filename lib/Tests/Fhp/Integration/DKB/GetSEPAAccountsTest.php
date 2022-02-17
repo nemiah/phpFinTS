@@ -4,8 +4,8 @@ namespace Tests\Fhp\Integration\DKB;
 
 class GetSEPAAccountsTest extends DKBIntegrationTestBase
 {
-    const GET_ACCOUNTS_REQUEST = "HKSPA:3:2'";
-    const GET_ACCOUNTS_RESPONSE = "HIRMG:3:2+0010::Nachricht entgegengenommen.'HIRMS:4:2:3+0020::Der Auftrag wurde ausgefuhrt.'HISPA:5:2:3+J:DExxABCDEFGH1234567890:BYLADEM1001:1234567890::280:ABCDEFGH'";
+    public const GET_ACCOUNTS_REQUEST = "HKSPA:3:2'";
+    public const GET_ACCOUNTS_RESPONSE = "HIRMG:3:2+0010::Nachricht entgegengenommen.'HIRMS:4:2:3+0020::Der Auftrag wurde ausgefuhrt.'HISPA:5:2:3+J:DExxABCDEFGH1234567890:BYLADEM1001:1234567890::280:ABCDEFGH'";
 
     /**
      * @throws \Throwable

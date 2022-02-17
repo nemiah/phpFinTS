@@ -17,8 +17,8 @@ use Fhp\Segment\BaseDeg;
  */
 class Sdo extends BaseDeg
 {
-    const CREDIT = 'C';  // "Haben"
-    const DEBIT = 'D'; // "Soll"
+    public const CREDIT = 'C';  // "Haben"
+    public const DEBIT = 'D'; // "Soll"
 
     /**
      * Allowed values:

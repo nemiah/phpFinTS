@@ -14,7 +14,7 @@ use Fhp\Segment\TAN\HKTAN;
  */
 final class NoPsd2TanMode implements TanMode
 {
-    const ID = -1;
+    public const ID = -1;
 
     /** {@inheritdoc} */
     public function getId(): int

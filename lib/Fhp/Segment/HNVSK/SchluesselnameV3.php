@@ -16,11 +16,11 @@ class SchluesselnameV3 extends BaseDeg
     /**
      * Indicates that the key is to be used for cryptographic signatures.
      */
-    const SIGNIERSCHLUESSEL = 'S';
+    public const SIGNIERSCHLUESSEL = 'S';
     /**
      * Indicates that the key is to be used for cryptographic ciphers (that is, encryption).
      */
-    const CHIFFRIERSCHLUESSEL = 'V';
+    public const CHIFFRIERSCHLUESSEL = 'V';
 
     /** @var \Fhp\Segment\Common\Kik */
     public $kreditinstitutskennung;

@@ -28,7 +28,7 @@ if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_k
 abstract class Parser
 {
     /** @var string Name of the PHP namespace under which all the segments are stored. */
-    const SEGMENT_NAMESPACE = 'Fhp\Segment';
+    public const SEGMENT_NAMESPACE = 'Fhp\Segment';
 
     /**
      * The FinTs wire format specifies escaping with a question mark `?` for the syntax characters `+:'?@`. This

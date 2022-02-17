@@ -8,7 +8,7 @@ class MinimaleVorlaufzeitSEPALastschrift
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
      * Section: D ("Unterstützte SEPA-Lastschriftarten, codiert")
      */
-    const UNTERSTUETZTE_SEPA_LASTSCHRIFTARTEN_CODIERT = [
+    public const UNTERSTUETZTE_SEPA_LASTSCHRIFTARTEN_CODIERT = [
         ['CORE'],
         ['COR1'],
         ['CORE', 'COR1'],
@@ -18,7 +18,7 @@ class MinimaleVorlaufzeitSEPALastschrift
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
      * Section: D ("SequenceType, codiert")
      */
-    const SEQUENCE_TYPE_CODIERT = [
+    public const SEQUENCE_TYPE_CODIERT = [
         ['FNAL', 'RCUR', 'FRST', 'OOFF'],
         ['FNAL', 'RCUR'],
         ['FRST', 'OOFF'],

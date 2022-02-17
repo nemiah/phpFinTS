@@ -7,10 +7,10 @@ use Fhp\Model\StatementOfAccount\Statement;
 class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
 {
     // Statement request (HKKAZ).
-    const GET_STATEMENT_REQUEST = "HKKAZ:3:7+DExxABCDEFGH1234567890:CSDBDE71XXX:1234567890::280:50220500+N+20190601+20190922'HKTAN:4:6+4+HKKAZ'";
+    public const GET_STATEMENT_REQUEST = "HKKAZ:3:7+DExxABCDEFGH1234567890:CSDBDE71XXX:1234567890::280:50220500+N+20190601+20190922'HKTAN:4:6+4+HKKAZ'";
 
     // Note: Consorsbank weirdly returns November statements even when only up to September was requested.
-    const GET_STATEMENT_RESPONSE = "HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Der Auftrag wurde ausgefuhrt.+3076::Keine starke Authentifizierung erforderlich.+3997::Der Auftrag wurde nur teilweise ausgefuhrt.'"
+    public const GET_STATEMENT_RESPONSE = "HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+0020::Der Auftrag wurde ausgefuhrt.+3076::Keine starke Authentifizierung erforderlich.+3997::Der Auftrag wurde nur teilweise ausgefuhrt.'"
     . "HIKAZ:4:7:3+@1034@\r\n"
     . ":20:0\r\n:21:NONREF\r\n:25:50220500/123456789\r\n:28C:0/7\r\n:60M:C191118EUR950,59\r\n"
     . ":61:1911181118D2,8N008NONREF\r\n:86:008?00Dauerauftrag?20EREF+NOTPROVIDED           ?21             ?\r\n22KREF+NONREF?23SVWZ+XY?30BICBICBICBI?31DExx444444444444444444?32\r\nMax Mustermannig\r\n:62M:C191118EUR947,79\r\n-\r\n"
@@ -21,7 +21,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
     . "HITAN:5:6:4+4++noref+nochallenge'";
 
     // Note: There is no HIKAZ at all in this response, but it's still valid.
-    const GET_STATEMENT_EMPTY_RESPONSE = "HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+3010::Keine Umsatze gefunden+3076::Keine starke Authentifizierung erforderlich.'HITAN:4:6:4+4++noref+nochallenge'";
+    public const GET_STATEMENT_EMPTY_RESPONSE = "HIRMG:2:2:+3060::Teilweise liegen Warnungen/Hinweise vor.'HIRMS:3:2:3+3010::Keine Umsatze gefunden+3076::Keine starke Authentifizierung erforderlich.'HITAN:4:6:4+4++noref+nochallenge'";
 
     /**
      * @throws \Throwable

@@ -6,8 +6,8 @@ use Fhp\Model\TanRequest;
 
 interface HITAN extends TanRequest
 {
-    const DUMMY_REFERENCE = 'noref';
-    const DUMMY_CHALLENGE = 'nochallenge';
+    public const DUMMY_REFERENCE = 'noref';
+    public const DUMMY_CHALLENGE = 'nochallenge';
 
     public function getTanProzess(): string;
 
