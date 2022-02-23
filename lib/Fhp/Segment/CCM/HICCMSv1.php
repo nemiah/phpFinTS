@@ -3,6 +3,7 @@
 namespace Fhp\Segment\CCM;
 
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
+use Fhp\Segment\BaseSegment;
 
 /**
  * Segment: SEPA Sammelüberweisung Parameter (Version 1)
