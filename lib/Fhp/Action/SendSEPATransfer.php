@@ -26,6 +26,12 @@ class SendSEPATransfer extends BaseAction
     private $painMessage;
     /** @var string */
     private $xmlSchema;
+	/** @var float */
+	protected $ctrlSum;
+	/** @var bool */
+	protected $singleTransfer = false;
+	/** @var bool */
+	protected $requestSingleBooking = false;
 
     /**
      * @param SEPAAccount $account The account from which the transfer will be sent.
@@ -35,21 +41,49 @@ class SendSEPATransfer extends BaseAction
      */
     public static function create(SEPAAccount $account, string $painMessage): SendSEPATransfer
     {
-        if (preg_match('/xmlns="(.*?)"/', $painMessage, $match) === false) {
+        if (preg_match('/xmlns="(.*?)"/', $painMessage, $xmlns) === false) {
             throw new \InvalidArgumentException('xmlns not found in the PAIN message');
         }
+
+        // Check whether the PAIN message contains the correct message root
+        if (strstr($painMessage, '<CstmrCdtTrfInitn>') === false) {
+            throw new \InvalidArgumentException('Pain message contains a wrong message root');
+        }
+
+        // Check whether the PAIN message contains multiple or only one transfer, should match <NbOfTxs>xx</NbOfTxs> in the XML
+        $nbOfTxs = substr_count($painMessage, '<CdtTrfTxInf>');
+        if ($nbOfTxs === 0) {
+            throw new \InvalidArgumentException('PAIN message contains no credit transfer transactions');
+        }
+
+        $ctrlSum = null;
+        if (preg_match('@<GrpHdr>.*<CtrlSum>(?<ctrlsum>[.0-9]+)</CtrlSum>.*</GrpHdr>@s', $painMessage, $matches) === 1) {
+            $ctrlSum = $matches['ctrlsum'];
+        }
+
+        // Check whether a <PmtInf> block sets <BtchBookg> to false: This means that Single Booking is to be requested
+        $singleBooking = preg_match('@<PmtInf>.*<BtchBookg>false</BtchBookg>.*</PmtInf>@', $painMessage) === 1;
+
         $result = new SendSEPATransfer();
         $result->account = $account;
         $result->painMessage = $painMessage;
-        $result->xmlSchema = $match[1];
+        $result->xmlSchema = $xmlns[1];
+        $result->ctrlSum = $ctrlSum;
+        $result->singleTransfer = $nbOfTxs === 1;
+        $result->requestSingleBooking = $singleBooking;
         return $result;
     }
 
     /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-        if (!$bpd->supportsParameters('HICCSS', 1)) {
-            throw new UnsupportedException('The bank does not support HKCCSv1');
+        /** @var string $segment */
+        $segment = $this->singleTransfer ? 'HKCCS' : 'HKCCM';
+        /** @var string $bankparams */
+        $bankparams = $this->singleTransfer ? 'HICCSS' : 'HICCMS';
+
+        if (!$bpd->supportsParameters($bankparams, 1)) {
+            throw new UnsupportedException('The bank does not support ' . $segment . 'v1');
         }
 
         /** @var HISPAS $hispas */
@@ -60,11 +94,26 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-        $hkccs = HKCCSv1::createEmpty();
-        $hkccs->kontoverbindungInternational = Kti::fromAccount($this->account);
-        $hkccs->sepaDescriptor = $this->xmlSchema;
-        $hkccs->sepaPainMessage = new Bin($this->painMessage);
-        return $hkccs;
+       	/** @var BaseSegment $hiccxs */
+      	$hiccxs = $bpd->requireLatestSupportedParameters($bankparams);
+
+      	$hkccx = $hiccxs->createRequestSegment();
+        $hkccx->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $hkccx->sepaDescriptor = $this->xmlSchema;
+        $hkccx->sepaPainMessage = new Bin($this->painMessage);
+
+        if (!$this->singleTransfer) {
+            // Just always send the control sum (may be optional)
+            $hkccx->summenfeld = Btg::create($this->ctrlSum);
+
+            // Request Single booking only if bank allows
+            /** @var HICCMSv1 $hiccxs */
+            if ($hiccxs->getParameter()->einzelbuchungErlaubt) {
+                $hkccx->einzelbuchungGewuenscht = $this->requestSingleBooking;
+            }
+        }
+
+        return $hkccx;
     }
 
     /** {@inheritdoc} */

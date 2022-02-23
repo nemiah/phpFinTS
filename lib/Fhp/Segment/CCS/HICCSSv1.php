@@ -13,4 +13,9 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 class HICCSSv1 extends BaseGeschaeftsvorfallparameter
 {
     // No parameters.
+
+    public function createRequestSegment(): BaseSegment
+    {
+        return HKCCSv1::createEmpty();
+    }
 }
