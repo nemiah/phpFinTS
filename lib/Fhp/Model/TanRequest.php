@@ -2,6 +2,7 @@
 
 namespace Fhp\Model;
 
+use Fhp\Model\FlickerTan\TanRequestChallengeFlicker;
 use Fhp\Syntax\Bin;
 
 /**
@@ -29,8 +30,8 @@ interface TanRequest
     public function getTanMediumName(): ?string;
 
     /**
-     * @return ?Bin An additional binary challenge payload. Used to receive the PhotoTan/ChipTan image. Use
-     *     {@link TanRequestChallengeImage} to parse the payload.
+     * @return ?Bin An additional binary challenge payload. Used to receive the PhotoTan/ChipTan image or Flicker Tan. Use
+     *     {@link TanRequestChallengeImage} or {@link TanRequestChallengeFlicker} to parse the payload.
      */
     public function getChallengeHhdUc(): ?Bin;
 }

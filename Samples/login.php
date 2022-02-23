@@ -54,7 +54,7 @@ function handleStrongAuthentication(\Fhp\BaseAction $action)
  * @param \Fhp\BaseAction $action Some action that requires a TAN.
  * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
-function handleTan(\Fhp\BaseAction $action)
+function handleTan(Fhp\BaseAction $action)
 {
     global $fints, $options, $credentials;
 
@@ -71,13 +71,24 @@ function handleTan(\Fhp\BaseAction $action)
 
     // Challenge Image for PhotoTan/ChipTan
     if ($tanRequest->getChallengeHhdUc()) {
-        $challengeImage = new \Fhp\Model\TanRequestChallengeImage(
-            $tanRequest->getChallengeHhdUc()
-        );
-        echo 'There is a challenge image.' . PHP_EOL;
-        // Save the challenge image somewhere
-        // Alternative: HTML sample code
-        echo '<img src="data:' . htmlspecialchars($challengeImage->getMimeType()) . ';base64,' . base64_encode($challengeImage->getData()) . '" />' . PHP_EOL;
+        try {
+            $flicker = new \Fhp\Model\FlickerTan\TanRequestChallengeFlicker($tanRequest->getChallengeHhdUc());
+            echo 'There is a challenge flicker.' . PHP_EOL;
+            // save or output svg
+            $flickerPattern = $flicker->getFlickerPattern();
+            // other renderers can be implemented with this pattern
+            $svg = new \Fhp\Model\FlickerTan\SvgRenderer($flickerPattern);
+            echo $svg->getImage();
+        } catch (InvalidArgumentException $e) {
+            // was not a flicker
+            $challengeImage = new \Fhp\Model\TanRequestChallengeImage(
+                $tanRequest->getChallengeHhdUc()
+            );
+            echo 'There is a challenge image.' . PHP_EOL;
+            // Save the challenge image somewhere
+            // Alternative: HTML sample code
+            echo '<img src="data:' . htmlspecialchars($challengeImage->getMimeType()) . ';base64,' . base64_encode($challengeImage->getData()) . '" />' . PHP_EOL;
+        }
     }
 
     // Optional: Instead of printing the above to the console, you can relay the information (challenge and TAN medium)
@@ -124,7 +135,7 @@ function handleTan(\Fhp\BaseAction $action)
  * @param \Fhp\BaseAction $action Some action that requires decoupled authentication.
  * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
-function handleDecoupled(\Fhp\BaseAction $action)
+function handleDecoupled(Fhp\BaseAction $action)
 {
     global $fints;
 
