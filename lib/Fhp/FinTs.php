@@ -566,7 +566,7 @@ class FinTs
             $this->execute($getTanMedia);
             $this->endDialog();
             return $getTanMedia->getTanMedia();
-        } catch (UnexpectedResponseException|CurlException|ServerException $e) {
+        } catch (UnexpectedResponseException | CurlException | ServerException $e) {
             throw $e;
         } finally {
             $this->selectedTanMode = $oldTanMode;

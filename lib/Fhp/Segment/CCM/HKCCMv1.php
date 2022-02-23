@@ -29,6 +29,6 @@ class HKCCMv1 extends BaseSegment
      * HISPAS informs which XML schemas are allowed.
      * The <ReqdExctnDt> field must be 1999-01-01.
      * @var Bin XML
-    */
+     */
     public $sepaPainMessage;
 }

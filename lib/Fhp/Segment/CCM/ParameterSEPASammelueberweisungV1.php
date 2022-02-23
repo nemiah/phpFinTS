@@ -14,5 +14,4 @@ class ParameterSEPASammelueberweisungV1 extends BaseDeg
 
     /** @var bool */
     public $einzelbuchungErlaubt;
-
 }

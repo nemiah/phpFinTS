@@ -9,9 +9,7 @@ use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
-use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\CCM\HICCMSv1;
-use Fhp\Segment\CCM\HKCCMv1;
 use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
@@ -30,12 +28,12 @@ class SendSEPATransfer extends BaseAction
     private $painMessage;
     /** @var string */
     private $xmlSchema;
-	/** @var float */
-	protected $ctrlSum;
-	/** @var bool */
-	protected $singleTransfer = false;
-	/** @var bool */
-	protected $requestSingleBooking = false;
+    /** @var float */
+    protected $ctrlSum;
+    /** @var bool */
+    protected $singleTransfer = false;
+    /** @var bool */
+    protected $requestSingleBooking = false;
 
     /**
      * @param SEPAAccount $account The account from which the transfer will be sent.
@@ -101,10 +99,10 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-       	/** @var BaseSegment $hiccxs */
-      	$hiccxs = $bpd->requireLatestSupportedParameters($bankparams);
+        /** @var BaseSegment $hiccxs */
+        $hiccxs = $bpd->requireLatestSupportedParameters($bankparams);
 
-      	$hkccx = $hiccxs->createRequestSegment();
+        $hkccx = $hiccxs->createRequestSegment();
         $hkccx->kontoverbindungInternational = Kti::fromAccount($this->account);
         $hkccx->sepaDescriptor = $this->xmlSchema;
         $hkccx->sepaPainMessage = new Bin($this->painMessage);
