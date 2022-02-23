@@ -66,7 +66,10 @@ class SendSEPATransfer extends BaseAction
         }
 
         // Check whether a <PmtInf> block sets <BtchBookg> to false: This means that Single Booking is to be requested
-        $singleBooking = preg_match('@<PmtInf>.*<BtchBookg>false</BtchBookg>.*</PmtInf>@', $painMessage) === 1;
+        $singleBooking = preg_match('@<PmtInf>.*<BtchBookg>false</BtchBookg>.*</PmtInf>@s', $painMessage) === 1;
+
+        // Set RequestedExecutionDate to 1999-01-01, as required by the FinTS standard for non-scheduled transfers
+        $painMessage = preg_replace('@(<ReqdExctnDt>)([\d-]*)(</ReqdExctnDt>)@', '${1}1999-01-01${3}', $painMessage) ?? $painMessage;
 
         $result = new SendSEPATransfer();
         $result->account = $account;
