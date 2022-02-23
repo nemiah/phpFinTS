@@ -7,7 +7,7 @@ use Fhp\Syntax\Parser;
 
 class AnonymousSegmentTest extends \PHPUnit\Framework\TestCase
 {
-    const RAW_SEGMENT = "HNXXX:4:3+A++C:D:E+F+'";
+    public const RAW_SEGMENT = "HNXXX:4:3+A++C:D:E+F+'";
 
     private static function getElements($segment)
     {

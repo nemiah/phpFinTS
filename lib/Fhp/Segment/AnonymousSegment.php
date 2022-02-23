@@ -49,9 +49,28 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
         // Do nothing, anonymous segments are always valid.
     }
 
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     */
     public function serialize(): string
     {
-        return $this->segmentkopf->serialize() . Delimiter::ELEMENT .
+        return $this->__serialize()[0];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * @param $serialized
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        self::__unserialize([$serialized]);
+    }
+
+    public function __serialize(): array
+    {
+        $result = $this->segmentkopf->serialize() . Delimiter::ELEMENT .
             implode(Delimiter::ELEMENT, array_map(function ($element) {
                 if ($element === null) {
                     return '';
@@ -62,11 +81,13 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
                 return implode(Delimiter::GROUP, $element);
             }, $this->elements))
             . Delimiter::SEGMENT;
+
+        return [$result];
     }
 
-    public function unserialize($serialized)
+    public function __unserialize(array $serialized): void
     {
-        $parsed = Parser::parseAnonymousSegment($serialized);
+        $parsed = Parser::parseAnonymousSegment($serialized[0]);
         $this->type = $parsed->type;
         $this->segmentkopf = $parsed->segmentkopf;
         $this->elements = $parsed->elements;

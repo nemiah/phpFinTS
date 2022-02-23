@@ -6,8 +6,8 @@ use Fhp\Action\GetBalance;
 
 class GetBalanceTest extends DKBIntegrationTestBase
 {
-    const GET_BALANCE_REQUEST = "HKSAL:3:5+1234567890::280:12030000+J'";
-    const GET_BALANCE_RESPONSE = "HIRMG:3:2+3060::Bitte beachten Sie die enthaltenen Warnungen/Hinweise.'HIRMS:4:2:3+0020::Der Auftrag wurde ausgefuhrt.'HIRMS:5:2:4+3076::Starke Kundenauthentifizierung nicht notwendig.'HITAN:6:6:4+4++noref+nochallenge+++SomePhone1'HISAL:7:5:3+1234567890::280:12030000+Sichteinlagen+EUR+C:123,45:EUR:20200409+C:0,:EUR:20200409+0,:EUR+123,45:EUR'";
+    public const GET_BALANCE_REQUEST = "HKSAL:3:5+1234567890::280:12030000+J'";
+    public const GET_BALANCE_RESPONSE = "HIRMG:3:2+3060::Bitte beachten Sie die enthaltenen Warnungen/Hinweise.'HIRMS:4:2:3+0020::Der Auftrag wurde ausgefuhrt.'HIRMS:5:2:4+3076::Starke Kundenauthentifizierung nicht notwendig.'HITAN:6:6:4+4++noref+nochallenge+++SomePhone1'HISAL:7:5:3+1234567890::280:12030000+Sichteinlagen+EUR+C:123,45:EUR:20200409+C:0,:EUR:20200409+0,:EUR+123,45:EUR'";
 
     /**
      * @throws \Throwable

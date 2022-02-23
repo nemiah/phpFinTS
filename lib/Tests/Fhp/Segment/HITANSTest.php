@@ -10,7 +10,7 @@ class HITANSTest extends \PHPUnit\Framework\TestCase
     /**
      * Real response from DKB (Deutsche Kreditbank).
      */
-    const REAL_DKB_RESPONSE = [
+    public const REAL_DKB_RESPONSE = [
         "HITANS:165:1:4+1+1+1+J:N:0:0:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:J:J:900:2:iTAN:iTAN:6:1:TAN-Nummer:3:1:J:J'",
         "HITANS:166:3:4+1+1+1+J:N:0:910:2:HHD1.3.0:chipTAN manuell:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:0:1:911:2:HHD1.3.2OPT:chipTAN optisch:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:0:1:912:2:HHD1.3.2USB:chipTAN-USB:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:0:1:913:2:Q1S:chipTAN-QR:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:0:1:920:2:smsTAN:smsTAN:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:2:5:921:2:TAN2go:TAN2go:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:2:2:900:2:iTAN:iTAN:6:1:TAN-Nummer:3:1:J:2:0:N:N:N:00:0:0'",
         "HITANS:167:6:4+1+1+1+J:N:0:910:2:HHD1.3.0:::chipTAN manuell:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:911:2:HHD1.3.2OPT:HHDOPT1:1.3.2:chipTAN optisch:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:912:2:HHD1.3.2USB:HHDUSB1:1.3.2:chipTAN-USB:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:913:2:Q1S:Secoder_UC:1.2.0:chipTAN-QR:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:1:920:2:smsTAN:::smsTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:5:921:2:TAN2go:::TAN2go:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:2:N:2:900:2:iTAN:::iTAN:6:1:TAN-Nummer:3:J:2:N:0:0:N:N:00:0:N:0'",

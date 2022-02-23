@@ -4,8 +4,8 @@ namespace Fhp\Syntax;
 
 abstract class Delimiter
 {
-    const SEGMENT = "'";
-    const ELEMENT = '+';
-    const GROUP = ':';
-    const BINARY = '@';
+    public const SEGMENT = "'";
+    public const ELEMENT = '+';
+    public const GROUP = ':';
+    public const BINARY = '@';
 }

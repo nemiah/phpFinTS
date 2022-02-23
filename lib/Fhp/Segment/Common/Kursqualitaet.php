@@ -12,8 +12,8 @@ use Fhp\Segment\BaseDeg;
  */
 class Kursqualitaet extends BaseDeg
 {
-    const DELAYED = 1;  // delayed-Kurs
-    const REALTIME = 2; // Echtzeit-Kurs
+    public const DELAYED = 1;  // delayed-Kurs
+    public const REALTIME = 2; // Echtzeit-Kurs
 
     /** @var int */
     public $kursqualitaet;

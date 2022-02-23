@@ -17,8 +17,8 @@ use Fhp\Segment\BaseDeg;
  */
 class SicherheitsprofilV1 extends BaseDeg
 {
-    const VERSION_EIN_SCHRITT_VERFAHREN = 1;
-    const VERSION_ZWEI_SCHRITT_VERFAHREN = 2;
+    public const VERSION_EIN_SCHRITT_VERFAHREN = 1;
+    public const VERSION_ZWEI_SCHRITT_VERFAHREN = 2;
 
     /** @var string Allowed values: "PIN", "RAH" */
     public $sicherheitsverfahren;

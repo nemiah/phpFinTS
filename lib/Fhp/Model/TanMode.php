@@ -16,16 +16,16 @@ interface TanMode
     /**
      * The dummy ID for the single-step TAN mode.
      */
-    const SINGLE_STEP_ID = 999;
+    public const SINGLE_STEP_ID = 999;
 
     /**
      * Only digits are allowed, i.e. [0-9]+
      */
-    const FORMAT_NUMERICAL = 1;
+    public const FORMAT_NUMERICAL = 1;
     /**
      * Digits and characters are allowed, i.e. any ISO 8859 characters (incl. [äöüß]) but not \r or \n.
      */
-    const FORMAT_ALPHANUMERICAL = 2;
+    public const FORMAT_ALPHANUMERICAL = 2;
 
     /**
      * @return int The ID of this TanMode. This is what the application needs to persist when it wants to remember
