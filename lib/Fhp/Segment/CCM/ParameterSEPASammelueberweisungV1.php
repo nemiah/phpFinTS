@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Author: Peter Eberhard, Copyright 2022 Launix Inh. Carl-Philip Hänsch
+ */
+
 namespace Fhp\Segment\CCM;
 
 use Fhp\Segment\BaseDeg;
