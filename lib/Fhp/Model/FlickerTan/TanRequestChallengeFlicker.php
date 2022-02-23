@@ -39,7 +39,7 @@ class TanRequestChallengeFlicker
         $lc = (int) substr($reducedChallenge, 0, 3);
         $reducedChallenge = substr($reducedChallenge, 3);
         if (strlen($reducedChallenge) !== $lc) {
-            throw new InvalidArgumentException('Wrong length of TAN Challenge - only Version 1.4 supported');
+            throw new InvalidArgumentException("Wrong length of TAN Challenge expected: $lc - found: ". strlen($reducedChallenge). ' - only Version 1.4 supported');
         }
 
         [$reducedChallenge, $this->startCode] = StartCode::parseNextBlock($reducedChallenge);
