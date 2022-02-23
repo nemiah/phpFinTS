@@ -38,7 +38,7 @@ $fints = require_once 'init.php';
  * @param \Fhp\BaseAction $action Some action that requires strong authentication.
  * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
-function handleStrongAuthentication(Fhp\BaseAction $action)
+function handleStrongAuthentication(\Fhp\BaseAction $action)
 {
     global $fints;
     if ($fints->getSelectedTanMode()->isDecoupled()) {
