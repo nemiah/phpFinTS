@@ -12,7 +12,6 @@ use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
-use Fhp\Segment\BaseSegment;
 use Fhp\Segment\CCM\HICCMSv1;
 use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
@@ -64,13 +63,21 @@ class SendSEPATransfer extends BaseAction
 
         $ctrlSum = null;
         if (preg_match('@<GrpHdr>.*<CtrlSum>(?<ctrlsum>[.0-9]+)</CtrlSum>.*</GrpHdr>@s', $painMessage, $matches) === 1) {
-            $ctrlSum = $matches['ctrlsum'];
+            $ctrlSum = floatval($matches['ctrlsum']);
+        } else {
+            throw new \InvalidArgumentException('Pain message contains no <CtrlSum> field');
         }
 
         // Check whether a <PmtInf> block sets <BtchBookg> to false: This means that Single Booking is to be requested
-        $singleBooking = preg_match('@<PmtInf>.*<BtchBookg>false</BtchBookg>.*</PmtInf>@s', $painMessage) === 1;
+        $requestSingleBooking = preg_match('@<PmtInf>.*<BtchBookg>false</BtchBookg>.*</PmtInf>@s', $painMessage) === 1;
 
-        // Set RequestedExecutionDate to 1999-01-01, as required by the FinTS standard for non-scheduled transfers
+        // Set RequestedExecutionDate to 1999-01-01, as required by the FinTS standard for non-scheduled transfers, see
+        /** @link
+        https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf
+         * Section: C.10.2.1 a) and C.10.3.1 a), pages 384 and 496
+         */
+        // TODO: implement scheduled transfers (segments HKCSE and HKCME) for future dates,
+        // only past or current dates should be set to 1999-01-01 and processed as HKCCS/HKCCM)
         $painMessage = preg_replace('@(<ReqdExctnDt>)([\d-]*)(</ReqdExctnDt>)@', '${1}1999-01-01${3}', $painMessage) ?? $painMessage;
 
         $result = new SendSEPATransfer();
@@ -79,7 +86,7 @@ class SendSEPATransfer extends BaseAction
         $result->xmlSchema = $xmlns[1];
         $result->ctrlSum = $ctrlSum;
         $result->singleTransfer = $nbOfTxs === 1;
-        $result->requestSingleBooking = $singleBooking;
+        $result->requestSingleBooking = $requestSingleBooking;
         return $result;
     }
 
@@ -103,9 +110,10 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-        /** @var BaseSegment $hiccxs */
+        /** @var HICCSS|HICCMS $hiccxs */
         $hiccxs = $bpd->requireLatestSupportedParameters($bankparams);
 
+        /** @var HKCCSv1|HKCCMv1 $hkccx */
         $hkccx = $hiccxs->createRequestSegment();
         $hkccx->kontoverbindungInternational = Kti::fromAccount($this->account);
         $hkccx->sepaDescriptor = $this->xmlSchema;

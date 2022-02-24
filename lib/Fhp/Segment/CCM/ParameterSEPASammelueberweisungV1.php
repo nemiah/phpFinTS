@@ -11,7 +11,7 @@ use Fhp\Segment\BaseDeg;
 class ParameterSEPASammelueberweisungV1 extends BaseDeg
 {
     /** @var int */
-    public $maximaleAnzahlCrediTransferTransactionInformation;
+    public $maximaleAnzahlCreditTransferTransactionInformation;
 
     /** @var bool */
     public $summenfeldBenoetigt;
