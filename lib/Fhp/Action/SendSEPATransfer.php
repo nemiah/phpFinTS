@@ -12,7 +12,10 @@ use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
+use Fhp\Segment\CCS\HICCSSv1;
+use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\CCM\HICCMSv1;
+use Fhp\Segment\CCM\HKCCMv1;
 use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
@@ -110,7 +113,7 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-        /** @var HICCSS|HICCMS $hiccxs */
+        /** @var HICCSSv1|HICCMSv1 $hiccxs */
         $hiccxs = $bpd->requireLatestSupportedParameters($bankparams);
 
         /** @var HKCCSv1|HKCCMv1 $hkccx */
