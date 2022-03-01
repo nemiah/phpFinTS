@@ -179,7 +179,7 @@ class MT940
         $result['description'] = $description;
         $result['primanoten_nr'] = trim($prepared[10] ?? '');
         $result['description_1'] = trim($description1);
-        $result['bank_code'] = trim($prepared[30]);
+        $result['bank_code'] = trim($prepared[30] ?? '');
         $result['account_number'] = trim($prepared[31] ?? '');
         $result['name'] = trim(($prepared[32] ?? '') . ($prepared[33] ?? ''));
         $result['text_key_addition'] = trim($prepared[34] ?? '');
