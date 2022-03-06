@@ -42,19 +42,22 @@ class MT940
                     $day[$i] = substr($day[$i], 4);
                     $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
+                    // if this statement date ist first seen set start_balance
+                    // Note: all further transactions in different statements with the same soaDate will be appended
+                    // there will be no new statement done for them. With bigger code changes this could be changed.
+                    // For now this is shortcutted like this for fixing https://github.com/nemiah/phpFinTS/issues/367
                     if (!isset($result[$soaDate])) {
                         $result[$soaDate] = ['start_balance' => []];
-                    }
+                        $cdMark = substr($day[$i], 0, 1);
+                        if ($cdMark === 'C') {
+                            $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
+                        } elseif ($cdMark === 'D') {
+                            $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
+                        }
 
-                    $cdMark = substr($day[$i], 0, 1);
-                    if ($cdMark == 'C') {
-                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($cdMark == 'D') {
-                        $result[$soaDate]['start_balance']['credit_debit'] = static::CD_DEBIT;
+                        $amount = str_replace(',', '.', substr($day[$i], 10));
+                        $result[$soaDate]['start_balance']['amount'] = $amount;
                     }
-
-                    $amount = str_replace(',', '.', substr($day[$i], 10));
-                    $result[$soaDate]['start_balance']['amount'] = $amount;
                 } elseif (
                     // found transaction
                     // trx:61:1603310331DR637,39N033NONREF
@@ -73,15 +76,15 @@ class MT940
                     $trx = &$result[$soaDate]['transactions'];
 
                     preg_match('/^\d{6}(\d{4})?(C|D|RC|RD)([A-Z]{1})?([^N]+)N/', $transaction, $trxMatch);
-                    if ($trxMatch[2] == 'C' or $trxMatch[2] == 'RC') {
+                    if ($trxMatch[2] === 'C' || $trxMatch[2] === 'RC') {
                         $trx[count($trx)]['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($trxMatch[2] == 'D' or $trxMatch[2] == 'RD') {
+                    } elseif ($trxMatch[2] === 'D' || $trxMatch[2] === 'RD') {
                         $trx[count($trx)]['credit_debit'] = static::CD_DEBIT;
                     } else {
                         throw new MT940Exception('cd mark not found in: ' . $transaction);
                     }
 
-                    $trx[count($trx) - 1]['is_storno'] = ($trxMatch[2] == 'RC' or $trxMatch[2] == 'RD');
+                    $trx[count($trx) - 1]['is_storno'] = ($trxMatch[2] === 'RC' or $trxMatch[2] === 'RD');
 
                     $amount = $trxMatch[4];
                     $amount = str_replace(',', '.', $amount);
@@ -138,7 +141,7 @@ class MT940
         return $result;
     }
 
-    protected function parseDescription($descr, $transaction)
+    protected function parseDescription($descr, $transaction): array
     {
         // Geschäftsvorfall-Code
         $gvc = substr($descr, 0, 3);
