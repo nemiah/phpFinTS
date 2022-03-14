@@ -10,7 +10,7 @@ use Fhp\Segment\CAZ\HICAZv1;
 class HICAZTest extends \PHPUnit\Framework\TestCase
 {
 	// Example from FinTS_3.0_Messages_Geschaeftsvorfaelle_2015-08-07_final_version.pdf, Chapter E.7.1 (SIMPLIFIED)
-	// First example: two segments inside BIN seperated by +
+	// First example: two segments seperated by +
 	// Second example: two segments  seperated by +, first segment has a group of two XMLs seperated by :
 	// According to specification first segmnet has "gebuchte Umsätze", second segment has "vorgemerkte Umsätze"
 	// Inside segemnts several XMLs can be present, seperated by ":"
@@ -52,7 +52,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 								static::sample_XML_doc1 . 
 								':@' . strlen(static::sample_XML_doc2) . '@' . 
 								static::sample_XML_doc2 .
-								'+@' . strlen(static::sample_XML_doc2) . '@' . 
+								'+@' . strlen(static::sample_XML_doc1) . '@' . 
 								static::sample_XML_doc1 .
 								"'" );						
 		//print_r($hicaz1);
