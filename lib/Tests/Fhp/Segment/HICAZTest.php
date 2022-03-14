@@ -49,7 +49,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 								"'" );
 		$this->assertEquals(
             static::sample_XML_doc1,
-            $hicaz1->gebuchteUmsaetze[0]);
+            $hicaz1->gebuchteUmsaetze[0]->GetData());
 			
 			
 		// XML of second segment should go to nichtGebuchteUmsaetze
