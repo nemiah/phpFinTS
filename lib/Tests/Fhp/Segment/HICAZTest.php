@@ -39,13 +39,26 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 
     public function testHICAZparse()
     {
-		//First example: two segments inside BIN seperated by +
+		//First example: two segments  seperated by +
 		$hicaz1 = HICAZv1::parse(static::HICAZ_Test_start . 
 								'@' . strlen(static::sample_XML_doc1) . '@' . 
 								static::sample_XML_doc1 . 
-								'+@' . strlen(static::sample_XML_doc2) . '@' . 
+								'+' . 
+								'@' . strlen(static::sample_XML_doc2) . '@' . 
 								static::sample_XML_doc2 .
 								"'" );
+		$this->assertEquals(
+            static::sample_XML_doc1,
+            $hicaz1->gebuchteUmsaetze[0]);
+			
+			
+		// XML of second segment should go to nichtGebuchteUmsaetze
+		// Currently fails 
+		// therefore commented out
+
+		//$this->assertEquals(
+        //    static::sample_XML_doc2,
+        //    $hicaz1->nichtGebuchteUmsaetze[0]);
 								
 		//Second example: two segments  seperated by +, first segment has a group of two XMLs seperated by :
 		//
@@ -60,10 +73,8 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 		//						'+@' . strlen(static::sample_XML_doc1) . '@' . 
 		//						static::sample_XML_doc1 .
 		//						"'" );						
-		
+	}
 
-
-    }
 	
 }
 
