@@ -12,8 +12,8 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
     // According to specification first segmnet has "gebuchte Umsätze", second segment has "vorgemerkte Umsätze"
     // Inside segemnts several XMLs can be present, seperated by ":"
 
-    const HICAZ_Test_start = 'HICAZ:5:1:3+DE06940594210000027227:TESTDETT421:::280:+urn?:iso?:std?:iso?:20022?:tech?:xsd?:camt.052.001.02+';
-    const sample_XML_doc1 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const HICAZ_Test_start = 'HICAZ:5:1:3+DE06940594210000027227:TESTDETT421:::280:+urn?:iso?:std?:iso?:20022?:tech?:xsd?:camt.052.001.02+';
+    private const sample_XML_doc1 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -22,7 +22,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
-    const sample_XML_doc2 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const sample_XML_doc2 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -36,7 +36,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 
     public function testHICAZparse()
     {
-        //First example: two segments  seperated by +
+        // First example: two  XMLs  seperated by ":" - both are gebuchteUmsaetze
         $hicaz1 = HICAZv1::parse(static::HICAZ_Test_start .
                                 '@' . strlen(static::sample_XML_doc1) . '@' .
                                 static::sample_XML_doc1 .
@@ -49,7 +49,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
             static::sample_XML_doc1,
             $hicaz1->gebuchteUmsaetze->bins[0]->GetData());
 
-        //Second example: two segments  seperated by +, first segment has a group of two XMLs seperated by :
+        // Second example: two areas  seperated by +, first area has a group of two XMLs seperated by :
 
         $hicaz2 = HICAZv1::parse(static::HICAZ_Test_start .
                                 '@' . strlen(static::sample_XML_doc1) . '@' .
