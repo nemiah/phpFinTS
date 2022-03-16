@@ -34,13 +34,13 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
      */
     public function testWithTanPaginated()
     {
-        //$this->initDialog();
+        $this->initDialog();
 
-        //$this->expectMessage(static::GET_STATEMENT_REQUEST, utf8_decode(static::GET_STATEMENT_RESPONSE_BEFORE_TAN));
-        //$getStatement = $this->runInitialRequest();
-        //$this->assertTrue($getStatement->needsTan());
+        $this->expectMessage(static::GET_STATEMENT_REQUEST, utf8_decode(static::GET_STATEMENT_RESPONSE_BEFORE_TAN));
+        $getStatement = $this->runInitialRequest();
+        $this->assertTrue($getStatement->needsTan());
 
-        //$this->completeWithTan($getStatement);
+        $this->completeWithTan($getStatement);
     }
 
     /**
