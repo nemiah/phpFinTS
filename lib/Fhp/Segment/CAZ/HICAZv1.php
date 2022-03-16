@@ -5,6 +5,7 @@ namespace Fhp\Segment\CAZ;
 
 use Fhp\Segment\BaseSegment;
 use Fhp\Syntax\Bin;
+use Fhp\Syntax\Bins;
 
 /**
  * Segment: Kontoumsätze rückmelden/Zeitraum camt
@@ -34,7 +35,7 @@ class HICAZv1 extends BaseSegment
      * Gebuchte camt-Umsätze werden als camt.052 message für Umsatzabfragen bzw. camt.053 message für den elektronischen
      * Kontoauszug (s. [Datenformate]) bereitgestellt und werden als transparentes Datenformat im Sinne von FinTS transportiert
      *
-     * @var Bin
+     * @var Bins
      */
     public $gebuchteUmsaetze;
 
@@ -57,7 +58,7 @@ class HICAZv1 extends BaseSegment
         return $this->camtDescriptor;
     }
 
-    public function getGebuchteUmsaetze(): Bin
+    public function getGebuchteUmsaetze(): Bins
     {
         return $this->gebuchteUmsaetze;
     }

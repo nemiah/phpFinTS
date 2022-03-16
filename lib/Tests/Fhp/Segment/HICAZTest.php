@@ -1,11 +1,14 @@
 <?php
-
 namespace Tests\Fhp\Segment;
 
+include_once 'C:/xampp/htdocs' . '/vendor/autoload.php'; 
+//echo $_SERVER['DOCUMENT_ROOT'];
 
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\Common\Sdo;
 use Fhp\Segment\CAZ\HICAZv1;
+
+echo "<pre>";
 
 class HICAZTest extends \PHPUnit\Framework\TestCase
 {
@@ -34,7 +37,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 							'<Ntry><Sts>BOOK</Sts></Ntry>' . 
 							'<Ntry><Sts>BOOK</Sts></Ntry>' .
 							'<Ntry><Sts>BOOK</Sts></Ntry>' . 
-							'<Ntry><Sts>BOOK</Sts></Ntry>' .							
+							'<Ntry><Sts>NNNN</Sts></Ntry>' .							
 							'</Rpt></BkToCstmrAcctRpt></Document>';
 
     public function testHICAZparse()
@@ -43,39 +46,43 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
 		$hicaz1 = HICAZv1::parse(static::HICAZ_Test_start . 
 								'@' . strlen(static::sample_XML_doc1) . '@' . 
 								static::sample_XML_doc1 . 
-								'+' . 
+								':' . 
 								'@' . strlen(static::sample_XML_doc2) . '@' . 
 								static::sample_XML_doc2 .
 								"'" );
+		print_r($hicaz1->gebuchteUmsaetze);
+		
 		$this->assertEquals(
             static::sample_XML_doc1,
-            $hicaz1->gebuchteUmsaetze[0]->GetData());
+            $hicaz1->gebuchteUmsaetze->bins[0]->GetData());
 			
 			
 		// XML of second segment should go to nichtGebuchteUmsaetze
 		// Currently fails 
 		// therefore commented out
 
-		//$this->assertEquals(
-        //    static::sample_XML_doc2,
-        //    $hicaz1->nichtGebuchteUmsaetze[0]);
 								
 		//Second example: two segments  seperated by +, first segment has a group of two XMLs seperated by :
-		//
-		// Currently fails 
-		// therefore commented out
-		//
-		//$hicaz2 = HICAZv1::parse(static::HICAZ_Test_start . 
-		//						'@' . strlen(static::sample_XML_doc1) . '@' . 
-		//						static::sample_XML_doc1 . 
-		//						':@' . strlen(static::sample_XML_doc2) . '@' . 
-		//						static::sample_XML_doc2 .
-		//						'+@' . strlen(static::sample_XML_doc1) . '@' . 
-		//						static::sample_XML_doc1 .
-		//						"'" );						
+		
+		//Currently fails 
+		//therefore commented out
+		
+		$hicaz2 = HICAZv1::parse(static::HICAZ_Test_start . 
+								'@' . strlen(static::sample_XML_doc1) . '@' . 
+								static::sample_XML_doc1 . 
+								':@' . strlen(static::sample_XML_doc2) . '@' . 
+								static::sample_XML_doc2 .
+								'+@' . strlen(static::sample_XML_doc1) . '@' . 
+								static::sample_XML_doc1 .
+								"'" );						
+		$this->assertEquals(
+           static::sample_XML_doc1,
+           $hicaz2->nichtGebuchteUmsaetze->GetData());
 	}
-
+	
 	
 }
+//$h = new HICAZTest;
+//$h->testHICAZparse();
 
 
