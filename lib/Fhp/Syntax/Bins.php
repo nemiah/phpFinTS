@@ -20,6 +20,7 @@ class Bins extends BaseDeg
      */
     public function getData(): array
     {
+        $xml = [];
         foreach ($this->bins as $bin) {
             $xml[] = $bin->getData();
         }
