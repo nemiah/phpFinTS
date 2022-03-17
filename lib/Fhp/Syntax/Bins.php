@@ -10,10 +10,19 @@ class Bins extends BaseDeg
     public $bins;
 
     /**
-     * Gets the binary data.
+     * Array of strings to store XML srings from the Bins structure.
+     * @var string[]
+     */
+    private $xml;
+
+    /**
+     * Gets the binary data as array of strings.
      */
     public function getData(): array
     {
-        return $this->bins;
+        foreach ($this->bins as $bin) {
+            $xml[] = $bin->getData();
+        }
+        return $xml;
     }
 }

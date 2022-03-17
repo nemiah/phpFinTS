@@ -31,7 +31,15 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
-                            '<Ntry><Sts>NNNN</Sts></Ntry>' .
+                            '<Ntry><Sts>BOOK</Sts></Ntry>' .
+                            '</Rpt></BkToCstmrAcctRpt></Document>';
+    private const sample_XML_doc3 = '<?xml version="1.0" encoding="UTF-8"?>' .
+                            '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
+                            'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
+                            '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
+                            '<CreDtTm>2013-11-18T10:15:10+01:00</CreDtTm><MsgPgntn><PgNb>1</PgNb><LastPgInd>true</LastPgInd></MsgPgntn></GrpHdr>' .
+                            '<Rpt><Id>camt052_ONLINEBA</Id>' .
+                            '<Ntry><Sts>PDNG</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
 
     public function testHICAZparse()
@@ -56,11 +64,17 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                                 static::sample_XML_doc1 .
                                 ':@' . strlen(static::sample_XML_doc2) . '@' .
                                 static::sample_XML_doc2 .
-                                '+@' . strlen(static::sample_XML_doc1) . '@' .
-                                static::sample_XML_doc1 .
+                                '+@' . strlen(static::sample_XML_doc3) . '@' .
+                                static::sample_XML_doc3 .
                                 "'");
         $this->assertEquals(
            static::sample_XML_doc1,
+           $hicaz2->gebuchteUmsaetze->GetData()[0]);
+        $this->assertEquals(
+           static::sample_XML_doc2,
+           $hicaz2->gebuchteUmsaetze->GetData()[1]);
+        $this->assertEquals(
+           static::sample_XML_doc3,
            $hicaz2->nichtGebuchteUmsaetze->GetData());
     }
 }
