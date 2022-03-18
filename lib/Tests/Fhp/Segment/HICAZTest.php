@@ -22,7 +22,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
-    private const  SAMPLE_XML_DOC2 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const SAMPLE_XML_DOC2 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -33,7 +33,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
-    private const  SAMPLE_XML_DOC3 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const SAMPLE_XML_DOC3 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .

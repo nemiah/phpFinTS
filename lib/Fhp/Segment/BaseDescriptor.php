@@ -3,7 +3,6 @@
 namespace Fhp\Segment;
 
 use Fhp\Syntax\Bin;
-use Fhp\Syntax\Bins;
 
 /**
  * Common functionality for segment/Deg descriptors.
@@ -187,8 +186,6 @@ abstract class BaseDescriptor
         if ($typeName === 'Bin') {
             $typeName = Bin::class;
         } elseif ($typeName === 'Bins') {
-            $typeName = Bins::class;
-        } elseif (strpos($typeName, '\\') === false) {
             // Let's assume it's a relative type name, e.g. `X` mentioned in a file that starts with `namespace Fhp\Y`
             // would become `\Fhp\X\Y`.
             $typeName = $contextClass->getNamespaceName() . '\\' . $typeName;
