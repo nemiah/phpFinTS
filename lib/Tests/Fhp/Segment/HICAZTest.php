@@ -13,7 +13,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
     // Inside segemnts several XMLs can be present, seperated by ":"
 
     private const HICAZ_Test_start = 'HICAZ:5:1:3+DE06940594210000027227:TESTDETT421:::280:+urn?:iso?:std?:iso?:20022?:tech?:xsd?:camt.052.001.02+';
-    private const sample_XML_doc1 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const SAMPLE_XML_DOC1 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -22,7 +22,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
-    private const sample_XML_doc2 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const  SAMPLE_XML_DOC2 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -33,7 +33,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '<Ntry><Sts>BOOK</Sts></Ntry>' .
                             '</Rpt></BkToCstmrAcctRpt></Document>';
-    private const sample_XML_doc3 = '<?xml version="1.0" encoding="UTF-8"?>' .
+    private const  SAMPLE_XML_DOC3 = '<?xml version="1.0" encoding="UTF-8"?>' .
                             '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
                             'xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02 camt.052.001.02.xsd">' .
                             '<BkToCstmrAcctRpt><GrpHdr><MsgId>camt52_20131118101510__ONLINEBA</MsgId>' .
@@ -46,35 +46,29 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
     {
         // First example: two  XMLs  seperated by ":" - both are gebuchteUmsaetze
         $hicaz1 = HICAZv1::parse(static::HICAZ_Test_start .
-                                '@' . strlen(static::sample_XML_doc1) . '@' .
-                                static::sample_XML_doc1 .
+                                '@' . strlen(static::SAMPLE_XML_DOC1) . '@' .
+                                static::SAMPLE_XML_DOC1 .
                                 ':' .
-                                '@' . strlen(static::sample_XML_doc2) . '@' .
-                                static::sample_XML_doc2 .
+                                '@' . strlen(static::SAMPLE_XML_DOC2) . '@' .
+                                static::SAMPLE_XML_DOC2 .
                                 "'");
 
-        $this->assertEquals(
-            static::sample_XML_doc1,
-            $hicaz1->gebuchteUmsaetze->bins[0]->GetData());
+        $this->assertEquals([static::SAMPLE_XML_DOC1, static::SAMPLE_XML_DOC2],
+                                $hicaz1->gebuchteUmsaetze->GetData());
 
         // Second example: two areas  seperated by +, first area has a group of two XMLs seperated by :
 
         $hicaz2 = HICAZv1::parse(static::HICAZ_Test_start .
-                                '@' . strlen(static::sample_XML_doc1) . '@' .
-                                static::sample_XML_doc1 .
-                                ':@' . strlen(static::sample_XML_doc2) . '@' .
-                                static::sample_XML_doc2 .
-                                '+@' . strlen(static::sample_XML_doc3) . '@' .
-                                static::sample_XML_doc3 .
+                                '@' . strlen(static::SAMPLE_XML_DOC1) . '@' .
+                                static::SAMPLE_XML_DOC1 .
+                                ':@' . strlen(static::SAMPLE_XML_DOC2) . '@' .
+                                static::SAMPLE_XML_DOC2 .
+                                '+@' . strlen(static::SAMPLE_XML_DOC3) . '@' .
+                                static::SAMPLE_XML_DOC3 .
                                 "'");
-        $this->assertEquals(
-           static::sample_XML_doc1,
-           $hicaz2->gebuchteUmsaetze->GetData()[0]);
-        $this->assertEquals(
-           static::sample_XML_doc2,
-           $hicaz2->gebuchteUmsaetze->GetData()[1]);
-        $this->assertEquals(
-           static::sample_XML_doc3,
-           $hicaz2->nichtGebuchteUmsaetze->GetData());
+        $this->assertEquals([static::SAMPLE_XML_DOC1, static::SAMPLE_XML_DOC2],
+                                $hicaz2->gebuchteUmsaetze->GetData());
+        $this->assertEquals(static::SAMPLE_XML_DOC3,
+                                $hicaz2->nichtGebuchteUmsaetze->GetData());
     }
 }
