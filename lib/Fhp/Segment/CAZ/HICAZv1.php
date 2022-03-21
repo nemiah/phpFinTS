@@ -57,9 +57,9 @@ class HICAZv1 extends BaseSegment
         return $this->camtDescriptor;
     }
 
-    public function getGebuchteUmsaetze(): GebuchteCamtUmsaetze
+    public function getGebuchteUmsaetze(): array
     {
-        return $this->gebuchteUmsaetze;
+        return $this->gebuchteUmsaetze->getData();
     }
 
     public function getNichtGebuchteUmsaetze(): ?Bin
