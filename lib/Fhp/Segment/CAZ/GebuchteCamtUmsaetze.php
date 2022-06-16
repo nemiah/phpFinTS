@@ -13,7 +13,8 @@ use Fhp\Segment\BaseDeg;
  */
 class GebuchteCamtUmsaetze extends BaseDeg
 {
-    /** @var Bin[] @Max(299) */
+    /** Allow for up to 999 Binary fields (XML files) */
+    /** @var Bin[] @Max(999) */
     public $gebuchteCamtUmsaetze;
 
     /**
