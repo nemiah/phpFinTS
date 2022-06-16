@@ -13,7 +13,7 @@ use Fhp\Segment\BaseDeg;
  */
 class GebuchteCamtUmsaetze extends BaseDeg
 {
-    /** @var Bin[] @Max(99) */
+    /** @var Bin[] @Max(299) */
     public $gebuchteCamtUmsaetze;
 
     /**
