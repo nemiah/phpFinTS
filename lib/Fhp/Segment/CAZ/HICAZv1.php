@@ -57,6 +57,9 @@ class HICAZv1 extends BaseSegment
         return $this->camtDescriptor;
     }
 
+    /**
+     * @return string[]
+     */
     public function getGebuchteUmsaetze(): array
     {
         return $this->gebuchteUmsaetze->getData();

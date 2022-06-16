@@ -18,13 +18,7 @@ class GebuchteCamtUmsaetze extends BaseDeg
     public $gebuchteCamtUmsaetze;
 
     /**
-     * Array of strings to store XML srings from the Bins structure.
-     * @var string[]
-     */
-    private $xml;
-
-    /**
-     * Gets the binary data as array of strings.
+     * @return string[]
      */
     public function getData(): array
     {
