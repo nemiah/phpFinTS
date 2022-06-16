@@ -54,7 +54,7 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                                 "'");
 
         $this->assertEquals([static::SAMPLE_XML_DOC1, static::SAMPLE_XML_DOC2],
-                                $hicaz1->gebuchteUmsaetze->GetData());
+                                $hicaz1->getGebuchteUmsaetze());
 
         // Second example: two areas  seperated by +, first area has a group of two XMLs seperated by :
 
@@ -67,8 +67,8 @@ class HICAZTest extends \PHPUnit\Framework\TestCase
                                 static::SAMPLE_XML_DOC3 .
                                 "'");
         $this->assertEquals([static::SAMPLE_XML_DOC1, static::SAMPLE_XML_DOC2],
-                                $hicaz2->gebuchteUmsaetze->GetData());
+                                $hicaz2->getGebuchteUmsaetze());
         $this->assertEquals(static::SAMPLE_XML_DOC3,
-                                $hicaz2->nichtGebuchteUmsaetze->GetData());
+                                $hicaz2->getNichtGebuchteUmsaetze());
     }
 }
