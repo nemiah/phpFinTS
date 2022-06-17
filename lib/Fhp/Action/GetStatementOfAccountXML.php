@@ -169,6 +169,8 @@ class GetStatementOfAccountXML extends PaginateableAction
             throw new UnsupportedException('More than 1 HICAZ response segment is not supported at the moment!');
         }
         // It seems that paginated responses, always contain a whole XML Document
-        $this->xml[] = $responseHicaz[0]->getGebuchteUmsaetze()->getData();
+        foreach ($responseHicaz[0]->getGebuchteUmsaetze() as $xml_string) {
+            $this->xml[] = $xml_string;
+        }
     }
 }

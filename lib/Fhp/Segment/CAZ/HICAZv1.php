@@ -34,7 +34,7 @@ class HICAZv1 extends BaseSegment
      * Gebuchte camt-Umsätze werden als camt.052 message für Umsatzabfragen bzw. camt.053 message für den elektronischen
      * Kontoauszug (s. [Datenformate]) bereitgestellt und werden als transparentes Datenformat im Sinne von FinTS transportiert
      *
-     * @var Bin
+     * @var \Fhp\Segment\CAZ\GebuchteCamtUmsaetze
      */
     public $gebuchteUmsaetze;
 
@@ -57,13 +57,16 @@ class HICAZv1 extends BaseSegment
         return $this->camtDescriptor;
     }
 
-    public function getGebuchteUmsaetze(): Bin
+    /**
+     * @return string[]
+     */
+    public function getGebuchteUmsaetze(): array
     {
-        return $this->gebuchteUmsaetze;
+        return $this->gebuchteUmsaetze->getData();
     }
 
-    public function getNichtGebuchteUmsaetze(): ?Bin
+    public function getNichtGebuchteUmsaetze(): string
     {
-        return $this->nichtGebuchteUmsaetze;
+        return $this->nichtGebuchteUmsaetze->getData();
     }
 }
