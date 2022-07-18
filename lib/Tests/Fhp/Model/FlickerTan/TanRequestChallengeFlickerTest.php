@@ -1,7 +1,8 @@
 <?php
 
-namespace Fhp\Model\FlickerTan;
+namespace Tests\Fhp\Model\FlickerTan;
 
+use Fhp\Model\FlickerTan\TanRequestChallengeFlicker;
 use Fhp\Syntax\Bin;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +23,7 @@ class TanRequestChallengeFlickerTest extends TestCase
     public function testGetHexOldVersion(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $flicker = new TanRequestChallengeFlicker(new Bin(self::SC_OLD_VERSION));
+        new TanRequestChallengeFlicker(new Bin(self::SC_OLD_VERSION));
     }
 
     public function testGetHex1(): void
