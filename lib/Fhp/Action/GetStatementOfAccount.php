@@ -189,9 +189,10 @@ class GetStatementOfAccount extends PaginateableAction
 
         /** @var HIKAZ $hikaz */
         foreach ($responseHikaz as $hikaz) {
-			$this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
-			if($this->includeUnbooked)
-				$this->rawMT940 .= $hikaz->getNichtGebuchteUmsaetze()->getData();
+            $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
+            if ($this->includeUnbooked) {
+                $this->rawMT940 .= $hikaz->getNichtGebuchteUmsaetze()->getData();
+            }
         }
 
         // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial
