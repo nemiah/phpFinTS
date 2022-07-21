@@ -26,7 +26,7 @@ class HIKAZv4 extends BaseSegment implements HIKAZ
     {
         return $this->gebuchteUmsaetze;
     }
-    
+
     public function getNichtGebuchteUmsaetze(): ?Bin
     {
         return $this->nichtGebuchteUmsaetze;
