@@ -35,7 +35,7 @@ foreach ($soa->getStatements() as $statement) {
     echo 'Transactions:' . PHP_EOL;
     echo '=======================================' . PHP_EOL;
     foreach ($statement->getTransactions() as $transaction) {
-    	echo "Booked      : " . ($transaction->getBooked() ? "true" : "false") . PHP_EOL;
+        echo "Booked      : " . ($transaction->getBooked() ? "true" : "false") . PHP_EOL;
         echo 'Amount      : ' . ($transaction->getCreditDebit() == \Fhp\Model\StatementOfAccount\Transaction::CD_DEBIT ? '-' : '') . $transaction->getAmount() . PHP_EOL;
         echo 'Booking text: ' . $transaction->getBookingText() . PHP_EOL;
         echo 'Name        : ' . $transaction->getName() . PHP_EOL;
