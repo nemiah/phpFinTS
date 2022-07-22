@@ -40,6 +40,8 @@ class GetStatementOfAccount extends PaginateableAction
     private $to;
     /** @var bool */
     private $allAccounts;
+    /** @var bool */
+    private $includeUnbooked;
 
     // Information from the BPD needed to interpret the response.
     /** @var string */
@@ -64,7 +66,7 @@ class GetStatementOfAccount extends PaginateableAction
      *     pass one of the accounts into $account, though.
      * @return GetStatementOfAccount A new action instance.
      */
-    public static function create(SEPAAccount $account, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false): GetStatementOfAccount
+    public static function create(SEPAAccount $account, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false, bool $includeUnbooked = false): GetStatementOfAccount
     {
         if ($from !== null && $to !== null && $from > $to) {
             throw new \InvalidArgumentException('From-date must be before to-date');
@@ -75,6 +77,7 @@ class GetStatementOfAccount extends PaginateableAction
         $result->from = $from;
         $result->to = $to;
         $result->allAccounts = $allAccounts;
+        $result->includeUnbooked = $includeUnbooked;
         return $result;
     }
 
@@ -112,7 +115,7 @@ class GetStatementOfAccount extends PaginateableAction
             $parentSerialized,
             $this->account, $this->from, $this->to, $this->allAccounts,
             $this->bankName
-            ) = $serialized;
+        ) = $serialized;
 
         is_array($parentSerialized) ?
             parent::__unserialize($parentSerialized) :
@@ -187,6 +190,9 @@ class GetStatementOfAccount extends PaginateableAction
         /** @var HIKAZ $hikaz */
         foreach ($responseHikaz as $hikaz) {
             $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
+            if ($this->includeUnbooked) {
+                $this->rawMT940 .= $hikaz->getNichtGebuchteUmsaetze()->getData();
+            }
         }
 
         // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial

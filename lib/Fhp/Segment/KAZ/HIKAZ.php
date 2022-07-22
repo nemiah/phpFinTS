@@ -12,4 +12,7 @@ interface HIKAZ extends SegmentInterface
 {
     /** @return Bin */
     public function getGebuchteUmsaetze(): Bin;
+
+    /** @return Bin|null */
+    public function getNichtGebuchteUmsaetze(): ?Bin;
 }
