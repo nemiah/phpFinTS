@@ -190,7 +190,7 @@ class GetStatementOfAccount extends PaginateableAction
         /** @var HIKAZ $hikaz */
         foreach ($responseHikaz as $hikaz) {
             $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
-			if($this->includeUnbooked AND $hikaz->getNichtGebuchteUmsaetze() !== null) {
+            if ($this->includeUnbooked and $hikaz->getNichtGebuchteUmsaetze() !== null) {
                 $this->rawMT940 .= $hikaz->getNichtGebuchteUmsaetze()->getData();
             }
         }
