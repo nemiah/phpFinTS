@@ -114,7 +114,7 @@ class FinTs
     {
         $this->options = $options;
         $this->credentials = $credentials;
-        $this->logger = new NullLogger();
+        $this->setLogger(new NullLogger());
     }
 
     /**
