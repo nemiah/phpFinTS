@@ -89,7 +89,7 @@ class SvgRenderer
      */
     private function getAnimation(int $channelNumber): string
     {
-        $timePerHalfByte = 1 / ($this->frequency) * 2;
+        $timePerHalfByte = 1 / $this->frequency * 2;
         $attr = [
             'attributeName' => 'fill',
             'calcMode' => 'discrete',

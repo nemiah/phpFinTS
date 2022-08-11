@@ -144,7 +144,7 @@ class DialogInitialization extends BaseAction
             $this->kundensystemId,
             $this->messageNumber,
             $this->dialogId
-            ) = $serialized;
+        ) = $serialized;
 
         is_array($parentSerialized) ?
             parent::__unserialize($parentSerialized) :

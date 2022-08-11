@@ -82,7 +82,7 @@ class GetDepotAufstellung extends PaginateableAction
         list(
             $parentSerialized,
             $this->account
-            ) = $serialized;
+        ) = $serialized;
 
         is_array($parentSerialized) ?
             parent::__unserialize($parentSerialized) :

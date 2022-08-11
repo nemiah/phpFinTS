@@ -115,7 +115,7 @@ class SendSEPADirectDebit extends BaseAction
         list(
             $parentSerialized,
             $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account
-            ) = $serialized;
+        ) = $serialized;
 
         is_array($parentSerialized) ?
             parent::__unserialize($parentSerialized) :
@@ -166,9 +166,9 @@ class SendSEPADirectDebit extends BaseAction
 
             /* @var HIDMESv1 $hidxes */
             // Just always send the control sum
-            //if ($hidxes->getParameter()->summenfeldBenoetigt) {
+            // if ($hidxes->getParameter()->summenfeldBenoetigt) {
             $hkdxe->summenfeld = Btg::create($this->ctrlSum);
-            //}
+            // }
         }
 
         return $hkdxe;
