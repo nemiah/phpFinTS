@@ -110,16 +110,16 @@ class MT940
 
                         $diff = $valutaDateTime->diff($bookingDateTime);
 
-                        //if diff is more than half a year
+                        // if diff is more than half a year
                         if ($diff->days > 182) {
-                            //and positive
+                            // and positive
                             if ($diff->invert === 0) {
-                                //its in the last year
+                                // its in the last year
                                 --$year;
                             }
-                            //and negative
+                            // and negative
                             else {
-                                //its in the next year
+                                // its in the next year
                                 ++$year;
                             }
                         }

@@ -210,7 +210,7 @@ class FinTs
             $this->kundensystemId,
             $this->dialogId,
             $this->messageNumber
-            ) = $data;
+        ) = $data;
     }
 
     /** @noinspection PhpUnused */
