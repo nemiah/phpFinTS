@@ -6,7 +6,6 @@ coverage/
 test.php
 /nbproject/private/
 /nbproject/
-/composer.lock
 /composer.phar
 /Samples/tan.txt
 /Samples/*.test.php
