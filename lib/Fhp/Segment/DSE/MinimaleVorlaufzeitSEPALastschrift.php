@@ -37,7 +37,7 @@ class MinimaleVorlaufzeitSEPALastschrift
     public $cutOffZeit;
 
     public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit, ?int $unterstuetzteSEPALastschriftartenCodiert = null,
-                                  ?int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
+        ?int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
     {
         $result = new MinimaleVorlaufzeitSEPALastschrift();
         $result->unterstuetzteSEPALastschriftartenCodiert = $unterstuetzteSEPALastschriftartenCodiert;
