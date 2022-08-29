@@ -64,6 +64,10 @@ Contributions are welcome! See the [developer guide](DEVELOPER-GUIDE.md) for som
 We use a slightly modified version of the [Symfony Coding-Style](https://symfony.com/doc/current/contributing/code/standards.html).
 Please run 
 ```
+composer update
+```
+and
+```
 composer cs-fix
 ```
 
