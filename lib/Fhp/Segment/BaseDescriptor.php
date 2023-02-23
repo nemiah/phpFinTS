@@ -36,10 +36,7 @@ abstract class BaseDescriptor
         $implicitIndex = true;
         $nextIndex = 0;
         foreach (static::enumerateProperties($clazz) as $property) {
-            $docComment = $property->getDocComment();
-            if (!is_string($docComment)) {
-                throw new \InvalidArgumentException("Property $property must be annotated.");
-            }
+            $docComment = $property->getDocComment() ?: '';
             if (static::getBoolAnnotation('Ignore', $docComment)) {
                 continue; // Skip @Ignore-d propeties.
             }
@@ -47,30 +44,47 @@ abstract class BaseDescriptor
             $index = $nextIndex;
             $descriptor = new ElementDescriptor();
             $descriptor->field = $property->getName();
-            $type = static::getVarAnnotation($docComment);
-            if ($type === null) {
+            $maxCount = static::getIntAnnotation('Max', $docComment);
+            if ($type = static::getVarAnnotation($docComment)) {
+                if (str_ends_with($type, '|null')) { // Nullable field
+                    $descriptor->optional = true;
+                    $type = substr($type, 0, -5);
+                }
+                if (str_ends_with($type, '[]')) { // Array/repeated field
+                    if ($maxCount === null) {
+                        throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
+                    }
+                    $descriptor->repeated = $maxCount;
+                    $type = substr($type, 0, -2);
+                    // If a repeated field is followed by anything at all, there will be an empty entry for each possible
+                    // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
+                    $nextIndex += $maxCount;
+                } elseif ($maxCount !== null) {
+                    throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
+                } else {
+                    ++$nextIndex; // Singular field, so the index advances by 1.
+                }
+                $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
+            } elseif ($type = $property->getType()) {
+                $descriptor->optional = $type->allowsNull();
+                if ($type instanceof \ReflectionUnionType) {
+                    throw new \InvalidArgumentException("Union type not supported for $property");
+                } elseif ($type->getName() === 'array') {
+                    throw new \InvalidArgumentException("Array type must use @type annotation on $property");
+                } elseif ($type->isBuiltin()) {
+                    $descriptor->type = $type->getName();
+                } else {
+                    try {
+                        $descriptor->type = new \ReflectionClass($type->getName());
+                    } catch (\ReflectionException $e) {
+                        throw new \InvalidArgumentException(
+                            "Cannot resolve type {$type->getName()} for $property", 0, $e);
+                    }
+                }
+                ++$nextIndex; // Singular field, so the index advances by 1.
+            } else {
                 throw new \InvalidArgumentException("Need type on property $property");
             }
-            $maxCount = static::getIntAnnotation('Max', $docComment);
-            if (str_ends_with($type, '|null')) { // Nullable field
-                $descriptor->optional = true;
-                $type = substr($type, 0, -5);
-            }
-            if (str_ends_with($type, '[]')) { // Array/repeated field
-                if ($maxCount === null) {
-                    throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
-                }
-                $descriptor->repeated = $maxCount;
-                $type = substr($type, 0, -2);
-                // If a repeated field is followed by anything at all, there will be an empty entry for each possible
-                // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
-                $nextIndex += $maxCount;
-            } elseif ($maxCount !== null) {
-                throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
-            } else {
-                ++$nextIndex; // Singular field, so the index advances by 1.
-            }
-            $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
         if (count($this->elements) === 0) {
