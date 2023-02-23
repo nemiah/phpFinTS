@@ -54,7 +54,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      * @param int $segmentNumber The new segment number.
      * @return $this The same instance.
      */
-    public function setSegmentNumber(int $segmentNumber): BaseSegment
+    public function setSegmentNumber(int $segmentNumber): static
     {
         $this->segmentkopf->segmentnummer = $segmentNumber;
         return $this;
@@ -125,7 +125,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.
      */
-    public static function parse(string $rawSegment): BaseSegment
+    public static function parse(string $rawSegment): static
     {
         if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
@@ -139,7 +139,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
     /**
      * @return static A new segment of the type on which this function was called, with the Segmentkopf initialized.
      */
-    public static function createEmpty()
+    public static function createEmpty(): static
     {
         if (static::class === BaseSegment::class) {
             throw new \InvalidArgumentException('Must not call BaseSegment::createEmpty() on the super class');
