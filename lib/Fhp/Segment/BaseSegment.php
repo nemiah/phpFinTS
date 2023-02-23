@@ -54,7 +54,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      * @param int $segmentNumber The new segment number.
      * @return $this The same instance.
      */
-    public function setSegmentNumber(int $segmentNumber)
+    public function setSegmentNumber(int $segmentNumber): BaseSegment
     {
         $this->segmentkopf->segmentnummer = $segmentNumber;
         return $this;
@@ -125,7 +125,7 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
      *     the end). This should be ISO-8859-1-encoded.
      * @return static The parsed segment.
      */
-    public static function parse(string $rawSegment)
+    public static function parse(string $rawSegment): BaseSegment
     {
         if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.

@@ -7,7 +7,7 @@ use Fhp\Syntax\Serializer;
 
 class SerializerTest extends \PHPUnit\Framework\TestCase
 {
-    public function escapeProvider()
+    public function escapeProvider(): array
     {
         return [ // expected, input
             ['ABC?+DEF', 'ABC+DEF'],
@@ -32,7 +32,7 @@ class SerializerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, Serializer::escape($input));
     }
 
-    public function provideSerializeDataElement()
+    public function provideSerializeDataElement(): array
     {
         return [ // expected, value, type
             ['15', 15, 'int'],

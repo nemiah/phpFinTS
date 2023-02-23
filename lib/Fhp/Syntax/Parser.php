@@ -124,7 +124,7 @@ abstract class Parser
      * @param string $rawValue The raw value (wire format).
      * @param string $type The PHP type that we need. This should support exactly the values for which
      *     {@link ElementDescriptor::isScalarType()} returns true.
-     * @return mixed|null The parsed value of type $type, null if the $rawValue was empty.
+     * @return bool|float|int|string|null The parsed value of type $type, null if the $rawValue was empty.
      */
     public static function parseDataElement(string $rawValue, string $type)
     {
@@ -319,8 +319,12 @@ abstract class Parser
         if (!($descriptor->type instanceof \ReflectionClass && $descriptor->type->isSubclassOf(BaseDeg::class))) {
             return false; // Cannot create empty value for non-DEG field.
         }
-        /** @var BaseDeg $result */
-        $result = $descriptor->type->newInstance();
+        try {
+            /** @var BaseDeg $result */
+            $result = $descriptor->type->newInstance();
+        } catch (\ReflectionException $e) {
+            throw new \RuntimeException("Failed to create $descriptor->type", 0, $e);
+        }
         foreach ($result->getDescriptor()->elements as $elementDescriptor) {
             $emptyValue = static::tryConstructEmptyValue($elementDescriptor);
             if ($emptyValue === false) {
@@ -428,7 +432,7 @@ abstract class Parser
      * @param string $rawElement The raw content (unparsed wire format) of an element, which can either be a single
      *     Data Element (DE) or a group (DEG), as determined by the descriptor.
      * @param ElementDescriptor $descriptor The descriptor that describes the expected format of the element.
-     * @return mixed|null The parsed value, or null if it was empty.
+     * @return BaseDeg|Bin|bool|float|int|string|null The parsed value, or null if it was empty.
      */
     private static function parseSegmentElement(string $rawElement, ElementDescriptor $descriptor)
     {
@@ -456,7 +460,6 @@ abstract class Parser
             // Let's assume it's an empty segment, i.e. all of it is the header.
             $firstElementDelimiter = strlen($rawSegment) - 1; // Exclude the SEGMENT delimiter at the end.
         }
-        /** @var Segmentkopf $segmentkopf */
         $segmentkopf = Segmentkopf::parse(substr($rawSegment, 0, $firstElementDelimiter));
 
         // Try the default class name Fhp\Segment\HABCD\HABCDvN.

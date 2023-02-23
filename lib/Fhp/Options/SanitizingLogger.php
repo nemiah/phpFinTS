@@ -88,10 +88,10 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
      * Removes sensitive values from the given string, while preserving its overall length, so that wrappers like FinTS
      * messages or Bin containers, which declare the length of their contents, remain parsable.
      * @param string $str Some string.
-     * @param string[] The sensitive values to be replaced, usually from {@link computeNeedles()}.
+     * @param string[] $needles The sensitive values to be replaced, usually from {@link computeNeedles()}.
      * @return string The same string, but with sensitive values removed.
      */
-    public static function sanitizeForLogging(string $str, $needles): string
+    public static function sanitizeForLogging(string $str, array $needles): string
     {
         $replacements = array_map(function ($needle) {
             $len = strlen($needle);

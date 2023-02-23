@@ -49,16 +49,13 @@ class PostbankIntegrationTestBase extends FinTsTestCase
         // And finally it can initialize the main dialog.
         $this->expectMessage(static::INIT_REQUEST, mb_convert_encoding(static::INIT_RESPONSE, 'ISO-8859-1', 'UTF-8'));
 
-        $this->fints->selectTanMode(intval(self::TEST_TAN_MODE), 'mT:PRIVATE__');
+        $this->fints->selectTanMode(self::TEST_TAN_MODE, 'mT:PRIVATE__');
         $login = $this->fints->login();
         $login->ensureDone(); // No TAN required upon login.
         $this->assertAllMessagesSeen();
     }
 
-    /**
-     * @return SEPAAccount
-     */
-    protected function getTestAccount()
+    protected function getTestAccount(): SEPAAccount
     {
         $sepaAccount = new SEPAAccount();
         $sepaAccount->setIban('DExxABCDEFGH1234567890');
