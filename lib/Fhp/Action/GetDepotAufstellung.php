@@ -156,7 +156,7 @@ class GetDepotAufstellung extends PaginateableAction
             // Note: Some banks encode their MT 535 data as SWIFT/ISO-8859 like it should be according to the
             // specification, others just send UTF-8, so we try to detect it here.
             $rawMT535 = mb_detect_encoding($this->rawMT535, 'UTF-8', true) === false
-                ? utf8_encode($this->rawMT535) : $this->rawMT535;
+                ? mb_convert_encoding($this->rawMT535, 'UTF-8', 'ISO-8859-1') : $this->rawMT535;
             $parser = new MT535($rawMT535);
             $this->statement = $parser->parseHoldings();
             $this->depotWert = $parser->parseDepotWert();

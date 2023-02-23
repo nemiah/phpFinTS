@@ -78,8 +78,8 @@ class SanitizingLogger extends \Psr\Log\AbstractLogger
         }
         $needles = array_filter($needles); // Filter out empty entries.
         $escapedNeedles = array_map(function (string $needle) {
-            // The wire format is ISO-8859-1, so thats what will be logged and thats what needs to looked for when replacing
-            return utf8_decode(Serializer::escape($needle));
+            // The wire format is ISO-8859-1, so that's what will be logged and that's what to look for when replacing.
+            return mb_convert_encoding(Serializer::escape($needle), 'ISO-8859-1', 'UTF-8');
         }, $needles);
         return array_merge($needles, $escapedNeedles);
     }

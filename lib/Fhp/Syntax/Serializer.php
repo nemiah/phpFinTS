@@ -45,7 +45,7 @@ abstract class Serializer
         }
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
             // Convert UTF-8 (PHP's encoding) to ISO-8859-1 (FinTS wire format encoding)
-            return static::escape(utf8_decode(strval($value)));
+            return static::escape(mb_convert_encoding(strval($value), 'ISO-8859-1', 'UTF-8'));
         } elseif ($type === 'float') {
             // Format with fixed 2 decimal places (there has to be some limit, and the specification does not specify
             // one), then trim zeros from the end.

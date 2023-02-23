@@ -216,7 +216,7 @@ class GetStatementOfAccount extends PaginateableAction
             // Note: Some banks encode their MT 940 data as SWIFT/ISO-8859 like it should be according to the
             // specification (e.g. DKB), others just send UTF-8 (e.g. Consorsbank), so we try to detect it here.
             $rawMT940 = mb_detect_encoding($this->rawMT940, 'UTF-8', true) === false
-                ? utf8_encode($this->rawMT940) : $this->rawMT940;
+                ? mb_convert_encoding($this->rawMT940, 'UTF-8', 'ISO-8859-1') : $this->rawMT940;
             $this->parsedMT940 = $parser->parse($rawMT940);
             $this->statement = StatementOfAccount::fromMT940Array($this->parsedMT940);
         } catch (MT940Exception $e) {
