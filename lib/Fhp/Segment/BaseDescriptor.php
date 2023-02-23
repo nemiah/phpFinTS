@@ -153,8 +153,8 @@ abstract class BaseDescriptor
      */
     private static function getBoolAnnotation(string $name, string $docComment): bool
     {
-        return str_contains("@$name ", $docComment)
-            || str_contains("@$name())", $docComment);
+        return str_contains($docComment, "@$name ")
+            || str_contains($docComment, "@$name())");
     }
 
     /**
