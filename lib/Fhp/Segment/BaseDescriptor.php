@@ -52,11 +52,11 @@ abstract class BaseDescriptor
                 throw new \InvalidArgumentException("Need type on property $property");
             }
             $maxCount = static::getIntAnnotation('Max', $docComment);
-            if (substr($type, -5) === '|null') { // Nullable field
+            if (str_ends_with($type, '|null')) { // Nullable field
                 $descriptor->optional = true;
                 $type = substr($type, 0, -5);
             }
-            if (substr($type, -2) === '[]') { // Array/repeated field
+            if (str_ends_with($type, '[]')) { // Array/repeated field
                 if ($maxCount === null) {
                     throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
                 }
@@ -153,8 +153,8 @@ abstract class BaseDescriptor
      */
     private static function getBoolAnnotation(string $name, string $docComment): bool
     {
-        return strpos("@$name ", $docComment) !== false
-            || strpos("@$name())", $docComment) !== false;
+        return str_contains("@$name ", $docComment)
+            || str_contains("@$name())", $docComment);
     }
 
     /**
@@ -185,7 +185,7 @@ abstract class BaseDescriptor
         }
         if ($typeName === 'Bin') {
             $typeName = Bin::class;
-        } elseif (strpos($typeName, '\\') === false) {
+        } elseif (!str_contains($typeName, '\\')) {
             // Let's assume it's a relative type name, e.g. `X` mentioned in a file that starts with `namespace Fhp\Y`
             // would become `\Fhp\X\Y`.
             $typeName = $contextClass->getNamespaceName() . '\\' . $typeName;
