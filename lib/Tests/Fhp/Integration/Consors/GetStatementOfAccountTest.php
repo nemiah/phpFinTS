@@ -33,8 +33,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_RESPONSE);
         $getStatement = \Fhp\Action\GetStatementOfAccount::create(
             $this->getTestAccount(),
-            new \DateTime('2019-06-01'), new \DateTime('2019-09-22'),
-            false
+            new \DateTime('2019-06-01'), new \DateTime('2019-09-22')
         );
         $this->fints->execute($getStatement);
         $statement = $getStatement->getStatement();
@@ -83,8 +82,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_EMPTY_RESPONSE);
         $getStatement = \Fhp\Action\GetStatementOfAccount::create(
             $this->getTestAccount(),
-            new \DateTime('2019-06-01'), new \DateTime('2019-09-22'),
-            false
+            new \DateTime('2019-06-01'), new \DateTime('2019-09-22')
         );
         $this->fints->execute($getStatement);
         $statement = $getStatement->getStatement();
