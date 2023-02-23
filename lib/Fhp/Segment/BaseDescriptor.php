@@ -9,10 +9,10 @@ use Fhp\Syntax\Bin;
  */
 abstract class BaseDescriptor
 {
-    /** @var string Example: "Fhp\Segment\TAN\HITANSv6" (Segment) or "Fhp\Common\Kik" (Deg) */
-    public $class;
-    /** @var int Example: 1 */
-    public $version = 1;
+    /** Example: "Fhp\Segment\TAN\HITANSv6" (Segment) or "Fhp\Common\Kik" (Deg) */
+    public string $class;
+    /** Example: 1 */
+    public int $version = 1;
 
     /**
      * Descriptors for the elements inside the segment/Deg in the order of the wire format. The indices in this array
@@ -20,15 +20,14 @@ abstract class BaseDescriptor
      * documentation does not specify it (anymore).
      * @var ElementDescriptor[]
      */
-    public $elements = [];
+    public array $elements = [];
 
     /**
      * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
      * segment/DEG described by this descriptor, it would get index $maxIndex+1.
      * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
-     * @var int
      */
-    public $maxIndex;
+    public int $maxIndex;
 
     protected function __construct(\ReflectionClass $clazz)
     {
@@ -99,7 +98,7 @@ abstract class BaseDescriptor
      * @throws \InvalidArgumentException If any of the fields in the given object is not valid according to the schema
      *     defined by this descriptor.
      */
-    public function validateObject($obj)
+    public function validateObject($obj): void
     {
         if (!is_a($obj, $this->class)) {
             throw new \InvalidArgumentException("Expected $this->class, got " . gettype($obj));
@@ -114,7 +113,7 @@ abstract class BaseDescriptor
      * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
      *     with the parents' properties *first*.
      */
-    private static function enumerateProperties(\ReflectionClass $clazz)
+    private static function enumerateProperties(\ReflectionClass $clazz): array|\Generator
     {
         if ($clazz->getParentClass() !== false) {
             yield from static::enumerateProperties($clazz->getParentClass());
@@ -192,7 +191,7 @@ abstract class BaseDescriptor
      *     classes in the same package.
      * @return string|\ReflectionClass The class that the type name refers to, or the scalar type name as a string.
      */
-    private static function resolveType(string $typeName, \ReflectionClass $contextClass)
+    private static function resolveType(string $typeName, \ReflectionClass $contextClass): \ReflectionClass|string
     {
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;

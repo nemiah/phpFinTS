@@ -13,9 +13,8 @@ abstract class BaseDeg implements \Serializable
 {
     /**
      * Reference to the descriptor for this type of segment.
-     * @var DegDescriptor|null
      */
-    private $descriptor = null;
+    private ?DegDescriptor $descriptor = null;
 
     /**
      * @return DegDescriptor The descriptor for this Deg type.
@@ -90,7 +89,7 @@ abstract class BaseDeg implements \Serializable
      * @param string $rawElements The serialized wire format for a data element group.
      * @return static The parsed value.
      */
-    public static function parse(string $rawElements)
+    public static function parse(string $rawElements): static
     {
         if (static::class === BaseDeg::class) {
             throw new UnsupportedException('Must not call BaseDeg::parse() on the base class');

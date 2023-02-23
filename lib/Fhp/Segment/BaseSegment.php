@@ -13,16 +13,9 @@ use Fhp\Syntax\Serializer;
  */
 abstract class BaseSegment implements SegmentInterface, \Serializable
 {
-    /**
-     * Reference to the descriptor for this type of segment.
-     * @var SegmentDescriptor|null
-     */
-    private $descriptor = null;
-
-    /**
-     * @var Segmentkopf
-     */
-    public $segmentkopf;
+    /** Reference to the descriptor for this type of segment. */
+    private ?SegmentDescriptor $descriptor = null;
+    public Segmentkopf $segmentkopf;
 
     /**
      * @return SegmentDescriptor The descriptor for this segment's type.
