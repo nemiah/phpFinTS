@@ -8,17 +8,6 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Segment\ElementDescriptor;
 use Fhp\Segment\Segmentkopf;
 
-// Polyfill for PHP < 7.3
-if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_key_last')) {
-    function array_key_last($array)
-    {
-        if (!is_array($array) || empty($array)) {
-            return null;
-        }
-        return array_keys($array)[count($array) - 1];
-    }
-}
-
 /**
  * Parses the FinTS wire format (aka. syntax) into Messages, Segments, Data Element Groups (DEG) and Data Elements (DE).
  *

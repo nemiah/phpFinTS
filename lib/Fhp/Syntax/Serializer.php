@@ -9,17 +9,6 @@ use Fhp\Segment\BaseSegment;
 use Fhp\Segment\DegDescriptor;
 use Fhp\Segment\SegmentDescriptor;
 
-// Polyfill for PHP < 7.3
-if (!function_exists('array_key_last') && !function_exists('Fhp\\Syntax\\array_key_last')) {
-    function array_key_last($array)
-    {
-        if (!is_array($array) || empty($array)) {
-            return null;
-        }
-        return array_keys($array)[count($array) - 1];
-    }
-}
-
 abstract class Serializer
 {
     /**
