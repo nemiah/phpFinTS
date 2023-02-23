@@ -74,7 +74,7 @@ abstract class Parser
                 break;
             }
             $matchedStr = $match[0][0]; // $match[0] refers to the entire matched string. [0] has the content
-            $matchedOffset = $match[0][1]; // and [1] has the offset within $str.
+            $matchedOffset = intval($match[0][1]); // and [1] has the offset within $str.
             if ($matchedStr === '?') {
                 // It's an escape character, so we should ignore this character and the next one.
                 $offset = $matchedOffset + 2;
