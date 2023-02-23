@@ -41,14 +41,14 @@ class HNVSDTest extends TestCase
         // In UTF-8 (used by PHP), the character ä uses two bytes:
         $this->assertEquals(2, strlen('ä'));
         // In ISO-8859-1 (FinTS wire format, and thus used for Bin lengths), it's just one byte:
-        $this->assertEquals(1, strlen(utf8_decode('ä')));
+        $this->assertEquals(1, strlen(mb_convert_encoding('ä', 'ISO-8859-1', 'UTF-8')));
         // So when we replace "Nachricht" with "Nächricht", the above message should still be valid.
-        $this->assertEquals(strlen(utf8_decode('Nachricht')), strlen(utf8_decode('Nächricht')));
+        $this->assertEquals(strlen(mb_convert_encoding('Nachricht', 'ISO-8859-1', 'UTF-8')), strlen(mb_convert_encoding('Nächricht', 'ISO-8859-1', 'UTF-8')));
 
-        $encodedResponse = str_replace('Nachricht', utf8_decode('Nächricht'), static::REAL_DKB_RESPONSE);
+        $encodedResponse = str_replace('Nachricht', mb_convert_encoding('Nächricht', 'ISO-8859-1', 'UTF-8'), static::REAL_DKB_RESPONSE);
         $this->assertFalse(strpos($encodedResponse, 'Nachricht')); // Make sure the replacement was effective.
         $hnvsd = HNVSDv1::parse($encodedResponse);
         $this->assertEquals(198, strlen($hnvsd->datenVerschluesselt->getData()));
-        $this->assertNotFalse(strpos($hnvsd->datenVerschluesselt->getData(), utf8_decode('Nächricht')));
+        $this->assertNotFalse(strpos($hnvsd->datenVerschluesselt->getData(), mb_convert_encoding('Nächricht', 'ISO-8859-1', 'UTF-8')));
     }
 }

@@ -36,7 +36,7 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
     {
         $this->initDialog();
 
-        $this->expectMessage(static::GET_STATEMENT_REQUEST, utf8_decode(static::GET_STATEMENT_RESPONSE_BEFORE_TAN));
+        $this->expectMessage(static::GET_STATEMENT_REQUEST, mb_convert_encoding(static::GET_STATEMENT_RESPONSE_BEFORE_TAN, 'ISO-8859-1', 'UTF-8'));
         $getStatement = $this->runInitialRequest();
         $this->assertTrue($getStatement->needsTan());
 
@@ -50,7 +50,7 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
     {
         $this->initDialog();
 
-        $this->expectMessage(static::GET_STATEMENT_REQUEST, utf8_decode(static::GET_STATEMENT_RESPONSE_BEFORE_TAN));
+        $this->expectMessage(static::GET_STATEMENT_REQUEST, mb_convert_encoding(static::GET_STATEMENT_RESPONSE_BEFORE_TAN, 'ISO-8859-1', 'UTF-8'));
         $getStatement = $this->runInitialRequest();
         $this->assertTrue($getStatement->needsTan());
 
@@ -71,9 +71,9 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
      */
     private function completeWithTan(GetStatementOfAccountXML $getStatement)
     {
-        $this->expectMessage(static::SEND_TAN_REQUEST, utf8_decode(static::SEND_TAN_RESPONSE . self::GET_STATEMENT_EMPTY_HICAZ_RESPONSE));
-        $this->expectMessage(self::GET_STATEMENT_PAGE_2_REQUEST, utf8_decode(self::GET_STATEMENT_PAGE_2_RESPONSE));
-        $this->expectMessage(self::GET_STATEMENT_PAGE_3_REQUEST, utf8_decode(self::GET_STATEMENT_PAGE_3_RESPONSE));
+        $this->expectMessage(static::SEND_TAN_REQUEST, mb_convert_encoding(static::SEND_TAN_RESPONSE . self::GET_STATEMENT_EMPTY_HICAZ_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(self::GET_STATEMENT_PAGE_2_REQUEST, mb_convert_encoding(self::GET_STATEMENT_PAGE_2_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(self::GET_STATEMENT_PAGE_3_REQUEST, mb_convert_encoding(self::GET_STATEMENT_PAGE_3_RESPONSE, 'ISO-8859-1', 'UTF-8'));
         $this->fints->submitTan($getStatement, '123456');
         $this->assertFalse($getStatement->needsTan());
     }
