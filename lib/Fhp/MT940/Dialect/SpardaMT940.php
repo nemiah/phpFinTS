@@ -65,8 +65,8 @@ class SpardaMT940 extends MT940
                 case 'SEPA-BASISLASTSCHRIFT':
                     $gvc = '105';
                     break;
-                // case 'SEPA-RÜCKLASTSCHRIFT':
-                // Hängt vom Betrag ab ?
+                    // case 'SEPA-RÜCKLASTSCHRIFT':
+                    // Hängt vom Betrag ab ?
             }
         }
 

@@ -2,8 +2,6 @@
 
 namespace Fhp\Model\FlickerTan;
 
-use InvalidArgumentException;
-
 /**
  * inspired by @see https://github.com/willuhn/hbci4java/blob/master/src/org/kapott/hbci/manager/FlickerCode.java
  * documentation @see tan_hhd_uc_v14.pdf e.g. https://github.com/willuhn/hbci4java/blob/master/doc/tan_hhd_uc_v14.pdf
@@ -28,7 +26,7 @@ class SvgRenderer
      * @param int $width width of the svg, aspect ratio around 2:1 is recommended, but not enforced, default 210
      * @param int $height height of the svg (will not adapt to width automatic), default 130
      * @param string $id DOM id of the svg, which can be used as a selector via JS, e.g. to change height or width on clientside
-     * @throws InvalidArgumentException thrown if $flickerFrequenz or $bitPattern are faulty formed
+     * @throws \InvalidArgumentException thrown if $flickerFrequenz or $bitPattern are faulty formed
      */
     public function __construct(array $bitPattern, int $flickerFrequenz = 10, int $width = 210, int $height = 130, string $id = 'flickerTanSVG')
     {
@@ -152,17 +150,17 @@ class SvgRenderer
 
     /**
      * Validates input for frequency and bit pattern
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     private function validate(array $bitPattern, int $frequency): void
     {
         if ($frequency < 2 || $frequency > 40) {
-            throw new InvalidArgumentException('Frequency is not between 2 and 40 Hz');
+            throw new \InvalidArgumentException('Frequency is not between 2 and 40 Hz');
         }
         foreach ($bitPattern as $idx => $pattern) {
             // detect if a string is not length 4 with only 0 and 1 chars
             if (!preg_match('/^[01]{4}$/', $pattern)) {
-                throw new InvalidArgumentException("Bit Pattern at index $idx is faulty, only 0 and 1 are allowed with length 4");
+                throw new \InvalidArgumentException("Bit Pattern at index $idx is faulty, only 0 and 1 are allowed with length 4");
             }
         }
     }

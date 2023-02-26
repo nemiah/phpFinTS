@@ -20,19 +20,16 @@ class ParameterDepotaufstellungV2 extends BaseDeg implements ParameterDepotaufst
     /** @var bool */
     public $kursqualitaetWaehlbar;
 
-    /** @return bool */
     public function getEingabeAnzahlEintraegeErlaubt(): bool
     {
         return $this->eingabeAnzahlEintraegeErlaubt;
     }
 
-    /** @return bool */
     public function getWaehrungDepotaufstellungWaehlbar(): bool
     {
         return $this->waehrungDepotaufstellungWaehlbar;
     }
 
-    /** @return bool */
     public function getKursqualitaetWaehlbar(): bool
     {
         return $this->kursqualitaetWaehlbar;

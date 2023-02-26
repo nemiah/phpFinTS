@@ -49,10 +49,7 @@ class KSKIntegrationTestBase extends FinTsTestCase
         $this->assertAllMessagesSeen();
     }
 
-    /**
-     * @return SEPAAccount
-     */
-    protected function getTestAccount()
+    protected function getTestAccount(): SEPAAccount
     {
         $sepaAccount = new SEPAAccount();
         $sepaAccount->setIban('DExxABCDEFGH1234567890');

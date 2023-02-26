@@ -141,10 +141,7 @@ class GetStatementOfAccount extends PaginateableAction
         return $this->parsedMT940;
     }
 
-    /**
-     * @return StatementOfAccount
-     */
-    public function getStatement()
+    public function getStatement(): StatementOfAccount
     {
         $this->ensureDone();
         return $this->statement;

@@ -41,13 +41,11 @@ class Credentials
         return $result;
     }
 
-    /** @return string */
     public function getBenutzerkennung(): string
     {
         return $this->benutzerkennung;
     }
 
-    /** @return string */
     public function getPin(): string
     {
         return $this->pin;

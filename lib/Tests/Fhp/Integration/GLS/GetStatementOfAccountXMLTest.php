@@ -4,6 +4,7 @@ namespace Tests\Fhp\Integration\GLS;
 
 use Fhp\Action\GetStatementOfAccount;
 use Fhp\Action\GetStatementOfAccountXML;
+use Fhp\BaseAction;
 use Tests\Fhp\FinTsPeer;
 
 class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
@@ -69,7 +70,7 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    private function completeWithTan(GetStatementOfAccountXML $getStatement)
+    private function completeWithTan(BaseAction $getStatement)
     {
         $this->expectMessage(static::SEND_TAN_REQUEST, mb_convert_encoding(static::SEND_TAN_RESPONSE . self::GET_STATEMENT_EMPTY_HICAZ_RESPONSE, 'ISO-8859-1', 'UTF-8'));
         $this->expectMessage(self::GET_STATEMENT_PAGE_2_REQUEST, mb_convert_encoding(self::GET_STATEMENT_PAGE_2_RESPONSE, 'ISO-8859-1', 'UTF-8'));

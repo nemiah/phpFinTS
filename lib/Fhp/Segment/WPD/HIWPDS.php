@@ -12,6 +12,5 @@ use Fhp\Segment\SegmentInterface;
  */
 interface HIWPDS extends SegmentInterface
 {
-    /** @return ParameterDepotaufstellung */
     public function getParameter(): ParameterDepotaufstellung;
 }

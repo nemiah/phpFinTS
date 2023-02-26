@@ -9,6 +9,5 @@ use Fhp\Segment\SegmentInterface;
  */
 interface HIKAZS extends SegmentInterface
 {
-    /** @return ParameterKontoumsaetze */
     public function getParameter(): ParameterKontoumsaetze;
 }

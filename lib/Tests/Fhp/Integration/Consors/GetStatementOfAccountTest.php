@@ -33,8 +33,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_RESPONSE);
         $getStatement = \Fhp\Action\GetStatementOfAccount::create(
             $this->getTestAccount(),
-            new \DateTime('2019-06-01'), new \DateTime('2019-09-22'),
-            false
+            new \DateTime('2019-06-01'), new \DateTime('2019-09-22')
         );
         $this->fints->execute($getStatement);
         $statement = $getStatement->getStatement();
@@ -58,7 +57,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $statement2 = $statement->getStatements()[1];
         $this->assertEquals(new \DateTime('2019-11-20'), $statement2->getDate());
         $this->assertEquals(Statement::CD_CREDIT, $statement2->getCreditDebit());
-        $this->assertEquals(950.59 - 2.80, $statement2->getStartBalance());
+        $this->assertEqualsWithDelta(950.59 - 2.80, $statement2->getStartBalance(), 0.01);
         $this->assertCount(2, $statement2->getTransactions());
         $transaction2 = $statement2->getTransactions()[0];
         $this->assertEquals(new \DateTime('2019-11-20'), $transaction2->getValutaDate());
@@ -83,8 +82,7 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->expectMessage(static::GET_STATEMENT_REQUEST, static::GET_STATEMENT_EMPTY_RESPONSE);
         $getStatement = \Fhp\Action\GetStatementOfAccount::create(
             $this->getTestAccount(),
-            new \DateTime('2019-06-01'), new \DateTime('2019-09-22'),
-            false
+            new \DateTime('2019-06-01'), new \DateTime('2019-09-22')
         );
         $this->fints->execute($getStatement);
         $statement = $getStatement->getStatement();

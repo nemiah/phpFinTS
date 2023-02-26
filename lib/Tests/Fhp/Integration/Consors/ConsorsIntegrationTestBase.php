@@ -77,10 +77,7 @@ class ConsorsIntegrationTestBase extends FinTsTestCase
         $this->fints->submitTan($login, '98765432');
     }
 
-    /**
-     * @return SEPAAccount
-     */
-    protected function getTestAccount()
+    protected function getTestAccount(): SEPAAccount
     {
         $sepaAccount = new SEPAAccount();
         $sepaAccount->setIban('DExxABCDEFGH1234567890');

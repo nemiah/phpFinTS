@@ -49,7 +49,7 @@ abstract class Serializer
         } elseif ($type === 'float') {
             // Format with fixed 2 decimal places (there has to be some limit, and the specification does not specify
             // one), then trim zeros from the end.
-            return preg_replace('/0+$/', '', number_format($value, 2, ',', ''));
+            return rtrim(number_format($value, 2, ',', ''), '0');
         } elseif ($type === 'bool' || $type === 'boolean') {
             return $value ? 'J' : 'N';
         } else {

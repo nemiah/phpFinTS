@@ -40,7 +40,7 @@ class GetSEPAAccounts extends PaginateableAction
     /**
      * @return SEPAAccount[]
      */
-    public function getAccounts()
+    public function getAccounts(): array
     {
         $this->ensureDone();
         return $this->accounts;
