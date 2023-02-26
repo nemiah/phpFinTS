@@ -152,7 +152,7 @@ abstract class Parser
             throw new \InvalidArgumentException("Invalid bool: $rawValue");
         } elseif ($type === 'string') {
             // Convert ISO-8859-1 (FinTS wire format encoding) to UTF-8 (PHP's encoding)
-            return utf8_encode(static::unescape($rawValue));
+            return mb_convert_encoding(static::unescape($rawValue), 'UTF-8', 'ISO-8859-1');
         } else {
             throw new \RuntimeException("Unsupported type $type");
         }

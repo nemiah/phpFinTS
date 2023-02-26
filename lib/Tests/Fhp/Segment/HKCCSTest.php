@@ -12,7 +12,7 @@ class HKCCSTest extends TestCase
 
     public function testValidateHBCI22Example1()
     {
-        $parsed = HKCCSv1::parse(utf8_decode(static::INVALID_HKCCS));
+        $parsed = HKCCSv1::parse(mb_convert_encoding(static::INVALID_HKCCS, 'ISO-8859-1', 'UTF-8'));
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('kreditinstitutscode');
         $parsed->validate();

@@ -13,7 +13,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     public const GET_STATEMENT_REQUEST = "HKKAZ:3:5+1234567890::280:12030000+N+20190901+20190922'";
     public const MT940_STATEMENT_1 = "\r\n:20:STARTUMSE\r\n:25:12030000/1234567890\r\n:28C:00000/001\r\n:60F:C190821EUR1234,56\r\n:61:1909030904DR12,00N033NONREF\r\n:86:177?00ONLINE-UEBERWEISUNG?109310?20KREF+HKCCS12345?21SVWZ+323\r\n01000-P111111-33333?22333?23DATUM 02.09.2019, 22.19 UHR?241.TAN 0\r\n12345?30DEUTDEBBXXX?31DExx123412341234123431?32EMPFAENGER ABCDE?3\r\n4997\r\n:62F:C190903EUR1222,56\r\n-\r\n:20:STARTUMSE\r\n:25:12030000/1234567890\r\n:28C:00000/001\r\n:60F:C190903EUR1222,56";
     // NOTE: This contains an 'ä' in UTF-8, but in practice DKB sends it as ISO-8859-1. We cannot hard-code non-UTF8
-    // characters here, so utf8_decode() still needs to be called on this before using it.
+    // characters here, so mb_convert_encoding() still needs to be called on this before using it.
     public const MT940_STATEMENT_2 = "\r\n:61:1909130914CR123,45N060NONREF\r\n:86:152?00GUTSCHR. UEBERW. DAUERAUFTR?109253?20SVWZ+Irgendein Kä\r\nse?30DAAEDEDD?31DExx123412341234123417?32Sender Name1\r\n:62F:C190913EUR1345,01\r\n-";
     public const GET_STATEMENT_RESPONSE = "HIRMG:3:2+3060::Bitte beachten Sie die enthaltenen Warnungen/Hinweise.'HIRMS:4:2:3+0020::Der Auftrag wurde ausgefuhrt.+0020::Die gebuchten Umsatze wurden ubermittelt.'HIRMS:5:2:4+3076::Starke Kundenauthentifizierung nicht notwendig.'HITAN:6:6:4+4++noref+nochallenge+++SomePhone1'HIKAZ:7:5:3+";
 
@@ -29,7 +29,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
 
     private static function getDkbEncodedBin(string $dataAsUtf8): string
     {
-        $content = utf8_decode($dataAsUtf8);
+        $content = mb_convert_encoding($dataAsUtf8, 'ISO-8859-1', 'UTF-8');
         return '@' . strlen($content) . '@' . $content;
     }
 

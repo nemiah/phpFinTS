@@ -38,10 +38,10 @@ class KSKIntegrationTestBase extends FinTsTestCase
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, static::ANONYMOUS_END_RESPONSE);
 
         // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
-        $this->expectMessage(static::SYNC_REQUEST, utf8_decode(static::SYNC_RESPONSE));
+        $this->expectMessage(static::SYNC_REQUEST, mb_convert_encoding(static::SYNC_RESPONSE, 'ISO-8859-1', 'UTF-8'));
         $this->expectMessage(static::SYNC_END_REQUEST, static::SYNC_END_RESPONSE);
         // And finally it can initialize the main dialog.
-        $this->expectMessage(static::INIT_REQUEST, utf8_decode(static::INIT_RESPONSE));
+        $this->expectMessage(static::INIT_REQUEST, mb_convert_encoding(static::INIT_RESPONSE, 'ISO-8859-1', 'UTF-8'));
 
         $this->fints->selectTanMode(intval(self::TEST_TAN_MODE));
         $login = $this->fints->login();
