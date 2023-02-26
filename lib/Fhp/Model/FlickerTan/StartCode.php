@@ -2,8 +2,6 @@
 
 namespace Fhp\Model\FlickerTan;
 
-use InvalidArgumentException;
-
 /**
  * Represents a startcode in the TAN Flicker Challenge. Shortens the given challenge
  * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
@@ -58,12 +56,12 @@ class StartCode extends DataElement
     }
 
     /**
-     * @throws InvalidArgumentException if $ctrlBytes are unequal to ['01'] -> old version not supported so far
+     * @throws \InvalidArgumentException if $ctrlBytes are unequal to ['01'] -> old version not supported so far
      */
     protected function __construct(array $ctrlBytes, string $data)
     {
         if ($ctrlBytes !== ['01']) {
-            throw new InvalidArgumentException('Other versions then 1.4 are not supported');
+            throw new \InvalidArgumentException('Other versions then 1.4 are not supported');
         }
         parent::__construct($data);
         $this->controlBytes = $ctrlBytes;

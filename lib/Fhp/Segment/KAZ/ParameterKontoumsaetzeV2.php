@@ -15,7 +15,6 @@ class ParameterKontoumsaetzeV2 extends ParameterKontoumsaetzeV1 implements Param
     /** @var bool */
     public $alleKontenErlaubt;
 
-    /** @return bool */
     public function getAlleKontenErlaubt(): bool
     {
         return $this->alleKontenErlaubt;

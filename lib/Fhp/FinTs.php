@@ -198,7 +198,6 @@ class FinTs
         }
     }
 
-    /** @param array $data */
     private function loadPersistedInstanceVersion2(array $data)
     {
         list( // This should match persist().

@@ -9,6 +9,5 @@ use Fhp\Segment\SegmentInterface;
  */
 interface HISPAS extends SegmentInterface
 {
-    /** @return ParameterSepaKontoverbindungAnfordern */
     public function getParameter(): ParameterSepaKontoverbindungAnfordern;
 }

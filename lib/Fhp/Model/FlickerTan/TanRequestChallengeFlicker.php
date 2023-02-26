@@ -3,7 +3,6 @@
 namespace Fhp\Model\FlickerTan;
 
 use Fhp\Syntax\Bin;
-use InvalidArgumentException;
 
 /**
  * Parses the HHDUC Flicker Tan Challenge to a Flicker pattern with suffixed control sequence
@@ -39,7 +38,7 @@ class TanRequestChallengeFlicker
         $lc = (int) substr($reducedChallenge, 0, 3);
         $reducedChallenge = substr($reducedChallenge, 3);
         if (strlen($reducedChallenge) !== $lc) {
-            throw new InvalidArgumentException("Wrong length of TAN Challenge expected: $lc - found: ". strlen($reducedChallenge). ' - only Version 1.4 supported');
+            throw new \InvalidArgumentException("Wrong length of TAN Challenge expected: $lc - found: ". strlen($reducedChallenge). ' - only Version 1.4 supported');
         }
 
         [$reducedChallenge, $this->startCode] = StartCode::parseNextBlock($reducedChallenge);
@@ -48,7 +47,7 @@ class TanRequestChallengeFlicker
             $this->dataElements[$i] = $de;
         }
         if (!empty($reducedChallenge)) {
-            throw new InvalidArgumentException("Challenge has unexpected ending $reducedChallenge");
+            throw new \InvalidArgumentException("Challenge has unexpected ending $reducedChallenge");
         }
     }
 
