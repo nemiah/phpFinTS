@@ -7,9 +7,9 @@ namespace Fhp\Segment\Common;
  */
 interface AccountInfo
 {
-    /** @return string This is the IBAN, if available, or the plain account number otherwise. */
-    public function getAccountNumber();
+    /** This is the IBAN, if available, or the plain account number otherwise. */
+    public function getAccountNumber(): string;
 
-    /** @return string|null This is the BIC, if available, or the country-specific bank code otherwise. */
-    public function getBankIdentifier();
+    /** This is the BIC, if available, or the country-specific bank code otherwise. */
+    public function getBankIdentifier(): ?string;
 }

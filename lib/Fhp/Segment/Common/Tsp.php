@@ -12,10 +12,10 @@ use Fhp\Segment\BaseDeg;
  */
 class Tsp extends BaseDeg
 {
-    /** @var string JJJJMMTT gemäß ISO 8601 */
-    public $datum;
-    /** @var string|null hhmmss gemäß ISO 8601, local time (no time zone support). */
-    public $uhrzeit;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public string $datum;
+    /** hhmmss gemäß ISO 8601, local time (no time zone support). */
+    public ?string $uhrzeit = null;
 
     public static function create(string $datum, ?string $uhrzeit): Tsp
     {

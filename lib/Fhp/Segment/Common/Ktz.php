@@ -13,27 +13,25 @@ use Fhp\Segment\BaseDeg;
  */
 class Ktz extends BaseDeg implements AccountInfo
 {
-    /** @var bool Whether it's a SEPA account that has IBAN/BIC, or not (e.g. a stock depot) */
-    public $kontoverwendungSepa;
-    /** @var string|null Max length: 34 */
-    public $iban;
-    /** @var string|null Max length: 11, required if IBAN is present. */
-    public $bic;
-    /** @var string Also known as Depotnummer. */
-    public $kontonummer;
-    /** @var string|null */
-    public $unterkontomerkmal;
-    /** @var Kik */
-    public $kreditinstitutskennung;
+    /** Whether it's a SEPA account that has IBAN/BIC, or not (e.g. a stock depot) */
+    public bool $kontoverwendungSepa;
+    /** Max length: 34 */
+    public ?string $iban = null;
+    /** Max length: 11, required if IBAN is present. */
+    public ?string $bic = null;
+    /** Also known as Depotnummer. */
+    public string $kontonummer;
+    public ?string $unterkontomerkmal = null;
+    public Kik $kreditinstitutskennung;
 
     /** {@inheritdoc} */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->iban ?? $this->kontonummer;
     }
 
     /** {@inheritdoc} */
-    public function getBankIdentifier()
+    public function getBankIdentifier(): ?string
     {
         return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;
     }

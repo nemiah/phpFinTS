@@ -14,10 +14,10 @@ class Kik extends BaseDeg
 {
     public const DEFAULT_COUNTRY_CODE = '280'; // Germany
 
-    /** @var string (ISO 3166-1; has leading zeros; Germany is 280, see also chapter E.4 */
-    public $laenderkennzeichen;
-    /** @var string|null Max length: 30 (Mandatory/absent depending on the country) */
-    public $kreditinstitutscode;
+    /** (ISO 3166-1; has leading zeros; Germany is 280, see also chapter E.4 */
+    public ?string $laenderkennzeichen;  // Officially it's mandatory, but in practice it can be missing.
+    /** Max length: 30 (Mandatory/absent depending on the country) */
+    public ?string $kreditinstitutscode = null;
 
     /** {@inheritdoc} */
     public function validate()

@@ -9,12 +9,10 @@ use Fhp\Segment\BaseDeg;
  */
 class Btg extends BaseDeg
 {
-    /** @var float */
-    public $wert;
-    /** @var string */
-    public $waehrung;
+    public float $wert;
+    public string $waehrung;
 
-    public static function create(float $wert, string $waehrung = 'EUR')
+    public static function create(float $wert, string $waehrung = 'EUR'): Btg
     {
         $result = new Btg();
         $result->wert = $wert;

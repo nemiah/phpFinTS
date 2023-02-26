@@ -24,15 +24,13 @@ class Sdo extends BaseDeg
      * Allowed values:
      *  "C" = Credit (the signum of $wert is positive)
      *  "D" = Debit (the signum of $wert is negative)
-     * @var string
      */
-    public $sollHabenKennzeichen;
-    /** @var Btg */
-    public $betrag;
-    /** @var string JJJJMMTT gemäß ISO 8601 */
-    public $datum;
-    /** @var string|null hhmmss gemäß ISO 8601, local time (no time zone support). */
-    public $uhrzeit;
+    public string $sollHabenKennzeichen;
+    public Btg $betrag;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public string $datum;
+    /** hhmmss gemäß ISO 8601, local time (no time zone support). */
+    public ?string $uhrzeit = null;
 
     public function getAmount(): float
     {
@@ -55,7 +53,7 @@ class Sdo extends BaseDeg
         return \DateTime::createFromFormat('Ymd His', $this->datum . ' ' . ($this->uhrzeit ?? '000000'));
     }
 
-    public static function create(float $amount, string $currency, \DateTime $timestamp)
+    public static function create(float $amount, string $currency, \DateTime $timestamp): Sdo
     {
         $result = new Sdo();
         $result->sollHabenKennzeichen = $amount < 0 ? self::DEBIT : self::CREDIT;

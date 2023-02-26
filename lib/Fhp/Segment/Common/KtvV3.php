@@ -19,12 +19,9 @@ use Fhp\Segment\BaseDeg;
  */
 class KtvV3 extends BaseDeg implements AccountInfo
 {
-    /** @var string */
-    public $kontonummer;
-    /** @var string|null */
-    public $unterkontomerkmal;
-    /** @var Kik */
-    public $kik;
+    public ?string $kontonummer = null;  // Officially it's mandatory, but in practice it can be missing.
+    public ?string $unterkontomerkmal = null;
+    public ?Kik $kik = null;  // Officially it's mandatory, but in practice it can be missing.
 
     public static function create(string $kontonummer, ?string $unterkontomerkmal, Kik $kik): KtvV3
     {
@@ -41,13 +38,13 @@ class KtvV3 extends BaseDeg implements AccountInfo
     }
 
     /** {@inheritdoc} */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
-        return $this->kontonummer;
+        return $this->kontonummer ?: '';
     }
 
     /** {@inheritdoc} */
-    public function getBankIdentifier()
+    public function getBankIdentifier(): ?string
     {
         return $this->kik->kreditinstitutscode;
     }

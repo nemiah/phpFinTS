@@ -14,19 +14,17 @@ use Fhp\Segment\BaseDeg;
  */
 class Kti extends BaseDeg implements AccountInfo
 {
-    /** @var string|null Max length: 34 */
-    public $iban;
-    /** @var string|null Max length: 11, required if IBAN is present. */
-    public $bic;
+    /** Max length: 34 */
+    public ?string $iban = null;
+    /** Max length: 11, required if IBAN is present. */
+    public ?string $bic = null;
 
     // The following fields can only be set if the BPD parameters allow it. If they are set, the fields above become
     // optional.
-    /** @var string|null Also known as Depotnummer. */
-    public $kontonummer;
-    /** @var string|null */
-    public $unterkontomerkmal;
-    /** @var Kik|null */
-    public $kreditinstitutskennung;
+    /** Also known as Depotnummer. */
+    public ?string $kontonummer = null;
+    public ?string $unterkontomerkmal = null;
+    public ?Kik $kreditinstitutskennung = null;
 
     /** {@inheritdoc} */
     public function validate()
@@ -61,13 +59,13 @@ class Kti extends BaseDeg implements AccountInfo
     }
 
     /** {@inheritdoc} */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->iban ?? $this->kontonummer;
     }
 
     /** {@inheritdoc} */
-    public function getBankIdentifier()
+    public function getBankIdentifier(): ?string
     {
         return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;
     }
