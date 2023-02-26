@@ -13,12 +13,11 @@ use Fhp\Segment\BaseSegment;
  */
 class HNSHAv2 extends BaseSegment
 {
-    /** @var string Max length: 14; A nonce, that matches the one in HNSHK */
-    public $sicherheitskontrollreferenz;
-    /** @var string|null Max length: 512; not allowed for PIN/TAN */
-    public $validierungsresultat;
-    /** @var BenutzerdefinierteSignaturV1|null */
-    public $benutzerdefinierteSignatur;
+    /** Max length: 14; A nonce, that matches the one in HNSHK */
+    public string $sicherheitskontrollreferenz;
+    /** Max length: 512; not allowed for PIN/TAN */
+    public ?string $validierungsresultat = null;
+    public ?BenutzerdefinierteSignaturV1 $benutzerdefinierteSignatur = null;
 
     /**
      * @param string $sicherheitskontrollreferenz The same number that was passed to HNSHK.

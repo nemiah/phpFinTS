@@ -14,5 +14,5 @@ use Fhp\Segment\BaseDeg;
 class UnterstuetzteHbciVersionenV2 extends BaseDeg
 {
     /** @var int[] @Max(9) */
-    public $unterstuetzteHbciVersion;
+    public array $unterstuetzteHbciVersion;
 }

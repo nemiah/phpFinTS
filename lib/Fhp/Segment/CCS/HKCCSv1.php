@@ -13,14 +13,14 @@ use Fhp\Syntax\Bin;
  */
 class HKCCSv1 extends BaseSegment
 {
-    /** @var \Fhp\Segment\Common\Kti IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
-    public $kontoverbindungInternational;
-    /** @var string Max length: 256 */
-    public $sepaDescriptor;
+    /** IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
+    /** Max length: 256 */
+    public string $sepaDescriptor;
     /**
+     * The PAIN message in XML format.
      * HISPAS informs which XML schemas are allowed.
      * The <ReqdExctnDt> field must be 1999-01-01.
-     * @var Bin XML
      */
-    public $sepaPainMessage;
+    public Bin $sepaPainMessage;
 }

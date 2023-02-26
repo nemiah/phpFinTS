@@ -16,22 +16,19 @@ use Fhp\Segment\BaseSegment;
  */
 class HKVVBv3 extends BaseSegment
 {
-    /** @var int */
-    public $bpdVersion = 0; // 0 means no BPD stored at client-side yet.
-    /** @var int */
-    public $updVersion = 0; // 0 means no UPD stored at client-side yet.
+    public int $bpdVersion = 0; // 0 means no BPD stored at client-side yet.
+    public int $updVersion = 0; // 0 means no UPD stored at client-side yet.
     /**
      * 0: Standard
      * 1: Deutsch, Code ‚de’ (German), Subset Deutsch, Codeset 1 (Latin 1)
      * 2: Englisch, Code ‚en’ (English), Subset Englisch, Codeset 1 (Latin 1)
      * 3: Französisch, Code ‚fr’ (French), Subset Französisch, Codeset 1 (Latin 1)
-     * @var int
      */
-    public $dialogsprache = 0; // The bank's default is fine.
-    /** @var string Max length: 25 */
-    public $produktbezeichnung;
-    /** @var string Max length: 5 */
-    public $produktversion;
+    public int $dialogsprache = 0; // The bank's default is fine.
+    /** Max length: 25 */
+    public string $produktbezeichnung;
+    /** Max length: 5 */
+    public string $produktversion;
 
     public static function create(FinTsOptions $options, ?BPD $bpd, ?UPD $upd): HKVVBv3
     {

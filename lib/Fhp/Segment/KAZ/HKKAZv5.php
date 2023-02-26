@@ -15,26 +15,25 @@ use Fhp\Segment\Paginateable;
  */
 class HKKAZv5 extends BaseSegment implements Paginateable
 {
-    /** @var \Fhp\Segment\Common\KtvV3 */
-    public $kontoverbindungAuftraggeber;
-    /** @var bool Only allowed if {@link ParameterKontoumsaetzeV2::$alleKontenErlaubt} says so. */
-    public $alleKonten;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 */
-    public $vonDatum;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 */
-    public $bisDatum;
-    /** @var int|null Only allowed if {@link ParameterKontoumsaetzeV2::$eingabeAnzahlEintraegeErlaubt} says so. */
-    public $maximaleAnzahlEintraege;
-    /** @var string|null Max length: 35 */
-    public $aufsetzpunkt;
+    public \Fhp\Segment\Common\KtvV3 $kontoverbindungAuftraggeber;
+    /** Only allowed if {@link ParameterKontoumsaetzeV2::$alleKontenErlaubt} says so. */
+    public bool $alleKonten;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $vonDatum = null;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $bisDatum = null;
+    /** Only allowed if {@link ParameterKontoumsaetzeV2::$eingabeAnzahlEintraegeErlaubt} says so. */
+    public ?int $maximaleAnzahlEintraege = null;
+    /** Max length: 35 */
+    public ?string $aufsetzpunkt = null;
 
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv, bool $alleKonten, ?\DateTime $vonDatum, ?\DateTime $bisDatum, ?string $aufsetzpunkt = null): HKKAZv5
     {
         $result = HKKAZv5::createEmpty();
         $result->kontoverbindungAuftraggeber = $ktv;
         $result->alleKonten = $alleKonten;
-        $result->vonDatum = $vonDatum === null ? null : $vonDatum->format('Ymd');
-        $result->bisDatum = $bisDatum === null ? null : $bisDatum->format('Ymd');
+        $result->vonDatum = $vonDatum?->format('Ymd');
+        $result->bisDatum = $bisDatum?->format('Ymd');
         $result->aufsetzpunkt = $aufsetzpunkt;
         return $result;
     }

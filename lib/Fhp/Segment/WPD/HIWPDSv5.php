@@ -13,8 +13,7 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameterOld;
  */
 class HIWPDSv5 extends BaseGeschaeftsvorfallparameterOld implements HIWPDS
 {
-    /** @var ParameterDepotaufstellungV2 */
-    public $parameter;
+    public ParameterDepotaufstellungV2 $parameter;
 
     public function getParameter(): ParameterDepotaufstellung
     {

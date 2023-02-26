@@ -20,5 +20,5 @@ class UnterstuetzteSprachenV2 extends BaseDeg
      * 3: Französisch, Code ‚fr’ (French), Subset Französisch, Codeset 1 (Latin 1)
      * @var int[] @Max(9)
      */
-    public $unterstuetzteSprache;
+    public array $unterstuetzteSprache;
 }

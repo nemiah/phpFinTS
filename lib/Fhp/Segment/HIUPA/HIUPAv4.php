@@ -16,13 +16,9 @@ use Fhp\Segment\BaseSegment;
  */
 class HIUPAv4 extends BaseSegment
 {
-    /** @var string */
-    public $benutzerkennung;
-    /**
-     * Note: The bank may send UPD version 0, which means these UPD are the most recent but should not be persisted.
-     * @var int
-     */
-    public $updVersion;
+    public string $benutzerkennung;
+    /** Note: The bank may send UPD version 0, which means these UPD are the most recent but should not be persisted. */
+    public int $updVersion;
     /**
      * 0: If the bank does not explicitly declare a business transaction type (i.e. request segment type) as supported,
      *    it does not support it, so sending such a request to the bank will always lead to failure.
@@ -30,9 +26,9 @@ class HIUPAv4 extends BaseSegment
      *    will check online and accept/reject accordingly.
      * @var int
      */
-    public $updVerwendung;
-    /** @var string|null Max length: 35 */
-    public $benutzername;
-    /** @var string|null Max length: 2048 */
-    public $erweiterungAllgemein;
+    public int $updVerwendung;
+    /** Max length: 35 */
+    public ?string $benutzername = null;
+    /** Max length: 2048 */
+    public ?string $erweiterungAllgemein = null;
 }

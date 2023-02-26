@@ -13,9 +13,9 @@ use Fhp\Segment\BaseDeg;
 class UnterstuetzteCamtMessages extends BaseDeg
 {
     /** @var string[] @Max(99) */
-    public $camtDescriptor;
+    public array $camtDescriptor;
 
-    public static function create(array $camtDescriptor)
+    public static function create(array $camtDescriptor): UnterstuetzteCamtMessages
     {
         $result = new UnterstuetzteCamtMessages();
         $result->camtDescriptor = $camtDescriptor;

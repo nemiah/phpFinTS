@@ -12,16 +12,15 @@ use Fhp\Segment\BaseDeg;
  */
 class ErlaubteGeschaeftsvorfaelleV1 extends BaseDeg implements ErlaubteGeschaeftsvorfaelle
 {
-    /** @var string References a segment type name (Segmentkennung) */
-    public $geschaeftsvorfall;
-    /** @var int Allowed values: 0, 1, 2, 3 */
-    public $anzahlBenoetigterSignaturen;
-    /** @var string|null Allowed values: E, T, W, M, Z */
-    public $limitart;
-    /** @var \Fhp\Segment\Common\Btg|null */
-    public $limitbetrag;
-    /** @var int|null If present, must be greater than 0 */
-    public $limitTage;
+    /** References a segment type name (Segmentkennung) */
+    public string $geschaeftsvorfall;
+    /** Allowed values: 0, 1, 2, 3 */
+    public int $anzahlBenoetigterSignaturen;
+    /** Allowed values: E, T, W, M, Z */
+    public ?string $limitart = null;
+    public ?\Fhp\Segment\Common\Btg $limitbetrag = null;
+    /** If present, must be greater than 0 */
+    public ?int $limitTage = null;
 
     /** {@inheritdoc} */
     public function getGeschaeftsvorfall(): string

@@ -27,14 +27,14 @@ class HKTANFactory
      */
     public static function createProzessvariante2Step1(TanMode $tanMode, ?string $tanMedium = null, string $segmentkennung = 'HKIDN'): BaseSegment
     {
-        if ($tanMode !== null && $tanMode->getSmsAbbuchungskontoErforderlich()) {
+        if ($tanMode->getSmsAbbuchungskontoErforderlich()) {
             throw new \InvalidArgumentException('SMS-Abbuchungskonto not supported');
         }
 
         $result = $tanMode->createHKTAN();
         $result->setTanProzess(HKTAN::TAN_PROZESS_4);
         $result->setSegmentkennung($segmentkennung);
-        if ($tanMode !== null && $tanMode->needsTanMedium()) {
+        if ($tanMode->needsTanMedium()) {
             if ($tanMedium === null) {
                 throw new \InvalidArgumentException('Missing tanMedium');
             }

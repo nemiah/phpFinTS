@@ -18,13 +18,12 @@ class SicherheitsdatumUndUhrzeitV2 extends BaseDeg
     /**
      * 1: Sicherheitszeitstempel (STS)
      * 6: Certificate Revocation Time (CRT)
-     * @var int
      */
-    public $datumUndZeitbezeichner = 1; // This library does not support recovation, so STS is all we need.
-    /** @var string|null JJJJMMTT gemäß ISO 8601 */
-    public $datum;
-    /** @var string|null hhmmss gemäß ISO 8601, local time (no time zone support). */
-    public $uhrzeit;
+    public int $datumUndZeitbezeichner = 1; // This library does not support recovation, so STS is all we need.
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $datum = null;
+    /** hhmmss gemäß ISO 8601, local time (no time zone support). */
+    public ?string $uhrzeit = null;
 
     /**
      * @return SicherheitsdatumUndUhrzeitV2 For the current time.

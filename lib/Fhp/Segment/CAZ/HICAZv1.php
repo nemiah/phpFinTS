@@ -16,36 +16,25 @@ use Fhp\Syntax\Bin;
  */
 class HICAZv1 extends BaseSegment
 {
-    /**
-     * Kontoverbindung international
-     * @var \Fhp\Segment\Common\Kti
-     */
-    public $kontoverbindungInternational;
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
 
-    /**
-     * Der camt-Descriptor beschreibt Ort, Name und Version einer camt Schema-Definition als URN.
-     * @var string
-     */
-    public $camtDescriptor;
+    /** Der camt-Descriptor beschreibt Ort, Name und Version einer camt Schema-Definition als URN. */
+    public string $camtDescriptor;
 
     /**
      * Umsätze, die auf dem Kundenkonto erfolgt sind und zum Zeitpunkt des Kundenauftrags vom Kreditinstitut bereits
      * gebucht wurden.
      * Gebuchte camt-Umsätze werden als camt.052 message für Umsatzabfragen bzw. camt.053 message für den elektronischen
      * Kontoauszug (s. [Datenformate]) bereitgestellt und werden als transparentes Datenformat im Sinne von FinTS transportiert
-     *
-     * @var \Fhp\Segment\CAZ\GebuchteCamtUmsaetze
      */
-    public $gebuchteUmsaetze;
+    public GebuchteCamtUmsaetze $gebuchteUmsaetze;
 
     /**
      * Noch nicht gebuchte Umsätze, die dem Kunden im camt.052-Format zusätzlich rückgemeldet werden und zum Zeitpunkt
      * des Kundenauftrags vom Kreditinstitut noch nicht gebucht wurden. Nicht gebuchte Umsätze können nicht auftreten,
      * wenn der vom Kunden angegebene Zeitraum in der Vergangenheit liegt.
-     *
-     * @var Bin|null
      */
-    public $nichtGebuchteUmsaetze;
+    public ?Bin $nichtGebuchteUmsaetze = null;
 
     public function getKontoverbindungInternational(): \Fhp\Segment\Common\Kti
     {

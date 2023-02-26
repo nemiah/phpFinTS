@@ -21,19 +21,18 @@ class HKIDNv2 extends BaseSegment
     public const ANONYMOUS_KUNDEN_ID = '9999999999';
     public const MISSING_KUNDENSYSTEM_ID = '0';
 
-    /** @var \Fhp\Segment\Common\Kik */
-    public $kreditinstitutskennung;
-    /** @var string Max length: 30 */
-    public $kundenId;
-    /** @var string Max length: 30 */
-    public $kundensystemId;
+    public \Fhp\Segment\Common\Kik $kreditinstitutskennung;
+    /** Max length: 30 */
+    public string $kundenId;
+    /** Max length: 30 */
+    public string $kundensystemId;
     /**
      * 0: Kundensystem-ID wird nicht benötigt (HBCI DDV-Verfahren und chipkartenbasierte Verfahren ab
      *    Sicherheitsprofil-Version 3)
      * 1: Kundensystem-ID wird benötigt (sonstige HBCI RAH-/RDH- und PIN/TAN-Verfahren)
      * @var int
      */
-    public $kundensystemStatus = 1; // This library only supports PIN/TAN, hence 1 is the right choice.
+    public int $kundensystemStatus = 1; // This library only supports PIN/TAN, hence 1 is the right choice.
 
     public static function create(string $kreditinstitutionscode, Credentials $credentials, string $kundensystemId): HKIDNv2
     {

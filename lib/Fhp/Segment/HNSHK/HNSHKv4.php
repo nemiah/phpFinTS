@@ -20,46 +20,37 @@ use Fhp\Segment\Common\Kik;
  */
 class HNSHKv4 extends BaseSegment
 {
-    /** @var \Fhp\Segment\HNVSK\SicherheitsprofilV1 */
-    public $sicherheitsprofil;
+    public \Fhp\Segment\HNVSK\SicherheitsprofilV1 $sicherheitsprofil;
     /**
      * For the PIN/TAN profile (see section B.9.4), this must be:
      *   - 998 for Ein-Schritt-Verfahren, or
      *   - the value in the 900--997 range as received in
      *     {@link \Fhp\Segment\TAN\VerfahrensparameterZweiSchrittVerfahrenv6::$sicherheitsfunktion}
-     * @var int
      */
-    public $sicherheitsfunktion;
-    /** @var string Max length: 14; A nonce, that matches the one in HNSHA */
-    public $sicherheitskontrollreferenz;
+    public int $sicherheitsfunktion;
+    /** Max length: 14; A nonce, that matches the one in HNSHA */
+    public string $sicherheitskontrollreferenz;
     /**
      * 1: Signaturkopf und HBCI-Nutzdaten (SHM)
      * (not allowed: 2: Von Signaturkopf bis Signaturabschluss (SHT))
-     * @var int (Version 2)
+     * (Version 2)
      */
-    public $bereichDerSicherheitsapplikation = 1; // This is the only allowed value.
+    public int $bereichDerSicherheitsapplikation = 1; // This is the only allowed value.
     /**
      * 1: Der Unterzeichner ist Herausgeber der signierten Nachricht, z. B. Erfasser oder Erstsignatur (ISS)
      * 3: Der Unterzeichner unterstützt den Inhalt der Nachricht, z. B. bei Zweitsignatur (CON)
      * 4: Der Unterzeichner ist Zeuge, aber für den Inhalt der Nachricht nicht verantwortlich, z. B. Übermittler,
      *    welcher nicht Erfasser ist (WIT)
-     * @var int
      */
-    public $rolleDesSicherheitslieferanten = 1;
-    /** @var \Fhp\Segment\HNVSK\SicherheitsidentifikationDetailsV2 */
-    public $sicherheitsidentifikationDetails;
-    /** @var int */
-    public $sicherheitsreferenznummer = 1; // Not used / supported by this library, so just a dummy value.
-    /** @var \Fhp\Segment\HNVSK\SicherheitsdatumUndUhrzeitV2 */
-    public $sicherheitsdatumUndUhrzeit;
-    /** @var HashalgorithmusV2 */
-    public $hashalgorithmus;
-    /** @var SignaturalgorithmusV2 */
-    public $signaturalgorithmus;
-    /** @var \Fhp\Segment\HNVSK\SchluesselnameV3 */
-    public $schluesselname;
-    /** @var \Fhp\Segment\HNVSK\ZertifikatV2|null For the PIN/TAN profile, this must be empty (see section B.9.4). */
-    public $zertifikat;
+    public int $rolleDesSicherheitslieferanten = 1;
+    public \Fhp\Segment\HNVSK\SicherheitsidentifikationDetailsV2 $sicherheitsidentifikationDetails;
+    public int $sicherheitsreferenznummer = 1; // Not used / supported by this library, so just a dummy value.
+    public \Fhp\Segment\HNVSK\SicherheitsdatumUndUhrzeitV2 $sicherheitsdatumUndUhrzeit;
+    public HashalgorithmusV2 $hashalgorithmus;
+    public SignaturalgorithmusV2 $signaturalgorithmus;
+    public \Fhp\Segment\HNVSK\SchluesselnameV3 $schluesselname;
+    /** For the PIN/TAN profile, this must be empty (see section B.9.4). */
+    public ?\Fhp\Segment\HNVSK\ZertifikatV2 $zertifikat = null;
 
     /**
      * @param string $sicherheitskontrollreferenz A nonce (random number) to reference the corresponding HNSHA segment.

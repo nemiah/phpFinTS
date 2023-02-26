@@ -17,5 +17,5 @@ class HKSPAv1 extends BaseSegment
      * If left empty, all accounts will be returned.
      * @var \Fhp\Segment\Common\KtvV3[]|null @Max(999)
      */
-    public $kontoverbindung;
+    public ?array $kontoverbindung = null;
 }

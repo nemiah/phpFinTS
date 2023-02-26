@@ -24,9 +24,8 @@ class HNVSDv1 extends BaseSegment
     /**
      * Note: This field is called "encrypted", but for PIN/TAN it contains plaintext data anyway, because the encryption
      * is done in the transport layer (TLS).
-     * @var Bin Binary.
      */
-    public $datenVerschluesselt;
+    public Bin $datenVerschluesselt;
 
     /**
      * @param BaseSegment[] $segments Some segments that will be serialized into the data field.

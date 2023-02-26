@@ -18,11 +18,11 @@ class HKSPAv2 extends BaseSegment implements Paginateable
      * If left empty, all accounts will be returned.
      * @var \Fhp\Segment\Common\KtvV3[]|null @Max(999)
      */
-    public $kontoverbindung;
-    /** @var int|null Only allowed if {@link ParameterSepaKontoverbindungAnfordernV2::$eingabeAnzahlEintraegeErlaubt} says so. */
-    public $maximaleAnzahlEintraege;
-    /** @var string|null For pagination. */
-    public $aufsetzpunkt;
+    public ?array $kontoverbindung = null;
+    /** Only allowed if {@link ParameterSepaKontoverbindungAnfordernV2::$eingabeAnzahlEintraegeErlaubt} says so. */
+    public ?int $maximaleAnzahlEintraege = null;
+    /** For pagination. */
+    public ?string $aufsetzpunkt = null;
 
     public function setPaginationToken(string $paginationToken)
     {

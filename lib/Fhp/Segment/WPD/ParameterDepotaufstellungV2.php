@@ -11,14 +11,9 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterDepotaufstellungV2 extends BaseDeg implements ParameterDepotaufstellung
 {
-    /** @var bool */
-    public $eingabeAnzahlEintraegeErlaubt;
-
-    /** @var bool */
-    public $waehrungDepotaufstellungWaehlbar;
-
-    /** @var bool */
-    public $kursqualitaetWaehlbar;
+    public bool $eingabeAnzahlEintraegeErlaubt;
+    public bool $waehrungDepotaufstellungWaehlbar;
+    public bool $kursqualitaetWaehlbar;
 
     public function getEingabeAnzahlEintraegeErlaubt(): bool
     {

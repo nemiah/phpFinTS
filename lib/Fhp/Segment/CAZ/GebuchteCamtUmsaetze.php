@@ -3,6 +3,7 @@
 namespace Fhp\Segment\CAZ;
 
 use Fhp\Segment\BaseDeg;
+use Fhp\Syntax\Bin;
 
 /**
  * Needed for
@@ -15,7 +16,7 @@ class GebuchteCamtUmsaetze extends BaseDeg
 {
     /** Allow for up to 999 Binary fields (XML files) */
     /** @var Bin[] @Max(999) */
-    public $gebuchteCamtUmsaetze;
+    public array $gebuchteCamtUmsaetze;
 
     /**
      * @return string[]

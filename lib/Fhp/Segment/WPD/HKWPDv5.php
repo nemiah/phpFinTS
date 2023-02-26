@@ -14,17 +14,11 @@ use Fhp\Segment\Paginateable;
  */
 class HKWPDv5 extends BaseSegment implements Paginateable
 {
-    /** @var \Fhp\Segment\Common\KtvV3 */
-    public $depot;
-
-    /** @var string|null */
-    public $waehrungDerDepotaufstellung;
-
-    /** @var \Fhp\Segment\Common\Kursqualitaet|null */
-    public $kursqualitaet;
-
-    /** @var int|null Only allowed if {@link ParameterDepotaufstellungV2::$eingabeAnzahlEintraegeErlaubt} says so. */
-    public $maximaleAnzahlEintraege;
+    public \Fhp\Segment\Common\KtvV3 $depot;
+    public ?string $waehrungDerDepotaufstellung = null;
+    public ?\Fhp\Segment\Common\Kursqualitaet $kursqualitaet = null;
+    /** Only allowed if {@link ParameterDepotaufstellungV2::$eingabeAnzahlEintraegeErlaubt} says so. */
+    public ?int $maximaleAnzahlEintraege = null;
 
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv): HKWPDv5
     {

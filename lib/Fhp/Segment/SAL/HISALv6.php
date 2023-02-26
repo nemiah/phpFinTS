@@ -16,28 +16,19 @@ use Fhp\Segment\Common\AccountInfo;
  */
 class HISALv6 extends BaseSegment implements HISAL
 {
-    /** @var \Fhp\Segment\Common\KtvV3 */
-    public $kontoverbindungAuftraggeber;
-    /** @var string */
-    public $kontoproduktbezeichnung;
-    /** @var string */
-    public $kontowaehrung;
-    /** @var \Fhp\Segment\Common\Sdo */
-    public $gebuchterSaldo;
-    /** @var \Fhp\Segment\Common\Sdo|null */
-    public $saldoDerVorgemerktenUmsaetze;
-    /** @var \Fhp\Segment\Common\Btg|null */
-    public $kreditlinie;
-    /** @var \Fhp\Segment\Common\Btg|null */
-    public $verfuegbarerBetrag;
-    /** @var \Fhp\Segment\Common\Btg|null */
-    public $bereitsVerfuegterBetrag;
-    /** @var \Fhp\Segment\Common\Btg|null This field can only be filled if {@link HISALv6::$verfuegbarerBetrag} is zero. */
-    public $ueberziehung;
-    /** @var \Fhp\Segment\Common\Tsp|null */
-    public $buchungszeitpunkt;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 */
-    public $faelligkeit;
+    public \Fhp\Segment\Common\KtvV3 $kontoverbindungAuftraggeber;
+    public string $kontoproduktbezeichnung;
+    public string $kontowaehrung;
+    public \Fhp\Segment\Common\Sdo $gebuchterSaldo;
+    public ?\Fhp\Segment\Common\Sdo $saldoDerVorgemerktenUmsaetze = null;
+    public ?\Fhp\Segment\Common\Btg $kreditlinie = null;
+    public ?\Fhp\Segment\Common\Btg $verfuegbarerBetrag = null;
+    public ?\Fhp\Segment\Common\Btg $bereitsVerfuegterBetrag = null;
+    /** This field can only be filled if {@link HISALv6::$verfuegbarerBetrag} is zero. */
+    public ?\Fhp\Segment\Common\Btg $ueberziehung = null;
+    public ?\Fhp\Segment\Common\Tsp $buchungszeitpunkt = null;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $faelligkeit = null;
 
     public function getAccountInfo(): AccountInfo
     {

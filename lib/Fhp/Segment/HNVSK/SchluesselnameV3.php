@@ -22,21 +22,18 @@ class SchluesselnameV3 extends BaseDeg
      */
     public const CHIFFRIERSCHLUESSEL = 'V';
 
-    /** @var \Fhp\Segment\Common\Kik */
-    public $kreditinstitutskennung;
-    /** @var string This is the username used for login. */
-    public $benutzerkennung;
+    public \Fhp\Segment\Common\Kik $kreditinstitutskennung;
+    /** This is the username used for login. */
+    public string $benutzerkennung;
     /**
      * D: Schlüssel zur Erzeugung digitaler Signaturen (DS-Schlüssel)
      * S: Signierschlüssel
      * V: Chiffrierschlüssel
-     * @var string (Version 2)
+     * (Version 2)
      */
-    public $schluesselart;
-    /** @var int */
-    public $schluesselnummer = 0; // Dummy value for PIN/TAN.
-    /** @var int */
-    public $schluesselversion = 0; // Dummy value for PIN/TAN.
+    public string $schluesselart;
+    public int $schluesselnummer = 0; // Dummy value for PIN/TAN.
+    public int $schluesselversion = 0; // Dummy value for PIN/TAN.
 
     public static function create(\Fhp\Segment\Common\Kik $kik, string $benutzerkennung, string $schluesselart): SchluesselnameV3
     {

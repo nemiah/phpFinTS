@@ -15,24 +15,23 @@ use Fhp\Syntax\Bin;
 class HITANv6 extends BaseSegment implements HITAN
 {
     /**
-     * @var string Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$tanProzess} for details.
+     * Allowed values: 1 (for Prozessvariante 1), 2, 3, 4. See {@link HKTANv6::$tanProzess} for details.
      *     NOTE: This field is re-used in HITANv7, where the value 'S' is also allowed.
      */
-    public $tanProzess;
+    public string $tanProzess;
     /**
      * This will just return the same hash as was passed in HKTAN.
      * M: bei AuftragsHashwertverfahren<>0 und TAN-Prozess=1
      * N: sonst
-     * @var Bin|null
      */
-    public $auftragsHashwert;
+    public ?Bin $auftragsHashwert = null;
     /**
      * Special value "noref" means that no TAN is needed.
      * M: bei TAN-Prozess=2, 3, 4 (and S)
      * O: TAN-Prozess=1
-     * @var string|null Max length: 35
+     * Max length: 35
      */
-    public $auftragsreferenz;
+    public ?string $auftragsreferenz = null;
     /**
      * This is the challenge that needs to be presented to the user, so that they can generate and enter a TAN.
      * Special value "nochallenge" means that no TAN is needed. If $challengeStrukturiert in HITANS is set, this may
@@ -41,22 +40,20 @@ class HITANv6 extends BaseSegment implements HITAN
      *
      * M: bei TAN-Prozess=1, 3, 4
      * O: bei TAN-Prozess=2 (and S)
-     * @var string|null Max length: 2048
+     * Max length: 2048
      */
-    public $challenge;
-    /** @var Bin|null */
-    public $challengeHhdUc;
-    /** @var GueltigkeitsdatumUndUhrzeitFuerChallenge|null */
-    public $gueltigkeitsdatumUndUhrzeitFuerChallenge;
+    public ?string $challenge = null;
+    public ?Bin $challengeHhdUc = null;
+    public ?GueltigkeitsdatumUndUhrzeitFuerChallenge $gueltigkeitsdatumUndUhrzeitFuerChallenge = null;
     /**
      * Note: There are generally two ways to treat TAN media, see also HKTAN's $bezeichnungDesTanMediums field. This
      * field here is set if the user does not choose the TAN medium beforehand, but the bank chooses it instead.
      *
      * M: bei TAN-Prozess=1, 3, 4 und „Anzahl unterstützter aktiver TAN-Medien“ nicht vorhanden
      * O: sonst
-     * @var string|null Max length 32
+     * Max length 32
      */
-    public $bezeichnungDesTanMediums;
+    public ?string $bezeichnungDesTanMediums = null;
 
     /** {@inheritdoc} */
     public function getProcessId(): string

@@ -13,14 +13,14 @@ use Fhp\Segment\BaseDeg;
  */
 class AntwortHhdUc extends BaseDeg
 {
-    /** @var string Max length 5 */
-    public $atc;
-    /** @var string Binary; Max length 256 */
-    public $applicationCryptogramAc;
-    /** @var string Binary; Max length 256 */
-    public $efIdData;
-    /** @var string Binary; Max length 256 */
-    public $cvr;
-    /** @var string Binary; Max length 256 */
-    public $versionsinfoDerChipTanApplication;
+    /** Max length 5 */
+    public string $atc;
+    /** Binary; Max length 256 */
+    public string $applicationCryptogramAc;
+    /** Binary; Max length 256 */
+    public string $efIdData;
+    /** Binary; Max length 256 */
+    public string $cvr;
+    /** Binary; Max length 256 */
+    public string $versionsinfoDerChipTanApplication;
 }

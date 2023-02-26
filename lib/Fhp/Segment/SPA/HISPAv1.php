@@ -14,7 +14,7 @@ use Fhp\Segment\BaseSegment;
 class HISPAv1 extends BaseSegment implements HISPA
 {
     /** @var \Fhp\Segment\Common\Ktz[]|null @Max(999) */
-    public $sepaKontoverbindung;
+    public ?array $sepaKontoverbindung = null;
 
     /** @return \Fhp\Segment\Common\Ktz[] */
     public function getSepaKontoverbindung(): array

@@ -20,10 +20,10 @@ class SicherheitsprofilV1 extends BaseDeg
     public const VERSION_EIN_SCHRITT_VERFAHREN = 1;
     public const VERSION_ZWEI_SCHRITT_VERFAHREN = 2;
 
-    /** @var string Allowed values: "PIN", "RAH" */
-    public $sicherheitsverfahren;
-    /** @var int Allowed values: 1, 2 (for "PIN"), 7, 9, 10 (for "RAH") */
-    public $versionDesSicherheitsverfahrens;
+    /** Allowed values: "PIN", "RAH" */
+    public string $sicherheitsverfahren;
+    /** Allowed values: 1, 2 (for "PIN"), 7, 9, 10 (for "RAH") */
+    public int $versionDesSicherheitsverfahrens;
 
     /**
      * @param TanMode|null $tanMode Optionally specifies which two-step TAN mode to use, defaults to 999 (single step).

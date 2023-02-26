@@ -2,7 +2,6 @@
 
 namespace Fhp\Segment\AUB;
 
-use Fhp\DataTypes\Bin;
 use Fhp\Segment\BaseSegment;
 
 /**
@@ -13,12 +12,10 @@ use Fhp\Segment\BaseSegment;
  */
 class HKAUBv9 extends BaseSegment
 {
-    /** @var \Fhp\Segment\Common\Kti */
-    public $kontoverbindungInternational;
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
 
-    /** @var int Max length: 4 */
-    public $DTAZVHandbuch;
+    /** Max length: 4 */
+    public int $DTAZVHandbuch;
 
-    /** @var Bin */
-    public $DTAZVDatensatz;
+    public \Fhp\Syntax\Bin $DTAZVDatensatz;
 }

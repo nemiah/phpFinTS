@@ -12,10 +12,8 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HISPASv1 extends BaseGeschaeftsvorfallparameter implements HISPAS
 {
-    /** @var ParameterSepaKontoverbindungAnfordernV1 */
-    public $parameter;
+    public ParameterSepaKontoverbindungAnfordernV1 $parameter;
 
-    /** {@inheritdoc} */
     public function getParameter(): ParameterSepaKontoverbindungAnfordern
     {
         return $this->parameter;

@@ -14,10 +14,9 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterKontoumsaetzeV1 extends BaseDeg implements ParameterKontoumsaetze
 {
-    /** @var int Positive, number of days. */
-    public $speicherzeitraum;
-    /** @var bool */
-    public $eingabeAnzahlEintraegeErlaubt;
+    /** Positive, number of days. */
+    public int $speicherzeitraum;
+    public bool $eingabeAnzahlEintraegeErlaubt;
 
     public function getAlleKontenErlaubt(): bool
     {

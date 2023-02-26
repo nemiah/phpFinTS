@@ -14,12 +14,12 @@ use Fhp\Segment\BaseSegment;
  */
 class HISYNv4 extends BaseSegment
 {
-    /** @var string|null Present if HKSYN.synchronisierungsmodus==0 */
-    public $kundensystemId;
-    /** @var int|null Present if HKSYN.synchronisierungsmodus==1 */
-    public $nachrichtennummer;
-    /** @var int|null Present if HKSYN.synchronisierungsmodus==2 */
-    public $sicherheitsreferenznummerFuerSignierschluessel;
-    /** @var int|null Present if HKSYN.synchronisierungsmodus==2 */
-    public $sicherheitsreferenznummerFuerDigitaleSignatur;
+    /** Present if HKSYN.synchronisierungsmodus==0 */
+    public ?string $kundensystemId = null;
+    /** Present if HKSYN.synchronisierungsmodus==1 */
+    public ?int $nachrichtennummer = null;
+    /** Present if HKSYN.synchronisierungsmodus==2 */
+    public ?int $sicherheitsreferenznummerFuerSignierschluessel = null;
+    /** Present if HKSYN.synchronisierungsmodus==2 */
+    public ?int $sicherheitsreferenznummerFuerDigitaleSignatur = null;
 }

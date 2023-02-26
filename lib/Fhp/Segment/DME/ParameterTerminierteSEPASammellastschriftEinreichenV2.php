@@ -6,18 +6,11 @@ use Fhp\Segment\DSE\ParameterTerminierteSEPALastschriftEinreichenV2;
 
 class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2
 {
-    /** @var int */
-    public $maximaleAnzahlDirectDebitTransferTransactionInformation;
-
-    /** @var bool */
-    public $summenfeldBenoetigt;
-
-    /** @var bool */
-    public $einzelbuchungErlaubt;
-
-    /** @var string|null Max Length: 4096 */
-    public $zulaessigePurposecodes;
-
+    public int $maximaleAnzahlDirectDebitTransferTransactionInformation;
+    public bool $summenfeldBenoetigt;
+    public bool $einzelbuchungErlaubt;
+    /** Max Length: 4096 */
+    public ?string $zulaessigePurposecodes = null;
     /** @var string[]|null @Max(9) Max Length: 256 */
-    public $unterstuetzteSEPADatenformate;
+    public ?array $unterstuetzteSEPADatenformate = null;
 }
