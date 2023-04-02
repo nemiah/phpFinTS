@@ -14,14 +14,11 @@ use Fhp\Segment\Paginateable;
  */
 class HKSALv7 extends BaseSegment implements Paginateable
 {
-    /** @var \Fhp\Segment\Common\Kti */
-    public $kontoverbindungInternational;
-    /** @var bool */
-    public $alleKonten;
-    /** @var int|null */
-    public $maximaleAnzahlEintraege;
-    /** @var string|null Max length: 35 */
-    public $aufsetzpunkt;
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
+    public bool $alleKonten;
+    public ?int $maximaleAnzahlEintraege = null;
+    /** Max length: 35 */
+    public ?string $aufsetzpunkt = null;
 
     public static function create(\Fhp\Segment\Common\Kti $kti, bool $alleKonten, ?string $aufsetzpunkt = null): HKSALv7
     {

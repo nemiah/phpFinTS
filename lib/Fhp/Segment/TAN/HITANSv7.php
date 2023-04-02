@@ -16,8 +16,7 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HITANSv7 extends BaseGeschaeftsvorfallparameter implements HITANS
 {
-    /** @var ParameterZweiSchrittTanEinreichungV7 */
-    public $parameterZweiSchrittTanEinreichung;
+    public ParameterZweiSchrittTanEinreichungV7 $parameterZweiSchrittTanEinreichung;
 
     public function getParameterZweiSchrittTanEinreichung(): ParameterZweiSchrittTanEinreichung
     {

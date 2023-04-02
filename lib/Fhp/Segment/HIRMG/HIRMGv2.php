@@ -21,5 +21,5 @@ class HIRMGv2 extends BaseSegment implements RueckmeldungContainer
     use FindRueckmeldungTrait; // For RueckmeldungContainer.
 
     /** @var \Fhp\Segment\HIRMS\Rueckmeldung[] @Max(99) */
-    public $rueckmeldung;
+    public array $rueckmeldung;
 }

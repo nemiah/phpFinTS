@@ -12,8 +12,7 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HICAZSv1 extends BaseGeschaeftsvorfallparameter
 {
-    /** @var ParameterKontoumsaetzeCamt */
-    public $parameter;
+    public ParameterKontoumsaetzeCamt $parameter;
 
     public function getParameter(): ParameterKontoumsaetzeCamt
     {

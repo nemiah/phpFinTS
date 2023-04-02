@@ -13,18 +13,18 @@ use Fhp\Syntax\Bin;
  */
 class HKDMEv1 extends BaseSegment
 {
-    /** @var \Fhp\Segment\Common\Kti IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
-    public $kontoverbindungInternational;
+    /** IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
 
-    /** @var \Fhp\Segment\Common\Btg|null Required if BDP „Summenfeld benötigt“ = J */
-    public $summenfeld;
+    /** Required if BDP „Summenfeld benötigt“ = J */
+    public ?\Fhp\Segment\Common\Btg $summenfeld = null;
 
-    /** @var bool|null Optional only if „Einzelbuchung erlaubt“ = J */
-    public $einzelbuchungGewuenscht;
+    /** Optional only if „Einzelbuchung erlaubt“ = J */
+    public ?bool $einzelbuchungGewuenscht = null;
 
-    /** @var string Max length: 256 */
-    public $sepaDescriptor;
+    /** Max length: 256 */
+    public string $sepaDescriptor;
 
     /** @var Bin XML */
-    public $sepaPainMessage;
+    public Bin $sepaPainMessage;
 }

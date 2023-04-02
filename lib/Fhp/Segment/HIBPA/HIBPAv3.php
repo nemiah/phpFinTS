@@ -14,22 +14,14 @@ use Fhp\Segment\BaseSegment;
  */
 class HIBPAv3 extends BaseSegment
 {
-    /** @var int */
-    public $bpdVersion;
-    /** @var \Fhp\Segment\Common\Kik */
-    public $kreditinstitutskennung;
-    /** @var string Max length: 60 */
-    public $kreditinstitutsbezeichnung;
-    /** @var int */
-    public $anzahlGeschaeftsvorfallarten;
-    /** @var UnterstuetzteSprachenV2 */
-    public $unterstuetzteSprachen;
-    /** @var UnterstuetzteHbciVersionenV2 */
-    public $unterstuetzteHbciVersionen;
-    /** @var int|null */
-    public $maximaleNachrichtengroesse;
-    /** @var int|null */
-    public $minimalerTimeoutWert;
-    /** @var int|null */
-    public $maximalerTimeoutWert;
+    public int $bpdVersion;
+    public \Fhp\Segment\Common\Kik $kreditinstitutskennung;
+    /** Max length: 60 */
+    public string $kreditinstitutsbezeichnung;
+    public int $anzahlGeschaeftsvorfallarten;
+    public UnterstuetzteSprachenV2 $unterstuetzteSprachen;
+    public UnterstuetzteHbciVersionenV2 $unterstuetzteHbciVersionen;
+    public ?int $maximaleNachrichtengroesse = null;
+    public ?int $minimalerTimeoutWert = null;
+    public ?int $maximalerTimeoutWert = null;
 }

@@ -13,8 +13,8 @@ use Fhp\Segment\BaseDeg;
  */
 class ZertifikatV2 extends BaseDeg
 {
-    /** @var int Allowed values: 1, 2, 3 */
-    public $zertifikatstyp;
-    /** @var string Binary, max length 4096 */
-    public $zertifikatsinhalt;
+    /** Allowed values: 1, 2, 3 */
+    public int $zertifikatstyp;
+    /** Binary, max length 4096 */
+    public string $zertifikatsinhalt;
 }

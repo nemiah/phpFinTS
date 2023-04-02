@@ -13,9 +13,8 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
     /**
      * The type plus version of the segment, i.e. the class name of the class that would normally implement it.
      * This is redundant with super::$segmentkopf, but it's useful to repeat here so that it shows up in a debugger.
-     * @var string
      */
-    public $type;
+    public string $type;
 
     /**
      * Contains the data elements of the segment. Some of them can be scalar values (represented as strings), and others
@@ -27,7 +26,7 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
      *
      * @var string[]|string[][]
      */
-    private $elements = [];
+    private array $elements;
 
     /**
      * @param string[]|string[][] $elements

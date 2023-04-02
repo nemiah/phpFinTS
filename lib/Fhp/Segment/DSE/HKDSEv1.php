@@ -13,12 +13,12 @@ use Fhp\Syntax\Bin;
  */
 class HKDSEv1 extends BaseSegment
 {
-    /** @var \Fhp\Segment\Common\Kti IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
-    public $kontoverbindungInternational;
+    /** IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
+    public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
 
-    /** @var string Max length: 256 */
-    public $sepaDescriptor;
+    /** Max length: 256 */
+    public string $sepaDescriptor;
 
-    /** @var Bin XML */
-    public $sepaPainMessage;
+    /** XML */
+    public Bin $sepaPainMessage;
 }

@@ -12,10 +12,9 @@ use Fhp\Segment\BaseDeg;
  */
 class KontolimitV1 extends BaseDeg
 {
-    /** @var string Allowed values: E, T, W, M, Z */
-    public $limitart;
-    /** @var \Fhp\Segment\Common\Btg */
-    public $limitbetrag;
-    /** @var int|null If present, must be greater than 0 */
-    public $limitTage;
+    /** Allowed values: E, T, W, M, Z */
+    public string $limitart;
+    public \Fhp\Segment\Common\Btg $limitbetrag;
+    /** If present, must be greater than 0 */
+    public ?int $limitTage = null;
 }

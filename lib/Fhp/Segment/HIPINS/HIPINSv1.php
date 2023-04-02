@@ -13,6 +13,5 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HIPINSv1 extends BaseGeschaeftsvorfallparameter
 {
-    /** @var ParameterPinTanSpezifischeInformationen */
-    public $parameter;
+    public ParameterPinTanSpezifischeInformationen $parameter;
 }

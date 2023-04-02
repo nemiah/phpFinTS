@@ -18,23 +18,20 @@ class HNHBKv3 extends BaseSegment
     /**
      * The length of the entire message (after encryption and compression) in bytes. While this is morally a number, the
      * specification requires padding it to 12 digits, so it is implemented as a string instead.
-     * @var string
      */
-    public $nachrichtengroesse = '000000000000'; // Ensure this field has always length 12.
+    public string $nachrichtengroesse = '000000000000'; // Ensure this field has always length 12.
     /**
      * Version 2.0.1 : 201 (Spezifikationsstatus: obsolet)
      * Version 2.1 : 210 (Spezifikationsstatus: obsolet)
      * Version 2.2 : 220 (Spezifikationsstatus: obsolet)
      * Version 3.0 : 300
-     * @var int
      */
-    public $hbciVersion = 300; // This library implements FinTS 3.0.
-    /** @var string */
-    public $dialogId;
-    /** @var int Must be positive. */
-    public $nachrichtennummer;
-    /** @var BezugsnachrichtV1|null Never sent to server, but always present in responses. */
-    public $bezugsnachricht;
+    public int $hbciVersion = 300; // This library implements FinTS 3.0.
+    public string $dialogId;
+    /** Must be positive. */
+    public int $nachrichtennummer;
+    /** Never sent to server, but always present in responses. */
+    public ?BezugsnachrichtV1 $bezugsnachricht = null;
 
     public function getNachrichtengroesse(): int
     {

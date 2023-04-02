@@ -13,25 +13,25 @@ use Fhp\Segment\BaseDeg;
  */
 class Rueckmeldung extends BaseDeg
 {
-    /** @var int See also the Rueckmeldungscode class/enum. */
-    public $rueckmeldungscode;
+    /** See also the Rueckmeldungscode class/enum. */
+    public int $rueckmeldungscode;
     /**
      * O: bei Verwendung im Segment HIRMS
      * N: bei Verwendung im Segment HIRMG
-     * @var string|null Max length: 7
+     * Max length: 7
      */
-    public $bezugsdatenelement;
-    /** @var string Max length: 80 */
-    public $rueckmeldungstext;
+    public ?string $bezugsdatenelement = null;
+    /** Max length: 80 */
+    public string $rueckmeldungstext;
     /** @var string[]|null @Max(10), max length each: 35 */
-    public $rueckmeldungsparameter;
+    public ?array $rueckmeldungsparameter = null;
 
     /**
      * This is not part of the FinTS wire format, but for convenience we store it here. If this Rueckmeldung pertains to
      * a particular segment of the request, then this will be its segment number.
-     * @var int|null @Ignore
+     * @Ignore
      */
-    public $referenceSegment;
+    public ?int $referenceSegment = null;
 
     public function __toString()
     {

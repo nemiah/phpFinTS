@@ -9,7 +9,7 @@ namespace Fhp\Segment;
 class SegmentDescriptor extends BaseDescriptor
 {
     /** @var SegmentDescriptor[] */
-    private static $descriptors = [];
+    private static array $descriptors = [];
 
     /**
      * @param string $class The name of a sub-class of {@link BaseSegment}.
@@ -23,8 +23,8 @@ class SegmentDescriptor extends BaseDescriptor
         return static::$descriptors[$class];
     }
 
-    /** @var string Example: "HITANS" */
-    public $kennung;
+    /** Example: "HITANS" */
+    public string $kennung;
 
     /**
      * Please use the factory above.
@@ -51,7 +51,7 @@ class SegmentDescriptor extends BaseDescriptor
         }
     }
 
-    public function validateObject($obj) // Override
+    public function validateObject($obj): void // Override
     {
         parent::validateObject($obj);
         if (!($obj instanceof BaseSegment)) {

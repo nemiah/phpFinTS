@@ -17,9 +17,8 @@ class HKTABv5 extends BaseSegment
      * 0: Alle
      * 1: Aktiv
      * 2: Verfügbar
-     * @var int
      */
-    public $tanMediumArt = 0;
+    public int $tanMediumArt = 0;
     /**
      * A: Alle Medien
      * L: Liste
@@ -27,7 +26,6 @@ class HKTABv5 extends BaseSegment
      * M: Mobiltelefon mit mobileTAN
      * S: Secoder
      * B: Bilateral vereinbart
-     * @var string
      */
-    public $tanMediumKlasse = 'A';
+    public string $tanMediumKlasse = 'A';
 }

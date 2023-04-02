@@ -12,8 +12,7 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HIKAZSv6 extends BaseGeschaeftsvorfallparameter implements HIKAZS
 {
-    /** @var ParameterKontoumsaetzeV2 */
-    public $parameter;
+    public ParameterKontoumsaetzeV2 $parameter;
 
     public function getParameter(): ParameterKontoumsaetze
     {

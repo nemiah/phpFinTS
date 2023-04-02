@@ -4,10 +4,7 @@ namespace Fhp\Syntax;
 
 class Bin
 {
-    /**
-     * @var string
-     */
-    protected $string;
+    protected string $string;
 
     public function __construct(string $string)
     {
@@ -19,7 +16,7 @@ class Bin
      *
      * @return $this
      */
-    public function setData(string $data)
+    public function setData(string $data): static
     {
         $this->string = $data;
 

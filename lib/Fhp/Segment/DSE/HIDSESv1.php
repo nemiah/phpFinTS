@@ -13,8 +13,7 @@ use Fhp\Segment\BaseSegment;
  */
 class HIDSESv1 extends BaseGeschaeftsvorfallparameter implements HIDXES
 {
-    /** @var ParameterTerminierteSEPAEinzellastschriftEinreichenV1 */
-    public $parameter;
+    public ParameterTerminierteSEPAEinzellastschriftEinreichenV1 $parameter;
 
     public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
     {

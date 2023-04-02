@@ -13,10 +13,10 @@ use Fhp\Segment\BaseDeg;
  */
 class BenutzerdefinierteSignaturV1 extends BaseDeg
 {
-    /** @var string Max length: 99 */
-    public $pin;
-    /** @var string|null Max length: 99 */
-    public $tan;
+    /** Max length: 99 */
+    public string $pin;
+    /** Max length: 99 */
+    public ?string $tan = null;
 
     public static function create(string $pin, ?string $tan): BenutzerdefinierteSignaturV1
     {

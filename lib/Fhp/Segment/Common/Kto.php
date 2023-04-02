@@ -15,10 +15,8 @@ use Fhp\Segment\BaseDeg;
  */
 class Kto extends BaseDeg implements AccountInfo
 {
-    /** @var string */
-    public $kontonummer; // Aka Depotnummer
-    /** @var Kik */
-    public $kik;
+    public string $kontonummer; // Aka Depotnummer
+    public Kik $kik;
 
     public static function create(string $kontonummer, Kik $kik): Kto
     {
@@ -34,13 +32,13 @@ class Kto extends BaseDeg implements AccountInfo
     }
 
     /** {@inheritdoc} */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->kontonummer;
     }
 
     /** {@inheritdoc} */
-    public function getBankIdentifier()
+    public function getBankIdentifier(): ?string
     {
         return $this->kik->kreditinstitutscode;
     }

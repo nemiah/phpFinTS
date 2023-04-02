@@ -9,7 +9,7 @@ namespace Fhp\Segment;
 class DegDescriptor extends BaseDescriptor
 {
     /** @var DegDescriptor[] */
-    private static $descriptors = [];
+    private static array $descriptors = [];
 
     /**
      * @param string $class The name of a sub-class of {@link BaseDeg}.

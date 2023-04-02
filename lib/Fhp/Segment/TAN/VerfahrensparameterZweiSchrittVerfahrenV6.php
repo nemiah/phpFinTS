@@ -8,28 +8,24 @@ use Fhp\Segment\BaseDeg;
 
 class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMode
 {
-    /** @var int Allowed values: 900 through 997 */
-    public $sicherheitsfunktion;
-    /** @var string Allowed values: 1, 2; See specification or {@link HKTANv6::$$tanProzess} for details. */
-    public $tanProzess;
-    /** @var string */
-    public $technischeIdentifikationTanVerfahren;
-    /** @var string|null Max length: 32 */
-    public $zkaTanVerfahren;
-    /** @var string|null Max length: 10 */
-    public $versionZkaTanVerfahren;
-    /** @var string Max length: 30 */
-    public $nameDesZweiSchrittVerfahrens;
-    /** @var int */
-    public $maximaleLaengeDesTanEingabewertes;
-    /** @var int Allowed values: 1 = numerisch, 2 = alfanumerisch */
-    public $erlaubtesFormat;
-    /** @var string */
-    public $textZurBelegungDesRueckgabewertes;
-    /** @var int Allowed values: 1 through 256 */
-    public $maximaleLaengeDesRueckgabewertes;
-    /** @var bool */
-    public $mehrfachTanErlaubt;
+    /** Allowed values: 900 through 997 */
+    public int $sicherheitsfunktion;
+    /** Allowed values: 1, 2; See specification or {@link HKTANv6::$$tanProzess} for details. */
+    public string $tanProzess;
+    public string $technischeIdentifikationTanVerfahren;
+    /** Max length: 32 */
+    public ?string $zkaTanVerfahren = null;
+    /** Max length: 10 */
+    public ?string $versionZkaTanVerfahren = null;
+    /** Max length: 30 */
+    public string $nameDesZweiSchrittVerfahrens;
+    public int $maximaleLaengeDesTanEingabewertes;
+    /** Allowed values: 1 = numerisch, 2 = alfanumerisch */
+    public int $erlaubtesFormat;
+    public string $textZurBelegungDesRueckgabewertes;
+    /** Allowed values: 1 through 256 */
+    public int $maximaleLaengeDesRueckgabewertes;
+    public bool $mehrfachTanErlaubt;
     /**
      * In case of multi-TAN (see {@link $mehrfachTanErlaubt}), this specifies whether all TANs must be entered in the
      * same dialog and at the same time, or not.
@@ -37,27 +33,21 @@ class VerfahrensparameterZweiSchrittVerfahrenV6 extends BaseDeg implements TanMo
      * 2 TAN zeitversetzt / dialogübergreifend erlaubt
      * 3 beide Verfahren unterstützt
      * 4 nicht zutreffend
-     * @var int
      */
-    public $tanZeitUndDialogbezug;
-    /** @var bool */
-    public $auftragsstornoErlaubt;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $smsAbbuchungskontoErforderlich;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $auftraggeberkontoErforderlich;
-    /** @var bool */
-    public $challengeKlasseErforderlich;
-    /** @var bool */
-    public $challengeStrukturiert;
-    /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
-    public $initialisierungsmodus;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $bezeichnungDesTanMediumsErforderlich;
-    /** @var bool */
-    public $antwortHhdUcErforderlich;
-    /** @var int|null */
-    public $anzahlUnterstuetzterAktiverTanMedien;
+    public int $tanZeitUndDialogbezug;
+    public bool $auftragsstornoErlaubt;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $smsAbbuchungskontoErforderlich;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $auftraggeberkontoErforderlich;
+    public bool $challengeKlasseErforderlich;
+    public bool $challengeStrukturiert;
+    /** Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
+    public string $initialisierungsmodus;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $bezeichnungDesTanMediumsErforderlich;
+    public bool $antwortHhdUcErforderlich;
+    public ?int $anzahlUnterstuetzterAktiverTanMedien = null;
 
     /** {@inheritdoc} */
     public function getId(): int

@@ -14,8 +14,8 @@ use Fhp\Syntax\Bin;
  */
 class HIWPDv5 extends BaseSegment implements HIWPD
 {
-    /** @var Bin Uses SWIFT format MT353, version SRG 1998 */
-    public $depotaufstellung;
+    /** Uses SWIFT format MT353, version SRG 1998 */
+    public Bin $depotaufstellung;
 
     public function getDepotaufstellung(): Bin
     {

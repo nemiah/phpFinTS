@@ -18,12 +18,11 @@ use Fhp\Segment\BaseSegment;
  */
 class HIUPDv6 extends BaseSegment implements HIUPD
 {
-    /** @var \Fhp\Segment\Common\KtvV3|null */ // Note: Specification wants version 2, but only specifies version 3.
-    public $kontoverbindung;
-    /** @var string|null Max length: 34 */
-    public $iban;
-    /** @var string */
-    public $kundenId;
+    // Note: Specification wants version 2, but only specifies version 3.
+    public ?\Fhp\Segment\Common\KtvV3 $kontoverbindung = null;
+    /** Max length: 34 */
+    public ?string $iban = null;
+    public string $kundenId;
     /**
      * 1 – 9: Kontokorrent-/Girokonto
      * 10 – 19: Sparkonto
@@ -35,28 +34,22 @@ class HIUPDv6 extends BaseSegment implements HIUPD
      * 70 – 79: Bausparvertrag
      * 80 – 89: Versicherungsvertrag
      * 90 – 99: Sonstige (nicht zuordenbar)
-     * @var int|null
      */
-    public $kontoart;
-    /** @var string|null */
-    public $kontowaehrung;
-    /** @var string */
-    public $name1;
-    /** @var string|null */
-    public $name2;
-    /** @var string|null */
-    public $kontoproduktbezeichnung;
-    /** @var KontolimitV2|null */
-    public $kontolimit;
+    public ?int $kontoart = null;
+    public ?string $kontowaehrung = null;
+    public string $name1;
+    public ?string $name2 = null;
+    public ?string $kontoproduktbezeichnung = null;
+    public ?KontolimitV2 $kontolimit = null;
     /** @var ErlaubteGeschaeftsvorfaelleV2[]|null @Max(999) */
-    public $erlaubteGeschaeftsvorfaelle;
+    public ?array $erlaubteGeschaeftsvorfaelle = null;
     /**
      * JSON-encoded extra information.
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Formals_2017-10-06_final_version.pdf
      * Section: E.3.1 "Aufbau der UPD-Erweiterung, kontobezogen"
-     * @var string|null Max length: 2048
+     * Max length: 2048
      */
-    public $erweiterungKontobezogen;
+    public ?string $erweiterungKontobezogen = null;
 
     /** {@inheritdoc} */
     public function matchesAccount(SEPAAccount $account): bool

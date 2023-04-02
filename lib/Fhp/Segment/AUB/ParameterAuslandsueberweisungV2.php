@@ -6,24 +6,11 @@ use Fhp\Segment\BaseDeg;
 
 class ParameterAuslandsueberweisungV2 extends BaseDeg
 {
-    /** @var int */
-    public $DTAZVHandbuch;
-
-    /** @var int */
-    public $maximaleAnzahlTSaetze;
-
-    /** @var float */
-    public $meldepflichtgrenzbetrag;
-
-    /** @var string|null */
-    public $unterstuetzteMeldesaetze;
-
-    /** @var string|null */
-    public $zugelasseneWeisungsschluessel;
-
-    /** @var string|null */
-    public $maximaleAnzahlDerZugelassenenWeisungschluessel;
-
-    /** @var string|null */
-    public $erlaubteZahlungsarten;
+    public int $DTAZVHandbuch;
+    public int $maximaleAnzahlTSaetze;
+    public float $meldepflichtgrenzbetrag;
+    public ?string $unterstuetzteMeldesaetze = null;
+    public ?string $zugelasseneWeisungsschluessel = null;
+    public ?string $maximaleAnzahlDerZugelassenenWeisungschluessel = null;
+    public ?string $erlaubteZahlungsarten = null;
 }

@@ -15,12 +15,9 @@ class ParameterSepaKontoverbindungAnfordernV1 extends BaseDeg implements Paramet
 {
     use GetUnterstuetzteSepaDatenformateTrait;
 
-    /** @var bool */
-    public $einzelkontenabrufErlaubt;
-    /** @var bool */
-    public $nationaleKontoverbindungErlaubt;
-    /** @var bool */
-    public $strukturierterVerwendungszweckErlaubt;
+    public bool $einzelkontenabrufErlaubt;
+    public bool $nationaleKontoverbindungErlaubt;
+    public bool $strukturierterVerwendungszweckErlaubt;
     /** @var string[] @Max(99) Max length each: 256 */
-    public $unterstuetzteSepaDatenformate;
+    public array $unterstuetzteSepaDatenformate;
 }

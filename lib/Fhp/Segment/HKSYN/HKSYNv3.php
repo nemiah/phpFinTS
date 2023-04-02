@@ -18,7 +18,6 @@ class HKSYNv3 extends BaseSegment
      * 0: Neue Kundensystem-ID zurückmelden
      * 1: Letzte verarbeitete Nachrichtennummer zurückmelden
      * 2: Signatur-ID zurückmelden
-     * @var int integer
      */
-    public $synchronisierungsmodus = 0; // The only mode we need in practice.
+    public int $synchronisierungsmodus = 0; // The only mode we need in practice.
 }

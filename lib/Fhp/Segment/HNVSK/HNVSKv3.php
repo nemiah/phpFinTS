@@ -29,29 +29,22 @@ class HNVSKv3 extends BaseSegment
      */
     public const SEGMENT_NUMBER = 998;
 
-    /** @var SicherheitsprofilV1 */
-    public $sicherheitsprofil;
+    public SicherheitsprofilV1 $sicherheitsprofil;
     /**
      * For the PIN/TAN profile, this must be 998 (see section B.9.8).
-     * @var int
      */
-    public $sicherheitsfunktion = 998;
+    public int $sicherheitsfunktion = 998;
     /**
      * 1: Der Unterzeichner ist Herausgeber der signierten Nachricht, z. B. Erfasser oder Erstsignatur (ISS)
      * (Not allowed: 3: Der Unterzeichner unterstützt den Inhalt der Nachricht, z. B. bei Zweitsignatur (CON))
      * 4: Der Unterzeichner ist Zeuge, aber für den Inhalt der Nachricht nicht verantwortlich, z. B. Übermittler,
      *    welcher nicht Erfasser ist (WIT)
-     * @var int
      */
-    public $rolleDesSicherheitslieferanten = 1;
-    /** @var SicherheitsidentifikationDetailsV2 */
-    public $sicherheitsidentifikationDetails;
-    /** @var SicherheitsdatumUndUhrzeitV2 */
-    public $sicherheitsdatumUndUhrzeit;
-    /** @var VerschluesselungsalgorithmusV2 */
-    public $verschluesselungsalgorithmus;
-    /** @var SchluesselnameV3 */
-    public $schluesselname;
+    public int $rolleDesSicherheitslieferanten = 1;
+    public SicherheitsidentifikationDetailsV2 $sicherheitsidentifikationDetails;
+    public SicherheitsdatumUndUhrzeitV2 $sicherheitsdatumUndUhrzeit;
+    public VerschluesselungsalgorithmusV2 $verschluesselungsalgorithmus;
+    public SchluesselnameV3 $schluesselname;
     /**
      * 0: Keine Kompression (NULL)
      * 1: Lempel, Ziv, Welch (LZW)
@@ -62,11 +55,10 @@ class HNVSKv3 extends BaseSegment
      * 6: deflate (GZIP) (http://www.gzip.org/zlib)
      * 7: bzip2 (http://sourceware.cygnus.com/bzip2/)
      * 999: Gegenseitig vereinbart (ZZZ)
-     * @var int
      */
-    public $komprimierungsfunktion = 0; // This library does not support compression.
-    /** @var ZertifikatV2|null For the PIN/TAN profile, this must be empty (see section B.9.8). */
-    public $zertifikat;
+    public int $komprimierungsfunktion = 0; // This library does not support compression.
+    /** For the PIN/TAN profile, this must be empty (see section B.9.8). */
+    public ?ZertifikatV2 $zertifikat = null;
 
     /**
      * @param FinTsOptions $options See {@link FinTsOptions}.

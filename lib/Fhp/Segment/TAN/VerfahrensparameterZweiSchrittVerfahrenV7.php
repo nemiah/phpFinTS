@@ -8,12 +8,11 @@ use Fhp\Segment\BaseDeg;
 
 class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMode
 {
-    /** @var int Allowed values: 900 through 997 */
-    public $sicherheitsfunktion;
-    /** @var string Allowed values: 1, 2; See specification or {@link HKTANv7::$$tanProzess} for details. */
-    public $tanProzess;
-    /** @var string */
-    public $technischeIdentifikationTanVerfahren;
+    /** Allowed values: 900 through 997 */
+    public int $sicherheitsfunktion;
+    /** Allowed values: 1, 2; See specification or {@link HKTANv7::$$tanProzess} for details. */
+    public string $tanProzess;
+    public string $technischeIdentifikationTanVerfahren;
     /**
      * Allowed values:
      * - HHD
@@ -23,23 +22,21 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
      * - App
      * - Decoupled
      * - DecoupledPush
-     * @var string|null Max length: 32
+     * Max length: 32
      */
-    public $dkTanVerfahren;
-    /** @var string|null Max length: 10 */
-    public $versionDkTanVerfahren;
-    /** @var string Max length: 30 */
-    public $nameDesZweiSchrittVerfahrens;
-    /** @var int|null Present iff !isDecoupled. */
-    public $maximaleLaengeDesTanEingabewertes;
-    /** @var int|null Present iff !isDecoupled. Allowed values: 1 = numerisch, 2 = alfanumerisch */
-    public $erlaubtesFormat;
-    /** @var string */
-    public $textZurBelegungDesRueckgabewertes;
-    /** @var int Allowed values: 1 through 256 */
-    public $maximaleLaengeDesRueckgabewertes;
-    /** @var bool */
-    public $mehrfachTanErlaubt;
+    public ?string $dkTanVerfahren = null;
+    /** Max length: 10 */
+    public ?string $versionDkTanVerfahren = null;
+    /** Max length: 30 */
+    public string $nameDesZweiSchrittVerfahrens;
+    /** Present iff !isDecoupled. */
+    public ?int $maximaleLaengeDesTanEingabewertes = null;
+    /** Present iff !isDecoupled. Allowed values: 1 = numerisch, 2 = alfanumerisch */
+    public ?int $erlaubtesFormat = null;
+    public string $textZurBelegungDesRueckgabewertes;
+    /** Allowed values: 1 through 256 */
+    public int $maximaleLaengeDesRueckgabewertes;
+    public bool $mehrfachTanErlaubt;
     /**
      * In case of multi-TAN (see {@link $mehrfachTanErlaubt}), this specifies whether all TANs must be entered in the
      * same dialog and at the same time, or not.
@@ -47,37 +44,31 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
      * 2 TAN zeitversetzt / dialogübergreifend erlaubt
      * 3 beide Verfahren unterstützt
      * 4 nicht zutreffend
-     * @var int
      */
-    public $tanZeitUndDialogbezug;
-    /** @var bool */
-    public $auftragsstornoErlaubt;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $smsAbbuchungskontoErforderlich;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $auftraggeberkontoErforderlich;
-    /** @var bool */
-    public $challengeKlasseErforderlich;
-    /** @var bool */
-    public $challengeStrukturiert;
-    /** @var string Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
-    public $initialisierungsmodus;
-    /** @var int Allowed values: 0 (cannot), 2 (must) */
-    public $bezeichnungDesTanMediumsErforderlich;
-    /** @var bool */
-    public $antwortHhdUcErforderlich;
-    /** @var int|null */
-    public $anzahlUnterstuetzterAktiverTanMedien;
-    /** @var int|null Present iff isDecoupled. 0 means infinity. */
-    public $maximaleAnzahlStatusabfragen;
-    /** @var int|null Present iff isDecoupled. In seconds. */
-    public $wartezeitVorErsterStatusabfrage;
-    /** @var int|null Present iff isDecoupled. In seconds. */
-    public $wartezeitVorNaechsterStatusabfrage;
-    /** @var bool|null Maybe present if isDecoupled. */
-    public $manuelleBestaetigungMoeglich;
-    /** @var bool|null Maybe present if isDecoupled. */
-    public $automatisierteStatusabfragenErlaubt;
+    public int $tanZeitUndDialogbezug;
+    public bool $auftragsstornoErlaubt;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $smsAbbuchungskontoErforderlich;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $auftraggeberkontoErforderlich;
+    public bool $challengeKlasseErforderlich;
+    public bool $challengeStrukturiert;
+    /** Allowed values: 00 (cleartext PIN, no TAN), 01 (Schablone 01, encrypted PIN), 02 (reserved) */
+    public string $initialisierungsmodus;
+    /** Allowed values: 0 (cannot), 2 (must) */
+    public int $bezeichnungDesTanMediumsErforderlich;
+    public bool $antwortHhdUcErforderlich;
+    public ?int $anzahlUnterstuetzterAktiverTanMedien = null;
+    /** Present iff isDecoupled. 0 means infinity. */
+    public ?int $maximaleAnzahlStatusabfragen = null;
+    /** Present iff isDecoupled. In seconds. */
+    public ?int $wartezeitVorErsterStatusabfrage = null;
+    /** Present iff isDecoupled. In seconds. */
+    public ?int $wartezeitVorNaechsterStatusabfrage = null;
+    /** Maybe present if isDecoupled. */
+    public ?bool $manuelleBestaetigungMoeglich = null;
+    /** Maybe present if isDecoupled. */
+    public ?bool $automatisierteStatusabfragenErlaubt = null;
 
     /** {@inheritdoc} */
     public function getId(): int

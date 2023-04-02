@@ -12,8 +12,7 @@ use Fhp\Segment\BaseSegment;
  */
 class HKENDv1 extends BaseSegment
 {
-    /** @var string */
-    public $dialogId;
+    public string $dialogId;
 
     public static function create(string $dialogId): HKENDv1
     {

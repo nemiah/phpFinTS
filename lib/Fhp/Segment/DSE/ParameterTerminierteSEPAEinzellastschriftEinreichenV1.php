@@ -6,17 +6,12 @@ use Fhp\Segment\BaseDeg;
 
 class ParameterTerminierteSEPAEinzellastschriftEinreichenV1 extends BaseDeg implements SEPADirectDebitMinimalLeadTimeProvider
 {
-    /** @var int Must be => 1 */
-    public $minimaleVorlaufzeitFNALRCUR;
-
-    /** @var int */
-    public $maximaleVorlaufzeitFNALRCUR;
-
-    /** @var int Must be => 1 */
-    public $minimaleVorlaufzeitFRSTOOFF;
-
-    /** @var int */
-    public $maximaleVorlaufzeitFRSTOOFF;
+    /** Must be => 1 */
+    public int $minimaleVorlaufzeitFNALRCUR;
+    public int $maximaleVorlaufzeitFNALRCUR;
+    /** Must be => 1 */
+    public int $minimaleVorlaufzeitFRSTOOFF;
+    public int $maximaleVorlaufzeitFRSTOOFF;
 
     public function getMinimalLeadTime(string $seqType): ?MinimaleVorlaufzeitSEPALastschrift
     {

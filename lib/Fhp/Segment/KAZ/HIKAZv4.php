@@ -17,10 +17,10 @@ use Fhp\Syntax\Bin;
  */
 class HIKAZv4 extends BaseSegment implements HIKAZ
 {
-    /** @var Bin Uses SWIFT format MT940, version SRG 2001 */
-    public $gebuchteUmsaetze;
-    /** @var Bin|null Uses SWIFT format MT942, version SRG 2001 */
-    public $nichtGebuchteUmsaetze;
+    /** Uses SWIFT format MT940, version SRG 2001 */
+    public Bin $gebuchteUmsaetze;
+    /** Uses SWIFT format MT942, version SRG 2001 */
+    public ?Bin $nichtGebuchteUmsaetze = null;
 
     public function getGebuchteUmsaetze(): Bin
     {

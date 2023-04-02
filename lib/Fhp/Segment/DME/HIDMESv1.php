@@ -15,8 +15,7 @@ use Fhp\Segment\DSE\SEPADirectDebitMinimalLeadTimeProvider;
  */
 class HIDMESv1 extends BaseGeschaeftsvorfallparameter implements HIDXES
 {
-    /** @var ParameterTerminierteSEPASammellastschriftEinreichenV1 */
-    public $parameter;
+    public ParameterTerminierteSEPASammellastschriftEinreichenV1 $parameter;
 
     public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
     {

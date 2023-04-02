@@ -9,10 +9,10 @@ use Fhp\Syntax\Bin;
  */
 abstract class BaseDescriptor
 {
-    /** @var string Example: "Fhp\Segment\TAN\HITANSv6" (Segment) or "Fhp\Common\Kik" (Deg) */
-    public $class;
-    /** @var int Example: 1 */
-    public $version = 1;
+    /** Example: "Fhp\Segment\TAN\HITANSv6" (Segment) or "Fhp\Common\Kik" (Deg) */
+    public string $class;
+    /** Example: 1 */
+    public int $version = 1;
 
     /**
      * Descriptors for the elements inside the segment/Deg in the order of the wire format. The indices in this array
@@ -20,15 +20,14 @@ abstract class BaseDescriptor
      * documentation does not specify it (anymore).
      * @var ElementDescriptor[]
      */
-    public $elements = [];
+    public array $elements = [];
 
     /**
      * The last index that can be present in an exploded serialized segment/DEG. If one were to append a new field to
      * segment/DEG described by this descriptor, it would get index $maxIndex+1.
      * Usually $maxIndex==array_key_last($elements), but when the last element is repeated, then $maxIndex is larger.
-     * @var int
      */
-    public $maxIndex;
+    public int $maxIndex;
 
     protected function __construct(\ReflectionClass $clazz)
     {
@@ -36,10 +35,7 @@ abstract class BaseDescriptor
         $implicitIndex = true;
         $nextIndex = 0;
         foreach (static::enumerateProperties($clazz) as $property) {
-            $docComment = $property->getDocComment();
-            if (!is_string($docComment)) {
-                throw new \InvalidArgumentException("Property $property must be annotated.");
-            }
+            $docComment = $property->getDocComment() ?: '';
             if (static::getBoolAnnotation('Ignore', $docComment)) {
                 continue; // Skip @Ignore-d propeties.
             }
@@ -47,30 +43,47 @@ abstract class BaseDescriptor
             $index = $nextIndex;
             $descriptor = new ElementDescriptor();
             $descriptor->field = $property->getName();
-            $type = static::getVarAnnotation($docComment);
-            if ($type === null) {
+            $maxCount = static::getIntAnnotation('Max', $docComment);
+            if ($type = static::getVarAnnotation($docComment)) {
+                if (str_ends_with($type, '|null')) { // Nullable field
+                    $descriptor->optional = true;
+                    $type = substr($type, 0, -5);
+                }
+                if (str_ends_with($type, '[]')) { // Array/repeated field
+                    if ($maxCount === null) {
+                        throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
+                    }
+                    $descriptor->repeated = $maxCount;
+                    $type = substr($type, 0, -2);
+                    // If a repeated field is followed by anything at all, there will be an empty entry for each possible
+                    // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
+                    $nextIndex += $maxCount;
+                } elseif ($maxCount !== null) {
+                    throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
+                } else {
+                    ++$nextIndex; // Singular field, so the index advances by 1.
+                }
+                $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
+            } elseif ($type = $property->getType()) {
+                $descriptor->optional = $type->allowsNull();
+                if ($type instanceof \ReflectionUnionType) {
+                    throw new \InvalidArgumentException("Union type not supported for $property");
+                } elseif ($type->getName() === 'array') {
+                    throw new \InvalidArgumentException("Array type must use @type annotation on $property");
+                } elseif ($type->isBuiltin()) {
+                    $descriptor->type = $type->getName();
+                } else {
+                    try {
+                        $descriptor->type = new \ReflectionClass($type->getName());
+                    } catch (\ReflectionException $e) {
+                        throw new \InvalidArgumentException(
+                            "Cannot resolve type {$type->getName()} for $property", 0, $e);
+                    }
+                }
+                ++$nextIndex; // Singular field, so the index advances by 1.
+            } else {
                 throw new \InvalidArgumentException("Need type on property $property");
             }
-            $maxCount = static::getIntAnnotation('Max', $docComment);
-            if (str_ends_with($type, '|null')) { // Nullable field
-                $descriptor->optional = true;
-                $type = substr($type, 0, -5);
-            }
-            if (str_ends_with($type, '[]')) { // Array/repeated field
-                if ($maxCount === null) {
-                    throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
-                }
-                $descriptor->repeated = $maxCount;
-                $type = substr($type, 0, -2);
-                // If a repeated field is followed by anything at all, there will be an empty entry for each possible
-                // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
-                $nextIndex += $maxCount;
-            } elseif ($maxCount !== null) {
-                throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
-            } else {
-                ++$nextIndex; // Singular field, so the index advances by 1.
-            }
-            $descriptor->type = static::resolveType($type, $property->getDeclaringClass());
             $this->elements[$index] = $descriptor;
         }
         if (count($this->elements) === 0) {
@@ -85,7 +98,7 @@ abstract class BaseDescriptor
      * @throws \InvalidArgumentException If any of the fields in the given object is not valid according to the schema
      *     defined by this descriptor.
      */
-    public function validateObject($obj)
+    public function validateObject($obj): void
     {
         if (!is_a($obj, $this->class)) {
             throw new \InvalidArgumentException("Expected $this->class, got " . gettype($obj));
@@ -100,7 +113,7 @@ abstract class BaseDescriptor
      * @return \Generator|\ReflectionProperty[] All non-static public properties of the given class and its parents, but
      *     with the parents' properties *first*.
      */
-    private static function enumerateProperties(\ReflectionClass $clazz)
+    private static function enumerateProperties(\ReflectionClass $clazz): array|\Generator
     {
         if ($clazz->getParentClass() !== false) {
             yield from static::enumerateProperties($clazz->getParentClass());
@@ -153,8 +166,8 @@ abstract class BaseDescriptor
      */
     private static function getBoolAnnotation(string $name, string $docComment): bool
     {
-        return str_contains("@$name ", $docComment)
-            || str_contains("@$name())", $docComment);
+        return str_contains($docComment, "@$name ")
+            || str_contains($docComment, "@$name())");
     }
 
     /**
@@ -178,7 +191,7 @@ abstract class BaseDescriptor
      *     classes in the same package.
      * @return string|\ReflectionClass The class that the type name refers to, or the scalar type name as a string.
      */
-    private static function resolveType(string $typeName, \ReflectionClass $contextClass)
+    private static function resolveType(string $typeName, \ReflectionClass $contextClass): \ReflectionClass|string
     {
         if (ElementDescriptor::isScalarType($typeName)) {
             return $typeName;

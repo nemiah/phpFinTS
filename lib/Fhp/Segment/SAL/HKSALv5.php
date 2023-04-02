@@ -15,14 +15,11 @@ use Fhp\Segment\Paginateable;
  */
 class HKSALv5 extends BaseSegment implements Paginateable
 {
-    /** @var \Fhp\Segment\Common\KtvV3 */
-    public $kontoverbindungAuftraggeber;
-    /** @var bool */
-    public $alleKonten;
-    /** @var int|null */
-    public $maximaleAnzahlEintraege;
-    /** @var string|null Max length: 35 */
-    public $aufsetzpunkt;
+    public \Fhp\Segment\Common\KtvV3 $kontoverbindungAuftraggeber;
+    public bool $alleKonten;
+    public ?int $maximaleAnzahlEintraege = null;
+    /** Max length: 35 */
+    public ?string $aufsetzpunkt = null;
 
     public static function create(\Fhp\Segment\Common\KtvV3 $ktv, bool $alleKonten, ?string $aufsetzpunkt = null): HKSALv5
     {

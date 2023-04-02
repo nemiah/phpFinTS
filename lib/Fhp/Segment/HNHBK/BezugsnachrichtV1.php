@@ -13,8 +13,8 @@ use Fhp\Segment\BaseDeg;
  */
 class BezugsnachrichtV1 extends BaseDeg
 {
-    /** @var string References a previously sent {@link HNHBKv3::$dialogId} */
-    public $dialogId;
-    /** @var int References a previously sent {@link HNHBKv3::$nachrichtennummer} */
-    public $nachrichtennummer;
+    /** References a previously sent {@link HNHBKv3::$dialogId} */
+    public string $dialogId;
+    /** References a previously sent {@link HNHBKv3::$nachrichtennummer} */
+    public int $nachrichtennummer;
 }

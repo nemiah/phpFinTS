@@ -12,6 +12,5 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HIAUBSv9 extends BaseGeschaeftsvorfallparameter
 {
-    /** @var ParameterAuslandsueberweisungV2 */
-    public $parameter;
+    public ParameterAuslandsueberweisungV2 $parameter;
 }

@@ -19,45 +19,42 @@ class TanMediumListeV4 extends BaseDeg implements TanMediumListe
      * G: TAN-Generator
      * M: Mobiltelefon mit mobileTAN
      * S: Secoder
-     * @var string
      */
-    public $tanMediumKlasse;
+    public string $tanMediumKlasse;
     /**
      * 1: Aktiv
      * 2: Verfügbar
      * 3: Aktiv Folgekarte
      * 4: Verfügbar Folgekarte
-     * @var int
      */
-    public $status;
-    /** @var string|null Only for tanMediumKlasse=='G' */
-    public $kartennummer;
-    /** @var string|null Only for tanMediumKlasse=='G' */
-    public $kartenfolgenummer;
-    /** @var int|null Only and optional for tanMediumKlasse=='G' and if BPD allows it */
-    public $kartenart;
-    /** @var \Fhp\Segment\Common\KtvV3|null Only and optional for tanMediumKlasse=='G' */
-    public $kontoverbindungAuftraggeber;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
-    public $gueltigAb;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
-    public $gueltigBis;
-    /** @var string|null Only for tanMediumKlasse=='L' */
-    public $tanListennumer;
-    /** @var string|null Must for tanMediumKlasse=='M', optional otherwise. Max length: 32 */
-    public $bezeichnungDesTanMediums;
-    /** @var string|null Only and optional for tanMediumKlasse=='M' */
-    public $mobiltelefonnummerVerschleiert;
-    /** @var string|null Only and optional for tanMediumKlasse=='M' */
-    public $mobiltelefonnummer;
-    /** @var \Fhp\Segment\Common\Kti|null Only and optional for tanMediumKlasse=='M' */
-    public $smsAbbuchungskonto;
-    /** @var int|null */
-    public $anzahlFreieTans;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
-    public $letzteBenutzung;
-    /** @var string|null JJJJMMTT gemäß ISO 8601 * */
-    public $freigeschaltetAm;
+    public int $status;
+    /** Only for tanMediumKlasse=='G' */
+    public ?string $kartennummer = null;
+    /** Only for tanMediumKlasse=='G' */
+    public ?string $kartenfolgenummer = null;
+    /** Only and optional for tanMediumKlasse=='G' and if BPD allows it */
+    public ?int $kartenart = null;
+    /** Only and optional for tanMediumKlasse=='G' */
+    public ?\Fhp\Segment\Common\KtvV3 $kontoverbindungAuftraggeber = null;
+    /** JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
+    public ?string $gueltigAb = null;
+    /** JJJJMMTT gemäß ISO 8601 Only and optional for tanMediumKlasse=='G' */
+    public ?string $gueltigBis = null;
+    /** Only for tanMediumKlasse=='L' */
+    public ?string $tanListennumer = null;
+    /** Must for tanMediumKlasse=='M', optional otherwise. Max length: 32 */
+    public ?string $bezeichnungDesTanMediums = null;
+    /** Only and optional for tanMediumKlasse=='M' */
+    public ?string $mobiltelefonnummerVerschleiert = null;
+    /** Only and optional for tanMediumKlasse=='M' */
+    public ?string $mobiltelefonnummer = null;
+    /** Only and optional for tanMediumKlasse=='M' */
+    public ?\Fhp\Segment\Common\Kti $smsAbbuchungskonto = null;
+    public ?int $anzahlFreieTans = null;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $letzteBenutzung = null;
+    /** JJJJMMTT gemäß ISO 8601 */
+    public ?string $freigeschaltetAm = null;
 
     /** {@inheritdoc} */
     public function getName(): string

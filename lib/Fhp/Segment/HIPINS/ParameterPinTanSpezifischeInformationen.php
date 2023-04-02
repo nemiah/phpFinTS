@@ -13,16 +13,13 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterPinTanSpezifischeInformationen extends BaseDeg
 {
-    /** @var int|null */
-    public $minimalePinLaenge;
-    /** @var int|null */
-    public $maximalePinLaenge;
-    /** @var int|null */
-    public $maximaleTanLaenge;
-    /** @var string|null Max length: 30; Label for the username field in the UI. */
-    public $textZurBelegungDerBenutzerkennung;
-    /** @var string|null Max length: 30; */
-    public $textZurBelegungDerKundenId;
+    public ?int $minimalePinLaenge = null;
+    public ?int $maximalePinLaenge = null;
+    public ?int $maximaleTanLaenge = null;
+    /** Max length: 30; Label for the username field in the UI. */
+    public ?string $textZurBelegungDerBenutzerkennung = null;
+    /** Max length: 30; */
+    public ?string $textZurBelegungDerKundenId = null;
     /** @var GeschaeftsvorfallspezifischePinTanInformationen[] @Max(999) */
-    public $geschaeftsvorfallspezifischePinTanInformationen;
+    public array $geschaeftsvorfallspezifischePinTanInformationen;
 }

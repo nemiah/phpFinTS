@@ -24,17 +24,17 @@ class MinimaleVorlaufzeitSEPALastschrift
         ['FRST', 'OOFF'],
     ];
 
-    /** @var int Must be 0,1,2 */
-    public $unterstuetzteSEPALastschriftartenCodiert;
+    /** Must be 0,1,2 */
+    public int $unterstuetzteSEPALastschriftartenCodiert;
 
-    /** @var int Must be 0,1,2 */
-    public $sequenceTypeCodiert;
+    /** Must be 0,1,2 */
+    public int $sequenceTypeCodiert;
 
-    /** @var int In Days */
-    public $minimaleSEPAVorlaufzeit;
+    /** In Days */
+    public int $minimaleSEPAVorlaufzeit;
 
-    /** @var string After this time the request will fail when the value of is used, for example 130000 meaning 1pm */
-    public $cutOffZeit;
+    /** After this time the request will fail when the value of is used, for example 130000 meaning 1pm */
+    public string $cutOffZeit;
 
     public static function create(int $minimaleSEPAVorlaufzeit, string $cutOffZeit, ?int $unterstuetzteSEPALastschriftartenCodiert = null,
         ?int $sequenceTypeCodiert = null): MinimaleVorlaufzeitSEPALastschrift
