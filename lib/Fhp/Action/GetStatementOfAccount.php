@@ -201,9 +201,9 @@ class GetStatementOfAccount extends PaginateableAction
 
     private function parseMt940()
     {
-        if (strpos(strtolower($this->bankName), 'sparda') !== false) {
+        if (str_contains(strtolower($this->bankName), 'sparda')) {
             $parser = new SpardaMT940();
-        } elseif (strpos(strtolower($this->bankName), 'postbank') !== false) {
+        } elseif (str_contains(strtolower($this->bankName), 'postbank')) {
             $parser = new PostbankMT940();
         } else {
             $parser = new MT940();

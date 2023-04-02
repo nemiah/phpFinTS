@@ -76,7 +76,7 @@ abstract class FinTsTestCase extends TestCase
             list($expectedRequest, $mockResponse) = array_shift($this->expectedMessages);
 
             // Check that the request matches the expectation.
-            if (strlen($expectedRequest) > 0 && strpos($expectedRequest, 'HNHBK') !== 0) {
+            if (strlen($expectedRequest) > 0 && !str_starts_with($expectedRequest, 'HNHBK')) {
                 // The expected request is just the inner part, so we need to unwrap the actual request. This is done in
                 // in a quick and hacky way, which slices everything from HNSHK's terminating delimiter to the start of
                 // HNSHA.
@@ -86,7 +86,7 @@ abstract class FinTsTestCase extends TestCase
             $this->assertEquals($expectedRequest, $request);
 
             // Send the mock response.
-            if (strpos($mockResponse, 'HNHBK') !== 0) {
+            if (!str_starts_with($mockResponse, 'HNHBK')) {
                 // The mock response is just the inner part, so we need to wrap it in a fake envelope.
                 $mockPrefix = 'HNHBK:1:3+';
                 // Note: The 4242 is the message number. It's garbage and a constant, but the SUT does not verify it.

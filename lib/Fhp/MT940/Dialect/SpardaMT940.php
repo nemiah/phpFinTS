@@ -77,7 +77,7 @@ class SpardaMT940 extends MT940
 
         $desc = parent::extractStructuredDataFromRemittanceLines($correctedLines, $gvc, $rawLines, $transaction);
 
-        if (isset($desc['SVWZ']) && strpos($desc['SVWZ'], 'Dauerauftrag') === 0) {
+        if (isset($desc['SVWZ']) && str_starts_with($desc['SVWZ'], 'Dauerauftrag')) {
             $gvc = '152';
             $rawLines[0] = 'Dauerauftrag-Gutschrift';
         }

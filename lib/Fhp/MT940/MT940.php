@@ -61,9 +61,9 @@ class MT940
                 } elseif (
                     // found transaction
                     // trx:61:1603310331DR637,39N033NONREF
-                    0 === strpos($day[$i], '61:')
+                    str_starts_with($day[$i], '61:')
                     && isset($day[$i + 1])
-                    && 0 === strpos($day[$i + 1], '86:')
+                    && str_starts_with($day[$i + 1], '86:')
                 ) {
                     $transaction = substr($day[$i], 3);
                     $description = substr($day[$i + 1], 3);

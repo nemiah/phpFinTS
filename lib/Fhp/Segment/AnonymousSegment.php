@@ -94,8 +94,9 @@ final class AnonymousSegment extends BaseSegment implements \Serializable
 
     /**
      * Just to override the super factory.
+     * @noinspection PhpUnnecessaryStaticReferenceInspection
      */
-    public static function createEmpty()
+    public static function createEmpty(): static
     {
         // Note: createEmpty() normally runs the constructor and then fills the Segmentkopf, but that is not possible
         // for AnonymousSegment. Callers should just call the constructor itself.
