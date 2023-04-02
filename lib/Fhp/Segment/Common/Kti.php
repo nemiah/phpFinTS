@@ -43,7 +43,7 @@ class Kti extends BaseDeg implements AccountInfo
         }
     }
 
-    public static function create(string $iban, string $bic): Kti
+    public static function create(?string $iban, ?string $bic): Kti
     {
         $result = new Kti();
         $result->iban = $iban;
