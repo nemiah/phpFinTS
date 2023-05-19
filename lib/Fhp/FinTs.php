@@ -529,9 +529,12 @@ class FinTs
     public function getTanModes(): array
     {
         $this->ensureTanModesAvailable();
-        return array_combine($this->allowedTanModes, array_map(function ($tanModeId) {
-            return $this->bpd->allTanModes[$tanModeId];
-        }, $this->allowedTanModes));
+        $result = array();
+        foreach ($this->allowedTanModes as $tanModeId) {
+            if (!array_key_exists($tanModeId, $this->bpd->allTanModes)) continue;
+            $result[$tanModeId] = $this->bpd->allTanModes[$tanModeId];
+        }
+        return $result;
     }
 
     /**
