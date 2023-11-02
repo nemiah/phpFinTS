@@ -471,10 +471,10 @@ class FinTs
         if ($hitanProcessS === null) {
             throw new UnexpectedResponseException('Missing HITAN with tanProzess=S in the response');
         }
-        $outstanding = $response->findRueckmeldung(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND);
+        $outstanding = $response->findRueckmeldungen(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND);
 
         if ($isSuccess) {
-            if ($outstanding !== null) {
+            if ($outstanding) {
                 throw new UnexpectedResponseException('Got both 3956 and HITAN with tanProzess=2');
             }
             $action->setTanRequest(null);
@@ -485,7 +485,7 @@ class FinTs
                 $this->execute($action);
             }
         } else {
-            if ($outstanding === null) {
+            if (!$outstanding) {
                 throw new UnexpectedResponseException('Got neither 3956 nor HITAN with tanProzess=2');
             }
             $action->setTanRequest($hitanProcessS);
