@@ -18,6 +18,11 @@ class Statement
     protected $startBalance = 0.0;
 
     /**
+     * @var float
+     */
+    protected $endBalance = 0.0;
+
+    /**
      * @var string
      */
     protected $creditDebit;
@@ -58,6 +63,26 @@ class Statement
     public function setStartBalance(float $startBalance)
     {
         $this->startBalance = (float) $startBalance;
+
+        return $this;
+    }
+
+    /**
+     * Get endBalance
+     */
+    public function getEndBalance(): float
+    {
+        return $this->endBalance;
+    }
+
+    /**
+     * Set endBalance
+     *
+     * @return $this
+     */
+    public function setEndBalance(float $endBalance)
+    {
+        $this->endBalance = (float) $endBalance;
 
         return $this;
     }

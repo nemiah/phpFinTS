@@ -74,6 +74,7 @@ class StatementOfAccount
                 $statementModel = new Statement();
                 $statementModel->setDate(static::parseDate($date));
                 $statementModel->setStartBalance((float) $statement['start_balance']['amount']);
+                $statementModel->setEndBalance((float) $statement['end_balance']['amount']);
                 $statementModel->setCreditDebit($statement['start_balance']['credit_debit']);
                 $result->statements[] = $statementModel;
             }
