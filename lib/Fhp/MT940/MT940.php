@@ -150,6 +150,7 @@ class MT940
                         $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
                     } elseif ($cdMark == 'D') {
                         $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
+                        $amount *= -1;
                     }
 
                     $amount = str_replace(',', '.', substr($day[$i], 10, -1));
