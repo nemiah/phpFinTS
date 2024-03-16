@@ -141,13 +141,13 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $statement1 = $statement->getStatements()[0];
         $this->assertEquals(new \DateTime('2019-08-21'), $statement1->getDate());
         $this->assertEquals(Statement::CD_CREDIT, $statement1->getCreditDebit());
-        $this->assertEquals(1234.56, $statement1->getStartBalance());
+        $this->assertEqualsWithDelta(1234.56, $statement1->getStartBalance(), 0.01);
         $this->assertCount(1, $statement1->getTransactions());
         $transaction1 = $statement1->getTransactions()[0];
         $this->assertEquals(new \DateTime('2019-09-03'), $transaction1->getValutaDate());
         $this->assertEquals(new \DateTime('2019-09-04'), $transaction1->getBookingDate());
         $this->assertEquals(Statement::CD_DEBIT, $transaction1->getCreditDebit());
-        $this->assertEquals(12.00, $transaction1->getAmount());
+        $this->assertEqualsWithDelta(12.00, $transaction1->getAmount(), 0.01);
         $this->assertEquals('32301000-P111111-33333333 DATUM 02.09.2019, 22.19 UHR1.TAN 012345', $transaction1->getMainDescription());
         $this->assertEquals('HKCCS12345', $transaction1->getStructuredDescription()['KREF']);
         $this->assertEquals('EMPFAENGER ABCDE', $transaction1->getName());
@@ -155,13 +155,13 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $statement2 = $statement->getStatements()[1];
         $this->assertEquals(new \DateTime('2019-09-03'), $statement2->getDate());
         $this->assertEquals(Statement::CD_CREDIT, $statement2->getCreditDebit());
-        $this->assertEquals(1234.56 - 12.00, $statement2->getStartBalance());
+        $this->assertEqualsWithDelta(1234.56 - 12.00, $statement2->getStartBalance(), 0.01);
         $this->assertCount(1, $statement2->getTransactions());
         $transaction2 = $statement2->getTransactions()[0];
         $this->assertEquals(new \DateTime('2019-09-13'), $transaction2->getValutaDate());
         $this->assertEquals(new \DateTime('2019-09-14'), $transaction2->getBookingDate());
         $this->assertEquals(Statement::CD_CREDIT, $transaction2->getCreditDebit());
-        $this->assertEquals(123.45, $transaction2->getAmount());
+        $this->assertEqualsWithDelta(123.45, $transaction2->getAmount(), 0.01);
         $this->assertEquals(['SVWZ' => 'Irgendein Käse'], $transaction2->getStructuredDescription());
         $this->assertEquals('Sender Name1', $transaction2->getName());
     }

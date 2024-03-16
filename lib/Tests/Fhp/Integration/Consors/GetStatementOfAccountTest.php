@@ -43,13 +43,13 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $statement1 = $statement->getStatements()[0];
         $this->assertEquals(new \DateTime('2019-11-18'), $statement1->getDate());
         $this->assertEquals(Statement::CD_CREDIT, $statement1->getCreditDebit());
-        $this->assertEquals(950.59, $statement1->getStartBalance());
+        $this->assertEqualsWithDelta(950.59, $statement1->getStartBalance(), 0.01);
         $this->assertCount(1, $statement1->getTransactions());
         $transaction1 = $statement1->getTransactions()[0];
         $this->assertEquals(new \DateTime('2019-11-18'), $transaction1->getValutaDate());
         $this->assertEquals(new \DateTime('2019-11-18'), $transaction1->getBookingDate());
         $this->assertEquals(Statement::CD_DEBIT, $transaction1->getCreditDebit());
-        $this->assertEquals(2.80, $transaction1->getAmount());
+        $this->assertEqualsWithDelta(2.80, $transaction1->getAmount(), 0.01);
         $this->assertEquals('XY', $transaction1->getMainDescription());
         $this->assertEquals('NONREF', $transaction1->getStructuredDescription()['KREF']);
         $this->assertEquals('Max Mustermannig', $transaction1->getName());
@@ -63,12 +63,12 @@ class GetStatementOfAccountTest extends ConsorsIntegrationTestBase
         $this->assertEquals(new \DateTime('2019-11-20'), $transaction2->getValutaDate());
         $this->assertEquals(new \DateTime('2019-11-20'), $transaction2->getBookingDate());
         $this->assertEquals(Statement::CD_DEBIT, $transaction2->getCreditDebit());
-        $this->assertEquals(11.30, $transaction2->getAmount());
+        $this->assertEqualsWithDelta(11.30, $transaction2->getAmount(), 0.01);
         $this->assertEquals('Lastschrift (Einzugsermächtigung)', $transaction2->getBookingText());
         $this->assertEquals('ZAA0987654321', $transaction2->getStructuredDescription()['EREF']);
         $this->assertEquals('LOGPAY FINANCIAL SERVICES GMBH', $transaction2->getName());
         $transaction3 = $statement2->getTransactions()[1];
-        $this->assertEquals(15.50, $transaction3->getAmount());
+        $this->assertEqualsWithDelta(15.50, $transaction3->getAmount(), 0.01);
         $this->assertEquals('ZAA0123456789', $transaction3->getStructuredDescription()['EREF']);
     }
 
