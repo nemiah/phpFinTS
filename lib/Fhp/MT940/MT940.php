@@ -137,24 +137,24 @@ class MT940
                 } elseif (
                     preg_match('/^62F:/', $day[$i]) // handle end balance
                 ) {
-                    // remove 62(F|M): for better parsing
+                    // remove 62F: for better parsing
                     $day[$i] = substr($day[$i], 4);
                     $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
-                    if (!isset($result[$soaDate])) {
-                        $result[$soaDate] = ['end_balance' => []];
-                    }
+                    if (isset($result[$soaDate])) {
+                        #$result[$soaDate] = ['end_balance' => []];
                     
-                    $amount = str_replace(',', '.', substr($day[$i], 10, -1));
-                    $cdMark = substr($day[$i], 0, 1);
-                    if ($cdMark == 'C') {
-                        $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
-                    } elseif ($cdMark == 'D') {
-                        $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
-                        $amount *= -1;
-                    }
+                        $amount = str_replace(',', '.', substr($day[$i], 10, -1));
+                        $cdMark = substr($day[$i], 0, 1);
+                        if ($cdMark == 'C') {
+                            $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
+                        } elseif ($cdMark == 'D') {
+                            $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
+                            $amount *= -1;
+                        }
 
-                    $result[$soaDate]['end_balance']['amount'] = $amount;
+                        $result[$soaDate]['end_balance']['amount'] = $amount;
+                    }
                 }
             }
         }
