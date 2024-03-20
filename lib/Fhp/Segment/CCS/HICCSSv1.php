@@ -1,8 +1,13 @@
 <?php
 
+/*
+ * Modified by: Peter Eberhard, Copyright 2022 Launix Inh. Carl-Philip Hänsch
+ */
+
 namespace Fhp\Segment\CCS;
 
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
+use Fhp\Segment\BaseSegment;
 
 /**
  * Segment: SEPA Einzelüberweisung Parameter (Version 1)
@@ -13,4 +18,9 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 class HICCSSv1 extends BaseGeschaeftsvorfallparameter
 {
     // No parameters.
+
+    public function createRequestSegment(): BaseSegment
+    {
+        return HKCCSv1::createEmpty();
+    }
 }
