@@ -18,9 +18,9 @@ class Statement
     protected $startBalance = 0.0;
 
     /**
-     * @var float
+     * @var float|null
      */
-    protected $endBalance = 0.0;
+    protected $endBalance = null;
 
     /**
      * @var string
@@ -69,8 +69,9 @@ class Statement
 
     /**
      * Get endBalance
+     * @return ?float returns the value, if given by the bank or null if unknown
      */
-    public function getEndBalance(): float
+    public function getEndBalance(): ?float
     {
         return $this->endBalance;
     }
