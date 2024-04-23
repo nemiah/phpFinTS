@@ -400,7 +400,7 @@ class FinTs
     /**
      * For an action where {@link BaseAction::needsTan()} returns `true` and {@link TanMode::isDecoupled()} returns
      * `true`, this function checks with the server whether the second factor authentication has been completed yet on
-     * the secondary device of the user. If this, this completes the given action and returns `true`, otherwise it
+     * the secondary device of the user. If so, this completes the given action and returns `true`, otherwise it
      * returns `false` and the action remains in its previous, uncompleted state.
      * This function can be called asynchronously, i.e. not in the same PHP process as the original {@link execute()}
      * call, and also repeatedly subject to the delays specified in the {@link TanMode}.
@@ -451,12 +451,12 @@ class FinTs
         // Determine if the decoupled authentication has completed. See section B.4.2.2.1.
         // There is always at least one HITAN segment with TAN-Prozess=S and the reference ID.
         // (2b) The response code 3956 indicates that the authentication is still outstanding. There could also be more
-        //      information for the user in the HITAN challenge field, but we ignore that for now.
-        // (2c) Note that we only support the (B) variant here. There is additionally a HITAN segment with TAN-Prozess=2
-        //      and the reference ID to indicate that the authentication has completed. In this case, the response also
-        //      contains the response segments for the executed action, if any.
+        //      information for the user in the HITAN challenge field.
+        // (2c) Note that we only support the (B) variant here. There is additionally supposed to be a HITAN segment
+        //      with TAN-Prozess=2 and the reference ID to indicate that the authentication has completed, though not
+        //      all banks actually send this, as they seem to consider the absence of 3956 as sufficient for signaling
+        //      success. In this case, the response also contains the response segments for the executed action, if any.
         $hitanProcessS = null;
-        $isSuccess = false;
         /** @var HITAN $hitan */
         foreach ($response->findSegments(HITAN::class) as $hitan) {
             if ($hitan->getAuftragsreferenz() !== $tanRequest->getProcessId()) {
@@ -464,33 +464,26 @@ class FinTs
             }
             if ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_S) {
                 $hitanProcessS = $hitan;
-            } elseif ($hitan->getTanProzess() === HKTAN::TAN_PROZESS_2) {
-                $isSuccess = true;
             }
         }
         if ($hitanProcessS === null) {
             throw new UnexpectedResponseException('Missing HITAN with tanProzess=S in the response');
         }
-        $outstanding = $response->findRueckmeldungen(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND);
-
-        if ($isSuccess) {
-            if ($outstanding) {
-                throw new UnexpectedResponseException('Got both 3956 and HITAN with tanProzess=2');
-            }
-            $action->setTanRequest(null);
-
-            // Process the response normally, and maybe keep going for more pages.
-            $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
-            if ($action instanceof PaginateableAction && $action->hasMorePages()) {
-                $this->execute($action);
-            }
-        } else {
-            if (!$outstanding) {
-                throw new UnexpectedResponseException('Got neither 3956 nor HITAN with tanProzess=2');
-            }
+        if ($response->findRueckmeldungen(Rueckmeldungscode::STARKE_KUNDENAUTHENTIFIZIERUNG_NOCH_AUSSTEHEND)) {
+            // The decoupled submission isn't complete yet. Update the TAN request, as the bank may have sent additional
+            // instructions.
             $action->setTanRequest($hitanProcessS);
+            return false;
         }
-        return $isSuccess;
+
+        // The decoupled submission is complete and the action's result is included in the response.
+        $action->setTanRequest(null);
+        // Process the response normally, and maybe keep going for more pages.
+        $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
+        if ($action instanceof PaginateableAction && $action->hasMorePages()) {
+            $this->execute($action);
+        }
+        return true;
     }
 
     /**
