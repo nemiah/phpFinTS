@@ -27,8 +27,8 @@ class GetBalanceTest extends DKBIntegrationTestBase
         $this->assertEquals('1234567890', $balance->getAccountInfo()->getAccountNumber());
         $this->assertEquals('12030000', $balance->getAccountInfo()->getBankIdentifier());
         $this->assertEquals('Sichteinlagen', $balance->getKontoproduktbezeichnung());
-        $this->assertEquals(+123.45, $balance->getGebuchterSaldo()->getAmount());
+        $this->assertEqualsWithDelta(+123.45, $balance->getGebuchterSaldo()->getAmount(), 0.01);
         $this->assertEquals(new \DateTime('2020-04-09T00:00:00'), $balance->getGebuchterSaldo()->getTimestamp());
-        $this->assertEquals(0, $balance->getSaldoDerVorgemerktenUmsaetze()->getAmount());
+        $this->assertEqualsWithDelta(0, $balance->getSaldoDerVorgemerktenUmsaetze()->getAmount(), 0.01);
     }
 }

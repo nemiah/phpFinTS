@@ -42,7 +42,7 @@ $directDebitFile = new \AbcAeffchenSephpa\SephpaDirectDebit(
  * https://github.com/AbcAeffchen/Sephpa
  *
 */
-$xml = $directDebitFile->generateXml(date("Y-m-d\TH:i:s", time()));
+$xml = $directDebitFile->generateOutput(['zipToOneFile' => false])[0]['data'];
 
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $xml);
 $fints->execute($sendSEPADirectDebit);
