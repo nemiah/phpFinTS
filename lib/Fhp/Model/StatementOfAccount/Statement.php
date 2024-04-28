@@ -23,9 +23,9 @@ class Statement
     protected $endBalance = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $creditDebit;
+    protected $creditDebit = null;
 
     /**
      * @var \DateTime|null
@@ -91,7 +91,7 @@ class Statement
     /**
      * Get creditDebit
      */
-    public function getCreditDebit(): string
+    public function getCreditDebit(): ?string
     {
         return $this->creditDebit;
     }
