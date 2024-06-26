@@ -489,6 +489,10 @@ class FinTs
                 throw new UnexpectedResponseException('Got neither 3956 nor HITAN with tanProzess=2');
             }
             $action->setTanRequest($hitanProcessS);
+            if ($action instanceof DialogInitialization) {
+                $this->dialogId = null;
+                $action->setMessageNumber($this->messageNumber);
+            }
         }
         return $isSuccess;
     }
