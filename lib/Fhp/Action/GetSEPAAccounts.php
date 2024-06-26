@@ -13,6 +13,7 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\SPA\HISPA;
 use Fhp\Segment\SPA\HKSPAv1;
 use Fhp\Segment\SPA\HKSPAv2;
+use Fhp\Segment\SPA\HKSPAv3;
 use Fhp\UnsupportedException;
 
 /**
@@ -56,6 +57,8 @@ class GetSEPAAccounts extends PaginateableAction
                 return HKSPAv1::createEmpty();
             case 2:
                 return HKSPAv2::createEmpty();
+            case 3:
+                return HKSPAv3::createEmpty();
             default:
                 throw new UnsupportedException('Unsupported HKSPA version: ' . $hispas->getVersion());
         }
