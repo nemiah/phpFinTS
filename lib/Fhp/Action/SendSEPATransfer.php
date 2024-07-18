@@ -8,7 +8,6 @@ use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
-use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\SPA\HISPAS;
@@ -60,11 +59,36 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-        $hkccs = HKCCSv1::createEmpty();
-        $hkccs->kontoverbindungInternational = Kti::fromAccount($this->account);
-        $hkccs->sepaDescriptor = $this->xmlSchema;
-        $hkccs->sepaPainMessage = new Bin($this->painMessage);
-        return $hkccs;
+        //ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
+        $xmlAsObject = simplexml_load_string($this->painMessage, "SimpleXMLElement", LIBXML_NOCDATA);
+        $payments = count($xmlAsObject->CstmrCdtTrfInitn?->PmtInf);
+        $hasReqdExDates = false;
+        foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
+            if (isset($pmtInfo->ReqdExctnDt) && $pmtInfo->ReqdExctnDt != '1999-01-01') {
+                $hasReqdExDates = true;
+                break;
+            }
+        }
+
+        //NOW READ OUT, WICH SEGMENT SHOULD BE USED:
+        if($payments > 1 && $hasReqdExDates) {
+            // Terminierte SEPA-Sammelüberweisung (Segment HKCME)
+            $segment = \Fhp\Segment\CME\HKCMEv1::createEmpty();
+        } elseif($payments == 1 && $hasReqdExDates) {
+            // Terminierte SEPA-Überweisung (Segment HKCSE)
+            $segment = \Fhp\Segment\CSE\HKCSEv1::createEmpty();
+        } elseif($payments > 1 && !$hasReqdExDates) {
+            // SEPA-Sammelüberweisungen (Segment HKCCM)
+            $segment = \Fhp\Segment\CCM\HKCCM::createEmpty();
+        } else {
+            //SEPA Einzelüberweisung (Segment HKCCS).
+            $segment = \Fhp\Segment\CCS\HKCCS::createEmpty();
+        }
+
+        $segment->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $segment->sepaDescriptor = $this->xmlSchema;
+        $segment->sepaPainMessage = new Bin($this->painMessage);
+        return $segment;
     }
 
     /** {@inheritdoc} */
