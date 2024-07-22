@@ -15,12 +15,16 @@ class HKCCMv1 extends BaseSegment
 {
     /** IBAN/BIC must match <DbtrAcct> and <DbtrAgt> in the XML Below. */
     public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
+
+    /** Required if BDP „Summenfeld benötigt“ = J */
+    public ?\Fhp\Segment\Common\Btg $summenfeld = null;
+
+    /** Optional only if „Einzelbuchung erlaubt“ = J */
+    public ?bool $einzelbuchungGewuenscht = null;
+
     /** Max length: 256 */
     public string $sepaDescriptor;
-        /**
-     * The PAIN message in XML format.
-     * HISPAS informs which XML schemas are allowed.
-     * The <ReqdExctnDt> field must be 1999-01-01.
-     */
+
+    /** @var Bin XML */
     public Bin $sepaPainMessage;
 }
