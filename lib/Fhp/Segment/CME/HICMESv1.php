@@ -13,7 +13,7 @@ use Fhp\Segment\DSE\SEPADirectDebitMinimalLeadTimeProvider;
  */
 class HICMESv1 extends BaseGeschaeftsvorfallparameter
 {
-    public ParameterTerminierteSEPAFirmenSammellastschriftEinreichenV1 $parameter;
+    public ParameterTerminierteSEPASammelueberweisungEinreichenV1 $parameter;
 
     public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
     {

@@ -12,5 +12,5 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HICSESv1 extends BaseGeschaeftsvorfallparameter
 {
-    //no parameters
+
 }
