@@ -6,6 +6,8 @@ use Fhp\Segment\BaseDeg;
 
 class ParameterTerminierteSEPAUeberweisungEinreichenV1 extends BaseDeg
 {
+    public int $maximaleAnzahlCreditTransferTransactionInformation;
+
     /** Must be => 1 */
     public int $minimaleVorlaufzeit;
     public int $maximaleVorlaufzeit;

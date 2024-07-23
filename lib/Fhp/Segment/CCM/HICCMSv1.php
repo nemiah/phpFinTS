@@ -12,5 +12,10 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HICCMSv1 extends BaseGeschaeftsvorfallparameter
 {
-    // No parameters.
+    public ParameterSEPASammelueberweisungV1 $parameter;
+
+    public function getParameter()
+    {
+        return $this->parameter;
+    }
 }

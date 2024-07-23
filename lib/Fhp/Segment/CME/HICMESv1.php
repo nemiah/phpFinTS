@@ -3,7 +3,6 @@
 namespace Fhp\Segment\CME;
 
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
-use Fhp\Segment\DSE\SEPADirectDebitMinimalLeadTimeProvider;
 
 /**
  * Segment: SEPA Einzelüberweisung Parameter (Version 1)
@@ -14,9 +13,4 @@ use Fhp\Segment\DSE\SEPADirectDebitMinimalLeadTimeProvider;
 class HICMESv1 extends BaseGeschaeftsvorfallparameter
 {
     public ParameterTerminierteSEPASammelueberweisungEinreichenV1 $parameter;
-
-    public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
-    {
-        return $this->parameter;
-    }
 }

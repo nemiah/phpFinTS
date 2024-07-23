@@ -1,13 +1,11 @@
 <?php
 
-namespace Fhp\Segment\CME;
+namespace Fhp\Segment\CCM;
 
 use Fhp\Segment\BaseDeg;
 
-class ParameterTerminierteSEPASammelueberweisungEinreichenV1 extends BaseDeg
+class ParameterSEPASammelueberweisungV1 extends BaseDeg
 {
-    public int $minimaleVorlaufzeit;
-    public int $maximaleVorlaufzeit;
     public int $maximaleAnzahlCreditTransferTransactionInformation;
     public bool $summenfeldBenoetigt;
     public bool $einzelbuchungErlaubt;
