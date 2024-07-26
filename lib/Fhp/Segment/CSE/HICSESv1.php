@@ -3,7 +3,6 @@
 namespace Fhp\Segment\CSE;
 
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
-use Fhp\Segment\CME\ParameterTerminierteSEPASammelueberweisungEinreichenV1;
 
 /**
  * Segment: SEPA Einzelüberweisung Parameter (Version 1)
@@ -13,7 +12,7 @@ use Fhp\Segment\CME\ParameterTerminierteSEPASammelueberweisungEinreichenV1;
  */
 class HICSESv1 extends BaseGeschaeftsvorfallparameter
 {
-    public ParameterTerminierteSEPASammelueberweisungEinreichenV1 $parameter;
+    public ParameterTerminierteSEPAUeberweisungEinreichenV1 $parameter;
 
     public function getParameter()
     {

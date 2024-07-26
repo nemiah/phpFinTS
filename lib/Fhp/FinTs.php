@@ -954,6 +954,7 @@ class FinTs
         try {
             $response = Message::parse($rawResponse);
         } catch (\InvalidArgumentException $e) {
+            throw $e;
             $this->disconnect();
             throw new InvalidResponseException('Invalid response from server', 0, $e);
         }

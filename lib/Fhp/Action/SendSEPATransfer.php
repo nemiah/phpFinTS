@@ -63,14 +63,8 @@ class SendSEPATransfer extends BaseAction
         if ($payments > 1 && $hasReqdExDates) {
 
             // Terminierte SEPA-Sammelüberweisung (Segment HKCME / Kennung HICMES)
-            $segmentID = 'HICME';
+            $segmentID = 'HICMES';
             $segment = \Fhp\Segment\CME\HKCMEv1::createEmpty();
-
-            //GET SUMMENFELD
-            $segment->summenfeld = 0.00;
-            foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
-
-            }
         } elseif ($payments == 1 && $hasReqdExDates) {
 
             // Terminierte SEPA-Überweisung (Segment HKCSE / Kennung HICSES)
