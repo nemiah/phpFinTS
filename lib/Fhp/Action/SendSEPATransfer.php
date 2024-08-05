@@ -49,7 +49,7 @@ class SendSEPATransfer extends BaseAction
     {
         //ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
         $xmlAsObject = simplexml_load_string($this->painMessage, "SimpleXMLElement", LIBXML_NOCDATA);
-        $payments = count($xmlAsObject->CstmrCdtTrfInitn?->PmtInf);
+        $numberOfTransactions = $xmlAsObject->GrpHdr->NbOfTxs;
         $hasReqdExDates = false;
         foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
             if (isset($pmtInfo->ReqdExctnDt) && $pmtInfo->ReqdExctnDt != '1999-01-01') {
@@ -60,17 +60,17 @@ class SendSEPATransfer extends BaseAction
 
 
         //NOW READ OUT, WICH SEGMENT SHOULD BE USED:
-        if ($payments > 1 && $hasReqdExDates) {
+        if ($numberOfTransactions > 1 && $hasReqdExDates) {
 
             // Terminierte SEPA-Sammelüberweisung (Segment HKCME / Kennung HICMES)
             $segmentID = 'HICMES';
             $segment = \Fhp\Segment\CME\HKCMEv1::createEmpty();
-        } elseif ($payments == 1 && $hasReqdExDates) {
+        } elseif ($numberOfTransactions == 1 && $hasReqdExDates) {
 
             // Terminierte SEPA-Überweisung (Segment HKCSE / Kennung HICSES)
             $segmentID = 'HICSES';
             $segment = \Fhp\Segment\CSE\HKCSEv1::createEmpty();
-        } elseif ($payments > 1 && !$hasReqdExDates) {
+        } elseif ($numberOfTransactions > 1 && !$hasReqdExDates) {
 
             // SEPA-Sammelüberweisungen (Segment HKCCM / Kennung HICSES)
             $segmentID = 'HICSES';
