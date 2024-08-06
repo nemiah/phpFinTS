@@ -8,7 +8,6 @@ use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
-use Fhp\Segment\CCS\HKCCSv1;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\SPA\HISPAS;
@@ -48,23 +47,57 @@ class SendSEPATransfer extends BaseAction
     /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-        if (!$bpd->supportsParameters('HICCSS', 1)) {
-            throw new UnsupportedException('The bank does not support HKCCSv1');
+        //ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
+        $xmlAsObject = simplexml_load_string($this->painMessage, "SimpleXMLElement", LIBXML_NOCDATA);
+        $numberOfTransactions = $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->NbOfTxs;
+        $hasReqdExDates = false;
+        foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
+            if (isset($pmtInfo->ReqdExctnDt) && $pmtInfo->ReqdExctnDt != '1999-01-01') {
+                $hasReqdExDates = true;
+                break;
+            }
+        }
+
+
+        //NOW READ OUT, WICH SEGMENT SHOULD BE USED:
+        if ($numberOfTransactions > 1 && $hasReqdExDates) {
+
+            // Terminierte SEPA-Sammelüberweisung (Segment HKCME / Kennung HICMES)
+            $segmentID = 'HICMES';
+            $segment = \Fhp\Segment\CME\HKCMEv1::createEmpty();
+        } elseif ($numberOfTransactions == 1 && $hasReqdExDates) {
+
+            // Terminierte SEPA-Überweisung (Segment HKCSE / Kennung HICSES)
+            $segmentID = 'HICSES';
+            $segment = \Fhp\Segment\CSE\HKCSEv1::createEmpty();
+        } elseif ($numberOfTransactions > 1 && !$hasReqdExDates) {
+
+            // SEPA-Sammelüberweisungen (Segment HKCCM / Kennung HICSES)
+            $segmentID = 'HICSES';
+            $segment = \Fhp\Segment\CCM\HKCCMv1::createEmpty();
+        } else {
+
+            //SEPA Einzelüberweisung (Segment HKCCS / Kennung HICCSS).
+            $segmentID = 'HICCSS';
+            $segment = \Fhp\Segment\CCS\HKCCSv1::createEmpty();
+        }
+
+        if (!$bpd->supportsParameters($segmentID, 1)) {
+            throw new UnsupportedException('The bank does not support ' . $segmentID . 'v1');
         }
 
         /** @var HISPAS $hispas */
-        $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
-        $supportedSchemas = $hispas->getParameter()->getUnterstuetzteSepaDatenformate();
+        $parameters = $bpd->requireLatestSupportedParameters('HISPAS');
+        $supportedSchemas = $parameters->getParameter()->getUnterstuetzteSepaDatenformate();
         if (!in_array($this->xmlSchema, $supportedSchemas)) {
             throw new UnsupportedException("The bank does not support the XML schema $this->xmlSchema, but only "
                 . implode(', ', $supportedSchemas));
         }
 
-        $hkccs = HKCCSv1::createEmpty();
-        $hkccs->kontoverbindungInternational = Kti::fromAccount($this->account);
-        $hkccs->sepaDescriptor = $this->xmlSchema;
-        $hkccs->sepaPainMessage = new Bin($this->painMessage);
-        return $hkccs;
+        $segment->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $segment->sepaDescriptor = $this->xmlSchema;
+        $segment->sepaPainMessage = new Bin($this->painMessage);
+        return $segment;
     }
 
     /** {@inheritdoc} */
