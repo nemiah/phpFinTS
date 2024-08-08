@@ -72,8 +72,8 @@ class SendSEPATransfer extends BaseAction
             $segment = \Fhp\Segment\CSE\HKCSEv1::createEmpty();
         } elseif ($numberOfTransactions > 1 && !$hasReqdExDates) {
 
-            // SEPA-Sammelüberweisungen (Segment HKCCM / Kennung HICSES)
-            $segmentID = 'HICSES';
+            // SEPA-Sammelüberweisungen (Segment HKCCM / Kennung HICCMS)
+            $segmentID = 'HICCMS';
             $segment = \Fhp\Segment\CCM\HKCCMv1::createEmpty();
         } else {
 
