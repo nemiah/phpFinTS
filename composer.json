@@ -1,7 +1,7 @@
 {
-  "name": "nemiah/php-fints",
+  "name": "seem2810/php-fints",
   "description": "PHP Library for the protocols fints and hbci",
-  "homepage": "https://github.com/nemiah/phpFinTS",
+  "homepage": "https://github.com/seem2810/phpFinTS",
   "version": "3.5.0",
   "license": "MIT",
   "autoload": {
@@ -24,7 +24,7 @@
   "suggest": {
     "monolog/monolog": "Allow sending log messages to a variety of different handlers",
     "abcaeffchen/sephpa": "1.*",
-    "nemiah/php-sepa-xml": "dev-master"
+    "seem2810/php-sepa-xml": "dev-master"
   },
   "scripts": {
     "test": [
