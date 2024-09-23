@@ -473,6 +473,10 @@ class FinTs
             // The decoupled submission isn't complete yet. Update the TAN request, as the bank may have sent additional
             // instructions.
             $action->setTanRequest($hitanProcessS);
+            if ($action instanceof DialogInitialization) {
+                $this->dialogId = null;
+                $action->setMessageNumber($this->messageNumber);
+            }
             return false;
         }
 
