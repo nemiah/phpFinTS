@@ -969,4 +969,27 @@ class FinTs
         }
         return $response;
     }
+
+    /**
+     * @return ?string The FinTS-Kundensystem-ID as provided by the bank (or set manually).
+     * This ID should be persisted if provided and reused for further communication.
+     * @see https://github.com/nemiah/phpFinTS/issues/453
+     */
+    public function getKundensystemId(): ?string {
+        return $this->kundensystemId;
+    }
+
+    /**
+     * Sets the FinTS-Kundensystem-ID to be used when communicating with the bank.
+     * It is initially provided by the bank and should be persisted.
+     * The kundensystemId should be set right after calling `selectTanMode()`.
+     * Note that alternatively to all this, a persisted FinTs instance can be restored in the constructor.
+     * @see https://github.com/nemiah/phpFinTS/issues/453
+     *
+     * @param mixed $kundensystemId
+     */
+    public function setKundensystemId(?string $kundensystemId): static {
+        $this->kundensystemId = $kundensystemId;
+        return $this;
+    }
 }
