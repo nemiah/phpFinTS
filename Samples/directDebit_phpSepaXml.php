@@ -26,8 +26,7 @@ $dt->add(new \DateInterval('P1D'));
 
 $sepaDD = new SEPADirectDebitBasic([
     'messageID' => time(),
-    'paymentID' => time(),
-    'type' => 'COR1',
+    'paymentID' => time()
 ]);
 
 $sepaDD->setCreditor(new SEPACreditor([ //this is you
@@ -49,6 +48,7 @@ $sepaDD->addDebitor(new SEPADebitor([ //this is who you want to get money from
     'info' => 'R20170100 vom 09.05.2017',
     'requestedCollectionDate' => $dt,
     'sequenceType' => 'OOFF',
+    'type' => 'CORE',
 ]));
 
 // Just pick the first account, for demonstration purposes. You could also have the user choose, or have SEPAAccount
@@ -60,7 +60,7 @@ if ($getSepaAccounts->needsTan()) {
 }
 $oneAccount = $getSepaAccounts->getAccounts()[0];
 
-$sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $sepaDD->toXML());
+$sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $sepaDD->toXML('pain.008.001.02'));
 $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
     handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
