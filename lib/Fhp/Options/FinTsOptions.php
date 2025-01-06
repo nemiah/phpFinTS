@@ -47,8 +47,9 @@ class FinTsOptions
 
     /**
      * The Kundensystem-Id as returned by the bank and persisted by the application code
-     * Prevents having to re-authenticate every time on login
-     * Use DialogInitialization::getKundensystemId() on the return-object of FinTs::login(), to get the new one
+     * This is optional, but it prevents having to re-authenticate every time on login 
+     * if not using a persisted instance with FinTs::persist()
+     * Use DialogInitialization::getKundensystemId() on the return object of FinTs::login(), to get the current Kundensystem-Id
      * @var string
      */
     public $kundensystemId;
