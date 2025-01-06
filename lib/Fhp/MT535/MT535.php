@@ -27,7 +27,7 @@ class MT535
     {
         preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $this->cleanedRawData, $block);
         preg_match('/EUR(.*)/sm', $block[1], $matches);
-        return floatval($matches[1]);
+        return floatval(str_replace(',', '.', $matches[1]));
     }
 
     public function parseHoldings(): StatementOfHoldings
@@ -93,18 +93,19 @@ class MT535
 
             // Bereitstellungsdatum
             // :98A::PRIC//20210304
+            // :98C::STAT//20250104140541
             if (preg_match('/:98([AC])::(.*?):/sm', $block, $iwn)) {
                 preg_match('/^.{6}(.{8})/sm', $iwn[2], $r);
                 $holding->setDate($this->getDate($r[1]));
-                // TODO The time code looks wrong.
+                $time = new \DateTime();
                 if ($iwn[1] == 'C') {
-                    preg_match('/^.{14}(.{6})/sm', $iwn[2], $r);
-                    $holding->setTime($r[1]);
+                    // 98C has a time component
+                    preg_match('/^.{14}(\d\d)(\d\d)(\d\d)/sm', $iwn[2], $r);
+                    $time->setTime($r[1], $r[2], $r[3]);
                 } else {
-                    $time = new \DateTime();
                     $time->setTime(0, 0);
-                    $holding->setTime($time);
                 }
+                $holding->setTime($time);
             }
 
             $result->addHolding($holding);
