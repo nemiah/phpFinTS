@@ -103,19 +103,15 @@ class SEPAAccount
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTransactionDescriptionLineGlue()
+    public function getTransactionDescriptionLineGlue(): ?string
     {
         return $this->transactionDescriptionLineGlue;
     }
 
     /**
-     * @param string|null $transactionDescriptionLineGlue
-     * @return self
+     * @return $this
      */
-    public function setTransactionDescriptionLineGlue($transactionDescriptionLineGlue): self
+    public function setTransactionDescriptionLineGlue($transactionDescriptionLineGlue)
     {
         $this->transactionDescriptionLineGlue = $transactionDescriptionLineGlue;
         return $this;
