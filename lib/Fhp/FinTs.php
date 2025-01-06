@@ -589,6 +589,8 @@ class FinTs
         }
         $this->selectedTanMode = $tanMode instanceof TanMode ? $tanMode->getId() : $tanMode;
         $this->selectedTanMedium = $tanMedium instanceof TanMedium ? $tanMedium->getName() : $tanMedium;
+		
+		$this->kundensystemId = $this->options->kundensystemId;
     }
 
     /**
