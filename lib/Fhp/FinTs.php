@@ -281,6 +281,9 @@ class FinTs
         if ($this->dialogId === null && !($action instanceof DialogInitialization)) {
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
+        if ($action instanceof PaginateableAction) {
+            $this->ensureBpdAvailable();
+        }
 
         $requestSegments = $action->getNextRequest($this->bpd, $this->upd);
 
