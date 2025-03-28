@@ -242,6 +242,16 @@ class FinTs
         $this->options->timeoutResponse = $responseTimeout;
     }
 
+    public function createLoginAction(): DialogInitialization
+    {
+        $this->requireTanMode();
+        $this->ensureSynchronized();
+        $this->messageNumber = 1;
+        
+        return new DialogInitialization($this->options, $this->requireCredentials(), $this->getSelectedTanMode(),
+            $this->selectedTanMedium, $this->kundensystemId);
+    }
+
     /**
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check whether a TAN is
@@ -254,12 +264,10 @@ class FinTs
      */
     public function login(): DialogInitialization
     {
-        $this->requireTanMode();
-        $this->ensureSynchronized();
-        $this->messageNumber = 1;
-        $login = new DialogInitialization($this->options, $this->requireCredentials(), $this->getSelectedTanMode(),
-            $this->selectedTanMedium, $this->kundensystemId);
+        $login = $this->createLoginAction();
+        
         $this->execute($login);
+        
         return $login;
     }
 
