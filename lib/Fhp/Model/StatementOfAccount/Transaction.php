@@ -121,7 +121,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingDate(\DateTime $date = null)
+    public function setBookingDate(?\DateTime $date = null)
     {
         $this->bookingDate = $date;
 
@@ -133,7 +133,7 @@ class Transaction
      *
      * @return $this
      */
-    public function setValutaDate(\DateTime $date = null)
+    public function setValutaDate(?\DateTime $date = null)
     {
         $this->valutaDate = $date;
 
