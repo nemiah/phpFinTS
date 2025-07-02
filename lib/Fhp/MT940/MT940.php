@@ -13,6 +13,8 @@ class MT940
     public const CD_CREDIT = 'credit';
     public const CD_DEBIT = 'debit';
 
+    private string $descriptionLineGlue = '';
+
     /**
      * @throws MT940Exception
      */
@@ -143,7 +145,7 @@ class MT940
 
                     if (isset($result[$soaDate])) {
                         #$result[$soaDate] = ['end_balance' => []];
-                    
+
                         $amount = str_replace(',', '.', substr($day[$i], 10, -1));
                         $cdMark = substr($day[$i], 0, 1);
                         if ($cdMark == 'C') {
@@ -180,15 +182,17 @@ class MT940
         preg_match_all('/\?(\d{2})([^\?]+)/', $descr, $matches, PREG_SET_ORDER);
 
         $descriptionLines = [];
-        $description1 = ''; // Legacy, could be removed.
-        $description2 = ''; // Legacy, could be removed.
+        $description1 = '';
+        $description2 = '';
         foreach ($matches as $m) {
             $index = (int) $m[1];
 
             if ((20 <= $index && $index <= 29) || (60 <= $index && $index <= 63)) {
                 if (20 <= $index && $index <= 29) {
+                    if ($description1 !== '') $description1 .= $this->descriptionLineGlue;
                     $description1 .= $m[2];
                 } else {
+                    if ($description2 !== '') $description2 .= $this->descriptionLineGlue;
                     $description2 .= $m[2];
                 }
                 $descriptionLines[] = $m[2];
@@ -222,7 +226,7 @@ class MT940
     {
         $description = [];
         if (empty($descriptionLines) || strlen($descriptionLines[0]) < 5 || $descriptionLines[0][4] !== '+') {
-            $description['SVWZ'] = implode('', $descriptionLines);
+            $description['SVWZ'] = implode($this->descriptionLineGlue, $descriptionLines);
         } else {
             $lastType = null;
             foreach ($descriptionLines as $line) {
@@ -233,7 +237,11 @@ class MT940
                     $lastType = substr($line, 0, 4);
                     $description[$lastType] = substr($line, 5);
                 } else {
-                    $description[$lastType] .= $line;
+                    if ($lastType === 'SVWZ') {
+                        $description[$lastType] .= $this->descriptionLineGlue . $line;
+                    } else {
+                        $description[$lastType] .= $line;
+                    }
                 }
                 if (strlen($line) < 27) {
                     // Usually, lines are 27 characters long. In case characters are missing, then it's either the end
@@ -254,5 +262,14 @@ class MT940
         $val = '20' . $val;
         preg_match('/(\d{4})(\d{2})(\d{2})/', $val, $m);
         return $m[1] . '-' . $m[2] . '-' . $m[3];
+    }
+
+    public function getDescriptionLineGlue(): string {
+        return $this->descriptionLineGlue;
+    }
+
+    public function setDescriptionLineGlue(string $descriptionLineGlue): self {
+        $this->descriptionLineGlue = $descriptionLineGlue;
+        return $this;
     }
 }

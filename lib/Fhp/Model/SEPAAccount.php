@@ -20,6 +20,14 @@ class SEPAAccount
     /** @var string|null */
     protected $blz;
 
+    /**
+     * Determines how single lines in transaction descriptions are joined, see #481.
+     * Defaults to an empty string for maximum compatibility but some banks implicitly assume line breaks for this.
+     * This is not provided by the bank and needs to be set manually.
+     * @var string|null
+     */
+    protected $transactionDescriptionLineGlue;
+
     public function getIban(): ?string
     {
         return $this->iban;
@@ -92,6 +100,24 @@ class SEPAAccount
     {
         $this->blz = $blz;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTransactionDescriptionLineGlue()
+    {
+        return $this->transactionDescriptionLineGlue;
+    }
+
+    /**
+     * @param string|null $transactionDescriptionLineGlue
+     * @return self
+     */
+    public function setTransactionDescriptionLineGlue($transactionDescriptionLineGlue): self
+    {
+        $this->transactionDescriptionLineGlue = $transactionDescriptionLineGlue;
         return $this;
     }
 }
