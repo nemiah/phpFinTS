@@ -148,7 +148,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $this->assertEquals(new \DateTime('2019-09-04'), $transaction1->getBookingDate());
         $this->assertEquals(Statement::CD_DEBIT, $transaction1->getCreditDebit());
         $this->assertEqualsWithDelta(12.00, $transaction1->getAmount(), 0.01);
-        $this->assertEquals('32301000-P111111-33333333 DATUM 02.09.2019, 22.19 UHR1.TAN 012345', $transaction1->getMainDescription());
+        $this->assertEquals("32301000-P111111-33333\n333 \nDATUM 02.09.2019, 22.19 UHR\n1.TAN 012345", $transaction1->getMainDescription());
         $this->assertEquals('HKCCS12345', $transaction1->getStructuredDescription()['KREF']);
         $this->assertEquals('EMPFAENGER ABCDE', $transaction1->getName());
 
