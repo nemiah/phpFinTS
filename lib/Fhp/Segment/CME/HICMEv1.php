@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment\CME;
 
-use Fhp\Segment\BaseGeschaeftsvorfallparameter;
+use Fhp\Segment\BaseSegment;
 
 /**
  * Segment: SEPA Einzelüberweisung Parameter (Version 1)
