@@ -60,6 +60,7 @@ class DKBIntegrationTestBase extends FinTsTestCase
         $sepaAccount->setBic('BYLADEM1001');
         $sepaAccount->setAccountNumber('1234567890');
         $sepaAccount->setBlz('12030000');
+        $sepaAccount->setTransactionDescriptionLineGlue(PHP_EOL);
         return $sepaAccount;
     }
 }

@@ -208,6 +208,9 @@ class GetStatementOfAccount extends PaginateableAction
         } else {
             $parser = new MT940();
         }
+        if (null !== $this->account->getTransactionDescriptionLineGlue()) {
+            $parser->setDescriptionLineGlue($this->account->getTransactionDescriptionLineGlue());
+        }
 
         try {
             // Note: Some banks encode their MT 940 data as SWIFT/ISO-8859 like it should be according to the
