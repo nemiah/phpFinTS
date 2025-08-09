@@ -337,6 +337,9 @@ class FinTs
      * `false`, this function sends the given $tan to the server in order to complete the action. This can be done
      * asynchronously, i.e. not in the same PHP process as the original {@link execute()} call.
      *
+     * After this function returns, the `$action` is completed. That is, its result is available through its getters
+     * just as if it had been completed by the original call to {@link execute()} right away.
+     *
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
      * Section B.4.2.1.1
      *
