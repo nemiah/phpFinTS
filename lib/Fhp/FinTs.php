@@ -32,7 +32,7 @@ use Psr\Log\NullLogger;
 
 /**
  * This is the main class of this library. Please see the Samples directory for how to use it.
- * This class is not thread-safe, do not call its funtions concurrently.
+ * This class is not thread-safe. Do not call its funtions concurrently.
  */
 class FinTs
 {
@@ -50,7 +50,7 @@ class FinTs
     /** @var string|null This is a {@link TanMedium::getName()}, but we don't have the {@link TanMedium} instance. */
     private $selectedTanMedium;
 
-    // State that persists across physical connections, dialogs and even PHP executions.
+    // State that persists across physical connections, dialogs and even PHP processes.
     /** @var BPD|null */
     private $bpd;
     /** @var int[]|null The IDs of the {@link TanMode}s from the BPD which the user is allowed to use. */
@@ -74,8 +74,8 @@ class FinTs
      * @param Credentials $credentials Authentication information for the user. Note: This library does not support
      *     anonymous connections, so the credentials are mandatory.
      * @param string|null $persistedInstance The return value of {@link persist()} of a previous FinTs instance,
-     *     usually from an earlier PHP execution. Passing this in here saves 1-2 dialogs that are normally made with the
-     *     bank to obtain the BPD and Kundensystem-ID.
+     *     usually from an earlier PHP process. NOTE: Each persisted instance may be used only once and should be
+     *     considered invalid afterwards. To continue the session, call {@link persist()} again.
      */
     public static function new(FinTsOptions $options, Credentials $credentials, ?string $persistedInstance = null): FinTs
     {
@@ -89,7 +89,7 @@ class FinTs
     }
 
     /**
-     * This function allows to fetch the BPD without knowing the user's credentials yet, by using an anonymous dialog.
+     * This function allows fetching the BPD without knowing the user's credentials yet, by using an anonymous dialog.
      * Note: If this fails with an error saying that your bank does not support the anonymous dialog, you probably need
      * to use {@link NoPsd2TanMode} for regular login.
      * @param FinTsOptions $options Configuration options for the connection to the bank.
@@ -118,9 +118,8 @@ class FinTs
     }
 
     /**
-     * Destructing the object only disconnects. Please use {@link close()} if you want to properly "log out", i.e. end
-     * the FinTs dialog. On the other hand, do *not* close in case you have serialized the FinTs instance and intend
-     * to resume it later due to a TAN request.
+     * Destructing the object only disconnects. Please use {@link close()} if you want to properly "log out", i.e., end
+     * the FinTs dialog.
      */
     public function __destruct()
     {
@@ -128,24 +127,38 @@ class FinTs
     }
 
     /**
-     * Returns a serialized form of parts of this object. This is different from PHP's `\Serializable` in that it only
-     * serializes parts and cannot simply be restored with `unserialize()` because the `FinTsOptions` and the
-     * `Credentials` need to be passed to FinTs::new() in addition to the string returned here.
+     * Returns a serialized form this object. This is different from PHP's {@link \Serializable} in that it only
+     * serializes parts and cannot simply be restored with {@link unserialize()}, because the {@link FinTsOptions} and
+     * the {@link Credentials} need to be passed to {@link FinTs::new()}, in addition to the string returned here.
      *
-     * Alternatively you can use {@link loadPersistedInstance) to separate constructing the instance and resuming it.
+     * Alternatively, you can use {@link loadPersistedInstance()} to separate constructing the instance and resuming it.
      *
-     * NOTE: Unless you're persisting this object to complete a TAN request later on, you probably want to log the user
-     * out first by calling {@link close()}.
+     * There are broadly two reasons to persist the instance:
+     * 1. During login or certain other actions, you may encounter a TAN/2FA request ({@link BaseAction::needsTan()}
+     *    returns true). In that case, you MUST call {@link submitTan()} or {@link checkDecoupledSubmission()} later,
+     *    without losing the dialog state in between. Depending on your application's circumstances, one option might be
+     *    to simply keep the {@link FinTs} instance itself alive in memory (e.g., in a CLI application, you can block
+     *    until the user provides the TAN). In most server-based scenarios, however, the PHP process will shut down and
+     *    a new PHP process will be started later, when the client calls again to provide the TAN. In this case, you
+     *    need to persist the {@link FinTs} instance and restore it later in order for the action to succeed.
+     * 2. Even when there is no outstanding action and after logging out with {@link close()}, it's beneficial to
+     *    persist the instance (with $minimal=false). By reusing the cached BPD, UPD and TAN mode information upon the
+     *    next {@link login()}, a few roundtrips to the FinTS server can be avoided.
      *
-     * @param bool $minimal If true, the return value only contains only those values that are necessary to complete an
-     *     outstanding TAN request, but not the relatively large BPD/UPD, which can always be retrieved again later with
-     *     a few extra requests to the server.
+     * IMPORTANT: Each serialized instance (each value returned from {@link persist()}) can only be used once. After
+     * passing it to {@link FinTs::new()} or {@link loadPersistedInstance()}, you must consider it invalidated. To keep
+     * the same instance/session alive, you must call {@link persist()} again.
+     *
+     * @param bool $minimal If true, the return value only contains the values necessary to complete an outstanding TAN
+     *     request, but not the relatively large BPD/UPD, which can always be retrieved again later with a few extra
+     *     requests to the server. So the persisting doesn't work for use case (2.) from above, but in turn, it saves
+     *     storage space.
      * @return string A serialized form of those parts of the FinTs instance that can reasonably be persisted (BPD, UPD,
      *     Kundensystem-ID, etc.). Note that this usually contains some user data (user's name, account names and
-     *     sometimes a dialog ID that is equivalent to session cookie), so the returned string needs to be treated
+     *     sometimes a dialog ID that is equivalent to session cookie). So the returned string needs to be treated
      *     carefully (not written to log files, only to a database or other storage system that would normally be used
      *     for user data). The returned string never contains highly sensitive information (not the user's password or
-     *     PIN), so it probably does not need to be encrypted.
+     *     PIN), so it probably does not need to be encrypted. Treat it like a session cookie of the same bank.
      */
     public function persist(bool $minimal = false): string
     {
@@ -175,11 +188,16 @@ class FinTs
     }
 
     /**
-     * Use this to continue a previous FinTs Instance, for example after a TAN was needed and PHP execution was ended to
-     * obtain it from the user.
+     * Loads data from a previous {@link FinTs} instance, to reuse cached BPD/UPD information and/or to continue using
+     * an ongoing session. The latter is necessary to complete a TAN request when the user provides the TAN in a fresh
+     * PHP process.
+     *
+     * Unless it's not available to you at that time already, you can just pass the persisted instance into
+     * {@link FinTs::new()} instead of calling this function.
      *
      * @param string $persistedInstance The return value of {@link persist()} of a previous FinTs instance, usually
-     *     from an earlier PHP execution.
+     *     from an earlier PHP process. NOTE: Each persisted instance may be used only once and should be considered
+     *     invalid afterwards. To continue the session, call {@link persist()} again.
      *
      * @throws \InvalidArgumentException
      */
@@ -245,8 +263,10 @@ class FinTs
     /**
      * Executes a strongly authenticated login action and returns it. With some banks, this requires a TAN.
      * @return DialogInitialization A {@link BaseAction} for the outcome of the login. You should check whether a TAN is
-     *     needed using {@link BaseAction::needsTan()} and, if so, finish the login by passing the {@link BaseAction}
-     *     returned here to {@link submitTan()} or {@link checkDecoupledSubmission()}.
+     *     needed using {@link BaseAction::needsTan()} and, if so, let the user complete the TAN request from
+     *     {@link BaseAction::getTanRequest()} and then finish the login by passing the {@link BaseAction}
+     *     returned here to {@link submitTan()} or {@link checkDecoupledSubmission()}. See {@link execute()} for
+     *     details.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
      * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
      * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
@@ -265,10 +285,18 @@ class FinTs
 
     /**
      * Executes an action. Be sure to {@link login()} first. See the `\Fhp\Action` package for actions that can be
-     * executed with this function. Note that, after this function returns, the result of the action is stored inside
-     * the action itself, so you need to check {@link BaseAction::needsTan()} to see if it needs a TAN before being
-     * completed and use its getters in order to obtain the result. In case the action fails, the corresponding
-     * exception will be thrown from this function.
+     * executed with this function. Note that, after this function returns, the action can be in two possible states:
+     * 1. If {@link BaseAction::needsTan()} returns true, the action isn't completed yet because needs a TAN or other
+     *    kind of two-factor authentication (2FA). In this case, use {@link BaseAction::getTanRequest()} to get more
+     *    information about the TAN/2FA that is needed. Your application then needs to interact with the user to obtain
+     *    the TAN (which should be passed into {@link submitTan()}) or to have them complete the 2FA check (which can
+     *    be verified with {@link checkDecoupledSubmission()}). Both of those functions require passing the same
+     *    {@link BaseAction} argument as an argument, and once they succeed, the action will be in the same completed
+     *    state as if it had been completed right away.
+     * 2. If {@link BaseAction::needsTan()} returns false, the action was completed right away. Use the respective
+     *    getters on the action instance to retrieve the result. In case the action fails, the corresponding exception
+     *    will be thrown from this function.
+     *
      * @param BaseAction $action The action to be executed. Its {@link BaseAction::isDone()} status will be updated when
      *     this function returns successfully.
      * @throws CurlException When the connection fails in a layer below the FinTS protocol.
@@ -334,11 +362,12 @@ class FinTs
 
     /**
      * For an action where {@link BaseAction::needsTan()} returns `true` and {@link TanMode::isDecoupled()} returns
-     * `false`, this function sends the given $tan to the server in order to complete the action. This can be done
-     * asynchronously, i.e. not in the same PHP process as the original {@link execute()} call.
+     * `false`, this function sends the given $tan to the server to complete the action. By using {@link persist()},
+     * this can be done asynchronously, i.e., not in the same PHP process as the original {@link execute()} call.
      *
      * After this function returns, the `$action` is completed. That is, its result is available through its getters
-     * just as if it had been completed by the original call to {@link execute()} right away.
+     * just as if it had been completed by the original call to {@link execute()} right away. In case the action fails,
+     * the corresponding exception will be thrown from this function.
      *
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
      * Section B.4.2.1.1
@@ -403,10 +432,18 @@ class FinTs
     /**
      * For an action where {@link BaseAction::needsTan()} returns `true` and {@link TanMode::isDecoupled()} returns
      * `true`, this function checks with the server whether the second factor authentication has been completed yet on
-     * the secondary device of the user. If so, this completes the given action and returns `true`, otherwise it
-     * returns `false` and the action remains in its previous, uncompleted state.
-     * This function can be called asynchronously, i.e. not in the same PHP process as the original {@link execute()}
-     * call, and also repeatedly subject to the delays specified in the {@link TanMode}.
+     * the secondary device of the user.
+     * -   If so, this completes the given action and returns `true`.
+     * -   In case the action fails, the corresponding exception will be thrown from this function.
+     * -   If the authentication has not been completed yet, this returns `false` and the action remains in its
+     *     previous, uncompleted state.
+     *
+     * By using {@link persist()}, this function can be called asynchronously, i.e., not in the same PHP process as the
+     * original {@link execute()} call.
+     *
+     * This function can be called repeatedly, subject to the delays specified in the {@link TanMode}.
+     * IMPORTANT: Remember to re-{@link persist()} the {@link FinTs} instance after each
+     * {@link checkDecoupledSubmission()} call.
      *
      * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
      * Section B.4.2.2
@@ -494,7 +531,11 @@ class FinTs
     }
 
     /**
-     * Closes open dialog/connection if any. This instance remains usable.
+     * Closes the session/dialog/connection, if open. This is equivalent to logging out. You should call this function
+     * when you're done with all the actions, but NOT when you're persisting the instance to fulfill the TAN request of
+     * an outstanding action.
+     * This FinTs object remains usable even after closing the session. You can still {@link persist()} it to benefit
+     * from cached BPD/UPD upon the next {@link login()}, for instance.
      * @throws ServerException When closing the dialog fails.
      */
     public function close()
@@ -506,9 +547,10 @@ class FinTs
     }
 
     /**
-     * Assumes that the dialog (if any is open) is gone. This can be called by the application using this library when
-     * it just restored this FinTs instance from the persisted format after a long time, so that the dialog/session has
-     * most likely been closed at the server side already.
+     * Assumes that the session/dialog (if any is open) is gone, but keeps any cached BPD/UPD for reuse (to allow for
+     * faster re-login).
+     * This can be called by the application using this library when it just restored this FinTs instance from the
+     * persisted format after a long time, during which the session/dialog has most likely expired on the server side.
      */
     public function forgetDialog()
     {
