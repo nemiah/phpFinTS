@@ -32,7 +32,7 @@ $fints = require_once 'init.php';
  * on its user interfaces. The implementation does not have to be in a single function like this -- it can be inlined
  * with the calling code, or live elsewhere. The TAN/confirmation can be obtained while the same PHP script is still
  * running (i.e. handleStrongAuthentication() is a blocking function that only returns once the authentication is done,
- * which is useful for a CLI application), but it is also possible to interrupt the PHP execution entirely while asking
+ * which is useful for a CLI application), but it is also possible to interrupt the PHP process entirely while asking
  * for the TAN/confirmation and resume it later (which is useful for a web application).
  *
  * @param \Fhp\BaseAction $action Some action that requires strong authentication.
@@ -51,6 +51,7 @@ function handleStrongAuthentication(\Fhp\BaseAction $action)
 /**
  * This function handles strong authentication for the case where the user needs to enter a TAN into the PHP
  * application.
+ *
  * @param \Fhp\BaseAction $action Some action that requires a TAN.
  * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
@@ -93,7 +94,7 @@ function handleTan(Fhp\BaseAction $action)
 
     // Optional: Instead of printing the above to the console, you can relay the information (challenge and TAN medium)
     // to the user in any other way (through your REST API, a push notification, ...). If waiting for the TAN requires
-    // you to interrupt this PHP execution and the TAN will arrive in a fresh (HTTP/REST/...) request, you can do so:
+    // you to interrupt this PHP process and the TAN will arrive in a fresh (HTTP/REST/...) request, you can do so:
     if ($optionallyPersistEverything = false) {
         $persistedAction = serialize($action);
         $persistedFints = $fints->persist();
@@ -116,7 +117,7 @@ function handleTan(Fhp\BaseAction $action)
     echo "Please enter the TAN:\n";
     $tan = trim(fgets(STDIN));
 
-    // Optional: If the state was persisted above, we can restore it now (imagine this is a new PHP execution).
+    // Optional: If the state was persisted above, we can restore it now (imagine this is a new PHP process).
     if ($optionallyPersistEverything) {
         $restoredState = file_get_contents(__DIR__ . '/state.txt');
         list($persistedInstance, $persistedAction) = unserialize($restoredState);
@@ -130,14 +131,15 @@ function handleTan(Fhp\BaseAction $action)
 
 /**
  * This function handles strong authentication for the case where the user needs to confirm the action on another
- * device. Note: Depending on the banks you need compatibility with you may not need to implement decoupled
- * authentication at all, i.e. you could filter out any decoupled TanModes when letting the user choose.
+ * device. Note: Depending on the banks you need compatibility with, you may not need to implement decoupled
+ * authentication at all, i.e., you could filter out any decoupled TanModes when letting the user choose.
+ *
  * @param \Fhp\BaseAction $action Some action that requires decoupled authentication.
  * @throws CurlException|UnexpectedResponseException|ServerException See {@link FinTs::execute()} for details.
  */
 function handleDecoupled(Fhp\BaseAction $action)
 {
-    global $fints;
+    global $fints, $options, $credentials;
 
     $tanMode = $fints->getSelectedTanMode();
     $tanRequest = $action->getTanRequest();
@@ -148,6 +150,18 @@ function handleDecoupled(Fhp\BaseAction $action)
     echo "\n";
     if ($tanRequest->getTanMediumName() !== null) {
         echo 'Please check this device: ' . $tanRequest->getTanMediumName() . "\n";
+    }
+
+    // Just like in handleTan() above, we have the option to interrupt the PHP process at this point. In fact, the
+    // for-loop below that deals with the polling may even be running on the client side of your larger application,
+    // polling your application server regularly, which spawns a new PHP process each time. Here, we demonstrate this by
+    // persisting the instance to a local file and restoring it (even though that's not technically necessary for a
+    // single-process CLI script like this).
+    if ($optionallyPersistEverything = false) {
+        $persistedAction = serialize($action);
+        $persistedFints = $fints->persist();
+        // See handleTan() for how to deal with this in practice.
+        file_put_contents(__DIR__ . '/state.txt', serialize([$persistedFints, $persistedAction]));
     }
 
     // IMPORTANT: In your real application, you don't have to use sleep() in PHP. You can persist the state in the same
@@ -162,22 +176,44 @@ function handleDecoupled(Fhp\BaseAction $action)
              $tanMode->getMaxDecoupledChecks() === 0 || $attempt < $tanMode->getMaxDecoupledChecks();
              ++$attempt
         ) {
+            // Optional: If the state was persisted above, we can restore it now (imagine this is a new PHP process).
+            if ($optionallyPersistEverything) {
+                $restoredState = file_get_contents(__DIR__ . '/state.txt');
+                list($persistedInstance, $persistedAction) = unserialize($restoredState);
+                $fints = \Fhp\FinTs::new($options, $credentials, $persistedInstance);
+                $action = unserialize($persistedAction);
+            }
+
+            // Check if we're done.
             if ($fints->checkDecoupledSubmission($action)) {
                 echo "Confirmed.\n";
                 return;
             }
             echo "Still waiting...\n";
+
+            // THIS IS CRUCIAL if you're using persistence in between polls. You must re-persist() the instance after
+            // calling checkDecoupledSubmission() and before calling it the next time. Don't reuse the
+            // $persistedInstance from above multiple times.
+            if ($optionallyPersistEverything) {
+                $persistedAction = serialize($action);
+                $persistedFints = $fints->persist();
+                file_put_contents(__DIR__ . '/state.txt', serialize([$persistedFints, $persistedAction]));
+            }
+
             sleep($tanMode->getPeriodicDecoupledCheckDelaySeconds());
         }
         throw new RuntimeException("Not confirmed after $attempt attempts, which is the limit.");
     } elseif ($tanMode->allowsManualConfirmation()) {
-        do {
-            echo "Please type 'done' and hit Return when you've completed the authentication on the other device.\n";
-            while (trim(fgets(STDIN)) !== 'done') {
-                echo "Try again.\n";
-            }
-            echo "Confirming that the action is done.\n";
-        } while (!$fints->checkDecoupledSubmission($action));
+        echo "Please type 'done' and hit Return when you've completed the authentication on the other device.\n";
+        while (trim(fgets(STDIN)) !== 'done') {
+            echo "Try again.\n";
+        }
+        echo "Confirming that the action is done.\n";
+        if (!$fints->checkDecoupledSubmission($action)) {
+            throw new RuntimeException(
+                "You confirmed that the authentication for action was copmleted, but the server does not think so."
+            );
+        }
         echo "Confirmed\n";
     } else {
         throw new AssertionError('Server allows neither automated polling nor manual confirmation');
