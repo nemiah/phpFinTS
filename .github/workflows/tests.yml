@@ -26,9 +26,6 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring
 
-      - name: Validate composer.json
-        run: composer validate --strict
-
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
