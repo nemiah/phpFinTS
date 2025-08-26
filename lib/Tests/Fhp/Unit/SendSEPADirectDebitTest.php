@@ -15,7 +15,8 @@ class SendSEPADirectDebitTest extends FinTsTestCase
 
         $painString = file_get_contents(__DIR__ . '/../../resources/pain.008.002.02.xml');
 
-        //this will throw an error
-        SendSEPADirectDebit::create($account, $painString);
+        $sepa = SendSEPADirectDebit::create($account, $painString);
+
+        $this->assertInstanceOf(SendSEPADirectDebit::class, $sepa);
     }
 }

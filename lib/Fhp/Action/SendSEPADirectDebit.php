@@ -55,11 +55,11 @@ class SendSEPADirectDebit extends BaseAction
         $nbOfTxs = substr_count($painMessage, '<DrctDbtTxInf>');
         $ctrlSum = null;
 
-        if (preg_match('@<GrpHdr>.*<CtrlSum>(?<ctrlsum>[.0-9]+)</CtrlSum>.*</GrpHdr>@s', $painMessage, $matches) === 1) {
+        if (preg_match('@<GrpHdr>.*?<CtrlSum>(?<ctrlsum>[0-9.]+)</CtrlSum>.*?</GrpHdr>@s', $painMessage, $matches) === 1) {
             $ctrlSum = $matches['ctrlsum'];
         }
 
-        if (preg_match('@<PmtTpInf>.*<LclInstrm>.*<Cd>(?<coretype>CORE|COR1|B2B)</Cd>.*</LclInstrm>.*</PmtTpInf>@s', $painMessage, $matches) === 1) {
+        if (preg_match('@<PmtTpInf>.*?<LclInstrm>.*?<Cd>(?<coretype>CORE|COR1|B2B)</Cd>.*?</LclInstrm>.*?</PmtTpInf>@s', $painMessage, $matches) === 1) {
             $coreType = $matches['coretype'];
         } else {
             throw new \InvalidArgumentException('The type CORE/COR1/B2B is missing in PAIN message');
