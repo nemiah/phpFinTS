@@ -5,8 +5,8 @@ namespace Fhp\MT940;
 /**
  * Data format: MT 940 (Version SRG 2001)
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Messages_Finanzdatenformate_2010-08-06_final_version.pdf
- * Section: B.8
+ * @link https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMTc2NjMsImV4cCI6MTc1NjQwNzY2MywidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL2ZpbnRzdjQvRmluVFNfNC4xX01lc3NhZ2VzX0ZpbmFuemRhdGVuZm9ybWF0ZV8yMDE0LTAxLTIwLUZWLnBkZiIsInBhZ2UiOjEyN30.y4aWITiNK6G4loD-5rjr5ZydOqJ_zXW_mykqMKW2ieg/FinTS_4.1_Messages_Finanzdatenformate_2014-01-20-FV.pdf
+ * Section: C.8
  */
 class MT940
 {

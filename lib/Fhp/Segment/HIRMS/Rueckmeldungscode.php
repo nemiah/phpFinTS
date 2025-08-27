@@ -5,8 +5,8 @@ namespace Fhp\Segment\HIRMS;
 /**
  * Enum for the response codes that the server can send.
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/FinTS_Rueckmeldungscodes_2019-07-22_final_version.pdf
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/fintsv3/FinTS_3.0_Security_Sicherheitsverfahren_PINTAN_2020-07-10_final_version.pdf
+ * @link https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMTc2NjMsImV4cCI6MTc1NjQwNzY2MywidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL0ZpblRTX1J1ZWNrbWVsZHVuZ3Njb2Rlc18yMDI1LTA4LTE5X0ZWLnBkZiIsInBhZ2UiOjEyN30.V9_N0iZSIveDYPTedp13vkC3u8xQ918Kh-ZDmE13e4E/FinTS_Rueckmeldungscodes_2025-08-19_FV.pdf
+ * @link https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMTc2NjMsImV4cCI6MTc1NjQwNzY2MywidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL0ZpblRTX1J1ZWNrbWVsZHVuZ3Njb2Rlc18yMDI1LTA4LTE5X0ZWLnBkZiIsInBhZ2UiOjEyN30.V9_N0iZSIveDYPTedp13vkC3u8xQ918Kh-ZDmE13e4E/FinTS_Rueckmeldungscodes_2025-08-19_FV.pdf
  */
 abstract class Rueckmeldungscode
 {

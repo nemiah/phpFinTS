@@ -4,7 +4,7 @@ namespace Fhp\Model\FlickerTan;
 
 /**
  * Represents a Data Element which is part of the Flicker Tan Challenge. Shortens the whole challenge.
- * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
+ * @see https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMjAyNjQsImV4cCI6MTc1NjQxMDI2NCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL2hoZC9CZWxlZ3VuZ3NyaWNodGxpbmllbiBUQU52ZTEuNSBGViB2b20gMjAxOC0wNC0xNi5wZGYiLCJwYWdlIjoxMzB9.wlNrEBrCjpmqX8zHQ4vZkFyq3u4n2I-nyiYyQB14wK4/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
  */
 class DataElement
 {
@@ -30,7 +30,7 @@ class DataElement
     /**
      * @param $challenge string raw challenge text
      * @return array [string $reducedChallenge, FlickerTanDataElement $dataElementObject]
-     * @see https://www.hbci-zka.de/dokumente/spezifikation_deutsch/hhd/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
+     * @see https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMjAyNjQsImV4cCI6MTc1NjQxMDI2NCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL2hoZC9CZWxlZ3VuZ3NyaWNodGxpbmllbiBUQU52ZTEuNSBGViB2b20gMjAxOC0wNC0xNi5wZGYiLCJwYWdlIjoxMzB9.wlNrEBrCjpmqX8zHQ4vZkFyq3u4n2I-nyiYyQB14wK4/Belegungsrichtlinien%20TANve1.5%20FV%20vom%202018-04-16.pdf
      */
     public static function parseNextBlock(string $challenge): array
     {

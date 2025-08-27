@@ -5,9 +5,9 @@ namespace Fhp\Segment;
 
 /**
  * This is an older version of {@link BaseGeschaeftsvorfallparameter} (see there for documentation) used in FinTS 2.2
- * and older, so any HIxyzS segments specified back use this.
+ * and older, so this is used by any HIxyzS segments specified back then.
  *
- * @link https://www.hbci-zka.de/dokumente/spezifikation_deutsch/archiv/HBCI_V2.x_FV.zip
+ * @link https://www.fints.org/securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTYzMjAzNjEsImV4cCI6MTc1NjQxMDM2MSwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW4vc2VjdXJlZC9kb2t1bWVudGUvc3BlemlmaWthdGlvbl9kZXV0c2NoL2FyY2hpdi9IQkNJX1YyLnhfRlYuemlwIiwicGFnZSI6MTI0fQ.oG30ZAXKp18HuWl7YnErp-8QTKG5c_XGVpbxh_B7foE/HBCI_V2.x_FV.zip
  * File: HBCI22 Final.pdf
  * Section: IV.6 "Geschäftsvorfallparameter"
  */
