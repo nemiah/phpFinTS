@@ -1,0 +1,1477 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document
+        xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.002.02">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <MsgId>FAKEPAIN397948648101</MsgId>
+            <CreDtTm>2025-08-26T21:03:32Z</CreDtTm>
+            <NbOfTxs>300</NbOfTxs>
+            <CtrlSum>14380.00</CtrlSum>
+            <InitgPty>
+                <Nm text="Example Sports Club e.V." />
+            </InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf><PmtInf>
+        <PmtInfId>PMT001</PmtInfId>
+        <PmtMtd>DD</PmtMtd>
+        <BtchBookg>true</BtchBookg>
+        <NbOfTxs>1</NbOfTxs>
+        <CtrlSum>50.00</CtrlSum>
+        <PmtTpInf>
+            <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+            <LclInstrm><Cd>CORE</Cd></LclInstrm>
+            <SeqTp>FRST</SeqTp>
+        </PmtTpInf>
+        <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+        <Cdtr>
+            <Nm>Example Sports Club e.V.</Nm>
+        </Cdtr>
+        <CdtrAcct>
+            <Id><IBAN>DE11123456789012345678</IBAN></Id>
+        </CdtrAcct>
+        <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+        <CdtrSchmeId>
+            <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+        </CdtrSchmeId>
+        <DrctDbtTxInf>
+            <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+            <InstdAmt Ccy="EUR">50.00</InstdAmt>
+            <DrctDbtTx>
+                <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+            </DrctDbtTx>
+            <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+            <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+            <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+            <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+        </DrctDbtTxInf>
+    </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf><PmtInf>
+        <PmtInfId>PMT001</PmtInfId>
+        <PmtMtd>DD</PmtMtd>
+        <BtchBookg>true</BtchBookg>
+        <NbOfTxs>1</NbOfTxs>
+        <CtrlSum>50.00</CtrlSum>
+        <PmtTpInf>
+            <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+            <LclInstrm><Cd>CORE</Cd></LclInstrm>
+            <SeqTp>FRST</SeqTp>
+        </PmtTpInf>
+        <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+        <Cdtr>
+            <Nm>Example Sports Club e.V.</Nm>
+        </Cdtr>
+        <CdtrAcct>
+            <Id><IBAN>DE11123456789012345678</IBAN></Id>
+        </CdtrAcct>
+        <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+        <CdtrSchmeId>
+            <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+        </CdtrSchmeId>
+        <DrctDbtTxInf>
+            <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+            <InstdAmt Ccy="EUR">50.00</InstdAmt>
+            <DrctDbtTx>
+                <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+            </DrctDbtTx>
+            <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+            <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+            <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+            <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+        </DrctDbtTxInf>
+    </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT001</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Example Sports Club e.V.</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>DE11123456789012345678</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <CdtrSchmeId>
+                <Id><PrvtId><Othr><Id>DE99ZZZ00000000001</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV001</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE001</MndtId><DtOfSgntr>2025-08-01</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEDEPPXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Max Mustermann</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE44123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Membership Fee August</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>PMT002</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>75.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2025-08-30</ReqdColltnDt>
+            <Cdtr><Nm>Example Sports Club e.V.</Nm></Cdtr>
+            <CdtrAcct><Id><IBAN>DE11123456789012345678</IBAN></Id></CdtrAcct>
+            <CdtrAgt><FinInstnId><BIC>FAKEDEFFXXX</BIC></FinInstnId></CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId><EndToEndId>INV002</EndToEndId></PmtId>
+                <InstdAmt Ccy="EUR">75.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf><MndtId>MANDATE002</MndtId><DtOfSgntr>2024-09-15</DtOfSgntr></MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt><FinInstnId><BIC>FAKEXYZZXXX</BIC></FinInstnId></DbtrAgt>
+                <Dbtr><Nm>Jane Doe</Nm></Dbtr>
+                <DbtrAcct><Id><IBAN>DE55123456789012345678</IBAN></Id></DbtrAcct>
+                <RmtInf><Ustrd>Quarterly Training Fee</Ustrd></RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>
