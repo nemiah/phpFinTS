@@ -148,7 +148,16 @@ class SendSEPADirectDebit extends BaseAction
             $supportedPainNamespaces = $hispas->getParameter()->getUnterstuetzteSepaDatenformate();
         }
 
-        if (!in_array($this->painNamespace, $supportedPainNamespaces)) {
+        // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
+        // GIBC_X stands for German Banking Industry Committee and a version counter.
+        $xmlSchema = $this->painNamespace;
+        $matchingSchemas = array_filter($supportedPainNamespaces, function($key) use ($xmlSchema) {
+            // For example urn:iso:std:iso:20022:tech:xsd:pain.008.001.08 from the xml matches
+            // urn:iso:std:iso:20022:tech:xsd:pain.008.001.08_GBIC_4
+            return strpos($key, $xmlSchema) === 0;
+        }, ARRAY_FILTER_USE_KEY);
+
+        if (count($matchingSchemas) > 0) {
             throw new UnsupportedException("The bank does not support the XML schema $this->painNamespace, but only "
                 . implode(', ', $supportedPainNamespaces));
         }

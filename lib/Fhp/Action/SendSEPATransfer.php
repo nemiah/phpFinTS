@@ -90,8 +90,8 @@ class SendSEPATransfer extends BaseAction
         $parameters = $bpd->requireLatestSupportedParameters('HISPAS');
         $supportedSchemas = $parameters->getParameter()->getUnterstuetzteSepaDatenformate();
 
-        // Sometimes the Bank reports supported schemas with a "_GBIC_X" prefix.
-        // GIBC_X  stands for German Banking Industry Committee and a version counter.
+        // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
+        // GIBC_X stands for German Banking Industry Committee and a version counter.
         $xmlSchema = $this->xmlSchema;
         $matchingSchemas = array_filter($supportedSchemas, function($key) use ($xmlSchema) {
             // For example urn:iso:std:iso:20022:tech:xsd:pain.001.001.09 from the xml matches
