@@ -58,18 +58,37 @@ if (isset($request->action)) {
                 return ['result' => 'success'];
             case 'submitTan':
                 $fints->submitTan(unserialize($persistedAction), $request->tan);
+                $persistedAction = null;
                 return ['result' => 'success'];
             case 'checkDecoupledSubmission':
                 if ($fints->checkDecoupledSubmission(unserialize($persistedAction))) {
+                    $persistedAction = null;
                     return ['result' => 'success'];
                 } else {
+                    // IMPORTANT: If you pull this example code apart in your real application code, remember that after
+                    // calling checkDecoupledSubmission(), you need to call $fints->persist() again, just like this
+                    // example code will do after we return from handleRequest() here.
                     return ['result' => 'ongoing'];
                 }
             case 'getBalances':
                 $getAccounts = \Fhp\Action\GetSEPAAccounts::create();
-                $fints->execute($getAccounts); // We assume that needsTan() is always false here.
+                $fints->execute($getAccounts);
+                if ($getAccounts->needsTan()) {
+                    throw new \Fhp\UnsupportedException(
+                            "This simple example code does not support strong authentication on GetSEPAAccounts calls. " .
+                            "But in your real application, you can do so analogously to how login() is handled above."
+                    );
+                }
+
                 $getBalances = \Fhp\Action\GetBalance::create($getAccounts->getAccounts()[0], true);
-                $fints->execute($getBalances); // We assume that needsTan() is always false here.
+                $fints->execute($getBalances);
+                if ($getAccounts->needsTan()) {
+                    throw new \Fhp\UnsupportedException(
+                            "This simple example code does not support strong authentication on GetBalance calls. " .
+                            "But in your real application, you can do so analogously to how login() is handled above."
+                    );
+                }
+
                 $balances = [];
                 foreach ($getBalances->getBalances() as $balance) {
                     $sdo = $balance->getGebuchterSaldo();
