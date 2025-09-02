@@ -52,12 +52,12 @@ class SendSEPATransfer extends BaseAction
         $numberOfTransactions = $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->NbOfTxs;
         $hasReqdExDates = false;
         foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
-            if (isset($pmtInfo->ReqdExctnDt) && $pmtInfo->ReqdExctnDt != '1999-01-01') {
+            // Checks for both, <ReqdExctnDt>1999-01-01</ReqdExctnDt> and <ReqdExctnDt><Dt>1999-01-01</Dt></ReqdExctnDt>
+            if (isset($pmtInfo->ReqdExctnDt) && ($pmtInfo->ReqdExctnDt->Dt ?? $pmtInfo->ReqdExctnDt) != '1999-01-01') {
                 $hasReqdExDates = true;
                 break;
             }
         }
-
 
         //NOW READ OUT, WICH SEGMENT SHOULD BE USED:
         if ($numberOfTransactions > 1 && $hasReqdExDates) {
@@ -89,7 +89,17 @@ class SendSEPATransfer extends BaseAction
         /** @var HISPAS $hispas */
         $parameters = $bpd->requireLatestSupportedParameters('HISPAS');
         $supportedSchemas = $parameters->getParameter()->getUnterstuetzteSepaDatenformate();
-        if (!in_array($this->xmlSchema, $supportedSchemas)) {
+
+        // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
+        // GIBC_X stands for German Banking Industry Committee and a version counter.
+        $xmlSchema = $this->xmlSchema;
+        $matchingSchemas = array_filter($supportedSchemas, function($value) use ($xmlSchema) {
+            // For example urn:iso:std:iso:20022:tech:xsd:pain.001.001.09 from the xml matches
+            // urn:iso:std:iso:20022:tech:xsd:pain.001.001.09_GBIC_4
+            return str_starts_with($value, $xmlSchema);
+        });
+
+        if (count($matchingSchemas) === 0) {
             throw new UnsupportedException("The bank does not support the XML schema $this->xmlSchema, but only "
                 . implode(', ', $supportedSchemas));
         }
