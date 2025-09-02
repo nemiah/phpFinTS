@@ -93,13 +93,13 @@ class SendSEPATransfer extends BaseAction
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
         // GIBC_X stands for German Banking Industry Committee and a version counter.
         $xmlSchema = $this->xmlSchema;
-        $matchingSchemas = array_filter($supportedSchemas, function($key) use ($xmlSchema) {
+        $matchingSchemas = array_filter($supportedSchemas, function($value) use ($xmlSchema) {
             // For example urn:iso:std:iso:20022:tech:xsd:pain.001.001.09 from the xml matches
             // urn:iso:std:iso:20022:tech:xsd:pain.001.001.09_GBIC_4
-            return strpos($key, $xmlSchema) === 0;
-        }, ARRAY_FILTER_USE_KEY);
+            return str_starts_with($value, $xmlSchema);
+        });
 
-        if (count($matchingSchemas) > 0) {
+        if (count($matchingSchemas) === 0) {
             throw new UnsupportedException("The bank does not support the XML schema $this->xmlSchema, but only "
                 . implode(', ', $supportedSchemas));
         }
