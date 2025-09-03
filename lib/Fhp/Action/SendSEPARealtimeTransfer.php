@@ -58,13 +58,13 @@ class SendSEPARealtimeTransfer extends BaseAction
         /** @var HIIPZSv1|HIIPZSv2 $hiipzs */
         $hiipzs = $bpd->requireLatestSupportedParameters('HIIPZS');
 
-        $supportedSchemas = $hiipzs->parameter->unterstuetzteSEPADatenformate;
+        $supportedSchemas = $hiipzs->parameter->getUnterstuetzteSEPADatenformate();
 
         // If there are no SEPA formats available in the HIIPZS Parameters, we look to the general formats
         if (is_null($supportedSchemas)) {
             /** @var HISPAS $hispas */
             $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
-            $supportedSchemas = $hispas->getParameter()->getUnterstuetzteSepaDatenformate();
+            $supportedSchemas = $hispas->getParameter()->getUnterstuetzteSEPADatenformate();
         }
 
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.

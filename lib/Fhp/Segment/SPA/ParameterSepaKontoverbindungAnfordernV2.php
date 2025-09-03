@@ -4,6 +4,7 @@
 namespace Fhp\Segment\SPA;
 
 use Fhp\Segment\BaseDeg;
+use Fhp\Segment\UnterstuetzteSEPADatenformateTrait;
 
 /**
  * Data Element Group: Parameter SEPA-Kontoverbindung anfordern (Version 2)
@@ -13,7 +14,7 @@ use Fhp\Segment\BaseDeg;
  */
 class ParameterSepaKontoverbindungAnfordernV2 extends BaseDeg implements ParameterSepaKontoverbindungAnfordern
 {
-    use GetUnterstuetzteSepaDatenformateTrait;
+    use UnterstuetzteSEPADatenformateTrait;
 
     public bool $einzelkontenabrufErlaubt;
     public bool $nationaleKontoverbindungErlaubt;
