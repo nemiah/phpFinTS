@@ -3,9 +3,13 @@
 namespace Fhp\Segment\DME;
 
 use Fhp\Segment\DSE\ParameterTerminierteSEPALastschriftEinreichenV2;
+use Fhp\Segment\UnterstuetzteSEPADatenformate;
+use Fhp\Segment\UnterstuetzteSEPADatenformateTrait;
 
-class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2
+class ParameterTerminierteSEPASammellastschriftEinreichenV2 extends ParameterTerminierteSEPALastschriftEinreichenV2 implements UnterstuetzteSEPADatenformate
 {
+    use UnterstuetzteSEPADatenformateTrait;
+
     public int $maximaleAnzahlDirectDebitTransferTransactionInformation;
     public bool $summenfeldBenoetigt;
     public bool $einzelbuchungErlaubt;

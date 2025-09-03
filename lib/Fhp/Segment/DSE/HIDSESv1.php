@@ -15,7 +15,7 @@ class HIDSESv1 extends BaseGeschaeftsvorfallparameter implements HIDXES
 {
     public ParameterTerminierteSEPAEinzellastschriftEinreichenV1 $parameter;
 
-    public function getParameter(): SEPADirectDebitMinimalLeadTimeProvider
+    public function getParameter(): ParameterTerminierteSEPAEinzellastschriftEinreichenV1
     {
         return $this->parameter;
     }
