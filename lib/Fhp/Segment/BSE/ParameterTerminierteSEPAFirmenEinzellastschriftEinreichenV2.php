@@ -2,8 +2,13 @@
 
 namespace Fhp\Segment\BSE;
 
-class ParameterTerminierteSEPAFirmenEinzellastschriftEinreichenV2 extends ParameterTerminierteSEPAFirmenLastschriftEinreichenV2
+use Fhp\Segment\UnterstuetzteSEPADatenformate;
+use Fhp\Segment\UnterstuetzteSEPADatenformateTrait;
+
+class ParameterTerminierteSEPAFirmenEinzellastschriftEinreichenV2 extends ParameterTerminierteSEPAFirmenLastschriftEinreichenV2 implements UnterstuetzteSEPADatenformate
 {
+    use UnterstuetzteSEPADatenformateTrait;
+
     /** Max Length: 4096 */
     public ?string $zulaessigePurposecodes = null;
 

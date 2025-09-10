@@ -138,14 +138,14 @@ class SendSEPADirectDebit extends BaseAction
 
         if ($hidxes->getVersion() === 2) {
             /** @var HIDMESv2|HIDSESv2 $hidxes */
-            $supportedPainNamespaces = $hidxes->getParameter()->unterstuetzteSEPADatenformate;
+            $supportedPainNamespaces = $hidxes->getParameter()->getUnterstuetzteSEPADatenformate();
         }
 
         // If there are no SEPA formats available in the HIDXES Parameters, we look to the general formats
         if (!is_array($supportedPainNamespaces) || count($supportedPainNamespaces) === 0) {
             /** @var HISPAS $hispas */
             $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
-            $supportedPainNamespaces = $hispas->getParameter()->getUnterstuetzteSepaDatenformate();
+            $supportedPainNamespaces = $hispas->getParameter()->getUnterstuetzteSEPADatenformate();
         }
 
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.

@@ -3,11 +3,12 @@
 
 namespace Fhp\Segment\SPA;
 
+use Fhp\Segment\UnterstuetzteSEPADatenformate;
+
 /**
  * Data Element Group: Parameter SEPA-Kontoverbindung anfordern
  */
-interface ParameterSepaKontoverbindungAnfordern
+interface ParameterSepaKontoverbindungAnfordern extends UnterstuetzteSEPADatenformate
 {
-    /** @return string[] */
-    public function getUnterstuetzteSepaDatenformate(): array;
+
 }
