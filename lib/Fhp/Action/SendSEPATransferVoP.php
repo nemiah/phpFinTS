@@ -17,6 +17,10 @@ use Fhp\UnsupportedException;
  */
 class SendSEPATransferVoP extends SendSEPATransfer
 {
+    protected $vopRequired = false;
+    protected $vopIsPending = false;
+    protected $vopNeedsConfirmation = false;
+
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $requestSegment = parent::createRequest($bpd, $upd);
@@ -28,6 +32,8 @@ class SendSEPATransferVoP extends SendSEPATransfer
         if ($hivpps = $bpd->getLatestSupportedParameters('HIVPPS')) {
             // Check if the request segment is in the list of VoP-supported segments
             if (in_array($requestSegment->getName(), $hivpps->parameter->vopPflichtigerZahlungsverkehrsauftrag)) {
+
+                $this->vopRequired = true;
 
                 $hkvpp = HKVPPv1::createEmpty();
 
@@ -45,19 +51,42 @@ class SendSEPATransferVoP extends SendSEPATransfer
 
     public function processResponse(Message $response)
     {
+        // The bank accepted the request as is.
+        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) !== null || $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) !== null) {
+            parent::processResponse($response);
+            return;
+        }
+
         // The Bank does not want a separate HKVPA ("VoP Ausführungsauftrag").
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT) !== null) {
             parent::processResponse($response);
             return;
         }
 
+        if ($response->findRueckmeldung(Rueckmeldungscode::VOP_NAMENSABGLEICH_IST_NOCH_IN_BEARBEITUNG) !== null) {
+            $this->vopIsPending = true;
+            return;
+        }
+
         // The user needs to check the result of the name check.
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null) {
 
+            $this->vopNeedsConfirmation = true;
             /** @var HIVPPv1 $hivpp */
             $hivpp = $response->findSegment(HIVPPv1::class);
 
             throw new UnsupportedException('The user needs to check the result of the name check. This is not implemented yet.');
         }
     }
+
+    public function needsTime()
+    {
+        return $this->vopIsPending;
+    }
+
+    public function needsConfirmation()
+    {
+        return $this->vopNeedsConfirmation;
+    }
+
 }

@@ -144,6 +144,16 @@ abstract class BaseAction implements \Serializable
         return $this->tanRequest;
     }
 
+    public function needsConfirmation()
+    {
+        return false;
+    }
+
+    public function needsTime()
+    {
+        return false;
+    }
+
     /**
      * Throws an exception unless this action has been successfully executed, i.e. in the following cases:
      *  - the action has not been {@link FinTs::execute()}-d at all or the {@link FinTs::execute()} call for it threw an

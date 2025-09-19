@@ -85,6 +85,10 @@ abstract class Rueckmeldungscode
 
     public const VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT = 3091;
 
+    public const VOP_NAMENSABGLEICH_IST_NOCH_IN_BEARBEITUNG = 3093;
+
+    public const VOP_NAMENSABGLEICH_IST_KOMPLETT = 3094;
+
     /**
      * Zugelassene Ein- und Zwei-Schritt-Verfahren für den Benutzer (+ Rückmeldungsparameter).
      * The parameters reference the VerfahrensparameterZweiSchrittVerfahren.sicherheitsfunktion values (900..997) from
