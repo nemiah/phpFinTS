@@ -3,9 +3,13 @@
 namespace Fhp\Action;
 
 use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
 use Fhp\Protocol\UPD;
+use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\VPP\HIVPPSv1;
+use Fhp\Segment\VPP\HIVPPv1;
 use Fhp\Segment\VPP\HKVPPv1;
+use Fhp\UnsupportedException;
 
 /**
  * Initiates an outgoing wire transfer in SEPA format (PAIN XML) with VoP.
@@ -23,7 +27,7 @@ class SendSEPATransferVoP extends SendSEPATransfer
         /** @var HIVPPSv1 $hivpps */
         if ($hivpps = $bpd->getLatestSupportedParameters('HIVPPS')) {
             // Check if the request segment is in the list of VoP-supported segments
-            if (in_array($requestSegment->getName(), $hivpps->parameter->VoPPflichtigerZahlungsverkehrsauftrag)) {
+            if (in_array($requestSegment->getName(), $hivpps->parameter->vopPflichtigerZahlungsverkehrsauftrag)) {
 
                 $hkvpp = HKVPPv1::createEmpty();
 
@@ -37,5 +41,23 @@ class SendSEPATransferVoP extends SendSEPATransfer
         }
 
         return $requestSegments;
+    }
+
+    public function processResponse(Message $response)
+    {
+        // The Bank does not want a separate HKVPA ("VoP Ausführungsauftrag").
+        if ($response->findRueckmeldung(Rueckmeldungscode::VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT) !== null) {
+            parent::processResponse($response);
+            return;
+        }
+
+        // The user needs to check the result of the name check.
+        if ($response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null) {
+
+            /** @var HIVPPv1 $hivpp */
+            $hivpp = $response->findSegment(HIVPPv1::class);
+
+            throw new UnsupportedException('The user needs to check the result of the name check. This is not implemented yet.');
+        }
     }
 }

@@ -18,5 +18,5 @@ class ParameterNamensabgleichPruefauftrag
     public string $unterstuetztePaymentStatusReportDatenformate;
 
     /** @var string[] @Max(N) Max length each: 6 */
-    public array $VoPPflichtigerZahlungsverkehrsauftrag;
+    public array $vopPflichtigerZahlungsverkehrsauftrag;
 }
