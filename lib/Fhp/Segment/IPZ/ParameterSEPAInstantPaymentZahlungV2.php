@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\lib\Fhp\Segment\IPZ;
+namespace Fhp\Segment\IPZ;
 
 use Fhp\Segment\BaseDeg;
 use Fhp\Segment\UnterstuetzteSEPADatenformate;
