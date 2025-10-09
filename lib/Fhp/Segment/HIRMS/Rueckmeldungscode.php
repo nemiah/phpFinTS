@@ -110,6 +110,14 @@ abstract class Rueckmeldungscode
     public const ZUGANG_VORLAEUFIG_GESPERRT = 3938;
 
     /**
+     * Der eingereichte HKTAN ist entwertet und der Auftrag (nach
+     * vollständiger Übermittlung des Prüfergebnisses) soll erneut mit einem neuen
+     * HKTAN in Verbindung mit einem HKVPA eingereicht werden, sofern der
+     * Kunde die Ausführung weiterhin wünscht.
+     */
+    public const FREIGABE_KANN_NICHT_ERTEILT_WERDEN = 3945;
+
+    /**
      * Starke Kundenauthentifizierung noch ausstehend.
      * Indicates that the decoupled authentication is still outstanding.
      */

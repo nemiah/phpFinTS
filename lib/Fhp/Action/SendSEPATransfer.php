@@ -32,12 +32,12 @@ class SendSEPATransfer extends BaseAction
      *     to create this.
      * @return SendSEPATransfer A new action for executing this the given PAIN message.
      */
-    public static function create(SEPAAccount $account, string $painMessage): SendSEPATransfer
+    public static function create(SEPAAccount $account, string $painMessage): static
     {
         if (preg_match('/xmlns="(.*?)"/', $painMessage, $match) === false) {
             throw new \InvalidArgumentException('xmlns not found in the PAIN message');
         }
-        $result = new SendSEPATransfer();
+        $result = new static();
         $result->account = $account;
         $result->painMessage = $painMessage;
         $result->xmlSchema = $match[1];

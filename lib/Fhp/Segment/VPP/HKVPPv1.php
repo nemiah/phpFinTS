@@ -22,4 +22,11 @@ class HKVPPv1 extends BaseSegment
 
     /** For pagination. Max length: 35 */
     public ?string $aufsetzpunkt = null;
+
+    public static function createEmpty(): static
+    {
+        $hkvpp = parent::createEmpty();
+        $hkvpp->unterstuetztePaymentStatusReports = new UnterstuetztePaymentStatusReports();
+        return $hkvpp;
+    }
 }

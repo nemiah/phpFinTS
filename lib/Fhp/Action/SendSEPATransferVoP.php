@@ -21,8 +21,17 @@ class SendSEPATransferVoP extends SendSEPATransfer
     protected $vopIsPending = false;
     protected $vopNeedsConfirmation = false;
 
+    public ?HKVPPv1 $hkvpp = null;
+    public ?HIVPPv1 $hivpp = null;
+
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
+        // Do we need to ask vor the VoP Result?
+        if ($this->vopIsPending) {
+            $this->hkvpp->pollingId = $this->hivpp->pollingId;
+            return $this->hkvpp;
+        }
+
         $requestSegment = parent::createRequest($bpd, $upd);
         $requestSegments = [$requestSegment];
 
@@ -35,14 +44,22 @@ class SendSEPATransferVoP extends SendSEPATransfer
 
                 $this->vopRequired = true;
 
-                $hkvpp = HKVPPv1::createEmpty();
+                // Send VoP confirmation
+                if ($this->needsConfirmation() && $this->hivpp?->vopId) {
+                    $hkvpp = HKVPAv1::createEmpty();
+                    $hkvpp->vopId = $this->hivpp->vopId;
+                    $requestSegments = [$hkvpp, $requestSegment];
+                } else {
+                    // Ask for VoP
+                    $this->hkvpp = $hkvpp = HKVPPv1::createEmpty();
 
-                // For now just pretend we support all formats
-                $supportedFormats = explode(';', $hivpps->parameter->unterstuetztePaymentStatusReportDatenformate);
-                $hkvpp->unterstuetztePaymentStatusReports->paymentStatusReportDescriptor = $supportedFormats;
+                    // For now just pretend we support all formats
+                    $supportedFormats = explode(';', $hivpps->parameter->unterstuetztePaymentStatusReportDatenformate);
+                    $hkvpp->unterstuetztePaymentStatusReports->paymentStatusReportDescriptor = $supportedFormats;
 
-                // VoP before the transfer request
-                $requestSegments = [$hkvpp, $requestSegment];
+                    // VoP before the transfer request
+                    $requestSegments = [$hkvpp, $requestSegment];
+                }
             }
         }
 
@@ -59,24 +76,43 @@ class SendSEPATransferVoP extends SendSEPATransfer
 
         // The Bank does not want a separate HKVPA ("VoP Ausführungsauftrag").
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT) !== null) {
+            $this->vopRequired = false;
+            $this->vopIsPending = false;
+            $this->vopNeedsConfirmation = false;
             parent::processResponse($response);
             return;
         }
 
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_NAMENSABGLEICH_IST_NOCH_IN_BEARBEITUNG) !== null) {
             $this->vopIsPending = true;
+            $this->vopNeedsConfirmation = false;
+            return;
+        }
+
+        $this->hivpp = $response->findSegment(HIVPPv1::class);
+
+        // The bank has discarded the request, and wants us to resend it with a HKVPA
+        // This can happen even if the name matches.
+        if ($response->findRueckmeldung(Rueckmeldungscode::FREIGABE_KANN_NICHT_ERTEILT_WERDEN) !== null) {
+            // Result is available
+            if ($this->hivpp->vopId) {
+                $this->vopNeedsConfirmation = true;
+            } else {
+                $this->vopIsPending = true;
+            }
             return;
         }
 
         // The user needs to check the result of the name check.
+        // This can be sent by the bank even if the name matches.
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null) {
 
+            $this->vopIsPending = false;
             $this->vopNeedsConfirmation = true;
-            /** @var HIVPPv1 $hivpp */
-            $hivpp = $response->findSegment(HIVPPv1::class);
 
-            throw new UnsupportedException('The user needs to check the result of the name check. This is not implemented yet.');
+            return;
         }
+        throw new UnsupportedException('Unexpected state in VoP process');
     }
 
     public function needsTime()
