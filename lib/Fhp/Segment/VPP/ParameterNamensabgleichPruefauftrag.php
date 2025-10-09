@@ -2,7 +2,9 @@
 
 namespace Fhp\Segment\VPP;
 
-class ParameterNamensabgleichPruefauftrag
+use Fhp\Segment\BaseDeg;
+
+class ParameterNamensabgleichPruefauftrag extends BaseDeg
 {
     public int $maximaleAnzahlCreditTransferTransactionInformationOptIn;
 
