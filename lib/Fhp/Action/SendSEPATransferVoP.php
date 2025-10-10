@@ -8,6 +8,7 @@ use Fhp\Protocol\UPD;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\VPP\HIVPPSv1;
 use Fhp\Segment\VPP\HIVPPv1;
+use Fhp\Segment\VPP\HKVPAv1;
 use Fhp\Segment\VPP\HKVPPv1;
 use Fhp\UnsupportedException;
 
@@ -21,19 +22,36 @@ class SendSEPATransferVoP extends SendSEPATransfer
     protected $vopIsPending = false;
     protected $vopNeedsConfirmation = false;
 
+    protected $vopConfirmed = false;
+
+    /**
+     * If set, the last response from the server regarding this action indicated that there are more results to be
+     * fetched using this pagination token. This is called "Aufsetzpunkt" in the specification.
+     * Pagination is used in VoP to poll for the result of the name check.
+     */
+    protected ?string $paginationToken = null;
+
     public ?HKVPPv1 $hkvpp = null;
     public ?HIVPPv1 $hivpp = null;
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-        // Do we need to ask vor the VoP Result?
+        // Do we need to ask for the VoP result?
         if ($this->vopIsPending) {
             $this->hkvpp->pollingId = $this->hivpp->pollingId;
+            $this->hkvpp->aufsetzpunkt = $this->paginationToken;
             return $this->hkvpp;
         }
 
         $requestSegment = parent::createRequest($bpd, $upd);
         $requestSegments = [$requestSegment];
+
+        if ($this->vopNeedsConfirmation && $this->vopConfirmed) {
+
+            $hkvpa = HKVPAv1::createEmpty();
+            $hkvpa->vopId = $this->hivpp->vopId;
+            return [$hkvpa, $requestSegment];
+        }
 
         // Check if VoP is supported by the bank
 
@@ -68,8 +86,12 @@ class SendSEPATransferVoP extends SendSEPATransfer
 
     public function processResponse(Message $response)
     {
+        $this->vopIsPending = false;
+        $this->hivpp = $response->findSegment(HIVPPv1::class);
+
         // The bank accepted the request as is.
         if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) !== null || $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) !== null) {
+            $this->vopRequired = false;
             parent::processResponse($response);
             return;
         }
@@ -77,7 +99,6 @@ class SendSEPATransferVoP extends SendSEPATransfer
         // The Bank does not want a separate HKVPA ("VoP Ausführungsauftrag").
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT) !== null) {
             $this->vopRequired = false;
-            $this->vopIsPending = false;
             $this->vopNeedsConfirmation = false;
             parent::processResponse($response);
             return;
@@ -89,27 +110,23 @@ class SendSEPATransferVoP extends SendSEPATransfer
             return;
         }
 
-        $this->hivpp = $response->findSegment(HIVPPv1::class);
-
-        // The bank has discarded the request, and wants us to resend it with a HKVPA
-        // This can happen even if the name matches.
-        if ($response->findRueckmeldung(Rueckmeldungscode::FREIGABE_KANN_NICHT_ERTEILT_WERDEN) !== null) {
-            // Result is available
-            if ($this->hivpp->vopId) {
-                $this->vopNeedsConfirmation = true;
-            } else {
-                $this->vopIsPending = true;
-            }
-            return;
+        if (($pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION)) !== null) {
+            $this->paginationToken = $pagination->rueckmeldungsparameter[0];
         }
 
-        // The user needs to check the result of the name check.
-        // This can be sent by the bank even if the name matches.
-        if ($response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null) {
-
-            $this->vopIsPending = false;
+        if (
+            // The bank has discarded the request, and wants us to resend it with a HKVPA
+            // This can happen even if the name matches.
+            $response->findRueckmeldung(Rueckmeldungscode::FREIGABE_KANN_NICHT_ERTEILT_WERDEN) !== null
+            // The user needs to check the result of the name check.
+            // This can be sent by the bank even if the name matches.
+            || $response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null
+        ) {
             $this->vopNeedsConfirmation = true;
-
+            // Is the result already available?
+            if (!$this->hivpp->vopId) {
+                $this->vopIsPending = true;
+            }
             return;
         }
         throw new UnsupportedException('Unexpected state in VoP process');
@@ -125,4 +142,8 @@ class SendSEPATransferVoP extends SendSEPATransfer
         return $this->vopNeedsConfirmation;
     }
 
+    public function setConfirmed()
+    {
+        $this->vopConfirmed = true;
+    }
 }

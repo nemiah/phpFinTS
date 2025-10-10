@@ -79,7 +79,7 @@ abstract class Rueckmeldungscode
      */
     public const PAGINATION = 3040;
 
-    public const VOP_KEINE_NAMENSABWEICHUNG = 0025;
+    public const VOP_KEINE_NAMENSABWEICHUNG = 25;
 
     public const VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN = 3090;
 
