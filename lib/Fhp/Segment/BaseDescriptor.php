@@ -32,9 +32,11 @@ abstract class BaseDescriptor
     protected function __construct(\ReflectionClass $clazz)
     {
         // Use reflection to map PHP class fields to elements in the segment/Deg.
-        $implicitIndex = true;
         $nextIndex = 0;
         foreach (static::enumerateProperties($clazz) as $property) {
+            if ($nextIndex === null) {
+                throw new \InvalidArgumentException("Disallowed property $property after an @Unlimited field");
+            }
             $docComment = $property->getDocComment() ?: '';
             if (static::getBoolAnnotation('Ignore', $docComment)) {
                 continue; // Skip @Ignore-d propeties.
@@ -44,22 +46,35 @@ abstract class BaseDescriptor
             $descriptor = new ElementDescriptor();
             $descriptor->field = $property->getName();
             $maxCount = static::getIntAnnotation('Max', $docComment);
+            $unlimitedCount = static::getBoolAnnotation('Unlimited', $docComment);
             if ($type = static::getVarAnnotation($docComment)) {
                 if (str_ends_with($type, '|null')) { // Nullable field
                     $descriptor->optional = true;
                     $type = substr($type, 0, -5);
                 }
                 if (str_ends_with($type, '[]')) { // Array/repeated field
-                    if ($maxCount === null) {
-                        throw new \InvalidArgumentException("Repeated property $property needs @Max() annotation");
-                    }
-                    $descriptor->repeated = $maxCount;
                     $type = substr($type, 0, -2);
-                    // If a repeated field is followed by anything at all, there will be an empty entry for each possible
-                    // repeated value (in extreme cases, there can be hundreds of consecutive `+`, for instance).
-                    $nextIndex += $maxCount;
+                    if ($unlimitedCount) {
+                        $descriptor->repeated = PHP_INT_MAX;
+                        // A repeated field of unlimited size cannot be followed by anything, because it would not be
+                        // clear which of the following values still belong to the repeated field vs to the next field.
+                        $nextIndex = null;
+                    } elseif ($maxCount !== null) {
+                        $descriptor->repeated = $maxCount;
+                        // If there's another field value after this repeated field, then a serialized message will
+                        // contain placeholders (i.e. empty field values separated by possibly hundreds of `+`) to fill
+                        // up to the repeated field's maximum length, after which the next message continues at the next
+                        // index.
+                        $nextIndex += $maxCount;
+                    } else {
+                        throw new \InvalidArgumentException(
+                            "Repeated property $property needs @Max(.) or (rarely) @Unlimited annotation"
+                        );
+                    }
                 } elseif ($maxCount !== null) {
                     throw new \InvalidArgumentException("@Max() annotation not recognized on single $property");
+                } elseif ($unlimitedCount) {
+                    throw new \InvalidArgumentException("@Unlimited annotation not recognized on single $property");
                 } else {
                     ++$nextIndex; // Singular field, so the index advances by 1.
                 }
@@ -90,7 +105,7 @@ abstract class BaseDescriptor
             throw new \InvalidArgumentException("No fields found in $clazz->name");
         }
         ksort($this->elements); // Make sure elements are parsed in wire-format order.
-        $this->maxIndex = $nextIndex - 1;
+        $this->maxIndex = $nextIndex === null ? PHP_INT_MAX : $nextIndex - 1;
     }
 
     /**
