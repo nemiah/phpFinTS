@@ -143,7 +143,7 @@ class DialogInitialization extends BaseAction
             $this->hktanRef,
             $this->kundensystemId,
             $this->messageNumber,
-            $this->dialogId
+            $this->dialogId,
         ) = $serialized;
 
         is_array($parentSerialized) ?

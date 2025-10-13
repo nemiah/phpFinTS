@@ -69,7 +69,7 @@ class SendSEPARealtimeTransfer extends BaseAction
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
         // GIBC_X stands for German Banking Industry Committee and a version counter.
         $xmlSchema = $this->xmlSchema;
-        $matchingSchemas = array_filter($supportedSchemas, function($value) use ($xmlSchema) {
+        $matchingSchemas = array_filter($supportedSchemas, function ($value) use ($xmlSchema) {
             // For example urn:iso:std:iso:20022:tech:xsd:pain.001.001.09 from the xml matches
             // urn:iso:std:iso:20022:tech:xsd:pain.001.001.09_GBIC_4
             return str_starts_with($value, $xmlSchema);
@@ -104,8 +104,8 @@ class SendSEPARealtimeTransfer extends BaseAction
             return;
         }
 
-        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) === null &&
-            $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) === null) {
+        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) === null
+            && $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) === null) {
             throw new UnexpectedResponseException('Bank did not confirm SEPATransfer execution');
         }
     }

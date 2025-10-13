@@ -10,5 +10,4 @@ use Fhp\Segment\UnterstuetzteSEPADatenformate;
  */
 interface ParameterSepaKontoverbindungAnfordern extends UnterstuetzteSEPADatenformate
 {
-
 }

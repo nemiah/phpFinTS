@@ -24,7 +24,6 @@ class HIUPAv4 extends BaseSegment
      *    it does not support it, so sending such a request to the bank will always lead to failure.
      * 1: Explicitly declared types are definitely supported, anything else may be reported and can be sent; the bank
      *    will check online and accept/reject accordingly.
-     * @var int
      */
     public int $updVerwendung;
     /** Max length: 35 */

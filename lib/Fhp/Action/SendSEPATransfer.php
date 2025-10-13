@@ -46,8 +46,8 @@ class SendSEPATransfer extends BaseAction
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
-        //ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
-        $xmlAsObject = simplexml_load_string($this->painMessage, "SimpleXMLElement", LIBXML_NOCDATA);
+        // ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
+        $xmlAsObject = simplexml_load_string($this->painMessage, 'SimpleXMLElement', LIBXML_NOCDATA);
         $numberOfTransactions = $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->NbOfTxs;
         $hasReqdExDates = false;
         foreach ($xmlAsObject->CstmrCdtTrfInitn?->PmtInf as $pmtInfo) {
@@ -58,25 +58,21 @@ class SendSEPATransfer extends BaseAction
             }
         }
 
-        //NOW READ OUT, WICH SEGMENT SHOULD BE USED:
+        // NOW READ OUT, WICH SEGMENT SHOULD BE USED:
         if ($numberOfTransactions > 1 && $hasReqdExDates) {
-
             // Terminierte SEPA-Sammelüberweisung (Segment HKCME / Kennung HICMES)
             $segmentID = 'HICMES';
             $segment = \Fhp\Segment\CME\HKCMEv1::createEmpty();
         } elseif ($numberOfTransactions == 1 && $hasReqdExDates) {
-
             // Terminierte SEPA-Überweisung (Segment HKCSE / Kennung HICSES)
             $segmentID = 'HICSES';
             $segment = \Fhp\Segment\CSE\HKCSEv1::createEmpty();
         } elseif ($numberOfTransactions > 1 && !$hasReqdExDates) {
-
             // SEPA-Sammelüberweisungen (Segment HKCCM / Kennung HICSES)
             $segmentID = 'HICSES';
             $segment = \Fhp\Segment\CCM\HKCCMv1::createEmpty();
         } else {
-
-            //SEPA Einzelüberweisung (Segment HKCCS / Kennung HICCSS).
+            // SEPA Einzelüberweisung (Segment HKCCS / Kennung HICCSS).
             $segmentID = 'HICCSS';
             $segment = \Fhp\Segment\CCS\HKCCSv1::createEmpty();
         }
@@ -92,7 +88,7 @@ class SendSEPATransfer extends BaseAction
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
         // GIBC_X stands for German Banking Industry Committee and a version counter.
         $xmlSchema = $this->xmlSchema;
-        $matchingSchemas = array_filter($supportedSchemas, function($value) use ($xmlSchema) {
+        $matchingSchemas = array_filter($supportedSchemas, function ($value) use ($xmlSchema) {
             // For example urn:iso:std:iso:20022:tech:xsd:pain.001.001.09 from the xml matches
             // urn:iso:std:iso:20022:tech:xsd:pain.001.001.09_GBIC_4
             return str_starts_with($value, $xmlSchema);

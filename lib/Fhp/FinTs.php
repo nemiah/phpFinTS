@@ -226,7 +226,7 @@ class FinTs
             $this->selectedTanMedium,
             $this->kundensystemId,
             $this->dialogId,
-            $this->messageNumber
+            $this->messageNumber,
         ) = $data;
     }
 
@@ -571,7 +571,7 @@ class FinTs
     public function getTanModes(): array
     {
         $this->ensureTanModesAvailable();
-        $result = array();
+        $result = [];
         foreach ($this->allowedTanModes as $tanModeId) {
             if (!array_key_exists($tanModeId, $this->bpd->allTanModes)) continue;
             $result[$tanModeId] = $this->bpd->allTanModes[$tanModeId];
