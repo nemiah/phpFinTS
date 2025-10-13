@@ -2,13 +2,15 @@
 
 namespace Fhp\Segment\VPP;
 
-class ErgebnisVopPruefungEinzeltransaktion
+use Fhp\Segment\BaseDeg;
+
+class ErgebnisVopPruefungEinzeltransaktion extends BaseDeg
 {
     public string $ibanEmpfaenger;
 
     public ?string $ibanZusatzinformationen = null;
 
-    public ?string $abweichenderEmpfängername = null;
+    public ?string $abweichenderEmpfaengername = null;
 
     public ?string $anderesIdentifikationmerkmal = null;
 
