@@ -2,7 +2,7 @@
 
 namespace Fhp\Segment\IPZ;
 
-use Fhp\lib\Fhp\Segment\IPZ\ParameterSEPAInstantPaymentZahlungV2;
+use Fhp\Segment\IPZ\ParameterSEPAInstantPaymentZahlungV2;
 use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 use Fhp\Segment\BaseSegment;
 
