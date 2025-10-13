@@ -37,29 +37,24 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
 abstract class BaseAction implements \Serializable
 {
     /** @var int[] Stores segment numbers that were assigned to the segments returned from {@link createRequest()}. */
-    protected $requestSegmentNumbers;
+    protected ?array $requestSegmentNumbers = null;
 
     /**
-     * @var string|null Contains the name of the segment, that might need a tan, used by FinTs::execute to signal
+     * Contains the name of the segment, that might need a tan, used by FinTs::execute to signal
      * to the bank that supplying a tan is supported.
      */
-    protected $needTanForSegment = null;
+    protected ?string $needTanForSegment = null;
 
-    /**
-     * If set, the last response from the server regarding this action asked for a TAN from the user.
-     * @var TanRequest|null
-     */
-    protected $tanRequest;
+    /** If set, the last response from the server regarding this action asked for a TAN from the user. */
+    protected ?TanRequest $tanRequest = null;
 
-    /** @var bool */
-    protected $isDone = false;
+    protected bool $isDone = false;
 
     /**
      * Will be populated with the message the bank sent along with the success indication, can be used to show to
      * the user.
-     * @var string
      */
-    public $successMessage;
+    public ?string $successMessage = null;
 
     /**
      * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
@@ -231,7 +226,7 @@ abstract class BaseAction implements \Serializable
     /** @return int[] */
     public function getRequestSegmentNumbers(): array
     {
-        return $this->requestSegmentNumbers;
+        return $this->requestSegmentNumbers ?? [];
     }
 
     /**
