@@ -7,25 +7,10 @@ namespace Fhp;
  */
 class Connection
 {
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @var resource
-     */
-    protected $curlHandle;
-
-    /**
-     * @var int
-     */
-    protected $timeoutConnect = 15;
-
-    /**
-     * @var int
-     */
-    protected $timeoutResponse = 30;
+    protected string $url;
+    protected ?\CurlHandle $curlHandle = null;
+    protected int $timeoutConnect = 15;
+    protected int $timeoutResponse = 30;
 
     public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
     {
