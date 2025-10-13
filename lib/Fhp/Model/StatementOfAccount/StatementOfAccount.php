@@ -6,10 +6,8 @@ use Fhp\MT940\MT940;
 
 class StatementOfAccount
 {
-    /**
-     * @var Statement[]
-     */
-    protected $statements = [];
+    /** @var Statement[] */
+    protected array $statements = [];
 
     /**
      * Get statements
