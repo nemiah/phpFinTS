@@ -89,13 +89,6 @@ class SendSEPATransferVoP extends SendSEPATransfer
         $this->vopIsPending = false;
         $this->hivpp = $response->findSegment(HIVPPv1::class);
 
-        // The bank accepted the request as is.
-        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) !== null || $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) !== null) {
-            $this->vopRequired = false;
-            parent::processResponse($response);
-            return;
-        }
-
         // The Bank does not want a separate HKVPA ("VoP Ausführungsauftrag").
         if ($response->findRueckmeldung(Rueckmeldungscode::VOP_AUSFUEHRUNGSAUFTRAG_NICHT_BENOETIGT) !== null) {
             $this->vopRequired = false;
@@ -115,9 +108,10 @@ class SendSEPATransferVoP extends SendSEPATransfer
         }
 
         if (
+            $response->findRueckmeldung(Rueckmeldungscode::VOP_KEINE_NAMENSABWEICHUNG) !== null
             // The bank has discarded the request, and wants us to resend it with a HKVPA
             // This can happen even if the name matches.
-            $response->findRueckmeldung(Rueckmeldungscode::FREIGABE_KANN_NICHT_ERTEILT_WERDEN) !== null
+            || $response->findRueckmeldung(Rueckmeldungscode::FREIGABE_KANN_NICHT_ERTEILT_WERDEN) !== null
             // The user needs to check the result of the name check.
             // This can be sent by the bank even if the name matches.
             || $response->findRueckmeldung(Rueckmeldungscode::VOP_ERGEBNIS_NAMENSABGLEICH_PRUEFEN) !== null
@@ -129,6 +123,14 @@ class SendSEPATransferVoP extends SendSEPATransfer
             }
             return;
         }
+
+        // The bank accepted the request as is.
+        if ($response->findRueckmeldung(Rueckmeldungscode::ENTGEGENGENOMMEN) !== null || $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) !== null) {
+            $this->vopRequired = false;
+            parent::processResponse($response);
+            return;
+        }
+
         throw new UnsupportedException('Unexpected state in VoP process');
     }
 
