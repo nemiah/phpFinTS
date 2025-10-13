@@ -51,13 +51,11 @@ class HIUPDv6 extends BaseSegment implements HIUPD
      */
     public ?string $erweiterungKontobezogen = null;
 
-    /** {@inheritdoc} */
     public function matchesAccount(SEPAAccount $account): bool
     {
         return !is_null($this->iban) && $this->iban == $account->getIban();
     }
 
-    /** {@inheritdoc} */
     public function getErlaubteGeschaeftsvorfaelle(): array
     {
         return $this->erlaubteGeschaeftsvorfaelle ?? [];

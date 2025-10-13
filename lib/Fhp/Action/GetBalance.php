@@ -96,7 +96,6 @@ class GetBalance extends PaginateableAction
         return $this->response;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hisals */
@@ -115,7 +114,6 @@ class GetBalance extends PaginateableAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

@@ -23,14 +23,12 @@ class FinTsPeer extends FinTs
         parent::__construct($options, $credentials);
     }
 
-    /** {@inheritdoc} */
     protected function newConnection(): Connection
     {
         return self::$mockConnection;
     }
 
     /**
-     * {@inheritdoc}
      * @throws ServerException
      */
     public function endDialog(bool $isAnonymous = false) // parent::endDialog() is protected

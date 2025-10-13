@@ -151,7 +151,6 @@ class DialogInitialization extends BaseAction
             parent::unserialize($parentSerialized);
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         throw new \AssertionError('DialogInitialization::createRequest should not be used.');

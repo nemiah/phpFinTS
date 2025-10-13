@@ -47,7 +47,6 @@ class GetSEPAAccounts extends PaginateableAction
         return $this->accounts;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var BaseSegment $hispas */
@@ -64,7 +63,6 @@ class GetSEPAAccounts extends PaginateableAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
