@@ -7,25 +7,10 @@ namespace Fhp;
  */
 class Connection
 {
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @var resource
-     */
-    protected $curlHandle;
-
-    /**
-     * @var int
-     */
-    protected $timeoutConnect = 15;
-
-    /**
-     * @var int
-     */
-    protected $timeoutResponse = 30;
+    protected string $url;
+    protected ?\CurlHandle $curlHandle = null;
+    protected int $timeoutConnect = 15;
+    protected int $timeoutResponse = 30;
 
     public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
     {
@@ -34,9 +19,12 @@ class Connection
         $this->timeoutResponse = $timeoutResponse;
     }
 
-    private function connect()
+    /**
+     * @throws CurlException When initializing cURL fails.
+     */
+    private function connect(): void
     {
-        $this->curlHandle = curl_init();
+        $this->curlHandle = curl_init() ?: throw new CurlException('Failed initializing cURL.');
 
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
@@ -52,7 +40,7 @@ class Connection
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, ['cache-control: no-cache', 'Content-Type: text/plain']);
     }
 
-    public function disconnect()
+    public function disconnect(): void
     {
         if ($this->curlHandle !== null) {
             curl_close($this->curlHandle);
@@ -76,7 +64,7 @@ class Connection
 
         if (false === $response) {
             throw new CurlException(
-                'Failed connection to ' . $this->url . ': ' . curl_error($this->curlHandle),
+                'Failed sending to ' . $this->url . ': ' . curl_error($this->curlHandle),
                 null,
                 curl_errno($this->curlHandle),
                 curl_getinfo($this->curlHandle),

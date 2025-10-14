@@ -8,86 +8,28 @@ class Transaction
     public const CD_CREDIT = 'credit';
     public const CD_DEBIT = 'debit';
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $bookingDate;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $valutaDate;
-
-    /**
-     * @var float
-     */
-    protected $amount;
-
-    /**
-     * @var string
-     */
-    protected $creditDebit;
-
-    /**
-     * @var bool
-     */
-    protected $isStorno;
-
-    /**
-     * @var string
-     */
-    protected $bookingCode;
-
-    /**
-     * @var string
-     */
-    protected $bookingText;
-
-    /**
-     * @var string
-     */
-    protected $description1;
-
-    /**
-     * @var string
-     */
-    protected $description2;
+    protected ?\DateTime $bookingDate = null;
+    protected ?\DateTime $valutaDate = null;
+    protected float $amount;
+    protected string $creditDebit;
+    protected bool $isStorno;
+    protected string $bookingCode;
+    protected string $bookingText;
+    protected string $description1;
+    protected string $description2;
 
     /**
      * Array keys are identifiers like "SVWZ" for the main description.
      * @var string[]
      */
-    protected $structuredDescription;
+    protected array $structuredDescription;
 
-    /**
-     * @var string
-     */
-    protected $bankCode;
-
-    /**
-     * @var string
-     */
-    protected $accountNumber;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var bool
-     */
-    protected $booked;
-
-    /**
-     * @var int
-     */
-    protected $pn;
-
-    /**
-     * @var int
-     */
-    protected $textKeyAddition;
+    protected string $bankCode;
+    protected string $accountNumber;
+    protected string $name;
+    protected bool $booked;
+    protected int $pn;
+    protected int $textKeyAddition;
 
     /**
      * Get booking date.
@@ -121,10 +63,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingDate(?\DateTime $date = null)
+    public function setBookingDate(?\DateTime $date = null): static
     {
         $this->bookingDate = $date;
-
         return $this;
     }
 
@@ -133,10 +74,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setValutaDate(?\DateTime $date = null)
+    public function setValutaDate(?\DateTime $date = null): static
     {
         $this->valutaDate = $date;
-
         return $this;
     }
 
@@ -153,10 +93,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setBooked(bool $booked)
+    public function setBooked(bool $booked): static
     {
         $this->booked = $booked;
-
         return $this;
     }
 
@@ -165,10 +104,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setAmount(float $amount)
+    public function setAmount(float $amount): static
     {
-        $this->amount = (float) $amount;
-
+        $this->amount = $amount;
         return $this;
     }
 
@@ -185,10 +123,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setCreditDebit(string $creditDebit)
+    public function setCreditDebit(string $creditDebit): static
     {
         $this->creditDebit = $creditDebit;
-
         return $this;
     }
 
@@ -205,10 +142,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setIsStorno(bool $isStorno)
+    public function setIsStorno(bool $isStorno): static
     {
         $this->isStorno = $isStorno;
-
         return $this;
     }
 
@@ -225,10 +161,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingCode(string $bookingCode)
+    public function setBookingCode(string $bookingCode): static
     {
-        $this->bookingCode = (string) $bookingCode;
-
+        $this->bookingCode = $bookingCode;
         return $this;
     }
 
@@ -245,10 +180,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setBookingText(string $bookingText)
+    public function setBookingText(string $bookingText): static
     {
-        $this->bookingText = (string) $bookingText;
-
+        $this->bookingText = $bookingText;
         return $this;
     }
 
@@ -265,10 +199,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setDescription1(string $description1)
+    public function setDescription1(string $description1): static
     {
-        $this->description1 = (string) $description1;
-
+        $this->description1 = $description1;
         return $this;
     }
 
@@ -285,10 +218,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setDescription2(string $description2)
+    public function setDescription2(string $description2): static
     {
-        $this->description2 = (string) $description2;
-
+        $this->description2 = $description2;
         return $this;
     }
 
@@ -306,10 +238,9 @@ class Transaction
      * Set structuredDescription
      *
      * @param string[] $structuredDescription
-     *
      * @return $this
      */
-    public function setStructuredDescription(array $structuredDescription)
+    public function setStructuredDescription(array $structuredDescription): static
     {
         $this->structuredDescription = $structuredDescription;
 
@@ -353,10 +284,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setBankCode(string $bankCode)
+    public function setBankCode(string $bankCode): static
     {
-        $this->bankCode = (string) $bankCode;
-
+        $this->bankCode = $bankCode;
         return $this;
     }
 
@@ -373,10 +303,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setAccountNumber(string $accountNumber)
+    public function setAccountNumber(string $accountNumber): static
     {
-        $this->accountNumber = (string) $accountNumber;
-
+        $this->accountNumber = $accountNumber;
         return $this;
     }
 
@@ -401,10 +330,9 @@ class Transaction
      *
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name): static
     {
-        $this->name = (string) $name;
-
+        $this->name = $name;
         return $this;
     }
 
@@ -422,7 +350,7 @@ class Transaction
      * @param int|mixed $nr Will be parsed to an int.
      * @return $this
      */
-    public function setPN($nr)
+    public function setPN($nr): static
     {
         $this->pn = intval($nr);
         return $this;
@@ -442,7 +370,7 @@ class Transaction
      * @param int|mixed $textKeyAddition Will be parsed to an int.
      * @return $this
      */
-    public function setTextKeyAddition($textKeyAddition)
+    public function setTextKeyAddition($textKeyAddition): static
     {
         $this->textKeyAddition = intval($textKeyAddition);
         return $this;
