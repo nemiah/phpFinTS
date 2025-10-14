@@ -55,21 +55,18 @@ class HITANv6 extends BaseSegment implements HITAN
      */
     public ?string $bezeichnungDesTanMediums = null;
 
-    /** {@inheritdoc} */
     public function getProcessId(): string
     {
         // Note: This is non-null because tanProzess==4.
         return $this->auftragsreferenz;
     }
 
-    /** {@inheritdoc} */
     public function getChallenge(): ?string
     {
         // Note: This is non-null because tanProzess==4.
         return $this->challenge === static::DUMMY_CHALLENGE ? null : $this->challenge;
     }
 
-    /** {@inheritdoc} */
     public function getTanMediumName(): ?string
     {
         return $this->bezeichnungDesTanMediums;

@@ -147,7 +147,6 @@ class GetStatementOfAccount extends PaginateableAction
         return $this->statement;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->bankName = $bpd->getBankName();
@@ -171,7 +170,6 @@ class GetStatementOfAccount extends PaginateableAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

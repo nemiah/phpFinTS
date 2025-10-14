@@ -70,67 +70,56 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
     /** Maybe present if isDecoupled. */
     public ?bool $automatisierteStatusabfragenErlaubt = null;
 
-    /** {@inheritdoc} */
     public function getId(): int
     {
         return $this->sicherheitsfunktion;
     }
 
-    /** {@inheritdoc} */
     public function getName(): string
     {
         return $this->nameDesZweiSchrittVerfahrens;
     }
 
-    /** {@inheritdoc} */
     public function isProzessvariante2(): bool
     {
         return $this->tanProzess === HKTAN::TAN_PROZESS_2;
     }
 
-    /** {@inheritdoc} */
     public function isDecoupled(): bool
     {
         return $this->dkTanVerfahren === 'Decoupled' || $this->dkTanVerfahren === 'DecoupledPush';
     }
 
-    /** {@inheritdoc} */
     public function getSmsAbbuchungskontoErforderlich(): bool
     {
         return $this->smsAbbuchungskontoErforderlich === 2;
     }
 
-    /** {@inheritdoc} */
     public function getAuftraggeberkontoErforderlich(): bool
     {
         return $this->auftraggeberkontoErforderlich === 2;
     }
 
-    /** {@inheritdoc} */
     public function getChallengeKlasseErforderlich(): bool
     {
         return $this->challengeKlasseErforderlich;
     }
 
-    /** {@inheritdoc} */
     public function getAntwortHhdUcErforderlich(): bool
     {
         return $this->antwortHhdUcErforderlich;
     }
 
-    /** {@inheritdoc} */
     public function getChallengeLabel(): string
     {
         return $this->textZurBelegungDesRueckgabewertes;
     }
 
-    /** {@inheritdoc} */
     public function getMaxChallengeLength(): int
     {
         return $this->maximaleLaengeDesRueckgabewertes;
     }
 
-    /** {@inheritdoc} */
     public function getMaxTanLength(): int
     {
         if ($this->isDecoupled()) {
@@ -142,7 +131,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->maximaleLaengeDesTanEingabewertes;
     }
 
-    /** {@inheritdoc} */
     public function getTanFormat(): int
     {
         if ($this->isDecoupled()) {
@@ -154,13 +142,11 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->erlaubtesFormat;
     }
 
-    /** {@inheritdoc} */
     public function needsTanMedium(): bool
     {
         return $this->bezeichnungDesTanMediumsErforderlich === 2 && $this->anzahlUnterstuetzterAktiverTanMedien > 0;
     }
 
-    /** {@inheritdoc} */
     public function getMaxDecoupledChecks(): int
     {
         if (!$this->isDecoupled()) {
@@ -172,7 +158,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->maximaleAnzahlStatusabfragen;
     }
 
-    /** {@inheritdoc} */
     public function getFirstDecoupledCheckDelaySeconds(): int
     {
         if (!$this->isDecoupled()) {
@@ -184,7 +169,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->wartezeitVorErsterStatusabfrage;
     }
 
-    /** {@inheritdoc} */
     public function getPeriodicDecoupledCheckDelaySeconds(): int
     {
         if (!$this->isDecoupled()) {
@@ -196,7 +180,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->wartezeitVorNaechsterStatusabfrage;
     }
 
-    /** {@inheritdoc} */
     public function allowsManualConfirmation(): bool
     {
         if (!$this->isDecoupled()) {
@@ -208,7 +191,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->manuelleBestaetigungMoeglich;
     }
 
-    /** {@inheritdoc} */
     public function allowsAutomatedPolling(): bool
     {
         if (!$this->isDecoupled()) {
@@ -220,7 +202,6 @@ class VerfahrensparameterZweiSchrittVerfahrenV7 extends BaseDeg implements TanMo
         return $this->automatisierteStatusabfragenErlaubt;
     }
 
-    /** {@inheritdoc} */
     public function createHKTAN(): HKTAN
     {
         return HKTANv7::createEmpty();

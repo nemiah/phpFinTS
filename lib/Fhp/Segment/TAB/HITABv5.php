@@ -22,7 +22,6 @@ class HITABv5 extends BaseSegment implements HITAB
     /** @var TanMediumListeV5[]|null @Max(99) */
     public ?array $tanMediumListe = null;
 
-    /** {@inheritdoc} */
     public function getTanMediumListe(): array
     {
         return $this->tanMediumListe;

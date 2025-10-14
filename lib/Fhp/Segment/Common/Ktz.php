@@ -24,13 +24,11 @@ class Ktz extends BaseDeg implements AccountInfo
     public ?string $unterkontomerkmal = null;
     public Kik $kreditinstitutskennung;
 
-    /** {@inheritdoc} */
     public function getAccountNumber(): string
     {
         return $this->iban ?? $this->kontonummer;
     }
 
-    /** {@inheritdoc} */
     public function getBankIdentifier(): ?string
     {
         return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;

@@ -68,17 +68,11 @@ class StartCode extends DataElement
         $this->headerHighBit = '1';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function toHex(): string
     {
         return $this->getHeaderHex() . implode('', $this->controlBytes) . $this->getDataHex();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getLuhnChecksum(): int
     {
         $luhn = 0;
@@ -89,9 +83,6 @@ class StartCode extends DataElement
         return $luhn;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function __debugInfo(): ?array
     {
         return [

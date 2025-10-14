@@ -56,7 +56,6 @@ class GetSEPADirectDebitParameters extends BaseAction
         }
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->hidxes = $bpd->requireLatestSupportedParameters(static::getHixxesSegmentName($this->directDebitType, $this->singleDirectDebit));

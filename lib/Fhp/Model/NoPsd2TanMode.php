@@ -16,13 +16,11 @@ final class NoPsd2TanMode implements TanMode
 {
     public const ID = -1;
 
-    /** {@inheritdoc} */
     public function getId(): int
     {
         return self::ID;
     }
 
-    /** {@inheritdoc} */
     public function getName(): string
     {
         return 'No PSD2/TANs supported';
@@ -33,91 +31,76 @@ final class NoPsd2TanMode implements TanMode
         return false;
     }
 
-    /** {@inheritdoc} */
     public function isDecoupled(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getChallengeLabel(): string
     {
         return '';
     }
 
-    /** {@inheritdoc} */
     public function getMaxChallengeLength(): int
     {
         return 0;
     }
 
-    /** {@inheritdoc} */
     public function getMaxTanLength(): int
     {
         return 0;
     }
 
-    /** {@inheritdoc} */
     public function getTanFormat(): int
     {
         return 0;
     }
 
-    /** {@inheritdoc} */
     public function needsTanMedium(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getSmsAbbuchungskontoErforderlich(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getAuftraggeberkontoErforderlich(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getChallengeKlasseErforderlich(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getAntwortHhdUcErforderlich(): bool
     {
         return false;
     }
 
-    /** {@inheritdoc} */
     public function getMaxDecoupledChecks(): int
     {
         throw new \RuntimeException('Only allowed for decoupled TAN modes');
     }
 
-    /** {@inheritdoc} */
     public function getFirstDecoupledCheckDelaySeconds(): int
     {
         throw new \RuntimeException('Only allowed for decoupled TAN modes');
     }
 
-    /** {@inheritdoc} */
     public function getPeriodicDecoupledCheckDelaySeconds(): int
     {
         throw new \RuntimeException('Only allowed for decoupled TAN modes');
     }
 
-    /** {@inheritdoc} */
     public function allowsManualConfirmation(): bool
     {
         throw new \RuntimeException('Only allowed for decoupled TAN modes');
     }
 
-    /** {@inheritdoc} */
     public function allowsAutomatedPolling(): bool
     {
         throw new \RuntimeException('Only allowed for decoupled TAN modes');

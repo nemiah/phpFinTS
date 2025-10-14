@@ -37,13 +37,11 @@ class KtvV3 extends BaseDeg implements AccountInfo
         return static::create($account->getAccountNumber(), $account->getSubAccount(), Kik::create($account->getBlz()));
     }
 
-    /** {@inheritdoc} */
     public function getAccountNumber(): string
     {
         return $this->kontonummer ?: '';
     }
 
-    /** {@inheritdoc} */
     public function getBankIdentifier(): ?string
     {
         return $this->kik->kreditinstitutscode;

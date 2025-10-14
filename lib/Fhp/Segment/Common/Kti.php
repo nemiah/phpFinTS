@@ -26,7 +26,6 @@ class Kti extends BaseDeg implements AccountInfo
     public ?string $unterkontomerkmal = null;
     public ?Kik $kreditinstitutskennung = null;
 
-    /** {@inheritdoc} */
     public function validate()
     {
         parent::validate();
@@ -58,13 +57,11 @@ class Kti extends BaseDeg implements AccountInfo
         return $result;
     }
 
-    /** {@inheritdoc} */
     public function getAccountNumber(): string
     {
         return $this->iban ?? $this->kontonummer;
     }
 
-    /** {@inheritdoc} */
     public function getBankIdentifier(): ?string
     {
         return $this->bic ?? $this->kreditinstitutskennung->kreditinstitutscode;

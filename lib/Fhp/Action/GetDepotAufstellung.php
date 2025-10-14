@@ -111,7 +111,6 @@ class GetDepotAufstellung extends PaginateableAction
         return $this->depotWert;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var HIWPDS $hiwpds */
@@ -125,7 +124,6 @@ class GetDepotAufstellung extends PaginateableAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
