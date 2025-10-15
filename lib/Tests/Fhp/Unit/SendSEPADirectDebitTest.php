@@ -2,7 +2,6 @@
 
 namespace Tests\Fhp\Unit;
 
-
 use Fhp\Action\SendSEPADirectDebit;
 use Fhp\Model\SEPAAccount;
 use Tests\Fhp\FinTsTestCase;

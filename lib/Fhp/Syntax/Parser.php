@@ -159,8 +159,8 @@ abstract class Parser
 
         $delimiterPos = strpos($rawValue, Delimiter::BINARY, 1);
         if (
-            substr($rawValue, 0, 1) !== Delimiter::BINARY ||
-            $delimiterPos === false
+            substr($rawValue, 0, 1) !== Delimiter::BINARY
+            || $delimiterPos === false
         ) {
             throw new \InvalidArgumentException("Expected binary block header, got $rawValue");
         }
@@ -205,7 +205,7 @@ abstract class Parser
      *     write to (the same instance will be returned from this function).
      * @param bool $allowEmpty If true, this returns either a valid DEG, or null if *all* the fields were empty.
      * @param int $offset The position in $rawElements to be read next.
-     * @return array (BaseDeg|null, integer)
+     * @return array (BaseDeg|null, int)
      *     1. The parsed value, which has the given $type or is null in case all the fields were empty and $allowEmpty
      *        is true.
      *     2. The offset at which parsing should continue. The difference between this returned offset and the $offset

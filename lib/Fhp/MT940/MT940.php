@@ -142,8 +142,8 @@ class MT940
                     $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
                     if (isset($result[$soaDate])) {
-                        #$result[$soaDate] = ['end_balance' => []];
-                    
+                        // $result[$soaDate] = ['end_balance' => []];
+
                         $amount = str_replace(',', '.', substr($day[$i], 10, -1));
                         $cdMark = substr($day[$i], 0, 1);
                         if ($cdMark == 'C') {

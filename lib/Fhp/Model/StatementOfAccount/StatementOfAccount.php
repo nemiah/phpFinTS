@@ -75,7 +75,7 @@ class StatementOfAccount
                     $statementModel->setStartBalance((float) $statement['start_balance']['amount']);
                 }
                 if (isset($statement['end_balance'])) {
-                    $statementModel->setEndBalance((float) $statement['end_balance']['amount'] * ($statement["end_balance"]['credit_debit'] == MT940::CD_CREDIT ? 1 : -1));
+                    $statementModel->setEndBalance((float) $statement['end_balance']['amount'] * ($statement['end_balance']['credit_debit'] == MT940::CD_CREDIT ? 1 : -1));
                 }
                 if (isset($statement['start_balance']['credit_debit'])) {
                     $statementModel->setCreditDebit($statement['start_balance']['credit_debit']);

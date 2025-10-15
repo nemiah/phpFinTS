@@ -114,7 +114,7 @@ class SendSEPADirectDebit extends BaseAction
     {
         list(
             $parentSerialized,
-            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account
+            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account,
         ) = $serialized;
 
         is_array($parentSerialized) ?
@@ -151,7 +151,7 @@ class SendSEPADirectDebit extends BaseAction
         // Sometimes the Bank reports supported schemas with a "_GBIC_X" postfix.
         // GIBC_X stands for German Banking Industry Committee and a version counter.
         $xmlSchema = $this->painNamespace;
-        $matchingSchemas = array_filter($supportedPainNamespaces, function($value) use ($xmlSchema) {
+        $matchingSchemas = array_filter($supportedPainNamespaces, function ($value) use ($xmlSchema) {
             // For example urn:iso:std:iso:20022:tech:xsd:pain.008.001.08 from the xml matches
             // urn:iso:std:iso:20022:tech:xsd:pain.008.001.08_GBIC_4
             return str_starts_with($value, $xmlSchema);

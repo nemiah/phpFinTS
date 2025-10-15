@@ -106,7 +106,7 @@ abstract class BaseAction implements \Serializable
         list(
             $this->requestSegmentNumbers,
             $this->tanRequest,
-            $this->needTanForSegment
+            $this->needTanForSegment,
         ) = $serialized;
     }
 

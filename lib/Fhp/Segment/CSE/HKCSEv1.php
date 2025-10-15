@@ -17,7 +17,7 @@ class HKCSEv1 extends BaseSegment
     public \Fhp\Segment\Common\Kti $kontoverbindungInternational;
     /** Max length: 256 */
     public string $sepaDescriptor;
-        /**
+    /**
      * The PAIN message in XML format.
      * HISPAS informs which XML schemas are allowed.
      * The <ReqdExctnDt> field must be 1999-01-01.

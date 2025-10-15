@@ -98,7 +98,7 @@ class GetStatementOfAccountXML extends PaginateableAction
     {
         list(
             $parentSerialized,
-            $this->account, $this->camtURN, $this->from, $this->to, $this->allAccounts
+            $this->account, $this->camtURN, $this->from, $this->to, $this->allAccounts,
         ) = $serialized;
 
         is_array($parentSerialized) ?

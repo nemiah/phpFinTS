@@ -12,5 +12,4 @@ use Fhp\Segment\CCS\HKCCSv1;
  */
 class HKIPZv1 extends HKCCSv1
 {
-
 }
