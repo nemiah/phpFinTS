@@ -573,7 +573,9 @@ class FinTs
         $this->ensureTanModesAvailable();
         $result = [];
         foreach ($this->allowedTanModes as $tanModeId) {
-            if (!array_key_exists($tanModeId, $this->bpd->allTanModes)) continue;
+            if (!array_key_exists($tanModeId, $this->bpd->allTanModes)) {
+                continue;
+            }
             $result[$tanModeId] = $this->bpd->allTanModes[$tanModeId];
         }
         return $result;
@@ -943,7 +945,7 @@ class FinTs
      * @param MessageBuilder $message The message to be built.
      * @param TanMode|null $tanMode Optionally a TAN mode that will be used when sending this message, defaults to 999
      *     (single step).
-     * @param string|null Optionally a TAN to sign this message with.
+     * @param string|null $tan Optionally a TAN to sign this message with.
      * @return Message The built message.
      */
     private function buildMessage(MessageBuilder $message, ?TanMode $tanMode = null, ?string $tan = null): Message
