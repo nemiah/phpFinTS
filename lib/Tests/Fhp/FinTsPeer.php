@@ -31,7 +31,7 @@ class FinTsPeer extends FinTs
     /**
      * @throws ServerException
      */
-    public function endDialog(bool $isAnonymous = false) // parent::endDialog() is protected
+    public function endDialog(bool $isAnonymous = false): void // parent::endDialog() is protected
     {
         parent::endDialog($isAnonymous);
     }
