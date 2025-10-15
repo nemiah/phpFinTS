@@ -320,8 +320,8 @@ class FinTs
         $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
         if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
             if (($needTanForSegment = $action->getNeedTanForSegment()) !== null) {
-                $message->add(HKTANFactory::createProzessvariante2Step1(
-                    $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
+                $hktan = HKTANFactory::createProzessvariante2Step1($this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment);
+                $message->add($hktan);
             }
         }
         $request = $this->buildMessage($message, $this->getSelectedTanMode());
@@ -354,7 +354,11 @@ class FinTs
         }
 
         // If no TAN is needed, process the response normally, and maybe keep going for more pages.
-        $this->processActionResponse($action, $response->filterByReferenceSegments($action->getRequestSegmentNumbers()));
+        $requestSegmentsNumbers = $action->getRequestSegmentNumbers();
+        if (isset($hktan)) {
+            $requestSegmentsNumbers[] = $hktan->getSegmentNumber();
+        }
+        $this->processActionResponse($action, $response->filterByReferenceSegments($requestSegmentsNumbers));
         if ($action instanceof PaginateableAction && $action->hasMorePages()) {
             $this->execute($action);
         }
