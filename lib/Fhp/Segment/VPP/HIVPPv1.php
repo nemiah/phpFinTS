@@ -14,6 +14,22 @@ use Fhp\Syntax\Bin;
  */
 class HIVPPv1 extends BaseSegment
 {
+    public const VOP_RESULT_CODE_RCVC = 'ReceivedVerificationCompleted';
+    public const VOP_RESULT_CODE_RVNA = 'ReceivedVerificationCompletedNotApplicable';
+    public const VOP_RESULT_CODE_RVNM = 'ReceivedVerificationCompletedNoMatch';
+    public const VOP_RESULT_CODE_RVMC = 'ReceivedVerificationCompletedMatchClosely';
+    public const VOP_RESULT_CODE_RVNC = 'ReceivedVerificationNotCompleted';
+    public const VOP_RESULT_CODE_RVCM = 'ReceivedVerificationCompletedWithMismatches';
+
+    public const VOP_RESULT_CODES = [
+        'RCVC' => 'ReceivedVerificationCompleted',
+        'RVNA' => 'ReceivedVerificationCompletedNotApplicable',
+        'RVNM' => 'ReceivedVerificationCompletedNoMatch',
+        'RVMC' => 'ReceivedVerificationCompletedMatchClosely',
+        'RVNC' => 'ReceivedVerificationNotCompleted',
+        'RVCM' => 'ReceivedVerificationCompletedWithMismatches'
+    ];
+
     public ?Bin $vopId = null;
 
     public ?Tsp $vopIdGueltigBis = null;
@@ -30,4 +46,14 @@ class HIVPPv1 extends BaseSegment
 
     // This value is in seconds
     public ?int $wartezeitVorNaechsterAbfrage = null;
+
+    public function getVopResultCode(): ?string
+    {
+        if ($this->paymentStatusReport) {
+            $report = simplexml_load_string($this->paymentStatusReport->getData());
+            return $report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->GrpSts;
+        } else {
+            return $this->ergebnisVopPruefungEinzeltransaktion?->vopPruefergebnis;
+        }
+    }
 }

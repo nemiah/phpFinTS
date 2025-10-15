@@ -45,30 +45,29 @@ class SendTransferVoPTest extends AtruviaIntegrationTestBase
         $transferAction = $this->getTransferAction();
 
         $this->expectMessage(static::SEND_TRANSFER_REQUEST, mb_convert_encoding(static::SEND_TRANSFER_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(static::POLL_VOP_REPORT_REQUEST, $requestVopReportResponse);
+        $this->expectMessage(static::CONFIRM_VOP_REQUEST, mb_convert_encoding(static::CONFIRM_VOP_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(static::CHECK_DECOUPLED_SUBMISSION_REQUEST, mb_convert_encoding(static::CHECK_DECOUPLED_SUBMISSION_RESPONSE, 'ISO-8859-1', 'UTF-8'));
 
         $this->fints->execute($transferAction);
 
-        while ($transferAction->needsTime()) {
+        if ($transferAction->needsTime()) {
             # As this is a test, we don't need to actually wait.
             #$wait = $transferAction->hivpp->wartezeitVorNaechsterAbfrage;
             #sleep($wait);
-
-            $this->expectMessage(static::POLL_VOP_REPORT_REQUEST, $requestVopReportResponse);
-
             $this->fints->execute($transferAction);
         }
 
         if ($transferAction->needsConfirmation()) {
+            # Do something with the result.
+            $transferAction->hivpp->getVopResultCode();
             $transferAction->setConfirmed();
-            $this->expectMessage(static::CONFIRM_VOP_REQUEST, mb_convert_encoding(static::CONFIRM_VOP_RESPONSE, 'ISO-8859-1', 'UTF-8'));
             $this->fints->execute($transferAction);
         }
 
         $tanMode = $this->fints->getSelectedTanMode();
-        while ($transferAction->needsTan()) {
-
+        if ($transferAction->needsTan()) {
             if ($tanMode->isDecoupled()) {
-                $this->expectMessage(static::CHECK_DECOUPLED_SUBMISSION_REQUEST, mb_convert_encoding(static::CHECK_DECOUPLED_SUBMISSION_RESPONSE, 'ISO-8859-1', 'UTF-8'));
                 $this->fints->checkDecoupledSubmission($transferAction);
             }
         }
