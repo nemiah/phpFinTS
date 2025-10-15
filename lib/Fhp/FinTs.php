@@ -310,21 +310,23 @@ class FinTs
             throw new \RuntimeException('Need to login (DialogInitialization) before executing other actions');
         }
 
+        // Add the action's main request segments.
         $requestSegments = $action->getNextRequest($this->bpd, $this->upd);
-
         if (count($requestSegments) === 0) {
             return; // No request needed.
         }
+        $message = MessageBuilder::create()->add($requestSegments);
 
-        // Construct the full request message.
-        $message = MessageBuilder::create()->add($requestSegments); // This fills in the segment numbers.
+        // Add HKTAN for authentication if necessary.
         if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
             if (($needTanForSegment = $action->getNeedTanForSegment()) !== null) {
                 $message->add(HKTANFactory::createProzessvariante2Step1(
                     $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
             }
         }
-        $request = $this->buildMessage($message, $this->getSelectedTanMode());
+
+        // Construct the request and tell the action about the segment numbers that were assigned.
+        $request = $this->buildMessage($message, $this->getSelectedTanMode()); // This fills in the segment numbers.
         $action->setRequestSegmentNumbers(array_map(function ($segment) {
             /* @var BaseSegment $segment */
             return $segment->getSegmentNumber();
@@ -332,6 +334,21 @@ class FinTs
 
         // Execute the request.
         $response = $this->sendMessage($request);
+        $this->processServerResponse($action, $response);
+    }
+
+    /**
+     * Updates the state of this FinTs instance and of the `$action` based on the server's response.
+     * See {@link execute()} for more documentation on the possible outcomes.
+     * @param BaseAction $action The action for which the request was sent.
+     * @param Message $response The response we just got from the server.
+     * @throws CurlException When the connection fails in a layer below the FinTS protocol.
+     * @throws UnexpectedResponseException When the server responds with a valid but unexpected message.
+     * @throws ServerException When the server responds with a (FinTS-encoded) error message, which includes most things
+     *      that can go wrong with the action itself, like wrong credentials, invalid IBANs, locked accounts, etc.
+     */
+    private function processServerResponse(BaseAction $action, Message $response): void
+    {
         $this->readBPD($response);
 
         // Detect if the bank wants a TAN.
