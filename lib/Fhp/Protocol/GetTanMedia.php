@@ -17,7 +17,6 @@ class GetTanMedia extends BaseAction
     /** @var TanMediumListe[]|null */
     private $tanMedia;
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         // Prepare the HKTAB request.
@@ -32,7 +31,6 @@ class GetTanMedia extends BaseAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

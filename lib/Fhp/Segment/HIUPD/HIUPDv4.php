@@ -29,14 +29,12 @@ class HIUPDv4 extends BaseSegment implements HIUPD
     /** @var ErlaubteGeschaeftsvorfaelleV1[]|null @Max(98) */
     public ?array $erlaubteGeschaeftsvorfaelle = null;
 
-    /** {@inheritdoc} */
     public function matchesAccount(SEPAAccount $account): bool
     {
         return !is_null($this->kontoverbindung->kontonummer)
             && $this->kontoverbindung->kontonummer == $account->getAccountNumber();
     }
 
-    /** {@inheritdoc} */
     public function getErlaubteGeschaeftsvorfaelle(): array
     {
         return $this->erlaubteGeschaeftsvorfaelle ?? [];

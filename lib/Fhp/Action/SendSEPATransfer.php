@@ -44,7 +44,6 @@ class SendSEPATransfer extends BaseAction
         return $result;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         //ANALYSE XML FOR RECEIPTS AND PAYMENT DATE
@@ -110,7 +109,6 @@ class SendSEPATransfer extends BaseAction
         return $segment;
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

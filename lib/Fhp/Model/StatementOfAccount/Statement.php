@@ -7,30 +7,12 @@ class Statement
     public const CD_CREDIT = 'credit';
     public const CD_DEBIT = 'debit';
 
-    /**
-     * @var array of Transaction
-     */
-    protected $transactions = [];
-
-    /**
-     * @var float
-     */
-    protected $startBalance = 0.0;
-
-    /**
-     * @var float|null
-     */
-    protected $endBalance = null;
-
-    /**
-     * @var string|null
-     */
-    protected $creditDebit = null;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $date;
+    /** @var Transaction[] */
+    protected array $transactions = [];
+    protected float $startBalance = 0.0;
+    protected ?float $endBalance = null;
+    protected ?string $creditDebit = null;
+    protected ?\DateTime $date = null;
 
     /**
      * Get transactions

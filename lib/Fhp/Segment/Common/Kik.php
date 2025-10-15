@@ -19,7 +19,6 @@ class Kik extends BaseDeg
     /** Max length: 30 (Mandatory/absent depending on the country) */
     public ?string $kreditinstitutscode = null;
 
-    /** {@inheritdoc} */
     public function validate()
     {
         parent::validate();

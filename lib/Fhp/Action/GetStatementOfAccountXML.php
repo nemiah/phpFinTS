@@ -115,7 +115,6 @@ class GetStatementOfAccountXML extends PaginateableAction
         return $this->xml;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         if ($upd === null) {
@@ -149,7 +148,6 @@ class GetStatementOfAccountXML extends PaginateableAction
         }
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

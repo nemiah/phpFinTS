@@ -52,7 +52,6 @@ class SendSEPARealtimeTransfer extends BaseAction
         return $result;
     }
 
-    /** {@inheritdoc} */
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         /** @var HIIPZSv1|HIIPZSv2 $hiipzs */
@@ -92,7 +91,6 @@ class SendSEPARealtimeTransfer extends BaseAction
         return $hkipz;
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         parent::processResponse($response);

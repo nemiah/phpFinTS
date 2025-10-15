@@ -19,23 +19,20 @@ use Fhp\Segment\Paginateable;
 abstract class PaginateableAction extends BaseAction
 {
     /**
-     * @var BaseSegment[] Stores the request created by BaseAction::getNextRequest to be reused in case the bank wants
+     * Stores the request created by BaseAction::getNextRequest to be reused in case the bank wants
      * to split the result over multiple pages e.g. request/response pairs. This avoids the need for {@link BPD} to be
      * available for paginated requests.
      */
-    protected $requestSegments;
+    protected ?array $requestSegments = null;
 
     /**
      * If set, the last response from the server regarding this action indicated that there are more results to be
      * fetched using this pagination token. This is called "Aufsetzpunkt" in the specification.
-     * @var string|null
      */
-    protected $paginationToken;
+    protected ?string $paginationToken = null;
 
     /**
      * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
-     *
-     * {@inheritdoc}
      */
     public function serialize(): string
     {
@@ -53,8 +50,6 @@ abstract class PaginateableAction extends BaseAction
 
     /**
      * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
-     *
-     * {@inheritdoc}
      */
     public function unserialize($serialized)
     {
@@ -82,7 +77,6 @@ abstract class PaginateableAction extends BaseAction
         return !$this->isDone() && $this->paginationToken !== null;
     }
 
-    /** {@inheritdoc} */
     public function processResponse(Message $response)
     {
         if (($pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION)) !== null) {
@@ -97,7 +91,6 @@ abstract class PaginateableAction extends BaseAction
         }
     }
 
-    /** {@inheritdoc} */
     public function getNextRequest(?BPD $bpd, ?UPD $upd)
     {
         if ($this->requestSegments === null) {
