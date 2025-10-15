@@ -14,13 +14,6 @@ use Fhp\Syntax\Bin;
  */
 class HIVPPv1 extends BaseSegment
 {
-    public const VOP_RESULT_CODE_RCVC = 'ReceivedVerificationCompleted';
-    public const VOP_RESULT_CODE_RVNA = 'ReceivedVerificationCompletedNotApplicable';
-    public const VOP_RESULT_CODE_RVNM = 'ReceivedVerificationCompletedNoMatch';
-    public const VOP_RESULT_CODE_RVMC = 'ReceivedVerificationCompletedMatchClosely';
-    public const VOP_RESULT_CODE_RVNC = 'ReceivedVerificationNotCompleted';
-    public const VOP_RESULT_CODE_RVCM = 'ReceivedVerificationCompletedWithMismatches';
-
     public const VOP_RESULT_CODES = [
         'RCVC' => 'ReceivedVerificationCompleted',
         'RVNA' => 'ReceivedVerificationCompletedNotApplicable',
