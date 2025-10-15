@@ -77,7 +77,7 @@ abstract class Rueckmeldungscode
      * Tells the client that the response is incomplete and the request needs to be re-sent with the pagination token
      * ("Aufsetzpunkt") that is contained in the Rueckmeldung parameters.
      */
-    public const PAGINATION = 3040;
+    public const AUFSETZPUNKT = 3040;
 
     public const VOP_KEINE_NAMENSABWEICHUNG = 25;
 
