@@ -4,7 +4,7 @@ namespace Fhp\Segment\VPP;
 
 use Fhp\Segment\BaseDeg;
 
-class ErgebnisVopPruefungEinzeltransaktion extends BaseDeg
+class ErgebnisVopPruefungEinzeltransaktionV1 extends BaseDeg
 {
     public string $ibanEmpfaenger;
 

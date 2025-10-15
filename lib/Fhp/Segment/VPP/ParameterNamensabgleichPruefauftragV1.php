@@ -4,7 +4,13 @@ namespace Fhp\Segment\VPP;
 
 use Fhp\Segment\BaseDeg;
 
-class ParameterNamensabgleichPruefauftrag extends BaseDeg
+/**
+ * DEG: Parameter Namensabgleich Prüfauftrag
+ *
+ * @see FinTS_3.0_Messages_Geschaeftsvorfaelle_VOP_1.01_2025_06_27_FV.pdf
+ *   Section: D
+ */
+class ParameterNamensabgleichPruefauftragV1 extends BaseDeg
 {
     public int $maximaleAnzahlCreditTransferTransactionInformationOptIn;
 
