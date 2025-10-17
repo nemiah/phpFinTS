@@ -10,6 +10,7 @@ use Fhp\Segment\HIBPA\HIBPAv3;
 use Fhp\Segment\HIPINS\HIPINSv1;
 use Fhp\Segment\SegmentInterface;
 use Fhp\Segment\TAN\HITANS;
+use Fhp\Segment\VPP\HIVPPSv1;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -146,6 +147,28 @@ class BPD
     {
         foreach ($requestSegments as $segment) {
             if ($this->tanRequired[$segment->getName()] ?? false) {
+                return $segment->getName();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
+     * @return string|null Identifier of the (first) segment that requires Verification of Payee according to HIPINS, or
+     *     null if none of the segments require verification.
+     */
+    public function vopRequiredForRequest(array $requestSegments): ?string
+    {
+        /** @var HIVPPSv1 $hivpps */
+        $hivpps = $this->getLatestSupportedParameters('HIVPPS');
+        $vopRequiredTypes = $hivpps?->parameter?->vopPflichtigerZahlungsverkehrsauftrag;
+        if ($vopRequiredTypes === null) {
+            return null;
+        }
+
+        foreach ($requestSegments as $segment) {
+            if (in_array($segment->getName(), $vopRequiredTypes)) {
                 return $segment->getName();
             }
         }
