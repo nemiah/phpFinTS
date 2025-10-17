@@ -8,11 +8,13 @@ use Fhp\Model\PollingInfo;
 use Fhp\Model\TanRequest;
 use Fhp\Model\VopConfirmationRequest;
 use Fhp\Protocol\ActionIncompleteException;
+use Fhp\Protocol\ActionPendingException;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
+use Fhp\Protocol\VopConfirmationRequiredException;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
@@ -170,21 +172,30 @@ abstract class BaseAction implements \Serializable
      * Throws an exception unless this action has been successfully executed, i.e. in the following cases:
      *  - the action has not been {@link FinTs::execute()}-d at all or the {@link FinTs::execute()} call for it threw an
      *    exception,
-     *  - the action is awaiting a TAN/confirmation (as per {@link BaseAction::needsTan()}.
+     *  - the action is awaiting a TAN/confirmation (as per {@link BaseAction::needsTan()},
+     *  - the action is pending a long-running operation on the bank server ({@link BaseAction::needsPollingWait()}),
+     *  - the action is awaiting the user's confirmation of the Verification of Payee result (as per
+     *    {@link BaseAction::needsVopConfirmation()}).
      *
      * After executing an action, you can use this function to make sure that it succeeded. This is especially useful
      * for actions that don't have any results (as each result getter would call {@link ensureDone()} internally).
      * On the other hand, you do not need to call this function if you make sure that (1) you called
-     * {@link FinTs::execute()} and (2) you checked {@link needsTan()} and, if it returned true, supplied a TAN by
-     * calling {@ink FinTs::submitTan()}. Note that both exception types thrown from this method are sub-classes of
-     * {@link \RuntimeException}, so you shouldn't need a try-catch block at the call site for this.
+     * {@link FinTs::execute()} and (2) you checked and resolved all other special outcome states documented there.
+     * Note that both exception types thrown from this method are sub-classes of {@link \RuntimeException}, so you
+     * shouldn't need a try-catch block at the call site for this.
      * @throws ActionIncompleteException If the action hasn't even been executed.
+     * @throws ActionPendingException If the action is pending a long-running server operation that needs polling.
+     * @throws VopConfirmationRequiredException If the action requires the user's confirmation for VOP.
      * @throws TanRequiredException If the action needs a TAN.
      */
-    public function ensureDone()
+    public function ensureDone(): void
     {
         if ($this->tanRequest !== null) {
             throw new TanRequiredException($this->tanRequest);
+        } elseif ($this->pollingInfo !== null) {
+            throw new ActionPendingException($this->pollingInfo);
+        } elseif ($this->vopConfirmationRequest !== null) {
+            throw new VopConfirmationRequiredException($this->vopConfirmationRequest);
         } elseif (!$this->isDone()) {
             throw new ActionIncompleteException();
         }
