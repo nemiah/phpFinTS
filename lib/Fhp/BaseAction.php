@@ -4,7 +4,9 @@
 
 namespace Fhp;
 
+use Fhp\Model\PollingInfo;
 use Fhp\Model\TanRequest;
+use Fhp\Model\VopConfirmationRequest;
 use Fhp\Protocol\ActionIncompleteException;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
@@ -48,6 +50,12 @@ abstract class BaseAction implements \Serializable
     /** If set, the last response from the server regarding this action asked for a TAN from the user. */
     protected ?TanRequest $tanRequest = null;
 
+    /** If set, this action is currently waiting for a long-running operation on the server to complete. */
+    protected ?PollingInfo $pollingInfo = null;
+
+    /** If set, this action needs the user's confirmation to be completed. */
+    protected ?VopConfirmationRequest $vopConfirmationRequest = null;
+
     protected bool $isDone = false;
 
     /**
@@ -72,15 +80,15 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
-     * present yet.
+     * An action can only be serialized *after* it has been executed and *if* it wasn't completed yet (e.g. because it
+     * still requires a TAN or VOP confirmation).
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      *
      * @return array The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
      */
     public function __serialize(): array
     {
-        if (!$this->needsTan()) {
+        if (!$this->needsTan() && !$this->needsPollingWait() && !$this->needsVopConfirmation()) {
             throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
         }
         return [
@@ -137,6 +145,26 @@ abstract class BaseAction implements \Serializable
     public function getTanRequest(): ?TanRequest
     {
         return $this->tanRequest;
+    }
+
+    public function needsPollingWait(): bool
+    {
+        return !$this->isDone() && $this->pollingInfo !== null;
+    }
+
+    public function getPollingInfo(): ?PollingInfo
+    {
+        return $this->pollingInfo;
+    }
+
+    public function needsVopConfirmation(): bool
+    {
+        return !$this->isDone() && $this->vopConfirmationRequest !== null;
+    }
+
+    public function getVopConfirmationRequest(): ?VopConfirmationRequest
+    {
+        return $this->vopConfirmationRequest;
     }
 
     /**
@@ -247,5 +275,17 @@ abstract class BaseAction implements \Serializable
     final public function setTanRequest(?TanRequest $tanRequest): void
     {
         $this->tanRequest = $tanRequest;
+    }
+
+    /** To be called only by the FinTs instance that executes this action. */
+    final public function setPollingInfo(?PollingInfo $pollingInfo): void
+    {
+        $this->pollingInfo = $pollingInfo;
+    }
+
+    /** To be called only by the FinTs instance that executes this action. */
+    final public function setVopConfirmationRequest(?VopConfirmationRequest $vopConfirmationRequest): void
+    {
+        $this->vopConfirmationRequest = $vopConfirmationRequest;
     }
 }
