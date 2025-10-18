@@ -46,6 +46,6 @@ $xml = $directDebitFile->generateOutput(['zipToOneFile' => false])[0]['data'];
 
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $xml);
 $fints->execute($sendSEPADirectDebit);
-if ($sendSEPADirectDebit->needsTan()) {
-    handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
-}
+
+require_once 'vop.php';
+handleVopAndAuthentication($sendSEPADirectDebit);

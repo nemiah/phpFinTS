@@ -58,6 +58,6 @@ $sepaDD->addCreditor(new SEPACreditor([ //this is who you want to send money to
 
 $sendSEPATransfer = \Fhp\Action\SendSEPATransfer::create($oneAccount, $sepaDD->toXML());
 $fints->execute($sendSEPATransfer);
-if ($sendSEPATransfer->needsTan()) {
-    handleStrongAuthentication($sendSEPATransfer); // See login.php for the implementation.
-}
+
+require_once 'vop.php';
+handleVopAndAuthentication($sendSEPATransfer);
