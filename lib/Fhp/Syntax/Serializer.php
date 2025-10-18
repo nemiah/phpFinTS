@@ -72,6 +72,15 @@ abstract class Serializer
     }
 
     /**
+     * @param BaseSegment[] $segments The segments to be serialized.
+     * @return string The concatenated HBCI wire format representation of the segments.
+     */
+    public static function serializeSegments(array $segments): string
+    {
+        return implode(array_map(['self', 'serializeSegment'], $segments));
+    }
+
+    /**
      * @param BaseSegment|BaseDeg|null $obj An object to be serialized. If null, all fields are implicitly null.
      * @param BaseDescriptor $descriptor The descriptor for the object to be serialized.
      * @return array A partial serialization of that object, namely a (possibly nested) array with all of its elements

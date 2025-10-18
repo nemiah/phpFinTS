@@ -222,11 +222,7 @@ class Message
      */
     public function serialize(): string
     {
-        $result = '';
-        foreach ($this->wrapperSegments as $segment) {
-            $result .= Serializer::serializeSegment($segment);
-        }
-        return $result;
+        return Serializer::serializeSegments($this->wrapperSegments);
     }
 
     /**
