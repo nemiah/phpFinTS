@@ -190,12 +190,17 @@ class Message
 
     /**
      * @param int $code The response code to search for.
+     * @param ?int $requestSegmentNumber If set, only consider Rueckmeldungen that pertain to this request segment.
      * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
      */
-    public function findRueckmeldung(int $code): ?Rueckmeldung
+    public function findRueckmeldung(int $code, ?int $requestSegmentNumber = null): ?Rueckmeldung
     {
         foreach ($this->plainSegments as $segment) {
-            if ($segment instanceof RueckmeldungContainer) {
+            if (
+                $segment instanceof RueckmeldungContainer && (
+                    $requestSegmentNumber === null || $segment->segmentkopf->bezugselement === $requestSegmentNumber
+                )
+            ) {
                 $rueckmeldung = $segment->findRueckmeldung($code);
                 if ($rueckmeldung !== null) {
                     return $rueckmeldung;
@@ -222,11 +227,7 @@ class Message
      */
     public function serialize(): string
     {
-        $result = '';
-        foreach ($this->wrapperSegments as $segment) {
-            $result .= Serializer::serializeSegment($segment);
-        }
-        return $result;
+        return Serializer::serializeSegments($this->wrapperSegments);
     }
 
     /**
@@ -300,14 +301,16 @@ class Message
         $segments = Parser::parseSegments($rawMessage);
 
         // Message header and footer must always be there, or something went badly wrong.
-        if (!($segments[0] instanceof HNHBKv3)) {
-            throw new \InvalidArgumentException("Expected first segment to be HNHBK: $rawMessage");
-        }
-        if (!($segments[count($segments) - 1] instanceof HNHBSv1)) {
-            throw new \InvalidArgumentException("Expected last segment to be HNHBS: $rawMessage");
-        }
         $result->header = $segments[0];
         $result->footer = $segments[count($segments) - 1];
+        if (!($result->header instanceof HNHBKv3)) {
+            $actual = $result->header->getName();
+            throw new \InvalidArgumentException("Expected first segment to be HNHBK, but got $actual: $rawMessage");
+        }
+        if (!($result->footer instanceof HNHBSv1)) {
+            $actual = $result->footer->getName();
+            throw new \InvalidArgumentException("Expected last segment to be HNHBS, but got $actual: $rawMessage");
+        }
 
         // Check if there's an encryption header and "encrypted" data.
         // Section B.8 specifies that there are exactly 4 segments: HNHBK, HNVSK, HNVSD, HNHBS.

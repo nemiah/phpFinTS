@@ -6,7 +6,6 @@ use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
-use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\Paginateable;
 
@@ -79,7 +78,7 @@ abstract class PaginateableAction extends BaseAction
 
     public function processResponse(Message $response)
     {
-        if (($pagination = $response->findRueckmeldung(Rueckmeldungscode::PAGINATION)) !== null) {
+        if (($pagination = $response->findRueckmeldung(Rueckmeldungscode::AUFSETZPUNKT)) !== null) {
             if (count($pagination->rueckmeldungsparameter) !== 1) {
                 throw new UnexpectedResponseException("Unexpected pagination request: $pagination");
             }
