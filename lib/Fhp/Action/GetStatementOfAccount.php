@@ -31,7 +31,7 @@ use Fhp\UnsupportedException;
  */
 class GetStatementOfAccount extends PaginateableAction
 {
-    // Request (not available after serialization, i.e. not available in processResponse()).
+    // Request (if you add a field here, update __serialize() and __unserialize() as well).
     /** @var SEPAAccount */
     private $account;
     /** @var \DateTime */
@@ -93,7 +93,7 @@ class GetStatementOfAccount extends PaginateableAction
     {
         return [
             parent::__serialize(),
-            $this->account, $this->from, $this->to, $this->allAccounts,
+            $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
         ];
     }
@@ -113,7 +113,7 @@ class GetStatementOfAccount extends PaginateableAction
     {
         list(
             $parentSerialized,
-            $this->account, $this->from, $this->to, $this->allAccounts,
+            $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
         ) = $serialized;
 

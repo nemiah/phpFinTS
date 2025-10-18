@@ -24,7 +24,7 @@ use Fhp\UnsupportedException;
  */
 class GetBalance extends PaginateableAction
 {
-    // Request (not available after serialization, i.e. not available in processResponse()).
+    // Request (if you add a field here, update __serialize() and __unserialize() as well).
     /** @var SEPAAccount */
     private $account;
     /** @var bool */

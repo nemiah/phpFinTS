@@ -347,7 +347,7 @@ class Message
      * @param int $segmentNumber The number for the *first* segment, subsequent segment get the subsequent integers.
      * @return BaseSegment[] The same array, for chaining.
      */
-    private static function setSegmentNumbers(array $segments, int $segmentNumber): array
+    public static function setSegmentNumbers(array $segments, int $segmentNumber): array
     {
         foreach ($segments as $segment) {
             $segment->segmentkopf->segmentnummer = $segmentNumber;
