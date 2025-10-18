@@ -1,6 +1,6 @@
 # PHP FinTS/HBCI library
 
-[![Build Status](https://travis-ci.org/nemiah/phpFinTS.svg?branch=master)](https://travis-ci.org/nemiah/phpFinTS)
+[![CI status](https://github.com/nemiah/phpFinTS/actions/workflows/tests.yml/badge.svg)](https://github.com/nemiah/phpFinTS/actions/workflows/tests.yml)
 
 A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
