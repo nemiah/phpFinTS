@@ -19,12 +19,15 @@ use Fhp\UnsupportedException;
  */
 class SendSEPATransfer extends BaseAction
 {
+    // Request (if you add a field here, update __serialize() and __unserialize() as well).
     /** @var SEPAAccount */
     private $account;
     /** @var string */
     private $painMessage;
     /** @var string */
     private $xmlSchema;
+
+    // There are no result fields. This action is simply marked as done to indicate that the transfer was executed.
 
     /**
      * @param SEPAAccount $account The account from which the transfer will be sent.
@@ -42,6 +45,45 @@ class SendSEPATransfer extends BaseAction
         $result->painMessage = $painMessage;
         $result->xmlSchema = $match[1];
         return $result;
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     */
+    public function serialize(): string
+    {
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
+            $this->account, $this->painMessage, $this->xmlSchema,
+        ];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * @param string $serialized
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        self::__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
+    {
+        list(
+            $parentSerialized,
+            $this->account, $this->painMessage, $this->xmlSchema,
+        ) = $serialized;
+
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
     }
 
     protected function createRequest(BPD $bpd, ?UPD $upd)

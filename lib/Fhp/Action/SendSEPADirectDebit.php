@@ -22,26 +22,23 @@ use Fhp\UnsupportedException;
  */
 class SendSEPADirectDebit extends BaseAction
 {
+    // Request (if you add a field here, update __serialize() and __unserialize() as well).
     /** @var SEPAAccount */
     protected $account;
-
     /** @var string */
     protected $painMessage;
-
     /** @var string */
     protected $painNamespace;
-
     /** @var float */
     protected $ctrlSum;
-
     /** @var bool */
     protected $singleDirectDebit = false;
-
     /** @var bool */
     protected $tryToUseControlSumForSingleTransactions = false;
-
     /** @var string */
     private $coreType;
+
+    // There are no result fields. This action is simply marked as done to indicate that the transfer was executed.
 
     public static function create(SEPAAccount $account, string $painMessage, bool $tryToUseControlSumForSingleTransactions = false): SendSEPADirectDebit
     {
