@@ -12,5 +12,5 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
  */
 class HIVPPSv1 extends BaseGeschaeftsvorfallparameter
 {
-    public ParameterNamensabgleichPruefauftrag $parameter;
+    public ParameterNamensabgleichPruefauftragV1 $parameter;
 }

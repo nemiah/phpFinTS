@@ -1,6 +1,6 @@
 <?php
 
-namespace Fhp\Segment\VPP;
+namespace Fhp\Segment\VPA;
 
 use Fhp\Segment\BaseSegment;
 use Fhp\Syntax\Bin;

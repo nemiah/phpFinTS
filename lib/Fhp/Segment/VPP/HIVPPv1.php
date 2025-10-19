@@ -24,7 +24,7 @@ class HIVPPv1 extends BaseSegment
 
     public ?Bin $paymentStatusReport = null;
 
-    public ?ErgebnisVopPruefungEinzeltransaktion $ergebnisVopPruefungEinzeltransaktion = null;
+    public ?ErgebnisVopPruefungEinzeltransaktionV1 $ergebnisVopPruefungEinzeltransaktion = null;
 
     public ?string $aufklaerungstextAutorisierungTrotzAbweichung = null;
 
