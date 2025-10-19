@@ -81,7 +81,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     public const SEND_TAN_REQUEST = "HNHBK:1:3+000000000425+300+FAKEDIALOGIDabcdefghijklmnopqr+3'HNVSK:998:3+PIN:2+998+1+1::FAKEKUNDENSYSTEMIDabcdefghij+1:20190102:030405+2:2:13:@8@00000000:5:1+280:12030000:test?@user:V:0:0+0'HNVSD:999:1+@206@HNSHK:2:4+PIN:2+921+9999999+1+1+1::FAKEKUNDENSYSTEMIDabcdefghij+1+1:20190102:030405+1:999:1+6:10:19+280:12030000:test?@user:S:0:0'HKTAN:3:6+2++++2472-12-07-21.27.57.456789+N'HNSHA:4:2+9999999++12345:666555''HNHBS:5:1+3'";
     public const SEND_TAN_RESPONSE = "HIRMG:3:2+0010::Nachricht entgegengenommen.'HIRMS:4:2:3+0010::Der Auftrag wurde entgegengenommen.'HITAN:5:6:3+2++2472-12-07-21.27.57.456789'";
 
-    private function getSendTransferRequest(): string
+    protected function getSendTransferRequest(): string
     {
         // Note: strlen() is computed instead of hard-coded because it depends on the indentation in this file, which
         // may be changed by linters and other tools, and because it contains line breaks, which are different depending
@@ -93,7 +93,7 @@ class SendSEPATransferTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    private function runInitialRequest(): SendSEPATransfer
+    protected function runInitialRequest(): SendSEPATransfer
     {
         $sendTransfer = SendSEPATransfer::create($this->getTestAccount(), static::PAIN_MESSAGE);
         $this->fints->execute($sendTransfer);
