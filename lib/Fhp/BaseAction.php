@@ -243,10 +243,8 @@ abstract class BaseAction implements \Serializable
         $this->requestSegmentNumbers = $requestSegmentNumbers;
     }
 
-    /**
-     * To be called only by the FinTs instance that executes this action.
-     */
-    final public function setTanRequest(?TanRequest $tanRequest)
+    /** To be called only by the FinTs instance that executes this action. */
+    final public function setTanRequest(?TanRequest $tanRequest): void
     {
         $this->tanRequest = $tanRequest;
     }
