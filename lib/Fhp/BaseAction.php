@@ -96,6 +96,8 @@ abstract class BaseAction implements \Serializable
             $this->requestSegmentNumbers,
             $this->tanRequest,
             $this->needTanForSegment,
+            $this->pollingInfo,
+            $this->vopConfirmationRequest,
         ];
     }
 
@@ -116,7 +118,9 @@ abstract class BaseAction implements \Serializable
             $this->requestSegmentNumbers,
             $this->tanRequest,
             $this->needTanForSegment,
-        ) = $serialized;
+            $this->pollingInfo,
+            $this->vopConfirmationRequest,
+        ) = array_pad($serialized, 5, null);
     }
 
     /**

@@ -49,7 +49,7 @@ class SendTransferVoPTest extends AtruviaIntegrationTestBase
     public function testVopWithResultMatchButConfirmationRequired(): void
     {
         $this->initDialog();
-        $action = SendSEPATransfer::create($this->getTestAccount(), self::XML_PAYLOAD);
+        $action = $this->createAction();
 
         // We send the transfer and the bank asks to wait while VOP is happening.
         $this->expectMessage(static::SEND_TRANSFER_REQUEST, mb_convert_encoding(static::SEND_TRANSFER_RESPONSE_POLLING_NEEDED, 'ISO-8859-1', 'UTF-8'));
@@ -104,7 +104,7 @@ class SendTransferVoPTest extends AtruviaIntegrationTestBase
     public function testVopWithResultPartialMatch(): void
     {
         $this->initDialog();
-        $action = SendSEPATransfer::create($this->getTestAccount(), self::XML_PAYLOAD);
+        $action = $this->createAction();
 
         // We send the transfer and the bank asks to wait while VOP is happening.
         $this->expectMessage(static::SEND_TRANSFER_REQUEST, mb_convert_encoding(static::SEND_TRANSFER_RESPONSE_POLLING_NEEDED, 'ISO-8859-1', 'UTF-8'));
