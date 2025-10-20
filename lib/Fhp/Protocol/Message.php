@@ -218,6 +218,23 @@ class Message
     }
 
     /**
+     * @param int $requestSegmentNumber Only consider Rueckmeldungen that pertain to this request segment.
+     * @return int[] The codes of all the Rueckmeldung instances matching the request segment.
+     */
+    public function findRueckmeldungscodesForReferenceSegment(int $requestSegmentNumber): array
+    {
+        $codes = [];
+        foreach ($this->plainSegments as $segment) {
+            if ($segment instanceof RueckmeldungContainer && $segment->segmentkopf->bezugselement === $requestSegmentNumber) {
+                foreach ($segment->getAllRueckmeldungen() as $rueckmeldung) {
+                    $codes[] = $rueckmeldung->rueckmeldungscode;
+                }
+            }
+        }
+        return $codes;
+    }
+
+    /**
      * @return string The HBCI/FinTS wire format for this message, ISO-8859-1 encoded.
      */
     public function serialize(): string
