@@ -109,18 +109,31 @@ class VopHelper
             if ($hivpp->ergebnisVopPruefungEinzeltransaktion === null) {
                 throw new UnsupportedException('Missing paymentStatusReport and ergebnisVopPruefungEinzeltransaktion');
             }
-            $verificationResultCode = $hivpp->ergebnisVopPruefungEinzeltransaktion->vopPruefergebnis;
+            $verificationResult = VopVerificationResult::parse(
+                $hivpp->ergebnisVopPruefungEinzeltransaktion->vopPruefergebnis
+            );
             $verificationNotApplicableReason = $hivpp->ergebnisVopPruefungEinzeltransaktion->grundRVNA;
         } else {
             $report = simplexml_load_string($hivpp->paymentStatusReport->getData());
-            $verificationResultCode = $report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->GrpSts ?: null;
+            $verificationResult = VopVerificationResult::parse(
+                $report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->GrpSts ?: null
+            );
+
+            // For a single transaction, we can do better than "CompletedPartialMatch",
+            // which can indicate either CompletedCloseMatch or CompletedNoMatch
+            if (intval($report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->OrgnlNbOfTxs ?: 0) === 1
+                && $verificationResult === VopVerificationResult::CompletedPartialMatch
+                && $verificationResultCode = $report->CstmrPmtStsRpt->OrgnlPmtInfAndSts->TxInfAndSts?->TxSts
+            ) {
+                $verificationResult = VopVerificationResult::parse($verificationResultCode);
+            }
         }
 
         return new VopConfirmationRequestImpl(
             $hivpp->vopId,
             $hivpp->vopIdGueltigBis?->asDateTime(),
             $hivpp->aufklaerungstextAutorisierungTrotzAbweichung,
-            VopVerificationResult::parse($verificationResultCode),
+            $verificationResult,
             $verificationNotApplicableReason,
         );
     }

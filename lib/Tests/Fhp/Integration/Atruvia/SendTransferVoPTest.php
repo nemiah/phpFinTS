@@ -125,7 +125,7 @@ class SendTransferVoPTest extends AtruviaIntegrationTestBase
         $this->assertFalse($action->needsTan());
         $this->assertFalse($action->isDone());
         $this->assertEquals(
-            VopVerificationResult::CompletedPartialMatch,
+            VopVerificationResult::CompletedNoMatch,
             $action->getVopConfirmationRequest()->getVerificationResult()
         );
 
