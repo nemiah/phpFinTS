@@ -65,3 +65,6 @@ $fints->execute($sendSEPADirectDebit);
 if ($sendSEPADirectDebit->needsTan()) {
     handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
 }
+
+// Debit requests don't produce any result we could receive through a getter, but we still need to make sure it's done.
+$sendSEPADirectDebit->ensureDone();
