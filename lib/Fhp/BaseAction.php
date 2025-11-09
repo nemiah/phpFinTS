@@ -77,6 +77,7 @@ abstract class BaseAction implements \Serializable
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      *
      * @return array The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
+     *   Note that this is not necessarily valid UTF-8, so you should store it as a BLOB column or raw bytes.
      */
     public function __serialize(): array
     {

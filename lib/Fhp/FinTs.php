@@ -159,6 +159,7 @@ class FinTs
      *     carefully (not written to log files, only to a database or other storage system that would normally be used
      *     for user data). The returned string never contains highly sensitive information (not the user's password or
      *     PIN), so it probably does not need to be encrypted. Treat it like a session cookie of the same bank.
+     *     Note that this is not necessarily valid UTF-8, so you should store it as a BLOB column or raw bytes.
      */
     public function persist(bool $minimal = false): string
     {
