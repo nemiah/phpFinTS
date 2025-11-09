@@ -2,6 +2,8 @@
 
 namespace Fhp\Segment\HIRMS;
 
+use Fhp\Protocol\DialogInitialization;
+
 /**
  * Enum for the response codes that the server can send.
  *
@@ -127,6 +129,12 @@ abstract class Rueckmeldungscode
      * In einer Nachricht ist mindestens ein fehlerhafter Auftrag enthalten.
      */
     public const TEILWEISE_FEHLERHAFT = 9050;
+
+    /**
+     * Neue Kundensystem-ID anfordern.
+     * Als Antwort auf eine Dialoginitialisierungsnachricht ({@link DialogInitialization}).
+     */
+    public const NEUE_KUNDENSYSTEM_ID_HOLEN = 9391;
 
     /**
      * Kreditinstitutsseitige Beendigung des Dialoges
