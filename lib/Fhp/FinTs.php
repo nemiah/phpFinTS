@@ -375,6 +375,16 @@ class FinTs
         if ($action instanceof PaginateableAction && $action->hasMorePages()) {
             $this->execute($action);
         }
+
+        // Check whether the server requested a Kundensystem-ID refresh.
+        if ($response->findRueckmeldung(Rueckmeldungscode::NEUE_KUNDENSYSTEM_ID_HOLEN) !== null) {
+            // TODO Properly implement the refresh here, see https://github.com/nemiah/phpFinTS/issues/458.
+            $this->logger->warning(
+                'The server asked us to refresh the Kundensystem-ID in response to a ' . gettype($action) .
+                ' action, but that is not implemented yet. This could result in authentication errors or extraneous ' .
+                ' re-authentication prompts from the bank.'
+            );
+        }
     }
 
     /**
