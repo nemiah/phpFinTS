@@ -62,6 +62,6 @@ $oneAccount = $getSepaAccounts->getAccounts()[0];
 
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $sepaDD->toXML('pain.008.001.02'));
 $fints->execute($sendSEPADirectDebit);
-if ($sendSEPADirectDebit->needsTan()) {
-    handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
-}
+
+require_once 'vop.php';
+handleVopAndAuthentication($sendSEPADirectDebit);

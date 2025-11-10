@@ -190,12 +190,17 @@ class Message
 
     /**
      * @param int $code The response code to search for.
+     * @param ?int $requestSegmentNumber If set, only consider Rueckmeldungen that pertain to this request segment.
      * @return Rueckmeldung|null The corresponding Rueckmeldung instance, or null if not found.
      */
-    public function findRueckmeldung(int $code): ?Rueckmeldung
+    public function findRueckmeldung(int $code, ?int $requestSegmentNumber = null): ?Rueckmeldung
     {
         foreach ($this->plainSegments as $segment) {
-            if ($segment instanceof RueckmeldungContainer) {
+            if (
+                $segment instanceof RueckmeldungContainer && (
+                    $requestSegmentNumber === null || $segment->segmentkopf->bezugselement === $requestSegmentNumber
+                )
+            ) {
                 $rueckmeldung = $segment->findRueckmeldung($code);
                 if ($rueckmeldung !== null) {
                     return $rueckmeldung;
