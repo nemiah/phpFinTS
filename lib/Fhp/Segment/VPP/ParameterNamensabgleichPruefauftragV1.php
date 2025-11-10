@@ -25,6 +25,6 @@ class ParameterNamensabgleichPruefauftragV1 extends BaseDeg
 
     public string $unterstuetztePaymentStatusReportDatenformate;
 
-    /** @var string[] @Max(999999) Max length each: 6 */
+    /** @var string[] @Unlimited Max length each: 6 */
     public array $vopPflichtigerZahlungsverkehrsauftrag;
 }
