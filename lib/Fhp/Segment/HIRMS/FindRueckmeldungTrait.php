@@ -29,4 +29,10 @@ trait FindRueckmeldungTrait
             return $rueckmeldung->rueckmeldungscode === $code;
         }));
     }
+
+    /** @return Rueckmeldung[] */
+    public function getAllRueckmeldungen(): array
+    {
+        return $this->rueckmeldung;
+    }
 }

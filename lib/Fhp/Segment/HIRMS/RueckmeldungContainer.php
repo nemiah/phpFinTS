@@ -15,4 +15,7 @@ interface RueckmeldungContainer
 
     /** @return Rueckmeldung[] */
     public function findRueckmeldungen(int $code): array;
+
+    /** @return Rueckmeldung[] */
+    public function getAllRueckmeldungen(): array;
 }
