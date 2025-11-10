@@ -11,8 +11,10 @@ use Fhp\Segment\Common\Btg;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\DME\HIDMESv1;
 use Fhp\Segment\DME\HIDMESv2;
+use Fhp\Segment\DME\HKDMEv2;
 use Fhp\Segment\DSE\HIDSESv2;
 use Fhp\Segment\DSE\HIDXES;
+use Fhp\Segment\DSE\HKDSEv2;
 use Fhp\Segment\SPA\HISPAS;
 use Fhp\Syntax\Bin;
 use Fhp\UnsupportedException;
@@ -159,7 +161,7 @@ class SendSEPADirectDebit extends BaseAction
                 . implode(', ', $supportedPainNamespaces));
         }
 
-        /** @var mixed $hkdxe */ // TODO Put a new interface type here.
+        /** @var HKDMEv2|HKDSEv2|HIDXES $hkdxe */
         $hkdxe = $hidxes->createRequestSegment();
         $hkdxe->kontoverbindungInternational = Kti::fromAccount($this->account);
         $hkdxe->sepaDescriptor = $this->painNamespace;
