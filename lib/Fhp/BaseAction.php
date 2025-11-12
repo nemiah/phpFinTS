@@ -61,8 +61,7 @@ abstract class BaseAction implements \Serializable
      *
      * NOTE: A common mistake is to call this function directly. Instead, you probably want `serialize($instance)`.
      *
-     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
-     * present yet.
+     * An action can only be serialized before it was completed.
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      * @return string The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
      */
@@ -72,8 +71,7 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
-     * present yet.
+     * An action can only be serialized before it was completed.
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      *
      * @return array The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
@@ -81,8 +79,8 @@ abstract class BaseAction implements \Serializable
      */
     public function __serialize(): array
     {
-        if (!$this->needsTan()) {
-            throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
+        if ($this->isDone()) {
+            throw new \RuntimeException('Completed actions cannot be serialized.');
         }
         return [
             $this->requestSegmentNumbers,
