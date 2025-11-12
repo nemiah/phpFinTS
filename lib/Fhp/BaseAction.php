@@ -4,13 +4,17 @@
 
 namespace Fhp;
 
+use Fhp\Model\PollingInfo;
 use Fhp\Model\TanRequest;
+use Fhp\Model\VopConfirmationRequest;
 use Fhp\Protocol\ActionIncompleteException;
+use Fhp\Protocol\ActionPendingException;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\TanRequiredException;
 use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
+use Fhp\Protocol\VopConfirmationRequiredException;
 use Fhp\Segment\BaseSegment;
 use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
@@ -48,6 +52,12 @@ abstract class BaseAction implements \Serializable
     /** If set, the last response from the server regarding this action asked for a TAN from the user. */
     protected ?TanRequest $tanRequest = null;
 
+    /** If set, this action is currently waiting for a long-running operation on the server to complete. */
+    protected ?PollingInfo $pollingInfo = null;
+
+    /** If set, this action needs the user's confirmation to be completed. */
+    protected ?VopConfirmationRequest $vopConfirmationRequest = null;
+
     protected bool $isDone = false;
 
     /**
@@ -61,8 +71,7 @@ abstract class BaseAction implements \Serializable
      *
      * NOTE: A common mistake is to call this function directly. Instead, you probably want `serialize($instance)`.
      *
-     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
-     * present yet.
+     * An action can only be serialized before it was completed.
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      * @return string The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
      */
@@ -72,8 +81,7 @@ abstract class BaseAction implements \Serializable
     }
 
     /**
-     * An action can only be serialized *after* it has been executed in case it needs a TAN, i.e. when the result is not
-     * present yet.
+     * An action can only be serialized before it was completed.
      * If a sub-class overrides this, it should call the parent function and include it in its result.
      *
      * @return array The serialized action, e.g. for storage in a database. This will not contain sensitive user data.
@@ -81,13 +89,15 @@ abstract class BaseAction implements \Serializable
      */
     public function __serialize(): array
     {
-        if (!$this->needsTan()) {
-            throw new \RuntimeException('Cannot serialize this action, because it is not waiting for a TAN.');
+        if ($this->isDone()) {
+            throw new \RuntimeException('Completed actions cannot be serialized.');
         }
         return [
             $this->requestSegmentNumbers,
             $this->tanRequest,
             $this->needTanForSegment,
+            $this->pollingInfo,
+            $this->vopConfirmationRequest,
         ];
     }
 
@@ -108,7 +118,9 @@ abstract class BaseAction implements \Serializable
             $this->requestSegmentNumbers,
             $this->tanRequest,
             $this->needTanForSegment,
-        ) = $serialized;
+            $this->pollingInfo,
+            $this->vopConfirmationRequest,
+        ) = array_pad($serialized, 5, null);
     }
 
     /**
@@ -140,25 +152,54 @@ abstract class BaseAction implements \Serializable
         return $this->tanRequest;
     }
 
+    public function needsPollingWait(): bool
+    {
+        return !$this->isDone() && $this->pollingInfo !== null;
+    }
+
+    public function getPollingInfo(): ?PollingInfo
+    {
+        return $this->pollingInfo;
+    }
+
+    public function needsVopConfirmation(): bool
+    {
+        return !$this->isDone() && $this->vopConfirmationRequest !== null;
+    }
+
+    public function getVopConfirmationRequest(): ?VopConfirmationRequest
+    {
+        return $this->vopConfirmationRequest;
+    }
+
     /**
      * Throws an exception unless this action has been successfully executed, i.e. in the following cases:
      *  - the action has not been {@link FinTs::execute()}-d at all or the {@link FinTs::execute()} call for it threw an
      *    exception,
-     *  - the action is awaiting a TAN/confirmation (as per {@link BaseAction::needsTan()}.
+     *  - the action is awaiting a TAN/confirmation (as per {@link BaseAction::needsTan()},
+     *  - the action is pending a long-running operation on the bank server ({@link BaseAction::needsPollingWait()}),
+     *  - the action is awaiting the user's confirmation of the Verification of Payee result (as per
+     *    {@link BaseAction::needsVopConfirmation()}).
      *
      * After executing an action, you can use this function to make sure that it succeeded. This is especially useful
      * for actions that don't have any results (as each result getter would call {@link ensureDone()} internally).
      * On the other hand, you do not need to call this function if you make sure that (1) you called
-     * {@link FinTs::execute()} and (2) you checked {@link needsTan()} and, if it returned true, supplied a TAN by
-     * calling {@ink FinTs::submitTan()}. Note that both exception types thrown from this method are sub-classes of
-     * {@link \RuntimeException}, so you shouldn't need a try-catch block at the call site for this.
+     * {@link FinTs::execute()} and (2) you checked and resolved all other special outcome states documented there.
+     * Note that both exception types thrown from this method are sub-classes of {@link \RuntimeException}, so you
+     * shouldn't need a try-catch block at the call site for this.
      * @throws ActionIncompleteException If the action hasn't even been executed.
+     * @throws ActionPendingException If the action is pending a long-running server operation that needs polling.
+     * @throws VopConfirmationRequiredException If the action requires the user's confirmation for VOP.
      * @throws TanRequiredException If the action needs a TAN.
      */
-    public function ensureDone()
+    public function ensureDone(): void
     {
         if ($this->tanRequest !== null) {
             throw new TanRequiredException($this->tanRequest);
+        } elseif ($this->pollingInfo !== null) {
+            throw new ActionPendingException($this->pollingInfo);
+        } elseif ($this->vopConfirmationRequest !== null) {
+            throw new VopConfirmationRequiredException($this->vopConfirmationRequest);
         } elseif (!$this->isDone()) {
             throw new ActionIncompleteException();
         }
@@ -248,5 +289,17 @@ abstract class BaseAction implements \Serializable
     final public function setTanRequest(?TanRequest $tanRequest): void
     {
         $this->tanRequest = $tanRequest;
+    }
+
+    /** To be called only by the FinTs instance that executes this action. */
+    final public function setPollingInfo(?PollingInfo $pollingInfo): void
+    {
+        $this->pollingInfo = $pollingInfo;
+    }
+
+    /** To be called only by the FinTs instance that executes this action. */
+    final public function setVopConfirmationRequest(?VopConfirmationRequest $vopConfirmationRequest): void
+    {
+        $this->vopConfirmationRequest = $vopConfirmationRequest;
     }
 }
