@@ -77,7 +77,7 @@ abstract class Serializer
      */
     public static function serializeSegments(array $segments): string
     {
-        return implode(array_map(['self', 'serializeSegment'], $segments));
+        return implode(array_map([self::class, 'serializeSegment'], $segments));
     }
 
     /**
