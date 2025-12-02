@@ -62,9 +62,9 @@ $oneAccount = $getSepaAccounts->getAccounts()[0];
 
 $sendSEPADirectDebit = \Fhp\Action\SendSEPADirectDebit::create($oneAccount, $sepaDD->toXML('pain.008.001.02'));
 $fints->execute($sendSEPADirectDebit);
-if ($sendSEPADirectDebit->needsTan()) {
-    handleStrongAuthentication($sendSEPADirectDebit); // See login.php for the implementation.
-}
+
+require_once 'vop.php';
+handleVopAndAuthentication($sendSEPADirectDebit);
 
 // Debit requests don't produce any result we could receive through a getter, but we still need to make sure it's done.
 $sendSEPADirectDebit->ensureDone();

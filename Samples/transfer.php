@@ -58,9 +58,9 @@ $sepaDD->addCreditor(new SEPACreditor([ //this is who you want to send money to
 
 $sendSEPATransfer = \Fhp\Action\SendSEPATransfer::create($oneAccount, $sepaDD->toXML());
 $fints->execute($sendSEPATransfer);
-if ($sendSEPATransfer->needsTan()) {
-    handleStrongAuthentication($sendSEPATransfer); // See login.php for the implementation.
-}
+
+require_once 'vop.php';
+handleVopAndAuthentication($sendSEPATransfer);
 
 // SEPA transfers don't produce any result we could receive through a getter, but we still need to make sure it's done.
 $sendSEPATransfer->ensureDone();
