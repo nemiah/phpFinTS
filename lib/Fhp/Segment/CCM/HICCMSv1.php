@@ -14,7 +14,7 @@ class HICCMSv1 extends BaseGeschaeftsvorfallparameter
 {
     public ParameterSEPASammelueberweisungV1 $parameter;
 
-    public function getParameter()
+    public function getParameter(): ParameterSEPASammelueberweisungV1
     {
         return $this->parameter;
     }
