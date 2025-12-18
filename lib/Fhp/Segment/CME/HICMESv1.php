@@ -13,4 +13,9 @@ use Fhp\Segment\BaseGeschaeftsvorfallparameter;
 class HICMESv1 extends BaseGeschaeftsvorfallparameter
 {
     public ParameterTerminierteSEPASammelueberweisungEinreichenV1 $parameter;
+
+    public function getParameter(): ParameterTerminierteSEPASammelueberweisungEinreichenV1
+    {
+        return $this->parameter;
+    }
 }
