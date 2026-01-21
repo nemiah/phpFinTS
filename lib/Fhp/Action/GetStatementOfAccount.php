@@ -2,6 +2,7 @@
 
 namespace Fhp\Action;
 
+use Fhp\CAMT\CAMT;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\MT940\Dialect\PostbankMT940;
@@ -46,6 +47,10 @@ class GetStatementOfAccount extends PaginateableAction
     // Information from the BPD needed to interpret the response.
     /** @var string */
     private $bankName;
+
+    // Internal action for XML fallback
+    /** @var GetStatementOfAccountXML|null */
+    private $xmlAction;
 
     // Response
     /** @var string */
@@ -151,28 +156,46 @@ class GetStatementOfAccount extends PaginateableAction
     {
         $this->bankName = $bpd->getBankName();
 
-        /** @var HIKAZS $hikazs */
-        $hikazs = $bpd->requireLatestSupportedParameters('HIKAZS');
-        if ($this->allAccounts && !$hikazs->getParameter()->getAlleKontenErlaubt()) {
-            throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
-        }
-        switch ($hikazs->getVersion()) {
-            case 4:
-                return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
-            case 5:
-                return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
-            case 6:
-                return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
-            case 7:
-                return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
-            default:
-                throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
+        // Try to use MT940 format (HIKAZS) if supported
+        try {
+            /** @var HIKAZS $hikazs */
+            $hikazs = $bpd->requireLatestSupportedParameters('HIKAZS');
+            if ($this->allAccounts && !$hikazs->getParameter()->getAlleKontenErlaubt()) {
+                throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
+            }
+            switch ($hikazs->getVersion()) {
+                case 4:
+                    return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
+                case 5:
+                    return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                case 6:
+                    return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                case 7:
+                    return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                default:
+                    throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
+            }
+        } catch (UnexpectedResponseException | UnsupportedException $e) {
+            // MT940 format not supported, fall back to XML format (HICAZS)
+            $this->xmlAction = GetStatementOfAccountXML::create($this->account, $this->from, $this->to, null, $this->allAccounts);
+            return $this->xmlAction->createRequest($bpd, $upd);
         }
     }
 
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
+
+        // If we're using XML fallback, delegate to the XML action
+        if ($this->xmlAction !== null) {
+            $this->xmlAction->processResponse($response);
+
+            // Parse XML and convert to StatementOfAccount once all pages are received
+            if (!$this->hasMorePages()) {
+                $this->parseXml();
+            }
+            return;
+        }
 
         // Banks send just 3010 and no HIKAZ in case there are no transactions.
         $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
@@ -216,6 +239,28 @@ class GetStatementOfAccount extends PaginateableAction
             $this->statement = StatementOfAccount::fromMT940Array($this->parsedMT940);
         } catch (MT940Exception $e) {
             throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
+        }
+    }
+
+    private function parseXml()
+    {
+        if ($this->xmlAction === null) {
+            throw new \RuntimeException('XML action not initialized');
+        }
+
+        $xmlStrings = $this->xmlAction->getBookedXML();
+        if (empty($xmlStrings)) {
+            // No transactions available
+            $this->statement = new StatementOfAccount();
+            return;
+        }
+
+        try {
+            $parser = new CAMT();
+            $parsedCAMT = $parser->parse($xmlStrings);
+            $this->statement = StatementOfAccount::fromCAMTArray($parsedCAMT);
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException('Invalid CAMT XML data', 0, $e);
         }
     }
 }
