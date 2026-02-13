@@ -121,4 +121,14 @@ class StatementOfAccount
         }
         return $result;
     }
+
+    /**
+     * @param array $array A parsed CAMT dataset, as returned from {@link \Fhp\CAMT\CAMT::parse()}.
+     * @return StatementOfAccount A new instance that contains the given data.
+     */
+    public static function fromCAMTArray(array $array): StatementOfAccount
+    {
+        // CAMT data structure is compatible with MT940 structure, so we can reuse the same method
+        return self::fromMT940Array($array);
+    }
 }
