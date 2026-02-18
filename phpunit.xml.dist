@@ -8,8 +8,8 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         bootstrap="./lib/Tests/phpunit_bootstrap.php"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+         bootstrap="./Tests/phpunit_bootstrap.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd">
   <coverage processUncoveredFiles="true">
     <include>
       <directory suffix=".php">./lib/Fhp/</directory>
@@ -17,7 +17,7 @@
   </coverage>
   <testsuites>
     <testsuite name="FHP Test Suite">
-      <directory>./lib/Tests/Fhp/</directory>
+      <directory>Tests/Unit/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
