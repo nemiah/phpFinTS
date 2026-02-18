@@ -18,7 +18,7 @@ Forked from [mschindler83/fints-hbci-php](https://github.com/mschindler83/fints-
 ## Getting Started
 
 Before using this library (or any other FinTS library), you have to register your application with
-[Die Deutsche Kreditwirtschaft](https://www.hbci-zka.de/register/hersteller.htm) in order to get your registration
+[Die Deutsche Kreditwirtschaft](https://www.fints.org/de/hersteller/produktregistrierung) in order to get your registration
 number.
 Note that this process can take several weeks.
 First you receive your registration number **after a couple days, but then you have to wait anywhere between 0 and 8+ weeks**
