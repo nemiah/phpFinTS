@@ -175,7 +175,7 @@ class GetStatementOfAccount extends PaginateableAction
                 default:
                     throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
             }
-        } catch (UnexpectedResponseException | UnsupportedException $e) {
+        } catch (UnexpectedResponseException|UnsupportedException $e) {
             // MT940 format not supported, fall back to XML format (HICAZS)
             $this->xmlAction = GetStatementOfAccountXML::create($this->account, $this->from, $this->to, null, $this->allAccounts);
             return $this->xmlAction->createRequest($bpd, $upd);
