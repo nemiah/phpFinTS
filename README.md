@@ -24,7 +24,7 @@ Note that this process can take several weeks.
 First you receive your registration number **after a couple days, but then you have to wait anywhere between 0 and 8+ weeks**
 for the registration to reach your bank's server. If you have multiple banks, it probably reaches them at different times.
 
-Then install the library via composer:
+Then install the library via [composer](https://getcomposer.org/download/):
 
 ```
 composer require nemiah/php-fints
