@@ -24,6 +24,12 @@ Note that this process can take several weeks.
 First you receive your registration number **after a couple days, but then you have to wait anywhere between 0 and 8+ weeks**
 for the registration to reach your bank's server. If you have multiple banks, it probably reaches them at different times.
 
+Further prerequisites:
+- to avoid error messages like: "Cannot use nemiah/php-fints's latest version 4.0.0 as it requires ext-mbstring * which is missing 
+from your platform." just install php-mbstring in advance.
+- to avoid error messages like "As there is no 'unzip' nor '7z' command installed zip files are being unpacked using the PHP
+zip extension." just install unzip or 7z in advance to coninuing to next step.
+
 Then install the library via composer:
 
 ```
