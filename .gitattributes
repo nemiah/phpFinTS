@@ -1,0 +1,5 @@
+/.* export-ignore
+/Tests export-ignore
+/DEVELOPER-GUIDE.md export-ignore
+/phplint.sh export-ignore
+/phpunit.xml.dist export-ignore

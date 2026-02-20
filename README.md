@@ -18,7 +18,7 @@ Forked from [mschindler83/fints-hbci-php](https://github.com/mschindler83/fints-
 ## Getting Started
 
 Before using this library (or any other FinTS library), you have to register your application with
-[Die Deutsche Kreditwirtschaft](https://www.hbci-zka.de/register/hersteller.htm) in order to get your registration
+[Die Deutsche Kreditwirtschaft](https://www.fints.org/de/hersteller/produktregistrierung) in order to get your registration
 number.
 Note that this process can take several weeks.
 First you receive your registration number **after a couple days, but then you have to wait anywhere between 0 and 8+ weeks**
@@ -30,7 +30,8 @@ from your platform." just install php-mbstring in advance.
 - to avoid error messages like "As there is no 'unzip' nor '7z' command installed zip files are being unpacked using the PHP
 zip extension." just install unzip or 7z in advance to coninuing to next step.
 
-Then install the library via composer:
+
+Then install the library via [composer](https://getcomposer.org/download/):
 
 ```
 composer require nemiah/php-fints
@@ -38,7 +39,7 @@ composer require nemiah/php-fints
 
 See the examples in the "[Samples](/Samples)" folder to get started on your code.
 Fill out the required configuration in `init.php` (server details can be obtained at
-[www.hbci-zka.de](https://www.hbci-zka.de) after registration).
+[https://www.fints.org](https://www.fints.org/de/startseite) after registration).
 Then execute `tanModesAndMedia.php` and later `login.php`.
 Once you are able to login without any issues, you can move on to the other examples.
 
@@ -50,7 +51,8 @@ If you are developing an online banking application with this library, please be
 
 The BLZ 71120078 will throw an "Unbekanntes Kreditinstitut" exception when used with the URL https://hbci-01.hypovereinsbank.de/bank/hbci. 
 You have to use BLZ 70020270 instead.
-```
+
+```php
 if (trim($url) == 'https://hbci-01.hypovereinsbank.de/bank/hbci')
 	$blz = '70020270';
 ```
@@ -58,8 +60,9 @@ if (trim($url) == 'https://hbci-01.hypovereinsbank.de/bank/hbci')
 ### ING Diba
 
 This bank does not support PSD2:
-```
-if(trim($blz) == "50010517")
+
+```php
+if (trim($blz) == "50010517")
 	$fints->selectTanMode(new Fhp\Model\NoPsd2TanMode());
 ```
 
@@ -69,11 +72,14 @@ Contributions are welcome! See the [developer guide](DEVELOPER-GUIDE.md) for som
 
 We use a slightly modified version of the [Symfony Coding-Style](https://symfony.com/doc/current/contributing/code/standards.html).
 Please run 
-```
+
+```bash
 composer update
 ```
+
 and
-```
+
+```bash
 composer cs-fix
 ```
 
@@ -86,7 +92,7 @@ specification differently sometimes. In addition, banks behave differently (with
 when it comes to validation (some may tolerate slightly wrong requests), TANs (some ask for TANs more often than others)
 and allowed parameters (not all banks support all parameter combinations).
 
-This library aims to be compatible with all banks that support [FinTS V3.0](https://www.hbci-zka.de/spec/3_0.htm) and
+This library aims to be compatible with all banks that support [FinTS V3.0](https://www.fints.org/de/spezifikation) and
 PIN/TAN-based authentication according to PSD2 regulations, which includes most relevant German banks. Currently, it
 works with the most popular banks at least, and probably with most others too. Some corner cases (e.g. Mehrfach-TANs or
 SMS-Abbuchungskonto for mTAN fees) are not and probably will not be supported.
