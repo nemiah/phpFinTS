@@ -427,11 +427,13 @@ abstract class Parser
     {
         if (is_string($descriptor->type)) { // Scalar value / DE
             return static::parseDataElement($rawElement, $descriptor->type);
-        } elseif ($descriptor->type->getName() === Bin::class) {
-            return static::parseBinaryBlock($rawElement);
-        } else {
-            return static::parseDeg($rawElement, $descriptor->type->name, $descriptor->optional);
         }
+
+        if ($descriptor->type->getName() === Bin::class) {
+            return static::parseBinaryBlock($rawElement);
+        }
+
+        return static::parseDeg($rawElement, $descriptor->type->name, $descriptor->optional);
     }
 
     /**

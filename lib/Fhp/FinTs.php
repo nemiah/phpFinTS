@@ -346,7 +346,7 @@ class FinTs
         $message = MessageBuilder::create()->add($requestSegments);
 
         // Add HKTAN for authentication if necessary.
-        if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
+        if (!$this->getSelectedTanMode() instanceof NoPsd2TanMode) {
             if (($needTanForSegment = $action->getNeedTanForSegment()) !== null) {
                 $message->add(HKTANFactory::createProzessvariante2Step1(
                     $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
@@ -421,11 +421,10 @@ class FinTs
                     if ($confirmationRequest->getVerificationResult() === VopVerificationResult::CompletedFullMatch) {
                         // If someone hits this branch in practice, we can implement it.
                         throw new UnsupportedException('Combined VOP match confirmation and TAN request');
-                    } else {
-                        throw new UnexpectedResponseException(
-                            'Unexpected TAN request on VOP result: ' . $confirmationRequest->getVerificationResult()
-                        );
                     }
+                    throw new UnexpectedResponseException(
+                        'Unexpected TAN request on VOP result: ' . $confirmationRequest->getVerificationResult()
+                    );
                 }
             }
         }
@@ -684,7 +683,7 @@ class FinTs
     public function confirmVop(BaseAction $action): void
     {
         $vopConfirmationRequest = $action->getVopConfirmationRequest();
-        if (!($vopConfirmationRequest instanceof VopConfirmationRequestImpl)) {
+        if (!$vopConfirmationRequest instanceof VopConfirmationRequestImpl) {
             throw new \InvalidArgumentException('Unexpected type: ' . gettype($vopConfirmationRequest));
         }
         // We need to send the original request again, plus HKVPA as the confirmation.
@@ -697,7 +696,7 @@ class FinTs
             ->add(VopHelper::createHKVPAForConfirmation($vopConfirmationRequest));
 
         // Add HKTAN for authentication if necessary.
-        if (!($this->getSelectedTanMode() instanceof NoPsd2TanMode)) {
+        if (!$this->getSelectedTanMode() instanceof NoPsd2TanMode) {
             if (($needTanForSegment = $action->getNeedTanForSegment()) !== null) {
                 $message->add(HKTANFactory::createProzessvariante2Step1(
                     $this->requireTanMode(), $this->selectedTanMedium, $needTanForSegment));
@@ -930,7 +929,7 @@ class FinTs
             // banks that don't support PSD2, we just keep the dummy TAN mode, as they wouldn't even understand 999.
             $oldTanMode = $this->selectedTanMode;
             $oldTanMedium = $this->selectedTanMedium;
-            if (!($this->selectedTanMode instanceof NoPsd2TanMode)) {
+            if (!$this->selectedTanMode instanceof NoPsd2TanMode) {
                 $this->selectedTanMode = null;
             }
             $this->selectedTanMedium = null;

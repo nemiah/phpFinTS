@@ -103,9 +103,8 @@ abstract class FinTsTestCase extends TestCase
                     + strlen($mockMiddle) + strlen($hnvsd) + strlen($mockSuffix);
                 $newLength = str_pad($newLength, HNHBKv3::NACHRICHTENGROESSE_LENGTH, '0', STR_PAD_LEFT);
                 return $mockPrefix . $newLength . $mockMiddle . $hnvsd . $mockSuffix;
-            } else {
-                return $mockResponse;
             }
+            return $mockResponse;
         });
         return $this->connection;
     }
