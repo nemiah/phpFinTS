@@ -43,7 +43,7 @@ class Connection
     public function disconnect(): void
     {
         if ($this->curlHandle !== null) {
-            #curl_close($this->curlHandle);
+            // curl_close($this->curlHandle);
             $this->curlHandle = null;
         }
     }
