@@ -54,7 +54,7 @@ class SegmentDescriptor extends BaseDescriptor
     public function validateObject($obj): void // Override
     {
         parent::validateObject($obj);
-        if (!($obj instanceof BaseSegment)) {
+        if (!$obj instanceof BaseSegment) {
             throw new \InvalidArgumentException('Expected sub-class of BaseSegment, got ' . gettype($obj));
         }
         if ($obj->getName() !== $this->kennung) {

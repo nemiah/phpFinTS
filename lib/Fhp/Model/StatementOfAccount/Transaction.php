@@ -254,9 +254,8 @@ class Transaction
     {
         if (array_key_exists('SVWZ', $this->structuredDescription)) {
             return $this->structuredDescription['SVWZ'];
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -266,9 +265,8 @@ class Transaction
     {
         if (array_key_exists('EREF', $this->structuredDescription)) {
             return $this->structuredDescription['EREF'];
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**

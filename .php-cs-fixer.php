@@ -3,7 +3,10 @@
 // This is based on the `@Symfony` rule set documented in `vendor/friendsofphp/php-cs-fixer/doc/ruleSets/Symfony.rst`.
 
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__ . '/lib');
+    ->in([
+        __DIR__ . '/lib',
+        __DIR__ . '/Tests',
+    ]);
 
 return (new PhpCsFixer\Config())
     ->setRules([

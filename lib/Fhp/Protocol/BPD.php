@@ -85,7 +85,7 @@ class BPD
     public function getAllSupportedParameters(string $type): array
     {
         return array_filter($this->parameters[$type] ?? [], function (BaseSegment $segment) {
-            return !($segment instanceof AnonymousSegment);
+            return !$segment instanceof AnonymousSegment;
         });
     }
 
@@ -101,7 +101,7 @@ class BPD
             return null;
         }
         foreach ($this->parameters[$type] as $segment) {
-            if (!($segment instanceof AnonymousSegment)) {
+            if (!$segment instanceof AnonymousSegment) {
                 return $segment;
             }
         }

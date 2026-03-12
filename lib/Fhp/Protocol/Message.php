@@ -320,11 +320,11 @@ class Message
         // Message header and footer must always be there, or something went badly wrong.
         $result->header = $segments[0];
         $result->footer = $segments[count($segments) - 1];
-        if (!($result->header instanceof HNHBKv3)) {
+        if (!$result->header instanceof HNHBKv3) {
             $actual = $result->header->getName();
             throw new \InvalidArgumentException("Expected first segment to be HNHBK, but got $actual: $rawMessage");
         }
-        if (!($result->footer instanceof HNHBSv1)) {
+        if (!$result->footer instanceof HNHBSv1) {
             $actual = $result->footer->getName();
             throw new \InvalidArgumentException("Expected last segment to be HNHBS, but got $actual: $rawMessage");
         }
@@ -332,7 +332,7 @@ class Message
         // Check if there's an encryption header and "encrypted" data.
         // Section B.8 specifies that there are exactly 4 segments: HNHBK, HNVSK, HNVSD, HNHBS.
         if (count($segments) === 4 && $segments[1] instanceof HNVSKv3) {
-            if (!($segments[2] instanceof HNVSDv1)) {
+            if (!$segments[2] instanceof HNVSDv1) {
                 throw new \InvalidArgumentException("Expected third segment to be HNVSD: $rawMessage");
             }
             $result->wrapperSegments = $segments;

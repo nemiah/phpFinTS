@@ -32,18 +32,23 @@ abstract class Serializer
         if ($value === null) {
             return '';
         }
+
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
             // Convert UTF-8 (PHP's encoding) to ISO-8859-1 (FinTS wire format encoding)
             return static::escape(mb_convert_encoding(strval($value), 'ISO-8859-1', 'UTF-8'));
-        } elseif ($type === 'float') {
+        }
+
+        if ($type === 'float') {
             // Format with fixed 2 decimal places (there has to be some limit, and the specification does not specify
             // one), then trim zeros from the end.
             return rtrim(number_format($value, 2, ',', ''), '0');
-        } elseif ($type === 'bool' || $type === 'boolean') {
-            return $value ? 'J' : 'N';
-        } else {
-            throw new \RuntimeException("Unsupported type $type");
         }
+
+        if ($type === 'bool' || $type === 'boolean') {
+            return $value ? 'J' : 'N';
+        }
+
+        throw new \RuntimeException("Unsupported type $type");
     }
 
     /**
@@ -147,14 +152,18 @@ abstract class Serializer
     {
         if (is_string($type)) { // Scalar value / DE
             return static::serializeDataElement($value, $type);
-        } elseif ($type->getName() === Bin::class) {
+        }
+
+        if ($type->getName() === Bin::class) {
             /* @var Bin|null $value */
             return $value === null ? '' : $value->toString();
-        } elseif ($fullySerialize) {
-            return static::serializeDeg($value, DegDescriptor::get($type->name));
-        } else {
-            return static::serializeElements($value, DegDescriptor::get($type->name));
         }
+
+        if ($fullySerialize) {
+            return static::serializeDeg($value, DegDescriptor::get($type->name));
+        }
+
+        return static::serializeElements($value, DegDescriptor::get($type->name));
     }
 
     /**

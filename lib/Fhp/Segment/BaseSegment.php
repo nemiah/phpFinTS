@@ -123,10 +123,9 @@ abstract class BaseSegment implements SegmentInterface, \Serializable
         if (static::class === BaseSegment::class) {
             // Called as BaseSegment::parse(), so we need to determine the right segment type/class.
             return Parser::detectAndParseSegment($rawSegment);
-        } else {
-            // The parse() function was called on the segment subclass itself.
-            return Parser::parseSegment($rawSegment, static::class);
         }
+        // The parse() function was called on the segment subclass itself.
+        return Parser::parseSegment($rawSegment, static::class);
     }
 
     /**
