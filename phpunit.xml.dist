@@ -12,7 +12,7 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd">
   <coverage processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">./lib/Fhp/</directory>
+      <directory suffix=".php">./src/</directory>
     </include>
   </coverage>
   <testsuites>
