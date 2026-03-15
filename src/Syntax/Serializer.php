@@ -35,7 +35,7 @@ abstract class Serializer
 
         if ($type === 'int' || $type === 'integer' || $type === 'string') {
             // Convert UTF-8 (PHP's encoding) to ISO-8859-1 (FinTS wire format encoding)
-            return static::escape(mb_convert_encoding(strval($value), 'ISO-8859-1', 'UTF-8'));
+            return static::escape(mb_convert_encoding((string) $value, 'ISO-8859-1', 'UTF-8'));
         }
 
         if ($type === 'float') {

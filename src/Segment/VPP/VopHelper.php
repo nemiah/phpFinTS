@@ -121,7 +121,7 @@ class VopHelper
 
             // For a single transaction, we can do better than "CompletedPartialMatch",
             // which can indicate either CompletedCloseMatch or CompletedNoMatch
-            if (intval($report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->OrgnlNbOfTxs ?: 0) === 1
+            if ((int) ($report->CstmrPmtStsRpt->OrgnlGrpInfAndSts->OrgnlNbOfTxs ?: 0) === 1
                 && $verificationResult === VopVerificationResult::CompletedPartialMatch
                 && $verificationResultCode = $report->CstmrPmtStsRpt->OrgnlPmtInfAndSts->TxInfAndSts?->TxSts
             ) {

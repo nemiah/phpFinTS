@@ -27,7 +27,7 @@ class MT535
     {
         preg_match('/:16R:ADDINFO(.*?):16S:ADDINFO/sm', $this->cleanedRawData, $block);
         preg_match('/EUR(.*)/sm', $block[1], $matches);
-        return floatval(str_replace(',', '.', $matches[1]));
+        return (float) str_replace(',', '.', $matches[1]);
     }
 
     public function parseHoldings(): StatementOfHoldings
@@ -66,12 +66,12 @@ class MT535
                     $holding->setCurrency($r[1]);
                     // Price
                     preg_match('/^.{14}(.*)/sm', $iwn[2], $r);
-                    $holding->setPrice(floatval(str_replace(',', '.', $r[1])));
+                    $holding->setPrice((float) str_replace(',', '.', $r[1]));
                 } elseif ($iwn[1] == 'A') {
                     $holding->setCurrency('%');
                     // Price
                     preg_match('/^.{11}(.*)/sm', $iwn[2], $r);
-                    $holding->setPrice(floatval(str_replace(',', '.', $r[1])) / 100);
+                    $holding->setPrice((float) str_replace(',', '.', $r[1]) / 100);
                 }
             }
 
@@ -80,7 +80,7 @@ class MT535
             if (preg_match('/:93B::(.*?):/sm', $block, $iwn)) {
                 // Amount
                 preg_match('/^.{11}(.*)/sm', $iwn[1], $r);
-                $holding->setAmount(floatval(str_replace(',', '.', $r[1])));
+                $holding->setAmount((float) str_replace(',', '.', $r[1]));
             }
 
             if ($holding->getAmount() !== null && $holding->getPrice() !== null) {

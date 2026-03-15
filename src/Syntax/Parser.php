@@ -63,7 +63,7 @@ abstract class Parser
                 break;
             }
             $matchedStr = $match[0][0]; // $match[0] refers to the entire matched string. [0] has the content
-            $matchedOffset = intval($match[0][1]); // and [1] has the offset within $str.
+            $matchedOffset = (int) $match[0][1]; // and [1] has the offset within $str.
             if ($matchedStr === '?') {
                 // It's an escape character, so we should ignore this character and the next one.
                 $offset = $matchedOffset + 2;
@@ -79,7 +79,7 @@ abstract class Parser
                 // Note: The FinTS specification says that the length of the binary block is given in bytes (not
                 // characters) and PHP's string functions like substr() or preg_match() also operate on byte offsets, so
                 // this is fine.
-                $offset = $matchedOffset + strlen($matchedStr) + intval($binaryLength);
+                $offset = $matchedOffset + strlen($matchedStr) + (int) $binaryLength;
                 if ($offset > strlen($str)) {
                     throw new \InvalidArgumentException(
                         "Incomplete binary block at offset $matchedOffset, declared length $binaryLength, but "
@@ -124,13 +124,13 @@ abstract class Parser
             if (!is_numeric($rawValue)) {
                 throw new \InvalidArgumentException("Invalid int: $rawValue");
             }
-            return intval($rawValue);
+            return (int) $rawValue;
         } elseif ($type === 'float') {
             $rawValue = str_replace(',', '.', $rawValue, $numCommas);
             if (!is_numeric($rawValue) || $numCommas !== 1) {
                 throw new \InvalidArgumentException("Invalid float: $rawValue");
             }
-            return floatval($rawValue);
+            return (float) $rawValue;
         } elseif ($type === 'bool' || $type === 'boolean') {
             if ($rawValue === 'J') {
                 return true;
@@ -170,7 +170,7 @@ abstract class Parser
             throw new \InvalidArgumentException("Invalid binary block length: $lengthStr");
         }
 
-        $length = intval($lengthStr);
+        $length = (int) $lengthStr;
         $result = new Bin(substr($rawValue, $delimiterPos + 1));
 
         $actualLength = strlen($result->getData());

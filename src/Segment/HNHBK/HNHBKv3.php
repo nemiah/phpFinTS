@@ -35,7 +35,7 @@ class HNHBKv3 extends BaseSegment
 
     public function getNachrichtengroesse(): int
     {
-        return intval($this->nachrichtengroesse);
+        return (int) $this->nachrichtengroesse;
     }
 
     /**
