@@ -96,6 +96,6 @@ This library aims to be compatible with all banks that support [FinTS V3.0](http
 PIN/TAN-based authentication according to PSD2 regulations, which includes most relevant German banks. Currently, it
 works with the most popular banks at least, and probably with most others too. Some corner cases (e.g. Mehrfach-TANs or
 SMS-Abbuchungskonto for mTAN fees) are not and probably will not be supported.
-Those banks with a dedicated [integration test](/lib/Tests/Fhp/Integration) have been tested most extensively.
+Those banks with a dedicated [integration test](/Tests/Unit/Integration) have been tested most extensively.
 
 If you encounter any problems with your particular bank, please check for open GitHub issues or open a new one.

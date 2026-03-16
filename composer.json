@@ -5,8 +5,8 @@
   "version": "4.0.0",
   "license": "MIT",
   "autoload": {
-    "psr-0": {
-      "Fhp": "lib/"
+    "psr-4": {
+      "Fhp\\": "src/"
     }
   },
   "autoload-dev": {
