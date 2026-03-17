@@ -39,7 +39,7 @@ class DegDescriptor extends BaseDescriptor
 
             // Check if the name ends in V2 or so, implicitly assume V1.
             if (preg_match('/^[A-Z]+[vV]([0-9]+)$/', $clazz->getShortName(), $match) === 1) {
-                $this->version = intval($match[1]);
+                $this->version = (int) $match[1];
             }
         } catch (\ReflectionException $e) {
             throw new \RuntimeException($e);

@@ -264,7 +264,7 @@ class Message
         $message->plainSegments = $plainSegments instanceof MessageBuilder ? $plainSegments->segments : $plainSegments;
 
         $tanMode = $tanMode instanceof NoPsd2TanMode ? null : $tanMode;
-        $randomReference = strval(rand(1000000, 9999999)); // Call unqualified rand() for unit test mocking to work.
+        $randomReference = (string) rand(1000000, 9999999); // Call unqualified rand() for unit test mocking to work.
         $signature = BenutzerdefinierteSignaturV1::create($credentials->getPin(), $tan);
         $numPlainSegments = count($message->plainSegments); // This is N, see $encryptedSegments.
 

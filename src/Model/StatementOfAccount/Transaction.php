@@ -350,7 +350,7 @@ class Transaction
      */
     public function setPN($nr): static
     {
-        $this->pn = intval($nr);
+        $this->pn = (int) $nr;
         return $this;
     }
 
@@ -370,7 +370,7 @@ class Transaction
      */
     public function setTextKeyAddition($textKeyAddition): static
     {
-        $this->textKeyAddition = intval($textKeyAddition);
+        $this->textKeyAddition = (int) $textKeyAddition;
         return $this;
     }
 }

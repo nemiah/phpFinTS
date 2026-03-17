@@ -44,8 +44,8 @@ class SegmentDescriptor extends BaseDescriptor
             if (preg_match('/^([A-Z]+)v([0-9]+)$/', $clazz->getShortName(), $match) !== 1) {
                 throw new \InvalidArgumentException("Invalid segment class name: $class");
             }
-            $this->kennung = strval($match[1]);
-            $this->version = intval($match[2]);
+            $this->kennung = $match[1];
+            $this->version = (int) $match[2];
         } catch (\ReflectionException $e) {
             throw new \RuntimeException($e);
         }

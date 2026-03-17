@@ -25,11 +25,11 @@ print_r($tanModeNames);
 
 echo "Which one do you want to use? Index:\n";
 $tanModeIndex = trim(fgets(STDIN));
-if (!is_numeric($tanModeIndex) || !array_key_exists(intval($tanModeIndex), $tanModes)) {
+if (!is_numeric($tanModeIndex) || !array_key_exists((int)$tanModeIndex, $tanModes)) {
     echo 'Invalid index!';
     return;
 }
-$tanMode = $tanModes[intval($tanModeIndex)];
+$tanMode = $tanModes[(int)$tanModeIndex];
 echo 'You selected ' . $tanMode->getName() . "\n";
 
 // In case the selected TAN mode requires a TAN medium (e.g. if the user picked mTAN, they may have to pick the mobile
@@ -49,11 +49,11 @@ if ($tanMode->needsTanMedium()) {
 
     echo "Which one do you want to use? Index:\n";
     $tanMediumIndex = trim(fgets(STDIN));
-    if (!is_numeric($tanMediumIndex) || !array_key_exists(intval($tanMediumIndex), $tanMedia)) {
+    if (!is_numeric($tanMediumIndex) || !array_key_exists((int)$tanMediumIndex, $tanMedia)) {
         echo 'Invalid index!';
         return;
     }
-    $tanMedium = $tanMedia[intval($tanMediumIndex)];
+    $tanMedium = $tanMedia[(int)$tanMediumIndex];
     echo 'You selected ' . $tanMedium->getName() . "\n";
 } else {
     $tanMedium = null;

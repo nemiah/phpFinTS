@@ -171,7 +171,7 @@ abstract class BaseDescriptor
         if (!is_numeric($val)) {
             throw new \InvalidArgumentException("Annotation $name has non-integer value $val");
         }
-        return intval($val);
+        return (int) $val;
     }
 
     /**

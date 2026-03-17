@@ -46,9 +46,9 @@ if (isset($request->action)) {
             case 'getTanMedia':
                 return array_map(function ($medium) {
                     return ['name' => $medium->getName(), 'phoneNumber' => $medium->getPhoneNumber()];
-                }, $fints->getTanMedia(intval($request->tanmode)));
+                }, $fints->getTanMedia((int)$request->tanmode));
             case 'login':
-                $fints->selectTanMode(intval($request->tanmode), $request->tanmedium ?? null);
+                $fints->selectTanMode((int)$request->tanmode, $request->tanmedium ?? null);
                 $login = $fints->login();
                 if ($login->needsTan()) {
                     $tanRequest = $login->getTanRequest();
