@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/var/www/html:rw
+    stdin_open: true
+    tty: true

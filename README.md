@@ -15,6 +15,27 @@ A PHP library implementing the following functions of the FinTS/HBCI protocol:
 
 Forked from [mschindler83/fints-hbci-php](https://github.com/mschindler83/fints-hbci-php), but then mostly reimplemented.
 
+## Docker
+
+A Docker environment with PHP 8.4, xDebug, and all dependencies is available.
+
+```bash
+docker compose up -d
+docker compose exec app composer install
+```
+
+Run tests inside the container:
+
+```bash
+docker compose exec app composer test
+```
+
+Work inside the container:
+
+```bash
+docker compose exec app composer bash
+```
+
 ## Getting Started
 
 Before using this library (or any other FinTS library), you have to register your application with

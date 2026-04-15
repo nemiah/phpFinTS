@@ -1,0 +1,5 @@
+.git
+.gitignore
+vendor
+.env
+xdebug.log
