@@ -146,7 +146,7 @@ class BPD
     public function supportsParametersOrNewer(string $type, int $minVersion): bool
     {
         foreach ($this->parameters[$type] as $segment) {
-            if ($segment->getVersion() >= $version) {
+            if ($segment->getVersion() >= $minVersion) {
                 return true;
             }
         }
