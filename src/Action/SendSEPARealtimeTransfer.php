@@ -13,6 +13,7 @@ use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\IPZ\HIIPZSv1;
 use Fhp\Segment\IPZ\HIIPZSv2;
+use Fhp\Segment\IPZ\HKIPZv1;
 use Fhp\Segment\IPZ\HKIPZv2;
 use Fhp\Segment\SPA\HISPAS;
 use Fhp\Syntax\Bin;
@@ -95,6 +96,8 @@ class SendSEPARealtimeTransfer extends BaseAction
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
+        /** @var HISPAS $hispas */
+        $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         /** @var HIIPZSv1|HIIPZSv2 $hiipzs */
         $hiipzs = $bpd->requireLatestSupportedParameters('HIIPZS');
 
@@ -102,8 +105,6 @@ class SendSEPARealtimeTransfer extends BaseAction
 
         // If there are no SEPA formats available in the HIIPZS Parameters, we look to the general formats
         if (is_null($supportedSchemas)) {
-            /** @var HISPAS $hispas */
-            $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
             $supportedSchemas = $hispas->getParameter()->getUnterstuetzteSEPADatenformate();
         }
 
@@ -123,7 +124,10 @@ class SendSEPARealtimeTransfer extends BaseAction
 
         /** @var HKIPZv1|HKIPZv2 $hkipz */
         $hkipz = $hiipzs->createRequestSegment();
-        $hkipz->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $hkipz->kontoverbindungInternational = Kti::fromAccount(
+            $this->account,
+            $hispas->getParameter()->getNationaleKontoverbindungErlaubt()
+        );
         $hkipz->sepaDescriptor = $this->xmlSchema;
         $hkipz->sepaPainMessage = new Bin($this->painMessage);
         if ($hiipzs instanceof HIIPZSv2) {

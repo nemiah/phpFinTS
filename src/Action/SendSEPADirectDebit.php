@@ -130,6 +130,8 @@ class SendSEPADirectDebit extends BaseAction
             $useSingleDirectDebit = false;
         }
 
+        /** @var HISPAS $hispas */
+        $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         /* @var HIDXES|BaseSegment $hidxes */
         $hidxes = $bpd->requireLatestSupportedParameters(GetSEPADirectDebitParameters::getHixxesSegmentName($this->coreType, $useSingleDirectDebit));
 
@@ -142,8 +144,6 @@ class SendSEPADirectDebit extends BaseAction
 
         // If there are no SEPA formats available in the HIDXES Parameters, we look to the general formats
         if (!is_array($supportedPainNamespaces) || count($supportedPainNamespaces) === 0) {
-            /** @var HISPAS $hispas */
-            $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
             $supportedPainNamespaces = $hispas->getParameter()->getUnterstuetzteSEPADatenformate();
         }
 
@@ -163,7 +163,10 @@ class SendSEPADirectDebit extends BaseAction
 
         /** @var HKDMEv2|HKDSEv2|HIDXES $hkdxe */
         $hkdxe = $hidxes->createRequestSegment();
-        $hkdxe->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $hkdxe->kontoverbindungInternational = Kti::fromAccount(
+            $this->account,
+            $hispas->getParameter()->getNationaleKontoverbindungErlaubt()
+        );
         $hkdxe->sepaDescriptor = $this->painNamespace;
         $hkdxe->sepaPainMessage = new Bin($this->painMessage);
 

@@ -156,7 +156,10 @@ class SendSEPATransfer extends BaseAction
                 . implode(', ', $supportedSchemas));
         }
 
-        $segment->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $segment->kontoverbindungInternational = Kti::fromAccount(
+            $this->account,
+            $hispas->getParameter()->getNationaleKontoverbindungErlaubt()
+        );
         $segment->sepaDescriptor = $this->xmlSchema;
         $segment->sepaPainMessage = new Bin($this->painMessage);
 

@@ -48,12 +48,14 @@ class Kti extends BaseDeg implements AccountInfo
         return $result;
     }
 
-    public static function fromAccount(SEPAAccount $account): Kti
+    public static function fromAccount(SEPAAccount $account, bool $nationaleKontoverbindungErlaubt): Kti
     {
         $result = static::create($account->getIban(), $account->getBic());
-        $result->kontonummer = $account->getAccountNumber();
-        $result->unterkontomerkmal = $account->getSubAccount();
-        $result->kreditinstitutskennung = Kik::create($account->getBlz());
+        if ($nationaleKontoverbindungErlaubt) {
+            $result->kontonummer = $account->getAccountNumber();
+            $result->unterkontomerkmal = $account->getSubAccount();
+            $result->kreditinstitutskennung = Kik::create($account->getBlz());
+        }
         return $result;
     }
 
