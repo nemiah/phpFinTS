@@ -10,4 +10,5 @@ use Fhp\Segment\UnterstuetzteSEPADatenformate;
  */
 interface ParameterSepaKontoverbindungAnfordern extends UnterstuetzteSEPADatenformate
 {
+    public function getNationaleKontoverbindungErlaubt(): bool;
 }

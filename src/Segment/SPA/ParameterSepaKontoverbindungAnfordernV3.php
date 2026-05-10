@@ -23,4 +23,9 @@ class ParameterSepaKontoverbindungAnfordernV3 extends BaseDeg implements Paramet
     public int $anzahlReservierterVerwendungszweckstellen;
     /** @var string[] @Max(99) Max length each: 256 */
     public array $unterstuetzteSepaDatenformate;
+
+    public function getNationaleKontoverbindungErlaubt(): bool
+    {
+        return $this->nationaleKontoverbindungErlaubt;
+    }
 }

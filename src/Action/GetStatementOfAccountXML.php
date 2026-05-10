@@ -16,6 +16,7 @@ use Fhp\Segment\CAZ\HKCAZv1;
 use Fhp\Segment\CAZ\UnterstuetzteCamtMessages;
 use Fhp\Segment\Common\Kti;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
+use Fhp\Segment\SPA\HISPAS;
 use Fhp\UnsupportedException;
 
 /**
@@ -139,10 +140,15 @@ class GetStatementOfAccountXML extends PaginateableAction
         if ($this->allAccounts && !$hicazs->getParameter()->getAlleKontenErlaubt()) {
             throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
         }
+
+        /** @var HISPAS $hispas */
+        $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
+        $kti = Kti::fromAccount($this->account, $hispas->getParameter()->getNationaleKontoverbindungErlaubt());
+
         switch ($hicazs->getVersion()) {
             case 1:
                 $unterstuetzteCamtMessages = UnterstuetzteCamtMessages::create($camtURNs);
-                return HKCAZv1::create(Kti::fromAccount($this->account), $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
+                return HKCAZv1::create($kti, $unterstuetzteCamtMessages, $this->allAccounts, $this->from, $this->to);
             default:
                 throw new UnsupportedException('Unsupported HKCAZ version: ' . $hicazs->getVersion());
         }

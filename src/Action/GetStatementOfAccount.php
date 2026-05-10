@@ -24,6 +24,7 @@ use Fhp\Segment\KAZ\HKKAZv4;
 use Fhp\Segment\KAZ\HKKAZv5;
 use Fhp\Segment\KAZ\HKKAZv6;
 use Fhp\Segment\KAZ\HKKAZv7;
+use Fhp\Segment\SPA\HISPAS;
 use Fhp\UnsupportedException;
 
 /**
@@ -171,7 +172,10 @@ class GetStatementOfAccount extends PaginateableAction
                 case 6:
                     return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
                 case 7:
-                    return HKKAZv7::create(Kti::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
+                    /** @var HISPAS $hispas */
+                    $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
+                    $kti = Kti::fromAccount($this->account, $hispas->getParameter()->getNationaleKontoverbindungErlaubt());
+                    return HKKAZv7::create($kti, $this->allAccounts, $this->from, $this->to);
                 default:
                     throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
             }

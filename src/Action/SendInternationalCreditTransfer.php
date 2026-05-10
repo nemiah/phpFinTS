@@ -9,6 +9,7 @@ use Fhp\Protocol\UPD;
 use Fhp\Segment\AUB\HIAUBSv9;
 use Fhp\Segment\AUB\HKAUBv9;
 use Fhp\Segment\Common\Kti;
+use Fhp\Segment\SPA\HISPAS;
 use Fhp\Syntax\Bin;
 
 class SendInternationalCreditTransfer extends BaseAction
@@ -76,11 +77,16 @@ class SendInternationalCreditTransfer extends BaseAction
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
+        /** @var HISPAS $hispas */
+        $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         /** @var HIAUBSv9 $hiaubs */
         $hiaubs = $bpd->requireLatestSupportedParameters('HIAUBS');
 
         $hkaub = HKAUBv9::createEmpty();
-        $hkaub->kontoverbindungInternational = Kti::fromAccount($this->account);
+        $hkaub->kontoverbindungInternational = Kti::fromAccount(
+            $this->account,
+            $hispas->getParameter()->getNationaleKontoverbindungErlaubt()
+        );
         $hkaub->DTAZVHandbuch = $this->dtavzVersion ?? $hiaubs->parameter->DTAZVHandbuch;
         $hkaub->DTAZVDatensatz = new Bin($this->dtavzData);
         return $hkaub;
