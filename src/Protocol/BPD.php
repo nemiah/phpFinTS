@@ -139,6 +139,21 @@ class BPD
     }
 
     /**
+     * @param string $type A business transaction type, see above.
+     * @param int $minVersion The minimum segment version of the business transaction.
+     * @return bool If that version of the given transaction type or a newer one is supported by the bank.
+     */
+    public function supportsParametersOrNewer(string $type, int $minVersion): bool
+    {
+        foreach ($this->parameters[$type] as $segment) {
+            if ($segment->getVersion() >= $minVersion) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @param SegmentInterface[] $requestSegments The segments that shall be sent to the bank.
      * @return string|null Identifier of the (first) segment that requires a TAN according to HIPINS, or null if none of
      *     the segments require a TAN.
@@ -180,7 +195,7 @@ class BPD
      */
     public function supportsPsd2(): bool
     {
-        return $this->supportsParameters('HITANS', 6);
+        return $this->supportsParametersOrNewer('HITANS', 6);
     }
 
     /**
