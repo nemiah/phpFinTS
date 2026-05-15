@@ -40,6 +40,13 @@ class FinTsOptions
      */
     public $url;
 
+    /**
+     * The HTTP User-Agent header sent to the bank server. Some banks display this value in their
+     * registered devices or applications list.
+     * @var string
+     */
+    public $userAgent = 'phpFinTS';
+
     /** @var int */
     public $timeoutConnect = 15;
     /** @var int */
