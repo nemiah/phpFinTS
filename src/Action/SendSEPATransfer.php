@@ -165,6 +165,13 @@ class SendSEPATransfer extends BaseAction
 
         // For batch transfers: set einzelbuchungGewuenscht if bank allows it
         if ($numberOfTransactions > 1) {
+
+            // Fix for strict banks (e.g. Atruvia): Extract the batch control sum from the PAIN XML and set it on the segment
+            if (isset($xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum)) {
+                $ctrlSum = (float) $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum;
+                $segment->summenfeld = \Fhp\Segment\Common\Btg::create($ctrlSum ?: 0);
+            }
+
             $paramSegmentId = $hasReqdExDates ? 'HICMES' : 'HICCMS';
             $paramSegment = $bpd->getLatestSupportedParameters($paramSegmentId);
             if ($paramSegment !== null && $paramSegment->getParameter()->einzelbuchungErlaubt) {
