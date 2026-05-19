@@ -1002,7 +1002,7 @@ class FinTs
      */
     protected function newConnection(): Connection
     {
-        return new Connection($this->options->url, $this->options->timeoutConnect, $this->options->timeoutResponse);
+        return new Connection($this->options->url, $this->options->timeoutConnect, $this->options->timeoutResponse, $this->options->userAgent);
     }
 
     /**

@@ -11,12 +11,14 @@ class Connection
     protected ?\CurlHandle $curlHandle = null;
     protected int $timeoutConnect = 15;
     protected int $timeoutResponse = 30;
+    protected string $userAgent = 'phpFinTS';
 
-    public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30)
+    public function __construct(string $url, int $timeoutConnect = 15, int $timeoutResponse = 30, string $userAgent = 'phpFinTS')
     {
         $this->url = $url;
         $this->timeoutConnect = $timeoutConnect;
         $this->timeoutResponse = $timeoutResponse;
+        $this->userAgent = $userAgent;
     }
 
     /**
@@ -28,7 +30,7 @@ class Connection
 
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, 'phpFinTS');
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, $this->userAgent);
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->url);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, $this->timeoutConnect);
