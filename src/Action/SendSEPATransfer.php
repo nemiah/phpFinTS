@@ -165,7 +165,6 @@ class SendSEPATransfer extends BaseAction
 
         // For batch transfers: set einzelbuchungGewuenscht if bank allows it
         if ($numberOfTransactions > 1) {
-
             // Fix for strict banks (e.g. Atruvia): Extract the batch control sum from the PAIN XML and set it on the segment
             if (isset($xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum)) {
                 $ctrlSum = (float) $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum;
