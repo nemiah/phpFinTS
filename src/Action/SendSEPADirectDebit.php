@@ -39,6 +39,7 @@ class SendSEPADirectDebit extends BaseAction
     protected $tryToUseControlSumForSingleTransactions = false;
     /** @var string */
     private $coreType;
+    private bool $singleBookingRequested = false;
 
     // There are no result fields. This action is simply marked as done to indicate that the transfer was executed.
 
@@ -83,6 +84,20 @@ class SendSEPADirectDebit extends BaseAction
     }
 
     /**
+     * Request individual bookings instead of a batch booking on the bank statement.
+     * Only applicable for batch direct debits (Sammellastschrift).
+     *
+     * @param bool $singleBookingRequested If true, each transaction appears separately on the statement.
+     * @return $this
+     */
+    public function setSingleBookingRequested(bool $singleBookingRequested): self
+    {
+        $this->singleBookingRequested = $singleBookingRequested;
+
+        return $this;
+    }
+
+    /**
      * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
      */
     public function serialize(): string
@@ -94,7 +109,7 @@ class SendSEPADirectDebit extends BaseAction
     {
         return [
             parent::__serialize(),
-            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account,
+            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account, $this->singleBookingRequested,
         ];
     }
 
@@ -113,7 +128,7 @@ class SendSEPADirectDebit extends BaseAction
     {
         list(
             $parentSerialized,
-            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account,
+            $this->singleDirectDebit, $this->tryToUseControlSumForSingleTransactions, $this->ctrlSum, $this->coreType, $this->painMessage, $this->painNamespace, $this->account, $this->singleBookingRequested,
         ) = $serialized;
 
         is_array($parentSerialized) ?
@@ -172,7 +187,7 @@ class SendSEPADirectDebit extends BaseAction
 
         if (!$useSingleDirectDebit) {
             if ($hidxes->getParameter()->einzelbuchungErlaubt) {
-                $hkdxe->einzelbuchungGewuenscht = false;
+                $hkdxe->einzelbuchungGewuenscht = $this->singleBookingRequested;
             }
 
             /* @var HIDMESv1 $hidxes */
