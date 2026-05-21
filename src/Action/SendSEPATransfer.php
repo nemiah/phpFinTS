@@ -168,7 +168,7 @@ class SendSEPATransfer extends BaseAction
             // Fix for strict banks (e.g. Atruvia): Extract the batch control sum from the PAIN XML and set it on the segment
             if (isset($xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum)) {
                 $ctrlSum = (float) $xmlAsObject->CstmrCdtTrfInitn->GrpHdr->CtrlSum;
-                $segment->summenfeld = \Fhp\Segment\Common\Btg::create($ctrlSum ?: 0);
+                $segment->summenfeld = \Fhp\Segment\Common\Btg::create($ctrlSum);
             }
 
             $paramSegmentId = $hasReqdExDates ? 'HICMES' : 'HICCMS';
