@@ -4,9 +4,11 @@
 
 /**
  * SAMPLE - Displays the statement of account using XML format (CAMT).
- * This sample demonstrates how to use GetStatementOfAccountXML directly when you need
- * raw XML access, or shows that GetStatementOfAccount now automatically falls back to
- * XML format when MT940 is not available.
+ * This sample demonstrates the two ways of retrieving CAMT XML statements: through GetStatementOfAccount, which picks
+ * the format that the bank supports (preferring CAMT XML over the older MT 940 format), and through
+ * GetStatementOfAccountXML directly, which additionally gives you access to the raw XML documents.
+ * If you need the MT 940 format specifically, e.g. because your bank does not offer CAMT XML, use
+ * GetStatementOfAccountMT940 (see statementOfAccount.php).
  */
 
 // See login.php, it returns a FinTs instance that is already logged in.
@@ -25,7 +27,8 @@ $oneAccount = $getSepaAccounts->getAccounts()[0];
 $from = new \DateTime('2022-07-15');
 $to = new \DateTime();
 
-// Option 1: Use GetStatementOfAccount - it will automatically use XML if MT940 is not available
+// Option 1: Use GetStatementOfAccount, which asks the bank for CAMT XML whenever the bank supports it. The last
+// parameter asks for the transactions that the bank received but has not booked yet (only sent for recent dates).
 $getStatement = \Fhp\Action\GetStatementOfAccount::create($oneAccount, $from, $to, false, true);
 $fints->execute($getStatement);
 if ($getStatement->needsTan()) {
@@ -56,7 +59,8 @@ echo '========================================' . PHP_EOL;
 echo 'Option 2: Direct XML access if needed' . PHP_EOL;
 echo '========================================' . PHP_EOL;
 
-// Option 2: Use GetStatementOfAccountXML directly if you need raw XML access
+// Option 2: Use GetStatementOfAccountXML directly if you need the raw XML documents. Note that the action above can
+// also hand them out via $getStatement->getRawResponse(), which works no matter which format the bank answered in.
 $getStatementXML = \Fhp\Action\GetStatementOfAccountXML::create($oneAccount, $from, $to);
 $fints->execute($getStatementXML);
 if ($getStatementXML->needsTan()) {

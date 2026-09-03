@@ -2,36 +2,26 @@
 
 namespace Fhp\Action;
 
-use Fhp\CAMT\CAMT;
 use Fhp\Model\SEPAAccount;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
-use Fhp\MT940\Dialect\PostbankMT940;
-use Fhp\MT940\Dialect\SpardaMT940;
-use Fhp\MT940\MT940;
-use Fhp\MT940\MT940Exception;
-use Fhp\PaginateableAction;
 use Fhp\Protocol\BPD;
 use Fhp\Protocol\Message;
-use Fhp\Protocol\UnexpectedResponseException;
 use Fhp\Protocol\UPD;
-use Fhp\Segment\Common\Kti;
-use Fhp\Segment\Common\Kto;
-use Fhp\Segment\Common\KtvV3;
-use Fhp\Segment\HIRMS\Rueckmeldungscode;
-use Fhp\Segment\KAZ\HIKAZ;
-use Fhp\Segment\KAZ\HIKAZS;
-use Fhp\Segment\KAZ\HKKAZv4;
-use Fhp\Segment\KAZ\HKKAZv5;
-use Fhp\Segment\KAZ\HKKAZv6;
-use Fhp\Segment\KAZ\HKKAZv7;
-use Fhp\Segment\SPA\HISPAS;
 use Fhp\UnsupportedException;
 
 /**
  * Retrieves statements for one specific account or for all accounts that the user has access to. A statement is a
  * series of financial transactions that pertain to the account, grouped by day.
+ *
+ * Banks return statements either as CAMT XML (HKCAZ) or as MT 940 data (HKKAZ), and not all of them support both. This
+ * action inspects the BPD and delegates to {@link GetStatementOfAccountXML} or {@link GetStatementOfAccountMT940}
+ * accordingly, preferring CAMT XML because MT 940 is being phased out. Use {@link getStatement()} to obtain the result
+ * regardless of the format that was used, or {@link getDelegate()} to find out which action it ended up using.
+ *
+ * If your application requires a particular format (e.g. because it parses the raw data itself), use the respective
+ * action directly instead of this one.
  */
-class GetStatementOfAccount extends PaginateableAction
+class GetStatementOfAccount extends AbstractGetStatementOfAccount
 {
     // Request (if you add a field here, update __serialize() and __unserialize() as well).
     /** @var SEPAAccount */
@@ -45,23 +35,16 @@ class GetStatementOfAccount extends PaginateableAction
     /** @var bool */
     private $includeUnbooked;
 
-    // Information from the BPD needed to interpret the response.
-    /** @var string */
+    // Information from the BPD, only kept for backwards compatibility of the serialized format.
+    /** @var string|null */
     private $bankName;
 
-    // Internal action for XML fallback
-    /** @var GetStatementOfAccountXML|null */
-    private $xmlAction;
-
-    // Response
-    /** @var string */
-    private $rawMT940 = '';
-
-    /** @var array */
-    protected $parsedMT940 = [];
-
-    /** @var StatementOfAccount */
-    private $statement;
+    /**
+     * The action that this one delegates to, determined from the BPD in {@link createRequest()}. It is part of the
+     * serialized form, so that the decision survives an interruption for a TAN.
+     * @var AbstractGetStatementOfAccount|null
+     */
+    private $delegate;
 
     /**
      * @param SEPAAccount $account The account to get the statement for. This can be constructed based on information
@@ -70,6 +53,9 @@ class GetStatementOfAccount extends PaginateableAction
      * @param \DateTime|null $to If set, only transactions before this date (inclusive) are returned.
      * @param bool $allAccounts If set to true, will return statements for all accounts of the user. You still need to
      *     pass one of the accounts into $account, though.
+     * @param bool $includeUnbooked If set to true, transactions that the bank has received but not booked yet are
+     *     included, in both formats. Note that the bank only sends them if the requested time range reaches into the
+     *     present.
      * @return GetStatementOfAccount A new action instance.
      */
     public static function create(SEPAAccount $account, ?\DateTime $from = null, ?\DateTime $to = null, bool $allAccounts = false, bool $includeUnbooked = false): GetStatementOfAccount
@@ -101,6 +87,7 @@ class GetStatementOfAccount extends PaginateableAction
             parent::__serialize(),
             $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
+            $this->delegate,
         ];
     }
 
@@ -121,6 +108,7 @@ class GetStatementOfAccount extends PaginateableAction
             $parentSerialized,
             $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
+            $this->delegate,
         ) = $serialized;
 
         is_array($parentSerialized) ?
@@ -129,142 +117,133 @@ class GetStatementOfAccount extends PaginateableAction
     }
 
     /**
-     * @return string The raw MT940 data received from the server.
+     * @return AbstractGetStatementOfAccount|null The action that this one delegates to, or null if it has not been
+     *     executed yet. Useful to access format-specific results.
      * @noinspection PhpUnused
      */
-    public function getRawMT940(): string
+    public function getDelegate(): ?AbstractGetStatementOfAccount
     {
-        $this->ensureDone();
-        return $this->rawMT940;
-    }
-
-    /**
-     * @return array The parsed MT940 data.
-     */
-    public function getParsedMT940(): array
-    {
-        $this->ensureDone();
-        return $this->parsedMT940;
+        return $this->delegate;
     }
 
     public function getStatement(): StatementOfAccount
     {
-        $this->ensureDone();
-        return $this->statement;
+        return $this->requireDelegate()->getStatement();
+    }
+
+    public function getRawResponse(): array
+    {
+        return $this->requireDelegate()->getRawResponse();
+    }
+
+    /**
+     * @deprecated This action only returns MT 940 data if the bank does not support CAMT XML. Use
+     *     {@link getRawResponse()} to obtain the raw data in whichever format the bank used, or use
+     *     {@link GetStatementOfAccountMT940} directly if your application requires the MT 940 format.
+     *
+     * @return string The raw MT940 data received from the server.
+     * @throws \RuntimeException If the bank returned CAMT XML instead.
+     * @noinspection PhpUnused
+     */
+    public function getRawMT940(): string
+    {
+        return $this->requireDelegateOfType(GetStatementOfAccountMT940::class)->getRawMT940();
+    }
+
+    /**
+     * @deprecated This action only returns MT 940 data if the bank does not support CAMT XML. Use
+     *     {@link getStatement()} for the parsed statement independent of the format, or use
+     *     {@link GetStatementOfAccountMT940} directly if your application requires the MT 940 format.
+     *
+     * @return array The parsed MT940 data.
+     * @throws \RuntimeException If the bank returned CAMT XML instead.
+     */
+    public function getParsedMT940(): array
+    {
+        return $this->requireDelegateOfType(GetStatementOfAccountMT940::class)->getParsedMT940();
+    }
+
+    /**
+     * @deprecated This action only returns CAMT XML if the bank supports it. Use {@link getRawResponse()} to obtain the
+     *     raw data in whichever format the bank used, or use {@link GetStatementOfAccountXML} directly if your
+     *     application requires the CAMT XML format.
+     *
+     * @return string[] The XML-Document(s) received from the bank, or empty array if the statement is unavailable/empty.
+     * @throws \RuntimeException If the bank returned MT 940 data instead.
+     * @noinspection PhpUnused
+     */
+    public function getBookedXML(): array
+    {
+        return $this->requireDelegateOfType(GetStatementOfAccountXML::class)->getBookedXML();
     }
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
         $this->bankName = $bpd->getBankName();
-
-        // Try to use MT940 format (HIKAZS) if supported
-        try {
-            /** @var HIKAZS $hikazs */
-            $hikazs = $bpd->requireLatestSupportedParameters('HIKAZS');
-            if ($this->allAccounts && !$hikazs->getParameter()->getAlleKontenErlaubt()) {
-                throw new \InvalidArgumentException('The bank do not permit the use of allAccounts=true');
-            }
-            switch ($hikazs->getVersion()) {
-                case 4:
-                    return HKKAZv4::create(Kto::fromAccount($this->account), $this->from, $this->to);
-                case 5:
-                    return HKKAZv5::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
-                case 6:
-                    return HKKAZv6::create(KtvV3::fromAccount($this->account), $this->allAccounts, $this->from, $this->to);
-                case 7:
-                    /** @var HISPAS $hispas */
-                    $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
-                    $kti = Kti::fromAccount($this->account, $hispas->getParameter()->getNationaleKontoverbindungErlaubt());
-                    return HKKAZv7::create($kti, $this->allAccounts, $this->from, $this->to);
-                default:
-                    throw new UnsupportedException('Unsupported HKKAZ version: ' . $hikazs->getVersion());
-            }
-        } catch (UnexpectedResponseException|UnsupportedException $e) {
-            // MT940 format not supported, fall back to XML format (HICAZS)
-            $this->xmlAction = GetStatementOfAccountXML::create($this->account, $this->from, $this->to, null, $this->allAccounts);
-            return $this->xmlAction->createRequest($bpd, $upd);
-        }
+        $this->delegate ??= $this->createDelegate($bpd, $upd);
+        return $this->delegate->createRequest($bpd, $upd);
     }
 
     public function processResponse(Message $response)
     {
         parent::processResponse($response);
 
-        // If we're using XML fallback, delegate to the XML action
-        if ($this->xmlAction !== null) {
-            $this->xmlAction->processResponse($response);
-
-            // Parse XML and convert to StatementOfAccount once all pages are received
-            if (!$this->hasMorePages()) {
-                $this->parseXml();
-            }
-            return;
-        }
-
-        // Banks send just 3010 and no HIKAZ in case there are no transactions.
-        $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
-        $responseHikaz = $response->findSegments(HIKAZ::class);
-        $numResponseSegments = count($responseHikaz);
-        if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
-            throw new UnexpectedResponseException("Only got $numResponseSegments HIKAZ response segments!");
-        }
-
-        /** @var HIKAZ $hikaz */
-        foreach ($responseHikaz as $hikaz) {
-            $this->rawMT940 .= $hikaz->getGebuchteUmsaetze()->getData();
-            if ($this->includeUnbooked and $hikaz->getNichtGebuchteUmsaetze() !== null) {
-                $this->rawMT940 .= $hikaz->getNichtGebuchteUmsaetze()->getData();
-            }
-        }
-
-        // Note: Pagination boundaries may cut in the middle of the MT940 data, so it is not possible to parse a partial
-        // reponse before having received all pages.
-        if (!$this->hasMorePages()) {
-            $this->parseMt940();
-        }
+        $delegate = $this->requireDelegate(false);
+        // The delegate needs to know the segment numbers to validate the response against, and only this action (the one
+        // that FinTs executes) is told about them.
+        $delegate->setRequestSegmentNumbers($this->getRequestSegmentNumbers());
+        $delegate->processResponse($response);
     }
 
-    private function parseMt940()
+    /**
+     * Decides which format to request: CAMT XML if the bank (and the account) supports it, MT 940 otherwise.
+     */
+    private function createDelegate(BPD $bpd, ?UPD $upd): AbstractGetStatementOfAccount
     {
-        if (str_contains(strtolower($this->bankName), 'sparda')) {
-            $parser = new SpardaMT940();
-        } elseif (str_contains(strtolower($this->bankName), 'postbank')) {
-            $parser = new PostbankMT940();
-        } else {
-            $parser = new MT940();
+        $camtSupported = $bpd->getLatestSupportedParameters('HICAZS') !== null
+            && ($upd === null || $upd->isRequestSupportedForAccount($this->account, 'HKCAZ'));
+        if ($camtSupported) {
+            return GetStatementOfAccountXML::create(
+                $this->account, $this->from, $this->to, null, $this->allAccounts, $this->includeUnbooked);
         }
-
-        try {
-            // Note: Some banks encode their MT 940 data as SWIFT/ISO-8859 like it should be according to the
-            // specification (e.g. DKB), others just send UTF-8 (e.g. Consorsbank), so we try to detect it here.
-            $rawMT940 = mb_detect_encoding($this->rawMT940, 'UTF-8', true) === false
-                ? mb_convert_encoding($this->rawMT940, 'UTF-8', 'ISO-8859-1') : $this->rawMT940;
-            $this->parsedMT940 = $parser->parse($rawMT940);
-            $this->statement = StatementOfAccount::fromMT940Array($this->parsedMT940);
-        } catch (MT940Exception $e) {
-            throw new \InvalidArgumentException('Invalid MT940 data', 0, $e);
+        if ($bpd->getLatestSupportedParameters('HIKAZS') !== null) {
+            return GetStatementOfAccountMT940::create($this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked);
         }
+        throw new UnsupportedException(
+            'The bank does not support retrieving statements in any format implemented in this library (neither HKCAZ '
+            . 'nor HKKAZ).');
     }
 
-    private function parseXml()
+    /**
+     * @param bool $ensureDone Whether to also verify that the action has completed, i.e. that results are available.
+     * @return AbstractGetStatementOfAccount The delegate, guaranteed to be present.
+     */
+    private function requireDelegate(bool $ensureDone = true): AbstractGetStatementOfAccount
     {
-        if ($this->xmlAction === null) {
-            throw new \RuntimeException('XML action not initialized');
+        if ($ensureDone) {
+            $this->ensureDone();
         }
+        if ($this->delegate === null) {
+            throw new \RuntimeException(
+                'This action does not know which statement format it requested. It was probably restored from a '
+                . 'serialized form that a different version of this library had created, in which case the request '
+                . 'has to be started over.');
+        }
+        return $this->delegate;
+    }
 
-        $xmlStrings = $this->xmlAction->getBookedXML();
-        if (empty($xmlStrings)) {
-            // No transactions available
-            $this->statement = new StatementOfAccount();
-            return;
+    /**
+     * @param class-string<AbstractGetStatementOfAccount> $type
+     * @return AbstractGetStatementOfAccount The delegate, guaranteed to be an instance of $type.
+     */
+    private function requireDelegateOfType(string $type): AbstractGetStatementOfAccount
+    {
+        $delegate = $this->requireDelegate();
+        if (!$delegate instanceof $type) {
+            throw new \RuntimeException(
+                'This statement was retrieved with ' . get_class($delegate) . ', so the requested data is not '
+                . 'available. Use ' . $type . ' directly if your application needs a particular format.');
         }
-
-        try {
-            $parser = new CAMT();
-            $parsedCAMT = $parser->parse($xmlStrings);
-            $this->statement = StatementOfAccount::fromCAMTArray($parsedCAMT);
-        } catch (\Exception $e) {
-            throw new \InvalidArgumentException('Invalid CAMT XML data', 0, $e);
-        }
+        return $delegate;
     }
 }

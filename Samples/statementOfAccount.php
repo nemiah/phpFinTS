@@ -4,6 +4,10 @@
 
 /**
  * SAMPLE - Displays the statement of account for a specific time range and account.
+ *
+ * GetStatementOfAccount asks the bank for its statements in whichever format the bank supports, preferring CAMT XML
+ * (HKCAZ) over the older MT 940 format (HKKAZ). If your application depends on one particular format, e.g. because it
+ * parses the raw data itself, use GetStatementOfAccountXML or GetStatementOfAccountMT940 directly.
  */
 
 // See login.php, it returns a FinTs instance that is already logged in.

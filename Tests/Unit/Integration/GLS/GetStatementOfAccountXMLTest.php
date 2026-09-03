@@ -42,6 +42,9 @@ class GetStatementOfAccountXMLTest extends GLSIntegrationTestBase
         $this->assertTrue($getStatement->needsTan());
 
         $this->completeWithTan($getStatement);
+
+        // The XML documents can also be converted to a StatementOfAccount. The ones in this test are empty.
+        $this->assertEmpty($getStatement->getStatement()->getStatements());
     }
 
     /**

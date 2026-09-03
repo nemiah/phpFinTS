@@ -2,7 +2,7 @@
 
 namespace Fhp\Tests\Unit\Integration\DKB;
 
-use Fhp\Action\GetStatementOfAccount;
+use Fhp\Action\GetStatementOfAccountMT940;
 use Fhp\Model\StatementOfAccount\Statement;
 use Fhp\Model\StatementOfAccount\StatementOfAccount;
 use Fhp\Tests\FinTsPeer;
@@ -10,6 +10,8 @@ use Fhp\Tests\FinTsPeer;
 class GetStatementOfAccountTest extends DKBIntegrationTestBase
 {
     // Statement request (HKKAZ). Note that DKB's BPD (see InitEndDialogTest) declares only HIKAZSv4 and HIKAZSv5.
+    // NOTE: DKB's BPD declares HICAZS as well, so this test uses GetStatementOfAccountMT940 to pin the MT 940 format.
+    // GetStatementOfAccount would request CAMT XML instead, see Action\GetStatementOfAccountAutoTest.
     public const GET_STATEMENT_REQUEST = "HKKAZ:3:5+1234567890::280:12030000+N+20190901+20190922'";
     public const MT940_STATEMENT_1 = "\r\n:20:STARTUMSE\r\n:25:12030000/1234567890\r\n:28C:00000/001\r\n:60F:C190821EUR1234,56\r\n:61:1909030904DR12,00N033NONREF\r\n:86:177?00ONLINE-UEBERWEISUNG?109310?20KREF+HKCCS12345?21SVWZ+323\r\n01000-P111111-33333?22333?23DATUM 02.09.2019, 22.19 UHR?241.TAN 0\r\n12345?30DEUTDEBBXXX?31DExx123412341234123431?32EMPFAENGER ABCDE?3\r\n4997\r\n:62F:C190903EUR1222,56\r\n-\r\n:20:STARTUMSE\r\n:25:12030000/1234567890\r\n:28C:00000/001\r\n:60F:C190903EUR1222,56";
     // NOTE: This contains an 'ä' in UTF-8, but in practice DKB sends it as ISO-8859-1. We cannot hard-code non-UTF8
@@ -51,9 +53,9 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    private function runInitialRequest(): GetStatementOfAccount
+    private function runInitialRequest(): GetStatementOfAccountMT940
     {
-        $getStatement = GetStatementOfAccount::create($this->getTestAccount(),
+        $getStatement = GetStatementOfAccountMT940::create($this->getTestAccount(),
             new \DateTime('2019-09-01'), new \DateTime('2019-09-22'));
         $this->fints->execute($getStatement);
         return $getStatement;
@@ -74,7 +76,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
     /**
      * @throws \Throwable
      */
-    private function completeWithTan(GetStatementOfAccount $getStatement)
+    private function completeWithTan(GetStatementOfAccountMT940 $getStatement)
     {
         $this->expectMessage(static::SEND_TAN_REQUEST, static::SEND_TAN_RESPONSE . static::getHikazContent() . "'");
         $this->fints->submitTan($getStatement, '777666');
@@ -112,7 +114,7 @@ class GetStatementOfAccountTest extends DKBIntegrationTestBase
         $this->connection->expects($this->once())->method('disconnect');
         $this->fints = new FinTsPeer($this->options, $this->credentials);
         $this->fints->loadPersistedInstance($persistedInstance);
-        /** @var GetStatementOfAccount $getStatement */
+        /** @var GetStatementOfAccountMT940 $getStatement */
         $getStatement = unserialize($persistedGetStatement);
 
         $this->completeWithTan($getStatement);

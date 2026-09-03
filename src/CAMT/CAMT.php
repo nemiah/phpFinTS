@@ -202,9 +202,11 @@ class CAMT
         $reversalIndicator = (string) ($entry->xpath('.//c:RvslInd')[0] ?? 'false');
         $isStorno = strtolower($reversalIndicator) === 'true';
 
-        // Get status - check if booked or pending
-        $status = (string) ($entry->xpath('.//c:Sts')[0] ?? 'BOOK');
-        $booked = strtoupper($status) === 'BOOK';
+        // Get status - check if booked or pending. Up to camt.052.001.06 this is a plain code (e.g. <Sts>BOOK</Sts>),
+        // from camt.052.001.08 on it is a choice element (e.g. <Sts><Cd>BOOK</Cd></Sts>, or <Prtry> for a proprietary
+        // status, which is not a documented code and thus treated as not booked here).
+        $status = (string) ($entry->xpath('.//c:Sts/c:Cd')[0] ?? $entry->xpath('.//c:Sts')[0] ?? 'BOOK');
+        $booked = strtoupper(trim($status)) === 'BOOK';
 
         // Parse transaction details
         $details = $this->parseEntryDetails($entry, $ns, $creditDebit);
