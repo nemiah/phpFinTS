@@ -174,6 +174,10 @@ class DIKKUTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('2026-07-18', $domestic->getBookingDate()->format('Y-m-d'));
         $this->assertEquals('2026-07-17', $domestic->getValutaDate()->format('Y-m-d'));
         $this->assertEquals('EXAMPLE SHOP BERLIN 555500******2233', $domestic->getPurpose());
+        // getMerchant() returns just the first line, without the location and masked card number that
+        // getPurpose() carries, so the same merchant yields a stable name across bookings.
+        $this->assertEquals('EXAMPLE SHOP', $domestic->getMerchant());
+        $this->assertEquals(['EXAMPLE SHOP', 'BERLIN 555500******2233'], $domestic->getPurposeLines());
         $this->assertEquals('5411', $domestic->getMerchantCategoryCode());
         // No conversion took place, so no original amount is reported.
         $this->assertNull($domestic->getOriginalAmount());
@@ -189,6 +193,8 @@ class DIKKUTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1000.0, $settlement->getAmount());
         $this->assertEquals(CreditCardTransaction::CD_CREDIT, $settlement->getCreditDebit());
         $this->assertNull($settlement->getMerchantCategoryCode());
+        // A booking without a real merchant still exposes its first line via getMerchant().
+        $this->assertEquals('Ausgleich Kreditkartenabrechnung', $settlement->getMerchant());
     }
 
     public function testEmptyStatement()

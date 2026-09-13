@@ -29,6 +29,12 @@ class CreditCardTransaction
     /** The exchange rate applied, or null if no conversion took place. */
     protected ?float $exchangeRate = null;
     protected string $purpose = '';
+    /**
+     * The individual Verwendungszweck lines, in order, non-empty only. {@link $purpose} is these
+     * joined by spaces. Usually the first line is the merchant name and the second the merchant
+     * location followed by the masked card number.
+     */
+    protected array $purposeLines = [];
     protected ?string $reference = null;
     /** ISO 18245 merchant category code, e.g. 5411 for grocery stores. Null if the booking has no merchant. */
     protected ?string $merchantCategoryCode = null;
@@ -108,6 +114,41 @@ class CreditCardTransaction
     {
         $this->purpose = $purpose;
         return $this;
+    }
+
+    /**
+     * @return string[] The individual Verwendungszweck lines, in order, non-empty only. Usually the
+     *     first line is the merchant name and the second the merchant location followed by the masked
+     *     card number. {@link getPurpose()} returns these joined by spaces.
+     */
+    public function getPurposeLines(): array
+    {
+        return $this->purposeLines;
+    }
+
+    /**
+     * @param string[] $purposeLines
+     */
+    public function setPurposeLines(array $purposeLines): static
+    {
+        $this->purposeLines = $purposeLines;
+        return $this;
+    }
+
+    /**
+     * The merchant name, taken from the first Verwendungszweck line. Prefer this over
+     * {@link getPurpose()} when you need a stable counterparty name (e.g. to name an expense account),
+     * because the full purpose also contains the location and the masked card number, which vary
+     * between bookings of the same merchant.
+     *
+     * For bookings without a merchant, such as the monthly settlement, this returns whatever
+     * descriptive text the bank placed in the first line (e.g. "Ausgleich Kreditkartenabrechnung").
+     *
+     * @return string|null Null only if the record carries no Verwendungszweck at all.
+     */
+    public function getMerchant(): ?string
+    {
+        return $this->purposeLines[0] ?? null;
     }
 
     public function getReference(): ?string
@@ -193,7 +234,8 @@ class CreditCardTransaction
             $result->exchangeRate = $umsatz->umrechnungskurs;
         }
 
-        $result->purpose = trim(implode(' ', $umsatz->getVerwendungszweckLines()));
+        $result->purposeLines = $umsatz->getVerwendungszweckLines();
+        $result->purpose = trim(implode(' ', $result->purposeLines));
         $result->reference = $umsatz->referenz;
         $result->merchantCategoryCode = $umsatz->branchenschluessel;
         return $result;
