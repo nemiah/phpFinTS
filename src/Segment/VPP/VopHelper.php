@@ -28,9 +28,11 @@ class VopHelper
         /** @var HIVPPSv1 $hivpps */
         $hivpps = $bpd->getLatestSupportedParameters('HIVPPS');
         $supportedFormats = explode(';', $hivpps->parameter->unterstuetztePaymentStatusReportDatenformate);
-        if ($hivpps->parameter->artDerLieferungPaymentStatusReport !== 'V') {
-            throw new UnsupportedException('The stepwise transfer of VOP reports is not yet supported');
-        }
+
+        // Note: The "Art der Lieferung Payment Status Report" (V/S) parameter only describes how the bank splits the
+        // pain.002 message *if* it uses the Aufsetzpunkt mechanism, which it typically only does for large batches.
+        // So we can always send the initial request and only need to look at the parameter once the bank actually
+        // sends us a partial report, see checkPollingRequired().
 
         $hkvpp = HKVPPv1::createEmpty();
         $hkvpp->unterstuetztePaymentStatusReports->paymentStatusReportDescriptor = $supportedFormats;
@@ -53,12 +55,16 @@ class VopHelper
     /**
      * @param Message $response The response we just received from the server.
      * @param int $hkvppSegmentNumber The number of the HKVPP segment in the request we had sent.
+     * @param BPD $bpd The BPD, which tells us how the bank splits the report across multiple deliveries.
      * @return ?VopPollingInfo If the response indicates that the Verification of Payee is still ongoing, such that the
      *     client should keep polling the server to (actively) wait until the result is available, this function returns
      *     a corresponding polling info object. If no polling is required, it returns null.
      */
-    public static function checkPollingRequired(Message $response, int $hkvppSegmentNumber): ?VopPollingInfo
-    {
+    public static function checkPollingRequired(
+        Message $response,
+        int $hkvppSegmentNumber,
+        BPD $bpd,
+    ): ?VopPollingInfo {
         // Note: We determine whether polling is required purely based on the presence of the primary polling token (
         // the Aufsetzpunkt is mandatory, the polling ID is optional).
         // The specification also contains the code "3093 Namensabgleich ist noch in Bearbeitung", which could also be
@@ -70,9 +76,20 @@ class VopHelper
         }
         /** @var HIVPPv1 $hivpp */
         $hivpp = $response->findSegment(HIVPPv1::class);
-        if ($hivpp->vopId !== null || $hivpp->paymentStatusReport !== null) {
-            // Implementation note: If this ever happens, it could be related to $artDerLieferungPaymentStatusReport.
-            throw new UnexpectedResponseException('Got response with Aufsetzpunkt AND vopId/paymentStatusReport.');
+        if ($hivpp->vopId !== null) {
+            // The specification says that the VOP ID is only present in the final HIVPP of an Aufsetzpunkt sequence.
+            throw new UnexpectedResponseException('Got response with Aufsetzpunkt AND vopId.');
+        }
+        if ($hivpp->paymentStatusReport !== null) {
+            // This is an intermediate delivery of the report. With "vollstaendige Lieferung" (V) each delivery
+            // contains all data accumulated so far, so the final one is enough and we can discard this one. With
+            // "schrittweise Lieferung" (S) the bank only sends the delta, so the client would have to stitch the
+            // deliveries together, which is not implemented.
+            /** @var HIVPPSv1 $hivpps */
+            $hivpps = $bpd->getLatestSupportedParameters('HIVPPS');
+            if ($hivpps->parameter->artDerLieferungPaymentStatusReport !== 'V') {
+                throw new UnsupportedException('The stepwise transfer of VOP reports is not yet supported');
+            }
         }
         return new VopPollingInfo(
             $aufsetzpunkt->rueckmeldungsparameter[0],

@@ -408,7 +408,7 @@ class FinTs
 
         // Detect if the bank needs us to do something for Verification of Payee.
         if ($hkvpp != null) {
-            if ($pollingInfo = VopHelper::checkPollingRequired($response, $hkvpp->getSegmentNumber())) {
+            if ($pollingInfo = VopHelper::checkPollingRequired($response, $hkvpp->getSegmentNumber(), $this->bpd)) {
                 $action->setPollingInfo($pollingInfo);
                 if ($action->needsTan()) {
                     throw new UnexpectedResponseException('Unexpected polling and TAN request in the same response.');

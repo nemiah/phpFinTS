@@ -282,6 +282,29 @@ class SendTransferVoPTest extends AtruviaIntegrationTestBase
         $this->assertNull($action->getVopConfirmationRequest()->getDifferingPayeeName());
     }
 
+    /**
+     * The bank tells us that it needs more time (Aufsetzpunkt) and already sends a first part of the report. With
+     * "vollstaendige Lieferung" (V) every delivery contains all data accumulated so far, so we can simply discard the
+     * intermediate one and keep polling for the final report.
+     * @throws \Throwable
+     */
+    public function testIntermediateReportDelivery(): void
+    {
+        $this->initDialog();
+        $action = $this->createAction();
+
+        $response = static::buildVopReportResponse(
+            static::SEND_TRANSFER_RESPONSE_POLLING_NEEDED,
+            static::VOP_REPORT_PARTIAL_MATCH_XML_PAYLOAD
+        );
+        $this->expectMessage(static::SEND_TRANSFER_REQUEST, $response);
+        $this->fints->execute($action);
+
+        $this->assertTrue($action->needsPollingWait());
+        $this->assertFalse($action->needsVopConfirmation());
+        $this->assertFalse($action->isDone());
+    }
+
     protected function createAction(): SendSEPATransfer
     {
         return SendSEPATransfer::create($this->getTestAccount(), self::XML_PAYLOAD);

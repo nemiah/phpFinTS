@@ -49,7 +49,7 @@ class AtruviaIntegrationTestBase extends FinTsTestCase
      */
     protected function InitAnonymous()
     {
-        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, mb_convert_encoding(static::ANONYMOUS_INIT_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, mb_convert_encoding(static::anonymousInitResponse(), 'ISO-8859-1', 'UTF-8'));
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, mb_convert_encoding(static::ANONYMOUS_END_RESPONSE, 'ISO-8859-1', 'UTF-8'));
 
         $this->fints->getBpd();
@@ -62,7 +62,7 @@ class AtruviaIntegrationTestBase extends FinTsTestCase
     protected function initDialog()
     {
         // We already know the TAN mode, so it will only fetch the BPD (anonymously) to verify it.
-        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, mb_convert_encoding(static::ANONYMOUS_INIT_RESPONSE, 'ISO-8859-1', 'UTF-8'));
+        $this->expectMessage(static::ANONYMOUS_INIT_REQUEST, mb_convert_encoding(static::anonymousInitResponse(), 'ISO-8859-1', 'UTF-8'));
         $this->expectMessage(static::ANONYMOUS_END_REQUEST, mb_convert_encoding(static::ANONYMOUS_END_RESPONSE, 'ISO-8859-1', 'UTF-8'));
 
         // Then when we initialize a dialog, it's going to request a Kundensystem-ID and UPD.
@@ -76,6 +76,15 @@ class AtruviaIntegrationTestBase extends FinTsTestCase
         $login = $this->fints->login();
         $login->ensureDone(); // No TAN required upon login.*/
         $this->assertAllMessagesSeen();
+    }
+
+    /**
+     * The response that carries the BPD. Subclasses can override this to test with different bank parameters, without
+     * having to duplicate the (very long) message.
+     */
+    protected static function anonymousInitResponse(): string
+    {
+        return static::ANONYMOUS_INIT_RESPONSE;
     }
 
     protected function getTestAccount(): SEPAAccount
