@@ -838,6 +838,20 @@ class FinTs
         return $this->bpd;
     }
 
+    /**
+     * Returns the UPD (Userparameterdaten) that the bank sent during the last strongly authenticated dialog
+     * initialization, or that were restored from a persisted instance. They describe the user's accounts (HIUPD:
+     * holder name, product name, currency, account type, permitted business transactions), which is more than
+     * {@link \Fhp\Action\GetSEPAAccounts} exposes.
+     *
+     * @return UPD|null The UPD, or null before the first successful {@link login()} (and when the persisted instance
+     *     was created with {@link persist()} in minimal mode).
+     */
+    public function getUpd(): ?UPD
+    {
+        return $this->upd;
+    }
+
     // ------------------------------------------------- IMPLEMENTATION ------------------------------------------------
 
     /**
