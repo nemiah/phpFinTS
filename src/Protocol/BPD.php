@@ -11,6 +11,7 @@ use Fhp\Segment\HIPINS\HIPINSv1;
 use Fhp\Segment\SegmentInterface;
 use Fhp\Segment\TAN\HITANS;
 use Fhp\Segment\VPP\HIVPPSv1;
+use Fhp\Syntax\Parser;
 
 /**
  * Segmentfolge: Bankparameterdaten (Version 3)
@@ -68,6 +69,27 @@ class BPD
     public function getBankCode()
     {
         return $this->hibpa->kreditinstitutskennung->kreditinstitutscode;
+    }
+
+    /**
+     * Parses parameter segments again that were stored as {@link AnonymousSegment} because the library version that
+     * received them did not implement them yet. Persisted BPD survive library upgrades (the bank only resends the BPD
+     * when *its* version changes), so without this, a business transaction that a newer library version supports
+     * would still look unsupported to {@link getLatestSupportedParameters()} until the bank happens to bump the BPD.
+     */
+    public function reparseAnonymousSegments(): void
+    {
+        foreach ($this->parameters as $type => $versions) {
+            foreach ($versions as $version => $segment) {
+                if (!$segment instanceof AnonymousSegment) {
+                    continue;
+                }
+                $reparsed = Parser::detectAndParseSegment((string) $segment);
+                if (!$reparsed instanceof AnonymousSegment) {
+                    $this->parameters[$type][$version] = $reparsed;
+                }
+            }
+        }
     }
 
     public function getBankName()
