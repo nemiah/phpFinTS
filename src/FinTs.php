@@ -235,6 +235,11 @@ class FinTs
             $this->dialogId,
             $this->messageNumber,
         ) = $data;
+
+        // The persisted BPD may predate segments that this library version implements.
+        if ($this->bpd !== null) {
+            $this->bpd->reparseAnonymousSegments();
+        }
     }
 
     /** @noinspection PhpUnused */
