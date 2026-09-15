@@ -76,6 +76,8 @@ class CAMT
 
         // Get account balances
         $balances = $this->parseBalances($report, $ns);
+        $startBalance = $balances['start'];
+        $endBalance = $balances['end'];
 
         // Parse entries (transactions)
         $entries = $report->xpath('.//c:Ntry');
@@ -95,7 +97,7 @@ class CAMT
             $dateKey = $transaction['booking_date'];
             if (!isset($result[$dateKey])) {
                 $result[$dateKey] = [
-                    'start_balance' => $balances,
+                    'start_balance' => $startBalance,
                     'transactions' => [],
                 ];
             }
@@ -104,22 +106,26 @@ class CAMT
         }
 
         // If we have balances but no transactions, still create an entry
-        if (!empty($balances) && empty($entries)) {
-            $dateKey = $balances['date'] ?? date('Y-m-d');
+        if (!empty($startBalance) && empty($entries)) {
+            $dateKey = $startBalance['date'] ?? date('Y-m-d');
             if (!isset($result[$dateKey])) {
                 $result[$dateKey] = [
-                    'start_balance' => $balances,
+                    'start_balance' => $startBalance,
                     'transactions' => [],
                 ];
             }
         }
 
-        // Set end balances
+        // Set end balances. Only a closing balance qualifies: reporting the opening balance here (as this parser did
+        // before) freezes StatementOfAccount::getEndBalance() at the day's start value while bookings keep coming in.
+        if ($endBalance === null) {
+            return;
+        }
         foreach ($result as $dateKey => &$statement) {
-            if (!isset($statement['end_balance']) && !empty($balances)) {
+            if (!isset($statement['end_balance'])) {
                 $statement['end_balance'] = [
-                    'amount' => $balances['amount'] ?? 0,
-                    'credit_debit' => $balances['credit_debit'] ?? MT940::CD_CREDIT,
+                    'amount' => $endBalance['amount'],
+                    'credit_debit' => $endBalance['credit_debit'],
                     'date' => $dateKey,
                 ];
             }
@@ -129,40 +135,50 @@ class CAMT
     /**
      * Parse balance information from report
      *
-     * @return array Balance information
+     * The opening balance (OPBD, or PRCD = previously closed booked as a fallback) becomes the start balance. The end
+     * balance is the closing booked balance (CLBD) or, on an intraday camt.052 report, the interim booked balance
+     * (ITBD). The "available" variants (CLAV/ITAV) are deliberately ignored because they include unbooked amounts and
+     * therefore do not correspond to the MT940 closing balance (:62F:) that the rest of the library is modelled on.
+     *
+     * @return array{start: array, end: ?array} Start balance ([] if none) and end balance (null if none), each with
+     *     keys amount, currency, credit_debit, date.
      */
     private function parseBalances(\SimpleXMLElement $report, string $ns): array
     {
         $report->registerXPathNamespace('c', $ns);
 
-        // Try to find opening balance (OPBD) or closing balance (CLBD)
         $balances = $report->xpath('.//c:Bal');
         if ($balances === false || empty($balances)) {
-            return [];
+            return ['start' => [], 'end' => null];
         }
 
-        $result = [];
+        $byType = [];
+        $first = null;
         foreach ($balances as $balance) {
             $balance->registerXPathNamespace('c', $ns);
 
-            $type = (string) $balance->xpath('.//c:Tp/c:CdOrPrtry/c:Cd')[0] ?? '';
+            $type = (string) ($balance->xpath('.//c:Tp/c:CdOrPrtry/c:Cd')[0] ?? '');
             $amount = (float) ($balance->xpath('.//c:Amt')[0] ?? 0);
             $currency = (string) ($balance->xpath('.//c:Amt/@Ccy')[0] ?? 'EUR');
             $creditDebit = (string) ($balance->xpath('.//c:CdtDbtInd')[0] ?? 'CRDT');
             $date = (string) ($balance->xpath('.//c:Dt/c:Dt')[0] ?? '');
 
-            // Use opening balance if available
-            if ($type === 'OPBD' || empty($result)) {
-                $result = [
-                    'amount' => $amount,
-                    'currency' => $currency,
-                    'credit_debit' => $creditDebit === 'DBIT' ? MT940::CD_DEBIT : MT940::CD_CREDIT,
-                    'date' => $date,
-                ];
-            }
+            $parsed = [
+                'amount' => $amount,
+                'currency' => $currency,
+                'credit_debit' => $creditDebit === 'DBIT' ? MT940::CD_DEBIT : MT940::CD_CREDIT,
+                'date' => $date,
+            ];
+            $first ??= $parsed;
+            // Banks may send several balances of the same type (e.g. one per day in a multi-day report); the last one
+            // is the most recent.
+            $byType[$type] = $parsed;
         }
 
-        return $result;
+        return [
+            'start' => $byType['OPBD'] ?? $byType['PRCD'] ?? $first,
+            'end' => $byType['CLBD'] ?? $byType['ITBD'] ?? null,
+        ];
     }
 
     /**
