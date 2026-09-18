@@ -29,13 +29,15 @@ class MT940ClosingBalanceTest extends TestCase
     }
 
     /**
-     * The parser negates a debit closing balance and the model used to negate it again, so an overdrawn account
-     * reported a positive end balance.
+     * The parser used to negate a debit closing balance (unlike the start balance and unlike the CAMT parser) and
+     * the model negated it again, so an overdrawn account reported a positive end balance. The parsed amount now
+     * stays unsigned and the model applies the direction once.
      */
     public function testDebitClosingBalanceIsNegative(): void
     {
         $parsed = (new MT940())->parse(self::statement(':60F:C260717EUR10,00', ':62F:D260717EUR5000,00'));
 
+        $this->assertSame('5000.00', $parsed['2026-07-17']['end_balance']['amount']);
         $this->assertSame(MT940::CD_DEBIT, $parsed['2026-07-17']['end_balance']['credit_debit']);
         $this->assertSame(-5000.0, StatementOfAccount::fromMT940Array($parsed)->getStatements()[0]->getEndBalance());
     }

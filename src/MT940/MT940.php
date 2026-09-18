@@ -145,13 +145,14 @@ class MT940
                     $day[$i] = substr($day[$i], 4);
 
                     // The statement terminator "-" sticks to the last field once the line breaks are removed above.
+                    // Like the start balance (and the CAMT parser), the amount stays unsigned; the direction is in
+                    // credit_debit and applied by StatementOfAccount::fromMT940Array().
                     $amount = str_replace(',', '.', rtrim(substr($day[$i], 10), "-\r\n "));
                     $cdMark = substr($day[$i], 0, 1);
                     if ($cdMark == 'C') {
                         $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
                     } elseif ($cdMark == 'D') {
                         $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
-                        $amount *= -1;
                     }
 
                     $result[$soaDate]['end_balance']['amount'] = $amount;

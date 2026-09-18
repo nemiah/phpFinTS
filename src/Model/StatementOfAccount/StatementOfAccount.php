@@ -75,10 +75,7 @@ class StatementOfAccount
                     $statementModel->setStartBalance((float) $statement['start_balance']['amount']);
                 }
                 if (isset($statement['end_balance'])) {
-                    // The MT940 parser already negates a debit closing balance, the CAMT parser does not, so derive
-                    // the sign from credit_debit alone instead of negating a possibly negative amount a second time.
-                    $endBalance = abs((float) $statement['end_balance']['amount']);
-                    $statementModel->setEndBalance($statement['end_balance']['credit_debit'] == MT940::CD_CREDIT ? $endBalance : -$endBalance);
+                    $statementModel->setEndBalance((float) $statement['end_balance']['amount'] * ($statement['end_balance']['credit_debit'] == MT940::CD_CREDIT ? 1 : -1));
                 }
                 if (isset($statement['start_balance']['credit_debit'])) {
                     $statementModel->setCreditDebit($statement['start_balance']['credit_debit']);
