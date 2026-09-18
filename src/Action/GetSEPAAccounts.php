@@ -21,12 +21,22 @@ use Fhp\UnsupportedException;
 /**
  * Runs an HKSPA request to retrieve account details about the accounts that the user can access through FinTs.
  *
+ * The accounts are annotated with the per-account information from the UPD (holder name, product name, currency,
+ * account type) where the bank sent a matching HIUPD segment, see {@link SEPAAccount}.
+ *
  * TODO In future, once all banks populate the BIC in HIUPD.erweiterungKontobezogen, or if we force library users to
  * supply the BIC to us, we won't need to send an HKSPA anymore, but we can simply fulfil this action from the UPD.
  */
 class GetSEPAAccounts extends PaginateableAction
 {
     // Empty request, in order to retrieve all accounts.
+
+    // Request state (if you add a field here, update __serialize() and __unserialize() as well).
+    /**
+     * The UPD as of createRequest(), needed again in processResponse() to annotate the accounts. Some banks require a
+     * TAN for HKSPA, in which case applications serialize this action while waiting for it, so the UPD travels along.
+     */
+    private ?UPD $upd = null;
 
     // Response
     /** @var SEPAAccount[] */
@@ -41,6 +51,48 @@ class GetSEPAAccounts extends PaginateableAction
     }
 
     /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     */
+    public function serialize(): string
+    {
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            parent::__serialize(),
+            $this->upd,
+        ];
+    }
+
+    /**
+     * @deprecated Beginning from PHP7.4 __unserialize is used for new generated strings, then this method is only used for previously generated strings - remove after May 2023
+     *
+     * @param string $serialized
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        self::__unserialize(unserialize($serialized));
+    }
+
+    public function __unserialize(array $serialized): void
+    {
+        // Actions serialized before the UPD travelled along consist of the PaginateableAction state only.
+        if (count($serialized) === 3) {
+            parent::__unserialize($serialized);
+            return;
+        }
+
+        list($parentSerialized, $this->upd) = $serialized;
+
+        is_array($parentSerialized) ?
+            parent::__unserialize($parentSerialized) :
+            parent::unserialize($parentSerialized);
+    }
+
+    /**
      * @return SEPAAccount[]
      */
     public function getAccounts(): array
@@ -51,6 +103,8 @@ class GetSEPAAccounts extends PaginateableAction
 
     protected function createRequest(BPD $bpd, ?UPD $upd)
     {
+        $this->upd = $upd;
+
         /** @var BaseSegment $hispas */
         $hispas = $bpd->requireLatestSupportedParameters('HISPAS');
         switch ($hispas->getVersion()) {
@@ -86,7 +140,26 @@ class GetSEPAAccounts extends PaginateableAction
             $account->setAccountNumber($ktz->kontonummer);
             $account->setSubAccount($ktz->unterkontomerkmal);
             $account->setBlz($ktz->kreditinstitutskennung->kreditinstitutscode);
+            $this->annotateFromUpd($account);
             return $account;
         }, $hispa->getSepaKontoverbindung());
+    }
+
+    /**
+     * Copies the descriptive fields of the account's HIUPD segment, if the bank sent one. HISPA and HIUPD describe the
+     * same accounts, but only the latter carries names, currency and type.
+     */
+    private function annotateFromUpd(SEPAAccount $account): void
+    {
+        $hiupd = $this->upd?->findHiupd($account);
+        if ($hiupd === null) {
+            return;
+        }
+
+        $account
+            ->setName(UPD::accountHolderName($hiupd))
+            ->setProductName($hiupd->getKontoproduktbezeichnung())
+            ->setCurrency($hiupd->getKontowaehrung())
+            ->setAccountType($hiupd->getKontoart());
     }
 }
