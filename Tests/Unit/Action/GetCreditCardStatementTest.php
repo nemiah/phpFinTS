@@ -22,7 +22,7 @@ use Fhp\Segment\KKU\DKKKUv2;
  * field). What this test therefore cannot prove is that the pagination token sits at the wire
  * position assumed by {@link DKKKUv2::$aufsetzpunkt} — see the note there.
  */
-class GetCreditCardStatementTest extends \PHPUnit\Framework\TestCase
+class GetCreditCardStatementTest extends ActionTestCase
 {
     private const ACCOUNT = '5555000011112222';
 
@@ -66,25 +66,7 @@ class GetCreditCardStatementTest extends \PHPUnit\Framework\TestCase
 
     private static function bpd(): BPD
     {
-        $bpd = new BPD();
-        $bpd->parameters['DIKKUS'] = [2 => BaseSegment::parse('DIKKUS:45:2:3+1+1+0+90:N:J\'')];
-        return $bpd;
-    }
-
-    /**
-     * Requests the next page the way FinTs::execute() does, which includes assigning segment numbers.
-     * Without those the request segments cannot be serialized.
-     *
-     * @return BaseSegment[]
-     */
-    private static function nextRequest(GetCreditCardStatement $action, BPD $bpd): array
-    {
-        $requestSegments = $action->getNextRequest($bpd, null);
-        Message::setSegmentNumbers($requestSegments, 3);
-        $action->setRequestSegmentNumbers(array_map(function (BaseSegment $segment) {
-            return $segment->getSegmentNumber();
-        }, $requestSegments));
-        return $requestSegments;
+        return self::createBpd(BaseSegment::parse('DIKKUS:45:2:3+1+1+0+90:N:J\''));
     }
 
     public function testBuildsRequest()

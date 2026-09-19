@@ -93,10 +93,7 @@ class GetStatementOfAccount extends PaginateableAction
             parent::__serialize(),
             $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
-            // The XML fallback action is created in createRequest(), so it must survive the serialization roundtrip
-            // that applications do while waiting for a TAN (banks like Atruvia/Volksbank offer only HKCAZ and require
-            // a TAN for it). Without it, processResponse() would look for HIKAZ segments in an HICAZ response.
-            $this->xmlAction,
+            $this->xmlAction, // Created in createRequest(), so it has to survive a TAN round trip like the rest.
         ];
     }
 
