@@ -34,7 +34,8 @@ class GetSEPAAccounts extends PaginateableAction
     // Request state (if you add a field here, update __serialize() and __unserialize() as well).
     /**
      * The UPD as of createRequest(), needed again in processResponse() to annotate the accounts. Some banks require a
-     * TAN for HKSPA, in which case applications serialize this action while waiting for it, so the UPD travels along.
+     * TAN for HKSPA, and the FinTs instance that completes it may have been restored from persist(true), which leaves
+     * out the UPD, so the action keeps (and serializes) its own copy.
      */
     private ?UPD $upd = null;
 
@@ -140,26 +141,15 @@ class GetSEPAAccounts extends PaginateableAction
             $account->setAccountNumber($ktz->kontonummer);
             $account->setSubAccount($ktz->unterkontomerkmal);
             $account->setBlz($ktz->kreditinstitutskennung->kreditinstitutscode);
-            $this->annotateFromUpd($account);
+            // HISPA and HIUPD describe the same accounts, but only the latter carries names, currency and type.
+            if ($hiupd = $this->upd?->findHiupd($account)) {
+                $account
+                    ->setName($hiupd->getAccountHolderName())
+                    ->setProductName($hiupd->getKontoproduktbezeichnung())
+                    ->setCurrency($hiupd->getKontowaehrung())
+                    ->setAccountType($hiupd->getKontoart());
+            }
             return $account;
         }, $hispa->getSepaKontoverbindung());
-    }
-
-    /**
-     * Copies the descriptive fields of the account's HIUPD segment, if the bank sent one. HISPA and HIUPD describe the
-     * same accounts, but only the latter carries names, currency and type.
-     */
-    private function annotateFromUpd(SEPAAccount $account): void
-    {
-        $hiupd = $this->upd?->findHiupd($account);
-        if ($hiupd === null) {
-            return;
-        }
-
-        $account
-            ->setName(UPD::accountHolderName($hiupd))
-            ->setProductName($hiupd->getKontoproduktbezeichnung())
-            ->setCurrency($hiupd->getKontowaehrung())
-            ->setAccountType($hiupd->getKontoart());
     }
 }

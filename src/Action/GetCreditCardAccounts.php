@@ -70,7 +70,7 @@ class GetCreditCardAccounts extends BaseAction
                 ->setAccountNumber($ktv->kontonummer)
                 ->setSubAccount($ktv->unterkontomerkmal)
                 ->setBlz($ktv->kik->kreditinstitutscode ?? $bpd->getBankCode())
-                ->setName(UPD::accountHolderName($hiupd))
+                ->setName($hiupd->getAccountHolderName())
                 ->setProductName($hiupd->getKontoproduktbezeichnung())
                 ->setCurrency($hiupd->getKontowaehrung())
                 ->setAccountType($hiupd->getKontoart());

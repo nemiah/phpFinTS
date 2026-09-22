@@ -3,6 +3,7 @@
 namespace Fhp\Tests\Unit\Segment;
 
 use Fhp\Segment\HIUPD\HIUPDv4;
+use Fhp\Segment\HIUPD\HIUPDv6;
 
 class HIUPDTest extends \PHPUnit\Framework\TestCase
 {
@@ -83,5 +84,19 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
     {
         $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'));
         $this->assertEquals(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'), $parsed->serialize());
+    }
+
+    public function testAccountHolderNameWithoutSecondNameField()
+    {
+        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'));
+        $this->assertSame('Ernst Müller', $parsed->getAccountHolderName());
+    }
+
+    public function testAccountHolderNameJoinsBothNameFields()
+    {
+        $parsed = HIUPDv6::parse(
+            "HIUPD:10:6:4+1234567890::280:60050101+DE02600501011234567890+9999999999+1+EUR+Mustermann+Max+Giro++HKSAK:1'"
+        );
+        $this->assertSame('Mustermann Max', $parsed->getAccountHolderName());
     }
 }

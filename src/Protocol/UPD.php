@@ -47,19 +47,6 @@ class UPD
     }
 
     /**
-     * Banks split the account holder name across two fields, e.g. "Mustermann" and "Max".
-     *
-     * @return string|null The joined account holder name, or null if the segment carries none.
-     */
-    public static function accountHolderName(HIUPD $hiupd): ?string
-    {
-        $parts = array_filter([$hiupd->getName1(), $hiupd->getName2()], function (?string $part) {
-            return $part !== null && $part !== '';
-        });
-        return count($parts) === 0 ? null : implode(' ', $parts);
-    }
-
-    /**
      * @param SEPAAccount $account An account.
      * @return HIUPD|null The HIUPD segment for this account, or null if none exists for this account.
      */
