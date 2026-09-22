@@ -18,6 +18,8 @@ use Fhp\Segment\BaseSegment;
  */
 class HIUPDv6 extends BaseSegment implements HIUPD
 {
+    use AccountHolderNameTrait; // For HIUPD.
+
     // Note: Specification wants version 2, but only specifies version 3.
     public ?\Fhp\Segment\Common\KtvV3 $kontoverbindung = null;
     /** Max length: 34 */

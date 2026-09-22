@@ -70,7 +70,7 @@ class GetCreditCardAccounts extends BaseAction
                 ->setAccountNumber($ktv->kontonummer)
                 ->setSubAccount($ktv->unterkontomerkmal)
                 ->setBlz($ktv->kik->kreditinstitutscode ?? $bpd->getBankCode())
-                ->setName(self::joinName($hiupd))
+                ->setName($hiupd->getAccountHolderName())
                 ->setProductName($hiupd->getKontoproduktbezeichnung())
                 ->setCurrency($hiupd->getKontowaehrung())
                 ->setAccountType($hiupd->getKontoart());
@@ -79,15 +79,6 @@ class GetCreditCardAccounts extends BaseAction
         // Everything was computed from the UPD, so no request to the server is necessary.
         $this->isDone = true;
         return [];
-    }
-
-    /** Banks split the account holder name across two fields, e.g. "Mustermann" and "Max". */
-    private static function joinName(HIUPD $hiupd): ?string
-    {
-        $parts = array_filter([$hiupd->getName1(), $hiupd->getName2()], function (?string $part) {
-            return $part !== null && $part !== '';
-        });
-        return count($parts) === 0 ? null : implode(' ', $parts);
     }
 
     /**

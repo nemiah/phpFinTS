@@ -40,6 +40,12 @@ interface HIUPD
     /** @return string|null A second account holder name part (usually the given name). */
     public function getName2(): ?string;
 
+    /**
+     * @return string|null The account holder name, i.e. {@link getName1()} and {@link getName2()} joined by a space
+     *     (e.g. "Mustermann Max"), or null if the bank sent neither.
+     */
+    public function getAccountHolderName(): ?string;
+
     /** @return string|null The bank's product name for this account. */
     public function getKontoproduktbezeichnung(): ?string;
 
