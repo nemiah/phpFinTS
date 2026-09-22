@@ -135,26 +135,27 @@ class MT940
 
                     $trx[count($trx) - 1]['description'] = $this->parseDescription($description, $trx[count($trx) - 1]);
                 } elseif (
-                    preg_match('/^62F:/', $day[$i]) // handle end balance
+                    preg_match('/^62(F|M):/', $day[$i]) // handle end balance
+                    && $soaDate !== null && isset($result[$soaDate])
                 ) {
-                    // remove 62F: for better parsing
+                    // The closing balance belongs to the statement opened by the preceding :60F:/:60M:, even when it
+                    // carries a different date (e.g. the next booking day, as some banks and proxies do). It used to
+                    // be keyed by its own date instead and was silently lost in that case. A :62M: intermediate
+                    // balance is taken as well; a later :62F: for the same statement overwrites it.
                     $day[$i] = substr($day[$i], 4);
-                    $soaDate = $this->getDate(substr($day[$i], 1, 6));
 
-                    if (isset($result[$soaDate])) {
-                        // $result[$soaDate] = ['end_balance' => []];
-
-                        $amount = str_replace(',', '.', substr($day[$i], 10, -1));
-                        $cdMark = substr($day[$i], 0, 1);
-                        if ($cdMark == 'C') {
-                            $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
-                        } elseif ($cdMark == 'D') {
-                            $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
-                            $amount *= -1;
-                        }
-
-                        $result[$soaDate]['end_balance']['amount'] = $amount;
+                    // The statement terminator "-" sticks to the last field once the line breaks are removed above.
+                    // Like the start balance (and the CAMT parser), the amount stays unsigned; the direction is in
+                    // credit_debit and applied by StatementOfAccount::fromMT940Array().
+                    $amount = str_replace(',', '.', rtrim(substr($day[$i], 10), "-\r\n "));
+                    $cdMark = substr($day[$i], 0, 1);
+                    if ($cdMark == 'C') {
+                        $result[$soaDate]['end_balance']['credit_debit'] = static::CD_CREDIT;
+                    } elseif ($cdMark == 'D') {
+                        $result[$soaDate]['end_balance']['credit_debit'] = static::CD_DEBIT;
                     }
+
+                    $result[$soaDate]['end_balance']['amount'] = $amount;
                 }
             }
         }
