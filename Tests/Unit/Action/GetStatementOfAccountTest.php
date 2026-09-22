@@ -5,18 +5,36 @@ namespace Fhp\Tests\Unit\Action;
 use Fhp\Action\GetStatementOfAccount;
 use Fhp\Model\SEPAAccount;
 use Fhp\Protocol\BPD;
+use Fhp\Protocol\Message;
+use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\CAZ\HKCAZv1;
 use Fhp\Segment\KAZ\HIKAZSv5;
 use Fhp\Segment\KAZ\HIKAZSv6;
 use Fhp\Segment\KAZ\HIKAZSv7;
 use Fhp\Segment\KAZ\HKKAZv5;
+use Fhp\Segment\KAZ\HKKAZv6;
 use Fhp\Segment\KAZ\HKKAZv7;
 use Fhp\Segment\KAZ\ParameterKontoumsaetzeV2;
 use Fhp\Segment\SPA\HISPASv1;
 use Fhp\Segment\SPA\ParameterSepaKontoverbindungAnfordernV1;
 
-class GetStatementOfAccountTest extends \PHPUnit\Framework\TestCase
+class GetStatementOfAccountTest extends ActionTestCase
 {
+    /**
+     * `serialize(GetStatementOfAccount::create(self::account(), 2026-04-20, 2026-07-19))` as written by 310249a, the
+     * last version before the XML fallback was serialized too (seven entries instead of eight). Applications keep
+     * such actions in their caches while waiting for a TAN, so they are still around when this change gets deployed.
+     */
+    private const SERIALIZED_BY_310249A = 'O:32:"Fhp\\Action\\GetStatementOfAccount":7:{'
+        . 'i:0;a:3:{i:0;a:5:{i:0;N;i:1;N;i:2;N;i:3;N;i:4;N;}i:1;N;i:2;N;}'
+        . "i:1;O:21:\"Fhp\\Model\\SEPAAccount\":5:{s:7:\"\0*\0iban\";s:22:\"DE44500105175407324931\";s:6:\"\0*\0bic\";"
+        . "s:11:\"INGDDEFFXXX\";s:16:\"\0*\0accountNumber\";s:10:\"5407324931\";s:13:\"\0*\0subAccount\";N;"
+        . "s:6:\"\0*\0blz\";s:8:\"50010517\";}"
+        . 'i:2;O:17:"DateTimeImmutable":3:{s:4:"date";s:26:"2026-04-20 00:00:00.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:13:"Europe/Berlin";}'
+        . 'i:3;O:17:"DateTimeImmutable":3:{s:4:"date";s:26:"2026-07-19 00:00:00.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:13:"Europe/Berlin";}'
+        . 'i:4;b:0;i:5;b:0;i:6;N;}';
+
     public function testRejectsReversedDateRange()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -85,6 +103,86 @@ class GetStatementOfAccountTest extends \PHPUnit\Framework\TestCase
         $action->getNextRequest(self::createBpd(self::createHikazsSegment(6, false)), null);
     }
 
+    /**
+     * Banks without HIKAZS (e.g. Atruvia/Volksbank) make the action fall back to HKCAZ. Those banks also tend to
+     * require a TAN for HKCAZ, so applications serialize the action while waiting for it and then feed the response
+     * to the unserialized copy. The fallback must survive that roundtrip, otherwise the copy expects HIKAZ segments.
+     */
+    public function testXmlFallbackSurvivesSerialization()
+    {
+        $action = GetStatementOfAccount::create(self::account(), new \DateTimeImmutable('2026-04-20'), new \DateTimeImmutable('2026-07-19'));
+
+        $requestSegments = self::nextRequest($action, self::createCamtOnlyBpd(), self::createUpdWithHkcaz());
+        self::assertCount(1, $requestSegments);
+        self::assertInstanceOf(HKCAZv1::class, $requestSegments[0]);
+
+        /** @var GetStatementOfAccount $action */
+        $action = unserialize(serialize($action));
+
+        $action->processResponse(self::camtResponse());
+
+        $statements = $action->getStatement()->getStatements();
+        self::assertCount(1, $statements);
+        $transactions = $statements[0]->getTransactions();
+        self::assertCount(1, $transactions);
+        self::assertSame(12.5, $transactions[0]->getAmount());
+        self::assertSame('Max Mustermann', $transactions[0]->getName());
+    }
+
+    /** Actions serialized by earlier versions of this library carry no XML fallback and must still unserialize. */
+    public function testUnserializesActionsWithoutXmlFallback()
+    {
+        /** @var GetStatementOfAccount $action */
+        $action = unserialize(self::SERIALIZED_BY_310249A);
+        self::assertInstanceOf(GetStatementOfAccount::class, $action);
+
+        $requestSegments = self::nextRequest($action, self::createBpd(self::createHikazsSegment(6, true)));
+        self::assertCount(1, $requestSegments);
+        self::assertInstanceOf(HKKAZv6::class, $requestSegments[0]);
+        self::assertSame('20260420', $requestSegments[0]->vonDatum);
+        self::assertSame('20260719', $requestSegments[0]->bisDatum);
+        self::assertSame('5407324931', $requestSegments[0]->kontoverbindungAuftraggeber->kontonummer);
+    }
+
+    /** A BPD that offers HKCAZ but no HKKAZ at all, like Atruvia banks do. */
+    private static function createCamtOnlyBpd(): BPD
+    {
+        return self::createBpd(
+            BaseSegment::parse("HICAZS:58:1:3+1+1+1+90:N:N:urn?:iso?:std?:iso?:20022?:tech?:xsd?:camt.052.001.02'"),
+            self::createHispasSegment(true)
+        );
+    }
+
+    private static function createUpdWithHkcaz(): UPD
+    {
+        $upd = new UPD();
+        $upd->hiupd = [BaseSegment::parse(
+            "HIUPD:7:6:4+5407324931::280:50010517+DE44500105175407324931+9999999999+1+EUR+Mustermann+Max+Girokonto++HKSAK:1+HKCAZ:1+HKSPA:1'"
+        )];
+        return $upd;
+    }
+
+    private static function camtResponse(): Message
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'
+            . '<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02">'
+            . '<BkToCstmrAcctRpt><GrpHdr><MsgId>1</MsgId><CreDtTm>2026-07-19T10:00:00+02:00</CreDtTm></GrpHdr>'
+            . '<Rpt><Id>1</Id><Acct><Id><IBAN>DE44500105175407324931</IBAN></Id></Acct>'
+            . '<Ntry><Amt Ccy="EUR">12.50</Amt><CdtDbtInd>CRDT</CdtDbtInd><Sts>BOOK</Sts>'
+            . '<BookgDt><Dt>2026-07-17</Dt></BookgDt><ValDt><Dt>2026-07-17</Dt></ValDt>'
+            . '<NtryDtls><TxDtls><RltdPties><Dbtr><Nm>Max Mustermann</Nm></Dbtr>'
+            . '<DbtrAcct><Id><IBAN>DE89370400440532013000</IBAN></Id></DbtrAcct></RltdPties>'
+            . '<RmtInf><Ustrd>Rechnung 4711</Ustrd></RmtInf></TxDtls></NtryDtls></Ntry>'
+            . '</Rpt></BkToCstmrAcctRpt></Document>';
+
+        return Message::parse(
+            "HNHBK:1:3+000000000000+300+0+1+0:1'"
+            . "HIRMG:2:2+0020::Auftrag ausgeführt.'"
+            . 'HICAZ:3:1:3+DE44500105175407324931:INGDDEFFXXX:5407324931::280:50010517+urn?:iso?:std?:iso?:20022?:tech?:xsd?:camt.052.001.02+@' . strlen($xml) . '@' . $xml . "'"
+            . "HNHBS:4:1+1'"
+        );
+    }
+
     private static function account(): SEPAAccount
     {
         return (new SEPAAccount())
@@ -142,22 +240,5 @@ class GetStatementOfAccountTest extends \PHPUnit\Framework\TestCase
         $segment->sicherheitsklasse = 0;
         $segment->parameter = $parameter;
         return $segment;
-    }
-
-    private static function createBpd(BaseSegment $hikazs, ?BaseSegment $hispas = null): BPD
-    {
-        $bpd = new class extends BPD {
-            public function getBankName()
-            {
-                return 'Testbank';
-            }
-        };
-
-        $bpd->parameters['HIKAZS'][$hikazs->getVersion()] = $hikazs;
-        if ($hispas !== null) {
-            $bpd->parameters['HISPAS'][$hispas->getVersion()] = $hispas;
-        }
-
-        return $bpd;
     }
 }

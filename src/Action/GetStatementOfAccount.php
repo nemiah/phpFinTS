@@ -93,6 +93,7 @@ class GetStatementOfAccount extends PaginateableAction
             parent::__serialize(),
             $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
+            $this->xmlAction, // Created in createRequest(), so it has to survive a TAN round trip like the rest.
         ];
     }
 
@@ -113,7 +114,8 @@ class GetStatementOfAccount extends PaginateableAction
             $parentSerialized,
             $this->account, $this->from, $this->to, $this->allAccounts, $this->includeUnbooked,
             $this->bankName,
-        ) = $serialized;
+            $this->xmlAction,
+        ) = array_pad($serialized, 8, null); // Actions serialized before the XML fallback was persisted have 7 entries.
 
         is_array($parentSerialized) ?
             parent::__unserialize($parentSerialized) :
