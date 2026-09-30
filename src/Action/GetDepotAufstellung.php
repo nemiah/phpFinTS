@@ -15,7 +15,9 @@ use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\WPD\HIWPD;
 use Fhp\Segment\WPD\HIWPDS;
 use Fhp\Segment\WPD\HIWPDv5;
+use Fhp\Segment\WPD\HIWPDv6;
 use Fhp\Segment\WPD\HKWPDv5;
+use Fhp\Segment\WPD\HKWPDv6;
 use Fhp\UnsupportedException;
 
 /**
@@ -119,6 +121,8 @@ class GetDepotAufstellung extends PaginateableAction
         switch ($hiwpds->getVersion()) {
             case 5:
                 return HKWPDv5::create(KtvV3::fromAccount($this->account));
+            case 6:
+                return HKWPDv6::create(KtvV3::fromAccount($this->account));
             default:
                 throw new UnsupportedException('Unsupported HKWPD version: ' . $hiwpds->getVersion());
         }
@@ -129,7 +133,10 @@ class GetDepotAufstellung extends PaginateableAction
         parent::processResponse($response);
 
         $isUnavailable = $response->findRueckmeldung(Rueckmeldungscode::NICHT_VERFUEGBAR) !== null;
-        $responseHiwpd = $response->findSegments(HIWPDv5::class);
+        $responseHiwpd = array_merge(
+            $response->findSegments(HIWPDv5::class),
+            $response->findSegments(HIWPDv6::class)
+        );
 
         $numResponseSegments = count($responseHiwpd);
         if (!$isUnavailable && $numResponseSegments < count($this->getRequestSegmentNumbers())) {
