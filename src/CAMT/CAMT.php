@@ -648,18 +648,17 @@ class CAMT
 
         // Common SEPA field patterns
         $patterns = [
-            'EREF' => '/EREF\+([^\s]+)/',
-            'MREF' => '/MREF\+([^\s]+)/',
-            'CRED' => '/CRED\+([^\s]+)/',
-            'DEBT' => '/DEBT\+([^\s]+)/',
-            'SVWZ' => '/SVWZ\+(.+?)(?=(?:EREF|MREF|CRED|DEBT|\s*$))/',
-            'KREF' => '/KREF\+([^\s]+)/',
-            'IBAN' => '/IBAN\+([A-Z]{2}[0-9]{2}[A-Z0-9]+)/',
+            '/(?<key>EREF|MREF|CRED|DEBT|SVWZ|KREF)\+(?<value>.*?)(?=(?:EREF|MREF|CRED|DEBT|SVWZ|KREF|IBAN|\s*$))/',
+            '/(?<key>IBAN)\+(?<value>[A-Z]{2}[0-9]{2}[A-Z0-9]+)/',
         ];
 
-        foreach ($patterns as $key => $pattern) {
-            if (preg_match($pattern, $text, $matches)) {
-                $fields[$key] = trim($matches[1]);
+        foreach ($patterns as $pattern) {
+            if (preg_match_all($pattern, $text, $matches)) {
+                for ($i = 0; $i < count($matches['key']); ++$i) {
+                    $key = $matches['key'][$i];
+                    $value = $matches['value'][$i];
+                    $fields[$key] = trim($value);
+                }
             }
         }
 
