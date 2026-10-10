@@ -23,7 +23,8 @@
   "require-dev": {
     "phpunit/phpunit": "^9.5",
     "php-mock/php-mock-phpunit": "^2.6",
-    "friendsofphp/php-cs-fixer": "^3.0"
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "phpstan/phpstan": "^2.2"
   },
   "suggest": {
     "monolog/monolog": "Allow sending log messages to a variety of different handlers",
@@ -38,6 +39,8 @@
       "@cs"
     ],
     "cs": "php-cs-fixer fix -v --diff --dry-run",
-    "cs-fix": "php-cs-fixer fix -v --diff"
+    "cs-fix": "php-cs-fixer fix -v --diff",
+    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+    "phpstan-baseline": "vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline"
   }
 }

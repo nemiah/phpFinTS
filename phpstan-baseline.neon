@@ -1,0 +1,3223 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method Fhp\\Tests\\CLILogger\:\:log\(\) has parameter \$message with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/CLILogger.php
+
+		-
+			message: '#^Method Fhp\\Tests\\FinTsPeer\:\:newConnection\(\) should return Fhp\\Connection but returns Fhp\\Connection\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: Tests/FinTsPeer.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\BPD@anonymous/Tests/Unit/Action/ActionTestCase\.php\:38\:\:getBankName\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/ActionTestCase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testAccountTypeDoesNotOverrideAnExplicitList\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testFallsBackToAccountType\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testFindsAccountInOlderSegmentVersion\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testFindsOnlyTheCreditCardAccount\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testNeedsNoRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testRequiresUpd\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardAccountsTest\:\:testReturnsNothingWithoutCreditCardAccounts\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupd \(array\<Fhp\\Segment\\HIUPD\\HIUPD\>\) does not accept array\<Fhp\\Segment\\BaseSegment\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupd \(array\<Fhp\\Segment\\HIUPD\\HIUPD\>\) does not accept array\<int, Fhp\\Segment\\BaseSegment\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardAccountsTest.php
+
+		-
+			message: '#^Cannot access property \$kreditinstitutscode on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testAcceptsRangeWithinTheAnnouncedPeriod\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testAcceptsRangeWithoutFromDate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testAcceptsShortRangeFarInThePast\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testBuildsRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testPaginatedResponseAccumulatesAllPages\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testRejectsAnAccountWithoutNumber\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testRejectsOpenEndedRangeStartingTooFarBack\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testRejectsRangeSpanningMoreThanTheAnnouncedPeriod\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testRejectsReversedDateRange\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testSerializationRoundTripPreservesTheRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testSinglePageResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetCreditCardStatementTest\:\:testStatementIsUnavailableWhileMorePagesFollow\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetCreditCardStatementTest.php
+
+		-
+			message: '#^Cannot access property \$kreditinstitutscode on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testCreateRequestBuildsHkkazV5FromDateTimeInterface\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testCreateRequestBuildsHkkazV7FromDateTimeInterface\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testCreateRequestRejectsAllAccountsWhenNotSupportedByBank\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testRejectsReversedDateRange\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testUnserializesActionsWithoutXmlFallback\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\GetStatementOfAccountTest\:\:testXmlFallbackSurvivesSerialization\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupd \(array\<Fhp\\Segment\\HIUPD\\HIUPD\>\) does not accept array\<int, Fhp\\Segment\\BaseSegment\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Tests/Unit/Action/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array\<Fhp\\Segment\\BaseSegment\> will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: Tests/Unit/Action/SendSEPATransferTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Action\\SendSEPATransferTest\:\:testSerializesRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Action/SendSEPATransferTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\BaseActionTanSerializationTest\:\:testSerializesTanRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/BaseActionTanSerializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\BaseActionVopSerializationTest\:\:testSerializesPollingInfo\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/BaseActionVopSerializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\BaseActionVopSerializationTest\:\:testSerializesVopConfirmationRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/BaseActionVopSerializationTest.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/Unit/BaseActionVopSerializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\FinTsTestCase\:\:assertAllMessagesSeen\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/FinTsTestCase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/FinTsTestCase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\FinTsTestCase\:\:setUpConnection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/FinTsTestCase.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: Tests/Unit/FinTsTestCase.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_pad expects string, int\<36, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Unit/FinTsTestCase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Atruvia\\AtruviaIntegrationTestBase\:\:InitAnonymous\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Atruvia/AtruviaIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Atruvia\\AtruviaIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Atruvia/AtruviaIntegrationTestBase.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 5
+			path: Tests/Unit/Integration/Atruvia/AtruviaIntegrationTestBase.php
+
+		-
+			message: '#^Cannot call method getChallenge\(\) on Fhp\\Model\\TanRequest\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: Tests/Unit/Integration/Atruvia/SendTransferVoPTest.php
+
+		-
+			message: '#^Cannot call method getDifferingPayeeName\(\) on Fhp\\Model\\VopConfirmationRequest\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: Tests/Unit/Integration/Atruvia/SendTransferVoPTest.php
+
+		-
+			message: '#^Cannot call method getNextAttemptInSeconds\(\) on Fhp\\Model\\PollingInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: Tests/Unit/Integration/Atruvia/SendTransferVoPTest.php
+
+		-
+			message: '#^Cannot call method getVerificationResult\(\) on Fhp\\Model\\VopConfirmationRequest\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: Tests/Unit/Integration/Atruvia/SendTransferVoPTest.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 13
+			path: Tests/Unit/Integration/Atruvia/SendTransferVoPTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\ConsorsIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/ConsorsIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\GetBPDTest\:\:testGetBpd\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/GetBPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\GetSEPAAccountsTest\:\:testGetSEPAAccounts\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/GetSEPAAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\GetStatementOfAccountTest\:\:testGetStatementOfAccount\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\GetStatementOfAccountTest\:\:testGetStatementOfAccountEmpty\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\InitEndDialogTest\:\:testGetTanModesAndGetTanMedia\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Consors\\InitEndDialogTest\:\:testInitAndEndDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Consors/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\DKBIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/DKBIntegrationTestBase.php
+
+		-
+			message: '#^Cannot call method getAmount\(\) on Fhp\\Segment\\Common\\Sdo\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetBalanceTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetBalanceTest\:\:testGetBalance\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetBalanceTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetSEPAAccountsTest\:\:testGetSEPAAccounts\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetSEPAAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:checkResult\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:completeWithTan\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:testPaginated\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:testSimple\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:testWithTan\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:testWithTanPersist\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:getDkbEncodedBin\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 3
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:getHikazContent\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:getHikazContentPage1\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Tests\\Unit\\Integration\\DKB\\GetStatementOfAccountTest\:\:getHikazContentPage2\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: Tests/Unit/Integration/DKB/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\InitEndDialogTest\:\:testGetTanModesAndGetTanMedia\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\InitEndDialogTest\:\:testInitAndEndDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\SendSEPATransferTest\:\:completeWithTan\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/SendSEPATransferTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\SendSEPATransferTest\:\:testSendSEPATransfer\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/SendSEPATransferTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\DKB\\SendSEPATransferTest\:\:testSendSEPATransferPersist\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/DKB/SendSEPATransferTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\GLSIntegrationTestBase\:\:InitAnonymous\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/GLSIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\GLSIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/GLSIntegrationTestBase.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 7
+			path: Tests/Unit/Integration/GLS/GLSIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\GetStatementOfAccountXMLTest\:\:completeWithTan\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/GetStatementOfAccountXMLTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\GetStatementOfAccountXMLTest\:\:testWithTanMinimalPersistPaginated\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/GetStatementOfAccountXMLTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\GetStatementOfAccountXMLTest\:\:testWithTanPaginated\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/GetStatementOfAccountXMLTest.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/Unit/Integration/GLS/GetStatementOfAccountXMLTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\InitEndDialogTest\:\:testInitAndEndDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\GLS\\InitEndDialogTest\:\:testInitAnonymous\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/GLS/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\IngDiba\\GetSEPAAccountsTest\:\:testGetSEPAAccounts\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/IngDiba/GetSEPAAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\IngDiba\\GetStatementOfAccountTest\:\:testGetStatementOfAccountTest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/IngDiba/GetStatementOfAccountTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\IngDiba\\IngDibaIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/IngDiba/IngDibaIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\IngDiba\\InitDialogWithBlockedPinTest\:\:testInitDialogWithBlockedPin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/IngDiba/InitDialogWithBlockedPinTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\IngDiba\\InitEndDialogTest\:\:testInitAndEndDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/IngDiba/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\InitializationErrorTest\:\:testInitializationErrorInvalidSegment\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/InitializationErrorTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\InitializationErrorTest\:\:testInitializationErrorMissingField\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/InitializationErrorTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\KSK\\Biberach\\GetBPDTest\:\:testGetBpd\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/KSK/Biberach/GetBPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\KSK\\InitDialogWithBlockedPinTest\:\:testInitDialogWithBlockedPin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/KSK/InitDialogWithBlockedPinTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\KSK\\KSKIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/KSK/KSKIntegrationTestBase.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/Unit/Integration/KSK/KSKIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Postbank\\GetSEPAAccountsTest\:\:testGetSEPAAccountsEmptyResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Postbank/GetSEPAAccountsTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Postbank\\InitDialogWithBlockedPinTest\:\:testInitDialogWithBlockedPin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Postbank/InitDialogWithBlockedPinTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Postbank\\InitEndDialogTest\:\:testInitAndEndDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Postbank/InitEndDialogTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Integration\\Postbank\\PostbankIntegrationTestBase\:\:initDialog\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Integration/Postbank/PostbankIntegrationTestBase.php
+
+		-
+			message: '#^Parameter \#2 \$response of method Fhp\\Tests\\Unit\\FinTsTestCase\:\:expectMessage\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/Unit/Integration/Postbank/PostbankIntegrationTestBase.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Options\\SanitizingLoggerTest\:\:testSanitize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Options/SanitizingLoggerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\BPDReparseTest\:\:testPersistedInstanceIsReparsedOnLoad\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/BPDReparseTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\BPDReparseTest\:\:testReparsesSegmentsTheLibraryNowImplements\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/BPDReparseTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertIsObject\(\) with Fhp\\Protocol\\DialogInitialization will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 2
+			path: Tests/Unit/Protocol/DialogInitializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\DialogInitializationTest\:\:testSerializableInterfaceMigration\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/DialogInitializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\DialogInitializationTest\:\:testSerializableInterfaceMigrationFromString\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/DialogInitializationTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: Tests/Unit/Protocol/ServerExceptionTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\ServerExceptionTest\:\:testDetectAndThrowErrorsOnlyWarnings\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/ServerExceptionTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Protocol\\ServerExceptionTest\:\:testDetectAndThrowErrorsWithErrors\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Protocol/ServerExceptionTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:getElements\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:getElements\(\) has parameter \$segment with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:testParse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:testParseEmpty\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:testSerialize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Tests\\Unit\\Segment\\AnonymousSegmentTest\:\:getElements\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: Tests/Unit/Segment/AnonymousSegmentTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\Common\\TspTest\:\:testParseWithTime\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/Common/TspTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\Common\\TspTest\:\:testParseWithoutTime\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/Common/TspTest.php
+
+		-
+			message: '#^Cannot call method format\(\) on DateTime\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testDecodesUmlautsFromIso8859\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testEmptyStatement\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testMapsToModel\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesAllRecordsTogether\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesDomesticRecord\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesForeignCurrencyRecord\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesHeaderAndBalance\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesLegacyFormatRecord\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\DIKKUTest\:\:testParsesRecordWithoutMerchantCategoryCode\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/DIKKUTest.php
+
+		-
+			message: '#^Cannot access property \$rueckmeldungsparameter on Fhp\\Segment\\HIRMS\\Rueckmeldung\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Cannot access property \$rueckmeldungstext on Fhp\\Segment\\HIRMS\\Rueckmeldung\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\FindRueckmeldungTraitTest\:\:testFindRueckmeldungFound\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\FindRueckmeldungTraitTest\:\:testFindRueckmeldungNotFound\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\FindRueckmeldungTraitTest\:\:testFindRueckmeldungen\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\FindRueckmeldungTraitTest\:\:testFindRueckmeldungscodesForReferenceSegment\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\FindRueckmeldungTraitTest\:\:testGetAllRueckmeldungen\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/FindRueckmeldungTraitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HICAZTest\:\:testHICAZparse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HICAZTest.php
+
+		-
+			message: '#^Unsafe access to private constant Fhp\\Tests\\Unit\\Segment\\HICAZTest\:\:HICAZ_TEST_START through static\:\:\.$#'
+			identifier: staticClassAccess.privateConstant
+			count: 2
+			path: Tests/Unit/Segment/HICAZTest.php
+
+		-
+			message: '#^Unsafe access to private constant Fhp\\Tests\\Unit\\Segment\\HICAZTest\:\:SAMPLE_XML_DOC1 through static\:\:\.$#'
+			identifier: staticClassAccess.privateConstant
+			count: 6
+			path: Tests/Unit/Segment/HICAZTest.php
+
+		-
+			message: '#^Unsafe access to private constant Fhp\\Tests\\Unit\\Segment\\HICAZTest\:\:SAMPLE_XML_DOC2 through static\:\:\.$#'
+			identifier: staticClassAccess.privateConstant
+			count: 6
+			path: Tests/Unit/Segment/HICAZTest.php
+
+		-
+			message: '#^Unsafe access to private constant Fhp\\Tests\\Unit\\Segment\\HICAZTest\:\:SAMPLE_XML_DOC3 through static\:\:\.$#'
+			identifier: staticClassAccess.privateConstant
+			count: 3
+			path: Tests/Unit/Segment/HICAZTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HISALTest\:\:testEmptyKti\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HISALTest.php
+
+		-
+			message: '#^Parameter \#3 \$timestamp of static method Fhp\\Segment\\Common\\Sdo\:\:create\(\) expects DateTime, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Unit/Segment/HISALTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITABTest\:\:testParseDKB\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITABTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITABTest\:\:testSerialize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITABTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITANSTest\:\:testParseDKBResponseV6\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITANSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITANSTest\:\:testSegmentVersionDetection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITANSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITANSTest\:\:testValidateInvalidDeg\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITANSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HITANSTest\:\:testValidateInvalidSegmentkopf\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HITANSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPATest\:\:testParseBroken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPATest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 2
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$kreditinstitutscode on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$laenderkennzeichen on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$limitTage on Fhp\\Segment\\HIUPD\\KontolimitV1\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$limitart on Fhp\\Segment\\HIUPD\\KontolimitV1\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$limitbetrag on Fhp\\Segment\\HIUPD\\KontolimitV1\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$waehrung on Fhp\\Segment\\Common\\Btg\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Cannot access property \$wert on Fhp\\Segment\\Common\\Btg\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testParseHBCI22Example1\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testParseHBCI22Example2\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testSerializeHBCI22Example1\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testSerializeHBCI22Example2\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testValidateHBCI22Example1\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIUPDTest\:\:testValidateHBCI22Example2\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Offset 4 might not exist on array\<Fhp\\Segment\\HIUPD\\ErlaubteGeschaeftsvorfaelleV1\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 6
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Parameter \#1 \$rawSegment of static method Fhp\\Segment\\BaseSegment\:\:parse\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 6
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertCount\(\) expects Countable\|iterable, array\<Fhp\\Segment\\HIUPD\\ErlaubteGeschaeftsvorfaelleV1\>\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/Unit/Segment/HIUPDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HIVPPSTest\:\:testPopulatedArray\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HIVPPSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HKCCSTest\:\:testValidateHBCI22Example1\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HKCCSTest.php
+
+		-
+			message: '#^Parameter \#1 \$rawSegment of static method Fhp\\Segment\\BaseSegment\:\:parse\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Unit/Segment/HKCCSTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HKSPATest\:\:testSerialize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HKSPATest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HKVPPTest\:\:testSerialize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HKVPPTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSDTest\:\:testIso8859EncodedLength\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSDTest\:\:testLengthTooLong\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSDTest\:\:testLengthTooShort\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSDTest\:\:testParseRealConsorsResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSDTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSKTest\:\:testParse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSKTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\HNVSKTest\:\:testSerialize\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/HNVSKTest.php
+
+		-
+			message: '#^Cannot access property \$minimaleSEPAVorlaufzeit on array\<Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\>\|Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: Tests/Unit/Segment/MinimaleVorlaufzeitSEPALastschriftTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\MinimaleVorlaufzeitSEPALastschriftTest\:\:testGetMinimalLeadTimeFromVersion1\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/MinimaleVorlaufzeitSEPALastschriftTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\MinimaleVorlaufzeitSEPALastschriftTest\:\:testGetMinimalLeadTimeFromVersion1B2B\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/MinimaleVorlaufzeitSEPALastschriftTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\MinimaleVorlaufzeitSEPALastschriftTest\:\:testParseCoded\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/MinimaleVorlaufzeitSEPALastschriftTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\MinimaleVorlaufzeitSEPALastschriftTest\:\:testParseCodedB2B\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Segment/MinimaleVorlaufzeitSEPALastschriftTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Segment\\SegmentComparator\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/Unit/Segment/SegmentComparator.php
+
+		-
+			message: '#^Unsafe access to private constant Fhp\\Tests\\Unit\\Segment\\UpdSerializationTest\:\:HIUPD through static\:\:\.$#'
+			identifier: staticClassAccess.privateConstant
+			count: 3
+			path: Tests/Unit/Segment/UpdSerializationTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\SendSEPADirectDebitTest\:\:testCanSendLargeFiles\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/SendSEPADirectDebitTest.php
+
+		-
+			message: '#^Parameter \#2 \$painMessage of static method Fhp\\Action\\SendSEPADirectDebit\:\:create\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Unit/SendSEPADirectDebitTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\BinTest\:\:testToString\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/BinTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testParseDataElement\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testParseDataElementInvalidFloatMultipleDecimalSeparator\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testParseDataElementInvalidFloatNoDecimalSeparator\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testParseDataElementInvalidFloatWrongDecimalSeparator\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testParseDataElementInvalidInt\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testSplitEscapedStringEmpty\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testSplitEscapedStringWithBinaryBlock\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testSplitEscapedStringWithEscaping\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testSplitEscapedStringWithEscapingAndBinaryBlock\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testSplitEscapedStringWithoutEscaping\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\ParserTest\:\:testUnescape\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/ParserTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:escapeProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:provideSerializeDataElement\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testEscape\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testEscape\(\) has parameter \$expected with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testEscape\(\) has parameter \$input with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testSerializeDataElement\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testSerializeDataElement\(\) has parameter \$expected with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testSerializeDataElement\(\) has parameter \$type with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Tests\\Unit\\Syntax\\SerializerTest\:\:testSerializeDataElement\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: Tests/Unit/Syntax/SerializerTest.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetBalance\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetBalance.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetBalance\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetBalance.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetBalance\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetBalance.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetBalance.php
+
+		-
+			message: '#^Property Fhp\\Action\\GetBalance\:\:\$response \(array\<Fhp\\Segment\\SAL\\HISAL\>\) does not accept array\<Fhp\\Segment\\BaseSegment\|Fhp\\Segment\\SAL\\HISAL\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Action/GetBalance.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetCreditCardAccounts\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetCreditCardAccounts.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupd \(array\<Fhp\\Segment\\HIUPD\\HIUPD\>\) on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.property
+			count: 1
+			path: src/Action/GetCreditCardAccounts.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetCreditCardStatement\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetCreditCardStatement\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetCreditCardStatement\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\KKU\\DIKKUS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^Parameter \#1 \$kontonummer of static method Fhp\\Segment\\Common\\KtvV3\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^Parameter \#2 \$kontonummer of static method Fhp\\Segment\\KKU\\DKKKUv2\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Action/GetCreditCardStatement.php
+
+		-
+			message: '#^Call to an undefined method Fhp\\Segment\\WPD\\HIWPD\:\:getDepotaufstellung\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetDepotAufstellung\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetDepotAufstellung\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetDepotAufstellung\:\:getStatement\(\) should return Fhp\\Model\\StatementOfHoldings\\StatementOfHoldings but returns Fhp\\Model\\StatementOfHoldings\\StatementOfHoldings\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetDepotAufstellung\:\:parseMt535\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetDepotAufstellung\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\WPD\\HIWPDS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetDepotAufstellung.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetSEPAAccounts\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetSEPAAccounts.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPA is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetSEPAAccounts.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetSEPADirectDebitParameters\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetSEPADirectDebitParameters.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetSEPADirectDebitParameters\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetSEPADirectDebitParameters.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetSEPADirectDebitParameters\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetSEPADirectDebitParameters.php
+
+		-
+			message: '#^Property Fhp\\Action\\GetSEPADirectDebitParameters\:\:\$hidxes \(Fhp\\Segment\\DSE\\HIDXES\) does not accept Fhp\\Segment\\BaseSegment\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Action/GetSEPADirectDebitParameters.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:getParsedMT940\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:getStatement\(\) should return Fhp\\Model\\StatementOfAccount\\StatementOfAccount but returns Fhp\\Model\\StatementOfAccount\\StatementOfAccount\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:parseMt940\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:parseXml\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccount\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\KAZ\\HIKAZS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strtolower expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Property Fhp\\Action\\GetStatementOfAccount\:\:\$parsedMT940 type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccountXML\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccountXML.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccountXML\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/GetStatementOfAccountXML.php
+
+		-
+			message: '#^Method Fhp\\Action\\GetStatementOfAccountXML\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/GetStatementOfAccountXML.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/GetStatementOfAccountXML.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendInternationalCreditTransfer\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendInternationalCreditTransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendInternationalCreditTransfer\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendInternationalCreditTransfer.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/SendInternationalCreditTransfer.php
+
+		-
+			message: '#^Property Fhp\\Segment\\AUB\\HKAUBv9\:\:\$DTAZVHandbuch \(int\) does not accept int\|string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Action/SendInternationalCreditTransfer.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\:\:\$einzelbuchungGewuenscht\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\:\:\$kontoverbindungInternational\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\:\:\$sepaDescriptor\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\:\:\$sepaPainMessage\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\:\:\$summenfeld\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Call to an undefined method Fhp\\Segment\\BaseSegment\:\:createRequestSegment\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Call to an undefined method Fhp\\Segment\\BaseSegment\:\:getParameter\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Call to an undefined method Fhp\\Segment\\DSE\\SEPADirectDebitMinimalLeadTimeProvider\:\:getUnterstuetzteSEPADatenformate\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPADirectDebit\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPADirectDebit\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPADirectDebit\:\:createRequest\(\) should return array\<Fhp\\Segment\\BaseSegment\>\|Fhp\\Segment\\BaseSegment but returns Fhp\\Segment\\DME\\HKDMEv2\|Fhp\\Segment\\DSE\\HIDXES\|Fhp\\Segment\\DSE\\HKDSEv2\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Parameter \#1 \$directDebitType of static method Fhp\\Action\\GetSEPADirectDebitParameters\:\:getHixxesSegmentName\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Parameter \#1 \$wert of static method Fhp\\Segment\\Common\\Btg\:\:create\(\) expects float, float\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Action/SendSEPADirectDebit.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\IPZ\\HKIPZv1\:\:\$umwandlungNachSEPAUeberweisungZulaessig\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Call to function is_null\(\) with array\<string\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPARealtimeTransfer\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPARealtimeTransfer\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPARealtimeTransfer\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/SendSEPARealtimeTransfer.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\CCM\\HKCCMv1\|Fhp\\Segment\\CCS\\HKCCSv1\|Fhp\\Segment\\CME\\HKCMEv1\|Fhp\\Segment\\CSE\\HKCSEv1\:\:\$einzelbuchungGewuenscht\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\CCM\\HKCCMv1\|Fhp\\Segment\\CCS\\HKCCSv1\|Fhp\\Segment\\CME\\HKCMEv1\|Fhp\\Segment\\CSE\\HKCSEv1\:\:\$summenfeld\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Call to an undefined method Fhp\\Segment\\BaseSegment\:\:getParameter\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Cannot access property \$CstmrCdtTrfInitn on SimpleXMLElement\|false\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPATransfer\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPATransfer\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Method Fhp\\Action\\SendSEPATransfer\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\SPA\\HISPAS is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Action/SendSEPATransfer.php
+
+		-
+			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^Method Fhp\\BaseAction\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^Method Fhp\\BaseAction\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^Method Fhp\\BaseAction\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^Method Fhp\\BaseAction\:\:setRequestSegmentNumbers\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$bpd with type Fhp\\Protocol\\BPD\|null is not subtype of native type Fhp\\Protocol\\BPD\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/BaseAction.php
+
+		-
+			message: '#^Argument of an invalid type array\<SimpleXMLElement\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Cannot access offset 0 on array\<SimpleXMLElement\>\|false\|null\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:extractStructuredFieldsFromText\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseBalances\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseBookingCode\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseEntry\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseEntryDetails\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseMandateInfo\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseReferences\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseRelatedAgents\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseRelatedParties\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseRemittanceInfo\(\) has parameter \$details with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Method Fhp\\CAMT\\CAMT\:\:parseReport\(\) has parameter \$result with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Parameter \#1 \$string of function trim expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 14
+			path: src/CAMT/CAMT.php
+
+		-
+			message: '#^Class Fhp\\CurlException constructor invoked with 1 parameter, 2\-5 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function curl_errno expects CurlHandle, CurlHandle\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function curl_error expects CurlHandle, CurlHandle\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function curl_exec expects CurlHandle, CurlHandle\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function curl_getinfo expects CurlHandle, CurlHandle\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function curl_setopt expects CurlHandle, CurlHandle\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#1 \$string of function base64_decode expects string, string\|true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#2 \$response of class Fhp\\CurlException constructor expects string\|null, string\|true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Connection.php
+
+		-
+			message: '#^Parameter \#3 \$value of function curl_setopt expects non\-empty\-string, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Connection.php
+
+		-
+			message: '#^Method Fhp\\CurlException\:\:__construct\(\) has parameter \$curlInfo with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CurlException.php
+
+		-
+			message: '#^Method Fhp\\CurlException\:\:getCurlInfo\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CurlException.php
+
+		-
+			message: '#^Property Fhp\\CurlException\:\:\$curlInfo type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CurlException.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\TAN\\HITAN\:\:\$tanProzess\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Argument of an invalid type array\<int\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Cannot access property \$allTanModes on Fhp\\Protocol\\BPD\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: src/FinTs.php
+
+		-
+			message: '#^Instanceof between Fhp\\Model\\TanMedium and Fhp\\Model\\TanMedium will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Instanceof between Fhp\\Model\\TanMode and Fhp\\Model\\TanMode will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Method Fhp\\FinTs\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Method Fhp\\FinTs\:\:getBpd\(\) should return Fhp\\Protocol\\BPD but returns Fhp\\Protocol\\BPD\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Method Fhp\\FinTs\:\:getTanMedia\(\) should return array\<Fhp\\Model\\TanMedium\> but returns array\<Fhp\\Segment\\TAB\\TanMediumListe\>\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Method Fhp\\FinTs\:\:loadPersistedInstanceVersion2\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\TAN\\HITAN is not subtype of native type Fhp\\Segment\\BaseSegment\|null\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/FinTs.php
+
+		-
+			message: '#^Parameter \#1 \$bpd of method Fhp\\BaseAction\:\:getNextRequest\(\) expects Fhp\\Protocol\\BPD, Fhp\\Protocol\\BPD\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/FinTs.php
+
+		-
+			message: '#^Parameter \#1 \$bpd of static method Fhp\\Segment\\VPP\\VopHelper\:\:createHKVPPForPollingRequest\(\) expects Fhp\\Protocol\\BPD, Fhp\\Protocol\\BPD\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, Fhp\\Model\\TanMode\|int\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, array\<string\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Parameter \#3 \$bpd of static method Fhp\\Segment\\VPP\\VopHelper\:\:checkPollingRequired\(\) expects Fhp\\Protocol\\BPD, Fhp\\Protocol\\BPD\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Part \$hitan \(Fhp\\Segment\\TAN\\HITAN\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Part \$this\-\>selectedTanMode \(Fhp\\Model\\TanMode\|int\|null\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Property Fhp\\FinTs\:\:\$messageNumber \(int\) does not accept int\|null\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: src/FinTs.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 2
+			path: src/FinTs.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between Fhp\\Segment\\TAN\\HITAN and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between Fhp\\Segment\\TAN\\HITAN and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/FinTs.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 2
+			path: src/FinTs.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 4
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 6
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Offset 2 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Offset 3 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Parameter \#1 \$hour of method DateTime\:\:setTime\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Parameter \#1 \$price of method Fhp\\Model\\StatementOfHoldings\\Holding\:\:setAcquisitionPrice\(\) expects float\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Parameter \#2 \$minute of method DateTime\:\:setTime\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Parameter \#3 \$second of method DateTime\:\:setTime\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Property Fhp\\MT535\\MT535\:\:\$cleanedRawData \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/MT535/MT535.php
+
+		-
+			message: '#^Method Fhp\\MT940\\Dialect\\PostbankMT940\:\:extractStructuredDataFromRemittanceLines\(\) has parameter \$transaction with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/Dialect/PostbankMT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\Dialect\\PostbankMT940\:\:extractStructuredDataFromRemittanceLines\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/Dialect/PostbankMT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\Dialect\\SpardaMT940\:\:extractStructuredDataFromRemittanceLines\(\) has parameter \$transaction with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/Dialect/SpardaMT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\Dialect\\SpardaMT940\:\:extractStructuredDataFromRemittanceLines\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/Dialect/SpardaMT940.php
+
+		-
+			message: '#^Parameter \#1 \$string of function trim expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT940/Dialect/SpardaMT940.php
+
+		-
+			message: '#^Cannot use \-\- on string\.$#'
+			identifier: preDec.type
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Comparison operation "\<\=" between 20 and int\<20, 29\>\|int\<60, 63\> is always true\.$#'
+			identifier: smallerOrEqual.alwaysTrue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:extractStructuredDataFromRemittanceLines\(\) has parameter \$transaction with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:extractStructuredDataFromRemittanceLines\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:parseDescription\(\) has parameter \$descr with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:parseDescription\(\) has parameter \$transaction with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Method Fhp\\MT940\\MT940\:\:parseDescription\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Offset 2 might not exist on array\{\}\|array\{non\-falsy\-string, ''''\|\(non\-falsy\-string&numeric\-string\), ''C''\|''D''\|''RC''\|''RD'', string, non\-empty\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Offset 2 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Offset 3 might not exist on array\{\}\|array\{non\-falsy\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string, non\-falsy\-string&numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Parameter \#2 \$string of function explode expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Parameter \#3 \$rawLines of method Fhp\\MT940\\MT940\:\:extractStructuredDataFromRemittanceLines\(\) expects array\<string\>, array\<int, string\|null\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between ''RD'' and ''RD'' will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: src/MT940/MT940.php
+
+		-
+			message: '#^Property Fhp\\Model\\CreditCardStatement\\CreditCardTransaction\:\:\$purposeLines type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/CreditCardStatement/CreditCardTransaction.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\DataElement\:\:__debugInfo\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\DataElement\:\:getLength\(\) should return int but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\DataElement\:\:parseNextBlock\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Parameter \#1 \$num of function base_convert expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Parameter \#1 \$num of function base_convert expects string, int\<0, 255\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_split expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Property Fhp\\Model\\FlickerTan\\DataElement\:\:\$headerHighBit \(string\) does not accept int\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Model/FlickerTan/DataElement.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\StartCode\:\:__construct\(\) has parameter \$ctrlBytes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/StartCode.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\StartCode\:\:__debugInfo\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/StartCode.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\StartCode\:\:parseControlBytes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/StartCode.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\StartCode\:\:parseNextBlock\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/StartCode.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(string the rest of the given challenge from the bank to parse\)\: Unexpected token "the", expected variable at offset 88 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Model/FlickerTan/StartCode.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\SvgRenderer\:\:buildNode\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/SvgRenderer.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\SvgRenderer\:\:validate\(\) has parameter \$bitPattern with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/SvgRenderer.php
+
+		-
+			message: '#^Property Fhp\\Model\\FlickerTan\\SvgRenderer\:\:\$svg has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Model/FlickerTan/SvgRenderer.php
+
+		-
+			message: '#^Method Fhp\\Model\\FlickerTan\\TanRequestChallengeFlicker\:\:__debugInfo\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/FlickerTan/TanRequestChallengeFlicker.php
+
+		-
+			message: '#^Parameter \#1 \$num of function base_convert expects string, float\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/FlickerTan/TanRequestChallengeFlicker.php
+
+		-
+			message: '#^Parameter \#1 \$num of function base_convert expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/FlickerTan/TanRequestChallengeFlicker.php
+
+		-
+			message: '#^Method Fhp\\Model\\StatementOfAccount\\Statement\:\:addTransaction\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Model/StatementOfAccount/Statement.php
+
+		-
+			message: '#^Method Fhp\\Model\\StatementOfAccount\\Statement\:\:getDate\(\) should return DateTime but returns DateTime\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Model/StatementOfAccount/Statement.php
+
+		-
+			message: '#^Cannot call method addTransaction\(\) on Fhp\\Model\\StatementOfAccount\\Statement\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Model/StatementOfAccount/StatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Model\\StatementOfAccount\\StatementOfAccount\:\:fromCAMTArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/StatementOfAccount/StatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Model\\StatementOfAccount\\StatementOfAccount\:\:fromMT940Array\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/StatementOfAccount/StatementOfAccount.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Model\\StatementOfAccount\\StatementOfAccount\:\:parseDate\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 4
+			path: src/Model/StatementOfAccount/StatementOfAccount.php
+
+		-
+			message: '#^Method Fhp\\Model\\StatementOfHoldings\\StatementOfHoldings\:\:addHolding\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Model/StatementOfHoldings/StatementOfHoldings.php
+
+		-
+			message: '#^Property Fhp\\Model\\TanRequestChallengeImage\:\:\$data has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Model/TanRequestChallengeImage.php
+
+		-
+			message: '#^Property Fhp\\Model\\TanRequestChallengeImage\:\:\$mimeType has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Model/TanRequestChallengeImage.php
+
+		-
+			message: '#^Method Fhp\\Options\\FinTsOptions\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Options/FinTsOptions.php
+
+		-
+			message: '#^Method Fhp\\Options\\SanitizingLogger\:\:__construct\(\) has parameter \$sensitiveMaterial with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Options/SanitizingLogger.php
+
+		-
+			message: '#^Method Fhp\\Options\\SanitizingLogger\:\:addSensitiveMaterial\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Options/SanitizingLogger.php
+
+		-
+			message: '#^Method Fhp\\Options\\SanitizingLogger\:\:addSensitiveMaterial\(\) has parameter \$sensitiveMaterial with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Options/SanitizingLogger.php
+
+		-
+			message: '#^Method Fhp\\Options\\SanitizingLogger\:\:computeNeedles\(\) has parameter \$sensitiveMaterial with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Options/SanitizingLogger.php
+
+		-
+			message: '#^Method Fhp\\Options\\SanitizingLogger\:\:log\(\) has parameter \$message with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Options/SanitizingLogger.php
+
+		-
+			message: '#^Method Fhp\\PaginateableAction\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Method Fhp\\PaginateableAction\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Method Fhp\\PaginateableAction\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Offset 0 might not exist on array\<string\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Parameter \#1 \$bpd of method Fhp\\BaseAction\:\:getNextRequest\(\) expects Fhp\\Protocol\\BPD, Fhp\\Protocol\\BPD\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, array\<string\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Property Fhp\\PaginateableAction\:\:\$requestSegments type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/PaginateableAction.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\BPD\:\:getBankCode\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\BPD\:\:getBankName\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\BPD\:\:getVersion\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\BPD\:\:\$hibpa \(Fhp\\Segment\\HIBPA\\HIBPAv3\) does not accept Fhp\\Segment\\BaseSegment\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between array\<string\> and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type Fhp\\Segment\\VPP\\HIVPPSv1\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type Fhp\\Segment\\VPP\\ParameterNamensabgleichPruefauftragV1\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: src/Protocol/BPD.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\DialogInitialization\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Protocol/DialogInitialization.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\DialogInitialization\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Protocol/DialogInitialization.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\DialogInitialization\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/DialogInitialization.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\DialogInitialization\:\:\$hktanRef \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/DialogInitialization.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\DialogInitialization\:\:\$hktanRef \(string\) on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.property
+			count: 1
+			path: src/Protocol/DialogInitialization.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\GetTanMedia\:\:processResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/GetTanMedia.php
+
+		-
+			message: '#^PHPDoc tag @var with type Fhp\\Segment\\TAB\\HITAB is not subtype of native type Fhp\\Segment\\BaseSegment\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Protocol/GetTanMedia.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\Message\:\:createWrappedMessage\(\) has parameter \$tan with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\Message\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(string\|null The TAN to be sent to the server \(in HNSHA\)\. If this is present, \$tanMode must be present\.\)\: Unexpected token "The", expected variable at offset 658 on line 9$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\Message\:\:\$footer \(Fhp\\Segment\\HNHBS\\HNHBSv1\) does not accept Fhp\\Segment\\BaseSegment\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\Message\:\:\$header \(Fhp\\Segment\\HNHBK\\HNHBKv3\) does not accept Fhp\\Segment\\BaseSegment\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\Message\:\:\$signatureFooter \(Fhp\\Segment\\HNSHA\\HNSHAv2\|null\) does not accept Fhp\\Segment\\BaseSegment\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\Message\:\:\$signatureHeader \(Fhp\\Segment\\HNSHK\\HNSHKv4\|null\) does not accept Fhp\\Segment\\BaseSegment\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/Message.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\MessageBuilder\:\:addInternal\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/MessageBuilder.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between Fhp\\Segment\\Segmentkopf and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Protocol/MessageBuilder.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\ServerException\:\:detectAndThrowErrors\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/ServerException.php
+
+		-
+			message: '#^Parameter \#3 \$requestSegments of class Fhp\\Protocol\\ServerException constructor expects array\<string\>, list\<Fhp\\Segment\\BaseSegment\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Protocol/ServerException.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\ServerException\:\:\$request is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Protocol/ServerException.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\TanRequiredException\:\:getTanRequest\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/TanRequiredException.php
+
+		-
+			message: '#^Method Fhp\\Protocol\\UPD\:\:getVersion\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Protocol/UPD.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupa \(Fhp\\Segment\\HIUPA\\HIUPAv4\) does not accept Fhp\\Segment\\BaseSegment\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/UPD.php
+
+		-
+			message: '#^Property Fhp\\Protocol\\UPD\:\:\$hiupd \(array\<Fhp\\Segment\\HIUPD\\HIUPD\>\) does not accept array\<Fhp\\Segment\\BaseSegment\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Protocol/UPD.php
+
+		-
+			message: '#^Method Fhp\\Segment\\AnonymousSegment\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/AnonymousSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\AnonymousSegment\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/AnonymousSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\AnonymousSegment\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/AnonymousSegment.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between array\<string\>\|string and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Segment/AnonymousSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BSE\\ParameterTerminierteSEPAFirmenLastschriftEinreichenV2\:\:getMinimalLeadTime\(\) should return array\<Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\> but returns array\<Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\|null\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/BSE/ParameterTerminierteSEPAFirmenLastschriftEinreichenV2.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDeg\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseDeg.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDeg\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseDeg.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDeg\:\:parse\(\) should return static\(Fhp\\Segment\\BaseDeg\) but returns Fhp\\Segment\\BaseDeg\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/BaseDeg.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDeg\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/BaseDeg.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:__construct\(\) has parameter \$clazz with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:enumerateProperties\(\) has parameter \$clazz with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:enumerateProperties\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:enumerateProperties\(\) return type has no value type specified in iterable type array\|\(Generator&iterable\<ReflectionProperty\>\)\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:resolveType\(\) has parameter \$contextClass with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseDescriptor\:\:resolveType\(\) return type with generic class ReflectionClass does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:enumerateProperties\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:getAnnotation\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:getBoolAnnotation\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:getIntAnnotation\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:getVarAnnotation\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Segment\\BaseDescriptor\:\:resolveType\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 1
+			path: src/Segment/BaseDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseSegment\:\:__serialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseSegment\:\:__unserialize\(\) has parameter \$serialized with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/BaseSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseSegment\:\:parse\(\) should return static\(Fhp\\Segment\\BaseSegment\) but returns Fhp\\Segment\\BaseSegment\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Segment/BaseSegment.php
+
+		-
+			message: '#^Method Fhp\\Segment\\BaseSegment\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/BaseSegment.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: src/Segment/BaseSegment.php
+
+		-
+			message: '#^Cannot call method getData\(\) on Fhp\\Syntax\\Bin\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Segment/CAZ/HICAZv1.php
+
+		-
+			message: '#^Method Fhp\\Segment\\CAZ\\HKCAZv1\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/CAZ/HKCAZv1.php
+
+		-
+			message: '#^Method Fhp\\Segment\\CAZ\\UnterstuetzteCamtMessages\:\:create\(\) has parameter \$camtDescriptor with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Segment/CAZ/UnterstuetzteCamtMessages.php
+
+		-
+			message: '#^Method Fhp\\Segment\\CSE\\HICSESv1\:\:getParameter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/CSE/HICSESv1.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Common\\Kik\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/Common/Kik.php
+
+		-
+			message: '#^Cannot access property \$kreditinstitutscode on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/Segment/Common/Kti.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Common\\Kti\:\:getAccountNumber\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/Common/Kti.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Common\\Kti\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/Common/Kti.php
+
+		-
+			message: '#^Parameter \#1 \$kreditinstitutscode of static method Fhp\\Segment\\Common\\Kik\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/Common/Kti.php
+
+		-
+			message: '#^Parameter \#1 \$kontonummer of static method Fhp\\Segment\\Common\\Kto\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/Common/Kto.php
+
+		-
+			message: '#^Parameter \#1 \$kreditinstitutscode of static method Fhp\\Segment\\Common\\Kik\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/Common/Kto.php
+
+		-
+			message: '#^Cannot access property \$kreditinstitutscode on Fhp\\Segment\\Common\\Kik\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/Segment/Common/KtvV3.php
+
+		-
+			message: '#^Parameter \#1 \$kontonummer of static method Fhp\\Segment\\Common\\KtvV3\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/Common/KtvV3.php
+
+		-
+			message: '#^Parameter \#1 \$kreditinstitutscode of static method Fhp\\Segment\\Common\\Kik\:\:create\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/Common/KtvV3.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Common\\Sdo\:\:getTimestamp\(\) should return DateTime but returns DateTime\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/Common/Sdo.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Common\\Tsp\:\:asDateTime\(\) should return DateTime but returns DateTime\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/Common/Tsp.php
+
+		-
+			message: '#^Parameter \#1 \$minimaleSEPAVorlaufzeit of static method Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\:\:create\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Segment/DSE/MinimaleVorlaufzeitSEPALastschrift.php
+
+		-
+			message: '#^Parameter \#3 \$unterstuetzteSEPALastschriftartenCodiert of static method Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\:\:create\(\) expects int\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/DSE/MinimaleVorlaufzeitSEPALastschrift.php
+
+		-
+			message: '#^Parameter \#4 \$sequenceTypeCodiert of static method Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\:\:create\(\) expects int\|null, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Segment/DSE/MinimaleVorlaufzeitSEPALastschrift.php
+
+		-
+			message: '#^Method Fhp\\Segment\\DSE\\ParameterTerminierteSEPALastschriftEinreichenV2\:\:getMinimalLeadTime\(\) should return array\<Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\> but returns array\<Fhp\\Segment\\DSE\\MinimaleVorlaufzeitSEPALastschrift\|null\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/DSE/ParameterTerminierteSEPALastschriftEinreichenV2.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/DegDescriptor.php
+
+		-
+			message: '#^Unsafe access to private property Fhp\\Segment\\DegDescriptor\:\:\$descriptors through static\:\:\.$#'
+			identifier: staticClassAccess.privateProperty
+			count: 3
+			path: src/Segment/DegDescriptor.php
+
+		-
+			message: '#^Property Fhp\\Segment\\ElementDescriptor\:\:\$type with generic class ReflectionClass does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Segment/ElementDescriptor.php
+
+		-
+			message: '#^Cannot access property \$kontonummer on Fhp\\Segment\\Common\\KtvV3\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: src/Segment/HIUPD/HIUPDv6.php
+
+		-
+			message: '#^Method Fhp\\Segment\\HNHBK\\HNHBKv3\:\:setNachrichtengroesse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/HNHBK/HNHBKv3.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_pad expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/HNHBK/HNHBKv3.php
+
+		-
+			message: '#^Method Fhp\\Segment\\KAZ\\HKKAZv4\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/KAZ/HKKAZv4.php
+
+		-
+			message: '#^Method Fhp\\Segment\\KAZ\\HKKAZv5\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/KAZ/HKKAZv5.php
+
+		-
+			message: '#^Method Fhp\\Segment\\KAZ\\HKKAZv6\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/KAZ/HKKAZv6.php
+
+		-
+			message: '#^Method Fhp\\Segment\\KAZ\\HKKAZv7\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/KAZ/HKKAZv7.php
+
+		-
+			message: '#^Method Fhp\\Segment\\KKU\\DKKKUv2\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/KKU/DKKKUv2.php
+
+		-
+			message: '#^Method Fhp\\Segment\\Paginateable\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/Paginateable.php
+
+		-
+			message: '#^Method Fhp\\Segment\\SAL\\HKSALv4\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/SAL/HKSALv4.php
+
+		-
+			message: '#^Method Fhp\\Segment\\SAL\\HKSALv5\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/SAL/HKSALv5.php
+
+		-
+			message: '#^Method Fhp\\Segment\\SAL\\HKSALv6\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/SAL/HKSALv6.php
+
+		-
+			message: '#^Method Fhp\\Segment\\SAL\\HKSALv7\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/SAL/HKSALv7.php
+
+		-
+			message: '#^Method Fhp\\Segment\\SPA\\HKSPAv2\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/SPA/HKSPAv2.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Segment/SegmentDescriptor.php
+
+		-
+			message: '#^Unsafe access to private property Fhp\\Segment\\SegmentDescriptor\:\:\$descriptors through static\:\:\.$#'
+			identifier: staticClassAccess.privateProperty
+			count: 3
+			path: src/Segment/SegmentDescriptor.php
+
+		-
+			message: '#^Method Fhp\\Segment\\TAB\\HITABv4\:\:getTanMediumListe\(\) should return array\<Fhp\\Segment\\TAB\\TanMediumListe\> but returns array\<Fhp\\Segment\\TAB\\TanMediumListeV4\>\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/TAB/HITABv4.php
+
+		-
+			message: '#^Method Fhp\\Segment\\TAB\\HITABv5\:\:getTanMediumListe\(\) should return array\<Fhp\\Segment\\TAB\\TanMediumListe\> but returns array\<Fhp\\Segment\\TAB\\TanMediumListeV5\>\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/TAB/HITABv5.php
+
+		-
+			message: '#^Method Fhp\\Segment\\TAB\\TanMediumListeV4\:\:getName\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/TAB/TanMediumListeV4.php
+
+		-
+			message: '#^Method Fhp\\Segment\\TAB\\TanMediumListeV5\:\:getName\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/TAB/TanMediumListeV5.php
+
+		-
+			message: '#^Method Fhp\\Segment\\TAN\\HITANv6\:\:getProcessId\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Segment/TAN/HITANv6.php
+
+		-
+			message: '#^Cannot access property \$CstmrPmtStsRpt on SimpleXMLElement\|false\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: src/Segment/VPP/VopHelper.php
+
+		-
+			message: '#^Offset 0 might not exist on array\<string\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Segment/VPP/VopHelper.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between Fhp\\Segment\\VPP\\HIVPPv1 and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Segment/VPP/VopHelper.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type Fhp\\Segment\\VPP\\HIVPPv1\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: src/Segment/VPP/VopHelper.php
+
+		-
+			message: '#^Access to an undefined property Fhp\\Segment\\WPD\\HKWPDv5\:\:\$aufsetzpunkt\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Segment/WPD/HKWPDv5.php
+
+		-
+			message: '#^Method Fhp\\Segment\\WPD\\HKWPDv5\:\:setPaginationToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Segment/WPD/HKWPDv5.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Parser\:\:parseDegElements\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Parser\:\:unescape\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Parameter \#1 \$rawElements of static method Fhp\\Segment\\BaseDeg\:\:parse\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Parameter \#2 \$elements of class Fhp\\Segment\\AnonymousSegment constructor expects array\<array\<string\>\|string\>, array\<array\<string\>\|string\|null\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Part \$result\-\>segmentkopf \(Fhp\\Segment\\Segmentkopf\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 2
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Parser\:\:parseDegElements\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Parser\:\:parseSegmentElement\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Parser\:\:splitIntoSegmentElements\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Parser\:\:tryConstructEmptyValue\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Parser.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Serializer\:\:escape\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Serializer\:\:flattenAndTrimEnd\(\) has parameter \$elements with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Serializer\:\:serializeElement\(\) has parameter \$type with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Serializer\:\:serializeElement\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Method Fhp\\Syntax\\Serializer\:\:serializeElements\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, array\<mixed, mixed\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Serializer\:\:flattenAndTrimEnd\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Serializer\:\:serializeElement\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Serializer.php
+
+		-
+			message: '#^Unsafe call to private method Fhp\\Syntax\\Serializer\:\:serializeElements\(\) through static\:\:\.$#'
+			identifier: staticClassAccess.privateMethod
+			count: 2
+			path: src/Syntax/Serializer.php

@@ -32,6 +32,25 @@ jobs:
       - name: Run PHPUnit
         run: ./vendor/bin/phpunit
 
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan
+
   php-cs-fixer:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
