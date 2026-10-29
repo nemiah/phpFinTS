@@ -46,7 +46,7 @@ abstract class Rueckmeldungscode
      */
     public static function isError(int $code): bool
     {
-        return (9000 < $code && $code < 9999) || in_array($code, self::TREAT_WARNINGS_AS_ERRORS);
+        return (9000 <= $code && $code <= 9999) || in_array($code, self::TREAT_WARNINGS_AS_ERRORS);
     }
 
     /**
