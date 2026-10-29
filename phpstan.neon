@@ -1,0 +1,11 @@
+parameters:
+	level: 8
+	paths:
+		- src
+		- Tests
+	excludePaths:
+		- Tests/*/DataProvider.*
+		- Tests/*_Mock.php
+
+includes:
+	- phpstan-baseline.neon
