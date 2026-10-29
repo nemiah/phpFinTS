@@ -19,6 +19,8 @@ use Fhp\Segment\BaseSegment;
  */
 class HIUPDv4 extends BaseSegment implements HIUPD
 {
+    use AccountHolderNameTrait; // For HIUPD.
+
     public \Fhp\Segment\Common\KtvV3 $kontoverbindung;
     public string $kundenId;
     public ?string $kontowaehrung = null;

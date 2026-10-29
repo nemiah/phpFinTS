@@ -26,5 +26,11 @@ class GetSEPAAccountsTest extends DKBIntegrationTestBase
         $this->assertEquals('1234567890', $account->getAccountNumber());
         $this->assertEmpty($account->getSubAccount());
         $this->assertEquals('ABCDEFGH', $account->getBlz());
+
+        // From the HIUPD segment of the login response (INIT_RESPONSE).
+        $this->assertEquals('NAME1 TEST ABCDEFGHIJK', $account->getName());
+        $this->assertEquals('Sichteinlagen', $account->getProductName());
+        $this->assertEquals('EUR', $account->getCurrency());
+        $this->assertSame(1, $account->getAccountType());
     }
 }
