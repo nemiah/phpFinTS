@@ -14,13 +14,20 @@ use Fhp\Model\StatementOfHoldings\StatementOfHoldings;
 class MT535
 {
     /** @var string */
+    private $rawData;
+
+    /** @var non-empty-string */
+    private $divider;
+
+    /** @var string */
     private $cleanedRawData;
 
     public function __construct(string $rawData)
     {
         // The divider can be either \r\n or @@
-        $divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
-        $this->cleanedRawData = preg_replace('#' . $divider . '([^:])#ms', '$1', $rawData);
+        $this->divider = substr_count($rawData, "\r\n-") > substr_count($rawData, '@@-') ? "\r\n" : '@@';
+        $this->rawData = $rawData;
+        $this->cleanedRawData = preg_replace('#' . $this->divider . '([^:])#ms', '$1', $rawData);
     }
 
     public function parseDepotWert(): float
@@ -34,7 +41,9 @@ class MT535
     {
         $result = new StatementOfHoldings();
         preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $this->cleanedRawData, $blocks);
-        foreach ($blocks[1] as $block) {
+        // The same blocks with their line breaks, which are needed to tell the lines of field 70E apart.
+        preg_match_all('/:16R:FIN(.*?):16S:FIN/sm', $this->rawData, $rawBlocks);
+        foreach ($blocks[1] as $index => $block) {
             $holding = new Holding();
             // handle ISIN, WKN & Name
             // :35B:ISIN DE0005190003/DE/519000BAY.MOTOREN WERKE AG ST
@@ -48,11 +57,20 @@ class MT535
             }
 
             // handle acquisition price
-            // e.g ':70E::HOLD//1STK23,968293+EUR'
-            if (preg_match('/:70E::HOLD\/\/\d*STK2(\d*),(\d*)\+([A-Z]{3})/sm', $block, $iwn)) {
-                $holding->setAcquisitionPrice((float) $iwn[1].'.'.$iwn[2]);
+            // Field 70E HOLD consists of numbered lines, line 2 starts with the acquisition price and its currency.
+            // Line 1 may carry further subfields, e.g. the date of the last movement:
+            // :70E::HOLD//1STK++++20250825
+            // 2224,5983333+EUR
+            $acquisitionPrice = $this->parseAcquisitionPrice($rawBlocks[1][$index] ?? '');
+            if ($acquisitionPrice === null
+                // e.g ':70E::HOLD//1STK23,968293+EUR' (lines already joined)
+                && preg_match('/:70E::HOLD\/\/\d*STK2(\d*),(\d*)\+([A-Z]{3})/sm', $block, $iwn)) {
+                $acquisitionPrice = [(float) ($iwn[1] . '.' . $iwn[2]), $iwn[3]];
+            }
+            if ($acquisitionPrice !== null) {
+                $holding->setAcquisitionPrice($acquisitionPrice[0]);
                 if ($holding->getCurrency() === null) {
-                    $holding->setCurrency($iwn[3]);
+                    $holding->setCurrency($acquisitionPrice[1]);
                 }
             }
 
@@ -111,6 +129,24 @@ class MT535
             $result->addHolding($holding);
         }
         return $result;
+    }
+
+    /**
+     * @param string $rawBlock A financial instrument block (16R:FIN) with its original line breaks.
+     * @return array{float, string}|null The acquisition price and its currency from line 2 of field 70E HOLD.
+     */
+    private function parseAcquisitionPrice(string $rawBlock): ?array
+    {
+        $divider = preg_quote($this->divider, '/');
+        if (!preg_match('/:70E::HOLD\/\/(.*?)(?=' . $divider . ':|$)/s', $rawBlock, $field)) {
+            return null;
+        }
+        foreach (explode($this->divider, $field[1]) as $line) {
+            if (preg_match('/^2(\d*),(\d*)\+([A-Z]{3})/', $line, $m)) {
+                return [(float) ($m[1] . '.' . $m[2]), $m[3]];
+            }
+        }
+        return null;
     }
 
     protected function getDate(string $val): \DateTime
