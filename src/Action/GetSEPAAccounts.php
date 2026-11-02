@@ -59,6 +59,7 @@ class GetSEPAAccounts extends PaginateableAction
         return serialize($this->__serialize());
     }
 
+    /** @return array<mixed> */
     public function __serialize(): array
     {
         return [
@@ -78,6 +79,7 @@ class GetSEPAAccounts extends PaginateableAction
         self::__unserialize(unserialize($serialized));
     }
 
+    /** @param array<mixed> $serialized */
     public function __unserialize(array $serialized): void
     {
         // Actions serialized before the UPD travelled along consist of the PaginateableAction state only.

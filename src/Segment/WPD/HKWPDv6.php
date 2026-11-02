@@ -28,7 +28,7 @@ class HKWPDv6 extends BaseSegment implements Paginateable
         return $result;
     }
 
-    public function setPaginationToken(string $paginationToken)
+    public function setPaginationToken(string $paginationToken): void
     {
         $this->aufsetzpunkt = $paginationToken;
     }
