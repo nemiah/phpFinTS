@@ -17,6 +17,7 @@ class CAMTStructuredFieldsTest extends TestCase
 
     /**
      * @dataProvider UstrdProvider
+     * @param array<string, string> $expectedStructuredTags
      */
     public function testExtractStructuredFieldsFromText(string $text, array $expectedStructuredTags): void
     {
@@ -27,6 +28,7 @@ class CAMTStructuredFieldsTest extends TestCase
         self::assertSame($expectedStructuredTags, $fields);
     }
 
+    /** @return list<array{string, array<string, string>}> */
     public static function UstrdProvider(): array
     {
         return [

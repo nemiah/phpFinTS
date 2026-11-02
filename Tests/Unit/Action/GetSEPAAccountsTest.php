@@ -7,6 +7,7 @@ use Fhp\Model\SEPAAccount;
 use Fhp\Protocol\Message;
 use Fhp\Protocol\UPD;
 use Fhp\Segment\BaseSegment;
+use Fhp\Segment\HIUPD\HIUPDv6;
 use Fhp\Segment\SPA\HKSPAv2;
 
 /**
@@ -24,7 +25,7 @@ class GetSEPAAccountsTest extends ActionTestCase
         . 'i:0;a:5:{i:0;a:1:{i:0;i:3;}i:1;N;i:2;N;i:3;N;i:4;N;}i:1;N;'
         . 'i:2;a:1:{i:0;O:23:"Fhp\\Segment\\SPA\\HKSPAv2":1:{i:0;s:10:"HKSPA:3:2\'";}}}';
 
-    public function testAnnotatesAccountsFromTheUpd()
+    public function testAnnotatesAccountsFromTheUpd(): void
     {
         $action = GetSEPAAccounts::create();
         self::nextRequest($action, self::createBpd(self::hispas()), self::createUpd());
@@ -47,7 +48,7 @@ class GetSEPAAccountsTest extends ActionTestCase
         $this->assertSame(10, $savings->getAccountType());
     }
 
-    public function testLeavesAccountsWithoutHiupdUnannotated()
+    public function testLeavesAccountsWithoutHiupdUnannotated(): void
     {
         $upd = new UPD();
         $upd->hiupd = [];
@@ -65,7 +66,7 @@ class GetSEPAAccountsTest extends ActionTestCase
         }
     }
 
-    public function testWorksWithoutUpd()
+    public function testWorksWithoutUpd(): void
     {
         $action = GetSEPAAccounts::create();
         self::nextRequest($action, self::createBpd(self::hispas()));
@@ -80,7 +81,7 @@ class GetSEPAAccountsTest extends ActionTestCase
      * the FinTs instance that completes it may come from persist(true), which contains no UPD. So the UPD captured in
      * createRequest() has to survive that round trip for the accounts to be annotated afterwards.
      */
-    public function testUpdSurvivesSerialization()
+    public function testUpdSurvivesSerialization(): void
     {
         $action = GetSEPAAccounts::create();
         $requestSegments = self::nextRequest($action, self::createBpd(self::hispas()), self::createUpd());
@@ -95,7 +96,7 @@ class GetSEPAAccountsTest extends ActionTestCase
         $this->assertSame('Girokonto Komfort', $giro->getProductName());
     }
 
-    public function testUnserializesActionsSerializedWithoutUpd()
+    public function testUnserializesActionsSerializedWithoutUpd(): void
     {
         /** @var GetSEPAAccounts $restored */
         $restored = unserialize(self::SERIALIZED_BY_DD2A7F2);
@@ -130,10 +131,10 @@ class GetSEPAAccountsTest extends ActionTestCase
     {
         $upd = new UPD();
         $upd->hiupd = [
-            BaseSegment::parse(
+            HIUPDv6::parse(
                 "HIUPD:7:6:4+5407324931::280:50010517+DE44500105175407324931+9999999999+1+EUR+Mustermann+Max+Girokonto Komfort++HKSAK:1+HKKAZ:1+HKSPA:1'"
             ),
-            BaseSegment::parse(
+            HIUPDv6::parse(
                 "HIUPD:8:6:4+0123456789::280:50010517++9999999999+10+EUR+Mustermann++Sparkonto++HKSAK:1+HKKAZ:1+HKSPA:1'"
             ),
         ];

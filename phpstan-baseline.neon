@@ -997,12 +997,6 @@ parameters:
 			path: Tests/Unit/Segment/HIUPDTest.php
 
 		-
-			message: '#^Parameter \#1 \$rawSegment of static method Fhp\\Segment\\BaseSegment\:\:parse\(\) expects string, array\|string given\.$#'
-			identifier: argument.type
-			count: 6
-			path: Tests/Unit/Segment/HIUPDTest.php
-
-		-
 			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertCount\(\) expects Countable\|iterable, array\<Fhp\\Segment\\HIUPD\\ErlaubteGeschaeftsvorfaelleV1\>\|null given\.$#'
 			identifier: argument.type
 			count: 2
@@ -1744,18 +1738,6 @@ parameters:
 			message: '#^Argument of an invalid type array\<SimpleXMLElement\>\|null supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 2
-			path: src/CAMT/CAMT.php
-
-		-
-			message: '#^Cannot access offset 0 on array\<SimpleXMLElement\>\|false\|null\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: src/CAMT/CAMT.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 1
 			path: src/CAMT/CAMT.php
 
 		-

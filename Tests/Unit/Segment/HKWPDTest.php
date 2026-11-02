@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HKWPDTest extends TestCase
 {
-    public function testParametersOfVersion6()
+    public function testParametersOfVersion6(): void
     {
         /** @var HIWPDSv6 $hiwpds */
         $hiwpds = Parser::parseSegment("HIWPDS:60:6:3+1+1+0+N:N:N'", HIWPDSv6::class);
@@ -24,7 +24,7 @@ class HKWPDTest extends TestCase
         $this->assertFalse($hiwpds->getParameter()->getKursqualitaetWaehlbar());
     }
 
-    public function testRequestOfVersion6()
+    public function testRequestOfVersion6(): void
     {
         $hkwpd = HKWPDv6::create(KtvV3::create('502022353', null, Kik::create('12030000')));
         $hkwpd->setSegmentNumber(3);

@@ -22,9 +22,15 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
         "HIUPD:17:4:4+1234568::280:10020030+12345+DEM+Ernst Müller++Sparkonto 2000++HKPRO:1+HKSAK:0+HKISA:1+HKSSP:0+HKUEB:2:Z:1000,:DEM:7+HKKAN:1+HKKAZ:1+HKSAL:2'",
     ];
 
+    /** The examples in ISO-8859-1, as a bank would send them. */
+    private static function hbci22Example(int $index): string
+    {
+        return mb_convert_encoding(self::HBCI22_EXAMPLES[$index], 'ISO-8859-1', 'UTF-8');
+    }
+
     public function testParseHBCI22Example1()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'));
+        $parsed = HIUPDv4::parse(self::hbci22Example(0));
         $this->assertSame(16, $parsed->segmentkopf->segmentnummer);
         $this->assertSame(4, $parsed->segmentkopf->segmentversion);
         $this->assertSame('1234567', $parsed->kontoverbindung->kontonummer);
@@ -46,20 +52,20 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
 
     public function testValidateHBCI22Example1()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'));
+        $parsed = HIUPDv4::parse(self::hbci22Example(0));
         $parsed->validate(); // Should not throw.
         $this->assertTrue(true);
     }
 
     public function testSerializeHBCI22Example1()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'));
-        $this->assertEquals(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'), $parsed->serialize());
+        $parsed = HIUPDv4::parse(self::hbci22Example(0));
+        $this->assertEquals(self::hbci22Example(0), $parsed->serialize());
     }
 
     public function testParseHBCI22Example2()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'));
+        $parsed = HIUPDv4::parse(self::hbci22Example(1));
         $this->assertSame('1234568', $parsed->kontoverbindung->kontonummer);
         $this->assertSame('Sparkonto 2000', $parsed->kontoproduktbezeichnung);
         $this->assertNull($parsed->kontolimit);
@@ -75,24 +81,24 @@ class HIUPDTest extends \PHPUnit\Framework\TestCase
 
     public function testValidateHBCI22Example2()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'));
+        $parsed = HIUPDv4::parse(self::hbci22Example(1));
         $parsed->validate(); // Should not throw.
         $this->assertTrue(true);
     }
 
     public function testSerializeHBCI22Example2()
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'));
-        $this->assertEquals(mb_convert_encoding(static::HBCI22_EXAMPLES[1], 'ISO-8859-1', 'UTF-8'), $parsed->serialize());
+        $parsed = HIUPDv4::parse(self::hbci22Example(1));
+        $this->assertEquals(self::hbci22Example(1), $parsed->serialize());
     }
 
-    public function testAccountHolderNameWithoutSecondNameField()
+    public function testAccountHolderNameWithoutSecondNameField(): void
     {
-        $parsed = HIUPDv4::parse(mb_convert_encoding(static::HBCI22_EXAMPLES[0], 'ISO-8859-1', 'UTF-8'));
+        $parsed = HIUPDv4::parse(self::hbci22Example(0));
         $this->assertSame('Ernst Müller', $parsed->getAccountHolderName());
     }
 
-    public function testAccountHolderNameJoinsBothNameFields()
+    public function testAccountHolderNameJoinsBothNameFields(): void
     {
         $parsed = HIUPDv6::parse(
             "HIUPD:10:6:4+1234567890::280:60050101+DE02600501011234567890+9999999999+1+EUR+Mustermann+Max+Giro++HKSAK:1'"
