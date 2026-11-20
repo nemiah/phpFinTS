@@ -2065,12 +2065,6 @@ parameters:
 			path: src/MT535/MT535.php
 
 		-
-			message: '#^Parameter \#1 \$price of method Fhp\\Model\\StatementOfHoldings\\Holding\:\:setAcquisitionPrice\(\) expects float\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/MT535/MT535.php
-
-		-
 			message: '#^Parameter \#2 \$minute of method DateTime\:\:setTime\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
