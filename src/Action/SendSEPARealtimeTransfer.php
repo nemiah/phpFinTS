@@ -15,6 +15,7 @@ use Fhp\Segment\HIRMS\Rueckmeldung;
 use Fhp\Segment\HIRMS\Rueckmeldungscode;
 use Fhp\Segment\IPZ\HIIPZSv1;
 use Fhp\Segment\IPZ\HIIPZSv2;
+use Fhp\Segment\IPZ\HIIPZv1;
 use Fhp\Segment\IPZ\HKIPZv1;
 use Fhp\Segment\IPZ\HKIPZv2;
 use Fhp\Segment\SPA\HISPAS;
@@ -26,13 +27,19 @@ use Fhp\UnsupportedException;
  */
 class SendSEPARealtimeTransfer extends BaseAction
 {
+    /** The payee's bank has not confirmed the payment yet; its status can be requested with HKIPS. */
+    public const CODE_STATUS_PENDING = 3045;
+
     // Request (if you add a field here, update __serialize() and __unserialize() as well).
     private SEPAAccount $account;
     private string $painMessage;
     private string $xmlSchema;
     private bool $allowConversionToSEPATransfer = true;
 
-    // There are no result fields. This action is simply marked as done to indicate that the transfer was executed.
+    // Response
+    private ?string $orderId = null;
+    private ?int $status = null;
+    private bool $statusPending = false;
 
     /**
      * @param SEPAAccount $account The account from which the transfer will be sent.
@@ -139,6 +146,20 @@ class SendSEPARealtimeTransfer extends BaseAction
     {
         parent::processResponse($response);
 
+        /** @var HIIPZv1|null $hiipz */
+        $hiipz = $response->findSegment(HIIPZv1::class);
+        if ($hiipz !== null) {
+            $this->orderId = $hiipz->auftragsidentifikation;
+            $this->status = $hiipz->statusSepaAuftrag;
+        }
+
+        // The bank accepted the order, but the payee's bank has not answered in time. The final status can be
+        // requested with GetSEPARealtimeTransferStatus.
+        if (count($response->findRueckmeldungen(self::CODE_STATUS_PENDING)) > 0) {
+            $this->statusPending = true;
+            return;
+        }
+
         // Was the instant payment converted to a regular transfer?
         $info = $response->findRueckmeldungen(3270);
         if (count($info) > 0) {
@@ -152,5 +173,29 @@ class SendSEPARealtimeTransfer extends BaseAction
             && $response->findRueckmeldung(Rueckmeldungscode::AUSGEFUEHRT) === null) {
             throw new UnexpectedResponseException('Bank did not confirm SEPATransfer execution');
         }
+    }
+
+    /** @return string|null The Auftragsidentifikation assigned by the bank, needed to request the status later. */
+    public function getOrderId(): ?string
+    {
+        $this->ensureDone();
+        return $this->orderId;
+    }
+
+    /** @return int|null The Status SEPA-Auftrag (1-9) if the bank reported one, see {@link HIIPZv1}. */
+    public function getStatus(): ?int
+    {
+        $this->ensureDone();
+        return $this->status;
+    }
+
+    /**
+     * @return bool True if the bank accepted the order but could not report its final status yet (code 3045). Use
+     *     {@link GetSEPARealtimeTransferStatus} with {@link getOrderId()} to request it.
+     */
+    public function isStatusPending(): bool
+    {
+        $this->ensureDone();
+        return $this->statusPending;
     }
 }
